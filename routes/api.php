@@ -3,6 +3,32 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+use App\Http\Controllers\User\AuthController;
+
+use App\Http\Controllers\User\UserDashboardController;
+
+require __DIR__.'/admin_api.php';
+require __DIR__.'/seller_api.php';
+
+
+// User APi M1
+
+Route::post('/register',[AuthController::class,'register']);
+Route::post('/verify_otp',[AuthController::class,'verify_otp']);
+Route::post('/login',[AuthController::class,'login']);
+Route::post('/login_by_mobile_or_email',[AuthController::class,'login_by_mobile_or_email']);
+
+route::post('/forgot_password',[AuthController::class,'forgot_password']);
+
+route::post('/create_password',[AuthController::class,'create_password']);
+
+
+// Route::get('/user-dashboard-test', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
+
+
+// Route::group( )
+
+
+Route::get('/user-dashboard', [UserDashboardController::class,'index']);
