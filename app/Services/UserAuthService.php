@@ -43,7 +43,8 @@ class UserAuthService
         $get_user_details->update(['otp_verify'=>'1']);
 
         if($request->type=='1'){
-        $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;  
+        $get_user_details->accessToken = $get_user_details->createToken('user-token', ['user'])->plainTextToken;   
+      
       }else{
         $get_user_details->accessToken ='';  
       }  
@@ -65,7 +66,11 @@ class UserAuthService
         if($get_user_details){
 
             if(Hash::check($request->password,$get_user_details->password,)){
-                $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;            
+              // $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;   
+              $get_user_details->accessToken = $get_user_details->createToken('user-token', ['user'])->plainTextToken;   
+                
+               
+                
                 return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
             }else{
                 return ['status'=>'error','message'=>"User Password Is wrong",'data'=>(object)[]];                
