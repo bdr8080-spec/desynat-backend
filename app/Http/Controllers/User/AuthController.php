@@ -43,7 +43,7 @@ class AuthController extends Controller
         $data= $this->UserAuthService->register($req);
 
         if(isset($data['status']) && $data['status']=='error' ){
-            return ApiResponse::generateResponse('error', $data['message'],'',422);
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
 
         }
 
@@ -66,7 +66,7 @@ class AuthController extends Controller
           $data= $this->UserAuthService->verify_otp($req);
 
           if(isset($data['status']) && $data['status']=='error' ){
-              return ApiResponse::generateResponse('error', $data['message'],'',400);
+              return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
           }
   
           return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
@@ -88,7 +88,7 @@ class AuthController extends Controller
         $data= $this->UserAuthService->loginCheck($req);
 
         if(isset($data['status']) && $data['status']=='error' ){
-            return ApiResponse::generateResponse('error', $data['message'],'',400);
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
 
         }
 
@@ -110,7 +110,7 @@ class AuthController extends Controller
         $data= $this->UserAuthService->login_by_mobile_or_email($req);
 
         if(isset($data['status']) && $data['status']=='error' ){
-            return ApiResponse::generateResponse('error', $data['message'],'',400);
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
@@ -155,7 +155,7 @@ class AuthController extends Controller
         $data= $this->UserAuthService->mobile_or_email_forgot_password($req);
 
         if(isset($data['status']) && $data['status']=='error' ){
-            return ApiResponse::generateResponse('error', $data['message'],'',400);
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
@@ -178,7 +178,7 @@ class AuthController extends Controller
         $data= $this->UserAuthService->create_password($req);
 
         if(isset($data['status']) && $data['status']=='error' ){
-            return ApiResponse::generateResponse('error', $data['message'],'',400);
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);

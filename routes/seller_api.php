@@ -17,6 +17,13 @@ Route::post('/seller_review', [AuthController::class,'seller_review']);
 
 Route::post('/seller_store_submit_request', [AuthController::class,'seller_store_submit_request']);
 
+Route::post('/login',[AuthController::class,'login']);
+
+route::post('/forgot_password',[AuthController::class,'forgot_password']);
+route::post('/create_password',[AuthController::class,'create_password']);
+
+
+
 
 Route::group(['middleware'=>['auth:sanctum']], function(){
 

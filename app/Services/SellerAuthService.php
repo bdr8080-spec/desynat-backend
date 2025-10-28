@@ -195,58 +195,53 @@ class SellerAuthService
     public function loginCheck($request){
 
 
-        $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+        $get_user_details=  seller::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
 
+        
         if($get_user_details){
+
+          if($get_user_details->admin_verify=='3'){
+            return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+          }
+
+          if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
+            return ['status'=>'error','message'=>"Wait for Admin To Accept Your Store",'data'=>(object)[]];                
+          }
+
 
             if(Hash::check($request->password,$get_user_details->password,)){
                 $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;            
-                return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
+                return ['status'=>'success','message'=>"Seller Login Successfully",'data'=>$get_user_details];                            
             }else{
                 return ['status'=>'error','message'=>"User Password Is wrong",'data'=>(object)[]];                
             }
         
           }else{
-            return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Seller is Not Existed",'data'=>(object)[]];                
           }
     
         }
-
-
-
-    public function login_by_mobile_or_email($request){
-
-
-        $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
-
-        if($get_user_details){
-
-           $otp= config('services.otp');
-
-            $get_user_details->update(['otp'=>$otp]);
-
-            $get_user_details->accessToken ='';            
-            return ['status'=>'success','message'=>"User Login Otp Send Successfully",'data'=>$get_user_details];            
-        
-          }else{
-            return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
-          }
-    
-        }
-
         
 
         public function mobile_or_email_forgot_password($request){
 
             if($request->type=='0'){ // when i use Mobile No
-                $get_user_details=  User::where('country_code',$request->country_code)->orWhere('mobile',$request->mobile)->where('otp_verify','1')->first();
+                $get_user_details=  seller::where('country_code',$request->country_code)->orWhere('mobile',$request->mobile)->where('otp_verify','1')->first();
 
             }else{
-                $get_user_details=  User::where('email',$request->email)->where('otp_verify','1')->first();
-
+                $get_user_details=  seller::where('email',$request->email)->where('otp_verify','1')->first();
             }
-    
+
             if($get_user_details){
+
+
+              if($get_user_details->admin_verify=='3'){
+                return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+              }
+    
+              if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
+                return ['status'=>'error','message'=>"Wait for Admin To Accept Your Store",'data'=>(object)[]];                
+              }
     
                 $otp= config('services.otp');
 
@@ -256,24 +251,24 @@ class SellerAuthService
                 return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
-                return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Seller is Not Existed",'data'=>(object)[]];                
               }
         
             }
 
             public function create_password($request){
 
-                $get_user_details=  User::where('id',$request->id)->where('otp_verify','1')->first();
+                $get_user_details=  seller::where('id',$request->id)->where('otp_verify','1')->first();
     
                 if($get_user_details){
               
                     $get_user_details->update(['password'=>hash::make($request->password)]);
                     
                     $get_user_details->accessToken ='';            
-                    return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
+                    return ['status'=>'success','message'=>"Forgot Password Password Change Successfully",'data'=>$get_user_details];            
                 
                   }else{
-                    return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+                    return ['status'=>'error','message'=>"seller is Not Existed",'data'=>(object)[]];                
                   }
             
                 }

@@ -131,7 +131,7 @@ class UserAuthService
                     $get_user_details->update(['password'=>hash::make($request->password)]);
                     
                     $get_user_details->accessToken ='';            
-                    return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
+                    return ['status'=>'success','message'=>"Forgot Password change Successfully",'data'=>$get_user_details];            
                 
                   }else{
                     return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
