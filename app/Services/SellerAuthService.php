@@ -86,6 +86,9 @@ class SellerAuthService
       if($store_information){
       // $get_seller_details=  seller::where('id',$request->user_id)->first();
 
+      seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
+
+
           return ['status'=>'success','message'=>"seller Store Information Insert Successfully",'data'=>$store_information];            
 
         }else{
@@ -140,7 +143,8 @@ class SellerAuthService
        $store_information=Bankdetails::Updateorcreate($match,$bank_data);
     
         if($store_information){
-        // $get_seller_details=  seller::where('id',$request->user_id)->first();
+
+          seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
   
             return ['status'=>'success','message'=>"seller Information Insert Successfully Wait for admin Verify",'data'=>$store_information];            
   

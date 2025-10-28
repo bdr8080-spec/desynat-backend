@@ -26,6 +26,10 @@ return new class extends Migration
             $table->string('device_type')->default('0')->comment('0 web 1 ios 2 andriod');
             $table->longText('device_token')->nullable();
             $table->enum('admin_verify',['0','1'])->default('0')->comment('0 pending 1 verify');
+
+            $table->string('store_information')->default('0')->comment('0 not upload 1 upload');
+            $table->string('bank_information')->default('0')->comment('0 not upload 1 upload');
+
            
             $table->timestamps();
         });
