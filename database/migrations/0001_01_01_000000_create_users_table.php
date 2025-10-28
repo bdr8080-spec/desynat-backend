@@ -22,7 +22,9 @@ return new class extends Migration
             $table->string('otp')->nullable();            
             $table->string('otp_verify')->default('0')->comment('0 pending , 1 verify otp');            
             $table->string('device_type')->default('0')->comment('0 web 1 ios 2 andriod');
-            $table->longText('fcm_token')->nullable();
+            $table->longText('device_token')->nullable();
+            $table->longText('let')->nullable();
+            $table->longText('long')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
