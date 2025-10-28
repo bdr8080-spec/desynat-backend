@@ -7,6 +7,8 @@ use App\Http\Controllers\User\AuthController;
 
 use App\Http\Controllers\User\UserDashboardController;
 
+use App\Http\Controllers\CommonController;
+
 require __DIR__.'/admin_api.php';
 require __DIR__.'/seller_api.php';
 
@@ -17,9 +19,7 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/verify_otp',[AuthController::class,'verify_otp']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/login_by_mobile_or_email',[AuthController::class,'login_by_mobile_or_email']);
-
 route::post('/forgot_password',[AuthController::class,'forgot_password']);
-
 route::post('/create_password',[AuthController::class,'create_password']);
 
 
@@ -28,7 +28,20 @@ route::post('/create_password',[AuthController::class,'create_password']);
 // })->middleware('auth:sanctum');
 
 
-// Route::group( )
+Route::group(['middleware'=>['auth:sanctum']], function(){
+
+    Route::get('/user-dashboard', [UserDashboardController::class,'index']);
+
+});
 
 
-Route::get('/user-dashboard', [UserDashboardController::class,'index']);
+
+// common APi
+// 
+
+Route::post('upload', [CommonController::class, 'upload']);
+
+
+
+
+
