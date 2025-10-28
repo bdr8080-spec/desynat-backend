@@ -149,6 +149,51 @@ class AuthController extends Controller
 
     }
 
+    public function seller_review(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'user_id' => 'required|exists:sellers,id',
+            ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+       }
+
+        $data= $this->SellerAuthService->seller_review($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],'',400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+    public function seller_store_submit_request(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'user_id' => 'required|exists:sellers,id',
+            ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+       }
+
+        $data= $this->SellerAuthService->seller_store_submit_request($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],'',400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+
+    
+
+    
+
 
     
 

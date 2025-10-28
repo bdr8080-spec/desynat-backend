@@ -10,12 +10,19 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('/verify_otp',[AuthController::class,'verify_otp']);
 
 
-// Route::group(['middleware'=>['auth:sanctum']], function(){
-
 Route::post('/store_information', [AuthController::class,'store_information']);
 Route::post('/store_document_and_bank_details', [AuthController::class,'store_document_and_bank_details']);
 
-// });
+Route::post('/seller_review', [AuthController::class,'seller_review']);
+
+Route::post('/seller_store_submit_request', [AuthController::class,'seller_store_submit_request']);
+
+
+Route::group(['middleware'=>['auth:sanctum']], function(){
+
+
+
+});
 
 
 
