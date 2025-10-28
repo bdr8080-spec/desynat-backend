@@ -24,9 +24,15 @@ route::post('/forgot_password',[AuthController::class,'forgot_password']);
 route::post('/create_password',[AuthController::class,'create_password']);
 
 
-Route::middleware(['auth:sanctum', 'ability:user'])->group(function () {
+Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(function () {
+
 
   Route::get('/user-dashboard', [UserDashboardController::class,'index']);
+
+  Route::get('/logout', [UserDashboardController::class,'logout']);
+  
+
+
 
 });
 

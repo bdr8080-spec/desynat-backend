@@ -14,9 +14,23 @@ class UserDashboardController extends Controller
 
         $user_details=$request->user();
 
-        return ApiResponse::generateResponse('success','User Details fetch Successfully',$user_details, 200);
+        return ApiResponse::generateResponse('success','User Dashbaord fetch Successfully',$user_details, 200);
 
     }
+
+
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return ApiResponse::generateResponse('success','Logged out successfully',(object)[], 200);
+
+    }
+
+
+    
+
 
 
 }
