@@ -86,6 +86,9 @@ class SellerAuthService
       if($store_information){
       // $get_seller_details=  seller::where('id',$request->user_id)->first();
 
+      seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
+
+
           return ['status'=>'success','message'=>"seller Store Information Insert Successfully",'data'=>$store_information];            
 
         }else{
@@ -96,9 +99,6 @@ class SellerAuthService
 
 
       public function store_document_and_bank_details($request){
-
-    // use App\Models\sellerDocument;
-    // use App\Models\Bankdetails;
 
     sellerDocument::where('seller_id',$request->user_id)->update(['status'=>'0']);
     
@@ -140,7 +140,8 @@ class SellerAuthService
        $store_information=Bankdetails::Updateorcreate($match,$bank_data);
     
         if($store_information){
-        // $get_seller_details=  seller::where('id',$request->user_id)->first();
+
+          seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
   
             return ['status'=>'success','message'=>"seller Information Insert Successfully Wait for admin Verify",'data'=>$store_information];            
   
@@ -150,6 +151,44 @@ class SellerAuthService
     
         }
 
+        public function seller_review($request){ 
+
+         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details')->where('id',$request->user_id)->first();
+        
+          if($seller_details){
+
+                return ['status'=>'success','message'=>"seller Information fetch successfully",'data'=>$seller_details];            
+        
+              }else{
+                return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+              }
+        
+              }
+
+            public function seller_store_submit_request($request){ 
+
+              $seller_details=seller::where('id',$request->user_id)->first();
+              
+                if($seller_details){
+
+                  if($seller_details->store_information!=='1'){
+                    return ['status'=>'error','message'=>"Please submit Store information",'data'=>(object)[]];                
+                  }
+
+                  if($seller_details->bank_information!=='1'){
+                    return ['status'=>'error','message'=>"Please submit Bank and store document information",'data'=>(object)[]];                                    
+                  }
+
+                  $seller_details->update(['admin_verify'=>'1']); // update store information
+
+                  return ['status'=>'success','message'=>"seller Store Request Submit",'data'=>$seller_details];            
+              
+                    }else{
+                      return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+                    }
+              
+                    }
+       
 
 
 
