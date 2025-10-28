@@ -3,6 +3,8 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Http\Request;
+use App\Http\Controllers\CommonController;
 
 
 class CategoryService
@@ -59,6 +61,101 @@ class CategoryService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch subcategories: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function changeCategoryStatus($categoryId)
+    {
+        try {
+            $category = Category::find($categoryId);
+
+            if (!$category) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Category not found',
+                    'data' => []
+                ];
+            }
+
+            $category->status = $category->status == 1 ? 0 : 1;
+            $category->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Category status updated successfully',
+                'data' => $category
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch Category: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function changeSubCategoryStatus($subCategoryId)
+    {
+        try {
+            $subCategory = SubCategory::find($subCategoryId);
+
+            if (!$subCategory) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Sub Category not found',
+                    'data' => []
+                ];
+            }
+
+            $subCategory->status = $subCategory->status == 1 ? 0 : 1;
+            $subCategory->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub Category status updated successfully',
+                'data' => $subCategory
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch Sub Category: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function createSubCategory(Request $request)
+    {
+        $commonController = new CommonController();
+        $uploadResult = $commonController->upload($request);
+        $uploadResultArray = $uploadResult->getData(true); 
+
+        if ($uploadResultArray['status'] === 'error') {
+            return $uploadResult;  
+        }
+
+        try {
+            $imageUrl = $uploadResultArray['data']['url'];
+            $subCategory = SubCategory::create([
+                'category_id' => $request->category_id,
+                'name_english' => $request->name_english,
+                'name_arabic' => $request->name_arabic,
+                'image' => $imageUrl,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Subcategory created successfully',
+                'data' => $subCategory
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to create subcategory: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to create subcategory',
                 'data' => []
             ];
         }
