@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->string('document_type')->nullable()->comment('1 owner document , 2 store document');
             $table->string('document_path')->nullable();
+            $table->enum('status',['0','1'])->default('1')->comment('0 inactive 1 active');
             $table->timestamps();
         });
     }

@@ -100,13 +100,15 @@ class SellerAuthService
     // use App\Models\sellerDocument;
     // use App\Models\Bankdetails;
 
-
+    sellerDocument::where('seller_id',$request->user_id)->update(['status'=>'0']);
+    
     foreach($request->owner_document as $key=>$val){
 
       sellerDocument::create([
         'seller_id'=>$request->user_id,
         'document_type'=>'1',
-        'document_path'=>$val
+        'document_path'=>$val,
+        'status'=>'1'
       ]);
     }
 
@@ -115,7 +117,8 @@ class SellerAuthService
       sellerDocument::create([
         'seller_id'=>$request->user_id,
         'document_type'=>'2',
-        'document_path'=>$val
+        'document_path'=>$val,
+        'status'=>'1'
       ]);
     }
 
