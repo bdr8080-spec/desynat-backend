@@ -42,8 +42,12 @@ class UserAuthService
     if($get_user_details->otp==$request->otp){
         $get_user_details->update(['otp_verify'=>'1']);
 
-        $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;
-            
+        if($request->type=='1'){
+        $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;  
+      }else{
+        $get_user_details->accessToken ='';  
+      }  
+        
         return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];            
     
       }else{

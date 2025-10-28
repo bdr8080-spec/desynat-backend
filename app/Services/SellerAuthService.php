@@ -50,9 +50,9 @@ class SellerAuthService
     if($get_user_details->otp==$request->otp){
         $get_user_details->update(['otp_verify'=>'1']);
 
-        $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;
+        // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;
             
-        return ['status'=>'success','message'=>"seller Otp Login Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message'=>"seller Otp verify Successfully",'data'=>$get_user_details];            
     
       }else{
         return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
