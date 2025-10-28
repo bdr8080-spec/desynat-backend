@@ -231,9 +231,8 @@ class SellerAuthService
             }else{
                 $get_user_details=  seller::where('email',$request->email)->where('otp_verify','1')->first();
             }
-
+            
             if($get_user_details){
-
 
               if($get_user_details->admin_verify=='3'){
                 return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
