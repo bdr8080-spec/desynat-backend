@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Seller\AuthController;
 
+use App\Http\Controllers\Seller\SellerDashboardController;
 
 Route::group(['prefix' => 'seller'], function () {
     Route::post('create_account', [AuthController::class, 'create_account']);
@@ -24,10 +25,15 @@ route::post('/create_password',[AuthController::class,'create_password']);
 
 
 
+// Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
+//     Route::get('/user-dashboard', [UserDashboardController::class, 'index']);
+// });
 
-Route::group(['middleware'=>['auth:sanctum']], function(){
+// Route::group(['middleware'=>['auth:sanctum']], function(){
 
+Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
+  Route::post('/seller-dashboard', [SellerDashboardController::class,'index']);
 
 });
 

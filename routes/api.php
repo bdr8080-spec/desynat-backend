@@ -19,18 +19,14 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/verify_otp',[AuthController::class,'verify_otp']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/login_by_mobile_or_email',[AuthController::class,'login_by_mobile_or_email']);
+
 route::post('/forgot_password',[AuthController::class,'forgot_password']);
 route::post('/create_password',[AuthController::class,'create_password']);
 
 
-// Route::get('/user-dashboard-test', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+Route::middleware(['auth:sanctum', 'ability:user'])->group(function () {
 
-
-Route::group(['middleware'=>['auth:sanctum']], function(){
-
-    Route::get('/user-dashboard', [UserDashboardController::class,'index']);
+  Route::get('/user-dashboard', [UserDashboardController::class,'index']);
 
 });
 

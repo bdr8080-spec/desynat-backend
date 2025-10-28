@@ -210,10 +210,15 @@ class SellerAuthService
 
 
             if(Hash::check($request->password,$get_user_details->password,)){
-                $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;            
+                // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
+                
+                $get_user_details->accessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+
+                // $user->createToken('seller-token', ['seller'])->plainTextToken;
+
                 return ['status'=>'success','message'=>"Seller Login Successfully",'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"User Password Is wrong",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Seller Password Is wrong",'data'=>(object)[]];                
             }
         
           }else{
