@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
 
 
 
@@ -16,7 +17,9 @@ use App\Http\Controllers\Admin\AuthController;
 
 
     Route::group(['prefix' => 'admin'], function () {
-
+      Route::get('/get_category',[CategoryController::class,'get_category']);
+      Route::get('/get_subcategories',[CategoryController::class,'get_subcategories']);
+      Route::get('/add_subcategory',[CategoryController::class,'add_subcategory']);
 
 
 
