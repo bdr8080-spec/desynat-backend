@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 use App\Services\AdminAuthService;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 
 use Validator;
 
@@ -108,6 +109,28 @@ class AuthController extends Controller
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
+    }
+
+    public function admin_logout(Request $req)
+    {
+        try {
+            $admin = Auth::user();
+           // dd($admin_id);
+
+            if (!$admin) {
+                return ApiResponse::generateResponse('error', 'Unauthorized access', '', 401);
+            }
+            $data = $this->AdminAuthService->logout($admin);
+
+            if ($data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], '', 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], (object)[], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong', $e->getMessage(), 500);
+        }
     }
 
     
