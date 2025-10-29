@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\country;
+
 class CommonController extends Controller
 {
     
@@ -57,6 +59,19 @@ class CommonController extends Controller
 
         // Return an error response if the file upload is invalid
         return ApiResponse::generateResponse('error', 'Invalid file upload.', null, 400);
+    }
+
+
+
+    public function country(Request $request){
+
+     $all_country=country::get();
+
+    return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully',$all_country, 200);
+       
+
+
+
     }
 
 

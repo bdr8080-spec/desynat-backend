@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 // 
 
 Route::post('upload', [CommonController::class, 'upload']);
+Route::get('country', [CommonController::class, 'country']);
 
 
 
