@@ -6,6 +6,8 @@ use App\Http\Controllers\Seller\AuthController;
 
 use App\Http\Controllers\Seller\SellerDashboardController;
 
+
+// M1 Milestone 
 Route::group(['prefix' => 'seller'], function () {
     Route::post('create_account', [AuthController::class, 'create_account']);
     Route::post('/verify_otp',[AuthController::class,'verify_otp']);
@@ -23,6 +25,7 @@ Route::post('/login',[AuthController::class,'login']);
 route::post('/forgot_password',[AuthController::class,'forgot_password']);
 route::post('/create_password',[AuthController::class,'create_password']);
 
+// Auth Checking
 Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   Route::post('/seller-dashboard', [SellerDashboardController::class,'index']);
