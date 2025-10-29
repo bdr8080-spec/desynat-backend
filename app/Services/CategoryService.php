@@ -161,6 +161,87 @@ class CategoryService
         }
     }
 
+    public function updateSubCategory(Request $request, $subCategoryId)
+    {
+        $subCategory = SubCategory::find($subCategoryId);
+
+        if (!$subCategory) {
+            return [
+                'status' => 'error',
+                'message' => 'Category not found',
+                'data' => []
+            ];
+        }
+
+        if ($request->hasFile('image')) {
+            $commonController = new CommonController();
+            $uploadResult = $commonController->upload($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return $uploadResult; 
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+        } else {
+            $imageUrl = $subCategory->image;
+        }
+
+        try {
+            $subCategory->update([
+                'name_english' => $request->name_english,
+                'name_arabic' => $request->name_arabic,
+                'image' => $imageUrl,  
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Sub Category updated successfully',
+                'data' => $subCategory
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to update category: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update category',
+                'data' => []
+            ];
+        }
+    }
+
+    public function deleteSubCategory($subCategoryId)
+    {
+        try {
+            $subCategory = SubCategory::find($subCategoryId);
+
+            if (!$subCategory) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Subcategory not found',
+                    'data' => []
+                ];
+            }
+            $subCategory->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Subcategory deleted successfully',
+                'data' => []
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to delete subcategory: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete subcategory',
+                'data' => []
+            ];
+        }
+    }
+
+
+
 
 
     

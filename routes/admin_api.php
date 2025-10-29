@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\CategoryController;
       Route::post('/change_category_status',[CategoryController::class,'change_category_status']);
       Route::post('/change_subcategory_status',[CategoryController::class,'change_subcategory_status']);
       Route::post('/add_subcategory',[CategoryController::class,'add_subcategory']);
+      Route::post('/update_subcategory',[CategoryController::class,'update_subcategory']);
+      Route::post('/delete_subcategory',[CategoryController::class,'delete_subcategory']);
 
 
 

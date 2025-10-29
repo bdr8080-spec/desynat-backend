@@ -136,6 +136,59 @@ class CategoryController extends Controller
         }
     }
 
+    public function update_subcategory(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'subcategory_id' => 'required|exists:sub_categories,id',
+            'name_english' => 'required|string|max:255',
+            'name_arabic' => 'required|string|max:255',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048', 
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CategoryService->updateSubCategory($request, $request->subcategory_id);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function delete_subcategory(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'subcategory_id' => 'required|exists:sub_categories,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CategoryService->deleteSubCategory($request->subcategory_id);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+
+
 
     
 
