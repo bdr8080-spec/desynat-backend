@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Models\Admin;
-
+use Illuminate\Support\Facades\Auth;
 use Hash;
 
 class AdminAuthService
@@ -81,6 +81,18 @@ class AdminAuthService
         return ['status'=>'error','message'=>"Admin is Not Existed",'data'=>(object)[]];                
         }
 
+    }
+
+    public function logout($admin)
+    {
+        try {
+            $admin->currentAccessToken()->delete();
+
+            return ['status' => 'success', 'message' => 'Admin logged out successfully'];
+
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'message' => 'Logout failed: ' . $e->getMessage()];
+        }
     }
     
 
