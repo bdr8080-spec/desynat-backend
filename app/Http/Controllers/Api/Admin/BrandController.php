@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
-use App\Services\CategoryService;
-use App\Models\Category;
-use App\Models\SubCategory;
+use App\Services\BrandService;
+use App\Models\Brand;
+
 
 use Validator;
 
-class CategoryController extends Controller
+class BrandController extends Controller
 {
 
-    public function __construct(CategoryService $CategoryService){
+    public function __construct(BrandService $BrandService){
 
-        $this->CategoryService=$CategoryService;
+        $this->BrandService=$BrandService;
 
     }
 
 
-    public function get_category(Request $req)
+    public function get_brand(Request $req)
     {
         try {
-            $data = $this->CategoryService->getCategory($req);
+            $data = $this->BrandService->getBrand($req);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -36,11 +36,11 @@ class CategoryController extends Controller
         }
     }
 
-    public function get_subcategories(Request $request)
+
+    public function change_brand_status(Request $request)
     {
-       //print_r('123');
         $validate = Validator::make($request->all(), [
-            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
         ]);
 
         if ($validate->fails()) {
@@ -48,7 +48,7 @@ class CategoryController extends Controller
         }
 
         try {
-            $data = $this->CategoryService->getSubCategoriesByCategoryId($request->category_id);
+            $data = $this->BrandService->changeBrandStatus($request->brand_id);
 
             if (isset($data['status']) && $data['status'] == 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -61,58 +61,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function change_category_status(Request $request)
+
+    public function add_brand(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'category_id' => 'required|exists:categories,id',
-        ]);
-
-        if ($validate->fails()) {
-            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
-        }
-
-        try {
-            $data = $this->CategoryService->changeCategoryStatus($request->category_id);
-
-            if (isset($data['status']) && $data['status'] == 'error') {
-                return ApiResponse::generateResponse('error', $data['message'], [], 400);
-            }
-
-            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
-
-        } catch (\Exception $e) {
-            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
-        }
-    }
-
-    public function change_subcategory_status(Request $request)
-    {
-        $validate = Validator::make($request->all(), [
-            'subcategory_id' => 'required|exists:sub_categories,id',
-        ]);
-
-        if ($validate->fails()) {
-            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
-        }
-
-        try {
-            $data = $this->CategoryService->changeSubCategoryStatus($request->subcategory_id);
-
-            if (isset($data['status']) && $data['status'] == 'error') {
-                return ApiResponse::generateResponse('error', $data['message'], [], 400);
-            }
-
-            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
-
-        } catch (\Exception $e) {
-            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
-        }
-    }
-
-    public function add_subcategory(Request $request)
-    {
-        $validate = Validator::make($request->all(), [
-            'category_id' => 'required|exists:categories,id',
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
@@ -123,7 +75,7 @@ class CategoryController extends Controller
         }
 
         try {
-            $result = $this->CategoryService->createSubCategory($request);
+            $result = $this->BrandService->createBrand($request);
 
             if ($result['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $result['message'], [], 400);
@@ -136,10 +88,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function update_subcategory(Request $request)
+    public function update_brand(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'subcategory_id' => 'required|exists:sub_categories,id',
+            'brand_id' => 'required|exists:brands,id',
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
             'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048', 
@@ -150,7 +102,7 @@ class CategoryController extends Controller
         }
 
         try {
-            $result = $this->CategoryService->updateSubCategory($request, $request->subcategory_id);
+            $result = $this->BrandService->updateBrand($request, $request->brand_id);
 
             if ($result['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $result['message'], [], 400);
@@ -163,10 +115,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function delete_subcategory(Request $request)
+    public function delete_brand(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'subcategory_id' => 'required|exists:sub_categories,id',
+            'brand_id' => 'required|exists:brands,id',
         ]);
 
         if ($validate->fails()) {
@@ -174,7 +126,7 @@ class CategoryController extends Controller
         }
 
         try {
-            $result = $this->CategoryService->deleteSubCategory($request->subcategory_id);
+            $result = $this->BrandService->deleteBrand($request->brand_id);
 
             if ($result['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $result['message'], [], 400);

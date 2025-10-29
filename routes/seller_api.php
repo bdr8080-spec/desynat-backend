@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Seller\AuthController;
+use App\Http\Controllers\Api\Seller\AuthController;
 
-use App\Http\Controllers\Seller\SellerDashboardController;
+use App\Http\Controllers\Api\Seller\SellerDashboardController;
 
 
 // M1 Milestone 

@@ -3,9 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\Api\User\AuthController;
 
-use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\Api\User\UserDashboardController;
 
 use App\Http\Controllers\CommonController;
 
