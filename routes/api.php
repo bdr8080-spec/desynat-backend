@@ -9,6 +9,18 @@ use App\Http\Controllers\User\UserDashboardController;
 
 use App\Http\Controllers\CommonController;
 
+
+use Illuminate\Support\Facades\Artisan;
+Route::get('optimize',function(){
+    Artisan::call('optimize');
+    Artisan::call('config:clear');
+    // Artisan::call('cache:clear');
+    return 'Application optimized successfully!';
+});
+
+
+
+
 require __DIR__.'/admin_api.php';
 require __DIR__.'/seller_api.php';
 
