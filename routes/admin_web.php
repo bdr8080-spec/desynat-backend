@@ -14,6 +14,7 @@ Route::group(['prefix'=>'admin'], function(){
     Route::match(['get','post'],'/change-password', [AuthController::class, 'changePassword'])->name('changePassword');
     Route::match(['get','post'],'/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
     Route::match(['get','post'],'/verify-otp', [AuthController::class, 'optVerify'])->name('optVerify');
+    Route::match(['get','post'],'/resend-otp', [AuthController::class, 'resendOtp'])->name('resendOtp');
 
     Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');

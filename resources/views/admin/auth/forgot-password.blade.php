@@ -134,13 +134,13 @@
   </div>
 
   <!-- RIGHT SIDE -->
-  <div class="auth-right">
+  <!-- <div class="auth-right">
     <div class="login-container-div">
       <div class="login">
         <div class="loginBackgroundeffect text">
           <div class="row">
 
-            <!-- HEADER BACK NAV -->
+          
             <div class="col-lg-12">
               <div class="d-flex align-items-center gap-3 mt-2">
                 <div class="arrow">
@@ -152,7 +152,7 @@
               </div>
             </div>
 
-            <!-- EMAIL INPUT -->
+         
             <div class="col-lg-12 mt-3">
               <div class="form-group">
                 <label for="password" class="form-label">Enter Address</label>
@@ -164,10 +164,10 @@
               </div>
             </div>
 
-            <!-- SPACE BELOW -->
+            
             <div class="col-lg-12 mt-2"></div>
 
-            <!-- SUBMIT BUTTON -->
+           
             <div class="col-lg-12">
               <div class="button d-flex align-items-center justify-content-center">
                 <a href="otp-page.html" class="btn custom-btn" style="max-width: 100% !important;">
@@ -180,27 +180,95 @@
         </div>
       </div>
     </div> 
+  </div>  -->
+  <div class="auth-right">
+  <div class="login-container-div">
+    <div class="login">
+      <div class="loginBackgroundeffect text">
+        <div class="row">
+
+          <!-- HEADER BACK NAV -->
+          <div class="col-lg-12">
+            <div class="d-flex align-items-center gap-3 mt-2">
+              <div class="arrow">
+                <a class="table-button" type="button" href="{{ route('adminLogin') }}">
+                  <i class="fas fa-angle-left"></i>
+                </a>
+              </div>
+              <h6 class="m-0">Forgot Password</h6>
+            </div>
+          </div>
+
+          <!-- EMAIL INPUT -->
+          <div class="col-lg-12 mt-3">
+            <div class="form-group">
+              <label for="email" class="form-label">Enter Email Address</label>
+              <input type="email"
+                     class="form-control"
+                     id="email"
+                     placeholder="Enter registered email address"
+                     required>
+              <small id="emailError" style="color: red;"></small>
+            </div>
+          </div>
+
+          <!-- SUBMIT BUTTON -->
+          <div class="col-lg-12">
+            <div class="button d-flex align-items-center justify-content-center">
+              <button id="forgotBtn" class="btn custom-btn" style="max-width: 100% !important;">
+                Next
+              </button>
+            </div>
+          </div>
+
+        </div> 
+      </div>
+    </div>
   </div> 
+</div> 
 
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('Admin/js/bootstrap.bundle.min.js')}}"></script>
 
-    <script>
-        // Toggle password visibility
-        document.querySelectorAll('.toggle-password').forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                const input = document.querySelector(this.getAttribute('toggle'));
-                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                input.setAttribute('type', type);
+<script>
+$(document).ready(function() {
+    $('#email').on('input', function() {
+        $('#emailError').text('');
+    });
 
-                // Toggle icon between eye and eye-slash
-                this.classList.toggle('fa-eye');
-                this.classList.toggle('fa-eye-slash');
-            });
+    // AJAX forgot password
+    $('#forgotBtn').click(function(e) {
+        e.preventDefault();
+        $('#emailError').text('');
+
+        var email = $('#email').val();
+
+        $.ajax({
+            url: '{{ route("forgotPassword") }}',
+            type: 'POST',
+            data: {
+                email: email,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if(response.success) {
+                    window.location.href = "{{ route('optVerify') }}";
+                }
+            },
+            error: function(xhr) {
+                if(xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    if(errors.email) {
+                        $('#emailError').text(errors.email[0]);
+                    }
+                }
+            }
         });
-    </script>
+    });
+});
+</script>
 
 </body>
 </html>

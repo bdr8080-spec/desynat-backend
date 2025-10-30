@@ -27,9 +27,6 @@ class AuthController extends Controller
             }
 
             if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-                $admin = Auth::guard('admin')->user();
-                $admin->otp = 123456;
-                $admin->save();
                 return response()->json(['success' => true]);
             } else {
                 return response()->json(['errors' => ['email' => ['Invalid credentials']]], 422);
@@ -44,30 +41,111 @@ class AuthController extends Controller
         return redirect()->route('adminLogin');
     }
  
-    public function forgotPassword(Request $request){
-           if($request->isMethod('get')){
-        return view('admin.auth.forgot-password');
-        }else{
- 
+    public function forgotPassword(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('admin.auth.forgot-password');
+        } else {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|exists:admins,email',
+            ], [
+                'email.exists' => 'Email not found in admin records.'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $admin = Admin::where('email', $request->email)->first();
+            $otp= config('services.otp');
+            $admin->otp = $otp;
+            $admin->save();
+
+            session(['admin_email' => $admin->email]);
+
+            return response()->json(['success' => true]);
         }
- 
     }
+
  
- 
-    public function changePassword(Request $request){
-           if($request->isMethod('get')){
-        return view('admin.auth.reset-password');
-        }else{
- 
+     public function optVerify(Request $request)
+    {
+        if($request->isMethod('get')){
+            return view('admin.auth.otp-verify', ['email' => session('admin_email')]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'otp' => 'required|digits:6',
+                'email' => 'required|email|exists:admins,email'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            $admin = Admin::where('email', $request->email)->first();
+
+            if($admin->otp !== $request->otp){
+                return response()->json(['errors' => ['otp' => ['Invalid OTP']]], 422);
+            }
+
+            $admin->otp = null;
+            $admin->otp_verify = 1;
+            $admin->save();
+            session(['reset_email' => $admin->email]);
+
+            return response()->json(['success' => true]);
         }
-   
     }
- 
-     public function optVerify(Request $request){
-           if($request->isMethod('get')){
-        return view('admin.auth.otp-verify');
-        }else{
- 
+
+    public function resendOtp(Request $request)
+    {
+        $admin = Admin::where('email', $request->email)->first();
+        if($admin){
+            $otp= config('services.otp');
+            $admin->otp = $otp; 
+            $admin->otp_verify = 0;
+            $admin->save();
+            session(['reset_email' => $admin->email]);
+            return response()->json(['success' => true]);
         }
+        return response()->json(['errors' => ['email' => ['Admin not found']]], 422);
     }
+
+    public function changePassword(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            $email = session('reset_email'); 
+            return view('admin.auth.reset-password', compact('email'));
+        }
+
+        $request->validate([
+            'email' => 'required|email|exists:admins,email',
+            'password' => 'required|min:6',
+            'confirm_password' => 'required|min:6',
+        ]);
+
+        if ($request->password !== $request->confirm_password) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['confirm_password' => ['Password and confirm password do not match']]
+            ], 422);
+        }
+
+        $admin = Admin::where('email', $request->email)->first();
+        if (!$admin) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['email' => ['Email not found']]
+            ], 422);
+        }
+
+        $admin->password = Hash::make($request->password);
+        $admin->otp = null;
+        $admin->save();
+
+        $request->session()->forget('reset_email');
+
+        return response()->json(['success' => true]);
+    }
+
 }
