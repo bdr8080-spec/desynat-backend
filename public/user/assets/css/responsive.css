@@ -1,0 +1,30 @@
+@media (max-width:992px) {
+    .customNavbar .navbar-brand img{
+        width: 242px;
+    }
+}
+
+@media (max-width:576px) {
+
+    .customNavbar .navbar-brand img {
+        width: 190px;
+    }
+
+    .customOwlcarousel .item .bannerContent{
+        width: 70%;
+        transform: translate(-72%, -50%);
+        background: #ffffff6e;
+        height: 100%;
+        display: flex;
+        align-self: center;
+
+    }
+
+    h1{
+        align-self: center;
+    }
+
+    .customNavbar .customBtn img{
+        
+    }
+}
