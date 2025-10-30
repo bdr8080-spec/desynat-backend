@@ -133,6 +133,25 @@ class AuthController extends Controller
         }
     }
 
+    public function resend_otp(Request $req)
+    {
+        $validate = Validator::make($req->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = $this->AdminAuthService->resendOtp($req);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], '', 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
     
 
     

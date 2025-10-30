@@ -94,6 +94,25 @@ class AdminAuthService
             return ['status' => 'error', 'message' => 'Logout failed: ' . $e->getMessage()];
         }
     }
+
+    public function resendOtp($request){
+
+        $get_user_details=  Admin::where('email',$request->email)->first();
+
+        if($get_user_details){
+
+            $otp= config('services.otp');
+
+            $get_user_details->update(['otp'=>$otp]);
+
+            $get_user_details->accessToken ='';            
+            return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
+        
+        }else{
+        return ['status'=>'error','message'=>"Admin is Not Existed",'data'=>(object)[]];                
+        }
+
+    }
     
 
             
