@@ -3,17 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <title>Ichrono</title>
-    <link href="{{asset('Admin/css/style.css')}}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="image/top_ten_homecare_fav_ic.png">
-    <link href="css/bootstrap.css" rel="stylesheet" />
-=======
-    <title>Desynat</title>
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="{{asset('admin/image/top_ten_homecare_fav_ic.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('adminimage/top_ten_homecare_fav_ic.png')}}">
     <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
->>>>>>> 1a53d696ef6aef4b44e691ef53f6426bc237daaa
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -140,52 +133,6 @@
       </div>
 
       <!-- RIGHT SIDE -->
-      <!-- <div class="auth-right">
-        <div class="login-container-div">
-          <div class="login">
-            <div class="loginBackgroundeffect text">
-              <div class="row">
-                
-                <div class="col-lg-12">
-                  <div class="d-flex align-items-center gap-3 mt-2">
-                    <div class="arrow">
-                      <a class="table-button" type="button" href="login.html">
-                        <i class="fas fa-angle-left"></i>
-                      </a>
-                    </div>
-                    <h6 class="m-0">Reset Password </h6>
-                  </div>
-                </div>
-
-                <div class="login">
-                            <div class="loginBackgroundeffect">
-                                
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="newPassword" class="form-label">Create New Password</label>
-                                            <input type="password" class="form-control" id="newPassword" placeholder="Enter New Password" required>
-                                            <i toggle="#newPassword" class="fas fa-eye toggle-password"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mt-3">
-                                        <div class="form-group">
-                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                            <input type="password" id="confirmPassword" class="form-control" placeholder="Enter Confirm Password" required>
-                                            <i toggle="#confirmPassword" class="fas fa-eye toggle-password"></i>
-                                        </div>
-                                    </div>
-                                    <div class="button d-flex align-items-center justify-content-center mt-5">
-                                        <a class="btn custom-btn" href="index.html" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="max-width: 100% !important;">Submit</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="auth-right">
   <div class="login-container-div">
     <div class="login">
