@@ -269,7 +269,7 @@ $(document).ready(function() {
     // Check fields empty
     if (!newPassword) {
       $('#passwordError').text('Password is required');
-      return;
+      
     }
     if (!confirmPassword) {
       $('#confirmPasswordError').text('Confirm password is required');
