@@ -142,65 +142,6 @@
       </div>
 
       <!-- RIGHT SIDE -->
-      <!-- <div class="auth-right">
-        <div class="login-container-div">
-          <div class="login">
-            <div class="loginBackgroundeffect">
-              <h5 class=""> <span>Welcome back ! </span></h5>
-              <div class="row mt-3">
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label for="validationCustom01" class="form-label"
-                      >Enter Email</label
-                    >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="validationCustom01"
-                      placeholder="Enter Email id"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="col-lg-12 mt-3">
-                  <div class="form-group">
-                    <label for="validationCustom01" class="form-label"
-                      >Password</label
-                    >
-                    <input
-                      type="text"
-                      id="password"
-                      class="form-control custom-password"
-                      placeholder="Enter password"
-                    />
-                    <i
-                      toggle="#password"
-                      class="fas fa-eye toggle-password"
-                    ></i>
-                  </div>
-                </div>
-                <div class="col-lg-12">
-                  <div
-                    class="mt-2 d-flex align-items-center justify-content-center"
-                  >
-                    <a href="{{ route('forgotPassword') }}">Forgot Password?</a>
-                  </div>
-                </div>
-                <div
-                  class="button d-flex align-items-center justify-content-center"
-                >
-                  <a
-                    class="btn custom-btn w-100"
-                    href="index.html"
-                    style="max-width: 100% !important"
-                    >Login</a
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="auth-right">
         <div class="login-container-div">
             <div class="login">

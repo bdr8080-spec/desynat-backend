@@ -1669,7 +1669,7 @@ button[type="submit"] {
         width: 100%;
       }
 
-      .auth-left {
+      /* .auth-left {
         flex: 1;
         background: url("image/background-image.svg") no-repeat center
           center/cover !important;
@@ -1677,7 +1677,7 @@ button[type="submit"] {
         display: flex;
         align-items: center;
         justify-content: center;
-      }
+      } */
 
       .brand-header {
         position: absolute;

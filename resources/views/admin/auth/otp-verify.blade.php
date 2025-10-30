@@ -197,109 +197,11 @@
       </div>
     </div>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <script src="{{asset('Admin/js/bootstrap.bundle.min.js')}}"></script>
+     <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
 
-<!-- <script>
-$(document).ready(function() {
-    let timer = 300; // 5 minutes in seconds
-    let interval;
-
-    // Disable resend button initially
-    $('#resendOtp').prop('disabled', true);
-
-    function startTimer() {
-        $('#seconds').text(formatTime(timer));
-        interval = setInterval(() => {
-            timer--;
-            $('#seconds').text(formatTime(timer));
-            if(timer <= 0) {
-                clearInterval(interval);
-                $('#resendOtp').prop('disabled', false); // Enable resend
-            }
-        }, 1000);
-    }
-
-    function formatTime(seconds) {
-        let min = Math.floor(seconds / 60);
-        let sec = seconds % 60;
-        return `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
-    }
-
-    startTimer();
-
-    // OTP input auto-focus
-    $('.otp-input').on('input', function() {
-        let next = $(this).next('.otp-input');
-        if(next.length && $(this).val()) {
-            next.focus();
-        }
-        $('#otpError').text('');
-    });
-
-    // Submit OTP
-    $('#submitOtp').click(function(e) {
-        e.preventDefault();
-        let otp = '';
-        $('.otp-input').each(function() { otp += $(this).val(); });
-
-        if(otp.length < 6) {
-            $('#otpError').text('Please enter full 6-digit OTP');
-            return;
-        }
-
-        $.ajax({
-            url: '{{ route("optVerify") }}',
-            type: 'POST',
-            data: {
-                otp: otp,
-                email: $('#adminEmail').text(),
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                if(response.success) {
-                    window.location.href = "{{ route('changePassword') }}";
-                }
-            },
-            error: function(xhr) {
-                if(xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    if(errors.otp) {
-                        $('#otpError').text(errors.otp[0]);
-                    }
-                }
-            }
-        });
-    });
-
-    // Resend OTP
-    $('#resendOtp').click(function(e) {
-        e.preventDefault();
-
-        // Check if button is disabled
-        if($(this).prop('disabled')) return;
-
-        $.ajax({
-            url: '{{ route("resendOtp") }}',
-            type: 'POST',
-            data: {
-                email: $('#adminEmail').text(),
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                if(response.success) {
-                    // Reset timer
-                    timer = 300; 
-                    $('#resendOtp').prop('disabled', true); 
-                    startTimer();
-                }
-            }
-        });
-    });
-});
-</script> -->
 <script>
 $(document).ready(function() {
-    let timer = 60; // 5 minutes
+    let timer = 60; 
     let interval;
 
     // Disable resend button initially

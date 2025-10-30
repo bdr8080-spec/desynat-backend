@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ichrono</title>
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="{{asset('adminimage/top_ten_homecare_fav_ic.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('admin/image/top_ten_homecare_fav_ic.png')}}">
     <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
@@ -109,8 +109,8 @@
 
         
             <div class="left-section d-flex align-items-center">
-              <img src="image/favicon.svg" class="header-logo" />
-             <img src="image/Desynat Logo_Final 1.svg" class="header-logo" />
+              <img src="{{asset('admin/image/favicon.svg')}}" class="header-logo" />
+             <img src="{{asset('admin/image/Desynat Logo_Final 1.svg')}}" class="header-logo" />
 
             </div>
 
@@ -143,7 +143,7 @@
           <div class="col-lg-12">
             <div class="d-flex align-items-center gap-3 mt-2">
               <div class="arrow">
-                <a class="table-button" type="button" href="{{ route('adminLogin') }}">
+                <a class="table-button" type="button" href="{{ route('forgotPassword') }}">
                   <i class="fas fa-angle-left"></i>
                 </a>
               </div>
@@ -209,7 +209,7 @@
         </div>
     </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{asset('Admin/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
         <script>
             // Toggle password visibility
             document.querySelectorAll('.toggle-password').forEach(toggle => {
@@ -227,12 +227,6 @@
 
 <script>
 $(document).ready(function() {
-
-  // Toggle password visibility
-  $(".toggle-password").click(function() {
-    let input = $($(this).attr("toggle"));
-    input.attr("type", input.attr("type") === "password" ? "text" : "password");
-  });
 
   // Validation criteria function
   function passwordHint(password) {
@@ -270,7 +264,7 @@ $(document).ready(function() {
 
     let newPassword = $('#newPassword').val();
     let confirmPassword = $('#confirmPassword').val();
-    let email = "{{ $email ?? '' }}";  // server passed email
+    let email = "{{ $email ?? '' }}"; 
 
     // Check fields empty
     if (!newPassword) {
@@ -306,7 +300,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         if(response.success) {
-          $('#successModal').modal('show');
+          $('#exampleModal').modal('show');
           setTimeout(function() {
             window.location.href = "{{ route('adminLogin') }}";
           }, 5000);
