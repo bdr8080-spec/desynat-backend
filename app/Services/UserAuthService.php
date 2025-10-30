@@ -104,6 +104,26 @@ class UserAuthService
     
         }
 
+      public function resend_otp_by_mobile_or_email($request){
+
+
+        $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->first();
+
+        if($get_user_details){
+
+           $otp= config('services.otp');
+
+            $get_user_details->update(['otp'=>$otp]);
+
+            $get_user_details->accessToken ='';            
+            return ['status'=>'success','message'=>"User Login Otp Send Successfully",'data'=>$get_user_details];            
+        
+          }else{
+            return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+          }
+    
+        }
+
         
 
         public function mobile_or_email_forgot_password($request){

@@ -118,6 +118,26 @@ class AuthController extends Controller
 
     }
 
+    public function resend_otp(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'email_mobile' => 'required',
+               ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+       }
+
+        $data= $this->UserAuthService->resend_otp_by_mobile_or_email($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
     public function forgot_password(Request $req){
 
         $validate = Validator::make($req->all(), [

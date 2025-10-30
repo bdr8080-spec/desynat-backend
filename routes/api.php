@@ -28,6 +28,7 @@ require __DIR__.'/seller_api.php';
 // User APi M1
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/verify_otp',[AuthController::class,'verify_otp']);
+Route::post('/resend_otp',[AuthController::class,'resend_otp']);
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/login_by_mobile_or_email',[AuthController::class,'login_by_mobile_or_email']);
 
