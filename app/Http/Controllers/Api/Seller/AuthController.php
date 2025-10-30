@@ -69,7 +69,7 @@ class AuthController extends Controller
         return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
        }
 
-        $data= $this->UserAuthService->resendOtp($req);
+        $data= $this->SellerAuthService->resendOtp($req);
 
         if(isset($data['status']) && $data['status']=='error' ){
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
