@@ -15,4 +15,8 @@ class CategoryController extends Controller
     public function categoryManagement(Request $request){
         return view('admin.category-management.index');
     }
+
+    public function manageSubCategory(Request $request){
+        return view('admin.category-management.manage');
+    }
 }

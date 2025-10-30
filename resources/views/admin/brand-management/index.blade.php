@@ -1,47 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Desynat</title>
-    <!-- <link href="css/style.css" rel="stylesheet" /> -->
-    <link rel="icon" type="image/x-icon" href="image/favicon.svg" />
- <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
-    <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link href="css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <!-- <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"> -->
-  </head>
-
-  <body id="page-top">
-    <div id="wrapper">
-      <ul
-        class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion customSidebar"
-        id="accordionSidebar"
-      >
-        <li class="nav-item ">
-          <a class="nav-link" href="index.html">
-            <span><img src="image/dashboard.svg" /></span>
-            Dashboard</a
-          >
-        </li>
-
-        <li class="nav-item active">
-          <a class="nav-link" href="Brands.html">
-            <span><img src="image/brand-icon.svg"></span>
-            Brands Management</a
-          >
-        </li>
-           <li class="nav-item">
-          <a class="nav-link" href="category&subcategory-mgmt.html">
-            <span><img src="image/brand-icon.svg"></span>
-            Category & Sub-Cattegory Management</a
-          >
-        </li>
-      </ul>
+@extends('admin.layout.app')
+@section('content')
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content" class="">
           <nav
@@ -307,18 +265,9 @@
         </div>
       </div>
     </div>
+    
+@endsection
 
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.js"></script>
-    <script>
-      $(document).ready(function () {
-        $(".inner-content").removeClass("innerToggle");
-        $(".menu").click(function () {
-          $(".customSidebar").toggleClass("toggle");
-          $(".inner-content").toggleClass("toggle");
-        });
-      });
-    </script>
     <script>
       const fileInput = document.getElementById("fileUpload");
       const previewImage = document.getElementById("previewImage");
@@ -337,5 +286,4 @@
         }
       });
     </script>
-  </body>
-</html>
+

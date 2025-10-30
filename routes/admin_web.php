@@ -19,8 +19,9 @@ Route::group(['prefix'=>'admin'], function(){
     Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('adminLogout');
-        Route::get('/category-management', [CategoryController::class, 'categoryManagement']);
-        Route::get('/brand-management', [BrandController::class, 'brandManagement']);
+        Route::get('/category-management', [CategoryController::class, 'categoryManagement'])->name('categoryManagement');
+        Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');
+        Route::get('/manage-subcategory', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
 
     });
 
