@@ -6,7 +6,7 @@
     <title>Ichrono</title>
     <link href="{{asset('Admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="image/top_ten_homecare_fav_ic.png">
-    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 <body>

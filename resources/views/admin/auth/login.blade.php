@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
 
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
+    <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
