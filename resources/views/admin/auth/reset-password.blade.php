@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ichrono</title>
+    <title>Desynat</title>
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/top_ten_homecare_fav_ic.png')}}">
     <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
