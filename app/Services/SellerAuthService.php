@@ -276,6 +276,31 @@ class SellerAuthService
                   }
             
                 }
+
+            public function resendOtp($request){
+
+            if($request->type=='0'){ // when i use Mobile No
+                $get_user_details=  seller::where('country_code',$request->country_code)->orWhere('mobile',$request->mobile)->first();
+
+            }else{
+                $get_user_details=  seller::where('email',$request->email)->first();
+            }
+            
+            if($get_user_details){
+
+    
+                $otp= config('services.otp');
+
+                $get_user_details->update(['otp'=>$otp]);
+    
+                $get_user_details->accessToken ='';            
+                return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
+            
+              }else{
+                return ['status'=>'error','message'=>"Seller is Not Existed",'data'=>(object)[]];                
+              }
+        
+            }
     
 
             
