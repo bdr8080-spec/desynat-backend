@@ -17,6 +17,7 @@ class UserAuthService
        $otp= config('services.otp');
 
         $record=[
+          'profile_image'=>$request->profile_image,
             'full_name'=>$request->full_name,
             'country_code'=>$request->country_code,
             'mobile'=>$request->mobile,

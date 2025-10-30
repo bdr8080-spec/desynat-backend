@@ -52,7 +52,9 @@ class LoginController extends Controller
         return view('dealer.reset_password');
     }
 
-
-
+    
+    public function forgot_password(Request $request){
+        return view('dealer.forgot');
+    }
 
 }
