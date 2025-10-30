@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Ichrono</title>
     <link href="{{asset('Admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="image/top_ten_homecare_fav_ic.png">
     <link href="css/bootstrap.css" rel="stylesheet" />
+=======
+    <title>Desynat</title>
+    <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{{asset('admin/image/top_ten_homecare_fav_ic.png')}}">
+    <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
+>>>>>>> 1a53d696ef6aef4b44e691ef53f6426bc237daaa
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
