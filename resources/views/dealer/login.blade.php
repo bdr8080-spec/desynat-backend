@@ -16,9 +16,8 @@
     <!-- Main CSS File -->
     <link href="{{ asset( '/dealer')}}/assets/custom-file/css/style.css" rel="stylesheet">
 </head>
-
 <body>
-
+    
 <div class="login-header">
     <div class="des-logo">
         <a href="#"><img src="{{ asset( '/dealer')}}/assets/img/desynat-logo.svg" alt="image" class="img-fluid logo-login">  </a> 
@@ -66,7 +65,7 @@
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                     </div>
                                     <div class="form-group py-2 mb-4 text-center">
-                                         <a href="forgot.php" class="link-color">Forgot Password ? </a>
+                                         <a href="{{route('seller.forgot')}}" class="link-color">Forgot Password ? </a>
                                     </div>
                                     <div class="login-btn">
                                         <a href="index.php" class="btn btn-success w-100">Login</a>
@@ -75,7 +74,7 @@
                                 </form>
 
                                 <div class="sign-new mt-2 text-center">
-                                    <div>Don’t have an account? <a href="sign-up.php" class="link-color"> Sign up</a></div>
+                                    <div>Don’t have an account? <a href="{{route('seller.register')}}" class="link-color"> Sign up</a></div>
                                 </div>
 
                             </div>
