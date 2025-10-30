@@ -4,25 +4,44 @@ namespace App\Http\Controllers\Admin;
  
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\AdminAuthService;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Validator;
  
 class AuthController extends Controller
 {
 
-    public function __construct(AdminAuthService $AdminAuthService){
+    
+    public function adminLogin(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            return view('admin.auth.login');
+        } else {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required|min:6',
+            ]);
 
-        $this->AdminAuthService=$AdminAuthService;
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
 
+            if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+                $admin = Auth::guard('admin')->user();
+                $admin->otp = 123456;
+                $admin->save();
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['errors' => ['email' => ['Invalid credentials']]], 422);
+            }
+        }
     }
 
-    public function adminLogin(Request $request){
-        if($request->isMethod('get')){
-        return view('admin.auth.login');
-        }else{
- 
-        }
+    public function adminLogout(Request $request)
+    {
+        Auth::guard('admin')->logout(); 
+
+        return redirect()->route('adminLogin');
     }
  
     public function forgotPassword(Request $request){

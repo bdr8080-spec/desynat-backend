@@ -49,7 +49,7 @@ class UserAuthService
         $get_user_details->accessToken ='';  
       }  
         
-        return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
     
       }else{
         return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
