@@ -19,9 +19,18 @@ Route::group(['prefix'=>'admin'], function(){
     Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('adminLogout');
+
+        //category management
         Route::get('/category-management', [CategoryController::class, 'categoryManagement'])->name('categoryManagement');
-        Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');
         Route::get('/manage-subcategory', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
+
+        //brand management
+        Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');
+        Route::post('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->name('deleteBrand');
+        Route::post('/updateBrandStatus/{id}', [BrandController::class, 'updateBrandStatus'])->name('updateBrandStatus');
+        Route::post('/addBrand', [BrandController::class, 'addBrand'])->name('addBrand');
+        Route::post('/updateBrand/{id}', [BrandController::class, 'updateBrand'])->name('updateBrand');
+
 
     });
 
