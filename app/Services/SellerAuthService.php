@@ -290,10 +290,10 @@ class SellerAuthService
             public function resendOtp($request){
 
             if($request->type=='0'){ // when i use Mobile No
-                $get_user_details=  seller::where('country_code',$request->country_code)->Where('mobile',$request->mobile)->first();
+                $get_user_details=  seller::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->first();
 
             }else{
-                $get_user_details=  seller::where('email',$request->email)->first();
+                $get_user_details=  seller::where('email',$request->email_mobile)->first();
             }
             
             if($get_user_details){
