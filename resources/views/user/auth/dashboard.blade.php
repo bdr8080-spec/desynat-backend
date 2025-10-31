@@ -202,7 +202,7 @@
                             </div>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="assets/images/global.svg" class="img-fluid" /> EN
+                                    <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
