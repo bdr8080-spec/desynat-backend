@@ -268,22 +268,5 @@
       </div>
     </div>
 @endsection
-    <script>
-      const fileInput = document.getElementById("fileUpload");
-      const previewImage = document.getElementById("previewImage");
-      const uploadIcon = document.getElementById("uploadIcon");
 
-      fileInput.addEventListener("change", function () {
-        const file = this.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            previewImage.src = e.target.result;
-            previewImage.style.display = "block";
-            uploadIcon.style.display = "none";
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-    </script>
 

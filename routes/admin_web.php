@@ -22,7 +22,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //category management
         Route::get('/category-management', [CategoryController::class, 'categoryManagement'])->name('categoryManagement');
-        Route::get('/manage-subcategory', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
+        Route::get('/manage-subcategory/{id}', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
+        Route::post('/updateCategoryStatus/{id}', [CategoryController::class, 'updateCategoryStatus'])->name('updateCategoryStatus');
 
         //brand management
         Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');

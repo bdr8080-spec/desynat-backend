@@ -15,7 +15,7 @@ class BrandController extends Controller
 
 
     public function brandManagement(Request $request){
-        $brands = Brand::all();
+        $brands = Brand::orderBy('id', 'desc')->get();
         return view('admin.brand-management.index',compact('brands'));
     }
 
