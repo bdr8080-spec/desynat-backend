@@ -20,10 +20,14 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('adminLogout');
 
-        //category management
+        //category and subcategory management
         Route::get('/category-management', [CategoryController::class, 'categoryManagement'])->name('categoryManagement');
         Route::get('/manage-subcategory/{id}', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
         Route::post('/updateCategoryStatus/{id}', [CategoryController::class, 'updateCategoryStatus'])->name('updateCategoryStatus');
+        Route::post('/deleteSubCategory/{id}', [CategoryController::class, 'deleteSubCategory'])->name('deleteSubCategory');
+        Route::post('/updateSubCategoryStatus/{id}', [CategoryController::class, 'updateSubCategoryStatus'])->name('updateSubCategoryStatus');
+        Route::post('/addSubCategory', [CategoryController::class, 'addSubCategory'])->name('addSubCategory');
+        Route::post('/updateSubCategory/{id}', [CategoryController::class, 'updateSubCategory'])->name('updateSubCategory');
 
         //brand management
         Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');

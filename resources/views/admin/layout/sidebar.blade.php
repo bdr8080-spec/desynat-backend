@@ -12,10 +12,16 @@
             Brands Management
         </a>
     </li>
-    <li class="nav-item {{ Request::routeIs('categoryManagement') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::routeIs('categoryManagement') || Request::routeIs('manageSubCategory') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('categoryManagement') }}">
             <span><img src="{{ asset('admin/image/brand-icon.svg') }}" alt="Category Management" /></span>
             Category & Sub-Category Management
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('adminLogout') }}">
+            <span><img src="{{ asset('admin/image/brand-icon.svg') }}" alt="Category Management" /></span>
+            Logout
         </a>
     </li>
 </ul>
