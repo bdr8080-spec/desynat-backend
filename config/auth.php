@@ -41,10 +41,6 @@ return [
             'provider' => 'users',
         ],
 
-         'user-web' => [
-            'driver' => 'session',
-            'provider' => 'user-web',
-        ],
 
         'admin' => [
             'driver' => 'session',
@@ -76,10 +72,6 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
-         'user-web' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
-        ],
 
          'admin' => [
             'driver' => 'eloquent',
