@@ -235,7 +235,7 @@ class AuthController extends Controller
 
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
        if($req->type=='0'){
@@ -287,7 +287,7 @@ class AuthController extends Controller
        }
 
        }
-       
+
     // when i use forgot password with Email
         if($req->type=='1'){
         $validate = Validator::make($req->all(), [
