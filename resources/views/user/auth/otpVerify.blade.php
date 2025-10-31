@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/responsive.css" rel="stylesheet" />
-    <!-- <link href="assets/css/fontawesome.min.css" rel="stylesheet" /> -->
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-    <link href="assets/css/style.css" rel="stylesheet" />
-</head>
-<body>
-    
+@extends('user.auth.layout.app')
+
+
+
+@section('content')
 
     <div class="login_contenar">
         <header class="inner-header">
@@ -38,23 +26,53 @@
             <div class="login_content_content align-self-center">
                 <div class="otp-page">
                     <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> OTP</h3>
-                    <h5 class="otp_sent">4 digit OTP has been sent to your registered Mobile Number <span>+971 1 123 123 1234</span></h5>
-                    <div class="otp-container mt-3">
-                        <input type="text" maxlength="1" class="otp-input" id="otp1" />
-                        <input type="text" maxlength="1" class="otp-input" id="otp2" />
-                        <input type="text" maxlength="1" class="otp-input" id="otp3" />
-                        <input type="text" maxlength="1" class="otp-input" id="otp4" />
+                    <h5 class="otp_sent">6 digit OTP has been sent to your registered Mobile Number <span>+971 1 123 123 1234</span></h5>
+                       <form id="otpVerify">
+                        @csrf
+                        <input type="hidden" name="id" value="{{request()->temp_user_id}}">
+                        <input type="hidden" name="forget_password" value="{{request()->forget_password}}">
+                       <div class="otp-container mt-3">
+                        <input type="text" maxlength="1" class="otp-input" id="otp1" name="otp[]" />
+                        <input type="text" maxlength="1" class="otp-input" id="otp2" name="otp[]" />
+                        <input type="text" maxlength="1" class="otp-input" id="otp3" name="otp[]" />
+                        <input type="text" maxlength="1" class="otp-input" id="otp4"  name="otp[]" />
+                        <input type="text" maxlength="1" class="otp-input" id="otp5"  name="otp[]" />
+                         <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
+                     
                     </div>
-                    <a type="button" class="customBtn mt-5" href="create-password.html">Continue</a>
+                    
+                    <button type="submit" class="customBtn mt-5">Continue</button>
+                        </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="assets/js/jquery-3.7.1.min.js" ></script>
-    <!-- <script src="assets/js/all.min.js" ></script> -->
-    <script src="assets/js/bootstrap.bundle.min.js" ></script>
-    <!-- <script src="assets/js/fontawesome.min.js" ></script> -->
+      <script>
+        $(document).on('submit', '#otpVerify', function (e) {
+            e.preventDefault();
+
+            let data = new FormData(this);
+
+            $.ajax({
+                url: "{{ route('userVerifyOtp') }}",
+                method: "POST",
+                data: data,
+                processData: false,
+                contentType: false, 
+                success: function (resp) {
+                    if(resp.status == true){
+                        location.href = resp.redirect_url
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseJSON.message);
+                   toastr.error(xhr.responseJSON.message)
+                }
+            });
+        });
+
+     </script>
 
     <script>
         const inputs = document.querySelectorAll(".otp-input");
@@ -80,5 +98,5 @@
             });
         });
   </script>
-</body>
-</html>
+
+@endsection
