@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -13,11 +14,29 @@ Route::group(['prefix'=>'admin'], function(){
     Route::match(['get','post'],'/change-password', [AuthController::class, 'changePassword'])->name('changePassword');
     Route::match(['get','post'],'/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
     Route::match(['get','post'],'/verify-otp', [AuthController::class, 'optVerify'])->name('optVerify');
+    Route::match(['get','post'],'/resend-otp', [AuthController::class, 'resendOtp'])->name('resendOtp');
 
-    Route::get('/dashboard', [DashboardController::class, 'dashboard']);
-    Route::get('/category-management', [CategoryController::class, 'categoryManagement']);
-    Route::get('/brand-management', [BrandController::class, 'brandManagement']);
+    Route::middleware([AdminAuth::class])->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+        Route::get('/logout', [AuthController::class, 'adminLogout'])->name('adminLogout');
+
+        //category and subcategory management
+        Route::get('/category-management', [CategoryController::class, 'categoryManagement'])->name('categoryManagement');
+        Route::get('/manage-subcategory/{id}', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
+        Route::post('/updateCategoryStatus/{id}', [CategoryController::class, 'updateCategoryStatus'])->name('updateCategoryStatus');
+        Route::post('/deleteSubCategory/{id}', [CategoryController::class, 'deleteSubCategory'])->name('deleteSubCategory');
+        Route::post('/updateSubCategoryStatus/{id}', [CategoryController::class, 'updateSubCategoryStatus'])->name('updateSubCategoryStatus');
+        Route::post('/addSubCategory', [CategoryController::class, 'addSubCategory'])->name('addSubCategory');
+        Route::post('/updateSubCategory/{id}', [CategoryController::class, 'updateSubCategory'])->name('updateSubCategory');
+
+        //brand management
+        Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');
+        Route::post('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->name('deleteBrand');
+        Route::post('/updateBrandStatus/{id}', [BrandController::class, 'updateBrandStatus'])->name('updateBrandStatus');
+        Route::post('/addBrand', [BrandController::class, 'addBrand'])->name('addBrand');
+        Route::post('/updateBrand/{id}', [BrandController::class, 'updateBrand'])->name('updateBrand');
 
 
+    });
 
 });

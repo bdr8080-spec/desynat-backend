@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Desynat</title>
-    <link href="css/style.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="image/favicon.svg">
+    <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
 
-     <link href="{{asset('Admin/css/style.css')}}" rel="stylesheet" />
+     <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
@@ -145,137 +145,155 @@
                 <div class="col-lg-12">
                   <div class="d-flex align-items-center gap-3 mt-2">
                     <div class="arrow">
-                      <a class="table-button" type="button" href="{{route('forgotPassword')}}">
+                      <a class="table-button" href="{{ route('forgotPassword') }}">
                         <i class="fas fa-angle-left"></i>
                       </a>
                     </div>
-                    <h6 class="m-0">OTP </h6>
+                    <h6 class="m-0">OTP</h6>
                   </div>
                 </div>
 
                 <div class="login">
                   <div class="loginBackgroundeffect">
-                    <p class="text-start">
-                      6 digit OTP has been sent to your registered mail id
+                    <!-- Dynamic message with admin email -->
+                    <p class="text-start" id="otpSentMessage">
+                      6 digit OTP has been sent to your registered email: <strong id="adminEmail">{{ $email ?? '' }}</strong>
                     </p>
+
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="form-group">
-                          <!-- <label for="password" class="text-center"
-                            >Enter OTP</label
-                          > -->
                           <div class="otp-container">
-                            <input
-                              type="text"
-                              maxlength="1"
-                              class="otp-input"
-                              id="otp-1"
-                              required
-                            />
-                            <input
-                              type="text"
-                              maxlength="1"
-                              class="otp-input"
-                              id="otp-2"
-                              required
-                            />
-                            <input
-                              type="text"
-                              maxlength="1"
-                              class="otp-input"
-                              id="otp-3"
-                              required
-                            />
-                            <input
-                              type="text"
-                              maxlength="1"
-                              class="otp-input"
-                              id="otp-4"
-                              required
-                            />
-                            <input
-                              type="text"
-                              maxlength="1"
-                              class="otp-input"
-                              id="otp-4"
-                              required
-                            />
-                            <input
-                              type="text"
-                              maxlength="1"
-                              class="otp-input"
-                              id="otp-4"
-                              required
-                            />
+                            @for ($i = 1; $i <= 6; $i++)
+                              <input type="text" maxlength="1" class="otp-input" id="otp-{{ $i }}" required>
+                            @endfor
                           </div>
+                          <span class="text-danger" id="otpError"></span>
                         </div>
-                        <div class="col-lg-12">
-                          <div
-                            class="d-flex align-items-center justify-content-end"
-                          >
-                            <a href="">Resend OTP</a>
-                          </div>
-                        </div>
-                        <div class=" mb-5 text-center ">
-                          <div id="timerOtp">
-                            in <span id="seconds"></span>Secs
-                          </div>
-                        </div>
-                           <div
-                        class="button d-flex align-items-center justify-content-center"
-                      >
-                        <a
-                          class="btn custom-btn"
-                          style="max-width: 100% !important"
-                          href="create-password.html"
-                          >Submit</a
-                        >
                       </div>
+
+                      <div class="col-lg-12">
+                        <div class="d-flex align-items-center justify-content-end">
+                          <a href="#" id="resendOtp">Resend OTP</a>
+                        </div>
                       </div>
-                   
+
+                      <div class="mb-5 text-center">
+                        <div id="timerOtp">in <span id="seconds">30</span> Secs</div>
+                      </div>
+
+                      <div class="button d-flex align-items-center justify-content-center">
+                        <button class="btn custom-btn" id="submitOtp" style="max-width: 100% !important;">Submit</button>
+                      </div>
+
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
 
-     <script src="{{asset('Admin/js/bootstrap.bundle.min.js')}}"></script>
+<script>
+$(document).ready(function() {
+    let timer = 60; 
+    let interval;
 
-    <script>
-      // Toggle password visibility
-      document.querySelectorAll(".toggle-password").forEach((toggle) => {
-        toggle.addEventListener("click", function () {
-          const input = document.querySelector(this.getAttribute("toggle"));
-          const type =
-            input.getAttribute("type") === "password" ? "text" : "password";
-          input.setAttribute("type", type);
+    // Disable resend button initially
+    $('#resendOtp').prop('disabled', true);
 
-          // Toggle icon between eye and eye-slash
-          this.classList.toggle("fa-eye");
-          this.classList.toggle("fa-eye-slash");
+    function startTimer() {
+        $('#seconds').text(formatTime(timer));
+        interval = setInterval(() => {
+            timer--;
+            $('#seconds').text(formatTime(timer));
+            if(timer <= 0) {
+                clearInterval(interval);
+                $('#resendOtp').prop('disabled', false); // Enable resend
+                $('#otpSentMessage').hide(); // Hide the OTP message after 5 minutes
+            }
+        }, 1000);
+    }
+
+    function formatTime(seconds) {
+        let min = Math.floor(seconds / 60);
+        let sec = seconds % 60;
+        return `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+    }
+
+    startTimer();
+
+    // OTP input auto-focus
+    $('.otp-input').on('input', function() {
+        let next = $(this).next('.otp-input');
+        if(next.length && $(this).val()) next.focus();
+        $('#otpError').text('');
+    });
+
+    // Submit OTP
+    $('#submitOtp').click(function(e) {
+        e.preventDefault();
+        let otp = '';
+        $('.otp-input').each(function() { otp += $(this).val(); });
+
+        if(otp.length < 6) {
+            $('#otpError').text('Please enter full 6-digit OTP');
+            return;
+        }
+
+        $.ajax({
+            url: '{{ route("optVerify") }}',
+            type: 'POST',
+            data: {
+                otp: otp,
+                email: $('#adminEmail').text(),
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if(response.success) {
+                    window.location.href = "{{ route('changePassword') }}";
+                }
+            },
+            error: function(xhr) {
+                if(xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    if(errors.otp) $('#otpError').text(errors.otp[0]);
+                }
+            }
         });
-      });
-    </script>
-    <script>
-      const inputs = document.querySelectorAll(".otp-input");
+    });
 
-      inputs.forEach((input, index) => {
-        input.addEventListener("input", () => {
-          if (input.value.length === 1 && index < inputs.length - 1) {
-            inputs[index + 1].focus();
-          }
-        });
+    // Resend OTP
+    $('#resendOtp').click(function(e) {
+        e.preventDefault();
 
-        input.addEventListener("keydown", (e) => {
-          if (e.key === "Backspace" && input.value === "" && index > 0) {
-            inputs[index - 1].focus();
-          }
+        if($(this).prop('disabled')) return;
+
+        $.ajax({
+            url: '{{ route("resendOtp") }}',
+            type: 'POST',
+            data: {
+                email: $('#adminEmail').text(),
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if(response.success) {
+                    // Reset timer
+                    timer = 60; 
+                    $('#resendOtp').prop('disabled', true); // Disable resend again
+                    $('#otpSentMessage').show(); // Show OTP message again
+                    startTimer();
+                }
+            }
         });
-      });
-    </script>
+    });
+});
+</script>
+
   </body>
 </html>

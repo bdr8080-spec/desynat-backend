@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Seller\SellerDashboardController;
 Route::group(['prefix' => 'seller'], function () {
     Route::post('create_account', [AuthController::class, 'create_account']);
     Route::post('/verify_otp',[AuthController::class,'verify_otp']);
+    Route::post('/resend_otp',[AuthController::class,'resend_otp']);
 
 
 Route::post('/store_information', [AuthController::class,'store_information']);

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ichrono</title>
-    <link href="{{asset('Admin/css/style.css')}}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="image/top_ten_homecare_fav_ic.png">
-    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{{asset('admin/image/top_ten_homecare_fav_ic.png')}}">
+    <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -109,8 +109,8 @@
 
         
             <div class="left-section d-flex align-items-center">
-              <img src="image/favicon.svg" class="header-logo" />
-             <img src="image/Desynat Logo_Final 1.svg" class="header-logo" />
+              <img src="{{asset('admin/image/favicon.svg')}}" class="header-logo" />
+             <img src="{{asset('admin/image/Desynat Logo_Final 1.svg')}}" class="header-logo" />
 
             </div>
 
@@ -134,52 +134,55 @@
 
       <!-- RIGHT SIDE -->
       <div class="auth-right">
-        <div class="login-container-div">
-          <div class="login">
-            <div class="loginBackgroundeffect text">
-              <div class="row">
-                <!-- HEADER BACK NAV -->
-                <div class="col-lg-12">
-                  <div class="d-flex align-items-center gap-3 mt-2">
-                    <div class="arrow">
-                      <a class="table-button" type="button" href="{{route('adminLogin')}}">
-                        <i class="fas fa-angle-left"></i>
-                      </a>
-                    </div>
-                    <h6 class="m-0">Reset Password </h6>
-                  </div>
-                </div>
-
-                <div class="login">
-                            <div class="loginBackgroundeffect">
-                                <!-- <a href="login.html"><i class="fas fa-long-arrow-alt-left"></i></a>
-                                <img src="image/Logo2.png" al="logo" class="img-fluid" /> -->
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label for="newPassword" class="form-label">Create New Password</label>
-                                            <input type="password" class="form-control" id="newPassword" placeholder="Enter New Password" required>
-                                            <i toggle="#newPassword" class="fas fa-eye toggle-password"></i>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mt-3">
-                                        <div class="form-group">
-                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                            <input type="password" id="confirmPassword" class="form-control" placeholder="Enter Confirm Password" required>
-                                            <i toggle="#confirmPassword" class="fas fa-eye toggle-password"></i>
-                                        </div>
-                                    </div>
-                                    <div class="button d-flex align-items-center justify-content-center mt-5">
-                                        <a class="btn custom-btn" href="index.html" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="max-width: 100% !important;">Submit</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <div class="login-container-div">
+    <div class="login">
+      <div class="loginBackgroundeffect text">
+        <div class="row">
+          
+          <!-- HEADER -->
+          <div class="col-lg-12">
+            <div class="d-flex align-items-center gap-3 mt-2">
+              <div class="arrow">
+                <a class="table-button" type="button" href="{{ route('forgotPassword') }}">
+                  <i class="fas fa-angle-left"></i>
+                </a>
               </div>
+              <h6 class="m-0">Reset Password</h6>
             </div>
           </div>
+
+          <div class="col-lg-12 mt-3">
+            <div class="form-group">
+              <label for="newPassword" class="form-label">Create New Password</label>
+              <input type="password" class="form-control" id="newPassword" placeholder="Enter New Password" required>
+              <i toggle="#newPassword" class="fas fa-eye toggle-password"></i>
+              <span id="passwordError" class="text-danger"></span>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-3">
+            <div class="form-group">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input type="password" id="confirmPassword" class="form-control" placeholder="Enter Confirm Password" required>
+              <i toggle="#confirmPassword" class="fas fa-eye toggle-password"></i>
+              <span id="confirmPasswordError" class="text-danger"></span>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-5">
+            <div class="button d-flex align-items-center justify-content-center">
+              <button class="btn custom-btn" id="submitPassword" style="max-width: 100% !important;">Submit</button>
+            </div>
+          </div>
+
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
     </div>
 
     <!-- Modal -->
@@ -205,8 +208,8 @@
         </div>
         </div>
     </div>
-
-    <script src="{{asset('Admin/js/bootstrap.bundle.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
         <script>
             // Toggle password visibility
             document.querySelectorAll('.toggle-password').forEach(toggle => {
@@ -221,6 +224,103 @@
                 });
             });
         </script>
+
+<script>
+$(document).ready(function() {
+
+  // Validation criteria function
+  function passwordHint(password) {
+    return "Password should be combination of at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character";
+  }
+  
+  // Check if password meets criteria
+  function meetsCriteria(password) {
+    return password.length >= 8 &&
+           /[A-Z]/.test(password) &&
+           /[a-z]/.test(password) &&
+           /[0-9]/.test(password) &&
+           /[!@#$%^&*(),.?\":{}|<>]/.test(password);
+  }
+
+  // On input in newPassword field
+  $('#newPassword').on('input', function() {
+    let pwd = $(this).val();
+    $('#passwordError').text('');
+    if (pwd && !meetsCriteria(pwd)) {
+      $('#passwordError').text(passwordHint(pwd));
+    }
+  });
+
+  // On input in confirmPassword field
+  $('#confirmPassword').on('input', function() {
+    $('#confirmPasswordError').text('');
+  });
+
+  // On submit
+  $('#submitPassword').click(function(e) {
+    e.preventDefault();
+    $('#passwordError').text('');
+    $('#confirmPasswordError').text('');
+
+    let newPassword = $('#newPassword').val();
+    let confirmPassword = $('#confirmPassword').val();
+    let email = "{{ $email ?? '' }}"; 
+
+    // Check fields empty
+    if (!newPassword) {
+      $('#passwordError').text('Password is required');
+      
+    }
+    if (!confirmPassword) {
+      $('#confirmPasswordError').text('Confirm password is required');
+      return;
+    }
+
+    // Check criteria
+    if (!meetsCriteria(newPassword)) {
+      $('#passwordError').text(passwordHint(newPassword));
+      return;
+    }
+
+    // Check match
+    if (newPassword !== confirmPassword) {
+      $('#confirmPasswordError').text('Passwords do not match');
+      return;
+    }
+
+    // Now do AJAX call
+    $.ajax({
+      url: '{{ route("changePassword") }}',
+      type: 'POST',
+      data: {
+        email: email,
+        password: newPassword,
+        confirm_password: confirmPassword,
+        _token: '{{ csrf_token() }}'
+      },
+      success: function(response) {
+        if(response.success) {
+          $('#exampleModal').modal('show');
+          setTimeout(function() {
+            window.location.href = "{{ route('adminLogin') }}";
+          }, 5000);
+        }
+      },
+      error: function(xhr) {
+        if(xhr.status === 422) {
+          let errors = xhr.responseJSON.errors;
+          if(errors.password) $('#passwordError').text(errors.password[0]);
+          if(errors.confirm_password) $('#confirmPasswordError').text(errors.confirm_password[0]);
+        }
+      }
+    });
+
+  });
+
+});
+</script>
+
+
         
 </body>
 </html>

@@ -17,6 +17,7 @@ class UserAuthService
        $otp= config('services.otp');
 
         $record=[
+          'profile_image'=>$request->profile_image,
             'full_name'=>$request->full_name,
             'country_code'=>$request->country_code,
             'mobile'=>$request->mobile,
@@ -49,7 +50,7 @@ class UserAuthService
         $get_user_details->accessToken ='';  
       }  
         
-        return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
     
       }else{
         return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
@@ -60,8 +61,14 @@ class UserAuthService
 
     public function loginCheck($request){
 
+      if($request->type=='0'){
 
-        $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+        $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+
+      }else{
+        $get_user_details=  User::where('email',$request->email_mobile)->where('otp_verify','1')->first();
+
+      }
 
         if($get_user_details){
 
@@ -86,8 +93,45 @@ class UserAuthService
 
     public function login_by_mobile_or_email($request){
 
+      if($request->type=='0'){
 
-        $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+        $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+
+      }else{
+        $get_user_details=  User::where('email',$request->email_mobile)->where('otp_verify','1')->first();
+
+      }
+
+        // $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+
+        if($get_user_details){
+
+           $otp= config('services.otp');
+
+            $get_user_details->update(['otp'=>$otp]);
+
+            $get_user_details->accessToken ='';            
+            return ['status'=>'success','message'=>"User Login Otp Send Successfully",'data'=>$get_user_details];            
+        
+          }else{
+            return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+          }
+    
+        }
+
+      public function resend_otp_by_mobile_or_email($request){
+
+
+        if($request->type=='0'){
+
+          $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->first();
+  
+        }else{
+          $get_user_details=  User::where('email',$request->email_mobile)->first();
+
+        }
+
+        // $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->first();
 
         if($get_user_details){
 
