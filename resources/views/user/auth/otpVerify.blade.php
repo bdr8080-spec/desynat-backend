@@ -26,7 +26,23 @@
             <div class="login_content_content align-self-center">
                 <div class="otp-page">
                     <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> OTP</h3>
-                    <h5 class="otp_sent">6 digit OTP has been sent to your registered Mobile Number <span>+971 1 123 123 1234</span></h5>
+                    @php
+
+                    use Illuminate\Support\Facades\Crypt;
+                    use App\Models\User;
+
+                    try {
+                            $id = Crypt::decryptString(request()->temp_user_id);
+                            $user  = User::where('id',$id)->first();
+                        } catch (\Exception $e) {
+                            return response()->json([
+                                'status' => false,
+                                'message' => 'Invalid user reference.',
+                            ], 400);
+                        }
+
+                    @endphp
+                    <h5 class="otp_sent">6 digit OTP has been sent to your registered Mobile Number <span>{{$user->country_code}} {{$user->mobile}}</span></h5>
                        <form id="otpVerify">
                         @csrf
                         <input type="hidden" name="id" value="{{request()->temp_user_id}}">
@@ -41,7 +57,7 @@
                      
                     </div>
                     
-                    <button type="submit" class="customBtn mt-5">Continue</button>
+                    <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Continue</button>
                         </form>
                 </div>
             </div>
@@ -53,6 +69,8 @@
             e.preventDefault();
 
             let data = new FormData(this);
+
+             $('#otpVerifyBtn').prop('disabled', true);
 
             $.ajax({
                 url: "{{ route('userVerifyOtp') }}",
@@ -68,6 +86,9 @@
                 error: function (xhr) {
                     console.log(xhr.responseJSON.message);
                    toastr.error(xhr.responseJSON.message)
+                },
+                 complete: function () {
+                   $('#otpVerifyBtn').prop('disabled', false);
                 }
             });
         });
