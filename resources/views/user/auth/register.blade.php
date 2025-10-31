@@ -23,10 +23,12 @@
             <div class="login_content login_content_right">
            
                 <div class="login_content_content">
-                     <form id="signup">
+                     <form id="signup" >
                         @csrf
                     <h4>Sign Up</h4>
                     <h3>Create your account !</h3>
+
+                    <input type="file" name="image" enctype="multipart/form-data">
                     <div class="form-group position-relative password_icon mt-3">
                         <label for="">Full Name</label>
                         <input type="text" id="login-password" name="full_name" class="form-control custom-password"

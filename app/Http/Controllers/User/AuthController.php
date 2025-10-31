@@ -13,7 +13,7 @@ use Auth;
 
 class AuthController extends Controller
 {
-    //
+    //  
     public function userRegister(Request $request){
         if($request->isMethod('get')){
             $country =   country::all();
@@ -42,6 +42,7 @@ class AuthController extends Controller
             $rules = [
                     'full_name' => 'required',
                     'country_code' => 'required',
+                    'image'=> 'required',
                     'email' => 'required|email|unique:users,email',
                     'mobile' => 'required',
                     'password' => 'required',
@@ -71,6 +72,10 @@ class AuthController extends Controller
                     'errors'=>$validator->errors()
                    ]);
                }
+
+                 $path = 'user/prfoile';
+
+                $image_path = $this->image_upload($request->image, $path);
     
                 $otp= config('services.otp');
 
@@ -81,6 +86,7 @@ class AuthController extends Controller
                     'email'         => $request->email,
                     'password'      => bcrypt($request->password),
                     'otp'           => $otp,
+                    'profile_image'=>$image_path
                 ]);
 
                 $id  = Crypt::encryptString($data->id);

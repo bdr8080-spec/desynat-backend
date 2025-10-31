@@ -26,8 +26,14 @@
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                         </div>
+                     
                         <div class="header_nav_button_dropdown">
-                            <button class="customBtn1"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</button>
+                               @if (Auth::guard('web')->check())
+                               <img src="{{asset('user/assets/images/logo.svg')}}" alt="" height="50px" width="80px"> 
+                               @else
+                                 <a class="customBtn1" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
+                                 @endif
+                       
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
