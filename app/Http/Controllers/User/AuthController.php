@@ -10,7 +10,6 @@ use App\Models\country;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
 
-
 class AuthController extends Controller
 {
     //  
@@ -73,7 +72,7 @@ class AuthController extends Controller
                    ]);
                }
 
-                 $path = 'user/prfoile';
+                 $path = 'profile_image/';
 
                 $image_path = $this->image_upload($request->image, $path);
     
@@ -94,7 +93,7 @@ class AuthController extends Controller
                 return response()->json([
                     'status'=>true,
                     'message'=>'OTP send Successfully',
-                    'id'=>$id
+                    'id'=>$id,
                    ]);
 
         }

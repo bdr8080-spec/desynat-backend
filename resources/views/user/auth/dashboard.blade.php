@@ -29,7 +29,7 @@
                      
                         <div class="header_nav_button_dropdown">
                                @if (Auth::guard('web')->check())
-                               <img src="{{asset('user/assets/images/logo.svg')}}" alt="" height="50px" width="80px"> 
+                               <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px"> 
                                @else
                                  <a class="customBtn1" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                                  @endif
