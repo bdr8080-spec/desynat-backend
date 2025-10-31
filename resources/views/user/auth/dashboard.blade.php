@@ -21,7 +21,7 @@
                 <div class="w-100">
                     <div class="d-flex align-self-center justify-content-between">
                         <div>
-                            <a class="navbar-brand" href="#"><img src="assets/images/logo.svg" /></a>
+                            <a class="navbar-brand" href="#"><img src="{{asset('user/assets/images/logo.svg')}}" /></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
@@ -30,7 +30,7 @@
                             <button class="customBtn1"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</button>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img id="selectedFlag" src="assets/images/flags/kuwait.svg" class="img-fluid" />
+                                    <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
                                 </button>
                                 <ul class="dropdown-menu custom-dropdown-menu  dropdown-menu-end" aria-labelledby="countryDropdownBtn">
                                     <li class="topDropdonw">
@@ -38,7 +38,7 @@
                                             <i class="fa-solid fa-xmark"></i>
                                         </p>
                                     </li>
-                                    <li class="dropdown-item" data-country="Kuwait" data-flag="assets/images/flags/kuwait.svg">
+                                    <li class="dropdown-item" data-country="Kuwait" data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
                                         <div class="d-flex align-self-center justify-content-between">
                                             <div class="radio-group">
                                                 <label class="custom-radio">
@@ -47,10 +47,10 @@
                                                     <span class="label-text">Kuwait</span>
                                                 </label>
                                             </div>
-                                            <img src="assets/images/flags/kuwait.svg" />
+                                            <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
                                         </div>
                                     </li>
-                                    <li class="dropdown-item" data-country="Bahrain" data-flag="assets/images/flags/bahrain.svg">
+                                    <li class="dropdown-item" data-country="Bahrain" data-flag="{{asset('user/assets/images/flags/bahrain.svg')}}">
                                         <div class="d-flex align-self-center justify-content-between">
 
                                             <div class="radio-group">
@@ -60,10 +60,10 @@
                                                     <span class="label-text">Bahrain</span>
                                                 </label>
                                             </div>
-                                            <img src="assets/images/flags/bahrain.svg" />
+                                            <img src="{{asset('user/assets/images/flags/bahrain.svg')}}" />
                                         </div>
                                     </li>
-                                    <li class="dropdown-item" data-country="Qatar" data-flag="assets/images/flags/qatar.svg">
+                                    <li class="dropdown-item" data-country="Qatar" data-flag="{{asset('user/assets/images/flags/qatar.svg')}}">
                                         <div class="d-flex align-self-center justify-content-between">
 
                                             <div class="radio-group">
@@ -73,10 +73,10 @@
                                                     <span class="label-text">Qatar</span>
                                                 </label>
                                             </div>
-                                            <img src="assets/images/flags/qatar.svg" />
+                                            <img src="{{asset('user/assets/images/flags/qatar.svg')}}" />
                                         </div>
                                     </li>
-                                    <li class="dropdown-item" data-country="Saudi Arabia" data-flag="assets/images/flags/saudi-arabia.svg">
+                                    <li class="dropdown-item" data-country="Saudi Arabia" data-flag="{{asset('user/assets/images/flags/saudi-arabia.svg')}}">
                                         <div class="d-flex align-self-center justify-content-between">
 
                                             <div class="radio-group">
@@ -86,10 +86,10 @@
                                                     <span class="label-text">Saudi Arabia</span>
                                                 </label>
                                             </div>
-                                            <img src="assets/images/flags/saudi-arabia.svg" />
+                                            <img src="{{asset('user/assets/images/flags/saudi-arabia.svg')}}" />
                                         </div>
                                     </li>
-                                    <li class="dropdown-item" data-country="UAE" data-flag="assets/images/flags/uae.svg">
+                                    <li class="dropdown-item" data-country="UAE" data-flag="{{asset('user/assets/images/flags/uae.svg')}}">
                                         <div class="d-flex align-self-center justify-content-between">
 
                                             <div class="radio-group">
@@ -99,10 +99,10 @@
                                                     <span class="label-text">UAE</span>
                                                 </label>
                                             </div>
-                                            <img src="assets/images/flags/uae.svg" />
+                                            <img src="{{asset('user/assets/images/flags/uae.svg')}}" />
                                         </div>
                                     </li>
-                                    <li class="dropdown-item" data-country="Oman" data-flag="assets/images/flags/oman.svg">
+                                    <li class="dropdown-item" data-country="Oman" data-flag="{{asset('user/assets/images/flags/oman.svg')}}">
                                         <div class="d-flex align-self-center justify-content-between">
 
                                             <div class="radio-group">
@@ -112,7 +112,7 @@
                                                     <span class="label-text">Oman</span>
                                                 </label>
                                             </div>
-                                            <img src="assets/images/flags/oman.svg" />
+                                            <img src="{{asset('user/assets/images/flags/oman.svg')}}" />
                                         </div>
                                     </li>
                                 </ul>
@@ -218,7 +218,7 @@
                                     <h6>Deliver to Reshab</h6>
                                     <div class="d-flex align-self-center w-100">
                                         <button>
-                                            <img src="assets/images/Icon.svg" class="img-fluid" /> Durgapur 
+                                            <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> Durgapur 
                                         </button>
                                         <span class="ms-5">
                                             <i class="fa-solid fa-chevron-down"></i>
@@ -442,16 +442,16 @@
     <div class="customContainer">
         <div class="owl-carousel owl-theme customOwlcarousel">
             <div class="item">
-                <img src="assets/images/banner.svg" class="img-fluid" />
+                <img src="{{asset('user/assets/images/banner.svg')}}" class="img-fluid" />
             </div>
             <div class="item">
-                <img src="assets/images/banner.svg" class="img-fluid" />
+                <img src="{{asset('user/assets/images/banner.svg')}}" class="img-fluid" />
             </div>
             <div class="item">
-                <img src="assets/images/banner.svg" class="img-fluid" />
+                <img src="{{asset('user/assets/images/banner.svg')}}" class="img-fluid" />
             </div>
             <div class="item">
-                <img src="assets/images/banner.svg" class="img-fluid" />
+                <img src="{{asset('user/assets/images/banner.svg')}}" class="img-fluid" />
             </div>
         </div>
     </div>
@@ -460,27 +460,27 @@
         <h3>Categories</h3>
         <div class="row">
             <div class="col-lg-4 my-3 text-center categorie_cotent">
-                <img src="assets/images/categorie1.png" class="img-fluid" />
+                <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Dresses</h3>
             </div>
             <div class="col-lg-4 my-3 text-center categorie_cotent">
-                <img src="assets/images/categorie1.png" class="img-fluid" />
+                <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Abaya</h3>
             </div>
             <div class="col-lg-4 my-3 text-center categorie_cotent">
-                <img src="assets/images/categorie1.png" class="img-fluid" />
+                <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Suits</h3>
             </div>
             <div class="col-lg-4 my-3 text-center categorie_cotent">
-                <img src="assets/images/categorie1.png" class="img-fluid" />
+                <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Abaya</h3>
             </div>
             <div class="col-lg-4 my-3 text-center categorie_cotent">
-                <img src="assets/images/categorie1.png" class="img-fluid" />
+                <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Cord Set</h3>
             </div>
             <div class="col-lg-4 my-3 text-center categorie_cotent">
-                <img src="assets/images/categorie1.png" class="img-fluid" />
+                <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Dresses</h3>
             </div>
         </div>
@@ -490,91 +490,91 @@
         <div class="suggestStore_contenar">
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
             <div class="suggestStore_content">
                 <div class="suggestedStore_img">
-                    <img src="assets/images/store1.jpg" class="img-fluid" />
+                    <img src="{{asset('user/assets/images/store1.jpg')}}" class="img-fluid" />
                 </div>
                 <h5>Atif Aslam</h5>
             </div>
