@@ -46,9 +46,12 @@ ul li a{
     font-size: var(--nav-font-size) !important;
     line-height: var(--nav-font-height) !important;
     font-weight: var(--nav-font-weight) !important;
-    text-transform: uppercase;
-    color: var(--secondry2-color) !important;
-    padding-left: 38px !important;
+    color: var(--third-color) !important;
+}
+.customContainer{
+    max-width: 1443px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 section{
@@ -75,14 +78,11 @@ section{
 
 /* header */
 
-.customNavbar{
-    background: var(--primary-color);
-}
 
 .customBtn{
     background: var(--gradient-color3) !important;
     box-shadow: none;
-    border: none;
+    border: 1px solid var(--third-color);
     padding: 10px;
     border-radius: 4px;
     color: var(--primary2-color);
@@ -93,8 +93,22 @@ section{
     text-align: center;
     text-decoration: none;
 }
+.customBtn1{
+    background-color: transparent !important;
+    box-shadow: none;
+    border: 1px solid var(--third-color);
+    padding: 10px;
+    border-radius: 12px;
+    color: var(--third-color);
+    font-size: var(--nav-font-size);
+    font-weight: 500;
+    line-height: var(--nav-font-height);
+    width: fit-content;
+    text-align: center;
+    text-decoration: none;
+}
 .inner-header{
-    background: var(--gradient-color);
+    background: var(--gradient-color5);
     padding: .5% 4%;
     display: flex;
     align-items: center;
@@ -102,6 +116,12 @@ section{
 }
 .inner-header a img{
     width: 55%;
+}
+.header-main{
+    padding: 0 2%;
+}
+.header-main .navbar-brand img{
+    width: 65%;
 }
 .inner-header .dropdown button{
     background: transparent;
@@ -176,7 +196,7 @@ section{
 }
 .login_content_content{
     width: 100%;
-        margin: 8% 0;
+    margin: 8% 0;
 }
 .login_content_content h3{
     color: var(--secondry2-color);
@@ -187,7 +207,7 @@ section{
 }
 .login_content_content .form-group input{
     padding: 10px;
-        color: #00000080;
+    color: #00000080;
 }
 .password_icon span, .verify span{
     position: absolute;
@@ -250,9 +270,9 @@ section{
 .social-icon a {
     padding: 8px;
     border: 2px solid transparent;
-  border-radius: 12px;
-  background: linear-gradient(#fff, #fff) padding-box,
-              linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+    border-radius: 12px;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
     width: 33.333%;
     display: flex;
     align-items: center;
@@ -371,3 +391,155 @@ section{
 .term_policy label a{
     color: var(--secondry2-color);
 }
+
+/* // header-main */
+
+.header-main{
+    background: var(--gradient-color5);
+}
+.header_nav_button_dropdown{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.header_nav_button_dropdown .dropdown{
+    width: auto;
+}
+.header_nav_button_dropdown .dropdown:hover, .header_nav_button_dropdown .customBtn1:hover,
+.header_nav_button_dropdown .customBtn1:active{
+    background: transparent;
+    border-color: var(--third-color);
+}
+.topDropdonw{
+    background: #FFF7EA;
+}
+.topDropdonw p{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px;
+    color: var(--third-color);
+}
+.topDropdonw i{
+    color: #6E4527;
+}
+.header_nav_button_dropdown .dropdown-menu.show{
+    padding: 0;
+}
+.header_nav_button_dropdown .dropdown-menu .dropdown-item{
+    margin: 10px;
+    border: 1px solid var(--toxic-color);
+    border-radius: 6px;
+    padding: 10px
+}
+.header_nav_button_dropdown li.dropdown-item{
+    width: 290px;
+}
+.header_nav_button_dropdown li.dropdown-item:hover{
+    border: 1px solid var(--secondry2-color);
+}
+.desynat_navigation_bar_header{
+    margin-top: 18px;
+}
+/* .desynat_navigation_bar_header .track_location{
+    display: flex;
+    align-items: center;
+} */
+.desynat_navigation_bar_header .track_location button{
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: var(--nav-font-size);
+    line-height: var(--nav-font-height);
+    font-weight: 400 !important;
+    padding: 0;
+}
+.desynat_navigation_bar_header .track_location h6{
+    font-weight: 400 !important;
+    margin-bottom: 0;
+}
+ .search i{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(10px, -50%);
+ }
+.search input{
+    width: 100%;
+    background: rgb(255 255 255 / 50%);
+    padding: 10px 0 10px 30px;
+}
+.customNavbar .dropdown-menu.sell_clothes.show {
+    position: absolute;
+    left: 0;
+    right: 0 !important;
+    width: 600px;
+    margin: 0 !important;
+    border-radius: 0;
+    background-color: #FAFAFA;
+    transform: translate(-50%, 0%);
+}
+.customNavbar .dropdown-menu.sell_clothes{
+    padding: 20px;
+}
+.customNavbar .sell_clothes .clothes_content p{
+    font-weight: 500 !important;
+    color: var(--secondry2-color);
+}
+.customNavbar ul li.nav-item a.nav-link{
+    padding: 10px 10px 10px 30px;
+    text-transform: uppercase;
+}
+.customNavbar ul li.nav-item a.nav-link:active{
+    border-bottom: 2px solid var(--secondry2-color);
+    color: var(--secondry2-color) !important;
+}
+.customNavbar ul li.nav-item .sell_clothes ul li a{
+    font-size: var(--nav-font-size) !important;
+    line-height: var(--nav-font-height) !important;
+    font-weight: 400 !important;
+    text-decoration: none;
+}
+
+/* // header-main end */
+
+/* header end */
+
+
+/* index */
+
+.categorie_contenar h3{
+    font-weight: 500 !important;
+}
+.suggestStore_contenar{
+    display: flex;
+    align-items: start;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    cursor:grab;
+}
+.suggestStore_contenar::-webkit-scrollbar {
+  display: none;
+}
+
+.suggestStore_contenar:active {
+  cursor: grabbing; /* 👈 active drag look */
+}
+.suggestStore_contenar {
+  scroll-behavior: smooth;
+}
+.suggestedStore_img{
+    width: 180px;
+    height: 180px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+    overflow: hidden;
+    margin-left: 20px;
+    
+}
+
+/* index end */
