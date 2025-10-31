@@ -28,6 +28,7 @@ class AuthController extends Controller
         $check_user_already->delete();
       }
 
+
         $validate = Validator::make($req->all(), [
             "profile_image"=>"required",
             'full_name' => 'required',
@@ -80,12 +81,30 @@ class AuthController extends Controller
 
         $validate = Validator::make($req->all(), [
             'email_mobile' => 'required',
-            'password' => 'required',     
+            'password' => 'required',   
+            "type"=>"required|in:0,1"  
                ]);
         
        if($validate->fails()){
         return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
        }
+
+
+       if($req->type=='0'){
+
+        $validate = Validator::make($req->all(), [
+            'email_mobile' => 'required',
+            'password' => 'required',   
+            "type"=>"required:in:0,1",
+            "country_code"=>"required" 
+               ]);
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        }
+       }
+
+
+
 
         $data= $this->UserAuthService->loginCheck($req);
 

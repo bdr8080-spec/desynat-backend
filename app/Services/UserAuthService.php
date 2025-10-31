@@ -61,8 +61,14 @@ class UserAuthService
 
     public function loginCheck($request){
 
+      if($request->type=='0'){
 
-        $get_user_details=  User::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+        $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+
+      }else{
+        $get_user_details=  User::where('email',$request->email_mobile)->where('otp_verify','1')->first();
+
+      }
 
         if($get_user_details){
 
