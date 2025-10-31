@@ -137,11 +137,61 @@ class LoginController extends Controller
 
 
     public function store_information(Request $request){
-        return view('dealer.store_page');
+
+        $country= country::all();
+
+        if ($request->isMethod('get')) {
+
+        return view('dealer.store_page',compact('country'));
+        
+        }
+
+        $validate = Validator::make($request->all(), [
+            'store_image' => 'required',
+            'store_name' => 'required',
+            'country'=>"required",
+            "store_address"=>"required",
+            'address_line1'=>'required',
+            'address_line2'=>'required',
+            "store_phone"=>"required",
+            'store_mail_id'=>'required',
+            'bio'=>'required',
+            // 'let'=>'required|nullable',
+            // 'long'=>'required|nullable'
+            
+            ]);
+
+            if ($validate->fails()) {
+                return redirect()->back()
+                    ->withErrors($validate)
+                    ->withInput();
+            }
+    
+            // 'seller_id' => $request->user_id,
+
+        $seller_id=  $request->id;
+
+        $request['user_id']=$seller_id;
+
+        $data= $this->SellerAuthService->store_information_insert($request);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+        
+        return redirect()->route('seller.upload_document',$seller_id);
+
     }
 
     public function upload_document(Request $request){
+        if ($request->isMethod('get')) {
         return view('dealer.bank-details');
+        }
+
+
+        
+
+
     }
 
 
