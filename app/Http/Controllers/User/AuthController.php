@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\country;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
-
+use Storage;
 
 class AuthController extends Controller
 {
