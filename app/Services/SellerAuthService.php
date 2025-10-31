@@ -194,8 +194,18 @@ class SellerAuthService
 
     public function loginCheck($request){
 
+        // $get_user_details=  seller::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
 
-        $get_user_details=  seller::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+
+        if($request->type=='0'){
+
+          $get_user_details=  seller::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+  
+        }else{
+          $get_user_details=  seller::where('email',$request->email_mobile)->where('otp_verify','1')->first();
+  
+        }
+
 
         
         if($get_user_details){
@@ -231,7 +241,7 @@ class SellerAuthService
         public function mobile_or_email_forgot_password($request){
 
             if($request->type=='0'){ // when i use Mobile No
-                $get_user_details=  seller::where('country_code',$request->country_code)->orWhere('mobile',$request->mobile)->where('otp_verify','1')->first();
+                $get_user_details=  seller::where('country_code',$request->country_code)->Where('mobile',$request->mobile)->where('otp_verify','1')->first();
 
             }else{
                 $get_user_details=  seller::where('email',$request->email)->where('otp_verify','1')->first();
@@ -280,7 +290,7 @@ class SellerAuthService
             public function resendOtp($request){
 
             if($request->type=='0'){ // when i use Mobile No
-                $get_user_details=  seller::where('country_code',$request->country_code)->orWhere('mobile',$request->mobile)->first();
+                $get_user_details=  seller::where('country_code',$request->country_code)->Where('mobile',$request->mobile)->first();
 
             }else{
                 $get_user_details=  seller::where('email',$request->email)->first();
