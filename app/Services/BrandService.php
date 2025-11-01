@@ -82,20 +82,12 @@ class BrandService
 
     public function createBrand(Request $request)
     {
-        $commonController = new CommonController();
-        $uploadResult = $commonController->upload($request);
-        $uploadResultArray = $uploadResult->getData(true); 
-
-        if ($uploadResultArray['status'] === 'error') {
-            return $uploadResult;  
-        }
 
         try {
-            $imageUrl = $uploadResultArray['data']['url'];
             $brand = Brand::create([
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,
+                'image' => $request->image,
             ]);
 
             return [
@@ -126,25 +118,11 @@ class BrandService
             ];
         }
 
-        if ($request->hasFile('image')) {
-            $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
-
-            if ($uploadResultArray['status'] === 'error') {
-                return $uploadResult; 
-            }
-
-            $imageUrl = $uploadResultArray['data']['url'];
-        } else {
-            $imageUrl = $brand->image;
-        }
-
         try {
             $brand->update([
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,  
+                'image' => $request->image,  
             ]);
 
             return [

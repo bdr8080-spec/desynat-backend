@@ -67,7 +67,7 @@ class BrandController extends Controller
         $validate = Validator::make($request->all(), [
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
+            'image' => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -94,7 +94,7 @@ class BrandController extends Controller
             'brand_id' => 'required|exists:brands,id',
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048', 
+            'image' => 'required', 
         ]);
 
         if ($validate->fails()) {

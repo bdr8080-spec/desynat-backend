@@ -138,21 +138,13 @@ class CategoryService
 
     public function createSubCategory(Request $request)
     {
-        $commonController = new CommonController();
-        $uploadResult = $commonController->upload($request);
-        $uploadResultArray = $uploadResult->getData(true); 
-
-        if ($uploadResultArray['status'] === 'error') {
-            return $uploadResult;  
-        }
 
         try {
-            $imageUrl = $uploadResultArray['data']['url'];
             $subCategory = SubCategory::create([
                 'category_id' => $request->category_id,
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,
+                'image' => $request->image,
             ]);
 
             return [
@@ -183,25 +175,11 @@ class CategoryService
             ];
         }
 
-        if ($request->hasFile('image')) {
-            $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
-
-            if ($uploadResultArray['status'] === 'error') {
-                return $uploadResult; 
-            }
-
-            $imageUrl = $uploadResultArray['data']['url'];
-        } else {
-            $imageUrl = $subCategory->image;
-        }
-
         try {
             $subCategory->update([
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,  
+                'image' => $request->image,  
             ]);
 
             return [
