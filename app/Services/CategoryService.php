@@ -56,7 +56,7 @@ class CategoryService
                 return [
                     'status' => 'success',
                     'message' => 'No subcategories found for this category',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 

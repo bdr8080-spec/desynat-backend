@@ -45,6 +45,9 @@ use App\Http\Controllers\Api\Admin\SellerController;
      Route::get('/get_new_sellers',[SellerController::class,'get_new_sellers']);
      Route::get('/get_approved_sellers',[SellerController::class,'get_approved_sellers']);
      Route::get('/get_rejected_sellers',[SellerController::class,'get_rejected_sellers']);
+     Route::get('/get_seller_details',[SellerController::class,'get_seller_details']);
+     Route::post('/accept_seller',[SellerController::class,'accept_seller']);
+     Route::post('/reject_seller',[SellerController::class,'reject_seller']);
 
 
 

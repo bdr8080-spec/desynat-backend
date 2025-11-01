@@ -12,6 +12,8 @@ class SellerManagementService
     public function getNewSellers($request)
     {
         try {
+            $limit = (int)($request->input('limit', 10)); 
+
             $query = seller::where('admin_verify', '1')
                 ->with([
                     'store_info',
@@ -20,14 +22,12 @@ class SellerManagementService
                     'seller_bank_details',
                 ]);
 
-            // Filter by country from  store_info
             if (!empty($request->country_id)) {
                 $query->whereHas('store_info', function ($q) use ($request) {
                     $q->where('country', $request->country_id);
                 });
             }
 
-            // Filter by date range
             if (!empty($request->from_date) && !empty($request->to_date)) {
                 $query->whereBetween('created_at', [
                     $request->from_date . ' 00:00:00',
@@ -39,15 +39,22 @@ class SellerManagementService
                 $query->whereDate('created_at', '<=', $request->to_date);
             }
 
-            $seller_details = $query->orderBy('id', 'desc')->get()->map(function ($seller) {
-                $data = $seller->toArray();
+            if (!empty($request->search)) {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%");
+                });
+            }
 
+            $seller_details = $query->orderBy('id', 'desc')->paginate($limit);
+
+            $seller_details->getCollection()->transform(function ($seller) {
+                $data = $seller->toArray();
                 $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
                 $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
                 $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
                 $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
-
-
                 return $data;
             });
 
@@ -74,9 +81,12 @@ class SellerManagementService
         }
     }
 
+
     public function getApprovedSellers($request)
     {
         try {
+            $limit = (int)($request->input('limit', 10)); 
+
             $query = seller::where('admin_verify', '2')
                 ->with([
                     'store_info',
@@ -85,14 +95,12 @@ class SellerManagementService
                     'seller_bank_details',
                 ]);
 
-            // Filter by country from  store_info
             if (!empty($request->country_id)) {
                 $query->whereHas('store_info', function ($q) use ($request) {
                     $q->where('country', $request->country_id);
                 });
             }
 
-            // Filter by date range
             if (!empty($request->from_date) && !empty($request->to_date)) {
                 $query->whereBetween('created_at', [
                     $request->from_date . ' 00:00:00',
@@ -104,14 +112,22 @@ class SellerManagementService
                 $query->whereDate('created_at', '<=', $request->to_date);
             }
 
-            $seller_details = $query->orderBy('id', 'desc')->get()->map(function ($seller) {
-                $data = $seller->toArray();
+            if (!empty($request->search)) {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%");
+                });
+            }
 
+            $seller_details = $query->orderBy('id', 'desc')->paginate($limit);
+
+            $seller_details->getCollection()->transform(function ($seller) {
+                $data = $seller->toArray();
                 $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
                 $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
                 $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
                 $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
-
                 return $data;
             });
 
@@ -132,15 +148,18 @@ class SellerManagementService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch new sellers: ' . $e->getMessage(),
+                'message' => 'Failed to fetch approved sellers: ' . $e->getMessage(),
                 'data' => []
             ];
         }
     }
 
+
     public function getRejectedSellers($request)
     {
         try {
+            $limit = (int)($request->input('limit', 10)); 
+
             $query = seller::where('admin_verify', '3')
                 ->with([
                     'store_info',
@@ -149,14 +168,12 @@ class SellerManagementService
                     'seller_bank_details',
                 ]);
 
-            // Filter by country from  store_info
             if (!empty($request->country_id)) {
                 $query->whereHas('store_info', function ($q) use ($request) {
                     $q->where('country', $request->country_id);
                 });
             }
 
-            // Filter by date range
             if (!empty($request->from_date) && !empty($request->to_date)) {
                 $query->whereBetween('created_at', [
                     $request->from_date . ' 00:00:00',
@@ -168,15 +185,22 @@ class SellerManagementService
                 $query->whereDate('created_at', '<=', $request->to_date);
             }
 
-            $seller_details = $query->orderBy('id', 'desc')->get()->map(function ($seller) {
-                $data = $seller->toArray();
+            if (!empty($request->search)) {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%");
+                });
+            }
 
+            $seller_details = $query->orderBy('id', 'desc')->paginate($limit);
+
+            $seller_details->getCollection()->transform(function ($seller) {
+                $data = $seller->toArray();
                 $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
                 $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
                 $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
                 $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
-
-
                 return $data;
             });
 
@@ -197,43 +221,109 @@ class SellerManagementService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch new sellers: ' . $e->getMessage(),
+                'message' => 'Failed to fetch rejected sellers: ' . $e->getMessage(),
                 'data' => []
             ];
         }
     }
 
-
-
-
-
-
-
-    public function acceptSeller($brandId)
+    public function getSellerDetailsById($sellerId)
     {
         try {
-            $brand = Brand::find($brandId);
+            $seller = seller::with([
+                'store_info',
+                'owner_document',
+                'store_document',
+                'seller_bank_details',
+            ])->find($sellerId);
 
-            if (!$brand) {
+            if (!$seller) {
                 return [
                     'status' => 'error',
-                    'message' => 'Brand not found',
+                    'message' => 'Seller not found',
                     'data' => []
                 ];
             }
 
-            $brand->status = $brand->status == 1 ? 0 : 1;
-            $brand->save();
+            $data = $seller->toArray();
+            $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
+            $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
+            $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
+            $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
 
             return [
                 'status' => 'success',
-                'message' => 'Brand status updated successfully',
-                'data' => $brand
+                'message' => 'Seller details fetched successfully',
+                'data' => $data
             ];
+
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch Brand: ' . $e->getMessage(),
+                'message' => 'Failed to fetch seller details: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function acceptSeller($sellerId)
+    {
+        try {
+            $seller = seller::find($sellerId);
+
+            if (!$seller) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Seller not found',
+                    'data' => []
+                ];
+            }
+
+            $seller->admin_verify = '2'; 
+            $seller->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller accepted successfully',
+                'data' => $seller
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to accept seller: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function rejectSeller($sellerId, $rejectReason)
+    {
+        try {
+            $seller = seller::find($sellerId);
+
+            if (!$seller) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Seller not found',
+                    'data' => []
+                ];
+            }
+
+            $seller->admin_verify = '3';
+            $seller->reject_reason = $rejectReason; 
+            $seller->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller rejected successfully',
+                'data' => $seller
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to reject seller: ' . $e->getMessage(),
                 'data' => []
             ];
         }
@@ -245,10 +335,10 @@ class SellerManagementService
 
 
 
-    
 
-            
-        
+
+
+
 
 
 }
