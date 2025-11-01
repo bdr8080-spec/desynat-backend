@@ -29,12 +29,58 @@ class LoginController extends Controller
     public function login(Request $request){
 
         if ($request->isMethod('get')) {
-
-
          $country= country::all();
 
         return view('dealer.login',compact('country'));
         }
+
+
+        $validate = Validator::make($request->all(), [
+            'email_mobile' => 'required',
+            'password' => 'required',
+           ]);
+
+        if ($validate->fails()) {
+            return redirect()->back()
+                ->withErrors($validate)
+                ->withInput(); // keep old input values
+        }
+
+        if (Auth::guard('seller')->attempt(['email' => $request->email_mobile, 'password' => $request->password])) {
+          
+           $seller_details=Auth::guard('seller')->user();
+
+           if($seller_details->admin_verify=='0'){
+            return redirect()->back()
+            ->withErrors(['password'=>'Seller Is Not verified By Admin'])
+            ->withInput();
+           }
+
+           if($seller_details->admin_verify=='3'){
+            return redirect()->back()
+            ->withErrors(['password'=>'Seller Is Rejected By Admin'])
+            ->withInput();
+           }
+
+
+           return redirect()->route('seller.dashboard');
+
+
+
+
+        }{
+            return redirect()->back()
+            ->withErrors(['password'=>'Login Details Is Wrong'])
+            ->withInput();
+
+        }
+
+
+
+
+
+
+        dd($request->all());
 
     }
 
@@ -257,7 +303,6 @@ class LoginController extends Controller
 
         return redirect()->route('seller.upload_review',$seller_id);
 
-
     }
 
 
@@ -315,5 +360,14 @@ class LoginController extends Controller
     public function forgot_password(Request $request){
         return view('dealer.forgot');
     }
+
+
+    public function seller_dashboard(Request $request){
+        return view('dealer.index');
+    }
+
+    
+
+
 
 }

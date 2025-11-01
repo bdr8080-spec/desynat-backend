@@ -1,4 +1,4 @@
-<?php include 'header.php';?>
+@include ('dealer/header');
 
 
 <div class="pagetitle mb-4">
@@ -179,4 +179,4 @@
     </div>
 </div>
 
-<?php include 'footer.php';?>
+@include ('dealer/footer');

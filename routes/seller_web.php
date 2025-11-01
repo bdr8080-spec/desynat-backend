@@ -16,13 +16,20 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/review_submit_page/{id}',[LoginController::class,'signup_review'])->name('seller.review_submit_page');    
 
     route::Match(['get','post'],'/logout',[LoginController::class,'logout'])->name('seller.logout');    
-    
 
     route::Match(['get','post'],'/login',[LoginController::class,'login'])->name('seller.login');
     route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
 
     route::Match(['get','post'],'/reset_password',[LoginController::class,'reset_password']);
     route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
+
+
+    route::Match(['get','post'],'/dashboard',[LoginController::class,'seller_dashboard'])->name('seller.dashboard');
+
+
+
+
+
 
 
 });

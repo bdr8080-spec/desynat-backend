@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
-    <link href="assets/custom-file/css/style.css" rel="stylesheet">
-    <link href="assets/custom-file/css/custom.css" rel="stylesheet">
+    <link href="{{ asset( 'dealer')}}/assets/custom-file/css/style.css" rel="stylesheet">
+    <link href="{{ asset( 'dealer')}}/assets/custom-file/css/custom.css" rel="stylesheet">
 
 </head>
 
@@ -30,7 +30,7 @@
 
         <div class="">
             <a href="#" class="logo">
-                <img src="assets/img/desynat-logo.svg" alt="image" class="img-fluid">            
+                <img src="{{ asset( 'dealer')}}/assets/img/desynat-logo.svg" alt="image" class="img-fluid">            
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div>
@@ -99,13 +99,13 @@
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <a class="nav-link sidebar-active border-radious-9 margin-20" href="index.php">
-                    <img src="assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset( 'dealer')}}/assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20" href="">
-                    <img src="assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset( 'dealer')}}/assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
                     <span>Product Management</span>
                 </a>
             </li>
