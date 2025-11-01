@@ -17,11 +17,25 @@ Route::group(['prefix'=>'admin'], function(){
     Route::match(['get','post'],'/resend-otp', [AuthController::class, 'resendOtp'])->name('resendOtp');
 
     Route::middleware([AdminAuth::class])->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/logout', [AuthController::class, 'adminLogout'])->name('adminLogout');
+
+        //category and subcategory management
         Route::get('/category-management', [CategoryController::class, 'categoryManagement'])->name('categoryManagement');
+        Route::get('/manage-subcategory/{id}', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
+        Route::post('/updateCategoryStatus/{id}', [CategoryController::class, 'updateCategoryStatus'])->name('updateCategoryStatus');
+        Route::post('/deleteSubCategory/{id}', [CategoryController::class, 'deleteSubCategory'])->name('deleteSubCategory');
+        Route::post('/updateSubCategoryStatus/{id}', [CategoryController::class, 'updateSubCategoryStatus'])->name('updateSubCategoryStatus');
+        Route::post('/addSubCategory', [CategoryController::class, 'addSubCategory'])->name('addSubCategory');
+        Route::post('/updateSubCategory/{id}', [CategoryController::class, 'updateSubCategory'])->name('updateSubCategory');
+
+        //brand management
         Route::get('/brand-management', [BrandController::class, 'brandManagement'])->name('brandManagement');
-        Route::get('/manage-subcategory', [CategoryController::class, 'manageSubCategory'])->name('manageSubCategory');
+        Route::post('/deleteBrand/{id}', [BrandController::class, 'deleteBrand'])->name('deleteBrand');
+        Route::post('/updateBrandStatus/{id}', [BrandController::class, 'updateBrandStatus'])->name('updateBrandStatus');
+        Route::post('/addBrand', [BrandController::class, 'addBrand'])->name('addBrand');
+        Route::post('/updateBrand/{id}', [BrandController::class, 'updateBrand'])->name('updateBrand');
+
 
     });
 
