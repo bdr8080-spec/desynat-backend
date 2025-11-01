@@ -1,4 +1,4 @@
-@include ('dealer/header');
+@include('dealer.header')
 
 
 <div class="pagetitle mb-4">
@@ -179,4 +179,4 @@
     </div>
 </div>
 
-@include ('dealer/footer');
+@include('dealer.footer');
