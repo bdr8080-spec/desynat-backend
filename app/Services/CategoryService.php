@@ -38,16 +38,25 @@ class CategoryService
         }
     }
 
-    public function getSubCategoriesByCategoryId($categoryId)
+    public function getSubCategoriesByCategoryId($categoryId, $limit = null, $search = null)
     {
         try {
-            $subCategories = SubCategory::where('category_id', $categoryId)->where('status', 1)->get();
+            $limit = !empty($limit) ? (int)$limit : 10;
+
+            $query = SubCategory::where('category_id', $categoryId)
+                                ->where('status', 1);
+
+            if (!empty($search)) {
+                $query->where('name_english', 'like', '%' . $search . '%');
+            }
+
+            $subCategories = $query->paginate($limit);
 
             if ($subCategories->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No subcategories found for this category',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -65,6 +74,7 @@ class CategoryService
             ];
         }
     }
+
 
     public function changeCategoryStatus($categoryId)
     {
@@ -128,21 +138,13 @@ class CategoryService
 
     public function createSubCategory(Request $request)
     {
-        $commonController = new CommonController();
-        $uploadResult = $commonController->upload($request);
-        $uploadResultArray = $uploadResult->getData(true); 
-
-        if ($uploadResultArray['status'] === 'error') {
-            return $uploadResult;  
-        }
 
         try {
-            $imageUrl = $uploadResultArray['data']['url'];
             $subCategory = SubCategory::create([
                 'category_id' => $request->category_id,
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,
+                'image' => $request->image,
             ]);
 
             return [
@@ -173,25 +175,11 @@ class CategoryService
             ];
         }
 
-        if ($request->hasFile('image')) {
-            $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
-
-            if ($uploadResultArray['status'] === 'error') {
-                return $uploadResult; 
-            }
-
-            $imageUrl = $uploadResultArray['data']['url'];
-        } else {
-            $imageUrl = $subCategory->image;
-        }
-
         try {
             $subCategory->update([
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,  
+                'image' => $request->image,  
             ]);
 
             return [

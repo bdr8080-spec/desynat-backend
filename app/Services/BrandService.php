@@ -12,13 +12,23 @@ class BrandService
     public function getBrand($request)
     {
         try {
-            $brand_details = Brand::where('status', 1)->get();
+            $limit = $request->input('limit', 10);
+            $limit = (int)$limit;
+
+            $query = Brand::where('status', 1);
+
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                $query->where('name_english', 'like', '%' . $search . '%');
+            }
+
+            $brand_details = $query->paginate($limit);
 
             if ($brand_details->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No Brand found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -36,6 +46,7 @@ class BrandService
             ];
         }
     }
+
 
 
     public function changeBrandStatus($brandId)
@@ -71,20 +82,12 @@ class BrandService
 
     public function createBrand(Request $request)
     {
-        $commonController = new CommonController();
-        $uploadResult = $commonController->upload($request);
-        $uploadResultArray = $uploadResult->getData(true); 
-
-        if ($uploadResultArray['status'] === 'error') {
-            return $uploadResult;  
-        }
 
         try {
-            $imageUrl = $uploadResultArray['data']['url'];
             $brand = Brand::create([
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,
+                'image' => $request->image,
             ]);
 
             return [
@@ -115,25 +118,11 @@ class BrandService
             ];
         }
 
-        if ($request->hasFile('image')) {
-            $commonController = new CommonController();
-            $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
-
-            if ($uploadResultArray['status'] === 'error') {
-                return $uploadResult; 
-            }
-
-            $imageUrl = $uploadResultArray['data']['url'];
-        } else {
-            $imageUrl = $brand->image;
-        }
-
         try {
             $brand->update([
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $imageUrl,  
+                'image' => $request->image,  
             ]);
 
             return [

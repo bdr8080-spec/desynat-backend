@@ -3,7 +3,7 @@
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content">
           <nav
-            class="navbar navbar-expand navbar-light custom-topbar mb-4 static-top shadow"
+            class="navbar navbar-expand navbar-light fixed-top custom-topbar mb-4 static-top shadow"
           >
             <div class="left-section d-flex align-items-center">
                         <img src="image/combine_logo.svg" class="header-logo" />
@@ -112,89 +112,30 @@
               </div>
 
               <div class="row justify-content-center">
-                <div class="col-xl-3 col-md-6 mb-4">
-                  <div class="card border-radious-10 dashboard-pnl">
-                    <div class="card-header">
-                      <div class="total-revenue justify-content-center">
-                        <h3>Order Stats</h3>
-                      </div>
-                    </div>
-
-                    <div class="card-body">
-                      <div
-                        class="h5 mb-0 font-weight-bold text-gray-800 justify-content-center"
-                      >
-                        $215,000
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Earnings (Monthly) Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                  <div class="card border-radious-10 dashboard-pnl">
-                    <div class="card-header">
-                      <div class="total-revenue justify-content-center">
-                        <h3>Order Stats</h3>
-                      </div>
-                    </div>
-
-                    <div class="card-body">
-                      <div
-                        class="h5 mb-0 font-weight-bold text-gray-800 justify-content-center"
-                      >
-                        $215,000
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                  <div class="card border-radious-10 dashboard-pnl">
-                    <div class="card-header">
-                      <div class="total-revenue justify-content-center">
-                        <h3>Order Stats</h3>
-                      </div>
-                    </div>
-
-                    <div class="card-body">
-                      <div
-                        class="h5 mb-0 font-weight-bold text-gray-800 justify-content-center"
-                      >
-                        $215,000
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="page-wapper dashboard-pnl">
+                 <div class="page-wapper dashboard-pnl">
                   <div class="row">
                     <div class="col-lg-6 col-md-6">
                       <div class="card border-radious-10">
                         <div class="card-header">
                           <div class="total-revenue justify-content-center">
-                            <h3>Order Stats</h3>
+                            <h5>Total users registered</h5>
                           </div>
                           <div class="dolor-icon">
-                            <span> $1234</span>
+                            <span> 1234</span>
                           </div>
                         </div>
 
                         <div class="card-body">
                           <div class="row">
-                            <div class="total-sale b-line text-center col-lg-4">
-                              <p>Ongoing</p>
+                            <div class=" text-center col-lg-4">
+                              <p>Active</p>
                               <h5>136</h5>
                             </div>
-                            <div class="total-sale b-line text-center col-lg-4">
-                              <p>Completed</p>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
                               <h5>136</h5>
                             </div>
-                            <div
-                              class="total-sale b-line-2 text-center col-lg-4"
-                            >
-                              <p>Canceled</p>
-                              <h5>36</h5>
-                            </div>
+                          
                           </div>
                         </div>
                       </div>
@@ -203,7 +144,7 @@
                       <div class="card border-radious-10">
                         <div class="card-header">
                           <div class="total-revenue">
-                            <h3>Order Stats</h3>
+                            <h5>Total Number of Affiliated Users</h5>
                           </div>
                           <div class="dolor-icon">
                             <span> $1234</span>
@@ -212,20 +153,248 @@
 
                         <div class="card-body">
                           <div class="row">
-                            <div class="total-sale b-line text-center col-lg-4">
-                              <p>Ongoing</p>
+                            <div class="text-center col-lg-4">
+                              <p>Active</p>
+
+                             <h5>136</h5>
+
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
                               <h5>136</h5>
                             </div>
-                            <div class="total-sale b-line text-center col-lg-4">
-                              <p>Completed</p>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                   <div class="page-wapper dashboard-pnl">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue justify-content-center">
+                            <h5>Total users registered</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            <span> 1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class=" text-center col-lg-4">
+                              <p>Active</p>
                               <h5>136</h5>
                             </div>
-                            <div
-                              class="total-sale b-line-2 text-center col-lg-4"
-                            >
-                              <p>Canceled</p>
-                              <h5>36</h5>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
                             </div>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue">
+                            <h5>Total Number of Affiliated Users</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            <span> $1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="text-center col-lg-4">
+                              <p>Active</p>
+
+                             <h5>136</h5>
+
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
+                            </div>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                   <div class="page-wapper dashboard-pnl">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue justify-content-center">
+                            <h5>Total users registered</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            <span> 1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class=" text-center col-lg-4">
+                              <p>Active</p>
+                              <h5>136</h5>
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
+                            </div>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue">
+                            <h5>Total Number of Affiliated Users</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            <span> $1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="text-center col-lg-4">
+                              <p>Active</p>
+
+                             <h5>136</h5>
+
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
+                            </div>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="page-wapper dashboard-pnl">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue justify-content-center">
+                            <h5>Total users registered</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            <span> 1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class=" text-center col-lg-4">
+                              <p>Active</p>
+                              <h5>136</h5>
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
+                            </div>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue">
+                            <h5>Total Number of Affiliated Users</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            
+                            <span> $1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class=" text-center col-lg-4">
+                              <p>Active</p>
+
+                             <h5>136</h5>
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
+                            </div>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>  <div class="page-wapper dashboard-pnl">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue justify-content-center">
+                            <h5>Total users registered</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            <span> 1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class=" text-center col-lg-4">
+                              <p>Active</p>
+                              <h5>136</h5>
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
+                            </div>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-5">
+                      <div class="card border-radious-10">
+                        <div class="card-header">
+                          <div class="total-revenue">
+                            <h5>Total Number of Affiliated Users</h5>
+                          </div>
+                          <div class="dolor-icon">
+                            <span> $1234</span>
+                          </div>
+                        </div>
+
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="text-center col-lg-4">
+                              <p>Active</p>
+
+                             <h5>136</h5>
+                            </div>
+                            <div class=" text-center col-lg-4">
+                              <p>Inactive</p>
+                              <h5>136</h5>
+                            </div>
+                          
                           </div>
                         </div>
                       </div>

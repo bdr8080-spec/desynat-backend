@@ -20,76 +20,87 @@
             <img src="assets/images/logoone.svg" class="left-img" />
             <img src="assets/images/right-img.svg" class="left-imgtwo" />
         </div>
-            <div class="login_content login_content_right">
-           
-                <div class="login_content_content">
-                     <form id="signup" >
-                        @csrf
-                    <h4>Sign Up</h4>
-                    <h3>Create your account !</h3>
+        <div class="login_content login_content_right">
+        
+            <div class="login_content_content">
+                    <form id="signup" >
+                    @csrf
+                <h4>Sign Up</h4>
+                <h3>Create your account !</h3>
 
-                    <input type="file" name="image" enctype="multipart/form-data">
-                    <div class="form-group position-relative password_icon mt-3">
-                        <label for="">Full Name</label>
-                        <input type="text" id="login-password" name="full_name" class="form-control custom-password"
-                            placeholder="Enter Full Name" style="padding-right: 40px;"/>
+                <div class="upload-image w-100">
+                    <label class="uploadLabel" style="cursor:pointer;text-align:center;">
+                        <img src="{{asset('user/assets/images/upload-icon.svg')}}"><div class="text-color-upload">Document 1</div>
+                        <input type="file" accept="image/*" name="image" enctype="multipart/form-data" hidden onchange="showPreview(event)">
+                    </label>
+                    <div class="imgshow">
+                        <img class="preview" style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
+                        <span class="removeIcon" style="display:none;cursor:pointer;font-size:24px;color:red;" onclick="removeImg()">&times;</span>
                     </div>
-                    <span class="text-danger" id="error-full_name"></span>
-
-                    <div class="form-group mt-3">
-                        <label class="d-block" for="">Mobile Number</label>
-                        <div class="row">
-                        <div class="col-3">
-                        <select name="country_code" id="" class="form-control">
-                            @foreach ($country as $item)                       
-                                <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
-                            @endforeach
-                        </select>
-                         </div> 
-                         <div class="col-9">
-                         <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
-                        </div>
-                        </div>
-                        {{-- <input type="hidden" value="+91" name="country_code" id="country_code"> --}}
-                    </div>
-                     <span class="text-danger" id="error-mobile"></span>
-                    <div class="form-group position-relative verify mt-3">
-                        <label class="d-block" for="">Email Address</label>
-                        <input type="text" id="login-password" class="form-control custom-password"
-                            placeholder="Enter Full Name" style="padding-right: 40px;" name="email"/>
-                    </div>
-                    <span class="text-danger" id="error-email"></span>
-                    <div class="form-group position-relative password_icon mt-3">
-                        <label for="">Create Password</label>
-                        <input type="password" id="login-password" class="form-control custom-password"
-                            placeholder="Enter password" style="padding-right: 40px;"  name="password"/>
-                        <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
-                    </div>
-                    <span class="text-danger" id="error-password"></span>
-                    <div class="form-group position-relative password_icon mt-3">
-                        <label for="">Confirm Password</label>
-                        <input type="password" id="login-password" class="form-control custom-password"
-                            placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
-                        <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
-                    </div>
-                    <span class="text-danger" id="error-confirm_password"></span>
-                    <div class="form-check term_policy my-3">
-                        <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate" name="accept_terms">
-                        <label class="form-check-label" for="checkIndeterminate">
-                            I accept the <a href="">Terms & Conditions</a> and <a href="">Policies</a>
-                        </label>
-                    </div>
-                     <span class="text-danger" id="error-accept_terms"></span>
-                    <button type="submit" class="customBtn" id="signBtn">Sign Up</button>
-                    </form>
-                    <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('userLogin')}}">Sign In</a></p>
                 </div>
-            
+
+                <!-- <input type="file" name="image" enctype="multipart/form-data"> -->
+                <div class="form-group position-relative password_icon mt-3">
+                    <label for="">Full Name</label>
+                    <input type="text"  name="full_name" class="form-control custom-password"
+                        placeholder="Enter Full Name" style="padding-right: 40px;"/>
+                </div>
+                <span class="text-danger" id="error-full_name"></span>
+
+                <div class="form-group mt-3">
+                    <label class="d-block" for="">Mobile Number</label>
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <select name="country_code" id="" class="country" class="form-control">
+                                @foreach ($country as $item)                       
+                                    <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
+                                @endforeach
+                            </select>
+                        </div> 
+                        <div class="w-100">
+                            <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                        </div>
+                    </div>
+                    {{-- <input type="hidden" value="+91" name="country_code" id="country_code"> --}}
+                </div>
+                <span class="text-danger" id="error-mobile"></span>
+                <div class="form-group position-relative verify mt-3">
+                    <label class="d-block" for="">Email Address</label>
+                    <input type="text"  class="form-control custom-password notapplyspace"
+                        placeholder="Enter Full Name" style="padding-right: 40px;" name="email"/>
+                </div>
+                <span class="text-danger" id="error-email"></span>
+                <div class="form-group position-relative password_icon mt-3">
+                    <label for="">Create Password</label>
+                    <input type="password" id="login-password" class="form-control custom-password"
+                        placeholder="Enter password" style="padding-right: 40px;"  name="password"/>
+                    <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
+                </div>
+                <span class="text-danger" id="error-password"></span>
+                <div class="form-group position-relative password_icon mt-3">
+                    <label for="">Confirm Password</label>
+                    <input type="password" id="login-password" class="form-control custom-password"
+                        placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
+                    <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
+                </div>
+                <span class="text-danger" id="error-confirm_password"></span>
+                <div class="form-check term_policy my-3">
+                    <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate" name="accept_terms">
+                    <label class="form-check-label" for="checkIndeterminate">
+                        I accept the <a href="">Terms & Conditions</a> and <a href="">Policies</a>
+                    </label>
+                </div>
+                    <span class="text-danger" id="error-accept_terms"></span>
+                <button type="submit" class="customBtn" id="signBtn">Sign Up</button>
+                </form>
+                <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('userLogin')}}">Sign In</a></p>
             </div>
-           
+        </div>
     </div>
 
      <script>
+
+
         $(document).on('submit', '#signup', function (e) {
             e.preventDefault();
 
@@ -125,6 +136,26 @@
                 }
             });
         });
+
+
+        function showPreview(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (x) {
+                $('.preview').attr('src', x.target.result).show();
+                $('.removeIcon').show();
+                $('.uploadLabel').hide();
+                };
+                reader.readAsDataURL(file);
+            }
+            }
+        
+            function removeImg() {
+            $('.preview').attr('src', '').hide();
+            $('.removeIcon').hide();
+            $('.uploadLabel').show();
+        }
 
      </script>
 

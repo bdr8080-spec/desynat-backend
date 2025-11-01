@@ -41,7 +41,7 @@ class AuthController extends Controller
             $rules = [
                     'full_name' => 'required',
                     'country_code' => 'required',
-                    'image'=> 'required',
+                    // 'image'=> 'required',
                     'email' => 'required|email|unique:users,email',
                     'mobile' => 'required',
                     'password' => 'required',
@@ -72,9 +72,9 @@ class AuthController extends Controller
                    ]);
                }
 
-                 $path = 'profile_image/';
+                 $dir = 'profile_image/';
 
-                $image_path = $this->image_upload($request->image, $path);
+                $image_path = $this->image_upload($request->image, $dir);
     
                 $otp= config('services.otp');
 
@@ -424,9 +424,53 @@ class AuthController extends Controller
         }
 
 
+        public function userLogout()
+        {
+            Auth::guard('web')->logout();
+
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+
+            return redirect('/');
+        }
+
+
+
+        public function resendOtp(Request $request)
+        {
+            try {
+                $id = Crypt::decryptString($request->id);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid user reference.',
+                ], 400);
+            }
+
+            // Find user
+            $user = User::find($id);
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User not found.',
+                ], 404);
+            }
+
+            $otp= config('services.otp');
+            $user->otp = $otp;
+            $user->save();
+
+       
+            return response()->json([
+                'status' => true,
+                'message' => 'OTP resent successfully.',
+            ]);
+        }
+
+
+
+
     public function dashboard(){
-
-
-        return view('user.auth.dashboard');
+      return view('user.auth.dashboard');
     }
 }

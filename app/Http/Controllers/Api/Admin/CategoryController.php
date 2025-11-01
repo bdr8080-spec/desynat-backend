@@ -48,7 +48,7 @@ class CategoryController extends Controller
         }
 
         try {
-            $data = $this->CategoryService->getSubCategoriesByCategoryId($request->category_id);
+            $data = $this->CategoryService->getSubCategoriesByCategoryId($request->category_id,$request->limit,$request->search);
 
             if (isset($data['status']) && $data['status'] == 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -84,6 +84,7 @@ class CategoryController extends Controller
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+    
 
     public function change_subcategory_status(Request $request)
     {
@@ -115,7 +116,7 @@ class CategoryController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
+            'image' => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -142,7 +143,7 @@ class CategoryController extends Controller
             'subcategory_id' => 'required|exists:sub_categories,id',
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048', 
+            'image' => 'required', 
         ]);
 
         if ($validate->fails()) {
