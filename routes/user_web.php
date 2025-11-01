@@ -15,7 +15,7 @@ use App\Http\Controllers\User\AuthController;
     Route::match(['get','post'],'/verify-otp',[AuthController::class,'userVerifyOtp'])->name('userVerifyOtp');
     Route::match(['get','post'],'/create-password',[AuthController::class,'userCreatePassword'])->name('userCreatePassword');
     Route::match(['get','post'],'/login-with-otp',[AuthController::class,'loginWithOtp'])->name('loginWithOtp');
-    Route::get('logout',[AuthController::class,'userLogout'])->name('userLogout');
+    Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
 
 
 
