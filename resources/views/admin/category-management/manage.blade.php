@@ -8,7 +8,7 @@
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content" class="">
           <nav
-            class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow"
+            class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top"
           >
             <div class="left-section d-flex align-items-center">
               <img src="image/combine_logo.svg" class="header-logo" />
@@ -28,7 +28,14 @@
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
               <div class="col-lg-6 col-md-6 col-12">
-                <h2 class="h2">Manage Sub-Category</h2>
+                <div class="d-flex align-items-center gap-3 mt-2">
+              <div class="arrow">
+                <a class="table-button" type="button" href="{{route('categoryManagement')}}">
+                  <i class="fas fa-angle-left"></i>
+                </a>
+              </div>
+              <h6 class="m-0">Manage Sub-Category</h6>
+            </div>
               </div>
 
               <div class="col-lg-3 col-md-4 col-12">
@@ -72,7 +79,7 @@
                   </div>
                 </div> -->
 
-                <div class="table-responsive w-100">
+                <div class=" w-100">
                   <table id="myTable" class="table w-100">
                     <thead>
                       <tr>
@@ -202,7 +209,7 @@
 
                                   <!-- Submit Button -->
                                   <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                      <button type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</button>
+                                      <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</a>
                                   </div>
 
                               </div>
@@ -259,7 +266,7 @@
 
                                     <!-- Submit Button -->
                                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
-                                        <button type="button" class="btn btn-dark customBtn" id="editBrandSubmit">Update</button>
+                                        <a type="button" class="btn btn-dark customBtn" id="editBrandSubmit">Update</a>
                                     </div>
                                 </div>
                             </form>

@@ -39,7 +39,7 @@
                                 </select>
                          </div> 
                          <div class="col-12 LoginMobileDesign">
-                           <input type="text" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobileOrEmail" id="LoginMobile">
+                           <input type="text" class="form-control"  value="" placeholder="Enter mobile number and email address" name="mobileOrEmail" id="LoginMobile">
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <label for="">Password</label>
                     <input type="password" name="password"  id="login-password" class="form-control custom-password"
                         placeholder="Enter password" style="padding-right: 40px;"/>
-                    <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
+                    <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
                   <span class="text-danger" id="error-password"></span>
                 <p class=" mt-3 mb-4"><a href="{{route('userForgetPassword')}}">Forgot password</a></p>
@@ -78,14 +78,14 @@
     </div>
 
 
-       <script>
+    <script>
             
 
-            document.addEventListener('keydown', function(e) {
-                if (e.key === ' ') {
-                    e.preventDefault();
-                }
-            });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === ' ') {
+                e.preventDefault();
+            }
+        });
 
 
 

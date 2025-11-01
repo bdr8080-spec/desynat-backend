@@ -25,7 +25,8 @@
         <div class="login_content login_content_right">
             <div class="login_content_content align-self-center">
                 <div class="otp-page">
-                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> OTP</h3>
+                    <h3 class="h3-heading">
+                        <span><a href="{{ url()->previous() }}"><i class="fa-solid fa-chevron-left"></i></a></span> OTP</h3>
                     @php
 
                     use Illuminate\Support\Facades\Crypt;
@@ -56,10 +57,10 @@
                          <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
                      
                     </div>
+                    <button type="button" class="customBtnresend" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
                     <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Continue</button>
                         </form>
 
-                         <button type="button" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
 
                 </div>
             </div>

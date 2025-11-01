@@ -67,30 +67,6 @@ class SellerController extends Controller
     }
 
 
-    public function change_brand_status(Request $request)
-    {
-        $validate = Validator::make($request->all(), [
-            'brand_id' => 'required|exists:brands,id',
-        ]);
-
-        if ($validate->fails()) {
-            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
-        }
-
-        try {
-            $data = $this->BrandService->changeBrandStatus($request->brand_id);
-
-            if (isset($data['status']) && $data['status'] == 'error') {
-                return ApiResponse::generateResponse('error', $data['message'], [], 400);
-            }
-
-            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
-
-        } catch (\Exception $e) {
-            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
-        }
-    }
-
     public function get_seller_details(Request $request)
     {
         $validate = Validator::make($request->all(), [
