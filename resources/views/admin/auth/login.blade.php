@@ -233,7 +233,7 @@
                 },
                 success: function(response) {
                     if(response.success) {
-                        window.location.href = "{{ route('dashboard') }}";
+                        window.location.href = "{{ route('admin.dashboard') }}";
                     }
                 },
                 error: function(xhr) {
