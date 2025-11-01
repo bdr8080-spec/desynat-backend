@@ -20,20 +20,30 @@ class AuthController extends Controller
         } else {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
-                'password' => 'required|min:6',
+                'password' => 'required',
+            ], [
+                'email.required' => 'Please Enter Email Id',
+                'email.email' => 'Please Enter a Valid Email Id',
+                'password.required' => 'Please Enter Password'
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
 
-            if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['errors' => ['email' => ['Invalid credentials']]], 422);
+            $admin = Admin::where('email', $request->email)->first();
+            if (!$admin) {
+                return response()->json(['errors' => ['email' => ['Email is not registered']]], 422);
             }
+
+            if (!Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+                return response()->json(['errors' => ['password' => ['Password is Incorrect']]], 422);
+            }
+
+            return response()->json(['success' => true]);
         }
     }
+
 
     public function adminLogout(Request $request)
     {
