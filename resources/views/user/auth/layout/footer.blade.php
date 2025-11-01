@@ -8,6 +8,18 @@
 
 
      <script>
+
+ 
+        document.querySelectorAll('.notapplyspace').forEach(function(input) {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === ' ') {
+                    e.preventDefault();
+                }
+            });
+            });
+
+
+
     $("input, textarea, select").on("input", function() {
         var field = $(this).attr("name");
         $("#error-" + field).text("");

@@ -31,7 +31,7 @@
                     <input type="file" name="image" enctype="multipart/form-data">
                     <div class="form-group position-relative password_icon mt-3">
                         <label for="">Full Name</label>
-                        <input type="text" id="login-password" name="full_name" class="form-control custom-password"
+                        <input type="text"  name="full_name" class="form-control custom-password"
                             placeholder="Enter Full Name" style="padding-right: 40px;"/>
                     </div>
                     <span class="text-danger" id="error-full_name"></span>
@@ -55,7 +55,7 @@
                      <span class="text-danger" id="error-mobile"></span>
                     <div class="form-group position-relative verify mt-3">
                         <label class="d-block" for="">Email Address</label>
-                        <input type="text" id="login-password" class="form-control custom-password"
+                        <input type="text"  class="form-control custom-password notapplyspace"
                             placeholder="Enter Full Name" style="padding-right: 40px;" name="email"/>
                     </div>
                     <span class="text-danger" id="error-email"></span>
@@ -90,6 +90,11 @@
     </div>
 
      <script>
+
+
+
+
+
         $(document).on('submit', '#signup', function (e) {
             e.preventDefault();
 
