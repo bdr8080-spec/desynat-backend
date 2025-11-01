@@ -12,7 +12,9 @@ class BrandService
     public function getBrand($request)
     {
         try {
-            $brand_details = Brand::where('status', 1)->get();
+            $limit = $request->input('limit', 10);
+            $limit = (int)$limit;
+            $brand_details = Brand::where('status', 1)->paginate($limit);
 
             if ($brand_details->isEmpty()) {
                 return [

@@ -48,7 +48,7 @@ class CategoryController extends Controller
         }
 
         try {
-            $data = $this->CategoryService->getSubCategoriesByCategoryId($request->category_id);
+            $data = $this->CategoryService->getSubCategoriesByCategoryId($request->category_id,$request->limit);
 
             if (isset($data['status']) && $data['status'] == 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);

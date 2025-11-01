@@ -38,10 +38,11 @@ class CategoryService
         }
     }
 
-    public function getSubCategoriesByCategoryId($categoryId)
+    public function getSubCategoriesByCategoryId($categoryId,$limit = null)
     {
         try {
-            $subCategories = SubCategory::where('category_id', $categoryId)->where('status', 1)->get();
+            $limit = !empty($limit) ? (int)$limit : 10;
+            $subCategories = SubCategory::where('category_id', $categoryId)->where('status', 1)->paginate($limit);
 
             if ($subCategories->isEmpty()) {
                 return [
