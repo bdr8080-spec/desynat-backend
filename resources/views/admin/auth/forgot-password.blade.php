@@ -11,12 +11,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     
 </head>
-<body>
+<body style="background-color: rgba(227, 194, 149, 0.75) !important;">
      <style>
-      .auth-wrapper {
+       .auth-wrapper {
         display: flex;
-        height: 100vh;
+        /* height: 100vh; */
         width: 100%;
+            max-width: 900px;
+    margin: 10% auto;
       }
 
       .auth-left {
@@ -56,7 +58,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 17px;
+    border: 1px solid #ddd;
+    border-radius: 0px 20px 20px 0px;
       }
+
 
       .auth-form-wrapper {
         width: 350px;
@@ -129,7 +135,7 @@
   <!-- LEFT SIDE -->
   <div class="auth-left">
     <div class="brand-header">
-      <!-- logo aa jayega baad me -->
+   
     </div>
   </div>
 

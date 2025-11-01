@@ -9,13 +9,15 @@
     <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
-<body>
+<body style="background-color: rgba(227, 194, 149, 0.75) !important;">
 
    <style>
-      .auth-wrapper {
+       .auth-wrapper {
         display: flex;
-        height: 100vh;
+        /* height: 100vh; */
         width: 100%;
+            max-width: 900px;
+    margin: 10% auto;
       }
 
       .auth-left {
@@ -49,13 +51,17 @@
         color: #000;
       }
 
-      .auth-right {
+      .auth-rights {
         flex: 1;
         background: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 17px;
+    border: 1px solid #ddd;
+    border-radius: 0px 20px 20px 0px;
       }
+
 
       .auth-form-wrapper {
         width: 350px;
@@ -124,7 +130,7 @@
             </div>
           </nav>
 
-      <div class="auth-wrapper">
+      <div class="auth-wrapper ">
       <!-- LEFT SIDE -->
       <div class="auth-left">
         <div class="brand-header">
@@ -133,7 +139,7 @@
       </div>
 
       <!-- RIGHT SIDE -->
-      <div class="auth-right">
+      <div class="auth-rights">
   <div class="login-container-div">
     <div class="login">
       <div class="loginBackgroundeffect text">
@@ -156,8 +162,8 @@
               <label for="newPassword" class="form-label">Create New Password</label>
               <input type="password" class="form-control" id="newPassword" placeholder="Enter New Password" required>
               <i toggle="#newPassword" class="fas fa-eye toggle-password"></i>
-              <span id="passwordError" class="text-danger"></span>
             </div>
+            <span id="passwordError" class="text-danger"></span>
           </div>
 
           <div class="col-lg-12 mt-3">
@@ -165,8 +171,8 @@
               <label for="confirmPassword" class="form-label">Confirm Password</label>
               <input type="password" id="confirmPassword" class="form-control" placeholder="Enter Confirm Password" required>
               <i toggle="#confirmPassword" class="fas fa-eye toggle-password"></i>
-              <span id="confirmPasswordError" class="text-danger"></span>
             </div>
+            <span id="confirmPasswordError" class="text-danger"></span>
           </div>
 
           <div class="col-lg-12 mt-5">

@@ -52,7 +52,7 @@
                   </div>
                 </div> -->
 
-                <div class="table-responsive w-100">
+                <div class=" w-100">
                   <table id="myTable" class="table w-100">
                     <thead>
                       <tr>
