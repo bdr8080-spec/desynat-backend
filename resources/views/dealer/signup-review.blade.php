@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title> Your account registration is under review !! </title>
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="{{asset('/dealer')}}/assets/img/favicon.png" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -14,20 +14,20 @@
         rel="stylesheet">
     <!-- Vendor CSS Files -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="assets/custom-file/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('/dealer')}}/assets/custom-file/css/bootstrap.min.css" rel="stylesheet">
     <!-- Main CSS File -->
-    <link href="assets/custom-file/css/style.css" rel="stylesheet">
+    <link href="{{asset('/dealer')}}/assets/custom-file/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 <div class="login-header">
     <div class="des-logo">
-        <a href="#"><img src="assets/img/desynat-logo.svg" alt="image" class="img-fluid logo-login">  </a> 
+        <a href="#"><img src="{{asset('/dealer')}}/assets/img/desynat-logo.svg" alt="image" class="img-fluid logo-login">  </a> 
     </div>
     <div class="des-language">
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="assets/img/global.svg" class="img-fluid" /> EN
+                <img src="{{asset('/dealer')}}/assets/img/global.svg" class="img-fluid" /> EN
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
@@ -47,7 +47,7 @@
                             <div class="login-grid-2">
                                 <form>
                                     <div class="review-image mb-4">
-                                        <img src="assets/img/review.svg" alt="image" class="img-fluid">
+                                        <img src="{{asset('/dealer')}}/assets/img/review.svg" alt="image" class="img-fluid">
                                     </div>
                                     <div class="group-radio-btn text-center">
                                         <h2 class="mb-3">Your account registration is under review !!</h2>
@@ -55,7 +55,7 @@
                                     </div>
 
                                     <div class="login-btn padding-top-60">
-                                        <a href="login.php" class="btn btn-success w-100">Logout</a>
+                                        <a href="{{route('seller.logout')}}" class="btn btn-success w-100">Logout</a>
                                     </div>
 
                                 </form>
@@ -72,12 +72,12 @@
 
 
 <!-- Vendor JS Files -->
-<script src="assets/custom-file/js/jquery.min.js"></script>
-<script src="assets/custom-file/js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('/dealer')}}/assets/custom-file/js/jquery.min.js"></script>
+<script src="{{asset('/dealer')}}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 
 
 <!--Main JS File -->
-<script src="assets/custom-file/js/main.js"></script>
+<script src="{{asset('/dealer')}}/assets/custom-file/js/main.js"></script>
 
 
 </html>

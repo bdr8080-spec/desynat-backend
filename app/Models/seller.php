@@ -2,12 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 
-class seller extends Model
+
+
+// class seller extends Model
+
+class seller extends Authenticatable
 {
-    use HasApiTokens;
+    use HasApiTokens,HasFactory;
+
+
+     protected $table = 'sellers';
 
     protected $guarded=[];
 

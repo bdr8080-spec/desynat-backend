@@ -100,6 +100,7 @@ class SellerAuthService
 
       public function store_document_and_bank_details($request){
 
+        
     sellerDocument::where('seller_id',$request->user_id)->update(['status'=>'0']);
     
     foreach($request->owner_document as $key=>$val){
@@ -111,6 +112,7 @@ class SellerAuthService
         'status'=>'1'
       ]);
     }
+
 
     foreach($request->store_document as $key=>$val){
 
@@ -160,7 +162,7 @@ class SellerAuthService
                 return ['status'=>'success','message'=>"seller Information fetch successfully",'data'=>$seller_details];            
         
               }else{
-                return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Seller Details is invalid",'data'=>(object)[]];                
               }
         
               }
