@@ -14,7 +14,15 @@ class BrandService
         try {
             $limit = $request->input('limit', 10);
             $limit = (int)$limit;
-            $brand_details = Brand::where('status', 1)->paginate($limit);
+
+            $query = Brand::where('status', 1);
+
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                $query->where('name_english', 'like', '%' . $search . '%');
+            }
+
+            $brand_details = $query->paginate($limit);
 
             if ($brand_details->isEmpty()) {
                 return [
@@ -38,6 +46,7 @@ class BrandService
             ];
         }
     }
+
 
 
     public function changeBrandStatus($brandId)
