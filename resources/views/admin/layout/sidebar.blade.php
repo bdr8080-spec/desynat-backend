@@ -1,7 +1,7 @@
 
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion customSidebar" id="accordionSidebar">
-    <li class="nav-item {{ Request::routeIs('dashboard') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('dashboard') }}">
+    <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.dashboard') }}">
             <span><img src="{{ asset('admin/image/dashboard.svg') }}" alt="Dashboard" /></span>
             Dashboard
         </a>
