@@ -75,7 +75,6 @@ class AuthController extends Controller
                  $dir = 'profile_image/';
 
                 $image_path = $this->image_upload($request->image, $dir);
-                dd($image_path);    
     
                 $otp= config('services.otp');
 

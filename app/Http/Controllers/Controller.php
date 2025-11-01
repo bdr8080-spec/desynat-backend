@@ -8,32 +8,18 @@ abstract class Controller
 {
     //
 
+    public function image_upload($file,$dir){
 
-public function image_upload($file, $dir)
-{
-    try {
-        $dir = rtrim($dir, '/') . '/';
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
 
-        $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+        $filepath  = $dir . $fileName;
+    
+        $resp =  Storage::disk('s3')->put($filepath, file_get_contents($file));
 
-        $filePath = $dir . $fileName;
+        
+        $image_url = 'https://desynat-bucket.s3.me-south-1.amazonaws.com/' . $filepath;
 
-        $uploaded = Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');
-
-                dd($uploaded);
-
-
-        if ($uploaded) {
-           return  Storage::disk('s3')->url($filePath);
-        } else {
-            return null;
-        }
-
-    } catch (\Exception $e) {
-        \Log::error('S3 Upload Error: ' . $e->getMessage());
-        return null;
+        return  $image_url;
     }
-}
-
 
 }
