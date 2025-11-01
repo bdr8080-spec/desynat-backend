@@ -12,13 +12,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 
     <style>
-    .auth-wrapper {
+    /* .auth-wrapper {
         display: flex;
-        /* height: 100vh; */
+        height: 100vh;
         width: 100%;
         max-width: 900px;
         margin: 10% auto;
-    }
+    } */
 
     .auth-left {
         flex: 1;
@@ -66,7 +66,7 @@
     }
 
     .loginBackgroundeffect {
-        max-width: 470px;
+        max-width: 576px;
     }
 
     .custom-topbar {
@@ -116,7 +116,7 @@
 <body style="background-color: rgba(227, 194, 149, 0.75) !important;">
 
     <div>
-        <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow">
+        <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
 
 
             <div class="left-section d-flex align-items-center">
@@ -136,52 +136,53 @@
         </nav>
 
         <div class="auth-wrapper">
-
-            <!-- LEFT SIDE -->
-            <div class="auth-left">
-                <div class="brand-header">
-                    <!-- <img src="assets/logo.png" class="brand-logo" alt="logo">
-      <span class="brand-name">Desynat</span> -->
-                </div>
-            </div>
-
-            <!-- RIGHT SIDE -->
-            <div class="auth-right">
-                <div class="login-container-div">
-                    <div class="login">
-                        <div class="loginBackgroundeffect">
-                            <h5 class=""> <span>Welcome back ! </span></h5>
-                            <div class="row mt-3">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label for="email" class="form-label">Enter Email</label>
-                                        <input type="text" class="form-control" id="email" name="email"
-                                            placeholder="Enter Email id" required />
-                                        <small id="emailError" style="color: red;"></small>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 mt-3">
-                                    <div class="form-group">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input type="password" id="password" class="form-control custom-password"
-                                            name="password" placeholder="Enter password" required />
-                                        <i toggle="#password" class="fas fa-eye toggle-password"></i>
+            <div class="wrapper-inner">
+              <!-- LEFT SIDE -->
+              <div class="auth-left">
+                  <div class="brand-header">
+                      <!-- <img src="assets/logo.png" class="brand-logo" alt="logo">
+                       <span class="brand-name">Desynat</span> -->
+                  </div>
+              </div>
+  
+              <!-- RIGHT SIDE -->
+              <div class="auth-right">
+                  <div class="login-container-div">
+                      <div class="login">
+                          <div class="loginBackgroundeffect">
+                              <h5 class=""> <span>Welcome back ! </span></h5>
+                              <div class="row mt-3">
+                                  <div class="col-lg-12">
+                                      <div class="form-group">
+                                          <label for="email" class="form-label">Enter Email</label>
+                                          <input type="text" class="form-control" id="email" name="email"
+                                              placeholder="Enter Email id" required />
+                                          <small id="emailError" style="color: red;"></small>
                                       </div>
-                                    </div>
-                                    <small id="passwordError" style="color: red;"></small>
-                                <div id="loginError" style="color: red; display:none;"></div>
-                                <div class="col-lg-12">
-                                    <div class="mt-2 d-flex align-items-center justify-content-center">
-                                        <a href="{{ route('forgotPassword') }}">Forgot Password?</a>
-                                    </div>
-                                </div>
-                                <div class="button d-flex align-items-center justify-content-center">
-                                    <button id="loginBtn" class="btn custom-btn w-100">Login</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                  </div>
+                                  <div class="col-lg-12 mt-3">
+                                      <div class="form-group">
+                                          <label for="password" class="form-label">Password</label>
+                                          <input type="password" id="password" class="form-control custom-password"
+                                              name="password" placeholder="Enter password" required />
+                                          <i toggle="#password" class="fas fa-eye toggle-password"></i>
+                                      </div>
+                                  </div>
+                                  <small id="passwordError" style="color: red;"></small>
+                                  <div id="loginError" style="color: red; display:none;"></div>
+                                  <div class="col-lg-12">
+                                      <div class="mt-2 d-flex align-items-center justify-content-center">
+                                          <a href="{{ route('forgotPassword') }}">Forgot Password?</a>
+                                      </div>
+                                  </div>
+                                  <div class="button d-flex align-items-center justify-content-center">
+                                      <button id="loginBtn" class="btn custom-btn w-100">Login</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
 
         </div>

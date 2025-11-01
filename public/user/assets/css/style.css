@@ -218,7 +218,7 @@ section{
     top: 50%;
     right: 10px;
 }
-.toggle-passwordone{
+.toggle-passwordone, .toggle-password{
     position: absolute; right: 10px; top: 38px; cursor: pointer;
 }
 .login_content_content p{
@@ -649,7 +649,60 @@ section{
     height: 100%;
     object-fit: cover;
 }
-
+/*--------------------------------------------------------------
+# image upload
+--------------------------------------------------------------*/
+.upload-image {
+  border: 1px dashed #cca97e;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  position: relative;
+  height: 130px;
+}
+.imgshow img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+ 
+.imgshow {
+  height: 110px;
+  margin: auto;
+  position: absolute;
+  width: 150px;
+  left: 50%;
+  transform: translate(-50%);
+  top: -3px;
+}
+.text-color-upload{
+  color: var(--title-dark);
+}
+.cmn-header .bi-chevron-left {
+  color: #000;
+}
+.upload-image .uploadLabel{
+        z-index: 99;
+}
+.uploadLabel-summary img {
+  height: 100%;
+  width: 100%;
+  aspect-ratio: 2;
+  object-fit: fill;
+}
+.removeIcon {
+  position: absolute;
+}
+.customBtnresend{
+    border: 1px solid var(--third-color);
+    font-size: 14px;
+    background: transparent;
+    border-radius: 5px;
+    margin: 20px auto 0;
+    display: flex;
+}
 
 /* index end */
 

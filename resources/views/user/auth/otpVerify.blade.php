@@ -56,10 +56,10 @@
                          <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
                      
                     </div>
+                    <button type="button" class="customBtnresend" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
                     <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Continue</button>
                         </form>
 
-                         <button type="button" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
 
                 </div>
             </div>

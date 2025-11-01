@@ -17,11 +17,11 @@
    #content-wrapper {
     display: flex;
     flex-direction: row;
-    height: 100vh; /* Ensures full height for proper layout */
+    /* height: 100vh;  */
 }
 
 #accordionSidebar {
-    margin-top: 0; /* Ensures no extra space at the top */
+    margin-top: 75px; /* Ensures no extra space at the top */
     padding-top: 0; /* Ensures no extra padding at the top */
     height: 100%; /* Ensures sidebar takes full height */
 }
