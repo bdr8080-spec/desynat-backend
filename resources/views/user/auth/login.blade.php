@@ -39,7 +39,7 @@
                                 </select>
                          </div> 
                          <div class="col-12 LoginMobileDesign">
-                           <input type="text" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobileOrEmail" id="LoginMobile">
+                           <input type="text" class="form-control"  value="" placeholder="Enter mobile number and email address" name="mobileOrEmail" id="LoginMobile">
                         </div>
                     </div>
                 </div>

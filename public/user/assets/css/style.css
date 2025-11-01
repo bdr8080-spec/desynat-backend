@@ -128,6 +128,24 @@ section{
     border: 1px solid #000000;
     color: var(--third-color);
 }
+.userDropdown .dropdown-menu li a{
+    margin: 0px !important;
+}
+.userDropdown button{
+    background: transparent;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+        width: 50px;
+    height: 50px;
+    display: flex;
+        overflow: hidden;
+}
+.userDropdown button img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .inner-header .dropdown .dropdown-menu li a.dropdown-item span{
     background: #FFF7EA;
     color: #6E4527;
