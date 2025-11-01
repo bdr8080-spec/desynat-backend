@@ -1,5 +1,5 @@
 // Toggle password visibility
-document.querySelectorAll('.toggle-password').forEach(toggle => {
+document.querySelectorAll('.toggle-passwordone').forEach(toggle => {
     toggle.addEventListener('click', function () {
     const input = this.parentElement.querySelector('input');
     const isPassword = input.getAttribute('type') === 'password';
@@ -13,17 +13,17 @@ document.querySelectorAll('.toggle-password').forEach(toggle => {
 });
 
 document.querySelectorAll('.toggle-password').forEach(toggle => {
-    toggle.addEventListener('click', function () {
+  toggle.addEventListener('click', function () {
     const input = this.parentElement.querySelector('input');
-    const isPassword = input.getAttribute('type') === 'password';
+    const isPassword = input.type === 'password';
 
     // Toggle between text/password
-    input.setAttribute('type', isPassword ? 'text' : 'password');
+    input.type = isPassword ? 'text' : 'password';
 
-    // Toggle the icon style
+    // Toggle icon classes
     this.classList.toggle('fa-eye');
     this.classList.toggle('fa-eye-slash');
-    });
+  });
 });
 
 
@@ -54,23 +54,36 @@ const inputs = document.querySelectorAll(".otp-input");
 
 // tel-input
 
-$(".tel-input").intlTelInput({
+$(document).ready(function () {
+  const telInput = $(".tel-input");
+
+  telInput.intlTelInput({
     initialCountry: "auto",
     nationalMode: false,
     formatOnDisplay: true,
     separateDialCode: false,
     preferredCountries: [],
-    geoIpLookup: cb => {
-        $.get("https://ipinfo.io", () => {}, "jsonp").always(resp => cb(resp?.country || ""));
+    geoIpLookup: function (callback) {
+      $.get("https://ipinfo.io", function () {}, "jsonp").always(function (resp) {
+        const countryCode = (resp && resp.country) ? resp.country : "";
+        callback(countryCode);
+      });
     },
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js"
-    });
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+  });
 
-    function resetIntlTelInput() {
+  // Reset function
+  function resetIntlTelInput() {
     if (typeof intlTelInputUtils === "undefined") return;
     const currentText = telInput.intlTelInput("getNumber", intlTelInputUtils.numberFormat.E164);
-    if (typeof currentText === "string") telInput.intlTelInput("setNumber", currentText);
-}
+    if (typeof currentText === "string") {
+      telInput.intlTelInput("setNumber", currentText);
+    }
+  }
+
+  // Optional: run it once on load
+  resetIntlTelInput();
+});
 
 // tel-input end
 
@@ -118,32 +131,6 @@ $(document).ready(function() {
 //   currency js end
 
 
-// owl carousel
-
-$('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:10,
-    responsiveClass:true,
-    nav:false,
-    dots:true,
-    responsive:{
-        0:{
-            items:1,
-        },
-        600:{
-            items:1,
-        },
-        1000:{
-            items:1,
-        }
-    }
-})
-
-// owl carousel end
-
-
-
-
 const container = document.querySelector('.suggestStore_contenar');
 
 let isDown = false;
@@ -171,6 +158,6 @@ container.addEventListener('mousemove', (e) => {
   if (!isDown) return;
   e.preventDefault();
   const x = e.pageX - container.offsetLeft;
-  const walk = (x - startX) * 1.5; // scroll speed
+  const walk = (x - startX) * 1.2; // scroll speed
   container.scrollLeft = scrollLeft - walk;
 });
