@@ -1,9 +1,9 @@
 @extends('admin.layout.app')
 @section('content')
-      <div id="" class="d-flex flex-column position-relative">
+      <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content">
           <nav
-            class="navbar navbar-expand navbar-light custom-topbar mb-4 static-top shadow"
+            class="navbar navbar-expand navbar-light fixed-top custom-topbar mb-4 static-top shadow"
           >
             <div class="left-section d-flex align-items-center">
                         <img src="image/combine_logo.svg" class="header-logo" />
