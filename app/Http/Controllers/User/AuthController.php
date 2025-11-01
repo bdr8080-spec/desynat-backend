@@ -41,7 +41,7 @@ class AuthController extends Controller
             $rules = [
                     'full_name' => 'required',
                     'country_code' => 'required',
-                    'image'=> 'required',
+                    // 'image'=> 'required',
                     'email' => 'required|email|unique:users,email',
                     'mobile' => 'required',
                     'password' => 'required',
