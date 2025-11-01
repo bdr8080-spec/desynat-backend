@@ -1778,16 +1778,19 @@ button[type="submit"] {
 }
 
 @media (min-width: 1200px) and (max-width: 1440px) {
-
-  /* Your CSS rules go here */
-
-}
-
-@media (min-width:1400px) {
     .auth-wrapper {
  
     margin-top: 97px ;
 
 }
+
 }
+
+/* @media (min-width:1400px) {
+    .auth-wrapper {
+ 
+    margin-top: 97px ;
+
+}
+} */
  
