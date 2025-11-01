@@ -67,10 +67,10 @@ class SellerController extends Controller
     }
 
 
-    public function change_brand_status(Request $request)
+    public function get_seller_details(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'brand_id' => 'required|exists:brands,id',
+            'seller_id' => 'required|exists:sellers,id',
         ]);
 
         if ($validate->fails()) {
@@ -78,9 +78,9 @@ class SellerController extends Controller
         }
 
         try {
-            $data = $this->BrandService->changeBrandStatus($request->brand_id);
+            $data = $this->SellerManagementService->getSellerDetailsById($request->seller_id);
 
-            if (isset($data['status']) && $data['status'] == 'error') {
+            if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
             }
 
@@ -90,6 +90,60 @@ class SellerController extends Controller
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+
+    public function accept_seller(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'seller_id' => 'required|exists:sellers,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->SellerManagementService->acceptSeller($request->seller_id);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+
+    public function reject_seller(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'seller_id' => 'required|exists:sellers,id',
+            'reject_reason' => 'required|string|max:1000',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->SellerManagementService->rejectSeller($request->seller_id,$request->reject_reason);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+
+
+
 
 
 

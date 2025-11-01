@@ -28,7 +28,7 @@ class BrandService
                 return [
                     'status' => 'success',
                     'message' => 'No Brand found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 

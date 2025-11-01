@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\AuthController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\SellerController;
+use App\Http\Controllers\Api\Admin\CountryController;
 
 
 // Admin APi M1
@@ -15,7 +16,8 @@ use App\Http\Controllers\Api\Admin\SellerController;
     Route::post('/admin_verify_otp',[AuthController::class,'admin_verify_otp']);
     Route::post('/admin_create_password',[AuthController::class,'admin_create_password']);
     Route::post('/resend_otp',[AuthController::class,'resend_otp']);
-
+    
+    Route::get('/get_countries',[CountryController::class,'get_countries']);
 
 
    Route::middleware(['auth:sanctum', 'ability:admin'])->group(function () {
@@ -45,6 +47,9 @@ use App\Http\Controllers\Api\Admin\SellerController;
      Route::get('/get_new_sellers',[SellerController::class,'get_new_sellers']);
      Route::get('/get_approved_sellers',[SellerController::class,'get_approved_sellers']);
      Route::get('/get_rejected_sellers',[SellerController::class,'get_rejected_sellers']);
+     Route::get('/get_seller_details',[SellerController::class,'get_seller_details']);
+     Route::post('/accept_seller',[SellerController::class,'accept_seller']);
+     Route::post('/reject_seller',[SellerController::class,'reject_seller']);
 
 
 

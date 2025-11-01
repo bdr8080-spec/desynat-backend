@@ -71,7 +71,7 @@
                   </div>
                 </div> -->
 
-                <div class="table-responsive w-100">
+                <div class=" w-100">
                   <table id="myTable" class="table w-100">
                     <thead>
                       <tr>
@@ -201,8 +201,9 @@
 
                                   <!-- Submit Button -->
                                   <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                      <button type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</button>
+                                      <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</a>
                                   </div>
+                 
 
                               </div>
                           </form>
