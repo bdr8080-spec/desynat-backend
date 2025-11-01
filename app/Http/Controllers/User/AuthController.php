@@ -424,9 +424,18 @@ class AuthController extends Controller
         }
 
 
+        public function userLogout()
+        {
+            Auth::guard('web')->logout();
+
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+
+            return redirect('/');
+        }
+
+
     public function dashboard(){
-
-
-        return view('user.auth.dashboard');
+      return view('user.auth.dashboard');
     }
 }
