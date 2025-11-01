@@ -115,7 +115,7 @@ class CategoryController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
+            'image' => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -142,7 +142,7 @@ class CategoryController extends Controller
             'subcategory_id' => 'required|exists:sub_categories,id',
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048', 
+            'image' => 'required', 
         ]);
 
         if ($validate->fails()) {
