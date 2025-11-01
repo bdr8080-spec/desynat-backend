@@ -29,8 +29,8 @@
                     <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> Reset Password</h3>
                     <div class="form-group position-relative password_icon mt-3">
                         <label for="createPassword">Create Password</label>
-                        <input type="password" id="createPassword" class="form-control custom-password"
-                            placeholder="Enter password" style="padding-right: 40px;" name="password"/>
+                        <input type="password" id="createPassword" class="form-control custom-password notapplyspace"
+                            placeholder="Enter password" style="padding-right: 40px;" name="password" />
                         <i class="fa-solid fa-eye toggle-password" id="toggleCreate"></i>
                     </div>
                      <span class="text-danger" id="error-password"></span>
@@ -38,7 +38,7 @@
 
                     <div class="form-group position-relative password_icon mt-3">
                         <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" class="form-control custom-password"
+                        <input type="password" id="confirmPassword" class="form-control custom-password notapplyspace"
                             placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password" />
                         <i class="fa-solid fa-eye toggle-password" id="toggleConfirm"></i>
                         {{-- <span class="text-danger" id="error-confirm_password"></span> --}}
@@ -67,11 +67,7 @@
 
        <script>
 
-        document.addEventListener('keydown', function(e) {
-        if (e.key === ' ') {
-            e.preventDefault();
-        }
-        });
+
 
 
         $(document).on('submit', '#resetPassword', function (e) {

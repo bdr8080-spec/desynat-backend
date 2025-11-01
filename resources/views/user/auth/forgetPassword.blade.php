@@ -27,7 +27,7 @@
                         @csrf
                     <div class="radio-group my-4">
                         <label class="custom-radio">
-                            <input type="radio" name="forgetPassword" class="emailandmobile" value="1"  checked />
+                            <input type="radio" name="forgetPassword" class="emailandmobile notapplyspace" value="1"  checked />
                             <span class="radio-mark"></span>
                             <span class="label-text">Mobile Number</span>
                         </label>
@@ -59,7 +59,7 @@
 
                     <div class="form-group position-relative password_icon mt-3 d-none emailInput">
                         <label for="">Enter Email Id</label>
-                        <input class="form-control" type="email" placeholder="Enter Mobile Number" name="email">
+                        <input class="form-control notapplyspace" type="email" placeholder="Enter Mobile Number" name="email">
                           <p class="text-danger" id="error-email"></p>
                     </div>
                     <button type="submit" class="customBtn mt-4">Continue</button>
