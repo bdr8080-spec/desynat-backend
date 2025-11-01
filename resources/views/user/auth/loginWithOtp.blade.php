@@ -30,15 +30,15 @@
                     @csrf
                     <div class="form-group mt-3">
                         <label class="d-block" for="">Enter Mobile Number</label>
-                    <div class="row">
-                        <div class="col-3">
-                                <select name="country_code" id="" class="form-control">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                                <select name="country_code" id="" class="country" class="form-control">
                                     @foreach ($country as $item)                       
                                         <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
                                     @endforeach
                                 </select>
                          </div> 
-                         <div class="col-9">
+                         <div class="w-100">
                            <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
                         </div>
                         <span class="text-danger" id="error-mobile"></span>
