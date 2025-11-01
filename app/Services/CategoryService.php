@@ -38,11 +38,19 @@ class CategoryService
         }
     }
 
-    public function getSubCategoriesByCategoryId($categoryId,$limit = null)
+    public function getSubCategoriesByCategoryId($categoryId, $limit = null, $search = null)
     {
         try {
             $limit = !empty($limit) ? (int)$limit : 10;
-            $subCategories = SubCategory::where('category_id', $categoryId)->where('status', 1)->paginate($limit);
+
+            $query = SubCategory::where('category_id', $categoryId)
+                                ->where('status', 1);
+
+            if (!empty($search)) {
+                $query->where('name_english', 'like', '%' . $search . '%');
+            }
+
+            $subCategories = $query->paginate($limit);
 
             if ($subCategories->isEmpty()) {
                 return [
@@ -66,6 +74,7 @@ class CategoryService
             ];
         }
     }
+
 
     public function changeCategoryStatus($categoryId)
     {
