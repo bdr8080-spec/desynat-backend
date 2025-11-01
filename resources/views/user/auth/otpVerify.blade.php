@@ -56,15 +56,17 @@
                          <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
                      
                     </div>
-                    
                     <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Continue</button>
                         </form>
+
+                         <button type="button" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
+
                 </div>
             </div>
         </div>
     </div>
 
-      <script>
+    <script>
         $(document).on('submit', '#otpVerify', function (e) {
             e.preventDefault();
 
@@ -93,7 +95,55 @@
             });
         });
 
-     </script>
+  
+            function resendOtp() {
+            let id = "{{ request()->temp_user_id }}"; 
+            let button = document.getElementById('resendOtpBtn');
+            let timer = 30; 
+
+            button.disabled = true;
+            button.innerText = `Resend OTP (${timer}s)`;
+
+            let countdown = setInterval(() => {
+                timer--;
+                button.innerText = `Resend OTP (${timer}s)`;
+
+                if (timer <= 0) {
+                    clearInterval(countdown);
+                    button.disabled = false;
+                    button.innerText = "Resend OTP";
+                }
+            }, 1000);
+
+            $('#resendOtpBtn').prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('userResendOtp') }}",
+                type: "POST",
+                data: {
+                    id: id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function (resp) {
+                    toastr.success(resp.message);
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+                },
+                complete: function () {
+                    $('#resendOtpBtn').prop('disabled', false);
+                }
+            });
+        }
+
+
+
+    
+    
+    </script>
+
+
+
 
     <script>
         const inputs = document.querySelectorAll(".otp-input");
