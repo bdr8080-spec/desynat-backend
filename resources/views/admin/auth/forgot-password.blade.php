@@ -13,13 +13,13 @@
 </head>
 <body style="background-color: rgba(227, 194, 149, 0.75) !important;">
      <style>
-       .auth-wrapper {
+       /* .auth-wrapper {
         display: flex;
-        /* height: 100vh; */
+        height: 100vh;
         width: 100%;
             max-width: 900px;
     margin: 10% auto;
-      }
+      } */
 
       .auth-left {
         flex: 1;
@@ -68,7 +68,7 @@
         width: 350px;
       }
       .loginBackgroundeffect {
-        max-width: 470px;
+        max-width: 576px;
       }
          .custom-topbar {
   background: linear-gradient(90deg, #c08f53, #a36a2a) !important;
@@ -112,7 +112,7 @@
   gap: 6px;
 }
     </style>
- <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow">
+ <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
 
         
             <div class="left-section d-flex align-items-center">
@@ -132,6 +132,7 @@
           </nav>
 
 <div class="auth-wrapper">
+   <div class="wrapper-inner">
   <!-- LEFT SIDE -->
   <div class="auth-left">
     <div class="brand-header">
@@ -230,7 +231,8 @@
         </div> 
       </div>
     </div>
-  </div> 
+  </div>
+</div> 
 </div> 
 
 </div>

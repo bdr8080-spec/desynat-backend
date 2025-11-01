@@ -832,12 +832,12 @@ table thead tr:nth-child(even) {
     color: #fff;
 }
 
-#content {
+/* #content {
     position: fixed !important;
     top: 0;
     width: 100%;
     z-index: 2;
-}
+} */
 
 .inner-content {
     margin-left: 279px;
@@ -847,7 +847,7 @@ table thead tr:nth-child(even) {
     position: relative;
     z-index: 0;
     /* overflow-y: scroll; */
-    margin-top: 17px;
+    padding-top: 98px;
     margin-right: 30px;
 }
 
@@ -866,7 +866,7 @@ table thead tr:nth-child(even) {
 }
 
 #content {
-    position: fixed !important;
+    /* position: fixed !important; */
     top: 0;
     width: 100%;
 }
@@ -1616,8 +1616,19 @@ button[type="submit"] {
     display: flex;
     /* height: 100vh; */
     width: 100%;
-    max-width: 900px;
-    margin: 10% auto;
+    max-width: 90%;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 160px;
+    /* padding: 150px 0px; */
+    /* overflow: hidden; */
+}
+
+.wrapper-inner{
+    display: flex;
+    flex:1;
 }
 
 .auth-left {
@@ -1666,7 +1677,7 @@ button[type="submit"] {
     width: 350px;
 }
 .loginBackgroundeffect {
-    max-width: 470px;
+    max-width: 576px;
 }
 
 .custom-topbar {
