@@ -30,15 +30,15 @@
                 <div class="form-group mt-4">
                     <label for="">Mobile or Email Address</label>
                    
-                    <div class="row">
-                        <div class="col-3 d-none LoginCountryCode">
-                                <select name="country_code" id="" class="form-control">
+                    <div class="d-flex align-items-center">
+                        <div class=" d-none LoginCountryCode">
+                                <select name="country_code" id="" class="country form-control">
                                     @foreach ($country as $item)                       
                                         <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
                                     @endforeach
                                 </select>
                          </div> 
-                         <div class="col-12 LoginMobileDesign">
+                         <div class="w-100 LoginMobileDesign">
                            <input type="text" class="form-control"  value="" placeholder="Enter mobile number and email address" name="mobileOrEmail" id="LoginMobile">
                         </div>
                     </div>
@@ -96,7 +96,7 @@
 
             if (!isNaN(value.charAt(0))) {
                 $('.LoginCountryCode').addClass('d-block').removeClass('d-none');
-                $('.LoginMobileDesign').addClass('col-9').removeClass('col-12');
+                $('.LoginMobileDesign').addClass('').removeClass('col-12');
             } else {
                 $('.LoginCountryCode').addClass('d-none').removeClass('d-block');
                 $('.LoginMobileDesign').addClass('col-12').removeClass('col-9');
