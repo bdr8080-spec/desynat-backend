@@ -84,6 +84,7 @@ class CategoryController extends Controller
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+    
 
     public function change_subcategory_status(Request $request)
     {

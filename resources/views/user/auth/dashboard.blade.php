@@ -29,7 +29,14 @@
                      
                         <div class="header_nav_button_dropdown">
                                @if (Auth::guard('web')->check())
-                               <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px"> 
+                                <div class="dropdown userDropdown">
+                                    <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
+                                    </ul>
+                                </div>
                                @else
                                  <a class="customBtn1" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                                  @endif
@@ -1251,7 +1258,7 @@
     
     <script src="{{asset('user/assets/js/jquery-3.7.1.min.js')}}" ></script>
     <!-- <script src="assets/js/all.min.js" ></script> -->
-    <script src="{{asset('usser/assets/js/bootstrap.bundle.min.js')}}" ></script>
+    <script src="{{asset('user/assets/js/bootstrap.bundle.min.js')}}" ></script>
     <!-- <script src="assets/js/fontawesome.min.js" ></script> -->
     <script src="{{asset('user/assets/js/owl.carousel.js')}}"></script>
     <script src="{{asset('user/assets/js/custom.js')}}"></script>
