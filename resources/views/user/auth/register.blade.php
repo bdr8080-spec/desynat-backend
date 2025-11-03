@@ -78,7 +78,7 @@
                                                             data-flag="{{ $item->flag1 }}"
                                                             class="country-radio"
                                                             {{ $index === 0 ? 'checked' : '' }} hidden>
-                                                        <img src="{{ $item->flag }}" alt="Flag of {{ $item->name }}" width="25" height="16">
+                                                        <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
                                                         <span>{{ $item->dial_code }} ({{ $item->name }})</span>
                                                     </label>
                                                 </li>
