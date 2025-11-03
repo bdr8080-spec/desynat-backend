@@ -151,7 +151,7 @@
                 contentType: false, 
                 success: function (resp) {
                     if(resp.status == true){
-                        location.href = `verify-otp?temp_user_id=${resp.id}&forget_password=one`;
+                        location.href = `verify-otp?temp_user_id=${resp.id}&forget_password=one&type=${resp.type}`;
                     }
 
                     if(resp.status == false){

@@ -320,6 +320,7 @@ class AuthController extends Controller
                         'status' => true,
                         'message' => 'OTP sent successfully',
                         'id' => $id,
+                        'type'=>$request->forgetPassword
                     ]);
                 }
 
@@ -401,56 +402,79 @@ class AuthController extends Controller
 
 
         public function loginWithOtp(Request $request){
+
                    if ($request->isMethod('get')) {
                         $country =   country::all();
                         return view('user.auth.loginWithOtp', compact('country'));
             }else{
 
               
+                $rules = [];
+                $messages = [];
 
-                $rules = [
-                    'mobile' => 'required|digits:10'
-                ];
+                if ($request->forgetPassword == '1') {
+                    $rules = [
+                        'country_code' => 'required',
+                        'mobile' => 'required|digits:10',
+                    ];
 
-                $messages = [
-                    'mobile.required' => 'Please enter your mobile number',
-                    'mobile.digits' => 'Mobile number must be 10 digits',
-                    // 'mobile.exists' => 'This mobile number is not registered',
-                ];
+                    $messages = [
+                        'country_code.required' => 'Please select your country code',
+                        'mobile.required' => 'Please enter your mobile number',
+                        'mobile.digits' => 'Mobile number must be 10 digits',
+                    ];
+                } else {
+                    $rules = [
+                        'email' => 'required|email',
+                    ];
+
+                    $messages = [
+                        'email.required' => 'Please enter your email address',
+                        'email.email' => 'Please enter a valid email address',
+                    ];
+                }
 
                 $validator = Validator::make($request->all(), $rules, $messages);
 
-               if($validator->fails()){
-                   return response()->json([
-                    'status'=>false,
-                    'errors'=>$validator->errors()
-                   ]);
-               }
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false,
+                        'errors' => $validator->errors()
+                    ]);
+                }
 
-                   $user = User::where([
-                            ['country_code',$request->country_code],
-                            ['mobile',$request->mobile],
-                        ])->first();
+                // OTP value
+                $otp = config('services.otp');
 
-                $otp= config('services.otp');
+                if ($request->forgetPassword == '1') {
+                    $user = User::where([
+                        ['country_code', $request->country_code],
+                        ['mobile', $request->mobile],
+                    ])->first();
+                } else {
+                    $user = User::where('email', $request->email)->first();
+                }
 
                 if ($user) {
                     $user->otp = $otp;
                     $user->save();
+
                     $id = Crypt::encryptString($user->id);
+
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP sent successfully',
                         'id' => $id,
+                        'type'=> $request->forgetPassword
                     ]);
                 }
 
                 return response()->json([
                     'status' => false,
-                    'message' => 'This mobile number is not registered'
-                ],403);
-
-
+                    'message' => $request->forgetPassword == '1'
+                        ? 'This mobile number is not registered'
+                        : 'This email address is not registered',
+                ], 403);
             }
         }
 
