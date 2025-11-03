@@ -13,7 +13,7 @@ class CategoryService
     public function getCategory($request)
     {
         try {
-            $category_details = Category::where('status', 1)->get();
+            $category_details = Category::all();
 
             if ($category_details->isEmpty()) {
                 return [
@@ -43,8 +43,7 @@ class CategoryService
         try {
             $limit = !empty($limit) ? (int)$limit : 10;
 
-            $query = SubCategory::where('category_id', $categoryId)
-                                ->where('status', 1);
+            $query = SubCategory::where('category_id', $categoryId);
 
             if (!empty($search)) {
                 $query->where('name_english', 'like', '%' . $search . '%');
