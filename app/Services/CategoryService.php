@@ -13,13 +13,13 @@ class CategoryService
     public function getCategory($request)
     {
         try {
-            $category_details = Category::query();
+            $category_details = Category::all();
 
             if ($category_details->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No categories found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 

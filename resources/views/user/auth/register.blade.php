@@ -103,14 +103,14 @@
                     <label for="">Create Password</label>
                     <input type="password" id="login-password" class="form-control custom-password notapplyspace"
                         placeholder="Please enter password" style="padding-right: 40px;"  name="password"/>
-                    <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
+                    <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-password"></span>
                 <div class="form-group position-relative password_icon mt-3">
                     <label for="">Confirm Password</label>
                     <input type="password" id="login-password" class="form-control custom-password notapplyspace"
                         placeholder="Please enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
-                    <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
+                    <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-confirm_password"></span>
                 <div class="form-check term_policy my-3">
