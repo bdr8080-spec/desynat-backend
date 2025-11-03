@@ -31,7 +31,7 @@
                         <label for="createPassword">Create Password</label>
                         <input type="password" id="createPassword" class="form-control custom-password notapplyspace"
                             placeholder="Enter password" style="padding-right: 40px;" name="password" />
-                        <i class="fa-solid fa-eye toggle-password" id="toggleCreate"></i>
+                        <i class="fa-solid fa-eye toggle-passwordtwo" id="toggleCreate"></i>
                     </div>
                      <span class="text-danger" id="error-password"></span>
 
@@ -40,7 +40,7 @@
                         <label for="confirmPassword">Confirm Password</label>
                         <input type="password" id="confirmPassword" class="form-control custom-password notapplyspace"
                             placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password" />
-                        <i class="fa-solid fa-eye toggle-password" id="toggleConfirm"></i>
+                        <i class="fa-solid fa-eye toggle-passwordtwo" id="toggleConfirm"></i>
                         {{-- <span class="text-danger" id="error-confirm_password"></span> --}}
                     </div>
                     <span class="text-danger" id="error-confirm_password"></span>
