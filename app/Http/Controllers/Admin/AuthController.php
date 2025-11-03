@@ -76,7 +76,10 @@ class AuthController extends Controller
 
             session(['admin_email' => $admin->email]);
 
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP sent successfully.'
+            ]);
         }
     }
 
@@ -106,7 +109,10 @@ class AuthController extends Controller
             $admin->save();
             session(['reset_email' => $admin->email]);
 
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP verified successfully.'
+            ]);
         }
     }
 
@@ -119,7 +125,10 @@ class AuthController extends Controller
             $admin->otp_verify = 0;
             $admin->save();
             session(['reset_email' => $admin->email]);
-            return response()->json(['success' => true]);
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP resent successfully.'
+            ]);
         }
         return response()->json(['errors' => ['email' => ['Admin not found']]], 422);
     }

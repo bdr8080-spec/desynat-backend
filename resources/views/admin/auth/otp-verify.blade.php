@@ -10,6 +10,13 @@
 
     <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+</head>
+<style>
+#otpSentMessage {
+    white-space: nowrap;
+}
+</style>
 </head>
 
 <body style="background-color: rgba(227, 194, 149, 0.75) !important;">
@@ -162,9 +169,9 @@
                                 <!-- <div class="login">
                                 <div class="loginBackgroundeffect"> -->
                                 <h5 class="text-start" id="otpSentMessage">
-                                    6 digit OTP has been sent to your registered email: 
-                                    <span id="adminEmail">{{ $email ?? '' }}</span>
+                                    6 digit OTP has been sent to: <span id="adminEmail">{{ $email ?? '' }}</span>
                                 </h5>
+
 
 
                                 <div class="row">
@@ -206,6 +213,7 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
 
     <script>
@@ -277,7 +285,10 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        window.location.href = "{{ route('changePassword') }}";
+                        toastr.success(response.message);
+                        setTimeout(function() {
+                            window.location.href = "{{ route('changePassword') }}";
+                        }, 2000); 
                     }
                 },
                 error: function(xhr) {
@@ -309,9 +320,9 @@
                         $('#resendOtp').prop('disabled', true).hide();
 
                         let email = $('#adminEmail').text();
-                        $('#otpSentMessage').html(
-                            `6 digit OTP has been resent to your registered email: <span id="adminEmail">${email}</span>`
-                        );
+                        $('#otpSentMessage').html('6 digit OTP has been resent to: <span id="adminEmail">' + email + '</span>');
+
+                        toastr.success(response.message);
 
                         startTimer(); // restart timer display
                     }
