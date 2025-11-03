@@ -15,7 +15,7 @@ class BrandService
             $limit = $request->input('limit', 10);
             $limit = (int)$limit;
 
-            $query = Brand::all();
+            $query = Brand::query();
 
             if ($request->filled('search')) {
                 $search = $request->input('search');

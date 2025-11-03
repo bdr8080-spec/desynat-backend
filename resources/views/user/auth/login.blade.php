@@ -27,7 +27,7 @@
                 @csrf
                 <h4>Sign In</h4>
                 <h3>Welcome back !</h3>
-                <div class="form-group mt-4">
+                <div class="form-group mt-lg-4 mt-md-3 mt-2">
                     <label for="">Mobile Number or Email Address</label>
                    
                     <div class="d-flex align-items-center">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <span class="text-danger" id="error-mobileOrEmail"></span>
-                <div class="form-group position-relative password_icon mt-3">
+                <div class="form-group position-relative password_icon mt-lg-3 mt-md-2 mt-1">
                     <label for="">Password</label>
                     <input type="password" name="password"  id="login-password" class="form-control custom-password notapplyspace"
                         placeholder="Please enter password" style="padding-right: 40px;"/>

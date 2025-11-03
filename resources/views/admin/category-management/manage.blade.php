@@ -170,7 +170,7 @@
                                           <div class="upload-text">Upload Image</div>
                                           <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                                       </label>
-                                      <div class="text-danger" id="imageError"></div>
+                                      <div class="text-danger text-center" id="imageError"></div>
                                   </div>
                                    <input type="hidden" name="category_id" class="form-control" value="{{ $id }}"/>
                                   <!-- Brand Name English -->
