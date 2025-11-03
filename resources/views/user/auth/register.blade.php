@@ -30,7 +30,7 @@
 
                 <div class="upload-image w-100">
                     <label class="uploadLabel" style="cursor:pointer;text-align:center;">
-                        <img src="{{asset('user/assets/images/upload-icon.svg')}}"><div class="text-color-upload">Document 1</div>
+                        <img src="{{asset('user/assets/images/upload-icon.svg')}}"><div class="text-color-upload">Upload profile image</div>
                         <input type="file" accept="image/*" name="image" enctype="multipart/form-data" hidden onchange="showPreview(event)">
                     </label>
                     <div class="imgshow">
@@ -67,27 +67,27 @@
                 <div class="form-group position-relative verify mt-3">
                     <label class="d-block" for="">Email Address</label>
                     <input type="text"  class="form-control custom-password notapplyspace"
-                        placeholder="Enter Full Name" style="padding-right: 40px;" name="email"/>
+                        placeholder="Please enter email address" style="padding-right: 40px;" name="email"/>
                 </div>
                 <span class="text-danger" id="error-email"></span>
                 <div class="form-group position-relative password_icon mt-3">
                     <label for="">Create Password</label>
                     <input type="password" id="login-password" class="form-control custom-password"
-                        placeholder="Enter password" style="padding-right: 40px;"  name="password"/>
+                        placeholder="Please enter password" style="padding-right: 40px;"  name="password"/>
                     <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-password"></span>
                 <div class="form-group position-relative password_icon mt-3">
                     <label for="">Confirm Password</label>
                     <input type="password" id="login-password" class="form-control custom-password"
-                        placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
+                        placeholder="Please enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
                     <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-confirm_password"></span>
                 <div class="form-check term_policy my-3">
                     <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate" name="accept_terms">
                     <label class="form-check-label" for="checkIndeterminate">
-                        I accept the <a href="">Terms & Conditions</a> and <a href="">Policies</a>
+                        Please accept the<a href="">terms and conditions</a> and <a href="">policies</a> 
                     </label>
                 </div>
                     <span class="text-danger" id="error-accept_terms"></span>

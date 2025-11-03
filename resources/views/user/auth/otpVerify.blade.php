@@ -58,7 +58,7 @@
                      
                     </div>
                     <button type="button" class="customBtnresend" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
-                    <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Continue</button>
+                    <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Verify OTP</button>
                         </form>
 
 
@@ -84,10 +84,11 @@
                 success: function (resp) {
                     if(resp.status == true){
                         location.href = resp.redirect_url
+                    }else{
+                        toastr.error(resp.error);
                     }
                 },
                 error: function (xhr) {
-                    console.log(xhr.responseJSON.message);
                    toastr.error(xhr.responseJSON.message)
                 },
                  complete: function () {

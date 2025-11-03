@@ -28,7 +28,7 @@
                 <h4>Sign In</h4>
                 <h3>Welcome back !</h3>
                 <div class="form-group mt-4">
-                    <label for="">Mobile or Email Address</label>
+                    <label for="">Mobile Number or Email Address</label>
                    
                     <div class="d-flex align-items-center">
                         <div class=" d-none LoginCountryCode">
@@ -39,7 +39,7 @@
                                 </select>
                          </div> 
                          <div class="w-100 LoginMobileDesign">
-                           <input type="text" class="form-control"  value="" placeholder="Enter mobile number and email address" name="mobileOrEmail" id="LoginMobile">
+                           <input type="text" class="form-control"  value="" placeholder="Please enter mobile number or email address" name="mobileOrEmail" id="LoginMobile">
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <div class="form-group position-relative password_icon mt-3">
                     <label for="">Password</label>
                     <input type="password" name="password"  id="login-password" class="form-control custom-password"
-                        placeholder="Enter password" style="padding-right: 40px;"/>
+                        placeholder="Please enter password" style="padding-right: 40px;"/>
                     <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
                   <span class="text-danger" id="error-password"></span>
@@ -120,7 +120,10 @@
                 contentType: false, 
                 success: function (resp) {
                     if(resp.status == true){
-                        location.href = "/";
+                             toastr.success(resp.message);
+                        setTimeout(() => {
+                             location.href = "/";
+                        }, 1000);
                     }
 
                     if(resp.status == false){
