@@ -46,35 +46,37 @@
                             </div>
 
                             {{-- Mobile Input Section --}}
-                            <div class="form-group position-relative password_icon mt-3 mobileInput">
+                            <div class="form-group position-relative mt-3 mobileInput">
                                 <label for="">Enter Mobile Number</label>
                                 <div class="d-flex align-items-center">
 
                                     {{-- Country Dropdown --}}
-                                    <div class="dropdown me-2">
-                                        <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
-                                                id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span id="selected-flag">
-                                                <img src="{{ $country[0]->flag1 }}" alt="flag" width="25" height="16">
-                                            </span>
-                                            <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
-                                        </button>
+                                    <div>
+                                        <div class="dropdown">
+                                            <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
+                                                    id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span id="selected-flag">
+                                                    <img src="{{ $country[0]->flag1 }}" alt="flag" width="25" height="16">
+                                                </span>
+                                                <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
+                                            </button>
 
-                                        <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">
-                                            @foreach ($country as $index => $item)
-                                                <li>
-                                                    <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
-                                                        <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }}"
-                                                            data-flag="{{ $item->flag1 }}"
-                                                            class="country-radio"
-                                                            {{ $index === 0 ? 'checked' : '' }} hidden>
-                                                        <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
-                                                        <span>{{ $item->dial_code }} ({{ $item->name }})</span>
-                                                    </label>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                            <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">
+                                                @foreach ($country as $index => $item)
+                                                    <li>
+                                                        <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
+                                                            <input type="radio" name="country_code"
+                                                                value="{{ $item->dial_code }}"
+                                                                data-flag="{{ $item->flag1 }}"
+                                                                class="country-radio"
+                                                                {{ $index === 0 ? 'checked' : '' }} hidden>
+                                                            <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
+                                                            <span>{{ $item->dial_code }} ({{ $item->name }})</span>
+                                                        </label>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
 
                                     <div class="w-100">

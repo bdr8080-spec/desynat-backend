@@ -120,8 +120,13 @@ section{
 .header-main{
     padding: 0 2%;
 }
+.header-main .navbar-brand{
+    width: 55%;
+}
 .header-main .navbar-brand img{
-    width: 65%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .inner-header .dropdown button{
     background: transparent;
@@ -487,6 +492,7 @@ section{
     width: 100%;
     background: rgb(255 255 255 / 50%);
     padding: 10px 0 10px 30px;
+    font-size: 16px;
 }
 .customNavbar .dropdown-menu.sell_clothes.show {
     position: absolute;
@@ -721,6 +727,7 @@ section{
 
 .text-danger{
     display: block !important;
+    text-align: start !important;
 }
 
 /* index end */

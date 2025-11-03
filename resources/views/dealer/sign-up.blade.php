@@ -88,7 +88,7 @@
                                         <div class="imgshow">
                                             <img id="preview"
                                                 style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
-                                            <span id="remove"
+                                            <span id="remove " class="remove-ic"
                                                 style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                 onclick="removeImg()">&times;</span>
                                         </div>
@@ -129,6 +129,29 @@
                                     </div>
 
                                     <div class="form-group phone-pnl">
+                                        <label for="name">Mobile Number</label>
+
+                                        <div class="form-group d-flex gap-2">
+                                            <select name="country_code" class="form-select" style="width: 100px">
+                                                @foreach ($country as $val)
+                                                    <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            <input class="form-control" type="tel" id="phone"
+                                                placeholder="Enter mobile Number" name="mobile"
+                                                value="{{ old('mobile') }}"
+                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+
+                                        </div>
+                                        @error('mobile')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
+                                    </div>
+
+                                    {{-- <div class="form-group phone-pnl">
                                         <select name="country_code">
                                             @foreach ($country as $val)
                                                 <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
@@ -139,9 +162,9 @@
                                         @error('country_code')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="form-group phone-pnl">
+                                    {{-- <div class="form-group phone-pnl">
                                         <label for="name">Mobile Number</label>
                                         <input class="form-control" type="tel" id="phone"
                                             placeholder="Enter mobile number" name="mobile"
@@ -149,7 +172,7 @@
                                         @error('mobile')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="form-group position-relative">
                                         <label for="password">Create Password</label>

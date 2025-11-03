@@ -66,7 +66,9 @@
 
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class=" d-none LoginCountryCode">
-                                                    <select name="country_code" id=""
+                                                    <select name="country_code" class="form-select"
+                                                        style="width: 100px">
+
                                                         class="country form-select form-control" style="width: 100px">
                                                         @foreach ($country as $item)
                                                             <option value="{{ $item->dial_code }}">
