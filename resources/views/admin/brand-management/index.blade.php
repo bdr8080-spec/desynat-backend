@@ -163,7 +163,7 @@
                                           <div class="upload-text">Upload Image</div>
                                           <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                                       </label>
-                                      <div class="text-danger" id="imageError"></div>
+                                      <div class="text-danger text-center" id="imageError"></div>
                                   </div>
                                    
                                   <!-- Brand Name English -->

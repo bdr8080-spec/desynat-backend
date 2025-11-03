@@ -13,7 +13,7 @@ class CategoryService
     public function getCategory($request)
     {
         try {
-            $category_details = Category::all();
+            $category_details = Category::query();
 
             if ($category_details->isEmpty()) {
                 return [
