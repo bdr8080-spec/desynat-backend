@@ -236,7 +236,7 @@ section{
     top: 50%;
     right: 10px;
 }
-.toggle-passwordone, .toggle-password{
+.toggle-passwordone, .toggle-password, .toggle-passwordtwo{
     position: absolute; right: 10px; top: 38px; cursor: pointer;
 }
 .login_content_content p{
@@ -402,6 +402,8 @@ section{
 }
 .otp-page .otp_sent{
     margin: 36px 0;
+    font-size: 15px !important;
+    line-height: 21px !important;
 }
 
 .intl-tel-input{
@@ -724,6 +726,10 @@ section{
 .LoginCountryCode{
     width: 74px;
     font-size: 14px;
+}
+
+.text-danger{
+    display: block !important;
 }
 
 /* index end */

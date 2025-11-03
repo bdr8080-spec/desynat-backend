@@ -30,19 +30,21 @@
                     @csrf
                     <div class="form-group mt-3">
                         <label class="d-block" for="">Enter Mobile Number</label>
-                    <div class="d-flex align-items-center">
-                        <div class="">
-                                <select name="country_code" id="" class="country" class="form-control">
-                                    @foreach ($country as $item)                       
-                                        <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
-                                    @endforeach
-                                </select>
-                         </div> 
-                         <div class="w-100">
-                           <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                        <div >
+                            <div class="d-flex align-items-center">
+                                <div class="">
+                                    <select name="country_code" id="" class="country" class="form-control">
+                                        @foreach ($country as $item)                       
+                                            <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
+                                        @endforeach
+                                    </select>
+                                </div> 
+                                <div class="w-100">
+                                    <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                                </div>
+                            </div>
+                            <span class="text-danger" id="error-mobile"></span>
                         </div>
-                        <span class="text-danger" id="error-mobile"></span>
-                    </div>
 
                     </div>
                     <button type="submit" class="customBtn mt-5" >Continue</button>

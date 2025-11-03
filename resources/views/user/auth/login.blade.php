@@ -28,26 +28,53 @@
                 <h4>Sign In</h4>
                 <h3>Welcome back !</h3>
                 <div class="form-group mt-4">
-                    <label for="">Mobile or Email Address</label>
+                    <label for="">Mobile Number or Email Address</label>
                    
                     <div class="d-flex align-items-center">
                         <div class=" d-none LoginCountryCode">
-                                <select name="country_code" id="" class="country form-control">
+                                {{-- <select name="country_code" id="" class="country form-control">
                                     @foreach ($country as $item)                       
                                         <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
                                     @endforeach
-                                </select>
+                                </select> --}}
+
+                                 <div class="dropdown">
+                                        <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
+                                                id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span id="selected-flag">
+                                                <img src="{{ $country[0]->flag1 }}" alt="flag" width="25" height="16">
+                                            </span>
+                                            <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
+                                        </button>
+
+                                        <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">
+                                            @foreach ($country as $index => $item)
+                                                <li>
+                                                    <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
+                                                        <input type="radio" name="country_code"
+                                                            value="{{ $item->dial_code }}"
+                                                            data-flag="{{ $item->flag1 }}"
+                                                            class="country-radio"
+                                                            {{ $index === 0 ? 'checked' : '' }} hidden>
+                                                        <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
+                                                        <span>{{ $item->dial_code }} ({{ $item->name }})</span>
+                                                    </label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+
                          </div> 
                          <div class="w-100 LoginMobileDesign">
-                           <input type="text" class="form-control"  value="" placeholder="Enter mobile number and email address" name="mobileOrEmail" id="LoginMobile">
+                           <input type="text" class="form-control notapplyspace"  value="" placeholder="Please enter mobile number or email address" name="mobileOrEmail" id="LoginMobile">
                         </div>
                     </div>
                 </div>
                 <span class="text-danger" id="error-mobileOrEmail"></span>
                 <div class="form-group position-relative password_icon mt-3">
                     <label for="">Password</label>
-                    <input type="password" name="password"  id="login-password" class="form-control custom-password"
-                        placeholder="Enter password" style="padding-right: 40px;"/>
+                    <input type="password" name="password"  id="login-password" class="form-control custom-password notapplyspace"
+                        placeholder="Please enter password" style="padding-right: 40px;"/>
                     <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
                   <span class="text-danger" id="error-password"></span>
@@ -81,11 +108,22 @@
     <script>
             
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === ' ') {
-                e.preventDefault();
-            }
-        });
+            document.addEventListener('DOMContentLoaded', function () {
+                const radios = document.querySelectorAll('.country-radio');
+                const selectedFlag = document.getElementById('selected-flag');
+                const selectedCode = document.getElementById('selected-code');
+
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                        const parent = this.closest('label');
+                        const flagImg = parent.querySelector('img').src;
+                        const dialCode = this.value;
+
+                        selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                        selectedCode.textContent = dialCode;
+                    });
+                });
+            });
 
 
 
@@ -120,7 +158,10 @@
                 contentType: false, 
                 success: function (resp) {
                     if(resp.status == true){
-                        location.href = "/";
+                             toastr.success(resp.message);
+                        setTimeout(() => {
+                             location.href = "/";
+                        }, 1000);
                     }
 
                     if(resp.status == false){
