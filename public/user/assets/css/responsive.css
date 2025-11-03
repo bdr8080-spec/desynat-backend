@@ -4,7 +4,7 @@
         margin: 0 5% !important;
     }
     .login_content_right{
-        padding: 5% 9%;
+        padding: 5% 9% !important;
     }
 }
 
@@ -20,12 +20,44 @@
    .customContainer{
         max-width: 800px !important;
     }
+    .login_content_right {
+        padding: 5% 3% !important;
+    }
+    .login_content_content .form-group input, .login_content_content .dropdown button{
+        font-size: 12px !important;
+    }
+
 }
 
 @media (max-width:768px) {
 
    .customContainer{
         max-width: 576px !important;
+    }
+    .login_contenar{
+        display: block !important;
+    }
+    .login_content{
+       width: 100% !important;
+        height: 20% !important;
+        border-radius: 0 0 10px 10px;
+        overflow: hidden;
+    }
+    .login_content_right{
+            height: calc(100% - 120px) !important;
+    }
+    .login_content_left .left-imgone{
+            top: 35.7% !important;
+    }
+    .login_content_left .left-imgone,
+    .login_content_left .left-imgtwo{
+            width: 6% !important;
+    }
+    .login_content_left .left-img{
+            width: 22% !important;
+    }
+    .login_content_content{
+        margin: 2% 0;
     }
 }
 
@@ -34,5 +66,8 @@
    .customContainer{
         max-width: 500px !important;
         margin: 0 5%;
+    }
+        .login_content_left .left-imgone {
+        top: 37.7% !important;
     }
 }

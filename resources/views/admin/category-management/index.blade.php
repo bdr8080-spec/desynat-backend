@@ -2,28 +2,12 @@
 @section('content')
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content" class="">
-          <nav
-            class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top"
-          >
-            <div class="left-section d-flex align-items-center">
-              <img src="image/combine_logo.svg" class="header-logo" />
-              <!-- <img src="image/Desynat Logo_Final 1.svg" class="header-logo" /> -->
-            </div>
-
-            <div class="header-divider"></div>
-
-            <div class="right-section">
-              <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-              </button>
-            </div>
-          </nav>
+        
 
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
               <div class="col-lg-6 col-md-6 col-12">
-                <h2 class="h2">Category & Sub-Cattegory Management</h2>
+                <h2 class="h2">Category & Sub-Category Management</h2>
               </div>
             </div>
 
@@ -134,7 +118,12 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    toastr.success(data.message);
+                    // toastr.success(data.message);
+                    if(data.status == 1){
+                        toastr.success(data.message); // Green for active
+                    } else {
+                        toastr.error(data.message);   // Red for deactivated
+                    }
                     setTimeout(() => {
                         location.reload();
                     }, 2000);

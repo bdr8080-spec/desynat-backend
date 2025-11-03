@@ -44,24 +44,25 @@
 
                     @endphp
                     <h5 class="otp_sent">6 digit OTP has been sent to your registered Mobile Number <span>{{$user->country_code}} {{$user->mobile}}</span></h5>
-                       <form id="otpVerify">
+                    <form id="otpVerify">
                         @csrf
                         <input type="hidden" name="id" value="{{request()->temp_user_id}}">
                         <input type="hidden" name="forget_password" value="{{request()->forget_password}}">
-                       <div class="otp-container mt-3">
-                        <input type="text" maxlength="1" class="otp-input" id="otp1" name="otp[]" />
-                        <input type="text" maxlength="1" class="otp-input" id="otp2" name="otp[]" />
-                        <input type="text" maxlength="1" class="otp-input" id="otp3" name="otp[]" />
-                        <input type="text" maxlength="1" class="otp-input" id="otp4"  name="otp[]" />
-                        <input type="text" maxlength="1" class="otp-input" id="otp5"  name="otp[]" />
-                         <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
-                     
-                    </div>
-                    <button type="button" class="customBtnresend" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
-                    <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Continue</button>
-                        </form>
-
-
+                        <div class="otp-container mt-3">
+                            <input type="text" maxlength="1" class="otp-input" id="otp1" name="otp[]" />
+                            <input type="text" maxlength="1" class="otp-input" id="otp2" name="otp[]" />
+                            <input type="text" maxlength="1" class="otp-input" id="otp3" name="otp[]" />
+                            <input type="text" maxlength="1" class="otp-input" id="otp4"  name="otp[]" />
+                            <input type="text" maxlength="1" class="otp-input" id="otp5"  name="otp[]" />
+                            <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
+                        
+                        </div>
+                        <div class="resend-otp-container" style="display: flex;justify-content: center;margin-top:20px !important;xmargin:0 auto; align-items: center; gap: 10px;">
+                            <button type="button" class="customBtnresend" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
+                            <span id="otpTimer" style="color: red;"></span>
+                        </div>
+                        <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Verify OTP</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -84,10 +85,11 @@
                 success: function (resp) {
                     if(resp.status == true){
                         location.href = resp.redirect_url
+                    }else{
+                        toastr.error(resp.error);
                     }
                 },
                 error: function (xhr) {
-                    console.log(xhr.responseJSON.message);
                    toastr.error(xhr.responseJSON.message)
                 },
                  complete: function () {
@@ -97,45 +99,51 @@
         });
 
   
-            function resendOtp() {
-            let id = "{{ request()->temp_user_id }}"; 
-            let button = document.getElementById('resendOtpBtn');
-            let timer = 30; 
+        document.addEventListener('DOMContentLoaded', function() {
+        startOtpTimer(); // Start automatically on page load
+    });
 
-            button.disabled = true;
-            button.innerText = `Resend OTP (${timer}s)`;
+    function startOtpTimer() {
+        let button = document.getElementById('resendOtpBtn');
+        let timerDisplay = document.getElementById('otpTimer');
+        let timer = 50; // seconds
 
-            let countdown = setInterval(() => {
-                timer--;
-                button.innerText = `Resend OTP (${timer}s)`;
+        button.disabled = true;
+        timerDisplay.innerText = `${timer}s`;
 
-                if (timer <= 0) {
-                    clearInterval(countdown);
-                    button.disabled = false;
-                    button.innerText = "Resend OTP";
-                }
-            }, 1000);
+        let countdown = setInterval(() => {
+            timer--;
+            timerDisplay.innerText = `${timer}s`;
 
-            $('#resendOtpBtn').prop('disabled', true);
+            if (timer <= 0) {
+                clearInterval(countdown);
+                button.disabled = false;
+                timerDisplay.innerText = ""; // Hide timer after completion
+            }
+        }, 1000);
+    }
 
-            $.ajax({
-                url: "{{ route('userResendOtp') }}",
-                type: "POST",
-                data: {
-                    id: id,
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function (resp) {
-                    toastr.success(resp.message);
-                },
-                error: function (xhr) {
-                    toastr.error(xhr.responseJSON?.message || 'Something went wrong');
-                },
-                complete: function () {
-                    $('#resendOtpBtn').prop('disabled', false);
-                }
-            });
-        }
+    function resendOtp() {
+        let id = "{{ request()->temp_user_id }}";
+
+        // Restart the timer
+        startOtpTimer();
+
+        $.ajax({
+            url: "{{ route('userResendOtp') }}",
+            type: "POST",
+            data: {
+                id: id,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function (resp) {
+                toastr.success(resp.message);
+            },
+            error: function (xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    }
 
 
 

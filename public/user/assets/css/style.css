@@ -224,9 +224,10 @@ section{
     color: var(--third-color);
 }
 .login_content_content .form-group input,
-.country{
+.login_content_content .dropdown button{
     padding: 10px;
     color: #00000080;
+    font-size: 16px;
 }
 .country{
     border:1px solid #eee;
@@ -236,7 +237,7 @@ section{
     top: 50%;
     right: 10px;
 }
-.toggle-passwordone, .toggle-password{
+.toggle-passwordone, .toggle-password, .toggle-passwordtwo{
     position: absolute; right: 10px; top: 38px; cursor: pointer;
 }
 .login_content_content p{
@@ -402,15 +403,8 @@ section{
 }
 .otp-page .otp_sent{
     margin: 36px 0;
-}
-
-.intl-tel-input{
-    width: 100%;
-}
-.intl-tel-input .tel-input{
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    width: 100%;
+    font-size: 15px !important;
+    line-height: 21px !important;
 }
 .term_policy label a{
     color: var(--secondry2-color);
@@ -610,20 +604,20 @@ section{
   justify-content: center;
 }
 .share-btn {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: transparent;
-  border: 1px solid transparent;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: 50%;
     background: linear-gradient(#fff, #fff) padding-box,
                 linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
-  color: var(--secondry2-color);
+    color: var(--secondry2-color);
     width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .product-content {
@@ -718,12 +712,15 @@ section{
     font-size: 14px;
     background: transparent;
     border-radius: 5px;
-    margin: 20px auto 0;
     display: flex;
 }
 .LoginCountryCode{
     width: 74px;
     font-size: 14px;
+}
+
+.text-danger{
+    display: block !important;
 }
 
 /* index end */

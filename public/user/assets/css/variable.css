@@ -20,9 +20,9 @@
     --nav-font-height:24px;
     --nav-font-weight:400;
 
-    --heading1-font:55px;
+    /* --heading1-font:55px;
     --heading1-font-height:80px;
-    --heading1-font-weight:400;
+    --heading1-font-weight:400; */
 
     --heading3-font:24px;
     --heading3-font-height:32px;
@@ -46,44 +46,31 @@
 @media (max-width:1300px) {
     :root{
 
-        --p-font-size:16px;
-        --p-font-height:26px;
+        --p-font-size:14px;
+        --p-font-height:24px;
         --p-font-weight:400;
 
-        --nav-font-size:14px;
-        --nav-font-height:24px;
+        --nav-font-size:13px;
+        --nav-font-height:22px;
         --nav-font-weight:400;
 
-        --heading1-font:55px;
-        --heading1-font-height:80px;
-        --heading1-font-weight:400;
-
-        --heading3-font:24px;
-        --heading3-font-height:32px;
+        --heading3-font:22px;
+        --heading3-font-height:30px;
         --heading3-font-weight:600;
 
-        --heading4-font:22px;
-        --heading4-font-height:30px;
+        --heading4-font:20px;
+        --heading4-font-height:28px;
         --heading4-font-weight:700;
 
-        --heading5-font:20px;
-        --heading5-font-height:28px;
+        --heading5-font:18px;
+        --heading5-font-height:26px;
         --heading5-font-weight:500;
 
-        --heading6-font:18px;
-        --heading6-font-height:24px;
+        --heading6-font:16px;
+        --heading6-font-height:22px;
         --heading6-font-weight:600;
 
-        --section: 50px 0;
-    }
-}
-
-
-@media (max-width:1025px) {
-    :root{
-
-        --heading1-font:38px;
-        --heading1-font-height:56px;
+        --section: 30px 0;
     }
 }
 
@@ -91,8 +78,31 @@
 @media (max-width:992px) {
     :root{
 
-        --heading1-font:32px;
-        --heading1-font-height:56px;
+        --p-font-size:13px;
+        --p-font-height:19px;
+        --p-font-weight:400;
+
+        --nav-font-size:12px;
+        --nav-font-height:18px;
+        --nav-font-weight:400;
+
+        --heading3-font:20px;
+        --heading3-font-height:28px;
+        --heading3-font-weight:600;
+
+        --heading4-font:18px;
+        --heading4-font-height:26px;
+        --heading4-font-weight:700;
+
+        --heading5-font:16px;
+        --heading5-font-height:24px;
+        --heading5-font-weight:500;
+
+        --heading6-font:14px;
+        --heading6-font-height:20px;
+        --heading6-font-weight:600;
+
+        --section: 24px 0;
     }
 }
 
@@ -100,20 +110,30 @@
 @media (max-width:768px) {
     :root{
 
-        --heading1-font:28px;
-        --heading1-font-height:48px;
-    }
-}
+        --p-font-size:13px;
+        --p-font-height:19px;
+        --p-font-weight:400;
 
+        --nav-font-size:12px;
+        --nav-font-height:18px;
+        --nav-font-weight:400;
 
+        --heading3-font:20px;
+        --heading3-font-height:28px;
+        --heading3-font-weight:600;
 
-@media (max-width:577px) {
-    :root{
-
-        --heading1-font:22px;
-        --heading1-font-height:30px;
+        --heading4-font:18px;
+        --heading4-font-height:26px;
+        --heading4-font-weight:700;
 
         --heading5-font:16px;
-        --heading5-font-height:26px;
+        --heading5-font-height:24px;
+        --heading5-font-weight:500;
+
+        --heading6-font:14px;
+        --heading6-font-height:20px;
+        --heading6-font-weight:600;
+
+        --section: 24px 0;
     }
 }

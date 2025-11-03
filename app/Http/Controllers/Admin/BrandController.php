@@ -41,17 +41,27 @@ class BrandController extends Controller
 
         return response()->json([
             'success' => true,
+            'status' => $brand->status,
             'message' => "Brand has been {$statusText} Successfully!"
         ]);
     }
 
     public function addBrand(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ], [
+            'name_english.required' => 'Please Enter Brand Name in English',
+            'name_arabic.required' => 'Please Enter Brand Name in Arabic',
+            'image.required' => 'Please Upload an Image',
+            'image.image' => 'The uploaded file must be an image',
+            'image.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
+            'image.max' => 'Image size should not exceed 2MB',
         ]);
+
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -87,7 +97,7 @@ class BrandController extends Controller
         $validator = Validator::make($request->all(), [
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         if ($validator->fails()) {

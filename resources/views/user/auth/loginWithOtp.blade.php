@@ -30,19 +30,48 @@
                     @csrf
                     <div class="form-group mt-3">
                         <label class="d-block" for="">Enter Mobile Number</label>
-                    <div class="d-flex align-items-center">
-                        <div class="">
-                                <select name="country_code" id="" class="country" class="form-control">
-                                    @foreach ($country as $item)                       
-                                        <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
-                                    @endforeach
-                                </select>
-                         </div> 
-                         <div class="w-100">
-                           <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                        <div >
+                            <div class="d-flex align-items-center">
+                                <div class="">
+                                    {{-- <select name="country_code" id="" class="country" class="form-control">
+                                        @foreach ($country as $item)                       
+                                            <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
+                                        @endforeach
+                                    </select> --}}
+
+                                    <div class="dropdown">
+                                        <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
+                                                id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span id="selected-flag">
+                                                <img src="{{ $country[0]->flag1 }}" alt="flag" width="25" height="16">
+                                            </span>
+                                            <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
+                                        </button>
+
+                                        <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">
+                                            @foreach ($country as $index => $item)
+                                                <li>
+                                                    <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
+                                                        <input type="radio" name="country_code"
+                                                            value="{{ $item->dial_code }}"
+                                                            data-flag="{{ $item->flag1 }}"
+                                                            class="country-radio"
+                                                            {{ $index === 0 ? 'checked' : '' }} hidden>
+                                                        <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
+                                                        <span>{{ $item->dial_code }} ({{ $item->name }})</span>
+                                                    </label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+
+                                </div> 
+                                <div class="w-100">
+                                    <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                                </div>
+                            </div>
+                            <span class="text-danger" id="error-mobile"></span>
                         </div>
-                        <span class="text-danger" id="error-mobile"></span>
-                    </div>
 
                     </div>
                     <button type="submit" class="customBtn mt-5" >Continue</button>
@@ -57,11 +86,25 @@
     
      <script>
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === ' ') {
-                e.preventDefault();
-            }
-        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+                const radios = document.querySelectorAll('.country-radio');
+                const selectedFlag = document.getElementById('selected-flag');
+                const selectedCode = document.getElementById('selected-code');
+
+                radios.forEach(radio => {
+                    radio.addEventListener('change', function () {
+                        const parent = this.closest('label');
+                        const flagImg = parent.querySelector('img').src;
+                        const dialCode = this.value;
+
+                        selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                        selectedCode.textContent = dialCode;
+                    });
+                });
+            });
+
+
 
 
 

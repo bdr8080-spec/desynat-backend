@@ -205,7 +205,7 @@
                 <div class="modal-header border-0">
                     <!-- <a href="login.html"><i class="fas fa-long-arrow-alt-left"></i></a> -->
                     <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <div class="modal-body mb-5">
                     <div class="change-success text-center">
@@ -281,11 +281,11 @@
 
             // Check fields empty
             if (!newPassword) {
-                $('#passwordError').text('Password is required');
+                $('#passwordError').text('Please Enter Password');
 
             }
             if (!confirmPassword) {
-                $('#confirmPasswordError').text('Confirm password is required');
+                $('#confirmPasswordError').text('Please Enter Confirm Password');
                 return;
             }
 

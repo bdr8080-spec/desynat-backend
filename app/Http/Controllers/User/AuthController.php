@@ -43,24 +43,31 @@ class AuthController extends Controller
                     'country_code' => 'required',
                     // 'image'=> 'required',
                     'email' => 'required|email|unique:users,email',
-                    'mobile' => 'required',
-                    'password' => 'required',
+                    'mobile' => 'required|digits_between:7,15',
+                    'password' => [
+                            'required',
+                            'string',
+                            'min:8',
+                            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                        ],
                     'confirm_password' => 'required|same:password',
                     'accept_terms' => 'required|in:1',
                 ];
 
-                $messages = [
-                    'full_name.required' => 'Please Enter Full Name',
-                    'country_code.required' => 'Please select your country code.',
-                    'email.required' => 'Email address is required.',
-                    'email.email' => 'Please enter a valid email address.',
-                    'email.unique' => 'This email address is already registered.',
-                    'mobile.required' => 'Mobile number is required.',
-                    'password.required' => 'Password is required.',
-                    'confirm_password.required' => 'Please confirm your password.',
-                    'confirm_password.same' => 'Confirm password must match the password.',
-                    'accept_terms.required' => 'You must accept the terms and conditions.',
-                    'accept_terms.in' => 'You must agree to the terms and conditions to continue.',
+                $messages = [      
+                    'full_name.required'    => 'Please enter your full name',
+                    'country_code.required' => 'Please select your country code',
+                    'email.required'        => 'Please enter your email address',
+                    'email.email'           => 'Please enter a valid email address',
+                    'email.unique'          => 'This email address is already registered',
+                    'mobile.required'       => 'Please enter your mobile number',
+                    'password.required'     => 'Please enter your password',
+                    'password.min' => 'Password must be at least 8 characters long',
+                    'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+                    'confirm_password.required' => 'Please confirm your password',
+                    'confirm_password.same' => 'Password do not match',
+                    'accept_terms.required' => 'You must accept the terms and conditions',
+                    'accept_terms.in' => 'You must agree to the terms and conditions to continue',
                 ];
 
                 $validator = Validator::make($request->all(), $rules, $messages);
@@ -92,7 +99,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status'=>true,
-                    'message'=>'OTP send Successfully',
+                    'message'=>'OTP sent to your mobile number succesfully ',
                     'id'=>$id,
                    ]);
 
@@ -106,17 +113,32 @@ class AuthController extends Controller
                   return view('user.auth.otpVerify'); 
         }else{
             
-            $request->validate([
-                'id' => 'required',
-                'otp' => 'required',
+ 
+            $validator = Validator::make($request->all(), [
+                'id'=>'required',
+                'otp' => 'required|array',
+            ], [
+                'otp.required' => 'Please enter OTP',
+                'otp.*.required' => 'Please enter OTP',
             ]);
+
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'error' => $validator->errors()->first()
+            ]);
+        }
+
+             
 
             try {
                 $id = Crypt::decryptString($request->id);
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference.',
+                    'message' => 'Invalid user reference',
                 ], 400);
             }
 
@@ -145,14 +167,14 @@ class AuthController extends Controller
                 if ($request->forget_password == 'one') {
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully.',
+                        'message' => 'OTP verified successfully',
                         'redirect_url' => route('userCreatePassword', ['temp_user_id' => $request->id]),
                     ]);
                 } else {
                     Auth::guard('web')->login($user);
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully.',
+                        'message' => 'OTP verified successfully',
                         'redirect_url' => route('dashboard'),
                     ]);
                 }
@@ -160,7 +182,7 @@ class AuthController extends Controller
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid OTP, please try again.',
+                    'message' => 'Invalid OTP, please try again',
                 ], 422);
             }
 
@@ -180,9 +202,9 @@ class AuthController extends Controller
                 'mobileOrEmail' => 'required',
                 'password' => 'required|min:6',
             ], [
-                'mobileOrEmail.required' => 'Please enter your mobile number or email address.',
-                'password.required' => 'Please enter your password.',
-                'password.min' => 'Password must be at least 6 characters long.',
+                'mobileOrEmail.required' => 'Please enter your mobile number or email address',
+                'password.required' => 'Please enter your password',
+                'password.min' => 'Password must be at least 6 characters long',
             ]);
 
             if ($validator->fails()) {
@@ -216,14 +238,14 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid ' . $loginField . ' or password.',
+                    'message' => 'Invalid ' . $loginField . ' or password',
                 ], 401);
             }
 
             if ($user->otp_verify == '0') {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Please verify your ' . $loginField . ' with OTP to login.',
+                    'message' => 'Please verify your ' . $loginField . ' with OTP to login',
                 ], 401);
             }
 
@@ -232,13 +254,14 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'User logged in successfully.',
+                    'message' => 'Login successfully',
                 ]);
             }
 
             return response()->json([
                 'status' => false,
-                'message' => 'Invalid ' . $loginField . ' or password.',
+                // 'message' => 'Invalid ' . $loginField . ' or password.',
+                'message'=>'User is not Regsiter'
             ], 401);
         }
 
@@ -318,15 +341,23 @@ class AuthController extends Controller
 
 
                 $rules = [
-                    'password' => 'required',
+                    'password' => [
+                        'required',
+                        'string',
+                        'min:8',
+                        'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                    ],
                     'confirm_password' => 'required|same:password',
-                ];
+                    ];
 
                 $messages = [
-                    'password.required' => 'Password is required',
-                    'confirm_password.required' => 'Please confirm your password',
-                    'confirm_password.same' => 'Confirm password must match the password',
+                'password.required' => 'Please Enter New password',
+                'password.min' => 'Password must be at least 8 characters long',
+                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
+                'confirm_password.required' => 'Please enter confirm password',
+                'confirm_password.same' => 'Passwords do not match',
                 ];
+
 
                 $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -342,7 +373,7 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference.',
+                    'message' => 'Invalid user reference',
                 ], 400);
             }
 
@@ -355,7 +386,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Password updated successfully.'
+                    'message' => 'Password updated successfully'
                 ]);
             }
 
@@ -443,7 +474,7 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference.',
+                    'message' => 'Invalid user reference',
                 ], 400);
             }
 
@@ -452,7 +483,7 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'User not found.',
+                    'message' => 'User not found',
                 ], 404);
             }
 
@@ -463,7 +494,7 @@ class AuthController extends Controller
        
             return response()->json([
                 'status' => true,
-                'message' => 'OTP resent successfully.',
+                'message' => 'OTP resent successfully',
             ]);
         }
 

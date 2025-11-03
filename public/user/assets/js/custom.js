@@ -12,7 +12,7 @@ document.querySelectorAll('.toggle-passwordone').forEach(toggle => {
     });
 });
 
-document.querySelectorAll('.toggle-password').forEach(toggle => {
+document.querySelectorAll('.toggle-passwordtwo').forEach(toggle => {
   toggle.addEventListener('click', function () {
     const input = this.parentElement.querySelector('input');
     const isPassword = input.type === 'password';

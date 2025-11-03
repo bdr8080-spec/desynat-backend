@@ -2,6 +2,9 @@
 @extends('user.auth.layout.app')    
 
 @section('content')
+
+
+
     <div class="login_contenar">
         <header class="inner-header">
             <a><img src="assets/images/logo.svg" class="img-fluid" /></a>
@@ -30,7 +33,7 @@
 
                 <div class="upload-image w-100">
                     <label class="uploadLabel" style="cursor:pointer;text-align:center;">
-                        <img src="{{asset('user/assets/images/upload-icon.svg')}}"><div class="text-color-upload">Document 1</div>
+                        <img src="{{asset('user/assets/images/upload-icon.svg')}}"><div class="text-color-upload">Upload profile image</div>
                         <input type="file" accept="image/*" name="image" enctype="multipart/form-data" hidden onchange="showPreview(event)">
                     </label>
                     <div class="imgshow">
@@ -51,11 +54,37 @@
                     <label class="d-block" for="">Mobile Number</label>
                     <div class="d-flex align-items-center">
                         <div class="">
-                            <select name="country_code" id="" class="country" class="form-control">
+                            {{-- <select name="country_code" id="" class="country" class="form-control">
                                 @foreach ($country as $item)                       
                                     <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
                                 @endforeach
-                            </select>
+                            </select> --}}
+
+                            <div class="dropdown">
+                                        <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
+                                                id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span id="selected-flag">
+                                                <img src="{{ $country[0]->flag1 }}" alt="flag" width="25" height="16">
+                                            </span>
+                                            <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
+                                        </button>
+
+                                        <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">
+                                            @foreach ($country as $index => $item)
+                                                <li>
+                                                    <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
+                                                        <input type="radio" name="country_code"
+                                                            value="{{ $item->dial_code }}"
+                                                            data-flag="{{ $item->flag1 }}"
+                                                            class="country-radio"
+                                                            {{ $index === 0 ? 'checked' : '' }} hidden>
+                                                        <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
+                                                        <span>{{ $item->dial_code }} ({{ $item->name }})</span>
+                                                    </label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                             </div>
                         </div> 
                         <div class="w-100">
                             <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
@@ -67,27 +96,27 @@
                 <div class="form-group position-relative verify mt-3">
                     <label class="d-block" for="">Email Address</label>
                     <input type="text"  class="form-control custom-password notapplyspace"
-                        placeholder="Enter Full Name" style="padding-right: 40px;" name="email"/>
+                        placeholder="Please enter email address" style="padding-right: 40px;" name="email"/>
                 </div>
                 <span class="text-danger" id="error-email"></span>
                 <div class="form-group position-relative password_icon mt-3">
                     <label for="">Create Password</label>
-                    <input type="password" id="login-password" class="form-control custom-password"
-                        placeholder="Enter password" style="padding-right: 40px;"  name="password"/>
+                    <input type="password" id="login-password" class="form-control custom-password notapplyspace"
+                        placeholder="Please enter password" style="padding-right: 40px;"  name="password"/>
                     <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-password"></span>
                 <div class="form-group position-relative password_icon mt-3">
                     <label for="">Confirm Password</label>
-                    <input type="password" id="login-password" class="form-control custom-password"
-                        placeholder="Enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
+                    <input type="password" id="login-password" class="form-control custom-password notapplyspace"
+                        placeholder="Please enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
                     <i class="fa-solid fa-eye toggle-password" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-confirm_password"></span>
                 <div class="form-check term_policy my-3">
                     <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate" name="accept_terms">
                     <label class="form-check-label" for="checkIndeterminate">
-                        I accept the <a href="">Terms & Conditions</a> and <a href="">Policies</a>
+                        Please accept the<a href=""> terms and conditions</a>
                     </label>
                 </div>
                     <span class="text-danger" id="error-accept_terms"></span>
@@ -118,12 +147,15 @@
                 success: function (resp) {
                    
                     if(resp.status == true){
-                        location.href = `verify-otp?temp_user_id=${resp.id}`;
+                         toastr.success(resp.message);
+                        setTimeout(() => {
+                              location.href = `verify-otp?temp_user_id=${resp.id}`;
+                        }, 1000);
+                      
                     }
 
                     if(resp.status == false){
                         for (const key in resp.errors) {
-                            console.log(resp.errors[key])
                             $(`#error-${key}`).html(resp.errors[key]);
                         }   
                     }
@@ -157,6 +189,25 @@
             $('.uploadLabel').show();
         }
 
-     </script>
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.querySelectorAll('.country-radio');
+    const selectedFlag = document.getElementById('selected-flag');
+    const selectedCode = document.getElementById('selected-code');
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            const parent = this.closest('label');
+            const flagImg = parent.querySelector('img').src;
+            const dialCode = this.value;
+
+            selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+            selectedCode.textContent = dialCode;
+        });
+    });
+});
+</script>
+
 
 @endsection

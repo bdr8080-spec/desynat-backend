@@ -7,22 +7,7 @@
 </style>
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content" class="">
-          <nav
-            class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top"
-          >
-            <div class="left-section d-flex align-items-center">
-              <img src="image/combine_logo.svg" class="header-logo" />
-            </div>
-
-            <div class="header-divider"></div>
-
-            <div class="right-section">
-              <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-              </button>
-            </div>
-          </nav>
+      
 
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
@@ -170,22 +155,22 @@
 
                                   <!-- Upload Image -->
                                   <div class="col-lg-12">
-                                      <div class="upload-title text-center">Upload profile image</div>
+                                      <div class="upload-title text-center">Upload Image</div>
 
                                       <label for="fileUpload" class="upload-box" style="cursor:pointer;">
                                           <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="uploadIcon" />
                                           <img id="previewImage" class="preview-image" style="display:none; max-width:100px; margin-top:10px;" />
-                                          <div class="upload-text">Upload profile image</div>
+                                          <div class="upload-text">Upload Image</div>
                                           <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                                       </label>
-                                      <div class="text-danger" id="imageError"></div>
+                                      <div class="text-danger text-center" id="imageError"></div>
                                   </div>
                                    
                                   <!-- Brand Name English -->
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
                                           <label class="form-label">Brand Name (English)</label>
-                                          <input type="text" name="name_english" class="form-control" placeholder="Brand Name" />
+                                          <input type="text" name="name_english" class="form-control" placeholder="Enter Brand Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
                                           <div class="text-danger" id="nameEnError"></div>
                                       </div>
                                   </div>
@@ -194,7 +179,7 @@
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
                                           <label class="form-label">Brand Name (Arabic)</label>
-                                          <input type="text" name="name_arabic" class="form-control" placeholder="Brand Name" />
+                                          <input type="text" name="name_arabic" class="form-control" placeholder="Enter Brand Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
                                           <div class="text-danger" id="nameArError"></div>
                                       </div>
                                   </div>
@@ -230,10 +215,10 @@
                                 <div class="row">
                                     <!-- Upload Image -->
                                     <div class="col-lg-12">
-                                        <div class="upload-title text-center">Upload profile image</div>
+                                        <div class="upload-title text-center">Upload Image</div>
                                         <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
                                             <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="editPreviewImage" class="preview-image" style="max-width:100px; margin-top:10px;" />
-                                            <div class="upload-text">Upload profile image</div>
+                                            <div class="upload-text">Upload Image</div>
                                             <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
                                         </label>
                                         <div class="text-danger" id="editImageError"></div>
@@ -243,7 +228,7 @@
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
                                             <label class="form-label">Brand Name (English)</label>
-                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Brand Name" />
+                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Enter Brand Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  />
                                             <div class="text-danger" id="editNameEnError"></div>
                                         </div>
                                     </div>
@@ -252,7 +237,7 @@
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
                                             <label class="form-label">Brand Name (Arabic)</label>
-                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Brand Name" />
+                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Enter Brand Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                             <div class="text-danger" id="editNameArError"></div>
                                         </div>
                                     </div>
@@ -275,6 +260,7 @@
 @endsection
 
 <!-- Delete Brand -->
+ 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.deleteBrand').forEach(button => {
@@ -336,7 +322,12 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    toastr.success(data.message);
+                    // toastr.success(data.message);
+                     if(data.status == 1){
+                        toastr.success(data.message); // Green for active
+                    } else {
+                        toastr.error(data.message);   // Red for deactivated
+                    }
                     setTimeout(() => {
                         location.reload();
                     }, 2000);
@@ -359,20 +350,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const fileInput = document.getElementById('fileUpload');
     const preview = document.getElementById('previewImage');
+    const icon = document.getElementById('uploadIcon');
 
-    // Show preview when selecting image
     fileInput.addEventListener('change', function(event){
         const file = event.target.files[0];
+        const text = document.querySelector('.upload-box .upload-text'); // Correctly get the text element
+
         if(file){
             const reader = new FileReader();
             reader.onload = function(e){
                 preview.src = e.target.result;
                 preview.style.display = 'block';
+                icon.style.display = 'none';   // Hide default icon
+                text.style.display = 'none';   // Hide upload text
                 document.getElementById('imageError').innerText = ''; 
             }
             reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+            icon.style.display = 'block';
+            text.style.display = 'block';
         }
     });
+
 
     // Clear validation when typing in inputs
     const nameEnInput = document.querySelector('input[name="name_english"]');
@@ -399,15 +399,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let hasError = false;
         if(!formData.get('image').name){
-            document.getElementById('imageError').innerText = 'Image is required';
+            document.getElementById('imageError').innerText = 'Please Upload Image';
             hasError = true;
         }
         if(!formData.get('name_english').trim()){
-            document.getElementById('nameEnError').innerText = 'English name is required';
+            document.getElementById('nameEnError').innerText = 'Please Enter Brand Name in English';
             hasError = true;
         }
         if(!formData.get('name_arabic').trim()){
-            document.getElementById('nameArError').innerText = 'Arabic name is required';
+            document.getElementById('nameArError').innerText = 'Please Enter Brand Name in Arabic';
             hasError = true;
         }
         if(hasError) return;
@@ -489,11 +489,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let hasError = false;
         if(!formData.get('name_english').trim()){
-            document.getElementById('editNameEnError').innerText = 'English name is required';
+            document.getElementById('editNameEnError').innerText = 'Please Enter Brand Name in English';
             hasError = true;
         }
         if(!formData.get('name_arabic').trim()){
-            document.getElementById('editNameArError').innerText = 'Arabic name is required';
+            document.getElementById('editNameArError').innerText = 'Please Enter Brand Name in Arabic';
             hasError = true;
         }
         if(hasError) return;
@@ -524,5 +524,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('sentModal2');
+    modal.addEventListener('hidden.bs.modal', function () {
+        location.reload(); 
+    });
+});
+</script>
+
 
 
