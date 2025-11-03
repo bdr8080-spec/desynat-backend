@@ -94,6 +94,7 @@ class UserAuthService
     public function login_by_mobile_or_email($request){
 
       if($request->type=='0'){
+        
 
         $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
 
