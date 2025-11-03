@@ -25,8 +25,6 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/logout',[LoginController::class,'logout'])->name('seller.logout');    
 
 
-
-
     route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
 
     route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');

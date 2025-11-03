@@ -88,7 +88,7 @@
                                         <div class="imgshow">
                                             <img id="preview"
                                                 style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
-                                            <span id="remove"
+                                            <span id="remove " class="remove-ic"
                                                 style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                 onclick="removeImg()">&times;</span>
                                         </div>
@@ -141,7 +141,8 @@
 
                                             <input class="form-control" type="tel" id="phone"
                                                 placeholder="Enter mobile Number" name="mobile"
-                                                value="{{ old('mobile') }}">
+                                                value="{{ old('mobile') }}"
+                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
 
                                         </div>
                                         @error('mobile')

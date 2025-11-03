@@ -30,7 +30,7 @@ class AuthController extends Controller
 
 
         $validate = Validator::make($req->all(), [
-            "profile_image"=>"required",
+            // "profile_image"=>"required",
             'full_name' => 'required',
             'country_code' => 'required',
             'email' => 'required|email|unique:users,email',

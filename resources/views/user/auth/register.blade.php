@@ -1,15 +1,12 @@
-
-@extends('user.auth.layout.app')    
+@extends('user.auth.layout.app')
 
 @section('content')
-
-
-
     <div class="login_contenar">
         <header class="inner-header">
             <a><img src="assets/images/logo.svg" class="img-fluid" /></a>
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     <img src="assets/images/global.svg" class="img-fluid" /> EN
                 </button>
                 <ul class="dropdown-menu">
@@ -24,113 +21,120 @@
             <img src="assets/images/right-img.svg" class="left-imgtwo" />
         </div>
         <div class="login_content login_content_right">
-        
+
             <div class="login_content_content">
-                    <form id="signup" >
+                <form id="signup">
                     @csrf
-                <h4>Sign Up</h4>
-                <h3>Create your account !</h3>
+                    <h4>Sign Up</h4>
+                    <h3>Create your account !</h3>
 
-                <div class="upload-image w-100">
-                    <label class="uploadLabel" style="cursor:pointer;text-align:center;">
-                        <img src="{{asset('user/assets/images/upload-icon.svg')}}"><div class="text-color-upload">Upload profile image</div>
-                        <input type="file" accept="image/*" name="image" enctype="multipart/form-data" hidden onchange="showPreview(event)">
-                    </label>
-                    <div class="imgshow">
-                        <img class="preview" style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
-                        <span class="removeIcon" style="display:none;cursor:pointer;font-size:24px;color:red;" onclick="removeImg()">&times;</span>
+                    <div class="upload-image w-100">
+                        <label class="uploadLabel" style="cursor:pointer;text-align:center;">
+                            <img src="{{ asset('user/assets/images/upload-icon.svg') }}">
+                            <div class="text-color-upload">Upload profile image</div>
+                            <input type="file" accept="image/*" name="image" enctype="multipart/form-data" hidden
+                                onchange="showPreview(event)">
+                        </label>
+                        <div class="imgshow">
+                            <img class="preview" style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
+                            <span class="removeIcon" style="display:none;cursor:pointer;font-size:24px;color:red;"
+                                onclick="removeImg()">&times;</span>
+                        </div>
                     </div>
-                </div>
 
-                <!-- <input type="file" name="image" enctype="multipart/form-data"> -->
-                <div class="form-group position-relative password_icon mt-3">
-                    <label for="">Full Name</label>
-                    <input type="text"  name="full_name" class="form-control custom-password"
-                        placeholder="Enter Full Name" style="padding-right: 40px;"/>
-                </div>
-                <span class="text-danger" id="error-full_name"></span>
+                    <!-- <input type="file" name="image" enctype="multipart/form-data"> -->
+                    <div class="form-group position-relative password_icon mt-3">
+                        <label for="">Full Name</label>
+                        <input type="text" name="full_name" class="form-control custom-password"
+                            placeholder="Enter Full Name" style="padding-right: 40px;" />
+                    </div>
+                    <span class="text-danger" id="error-full_name"></span>
 
-                <div class="form-group mt-3">
-                    <label class="d-block" for="">Mobile Number</label>
-                    <div class="d-flex align-items-center">
-                        <div class="">
-                            {{-- <select name="country_code" id="" class="country" class="form-control">
+                    <div class="form-group mt-3">
+                        <label class="d-block" for="">Mobile Number</label>
+                        <div class="d-flex align-items-center">
+                            <div class="">
+                                {{-- <select name="country_code" id="" class="country" class="form-control">
                                 @foreach ($country as $item)                       
                                     <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
                                 @endforeach
                             </select> --}}
 
-                            <div class="dropdown">
-                                        <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
-                                                id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span id="selected-flag">
-                                                <img src="{{ $country[0]->flag1 }}" alt="flag" width="25" height="16">
-                                            </span>
-                                            <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
-                                        </button>
+                                <div class="dropdown">
+                                    <button class="btn btn-light border dropdown-toggle d-flex align-items-center"
+                                        type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span id="selected-flag">
+                                            <img src="{{ $country[0]->flag1 }}" alt="flag" width="25"
+                                                height="16">
+                                        </span>
+                                        <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
+                                    </button>
 
-                                        <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">
-                                            @foreach ($country as $index => $item)
-                                                <li>
-                                                    <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
-                                                        <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }}"
-                                                            data-flag="{{ $item->flag1 }}"
-                                                            class="country-radio"
-                                                            {{ $index === 0 ? 'checked' : '' }} hidden>
-                                                        <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
-                                                        <span>{{ $item->dial_code }} ({{ $item->name }})</span>
-                                                    </label>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                             </div>
-                        </div> 
-                        <div class="w-100">
-                            <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                                    <ul class="dropdown-menu" aria-labelledby="countryDropdown"
+                                        style="max-height: 250px; overflow-y: auto;">
+                                        @foreach ($country as $index => $item)
+                                            <li>
+                                                <label class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                    style="cursor: pointer;">
+                                                    <input type="radio" name="country_code" value="{{ $item->dial_code }}"
+                                                        data-flag="{{ $item->flag1 }}" class="country-radio"
+                                                        {{ $index === 0 ? 'checked' : '' }} hidden>
+                                                    <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}"
+                                                        width="25" height="16">
+                                                    <span>{{ $item->dial_code }} ({{ $item->name }})</span>
+                                                </label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="w-100">
+                                <input type="number" class="form-control" value="" placeholder="Enter Mobile Number"
+                                    name="mobile"
+                                    oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+                            </div>
                         </div>
+                        {{-- <input type="hidden" value="+91" name="country_code" id="country_code"> --}}
                     </div>
-                    {{-- <input type="hidden" value="+91" name="country_code" id="country_code"> --}}
-                </div>
-                <span class="text-danger" id="error-mobile"></span>
-                <div class="form-group position-relative verify mt-3">
-                    <label class="d-block" for="">Email Address</label>
-                    <input type="text"  class="form-control custom-password notapplyspace"
-                        placeholder="Please enter email address" style="padding-right: 40px;" name="email"/>
-                </div>
-                <span class="text-danger" id="error-email"></span>
-                <div class="form-group position-relative password_icon mt-3">
-                    <label for="">Create Password</label>
-                    <input type="password" id="login-password" class="form-control custom-password notapplyspace"
-                        placeholder="Please enter password" style="padding-right: 40px;"  name="password"/>
-                    <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
-                </div>
-                <span class="text-danger" id="error-password"></span>
-                <div class="form-group position-relative password_icon mt-3">
-                    <label for="">Confirm Password</label>
-                    <input type="password" id="login-password" class="form-control custom-password notapplyspace"
-                        placeholder="Please enter confirm password" style="padding-right: 40px;" name="confirm_password"/>
-                    <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
-                </div>
-                <span class="text-danger" id="error-confirm_password"></span>
-                <div class="form-check term_policy my-3">
-                    <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate" name="accept_terms">
-                    <label class="form-check-label" for="checkIndeterminate">
-                        Please accept the<a href=""> terms and conditions</a>
-                    </label>
-                </div>
+                    <span class="text-danger" id="error-mobile"></span>
+                    <div class="form-group position-relative verify mt-3">
+                        <label class="d-block" for="">Email Address</label>
+                        <input type="text" class="form-control custom-password notapplyspace"
+                            placeholder="Please enter email address" style="padding-right: 40px;" name="email" />
+                    </div>
+                    <span class="text-danger" id="error-email"></span>
+                    <div class="form-group position-relative password_icon mt-3">
+                        <label for="">Create Password</label>
+                        <input type="password" id="login-password" class="form-control custom-password notapplyspace"
+                            placeholder="Please enter password" style="padding-right: 40px;" name="password" />
+                        <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
+                    </div>
+                    <span class="text-danger" id="error-password"></span>
+                    <div class="form-group position-relative password_icon mt-3">
+                        <label for="">Confirm Password</label>
+                        <input type="password" id="login-password" class="form-control custom-password notapplyspace"
+                            placeholder="Please enter confirm password" style="padding-right: 40px;"
+                            name="confirm_password" />
+                        <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
+                    </div>
+                    <span class="text-danger" id="error-confirm_password"></span>
+                    <div class="form-check term_policy my-3">
+                        <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate"
+                            name="accept_terms">
+                        <label class="form-check-label" for="checkIndeterminate">
+                            Please accept the<a href=""> terms and conditions</a>
+                        </label>
+                    </div>
                     <span class="text-danger" id="error-accept_terms"></span>
-                <button type="submit" class="customBtn" id="signBtn">Sign Up</button>
+                    <button type="submit" class="customBtn" id="signBtn">Sign Up</button>
                 </form>
-                <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('userLogin')}}">Sign In</a></p>
+                <p class="mt-3 dontAccount">Don’t have an account? <a href="{{ route('userLogin') }}">Sign In</a></p>
             </div>
         </div>
     </div>
 
-     <script>
-
-
-        $(document).on('submit', '#signup', function (e) {
+    <script>
+        $(document).on('submit', '#signup', function(e) {
             e.preventDefault();
 
             let data = new FormData(this);
@@ -143,28 +147,29 @@
                 method: "POST",
                 data: data,
                 processData: false,
-                contentType: false, 
-                success: function (resp) {
-                   
-                    if(resp.status == true){
-                         toastr.success(resp.message);
+                contentType: false,
+                success: function(resp) {
+
+                    if (resp.status == true) {
+                        toastr.success(resp.message);
                         setTimeout(() => {
-                              location.href = `verify-otp?temp_user_id=${resp.id}`;
+                            location.href = `verify-otp?temp_user_id=${resp.id}`;
                         }, 1000);
-                      
+
                     }
 
-                    if(resp.status == false){
+                    if (resp.status == false) {
                         for (const key in resp.errors) {
                             $(`#error-${key}`).html(resp.errors[key]);
-                        }   
+                        }
                     }
 
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     console.log(xhr.responseJSON);
-                }, complete: function () {
-                   $('#signBtn').prop('disabled', false);
+                },
+                complete: function() {
+                    $('#signBtn').prop('disabled', false);
                 }
             });
         });
@@ -174,16 +179,16 @@
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function (x) {
-                $('.preview').attr('src', x.target.result).show();
-                $('.removeIcon').show();
-                $('.uploadLabel').hide();
+                reader.onload = function(x) {
+                    $('.preview').attr('src', x.target.result).show();
+                    $('.removeIcon').show();
+                    $('.uploadLabel').hide();
                 };
                 reader.readAsDataURL(file);
             }
-            }
-        
-            function removeImg() {
+        }
+
+        function removeImg() {
             $('.preview').attr('src', '').hide();
             $('.removeIcon').hide();
             $('.uploadLabel').show();
@@ -191,23 +196,21 @@
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    const radios = document.querySelectorAll('.country-radio');
-    const selectedFlag = document.getElementById('selected-flag');
-    const selectedCode = document.getElementById('selected-code');
+        document.addEventListener('DOMContentLoaded', function() {
+            const radios = document.querySelectorAll('.country-radio');
+            const selectedFlag = document.getElementById('selected-flag');
+            const selectedCode = document.getElementById('selected-code');
 
-    radios.forEach(radio => {
-        radio.addEventListener('change', function () {
-            const parent = this.closest('label');
-            const flagImg = parent.querySelector('img').src;
-            const dialCode = this.value;
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const parent = this.closest('label');
+                    const flagImg = parent.querySelector('img').src;
+                    const dialCode = this.value;
 
-            selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
-            selectedCode.textContent = dialCode;
+                    selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                    selectedCode.textContent = dialCode;
+                });
+            });
         });
-    });
-});
-</script>
-
-
+    </script>
 @endsection
