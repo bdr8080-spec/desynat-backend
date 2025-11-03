@@ -19,8 +19,8 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <div class="w-100">
-                    <div class="d-flex align-self-center justify-content-between">
-                        <div>
+                    <div class="d-flex align-self-center justify-content-between flex-wrap mobileResponsive">
+                        <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont">
                             <a class="navbar-brand" href="#"><img src="{{asset('user/assets/images/logo.svg')}}" /></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
@@ -37,9 +37,9 @@
                                         <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
                                     </ul>
                                 </div>
-                               @else
-                                 <a class="customBtn1" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
-                                 @endif
+                                @else
+                                 <a class="customBtn1 mobileSignup" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
+                                @endif
                        
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -213,11 +213,11 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="dropdown">
+                            <div class="dropdown mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
                                 </button>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu dropdown-menu-end">
                                     <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
                                     <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                                 </ul>
@@ -233,7 +233,7 @@
                                         <button>
                                             <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> Durgapur 
                                         </button>
-                                        <span class="ms-5">
+                                        <span class="ms-lg-5 ms-md-3 ms-2">
                                             <i class="fa-solid fa-chevron-down"></i>
                                         </span>
                                     </div>
@@ -1188,12 +1188,12 @@
 
     <footer>
         <div class="row justify-content-between">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3 col-12">
                 <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" />
                 <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span>
                 <button class="customBtn1">Become an Affiliate Customer</button> 
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-5 col-md-5 col-12">
                 <div class="footerNavLink ms-20percenter">
                     <div class="footerNavLink_content">
                         <h6>Customer Policy</h6>
@@ -1228,9 +1228,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-3 col-12">
                 <div class="footerNavLink">
-                    <div class="footerNavLink_content ms-auto">
+                    <div class="footerNavLink_content ms-lg-auto ms-md-auto">
                         <h6>Get the App</h6>
                         <div class="getTheApp d-flex align-items-end flex-column">
                             <img src="{{asset('user/assets/images/play-store.svg')}}" class="img-fluid" />
