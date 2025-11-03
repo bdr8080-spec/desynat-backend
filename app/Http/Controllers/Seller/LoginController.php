@@ -228,8 +228,10 @@ class LoginController extends Controller
 
         if ($request->isMethod('get')) {
 
-          $seller_data=Auth::guard('seller')->user()->id;
+        $seller_data=Auth::guard('seller')->user()->id;
+
          $store_info=sellerStoreInformation::where('seller_id',$seller_data)->first();
+
 
         return view('dealer.store_page',compact('country','store_info'));
 

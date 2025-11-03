@@ -13,13 +13,13 @@ class CategoryService
     public function getCategory($request)
     {
         try {
-            $category_details = Category::query();
+            $category_details = Category::orderBy('id', 'desc')->get();
 
             if ($category_details->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No categories found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -48,6 +48,8 @@ class CategoryService
             if (!empty($search)) {
                 $query->where('name_english', 'like', '%' . $search . '%');
             }
+
+            $query->orderBy('id', 'desc');
 
             $subCategories = $query->paginate($limit);
 

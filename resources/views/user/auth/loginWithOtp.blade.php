@@ -84,17 +84,15 @@
                             </div>
                               <p class="text-danger" id="error-mobile"></p>
 
-                            {{-- Email Input Section --}}
                             <div class="form-group position-relative password_icon mt-3 d-none emailInput">
                                 <label for="">Enter Email ID</label>
                                 <input class="form-control notapplyspace" type="email" placeholder="Enter Email ID" name="email">
+                                 <p class="text-danger" id="error-email"></p>
                             </div>
-                              <p class="text-danger" id="error-email"></p>
+                             
 
                             <button type="submit" class="customBtn mt-4">Continue</button>
                         </form>
-
-         
          
                 </div>
             </div>
