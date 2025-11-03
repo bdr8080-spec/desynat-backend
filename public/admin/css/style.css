@@ -976,7 +976,7 @@ table thead tr:nth-child(even) {
 .toggle-password {
     cursor: pointer;
     position: absolute;
-    bottom: 15px;
+    bottom: 10px;
     right: 10px;
 }
 
