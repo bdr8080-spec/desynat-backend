@@ -184,25 +184,30 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
-                                    <div class="form-group phone-pnl">
-                                        <select name="country_code">
-                                            @foreach ($country as $val)
-                                                <option value="{{ $val->id }}"> {{ $val->dial_code }} </option>
-                                            @endforeach
-                                        </select>
 
-                                        @error('country_code')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
 
                                     <div class="form-group phone-pnl">
-
-
                                         <label for="name">Store Phone Number</label>
-                                        <input class="form-control" type="tel" id="phone"
-                                            placeholder="Enter Store Phone Number" name="store_phone"
-                                            value="{{ old('store_phone', @$store_info->store_phone) }}">
+
+                                        <div class="form-group d-flex gap-2">
+                                            <select name="country_code" class="form-select" style="width: 100px">
+                                                @foreach ($country as $val)
+                                                    <option value="{{ $val->id }}"> {{ $val->dial_code }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            <input class="form-control" type="tel" id="phone"
+                                                placeholder="Enter Store Phone Number" name="store_phone"
+                                                value="{{ old('store_phone', @$store_info->store_phone) }}">
+
+                                            @error('country_code')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+
+
                                     </div>
                                     @error('store_phone')
                                         <span class="text-danger">{{ $message }}</span>
