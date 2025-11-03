@@ -26,20 +26,32 @@
             <div class="login_content_content align-self-center">
                 <div class="otp-page">
                     <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="fa-solid fa-chevron-left"></i></a></span> Login Via OTP</h3>
-                <form id="loginWithOtp">
-                    @csrf
-                    <div class="form-group mt-3">
-                        <label class="d-block" for="">Enter Mobile Number</label>
-                        <div >
-                            <div class="d-flex align-items-center">
-                                <div class="">
-                                    {{-- <select name="country_code" id="" class="country" class="form-control">
-                                        @foreach ($country as $item)                       
-                                            <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
-                                        @endforeach
-                                    </select> --}}
 
-                                    <div class="dropdown">
+                    <form id="loginWithOtp">
+                            @csrf
+
+                            {{-- Radio Selection --}}
+                            <div class="radio-group my-4">
+                                <label class="custom-radio">
+                                    <input type="radio" name="forgetPassword" class="emailandmobile notapplyspace" value="1" checked>
+                                    <span class="radio-mark"></span>
+                                    <span class="label-text">Mobile Number</span>
+                                </label>
+
+                                <label class="custom-radio">
+                                    <input type="radio" name="forgetPassword" class="emailandmobile" value="2">
+                                    <span class="radio-mark"></span>
+                                    <span class="label-text">Email Address</span>
+                                </label>
+                            </div>
+
+                            {{-- Mobile Input Section --}}
+                            <div class="form-group position-relative password_icon mt-3 mobileInput">
+                                <label for="">Enter Mobile Number</label>
+                                <div class="d-flex align-items-center">
+
+                                    {{-- Country Dropdown --}}
+                                    <div class="dropdown me-2">
                                         <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
                                                 id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span id="selected-flag">
@@ -65,17 +77,25 @@
                                         </ul>
                                     </div>
 
-                                </div> 
-                                <div class="w-100">
-                                    <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                                    <div class="w-100">
+                                        <input type="number" class="form-control" name="mobile" placeholder="Enter Mobile Number">
+                                    </div>
                                 </div>
                             </div>
-                            <span class="text-danger" id="error-mobile"></span>
-                        </div>
+                              <p class="text-danger" id="error-mobile"></p>
 
-                    </div>
-                    <button type="submit" class="customBtn mt-5" >Continue</button>
-                </form>
+                            {{-- Email Input Section --}}
+                            <div class="form-group position-relative password_icon mt-3 d-none emailInput">
+                                <label for="">Enter Email ID</label>
+                                <input class="form-control notapplyspace" type="email" placeholder="Enter Email ID" name="email">
+                            </div>
+                              <p class="text-danger" id="error-email"></p>
+
+                            <button type="submit" class="customBtn mt-4">Continue</button>
+                        </form>
+
+         
+         
                 </div>
             </div>
           
@@ -123,9 +143,12 @@
                 processData: false,
                 contentType: false, 
                 success: function (resp) {
-                   
+
+                    toastr.success(resp.message);
                     if(resp.status == true){
-                        location.href = `verify-otp?temp_user_id=${resp.id}`;
+                        setTimeout(() => {
+                              location.href = `verify-otp?temp_user_id=${resp.id}&type=${resp.type}`;
+                        }, 1000);
                     }
 
                     if(resp.status == false){
@@ -163,6 +186,31 @@
             this.classList.toggle('fa-eye-slash');
             });
         });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const radios = document.querySelectorAll('.emailandmobile');
+            const mobileInput = document.querySelector('.mobileInput');
+            const emailInput = document.querySelector('.emailInput');
+
+            // Listen for change on radio buttons
+            radios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (this.value === '1') {
+                        // Show Mobile Input
+                        mobileInput.classList.remove('d-none');
+                        emailInput.classList.add('d-none');
+                    } else if (this.value === '2') {
+                        // Show Email Input
+                        emailInput.classList.remove('d-none');
+                        mobileInput.classList.add('d-none');
+                    }
+                });
+            });
+        });
+
+
+
   </script>
 
 @endsection

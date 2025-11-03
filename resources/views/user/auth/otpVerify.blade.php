@@ -43,8 +43,19 @@
                         }
 
                     @endphp
-                    <h5 class="otp_sent">6 digit OTP has been sent to your registered Mobile Number <span>{{$user->country_code}} {{$user->mobile}}</span></h5>
-                       <form id="otpVerify">
+                  
+                @if ($user)
+                    <h5 class="otp_sent">
+                        6 digit OTP has been sent to your registered 
+                        @if (request()->type == '2')
+                            Email Address: <span>{{ $user->email }}</span>
+                        @else
+                            Mobile Number: <span>{{ $user->country_code }} {{ $user->mobile }}</span>
+                        @endif
+                    </h5>
+                @endif
+                  
+                   <form id="otpVerify">
                         @csrf
                         <input type="hidden" name="id" value="{{request()->temp_user_id}}">
                         <input type="hidden" name="forget_password" value="{{request()->forget_password}}">
