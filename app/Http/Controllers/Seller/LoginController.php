@@ -12,6 +12,9 @@ use App\Models\sellerStoreInformation;
 use App\Models\sellerDocument;
 use App\Models\Bankdetails;
 
+use App\Helpers\ApiResponse;
+
+use Illuminate\Validation\Rule;
 
 Use Auth;
 
@@ -27,6 +30,7 @@ class LoginController extends Controller
     }
 
     public function login(Request $request){
+
 
         if ($request->isMethod('get')) {
          $country= country::all();
@@ -46,7 +50,38 @@ class LoginController extends Controller
                 ->withInput(); // keep old input values
         }
 
-        if (Auth::guard('seller')->attempt(['email' => $request->email_mobile, 'password' => $request->password])) {
+
+        $loginField = filter_var($request->email_mobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+
+        if ($loginField === 'mobile') {
+            $credentials = [
+                'country_code' => $request->country_code,
+                'mobile'       => $request->email_mobile,
+                'password'     => $request->password,
+            ];
+
+            $seller = seller::where('mobile', $request->email_mobile)
+                        ->where('country_code', $request->country_code)
+                        ->where('otp_verify','1')
+                        ->first();
+        } else {
+            $credentials = [
+                'email'    => $request->email_mobile,
+                'password' => $request->password,
+            ];
+            
+            $seller = seller::where('email', $request->email_mobile)->where('otp_verify','1')->first();
+        }
+
+
+        if(!$seller){                   
+        return redirect()->back()
+        ->withErrors(['password'=>'No Seller Account Found'])
+        ->withInput();
+        }
+ 
+
+        if (Auth::guard('seller')->attempt($credentials)) {
           
            $seller_details=Auth::guard('seller')->user();
 
@@ -74,13 +109,6 @@ class LoginController extends Controller
             ->withInput();
 
         }
-
-
-
-
-
-
-        dd($request->all());
 
     }
 
@@ -132,7 +160,7 @@ class LoginController extends Controller
 
         $seller_id=$data['data']->id;
 
-        return redirect()->route('seller.register_otp_verify',$seller_id);
+        return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'Please verify OTP');
 
     }
 
@@ -166,10 +194,19 @@ class LoginController extends Controller
 
        if($seller_details->otp==$enteredOtp){
 
+        $seller_details->update(['otp_verify'=>'1']);
+        
+        if($request->forgot=='yes'){
+
+        return redirect()->route('seller.create_password',$seller_details->id)->with('success', 'Otp verify Successfully');
+
+        }else{
+            
         Auth::guard('seller')->login($seller_details); // login with seller details
 
+        return redirect()->route('seller.store_information',$seller_details->id)->with('success', 'Otp verify Successfully');
 
-        return redirect()->route('seller.store_information',$seller_details->id);
+        }
 
        }else{
 
@@ -232,7 +269,7 @@ class LoginController extends Controller
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
         
-        return redirect()->route('seller.upload_document',$seller_id);
+        return redirect()->route('seller.upload_document',$seller_id)->with('success', 'Store Information Save Successfully');
 
     }
 
@@ -242,31 +279,60 @@ class LoginController extends Controller
 
            $seller_data=Auth::guard('seller')->user()->id;
 
-           $seller_document=sellerDocument::where('seller_id',$seller_data)->where('status','1')->get();
+           $owner_document=sellerDocument::where('seller_id',$seller_data)->where('document_type','1')->where('status','1')->get();
+           $store_document=sellerDocument::where('seller_id',$seller_data)->where('document_type','2')->where('status','1')->get();
+
            $seller_bank=Bankdetails::where('user_id',$seller_data)->first();
-        return view('dealer.bank-details',compact('seller_document','seller_bank'));
-       
+        return view('dealer.bank-details',compact('owner_document','store_document','seller_bank'));
+
     }
 
+    
     $validate = Validator::make($request->all(), [
         // 'user_id' => 'required|exists:sellers,id',
-        'owner_document' => 'required|array',
-        'store_document' => 'required|array',
+
+        'owner_document' => [
+        'nullable',
+        'array',
+        'min:2',
+        Rule::requiredIf(empty($request->old_owner_document) || count($request->old_owner_document) < 2),
+    ],
+    // 👇 Validate each file inside array
+    'owner_document.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048',
+    // 👇 Old documents (for keeping old images)
+    'old_owner_document' => 'nullable|array',
+
+    // store Value
+    'store_document' => [
+        'nullable',
+        'array',
+        'min:2',
+        Rule::requiredIf(empty($request->old_store_document) || count($request->old_store_document) < 2),
+    ],
+    // 👇 Validate each file inside array
+    'store_document.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048',
+    // 👇 Old documents (for keeping old images)
+    'old_store_document' => 'nullable|array',
+
+
+    // 'owner_document' => 'nullable|array',        
+    // 'store_document' => 'required|array',
+    
         'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
         "iban"=>"required",
         'swift'=>'required',
         'bank_name'=>'required',
         "account_holder_name"=>"required",
-        'upload_proof'=>'required'
-        ]);
+        'upload_proof' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|required_without:old_upload_proof',
+        'old_upload_proof' => 'nullable|required_without:upload_proof', 
+    ]);
 
         if ($validate->fails()) {
             return redirect()->back()
                 ->withErrors($validate)
                 ->withInput();
         }
-
-
+        
         $dir="image";
 
         $owner_document1=[];
@@ -274,15 +340,31 @@ class LoginController extends Controller
 
        $seller_id=$request->id;
 
+       if($request->has('old_owner_document')){
+        $owner_document1=$request->old_owner_document;
+
+       }else{
         foreach($request->owner_document as $key=>$val){
-        $owner_document1[$key]=image_upload($val,$dir);
-        }
+            $owner_document1[$key]=image_upload($val,$dir);
+            }
+       }
+
+       if($request->has('old_store_document')){
+        $store_document1=$request->old_store_document;
+       }else{
 
         foreach($request->store_document as $key=>$val){
             $store_document1[$key]=image_upload($val,$dir);
         }
 
-        $upload_proof1=image_upload($request->upload_proof,$dir);
+    }
+
+        if($request->has('old_upload_proof') && $request->old_upload_proof!==''){
+            $upload_proof1=$request->old_upload_proof;
+        }else{
+            $upload_proof1=image_upload($request->upload_proof,$dir);
+        }
+
 
         // unset data in request
 
@@ -301,7 +383,7 @@ class LoginController extends Controller
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
-        return redirect()->route('seller.upload_review',$seller_id);
+        return redirect()->route('seller.upload_review',$seller_id)->with('success', 'Store Document Save Successfully');
 
     }
 
@@ -318,12 +400,12 @@ class LoginController extends Controller
         $review_data= $this->SellerAuthService->seller_review($request);
         if($review_data['status']=='success'){
             $review=$review_data['data'];
-            return view('dealer.summary_page',compact('review'));
+            return view('dealer.summary_page',compact('review'))->with('success', 'Store Review Confirm Successfully');
             }
 
         }
 
-        return redirect()->route('seller.review_submit_page',$seller_id);
+        return redirect()->route('seller.review_submit_page',$seller_id)->with('success', 'Store Review Confirm Successfully');
 
 
     }
@@ -335,11 +417,8 @@ class LoginController extends Controller
         $request = (object) $request;
 
         $data= $this->SellerAuthService->seller_store_submit_request($request);
-        return view('dealer.signup-review');
-
-
+        return view('dealer.signup-review')->with('success', 'Wait for Admin To Verify Your Details');;
     }
-
 
     public function logout(Request $request)
     {
@@ -350,22 +429,145 @@ class LoginController extends Controller
         return redirect()->route('seller.login');
     }
 
+     
+    public function forgot_password(Request $request){
+
+    if ($request->isMethod('get')) {
+        $country= country::all();
+        return view('dealer.forgot',compact('country'));
+    }
+
+
+    if($request->type=='0'){
+        $validate = Validator::make($request->all(), [
+            'country_code'=>"required",
+            'email_mobile'=>"required"
+        ]);
+
+       if($validate->fails()){
+        return redirect()->back()
+        ->withErrors(['error'=>'Mobile Number Is required'])
+        ->withInput();
+     }
+       }
+
+    // when i use forgot password with Email
+        if($request->type=='1'){
+        $validate = Validator::make($request->all(), [
+            'email_mobile'=>"required",
+        ]);
+
+        if($validate->fails()){
+
+            return redirect()->back()
+            ->withErrors(['error'=>'Email Address Is required'])
+        ->withInput();
+        }
+        }
+
+    $loginField = filter_var($request->email_mobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+
+    if ($loginField === 'mobile') {
+        $credentials = [
+            'type'=>'0',
+            'country_code' => $request->country_code,
+            'mobile'       => $request->email_mobile,
+        ];
+
+        $seller = seller::where('mobile', $request->email_mobile)
+                    ->where('country_code', $request->country_code)
+                    ->where('otp_verify','1')
+                    ->first();
+    } else {
+        $credentials = [
+            'type'=>'1',
+            'email'    => $request->email_mobile,
+        ];
+        
+        $seller = seller::where('email', $request->email_mobile)->where('otp_verify','1')->first();
+    }
+
+
+    if(!$seller){                   
+    return redirect()->back()
+    ->withErrors(['error'=>'No Seller Account Found'])
+    ->withInput();
+    }
+    
+    $credentials=(object) $credentials;
+    
+    $data= $this->SellerAuthService->mobile_or_email_forgot_password($credentials);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+
+        return redirect()->back()
+        ->withErrors(['error'=>$data['message']])
+        ->withInput();
+    }
+
+
+    $seller_id= $data['data']->id."?forgot=yes";
+
+    return redirect()->route('seller.register_otp_verify',$seller_id);
+    
+    }
+
 
 
     public function reset_password(Request $request){
+        if ($request->isMethod('get')) {
         return view('dealer.reset_password');
+        }
+
+       $validate = Validator::make($request->all(), [
+        'password' => 'required',
+        'confirm_password'=>"required|same:password"
+           ]);
+    
+   if($validate->fails()){
+    if ($validate->fails()) {
+        return redirect()->back()
+            ->withErrors($validate)
+            ->withInput();
     }
 
-    
-    public function forgot_password(Request $request){
-        return view('dealer.forgot');
+   }
+
+   $data=[
+   'id'=>$request->id,
+   'password' => $request->password,
+   'confirm_password'=>$request->confirm_password,
+   ];
+
+   $data= (object) $data;
+
+   $data= $this->SellerAuthService->create_password($data);
+  
+    if(isset($data['status']) && $data['status']=='error' ){
+        return redirect()->back()
+        ->withErrors(['error'=>$data['message']])
+        ->withInput();
     }
+    
+
+    return redirect()->route('seller.login');
+
+    }
+
+   
 
 
     public function seller_dashboard(Request $request){
         return view('dealer.index');
     }
 
+
+    public function removeImage(Request $request){
+            
+        sellerDocument::where('id',$request->id)->delete();
+        return ApiResponse::generateResponse('success', 'Image Remove Successfully',(object)[],200);
+    
+    }
     
 
 
