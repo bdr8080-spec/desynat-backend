@@ -68,6 +68,9 @@
     .header-main .navbar-brand {
         width: 27% !important;
     }
+    .customContainer{
+        padding: 0 5% !important;
+    }
 }
 
 @media (max-width:568px) {
