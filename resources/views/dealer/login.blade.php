@@ -64,10 +64,10 @@
                                         <div class="form-group mt-4">
                                             <label for="">Mobile or Email Address</label>
 
-                                            <div class="d-flex align-items-center">
+                                            <div class="d-flex align-items-center gap-3">
                                                 <div class=" d-none LoginCountryCode">
                                                     <select name="country_code" id=""
-                                                        class="country form-control">
+                                                        class="country form-select form-control" style="width: 100px">
                                                         @foreach ($country as $item)
                                                             <option value="{{ $item->dial_code }}">
                                                                 {{ $item->dial_code }}</option>
