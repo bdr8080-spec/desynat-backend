@@ -20,6 +20,13 @@
    .customContainer{
         max-width: 800px !important;
     }
+    .login_content_right {
+        padding: 5% 3% !important;
+    }
+    .login_content_content .form-group input, .login_content_content .dropdown button{
+        font-size: 12px;
+    }
+
 }
 
 @media (max-width:768px) {
