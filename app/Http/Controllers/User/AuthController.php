@@ -373,7 +373,7 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference.',
+                    'message' => 'Invalid user reference',
                 ], 400);
             }
 
@@ -386,7 +386,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Password updated successfully.'
+                    'message' => 'Password updated successfully'
                 ]);
             }
 
@@ -474,7 +474,7 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference.',
+                    'message' => 'Invalid user reference',
                 ], 400);
             }
 
@@ -483,7 +483,7 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'User not found.',
+                    'message' => 'User not found',
                 ], 404);
             }
 
@@ -494,7 +494,7 @@ class AuthController extends Controller
        
             return response()->json([
                 'status' => true,
-                'message' => 'OTP resent successfully.',
+                'message' => 'OTP resent successfully',
             ]);
         }
 
