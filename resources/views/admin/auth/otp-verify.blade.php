@@ -14,7 +14,7 @@
 
 <body style="background-color: rgba(227, 194, 149, 0.75) !important;">
     <style>
-      /* .auth-wrapper {
+    /* .auth-wrapper {
         display: flex;
         height: 100vh;
         width: 100%;
@@ -133,195 +133,193 @@
     </nav>
 
     <div class="auth-wrapper">
-       <div class="wrapper-inner">
-        <!-- LEFT SIDE -->
-        <div class="auth-left">
-            <div class="brand-header">
-              
+        <div class="wrapper-inner">
+            <!-- LEFT SIDE -->
+            <div class="auth-left">
+                <div class="brand-header">
+
+                </div>
             </div>
-        </div>
 
-        <!-- RIGHT SIDE -->
-        <div class="auth-right">
-            <div class="login-container-div">
-                <div class="login">
-                    <div class="loginBackgroundeffect text">
-                        <div class="row">
-                            <!-- HEADER BACK NAV -->
-                            <div class="col-lg-12">
-                                <div class="d-flex align-items-center gap-3 mt-2">
-                                    <div class="arrow">
-                                        <a class="table-button" href="{{ route('forgotPassword') }}">
-                                            <i class="fas fa-angle-left"></i>
-                                        </a>
+            <!-- RIGHT SIDE -->
+            <div class="auth-right">
+                <div class="login-container-div">
+                    <div class="login">
+                        <div class="loginBackgroundeffect text">
+                            <div class="row">
+                                <!-- HEADER BACK NAV -->
+                                <div class="col-lg-12">
+                                    <div class="d-flex align-items-center gap-3 mb-4">
+                                        <div class="arrow">
+                                            <a class="table-button" href="{{ route('forgotPassword') }}">
+                                                <i class="fas fa-angle-left"></i>
+                                            </a>
+                                        </div>
+                                        <h4 class="m-0">OTP</h4>
                                     </div>
-                                    <h6 class="m-0">OTP</h6>
                                 </div>
-                            </div>
 
-                            <!-- <div class="login">
+                                <!-- <div class="login">
                                 <div class="loginBackgroundeffect"> -->
-                                    <p class="text-start" id="otpSentMessage">
-                                        6 digit OTP has been sent to your registered email: 
-                                        <span id="adminEmail">{{ $email ?? '' }}</span>
-                                    </p>
+                                <h5 class="text-start" id="otpSentMessage">
+                                    6 digit OTP has been sent to your registered email: 
+                                    <span id="adminEmail">{{ $email ?? '' }}</span>
+                                </h5>
 
 
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <div class="otp-container">
-                                                    @for ($i = 1; $i <= 6; $i++) <input type="text" maxlength="1"
-                                                        class="otp-input" id="otp-{{ $i }}" required>
-                                                        @endfor
-                                                </div>
-                                                <span class="text-danger" id="otpError"></span>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <div class="otp-container">
+                                                @for ($i = 1; $i <= 6; $i++) <input type="text" maxlength="1"
+                                                    class="otp-input" id="otp-{{ $i }}" required>
+                                                    @endfor
                                             </div>
+                                            <span class="text-danger" id="otpError"></span>
                                         </div>
-
-                                        <div class="col-lg-12">
-                                            <div class="d-flex align-items-center justify-content-end">
-                                                <a href="#" id="resendOtp">Resend OTP</a>
-                                            </div>
-                                        </div>
-
-                                        <div class=" text-center">
-                                            <div id="timerOtp">Resend OTP in <span id="seconds">30</span> Secs</div>
-                                        </div>
-
-                                        <div class="button d-flex align-items-center justify-content-center">
-                                            <button class="btn custom-btn" id="submitOtp"
-                                                style="max-width: 100% !important;">Submit</button>
-                                        </div>
-
                                     </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a href="#" id="resendOtp">Resend OTP</a>
+                                        </div>
+                                    </div>
+
+                                    <div class=" text-center">
+                                        <div id="timerOtp">Resend OTP in <span id="seconds">30</span> Secs</div>
+                                    </div>
+
+                                    <div class="button d-flex align-items-center justify-content-center">
+                                        <button class="btn custom-btn" id="submitOtp"
+                                            style="max-width: 100% !important;">Submit</button>
+                                    </div>
+
+                                </div>
                                 <!-- </div>
                             </div> -->
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-  </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
 
-<script>
-$(document).ready(function() {
-    let timer = 60;
-    let interval;
+    <script>
+    $(document).ready(function() {
+        let timer = 60;
+        let interval;
 
-    // Hide resend button initially
-    $('#resendOtp').prop('disabled', true);
-    $('#resendOtp').hide(); 
-    $('#timerOtp').show(); // Show timer at start
+        // Hide resend button initially
+        $('#resendOtp').prop('disabled', true);
+        $('#resendOtp').hide();
+        $('#timerOtp').show(); // Show timer at start
 
-    function startTimer() {
-        clearInterval(interval); // prevent multiple intervals
-        $('#timerOtp').show();   // show timer whenever countdown starts
-        $('#seconds').text(formatTime(timer));
-
-        interval = setInterval(() => {
-            timer--;
+        function startTimer() {
+            clearInterval(interval); // prevent multiple intervals
+            $('#timerOtp').show(); // show timer whenever countdown starts
             $('#seconds').text(formatTime(timer));
 
-            if (timer <= 0) {
-                clearInterval(interval);
-                $('#resendOtp').prop('disabled', false);
-                $('#resendOtp').show(); // show resend button after timer ends
-                $('#timerOtp').hide();  // hide timer text
-            }
-        }, 1000);
-    }
+            interval = setInterval(() => {
+                timer--;
+                $('#seconds').text(formatTime(timer));
 
-    function formatTime(seconds) {
-        let min = Math.floor(seconds / 60);
-        let sec = seconds % 60;
-        return `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
-    }
-
-    startTimer();
-
-    // OTP input auto-focus
-    $('.otp-input').on('input', function() {
-        let next = $(this).next('.otp-input');
-        if (next.length && $(this).val()) next.focus();
-        $('#otpError').text('');
-    });
-
-    // Submit OTP
-    $('#submitOtp').click(function(e) {
-        e.preventDefault();
-        let otp = '';
-        $('.otp-input').each(function() {
-            otp += $(this).val();
-        });
-
-        if (otp.length === 0) {
-            $('#otpError').text('Please Enter OTP');
-            return;
-        } else if (otp.length > 0 && otp.length < 6) {
-            $('#otpError').text('Please Enter Full 6-digit OTP');
-            return;
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    $('#resendOtp').prop('disabled', false);
+                    $('#resendOtp').show(); // show resend button after timer ends
+                    $('#timerOtp').hide(); // hide timer text
+                }
+            }, 1000);
         }
 
-        $.ajax({
-            url: '{{ route("optVerify") }}',
-            type: 'POST',
-            data: {
-                otp: otp,
-                email: $('#adminEmail').text(),
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                if (response.success) {
-                    window.location.href = "{{ route('changePassword') }}";
-                }
-            },
-            error: function(xhr) {
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    if (errors.otp) $('#otpError').text(errors.otp[0]);
-                }
+        function formatTime(seconds) {
+            let min = Math.floor(seconds / 60);
+            let sec = seconds % 60;
+            return `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+        }
+
+        startTimer();
+
+        // OTP input auto-focus
+        $('.otp-input').on('input', function() {
+            let next = $(this).next('.otp-input');
+            if (next.length && $(this).val()) next.focus();
+            $('#otpError').text('');
+        });
+
+        // Submit OTP
+        $('#submitOtp').click(function(e) {
+            e.preventDefault();
+            let otp = '';
+            $('.otp-input').each(function() {
+                otp += $(this).val();
+            });
+
+            if (otp.length === 0) {
+                $('#otpError').text('Please Enter OTP');
+                return;
+            } else if (otp.length > 0 && otp.length < 6) {
+                $('#otpError').text('Please Enter Full 6-digit OTP');
+                return;
             }
+
+            $.ajax({
+                url: '{{ route("optVerify") }}',
+                type: 'POST',
+                data: {
+                    otp: otp,
+                    email: $('#adminEmail').text(),
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        window.location.href = "{{ route('changePassword') }}";
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        if (errors.otp) $('#otpError').text(errors.otp[0]);
+                    }
+                }
+            });
+        });
+
+        // Resend OTP
+        $('#resendOtp').click(function(e) {
+            e.preventDefault();
+
+            if ($(this).prop('disabled')) return;
+
+            $.ajax({
+                url: '{{ route("resendOtp") }}',
+                type: 'POST',
+                data: {
+                    email: $('#adminEmail').text(),
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Reset timer and message
+                        timer = 60;
+                        $('#resendOtp').prop('disabled', true).hide();
+
+                        let email = $('#adminEmail').text();
+                        $('#otpSentMessage').html(
+                            `6 digit OTP has been resent to your registered email: <span id="adminEmail">${email}</span>`
+                        );
+
+                        startTimer(); // restart timer display
+                    }
+                }
+            });
         });
     });
-
-    // Resend OTP
-    $('#resendOtp').click(function(e) {
-        e.preventDefault();
-
-        if ($(this).prop('disabled')) return;
-
-        $.ajax({
-            url: '{{ route("resendOtp") }}',
-            type: 'POST',
-            data: {
-                email: $('#adminEmail').text(),
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                if (response.success) {
-                    // Reset timer and message
-                    timer = 60;
-                    $('#resendOtp').prop('disabled', true).hide();
-
-                    let email = $('#adminEmail').text();
-                    $('#otpSentMessage').html(
-                        `6 digit OTP has been resent to your registered email: <span id="adminEmail">${email}</span>`
-                    );
-
-                    startTimer(); // restart timer display
-                }
-            }
-        });
-    });
-});
-
-
-</script>
+    </script>
 
 </body>
 
