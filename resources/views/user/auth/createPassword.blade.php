@@ -28,9 +28,9 @@
                 <div>
                     <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> Reset Password</h3>
                     <div class="form-group position-relative password_icon mt-3">
-                        <label for="createPassword">Create Password</label>
+                        <label for="createPassword">Create New Password</label>
                         <input type="password" id="createPassword" class="form-control custom-password notapplyspace"
-                            placeholder="Enter password" style="padding-right: 40px;" name="password" />
+                            placeholder="Enter New Password" style="padding-right: 40px;" name="password" />
                         <i class="fa-solid fa-eye toggle-passwordtwo" id="toggleCreate"></i>
                     </div>
                      <span class="text-danger" id="error-password"></span>
