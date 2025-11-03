@@ -147,12 +147,15 @@
                 success: function (resp) {
                    
                     if(resp.status == true){
-                        location.href = `verify-otp?temp_user_id=${resp.id}`;
+                         toastr.success(resp.message);
+                        setTimeout(() => {
+                              location.href = `verify-otp?temp_user_id=${resp.id}`;
+                        }, 1000);
+                      
                     }
 
                     if(resp.status == false){
                         for (const key in resp.errors) {
-                            console.log(resp.errors[key])
                             $(`#error-${key}`).html(resp.errors[key]);
                         }   
                     }
