@@ -1172,3 +1172,9 @@ label {
 .plan-circle {
   border-radius: 20px;
 }
+
+.remove-ic {
+  position: absolute;
+  top: 2px;
+  right: -22px;
+}

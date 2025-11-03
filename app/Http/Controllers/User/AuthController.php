@@ -79,9 +79,12 @@ class AuthController extends Controller
                    ]);
                }
 
+               if($request->image){
+                
                  $dir = 'profile_image/';
-
-                $image_path = $this->image_upload($request->image, $dir);
+                 $image_path = $this->image_upload($request->image, $dir);
+                 
+                }
     
                 $otp= config('services.otp');
 
@@ -92,7 +95,7 @@ class AuthController extends Controller
                     'email'         => $request->email,
                     'password'      => bcrypt($request->password),
                     'otp'           => $otp,
-                    'profile_image'=>$image_path
+                    'profile_image'=>$image_path??null
                 ]);
 
                 $id  = Crypt::encryptString($data->id);
