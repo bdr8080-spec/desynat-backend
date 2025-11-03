@@ -80,11 +80,11 @@ class UserAuthService
                 
                 return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"User Password Is wrong",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Please Enter correct password",'data'=>(object)[]];                
             }
         
           }else{
-            return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
           }
     
         }
@@ -111,10 +111,10 @@ class UserAuthService
             $get_user_details->update(['otp'=>$otp]);
 
             $get_user_details->accessToken ='';            
-            return ['status'=>'success','message'=>"User Login Otp Send Successfully",'data'=>$get_user_details];            
+            return ['status'=>'success','message'=>"OTP sent to mobile number succesfully",'data'=>$get_user_details];            
         
           }else{
-            return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
           }
     
         }
@@ -140,10 +140,10 @@ class UserAuthService
             $get_user_details->update(['otp'=>$otp]);
 
             $get_user_details->accessToken ='';            
-            return ['status'=>'success','message'=>"User Login Otp Send Successfully",'data'=>$get_user_details];            
+            return ['status'=>'success','message'=>"OTP sent to mobile number succesfully ",'data'=>$get_user_details];            
         
           }else{
-            return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
           }
     
         }
@@ -170,7 +170,7 @@ class UserAuthService
                 return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
-                return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
               }
         
             }
@@ -180,6 +180,16 @@ class UserAuthService
                 $get_user_details=  User::where('id',$request->id)->where('otp_verify','1')->first();
     
                 if($get_user_details){
+
+
+                    // ✅ Check if new password is same as old
+                  if (Hash::check($request->password, $get_user_details->password)) {
+                    return [
+                        'status' => 'error',
+                        'message' => 'New password cannot be the same as the old password',
+                        'data' => (object)[],
+                    ];
+                }
               
                     $get_user_details->update(['password'=>hash::make($request->password)]);
                     
@@ -187,7 +197,7 @@ class UserAuthService
                     return ['status'=>'success','message'=>"Forgot Password change Successfully",'data'=>$get_user_details];            
                 
                   }else{
-                    return ['status'=>'error','message'=>"User is Not Existed",'data'=>(object)[]];                
+                    return ['status'=>'error','message'=>"Account does not exist",'data'=>(object)[]];                
                   }
             
                 }
