@@ -22,6 +22,8 @@ class BrandService
                 $query->where('name_english', 'like', '%' . $search . '%');
             }
 
+            $query->orderBy('id', 'desc');
+
             $brand_details = $query->paginate($limit);
 
             if ($brand_details->isEmpty()) {
