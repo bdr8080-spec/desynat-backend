@@ -141,7 +141,8 @@
 
                                             <input class="form-control" type="tel" id="phone"
                                                 placeholder="Enter mobile Number" name="mobile"
-                                                value="{{ old('mobile') }}">
+                                                value="{{ old('mobile') }}"
+                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
 
                                         </div>
                                         @error('mobile')
