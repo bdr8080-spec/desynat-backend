@@ -44,7 +44,7 @@
         overflow: hidden;
     }
     .login_content_right{
-            height: calc(100% - 170px) !important;
+            height: calc(100% - 120px) !important;
     }
     .login_content_left .left-imgone{
             top: 35.7% !important;
@@ -68,6 +68,6 @@
         margin: 0 5%;
     }
         .login_content_left .left-imgone {
-        top: 25.7% !important;
+        top: 37.7% !important;
     }
 }
