@@ -21,7 +21,7 @@ class CommonController extends Controller
         // Validate the request
         $request->validate([
             // 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg,pdf|max:5120',
         ]);
 
         // Check if the request has a valid file

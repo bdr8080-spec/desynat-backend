@@ -7,7 +7,7 @@
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
               <div class="col-lg-6 col-md-6 col-12">
-                <h2 class="h2">Category & Sub-Cattegory Management</h2>
+                <h2 class="h2">Category & Sub-Category Management</h2>
               </div>
             </div>
 
@@ -118,7 +118,12 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    toastr.success(data.message);
+                    // toastr.success(data.message);
+                    if(data.status == 1){
+                        toastr.success(data.message); // Green for active
+                    } else {
+                        toastr.error(data.message);   // Red for deactivated
+                    }
                     setTimeout(() => {
                         location.reload();
                     }, 2000);
