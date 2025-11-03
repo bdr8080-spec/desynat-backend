@@ -87,7 +87,7 @@
                 <div class="form-check term_policy my-3">
                     <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate" name="accept_terms">
                     <label class="form-check-label" for="checkIndeterminate">
-                        Please accept the<a href="">terms and conditions</a> and <a href="">policies</a> 
+                        Please accept the<a href=""> terms and conditions</a> and <a href="">policies</a> 
                     </label>
                 </div>
                     <span class="text-danger" id="error-accept_terms"></span>
