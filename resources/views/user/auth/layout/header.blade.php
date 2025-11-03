@@ -33,6 +33,14 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.country-option:hover {
+    background-color: #f8f9fa;
+}
+.country-radio:checked + img + span {
+    font-weight: 600;
+}
+
 </style>
 </head>
 <body>
