@@ -40,7 +40,7 @@ class AuthController extends Controller
         ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->UserAuthService->register($req);
@@ -63,7 +63,7 @@ class AuthController extends Controller
               ]);
           
          if($validate->fails()){
-          return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
          }
   
           $data= $this->UserAuthService->verify_otp($req);
@@ -86,7 +86,7 @@ class AuthController extends Controller
                ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
 
@@ -99,7 +99,7 @@ class AuthController extends Controller
             "country_code"=>"required" 
                ]);
         if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
         }
        }
 
@@ -126,7 +126,7 @@ class AuthController extends Controller
                ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
 
@@ -138,7 +138,7 @@ class AuthController extends Controller
             "country_code"=>"required" 
                ]);
         if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
         }
        }
 
@@ -172,7 +172,7 @@ class AuthController extends Controller
             "country_code"=>"required" 
                ]);
         if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
         }
        }
 
@@ -194,7 +194,7 @@ class AuthController extends Controller
                ]);
 
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
        // when i use forgot password with Mobile
@@ -205,7 +205,7 @@ class AuthController extends Controller
         ]);
 
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
        }
@@ -217,7 +217,7 @@ class AuthController extends Controller
         ]);
 
         if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
         }
 
         }
@@ -242,7 +242,7 @@ class AuthController extends Controller
                ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->UserAuthService->create_password($req);
