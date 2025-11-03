@@ -60,7 +60,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="signup_otp.php"><i class="bi bi-chevron-left"></i></a> Store information</h1>
+                                    <h1><a href="{{url()->previous()}}"><i class="bi bi-chevron-left"></i></a> Store information</h1>
                                 </div>
 
                                 <form action="{{route('seller.store_information',request()->id)}}" method="Post">
@@ -91,7 +91,7 @@
                                             <span id="remove" style="display:none;cursor:pointer;font-size:24px;color:red;" onclick="removeImg()">&times;</span>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="form-control" name="store_image" id="store_image" value="{{old('store_image')}}">
+                                    <input type="hidden" class="form-control" name="store_image" id="store_image"  value=" { old('store_image', @$store_info->store_image) }}">
                                  
                                  @error('store_image')
                                          <span class="text-danger">{{ $message }}</span>
@@ -101,7 +101,8 @@
 
                                     <div class="form-group">
                                         <label for="name">Store Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Store name" name="store_name" value="{{old('store_name')}}">
+                                        <input type="text" class="form-control" placeholder="Enter Store name" name="store_name" value="{{ old('store_address', @$store_info->store_name) }}"
+                                         >
                                     </div>
 
                                     @error('store_name')
@@ -126,7 +127,7 @@
 
                                     <div class="form-group">
                                         <label for="name">Store Address</label>
-                                        <input type="text" class="form-control" placeholder="Enter Store Address" name="store_address" value="{{old('store_address')}}">
+                                        <input type="text" class="form-control" placeholder="Enter Store Address" name="store_address" value="{{ old('store_address',@$store_info->store_address)}}">
                                     </div>
                                     
                                     @error('store_address')
@@ -134,14 +135,14 @@
                                         @enderror
                                     <div class="form-group">
                                         <label for="name">Address line 1</label>
-                                        <input type="text" class="form-control" placeholder="Enter Address line 1" name="address_line1" value="{{old('address_line1')}}">
+                                        <input type="text" class="form-control" placeholder="Enter Address line 1" name="address_line1" value="{{ old('address_line1',@$store_info->address_line1)}}" >
                                     </div>
                                     @error('address_line1')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     <div class="form-group">
                                         <label for="name">Address line 2</label>
-                                        <input type="text" class="form-control" placeholder="Enter Address line 2" name="address_line2" value="{{old('address_line2')}}">
+                                        <input type="text" class="form-control" placeholder="Enter Address line 2" name="address_line2" value="{{ old('address_line2',@$store_info->address_line2)}}">
                                     </div>
                                     @error('address_line2')
                                         <span class="text-danger">{{ $message }}</span>
@@ -163,21 +164,21 @@
 
                                     
                                         <label for="name">Store Phone Number</label>
-                                        <input class="form-control" type="tel" id="phone" placeholder="Enter Store Phone Number" name="store_phone" value="{{old('store_phone')}}">
+                                        <input class="form-control" type="tel" id="phone" placeholder="Enter Store Phone Number" name="store_phone" value="{{ old('store_phone',@$store_info->store_phone)}}">
                                     </div>
                                     @error('store_phone')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     <div class="form-group">
                                         <label for="name">Store mail Id</label>
-                                        <input type="text" class="form-control" placeholder="Enter Store mail Id" name="store_mail_id" value="{{old('store_mail_id')}}">
+                                        <input type="text" class="form-control" placeholder="Enter Store mail Id" name="store_mail_id" value="{{ old('store_mail_id',@$store_info->store_mail_id)}}" >
                                     </div>
                                     @error('store_mail_id')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     <div class="form-group">
                                         <label for="name">Bio</label>
-                                        <textarea class="form-control" rows="3" placeholder="Write a massage...." name="bio"> {{old('bio')}} </textarea>
+                                        <textarea class="form-control" rows="3" placeholder="Write a massage...." name="bio"> {{ old('bio',@$store_info->bio)}} </textarea>
                                     </div>
                                     @error('bio')
                                         <span class="text-danger">{{ $message }}</span>

@@ -8,19 +8,19 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="{{ asset( 'dealer')}}/assets/img/favicon.png" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- Vendor CSS Files -->
-    <link href="assets/custom-file/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset( 'dealer')}}/assets/custom-file/css/bootstrap.min.css" rel="stylesheet">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
-    <link href="assets/custom-file/css/style.css" rel="stylesheet">
-    <link href="assets/custom-file/css/custom.css" rel="stylesheet">
+    <link href="{{ asset( 'dealer')}}/assets/custom-file/css/style.css" rel="stylesheet">
+    <link href="{{ asset( 'dealer')}}/assets/custom-file/css/custom.css" rel="stylesheet">
 
 </head>
 
@@ -30,7 +30,7 @@
 
         <div class="">
             <a href="#" class="logo">
-                <img src="assets/img/desynat-logo.svg" alt="image" class="img-fluid">            
+                <img src="{{ asset( 'dealer')}}/assets/img/desynat-logo.svg" alt="image" class="img-fluid">            
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div>
@@ -68,7 +68,7 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <img src="{{ asset( 'dealer')}}/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
                         <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -99,13 +99,13 @@
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <a class="nav-link sidebar-active border-radious-9 margin-20" href="index.php">
-                    <img src="assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset( 'dealer')}}/assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20" href="">
-                    <img src="assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset( 'dealer')}}/assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
                     <span>Product Management</span>
                 </a>
             </li>

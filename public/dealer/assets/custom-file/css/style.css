@@ -1,46 +1,45 @@
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
-  --title-dark:#6E4527;
-  --text-dark:#6F4628;
-  --dark-black:#000;
-  --text-black:#000;
-  --bg-fill:#6E4527;
-  --text-white:#fff;
-  --bg-multiple:linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
-  --btn-gradient:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
-  --h1:24px;
-  --h1-line-height:35px;
+  --title-dark: #6E4527;
+  --text-dark: #6F4628;
+  --dark-black: #000;
+  --text-black: #000;
+  --bg-fill: #6E4527;
+  --text-white: #fff;
+  --bg-multiple: linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
+  --btn-gradient: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+  --h1: 24px;
+  --h1-line-height: 35px;
 
-  --h2:22px;
-  --h2-line-height:25px;
+  --h2: 22px;
+  --h2-line-height: 25px;
 
-  --h3:20px;
-  --h3-line-height:25px;
+  --h3: 20px;
+  --h3-line-height: 25px;
 
-  --h4:18px;
-  --h4-line-height:30px;
+  --h4: 18px;
+  --h4-line-height: 30px;
 
-  --label:16px;
-  --label-line-height:20px;
+  --label: 16px;
+  --label-line-height: 20px;
 
-  --allLink:18px;
-  --lineheight:16px;
+  --allLink: 18px;
+  --lineheight: 16px;
 
-  --btn-font:18px;
-  --form-label-size:14px;
-  --form-label-color:#808080;
-  --font-size-16:16px;
-  --asidbar-color:#FFF7EA;
-  --tab-active-bg:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
-  --plan-yellow:linear-gradient(181.43deg, #FFA41B 4.41%, #FFD79C 97.79%);
-  --plan-black:linear-gradient(359.73deg, #1A1A1A 48.2%, #5E5E5E 100.29%);
-  --plan-gold:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
-  --plan-green:linear-gradient(182.18deg, #17854C 28.73%, #2DFF92 120.46%);
-  --border-color:#DFBF8F;
+  --btn-font: 18px;
+  --form-label-size: 14px;
+  --form-label-color: #808080;
+  --font-size-16: 16px;
+  --asidbar-color: #FFF7EA;
+  --tab-active-bg: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+  --plan-yellow: linear-gradient(181.43deg, #FFA41B 4.41%, #FFD79C 97.79%);
+  --plan-black: linear-gradient(359.73deg, #1A1A1A 48.2%, #5E5E5E 100.29%);
+  --plan-gold: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+  --plan-green: linear-gradient(182.18deg, #17854C 28.73%, #2DFF92 120.46%);
+  --border-color: #DFBF8F;
 
 
 }
@@ -49,22 +48,25 @@ body {
   font-family: "Poppins", sans-serif;
   color: #444444;
   font-size: var(--label);
-  
+
 }
 
-h1{
+h1 {
   font-size: var(--h1);
   line-height: var(--h1-line-height);
 }
-h2{
+
+h2 {
   font-size: var(--h2);
   line-height: var(--h2-line-height);
 }
-h3{
+
+h3 {
   font-size: var(--h3);
   line-height: var(--h3-line-height);
 }
-h4{
+
+h4 {
   font-size: var(--h4);
   line-height: var(--h4-line-height);
 }
@@ -78,55 +80,71 @@ a:hover {
   color: #717ff5;
   text-decoration: none;
 }
-label{
+
+label {
   font-size: var(--label);
 }
-.padding-top-60{
+
+.padding-top-60 {
   padding-top: 60px;
 }
+
 .personal-list {
   margin: 10px 0px;
 }
+
 .iti {
   position: relative;
   display: block;
 }
+
 .lightName {
   color: var(--form-label-color);
-  font-size: var(--form-label-size);;
+  font-size: var(--form-label-size);
+  ;
 }
+
 .title_black {
   font-size: var(--font-size-16);
   color: var(--dark-black);
 }
+
 .summary-title {
   font-size: var(--font-size-16);
   color: var(--dark-black);
   font-weight: 600;
 }
-.sidebar-active{
+
+.sidebar-active {
   background: var(--tab-active-bg);
   color: #fff !important;
 }
-.border-radious-9{
+
+.border-radious-9 {
   border-radius: 9px;
 }
-.margin-20{
+
+.margin-20 {
   margin: 0px 20px;
 }
+
 .asideicon {
   width: 15px;
   margin-right: 8px;
 }
+
 .login-img {
   width: 60%;
 }
-.planheight{
-  height:350px !important;
+
+.planheight {
+  height: 350px !important;
 }
-.plan-shadow{
+
+.plan-shadow {
   box-shadow: 0px 4.58px 4.58px 0px #0000001F;
 }
+
 .total-pnl {
   display: flex;
   justify-content: space-between;
@@ -144,7 +162,8 @@ label{
   padding: 50px 30px;
   transition: all 0.3s;
 }
-.custom-container{
+
+.custom-container {
   padding-left: 50px;
   padding-right: 50px;
 }
@@ -154,6 +173,7 @@ label{
     padding: 20px;
   }
 }
+
 .border-radious-20 {
   border-radius: 22px !important;
 }
@@ -170,14 +190,16 @@ label{
 }
 
 .pagescroll {
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
 .pro-1 {
   width: 23%;
   display: inline-flex;
   margin: 0px 3px;
 }
+
 .progress-bar {
   background-color: var(--bg-fill);
 }
@@ -188,40 +210,47 @@ label{
 .pagetitle {
   margin-bottom: 10px;
 }
+
 .otp-panel .form-control {
   width: 60px;
   text-align: center;
   padding: 10px;
   font-size: var(--h3);
 }
+
 .pagetitle h1 {
   font-size: var(--h1);
   margin-bottom: 0;
   font-weight: 600;
   color: #012970;
 }
+
 .btn-success {
   line-height: 32px;
   background: var(--btn-gradient);
   border: none;
   font-size: var(--btn-font);
 }
+
 .bg-logo-wapper {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
+
 .vector-left {
   position: absolute;
   left: 0;
   top: 30px;
 }
+
 .vector-right {
   position: absolute;
   right: 0;
   bottom: 30px;
 }
+
 .login-header {
   padding: 12px;
   display: flex;
@@ -237,9 +266,9 @@ label{
 /*--------------------------------------------------------------
 # custom login section
 --------------------------------------------------------------*/
-.login-grid-bg{
+.login-grid-bg {
   height: 100vh;
-  background:var(--bg-multiple);
+  background: var(--bg-multiple);
 }
 
 .login-content.pt-40 {
@@ -250,6 +279,7 @@ label{
   align-items: center;
   justify-content: center;
 }
+
 .login-grid-2 {
   max-width: 550px;
   width: 100%;
@@ -259,20 +289,24 @@ label{
   font-size: var(--h1);
   color: #000;
 }
+
 .login-grid-2 h2 {
   font-size: var(--h2);
   font-weight: 700;
   margin-top: 30px;
   margin-bottom: 0px;
 }
+
 .gold-color {
-  color:var(--text-dark);
+  color: var(--text-dark);
 }
+
 .form-control {
   padding: 13px;
   font-size: 15px;
   border: 1px solid #c5c3c3;
 }
+
 .form-control:focus {
   border-color: #d5b272;
   box-shadow: 0 0 0 .25rem rgb(209 174 111 / 6%);
@@ -286,13 +320,14 @@ label{
   cursor: pointer;
   transform: translate(3px, 7px);
 }
-.form-group label{
+
+.form-group label {
   margin: 10px 0px;
   font-size: var(--label);
   color: var(--dark-black);
 }
 
-.link-color{
+.link-color {
   color: var(--text-dark);
 }
 
@@ -301,19 +336,23 @@ label{
   width: 100%;
   margin: auto;
 }
-.res-title h2{
-  font-size:var(--h1);
+
+.res-title h2 {
+  font-size: var(--h1);
   font-weight: 600;
   color: #000;
   margin-bottom: 10px;
 }
+
 .res-title p {
   color: #000;
   font-weight: 600;
 }
-.email-title{
+
+.email-title {
   color: var(--btn-color);
 }
+
 .title-reset {
   font-size: var(--h1);
   font-weight: 800;
@@ -325,6 +364,7 @@ label{
   background: #003A4E;
   padding: 20px;
 }
+
 .step {
   display: none;
 }
@@ -336,7 +376,8 @@ label{
 .navigation {
   margin-top: 20px;
 }
-.create-panel{
+
+.create-panel {
   max-width: 600px;
   width: 100%;
   border: 1px solid #ccc;
@@ -346,19 +387,23 @@ label{
   margin-top: 2rem;
   margin-bottom: 3rem;
 }
+
 .boxstep h5 {
   font-size: 25px;
   font-weight: 600;
 }
-.alaccount{
+
+.alaccount {
   color: #7F9CA6;
   font-weight: 700;
   font-size: 20px;
 }
+
 .type-business {
   display: flex;
   gap: 26px;
 }
+
 .custom-radio {
   background: #fff;
   width: 100%;
@@ -368,13 +413,16 @@ label{
   border-radius: 6px;
   border: 1px solid #ddd;
 }
+
 .custom-radio.active {
   background: #b4c5cbc2;
   color: #000;
 }
-.signup-pnl{
+
+.signup-pnl {
   padding: 40px;
 }
+
 .user-pnl-1 {
   background: #EAEEF0;
   padding: 10px 40px 20px;
@@ -437,7 +485,7 @@ label{
   background-color: #f6f9ff;
 }
 
-.datatable-table > tr > td {
+.datatable-table>tr>td {
   white-space: nowrap !important;
 }
 
@@ -582,6 +630,7 @@ label{
   min-width: 360px;
   padding: 0 20px;
 }
+
 .bellic i {
   color: #fff;
 }
@@ -662,6 +711,7 @@ label{
   text-align: center;
   color: var(--text-white);
 }
+
 .header-nav .nav-profile {
   color: #fff;
   padding: 5px;
@@ -784,18 +834,20 @@ label{
   background-color: #f6f9ff;
 }
 
-.des-language .dropdown button{
+.des-language .dropdown button {
   background: transparent;
   border: 1px solid #000000;
   color: var(--text-black);
 }
-.des-language .dropdown .dropdown-menu li a.dropdown-item span{
+
+.des-language .dropdown .dropdown-menu li a.dropdown-item span {
   background: #FFF7EA;
   color: #6E4527;
   padding: 3px;
   border-radius: 4px;
 }
-.des-language .dropdown .dropdown-menu li a.dropdown-item{
+
+.des-language .dropdown .dropdown-menu li a.dropdown-item {
   font-size: 16px !important;
   line-height: 18px !important;
   text-transform: inherit;
@@ -983,6 +1035,7 @@ label{
   position: relative;
   height: 130px;
 }
+
 .imgshow img {
   height: 100%;
   width: 100%;
@@ -998,18 +1051,26 @@ label{
   transform: translate(-50%);
   top: -3px;
 }
-.text-color-upload{
+
+.imgshow_Width {
+  width: "100%"
+}
+
+.text-color-upload {
   color: var(--title-dark);
 }
+
 .cmn-header .bi-chevron-left {
   color: #000;
 }
+
 .uploadLabel-summary img {
   height: 100%;
   width: 100%;
   aspect-ratio: 2;
   object-fit: fill;
 }
+
 .removeIcon {
   position: absolute;
 }
@@ -1049,12 +1110,14 @@ label{
   white-space: nowrap;
   color: #666;
 }
+
 /*--------------------------------------------------------------
 # Price plan page
 --------------------------------------------------------------*/
-.plan-wapper{
+.plan-wapper {
   margin-top: -6%;
 }
+
 .plan-header {
   border-radius: 0px 0px 10px 10px;
   padding: 13px;
@@ -1062,40 +1125,50 @@ label{
   font-size: 20px;
   font-weight: 500;
 }
-.bg-yellow-1{
+
+.bg-yellow-1 {
   background: var(--plan-yellow);
 }
-.bg-yellow-2{
+
+.bg-yellow-2 {
   background: var(--plan-black);
 }
-.bg-yellow-3{
+
+.bg-yellow-3 {
   background: var(--plan-gold);
 }
-.bg-yellow-4{
+
+.bg-yellow-4 {
   background: var(--plan-green);
 }
+
 .plan-content {
   border-radius: 0px 0px 20px 20px;
   padding: 13px;
   color: var(--title-dark);
 }
+
 .plan-card {
   background: #fff;
   border-radius: 0px 0px 20px 20px;
   margin-bottom: 30px;
 }
+
 .plan-body li {
   line-height: 2.5;
   font-size: 16px;
 }
+
 .plan-body li img {
   margin-right: 8px;
   width: 16px;
 }
+
 .pkg-list {
   display: flex;
   justify-content: space-between;
 }
+
 .plan-circle {
   border-radius: 20px;
 }

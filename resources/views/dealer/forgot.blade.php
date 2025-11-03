@@ -43,10 +43,10 @@
                 <div class="row g-0">
                     <div class="col-lg-6 bg-logo-wapper">
                         <div class="login-img">
-                            <img src="{{ asset( '/dealer')}}/assets/img/Desynat-logo-2.svg" alt="image" class="img-fluid logo-login">                          
+                            <img src="{{ asset( 'dealer')}}/assets/img/Desynat-logo-2.svg" alt="image" class="img-fluid logo-login">                          
                         </div>
-                        <img src="{{ asset( '/dealer')}}/assets/img/Vector-left.svg" alt="image" class="vector-left">
-                        <img src="{{ asset( '/dealer')}}/assets/img/Vector-right.svg" alt="image" class="vector-right">
+                        <img src="{{ asset( 'dealer')}}/assets/img/Vector-left.svg" alt="image" class="vector-left">
+                        <img src="{{ asset( 'dealer')}}/assets/img/Vector-right.svg" alt="image" class="vector-right">
                     </div>
                     <div class="col-lg-6">
                         <div class="login-content pt-40">
@@ -90,12 +90,12 @@
 
 
 <!-- Vendor JS Files -->
-<script src="{{ asset( '/dealer')}}/assets/custom-file/js/jquery.min.js"></script>
-<script src="{{ asset( '/dealer')}}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset( '/dealer')}}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
+<script src="{{ asset( 'dealer')}}/assets/custom-file/js/jquery.min.js"></script>
+<script src="{{ asset( 'dealer')}}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset( 'dealer')}}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 
 <!--Main JS File -->
-<script src="{{ asset( '/dealer')}}/assets/custom-file/js/main.js"></script>
+<script src="{{ asset( 'dealer')}}/assets/custom-file/js/main.js"></script>
 
 
 </html>

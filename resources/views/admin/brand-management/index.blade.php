@@ -7,22 +7,7 @@
 </style>
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content" class="">
-          <nav
-            class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top"
-          >
-            <div class="left-section d-flex align-items-center">
-              <img src="image/combine_logo.svg" class="header-logo" />
-            </div>
-
-            <div class="header-divider"></div>
-
-            <div class="right-section">
-              <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-              </button>
-            </div>
-          </nav>
+      
 
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">

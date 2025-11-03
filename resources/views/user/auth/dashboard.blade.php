@@ -29,7 +29,14 @@
                      
                         <div class="header_nav_button_dropdown">
                                @if (Auth::guard('web')->check())
-                               <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px"> 
+                                <div class="dropdown userDropdown">
+                                    <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
+                                    </ul>
+                                </div>
                                @else
                                  <a class="customBtn1" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                                  @endif
@@ -466,27 +473,27 @@
     <section class="customContainer categorie_contenar">
         <h3>Categories</h3>
         <div class="row">
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Dresses</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Abaya</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Suits</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Abaya</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Cord Set</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Dresses</h3>
             </div>
@@ -984,7 +991,7 @@
     <section class="customContainer">
         <h3>Newest Products</h3>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1008,7 +1015,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1032,7 +1039,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1056,7 +1063,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1080,7 +1087,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1104,7 +1111,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1128,7 +1135,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1152,7 +1159,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1251,7 +1258,7 @@
     
     <script src="{{asset('user/assets/js/jquery-3.7.1.min.js')}}" ></script>
     <!-- <script src="assets/js/all.min.js" ></script> -->
-    <script src="{{asset('usser/assets/js/bootstrap.bundle.min.js')}}" ></script>
+    <script src="{{asset('user/assets/js/bootstrap.bundle.min.js')}}" ></script>
     <!-- <script src="assets/js/fontawesome.min.js" ></script> -->
     <script src="{{asset('user/assets/js/owl.carousel.js')}}"></script>
     <script src="{{asset('user/assets/js/custom.js')}}"></script>
