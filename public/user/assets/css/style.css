@@ -727,6 +727,7 @@ section{
 
 .text-danger{
     display: block !important;
+    text-align: start !important;
 }
 
 /* index end */
