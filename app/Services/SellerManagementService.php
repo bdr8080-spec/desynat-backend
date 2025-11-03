@@ -62,7 +62,7 @@ class SellerManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No New Seller found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -135,7 +135,7 @@ class SellerManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Approved Seller found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -208,7 +208,7 @@ class SellerManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Rejected Seller found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -241,7 +241,7 @@ class SellerManagementService
                 return [
                     'status' => 'error',
                     'message' => 'Seller not found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -275,7 +275,7 @@ class SellerManagementService
                 return [
                     'status' => 'error',
                     'message' => 'Seller not found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
@@ -306,7 +306,7 @@ class SellerManagementService
                 return [
                     'status' => 'error',
                     'message' => 'Seller not found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 

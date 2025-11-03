@@ -3,6 +3,9 @@
         max-width: 1200px !important;
         margin: 0 5% !important;
     }
+    .login_content_right{
+        padding: 5% 9%;
+    }
 }
 
 @media (max-width:1200px) {

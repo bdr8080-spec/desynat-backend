@@ -473,27 +473,27 @@
     <section class="customContainer categorie_contenar">
         <h3>Categories</h3>
         <div class="row">
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Dresses</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Abaya</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Suits</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Abaya</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Cord Set</h3>
             </div>
-            <div class="col-lg-4 my-3 text-center categorie_cotent">
+            <div class="col-lg-4 col-md-4 col-6 my-3 text-center categorie_cotent">
                 <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" />
                 <h3>Dresses</h3>
             </div>
@@ -991,7 +991,7 @@
     <section class="customContainer">
         <h3>Newest Products</h3>
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1015,7 +1015,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1039,7 +1039,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1063,7 +1063,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1087,7 +1087,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1111,7 +1111,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1135,7 +1135,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
@@ -1159,7 +1159,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">

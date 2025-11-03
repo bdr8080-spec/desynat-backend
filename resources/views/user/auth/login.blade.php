@@ -96,7 +96,7 @@
 
             if (!isNaN(value.charAt(0))) {
                 $('.LoginCountryCode').addClass('d-block').removeClass('d-none');
-                $('.LoginMobileDesign').addClass('col-9').removeClass('col-12');
+                $('.LoginMobileDesign').addClass('').removeClass('col-12');
             } else {
                 $('.LoginCountryCode').addClass('d-none').removeClass('d-block');
                 $('.LoginMobileDesign').addClass('col-12').removeClass('col-9');

@@ -721,6 +721,10 @@ section{
     margin: 20px auto 0;
     display: flex;
 }
+.LoginCountryCode{
+    width: 74px;
+    font-size: 14px;
+}
 
 /* index end */
 
