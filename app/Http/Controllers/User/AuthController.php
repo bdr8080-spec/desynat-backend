@@ -99,7 +99,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status'=>true,
-                    'message'=>'OTP send Successfully',
+                    'message'=>'OTP sent to your mobile number succesfully ',
                     'id'=>$id,
                    ]);
 
