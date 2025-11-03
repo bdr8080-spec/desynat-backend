@@ -161,11 +161,11 @@
 
                             <!-- <div class="login">
                                 <div class="loginBackgroundeffect"> -->
-                                    <!-- Dynamic message with admin email -->
                                     <p class="text-start" id="otpSentMessage">
-                                        6 digit OTP has been sent to your registered email: <strong
-                                            id="adminEmail">{{ $email ?? '' }}</strong>
+                                        6 digit OTP has been sent to your registered email: 
+                                        <span id="adminEmail">{{ $email ?? '' }}</span>
                                     </p>
+
 
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -186,7 +186,7 @@
                                         </div>
 
                                         <div class=" text-center">
-                                            <div id="timerOtp">in <span id="seconds">30</span> Secs</div>
+                                            <div id="timerOtp">Resend OTP in <span id="seconds">30</span> Secs</div>
                                         </div>
 
                                         <div class="button d-flex align-items-center justify-content-center">
@@ -208,103 +208,120 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
 
-    <script>
-    $(document).ready(function() {
-        let timer = 60;
-        let interval;
+<script>
+$(document).ready(function() {
+    let timer = 60;
+    let interval;
 
-        // Disable resend button initially
-        $('#resendOtp').prop('disabled', true);
+    // Hide resend button initially
+    $('#resendOtp').prop('disabled', true);
+    $('#resendOtp').hide(); 
+    $('#timerOtp').show(); // Show timer at start
 
-        function startTimer() {
+    function startTimer() {
+        clearInterval(interval); // prevent multiple intervals
+        $('#timerOtp').show();   // show timer whenever countdown starts
+        $('#seconds').text(formatTime(timer));
+
+        interval = setInterval(() => {
+            timer--;
             $('#seconds').text(formatTime(timer));
-            interval = setInterval(() => {
-                timer--;
-                $('#seconds').text(formatTime(timer));
-                if (timer <= 0) {
-                    clearInterval(interval);
-                    $('#resendOtp').prop('disabled', false); // Enable resend
-                    $('#otpSentMessage').hide(); // Hide the OTP message after 5 minutes
-                }
-            }, 1000);
-        }
 
-        function formatTime(seconds) {
-            let min = Math.floor(seconds / 60);
-            let sec = seconds % 60;
-            return `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
-        }
-
-        startTimer();
-
-        // OTP input auto-focus
-        $('.otp-input').on('input', function() {
-            let next = $(this).next('.otp-input');
-            if (next.length && $(this).val()) next.focus();
-            $('#otpError').text('');
-        });
-
-        // Submit OTP
-        $('#submitOtp').click(function(e) {
-            e.preventDefault();
-            let otp = '';
-            $('.otp-input').each(function() {
-                otp += $(this).val();
-            });
-
-            if (otp.length < 6) {
-                $('#otpError').text('Please enter full 6-digit OTP');
-                return;
+            if (timer <= 0) {
+                clearInterval(interval);
+                $('#resendOtp').prop('disabled', false);
+                $('#resendOtp').show(); // show resend button after timer ends
+                $('#timerOtp').hide();  // hide timer text
             }
+        }, 1000);
+    }
 
-            $.ajax({
-                url: '{{ route("optVerify") }}',
-                type: 'POST',
-                data: {
-                    otp: otp,
-                    email: $('#adminEmail').text(),
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        window.location.href = "{{ route('changePassword') }}";
-                    }
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        if (errors.otp) $('#otpError').text(errors.otp[0]);
-                    }
-                }
-            });
+    function formatTime(seconds) {
+        let min = Math.floor(seconds / 60);
+        let sec = seconds % 60;
+        return `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+    }
+
+    startTimer();
+
+    // OTP input auto-focus
+    $('.otp-input').on('input', function() {
+        let next = $(this).next('.otp-input');
+        if (next.length && $(this).val()) next.focus();
+        $('#otpError').text('');
+    });
+
+    // Submit OTP
+    $('#submitOtp').click(function(e) {
+        e.preventDefault();
+        let otp = '';
+        $('.otp-input').each(function() {
+            otp += $(this).val();
         });
 
-        // Resend OTP
-        $('#resendOtp').click(function(e) {
-            e.preventDefault();
+        if (otp.length === 0) {
+            $('#otpError').text('Please Enter OTP');
+            return;
+        } else if (otp.length > 0 && otp.length < 6) {
+            $('#otpError').text('Please Enter Full 6-digit OTP');
+            return;
+        }
 
-            if ($(this).prop('disabled')) return;
-
-            $.ajax({
-                url: '{{ route("resendOtp") }}',
-                type: 'POST',
-                data: {
-                    email: $('#adminEmail').text(),
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Reset timer
-                        timer = 60;
-                        $('#resendOtp').prop('disabled', true); // Disable resend again
-                        $('#otpSentMessage').show(); // Show OTP message again
-                        startTimer();
-                    }
+        $.ajax({
+            url: '{{ route("optVerify") }}',
+            type: 'POST',
+            data: {
+                otp: otp,
+                email: $('#adminEmail').text(),
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    window.location.href = "{{ route('changePassword') }}";
                 }
-            });
+            },
+            error: function(xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON.errors;
+                    if (errors.otp) $('#otpError').text(errors.otp[0]);
+                }
+            }
         });
     });
-    </script>
+
+    // Resend OTP
+    $('#resendOtp').click(function(e) {
+        e.preventDefault();
+
+        if ($(this).prop('disabled')) return;
+
+        $.ajax({
+            url: '{{ route("resendOtp") }}',
+            type: 'POST',
+            data: {
+                email: $('#adminEmail').text(),
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Reset timer and message
+                    timer = 60;
+                    $('#resendOtp').prop('disabled', true).hide();
+
+                    let email = $('#adminEmail').text();
+                    $('#otpSentMessage').html(
+                        `6 digit OTP has been resent to your registered email: <span id="adminEmail">${email}</span>`
+                    );
+
+                    startTimer(); // restart timer display
+                }
+            }
+        });
+    });
+});
+
+
+</script>
 
 </body>
 

@@ -36,6 +36,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
+            'status' => $category->status,
             'message' => "Category has been {$statusText} Successfully!"
         ]);
     }
@@ -62,6 +63,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
+            'status' => $scat->status,
             'message' => "Sub Category has been {$statusText} Successfully!"
         ]);
     }
@@ -71,7 +73,7 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         if ($validator->fails()) {
@@ -109,7 +111,7 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'name_english' => 'required|string|max:255',
             'name_arabic' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         if ($validator->fails()) {

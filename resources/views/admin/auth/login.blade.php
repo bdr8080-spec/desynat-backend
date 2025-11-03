@@ -150,11 +150,11 @@
                   <div class="login-container-div">
                       <div class="login">
                           <div class="loginBackgroundeffect">
-                              <h5 class=""> <span>Welcome back ! </span></h5>
+                              <!-- <h5 class=""> <span>Welcome back ! </span></h5> -->
                               <div class="row mt-3">
                                   <div class="col-lg-12">
                                       <div class="form-group">
-                                          <label for="email" class="form-label">Enter Email</label>
+                                          <label for="email" class="form-label">Enter Email Id</label>
                                           <input type="text" class="form-control" id="email" name="email"
                                               placeholder="Enter Email id" required />
                                           <small id="emailError" style="color: red;"></small>

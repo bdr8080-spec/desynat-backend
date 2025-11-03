@@ -60,6 +60,8 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email|exists:admins,email',
             ], [
+                'email.required' => 'Please Enter Email Id',
+                'email.email' => 'Please Enter a Valid Email Id',
                 'email.exists' => 'Email not found in admin records.'
             ]);
 
@@ -129,10 +131,13 @@ class AuthController extends Controller
             return view('admin.auth.reset-password', compact('email'));
         }
 
-        $request->validate([
+       $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:admins,email',
             'password' => 'required|min:8',
             'confirm_password' => 'required|min:8',
+        ], [
+            'password.required' => 'Please Enter Password',
+            'confirm_password.required' => 'Please Enter Confirm Password',
         ]);
 
         if ($request->password !== $request->confirm_password) {

@@ -209,11 +209,11 @@
           <!-- EMAIL INPUT -->
           <div class="col-lg-12 mt-3">
             <div class="form-group">
-              <label for="email" class="form-label">Enter Email Address</label>
+              <label for="email" class="form-label">Enter Email Id</label>
               <input type="email"
                      class="form-control"
                      id="email"
-                     placeholder="Enter registered email address"
+                     placeholder="Enter Register Email id "
                      required>
               <small id="emailError" style="color: red;"></small>
             </div>
