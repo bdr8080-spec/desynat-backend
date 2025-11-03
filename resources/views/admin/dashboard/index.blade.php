@@ -2,23 +2,7 @@
 @section('content')
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content">
-          <nav
-            class="navbar navbar-expand navbar-light fixed-top custom-topbar mb-4 static-top shadow"
-          >
-            <div class="left-section d-flex align-items-center">
-                        <img src="image/combine_logo.svg" class="header-logo" />
-
-            </div>
-
-            <div class="header-divider"></div>
-
-            <div class="right-section">
-              <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-              </button>
-            </div>
-          </nav>
+        
 
           <div class="inner-content">
             <div class="container-fluid">
