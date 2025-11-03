@@ -35,11 +35,11 @@ class AdminAuthService
                 $get_user_details->accessToken = $get_user_details->createToken('admin')->plainTextToken;            
                 return ['status'=>'success','message'=>"Admin Login Successfully",'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Admin Password Is wrong",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Please enter correct password",'data'=>(object)[]];                
             }
     
         }else{
-        return ['status'=>'error','message'=>"Admin is Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Admin does not exist",'data'=>(object)[]];                
         }
 
     }
@@ -59,7 +59,7 @@ class AdminAuthService
             return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
         
         }else{
-        return ['status'=>'error','message'=>"Admin is Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Admin does not exist",'data'=>(object)[]];                
         }
 
     }
@@ -78,7 +78,7 @@ class AdminAuthService
             return ['status'=>'success','message'=>"Password Updated Successfully",'data'=>$get_user_details];            
         
         }else{
-        return ['status'=>'error','message'=>"Admin is Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Admin does not exist",'data'=>(object)[]];                
         }
 
     }
@@ -109,7 +109,7 @@ class AdminAuthService
             return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
         
         }else{
-        return ['status'=>'error','message'=>"Admin is Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Admin does not exist",'data'=>(object)[]];                
         }
 
     }
