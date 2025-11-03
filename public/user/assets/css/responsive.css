@@ -24,7 +24,7 @@
         padding: 5% 3% !important;
     }
     .login_content_content .form-group input, .login_content_content .dropdown button{
-        font-size: 12px;
+        font-size: 12px !important;
     }
 
 }
@@ -38,8 +38,10 @@
         display: block !important;
     }
     .login_content{
-        width: 100% !important;
-        height: 30% !important;
+       width: 100% !important;
+        height: 20% !important;
+        border-radius: 0 0 10px 10px;
+        overflow: hidden;
     }
     .login_content_right{
             height: calc(100% - 170px) !important;
