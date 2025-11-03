@@ -39,7 +39,7 @@
                         </label>
                     </div>
                    
-                    <div class="form-group position-relative password_icon mt-3 mobileInput">
+                    <div class="form-group position-relative mt-3 mobileInput">
                         <label for="">Enter Mobile Number</label>
                         <div class="d-flex align-items-center">
                             <div class="">
@@ -49,7 +49,7 @@
                                     @endforeach
                                 </select> --}}
 
-                                     <div class="dropdown">
+                                    <div class="dropdown">
                                         <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
                                                 id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span id="selected-flag">
@@ -151,7 +151,7 @@
                 contentType: false, 
                 success: function (resp) {
                     if(resp.status == true){
-                        location.href = `verify-otp?temp_user_id=${resp.id}&forget_password=one`;
+                        location.href = `verify-otp?temp_user_id=${resp.id}&forget_password=one&type=${resp.type}`;
                     }
 
                     if(resp.status == false){

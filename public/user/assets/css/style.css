@@ -227,6 +227,7 @@ section{
 .login_content_content .dropdown button{
     padding: 10px;
     color: #00000080;
+    font-size: 16px;
 }
 .country{
     border:1px solid #eee;
