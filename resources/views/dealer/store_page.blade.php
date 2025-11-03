@@ -99,16 +99,28 @@
                                             <input type="file" accept="image/*" hidden onchange="showPreview(event)"
                                                 id="edit_imageUpload">
                                         </label>
-                                        <div class="imgshow">
-                                            <img id="preview"
-                                                style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
-                                            <span id="remove"
-                                                style="display:none;cursor:pointer;font-size:24px;color:red;"
-                                                onclick="removeImg()">&times;</span>
-                                        </div>
+
+                                        @if (isset($store_info->store_image))
+                                            <div class="imgshow">
+                                                <img id="preview" src="{{ $store_info->store_image }}"
+                                                    style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
+                                                <span id="remove"
+                                                    style="display:block;cursor:pointer;font-size:24px;color:red;"
+                                                    onclick="removeImg()">&times;</span>
+                                            </div>
+                                        @else
+                                            <div class="imgshow">
+                                                <img id="preview"
+                                                    style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
+                                                <span id="remove"
+                                                    style="display:none;cursor:pointer;font-size:24px;color:red;"
+                                                    onclick="removeImg()">&times;</span>
+                                            </div>
+                                        @endif
+
                                     </div>
                                     <input type="hidden" class="form-control" name="store_image" id="store_image"
-                                        value=" { old('store_image', @$store_info->store_image) }}">
+                                        value=" {{ old('store_image', @$store_info->store_image) }}">
 
                                     @error('store_image')
                                         <span class="text-danger">{{ $message }}</span>
@@ -275,7 +287,6 @@
     }
 
 
-
     $(document).on('change', '#edit_imageUpload', function(event) {
 
         event.preventDefault();
@@ -323,6 +334,6 @@
 </script>
 
 
-@include('dealer.footer');
+{{-- @include('dealer.footer'); --}}
 
 </html>
