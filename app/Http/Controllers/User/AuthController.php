@@ -66,7 +66,7 @@ class AuthController extends Controller
                     'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
                     'confirm_password.required' => 'Please confirm your password',
                     'confirm_password.same' => 'Password do not match',
-                    'accept_terms.required' => 'You must accept the terms and conditions',
+                    'accept_terms.required' => 'Please accept the terms and conditions',
                     'accept_terms.in' => 'You must agree to the terms and conditions to continue',
                 ];
 
