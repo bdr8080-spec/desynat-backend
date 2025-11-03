@@ -224,7 +224,7 @@ section{
     color: var(--third-color);
 }
 .login_content_content .form-group input,
-.login_content_content .dropdown{
+.login_content_content .dropdown button{
     padding: 10px;
     color: #00000080;
 }

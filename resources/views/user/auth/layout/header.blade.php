@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Desynat</title>
     <link href="{{asset('user/assets/css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{asset('user/assets/css/responsive.css')}}" rel="stylesheet" />
     <!-- <link href="assets/css/fontawesome.min.css" rel="stylesheet" /> -->
@@ -34,6 +34,14 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.country-option:hover {
+    background-color: #f8f9fa;
+}
+.country-radio:checked + img + span {
+    font-weight: 600;
+}
+
 </style>
 </head>
 <body>

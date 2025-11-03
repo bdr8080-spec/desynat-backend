@@ -99,7 +99,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status'=>true,
-                    'message'=>'OTP send Successfully',
+                    'message'=>'OTP sent to your mobile number succesfully ',
                     'id'=>$id,
                    ]);
 
@@ -138,7 +138,7 @@ class AuthController extends Controller
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid user reference.',
+                    'message' => 'Invalid user reference',
                 ], 400);
             }
 
@@ -167,14 +167,14 @@ class AuthController extends Controller
                 if ($request->forget_password == 'one') {
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully.',
+                        'message' => 'OTP verified successfully',
                         'redirect_url' => route('userCreatePassword', ['temp_user_id' => $request->id]),
                     ]);
                 } else {
                     Auth::guard('web')->login($user);
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully.',
+                        'message' => 'OTP verified successfully',
                         'redirect_url' => route('dashboard'),
                     ]);
                 }
@@ -182,7 +182,7 @@ class AuthController extends Controller
             } else {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid OTP, please try again.',
+                    'message' => 'Invalid OTP, please try again',
                 ], 422);
             }
 
@@ -202,9 +202,9 @@ class AuthController extends Controller
                 'mobileOrEmail' => 'required',
                 'password' => 'required|min:6',
             ], [
-                'mobileOrEmail.required' => 'Please enter your mobile number or email address.',
-                'password.required' => 'Please enter your password.',
-                'password.min' => 'Password must be at least 6 characters long.',
+                'mobileOrEmail.required' => 'Please enter your mobile number or email address',
+                'password.required' => 'Please enter your password',
+                'password.min' => 'Password must be at least 6 characters long',
             ]);
 
             if ($validator->fails()) {
@@ -238,14 +238,14 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid ' . $loginField . ' or password.',
+                    'message' => 'Invalid ' . $loginField . ' or password',
                 ], 401);
             }
 
             if ($user->otp_verify == '0') {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Please verify your ' . $loginField . ' with OTP to login.',
+                    'message' => 'Please verify your ' . $loginField . ' with OTP to login',
                 ], 401);
             }
 
@@ -254,7 +254,7 @@ class AuthController extends Controller
 
                 return response()->json([
                     'status' => true,
-                    'message' => 'Login successfully.',
+                    'message' => 'Login successfully',
                 ]);
             }
 
