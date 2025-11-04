@@ -16,7 +16,7 @@ return new class extends Migration
 
             // Foreign keys
             $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('city_id')->comment('id from service_cities table');
 
             // Zone details
             $table->string('name_english');

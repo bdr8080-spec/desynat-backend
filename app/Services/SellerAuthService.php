@@ -75,6 +75,7 @@ class SellerAuthService
         "store_address"=>$request->store_address ,
         'address_line1'=>$request->address_line1 ,
         'address_line2'=>$request->address_line2 ,
+        'country_code' => $request->country_code,
         "store_phone"=>$request->store_phone ,
         'store_mail_id'=>$request->store_mail_id ,
         'bio'=>$request->bio,
@@ -90,7 +91,7 @@ class SellerAuthService
       seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
 
 
-          return ['status'=>'success','message'=>"seller Store Information Insert Successfully",'data'=>$store_information];            
+          return ['status'=>'success','message'=>"Store information Save succesfully",'data'=>$store_information];            
 
         }else{
           return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
@@ -146,7 +147,7 @@ class SellerAuthService
 
           seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
   
-            return ['status'=>'success','message'=>"seller Information Insert Successfully Wait for admin Verify",'data'=>$store_information];            
+            return ['status'=>'success','message'=>"Bank Store information Save succesfully",'data'=>$store_information];            
   
           }else{
             return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
@@ -218,7 +219,7 @@ class SellerAuthService
           }
 
           if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
-            return ['status'=>'error','message'=>"Wait for Admin To Accept Your Store",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Your Profile is Under Review",'data'=>(object)[]];                
           }
 
 
