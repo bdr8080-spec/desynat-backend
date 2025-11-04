@@ -77,7 +77,7 @@ class CountryService
             if (!empty($search)) {
                 $query->where('name', 'like', '%' . $search . '%');
             }
-
+            $query->orderBy('id', 'desc');
             $cities = $query->paginate($limit);
 
             if ($cities->isEmpty()) {
@@ -117,7 +117,8 @@ class CountryService
             }
 
             $serviceCity = ServiceCity::create([
-                'country_id' => $city->country_id, 
+                'country_id' => $city->country_id,
+                'city_id' => $city->id,  
                 'name' => $city->name,             
             ]);
 
@@ -224,6 +225,168 @@ class CountryService
             ];
         }
     }
+
+    public function getZones($countryId, $cityId, $limit = null, $search = null)
+    {
+        try {
+            $limit = !empty($limit) ? (int)$limit : 10;
+
+            $query = Zone::where('country_id', $countryId)->where('city_id',$cityId);
+
+            if (!empty($search)) {
+                $query->where('name', 'like', '%' . $search . '%');
+            }
+            $query->orderBy('id', 'desc');
+            $zones = $query->paginate($limit);
+
+            if ($zones->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No zone found for this city',
+                    'data' => (object) []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Zones fetched successfully',
+                'data' => $zones
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch zones: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getZoneDetailsById($zoneId)
+    {
+        try {
+            $details = Zone::find($zoneId);
+
+            if (!$details) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Zone not found',
+                    'data' => (object) []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Zone details fetched successfully',
+                'data' => $details
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch zone details: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function updateZone(Request $request)
+    {
+        try {
+            $zone = Zone::find($request->zone_id);
+
+            if (!$zone) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Zone not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $zone->update([
+                'country_id'   => $request->country_id,
+                'city_id'      => $request->city_id,
+                'name_english' => $request->name_english,
+                'name_arabic'  => $request->name_arabic,
+                'coordinates'  => $request->coordinates, 
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Zone updated successfully',
+                'data' => $zone,
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to update zone: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update zone',
+                'data' => (object)[],
+            ];
+        }
+    }
+
+    public function changeZoneStatus($zoneId)
+    {
+        try {
+            $zone = Zone::find($zoneId);
+
+            if (!$zone) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Zone not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $zone->status = $zone->status == 1 ? 0 : 1;
+            $zone->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Zone status updated successfully',
+                'data' => $zone
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch zone: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function deleteZone($zoneId)
+    {
+        try {
+            $zone = Zone::find($zoneId);
+
+            if (!$zone) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Zone not found',
+                    'data' => (object)[]
+                ];
+            }
+            $zone->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Zone deleted successfully',
+                'data' => []
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to delete city: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete zone',
+                'data' => (object)[]
+            ];
+        }
+    }
+
 
 
 

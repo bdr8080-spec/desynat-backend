@@ -57,7 +57,12 @@ use App\Http\Controllers\Api\Admin\CountryController;
      Route::post('/add_service_city',[CountryController::class,'add_service_city']);
      Route::post('/change_service_city_status',[CountryController::class,'change_service_city_status']);
      Route::post('/delete_service_city',[CountryController::class,'delete_service_city']);
+     Route::get('/get_zones',[CountryController::class,'get_zones']);
+     Route::get('/get_zone_details',[CountryController::class,'get_zone_details']);
      Route::post('/add_zone',[CountryController::class,'add_zone']);
+     Route::post('/update_zone',[CountryController::class,'update_zone']);
+     Route::post('/change_zone_status',[CountryController::class,'change_zone_status']);
+     Route::post('/delete_zone',[CountryController::class,'delete_zone']);
 
 
 
