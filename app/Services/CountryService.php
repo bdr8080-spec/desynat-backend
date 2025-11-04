@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\country;
 use App\Models\City;
 use App\Models\ServiceCity;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 
 
@@ -192,6 +193,34 @@ class CountryService
                 'status' => 'error',
                 'message' => 'Failed to delete city',
                 'data' => (object)[]
+            ];
+        }
+    }
+
+    public function addZone(Request $request)
+    {
+        try {
+            $zone = Zone::create([
+                'country_id' => $request->country_id,
+                'city_id' => $request->city_id,
+                'name_english' => $request->name_english,
+                'name_arabic' => $request->name_arabic,
+                'coordinates' => $request->coordinates,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Zone added successfully',
+                'data' => $zone,
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to create Zone: ' . $e->getMessage());
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to create zone',
+                'data' => (object)[],
             ];
         }
     }
