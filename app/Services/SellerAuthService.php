@@ -30,7 +30,8 @@ class SellerAuthService
           'accept_terms' => '1',
           'device_type' => $request->device_type,
           'device_token'=>$request->device_token,
-          'otp'=>$otp
+          'otp'=>$otp,
+          'lang'=>$request->lang??null
         ];
 
        $check=  seller::create($record);
