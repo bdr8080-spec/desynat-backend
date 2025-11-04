@@ -54,6 +54,9 @@ use App\Http\Controllers\Api\Admin\CountryController;
      //country,city,zome management
      Route::get('/get_cities',[CountryController::class,'get_cities']);
      Route::get('/get_service_cities',[CountryController::class,'get_service_cities']);
+     Route::post('/add_service_city',[CountryController::class,'add_service_city']);
+     Route::post('/change_service_city_status',[CountryController::class,'change_service_city_status']);
+     Route::post('/delete_service_city',[CountryController::class,'delete_service_city']);
 
 
 
