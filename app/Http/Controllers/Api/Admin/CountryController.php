@@ -9,6 +9,7 @@ use App\Services\CountryService;
 use App\Models\country;
 use App\Models\City;
 use App\Models\ServiceCity;
+use App\Models\Zone;
 
 
 use Validator;
@@ -155,6 +156,36 @@ class CountryController extends Controller
 
             return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
             
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function add_zone(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'country_id' => 'required|exists:countries,id',
+            'city_id' => 'required|exists:service_cities,id',
+            'name_english' => 'required|string|max:255',
+            'name_arabic' => 'required|string|max:255',
+            'coordinates' => 'required|array|min:3',
+            'coordinates.*.lat' => 'required|numeric',
+            'coordinates.*.lng' => 'required|numeric',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CountryService->addZone($request);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+
         } catch (\Exception $e) {
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
