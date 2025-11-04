@@ -136,15 +136,14 @@
                                             <div class="imgshow">
                                                 <img id="preview" src="{{ $store_info->store_image }}"
                                                     style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                <span id="remove"
-                                                    style="display:block;cursor:pointer;font-size:24px;color:red;"
+                                                <span id="remove" class="removebtn"
                                                     onclick="removeImg()">&times;</span>
                                             </div>
                                         @else
                                             <div class="imgshow">
                                                 <img id="preview"
                                                     style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                <span id="remove"
+                                                <span id="remove" class="removebtn"
                                                     style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                     onclick="removeImg()">&times;</span>
                                             </div>
@@ -205,11 +204,8 @@
                                                 data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
                                                     class="bi bi-crosshair "></i></div> --}}
 
-                                            <button class="btn btn-primary"
-                                                style="position: absolute;top: 50%;right: 0;background: none;color: var(--secondry-color);
-                                                    border: none;"
-                                                type="button" data-bs-toggle="offcanvas" data-bs-target="#gpspanel"
-                                                aria-controls="offcanvasExample">
+                                            <button class="btn gpsmap" type="button" data-bs-toggle="offcanvas"
+                                                data-bs-target="#gpspanel" aria-controls="offcanvasExample">
                                                 <i class="bi bi-crosshair"></i>
                                             </button>
 
@@ -244,7 +240,7 @@
 
 
                                     <div class="form-group phone-pnl">
-                                        <label for="name">Store Phone Number {{ $country['0']->name }}</label>
+                                        <label for="name">Store Phone Number</label>
 
                                         <div class="form-group d-flex gap-2">
                                             {{-- <select name="country_code" class="form-select" style="width: 100px">
@@ -294,9 +290,9 @@
                                             </div> --}}
 
 
-                                            <div class="dropdown w-100">
+                                            <div class="dropdown">
                                                 <button
-                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100"
+                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
                                                     type="button" id="countryDropdown" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
 
@@ -313,11 +309,11 @@
                                                     style="max-height: 250px; overflow-y: auto; width: 100%;">
 
                                                     <!-- Search box -->
-                                                    <li class="px-2 mb-2">
+                                                    {{-- <li class="px-2 mb-2">
                                                         <input type="text" id="countrySearch"
                                                             class="form-control form-control-sm"
                                                             placeholder="Search country...">
-                                                    </li>
+                                                    </li> --}}
 
                                                     @foreach ($country as $index => $item)
                                                         <li>

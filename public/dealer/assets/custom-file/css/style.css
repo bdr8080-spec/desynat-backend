@@ -46,6 +46,7 @@
   --title-color: #040404;
   --gold-color: #F3D1A2;
   --title30: 25px;
+  --text-red: red;
 
 }
 
@@ -1211,4 +1212,21 @@ label {
   position: absolute;
   top: 2px;
   right: -22px;
+}
+
+.removebtn {
+  position: absolute;
+  top: 2px;
+  right: -22px;
+  font-size: 28px;
+  color: var(--text-red);
+}
+
+.gpsmap {
+  position: absolute;
+  right: 0;
+  bottom: 50%;
+  transform: translate(-5px, 24px);
+  font-size: 22px;
+  background: #fff;
 }
