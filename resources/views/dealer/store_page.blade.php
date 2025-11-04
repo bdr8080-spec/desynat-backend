@@ -39,6 +39,10 @@
         #countrySearch {
             border-radius: 6px;
         }
+
+        .pac-container {
+            z-index: 9999;
+        }
     </style>
 
 
@@ -95,6 +99,10 @@
                                 </div>
 
                                 <form action="{{ route('seller.store_information', request()->id) }}" method="Post">
+
+
+                                    <input type="hidden" id="lat" name="let">
+                                    <input type="hidden" id="lng" name="long">
 
 
                                     <div class="step-progress py-4">
@@ -191,7 +199,8 @@
                                         <div class="store-map  position-relative">
                                             <input type="text" class="form-control blockFirstTime"
                                                 placeholder="Enter Store Address" name="store_address"
-                                                value="{{ old('store_address', @$store_info->store_address) }}">
+                                                value="{{ old('store_address', @$store_info->store_address) }}"
+                                                id="store_address">
                                             {{-- <div class="mapIcon" data-bs-toggle="offcanvas"
                                                 data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
                                                     class="bi bi-crosshair "></i></div> --}}
@@ -215,7 +224,8 @@
                                         <label for="name">Address line 1</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 1" name="address_line1"
-                                            value="{{ old('address_line1', @$store_info->address_line1) }}">
+                                            value="{{ old('address_line1', @$store_info->address_line1) }}"
+                                            id="address_line1">
                                     </div>
                                     @error('address_line1')
                                         <span class="text-danger">{{ $message }}</span>
@@ -224,7 +234,8 @@
                                         <label for="name">Address line 2</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 2" name="address_line2"
-                                            value="{{ old('address_line2', @$store_info->address_line2) }}">
+                                            value="{{ old('address_line2', @$store_info->address_line2) }}"
+                                            id="address_line2">
                                     </div>
                                     @error('address_line2')
                                         <span class="text-danger">{{ $message }}</span>
@@ -596,15 +607,15 @@
     let mapInitialized = false;
 
     // IDs of input fields
-    const address1Id = "street_line_1";
-    const address2Id = "street_line_2";
-    const cityId = "city";
-    const pincodeId = "pincode";
-    const countryId = "country";
+    const address1Id = "address_line1";
+    const address2Id = "address_line2";
+    // const cityId = "city";
+    // const pincodeId = "pincode";
+    // const countryId = "country";
     const searchBoxId = "searchBox";
     const latId = "lat";
     const lngId = "lng";
-    const selectedAddressId = "selectedAddress";
+    const selectedAddressId = "store_address";
 
     function initMap() {
         if (navigator.geolocation) {
@@ -659,7 +670,8 @@
         const input = document.getElementById(searchBoxId);
 
         // Clear input fields on map load
-        [latId, lngId, address1Id, address2Id, cityId, pincodeId, countryId].forEach(id => {
+        // cityId, pincodeId, countryId
+        [latId, lngId, address1Id, address2Id].forEach(id => {
             document.getElementById(id).value = "";
         });
         input.value = "";
@@ -763,31 +775,38 @@
             country = "";
 
         place.address_components.forEach(c => {
-            if (c.types.includes("locality")) city = c.long_name;
-            if (c.types.includes("administrative_area_level_1")) state = c.long_name;
-            if (c.types.includes("postal_code")) zip = c.long_name;
-            if (c.types.includes("country")) country = c.long_name;
+
+            // console.log(c);
+            // if (c.types.includes("locality")) city = c.long_name;
+            // if (c.types.includes("administrative_area_level_1")) state = c.long_name;
+            // if (c.types.includes("postal_code")) zip = c.long_name;
+            // if (c.types.includes("country")) country = c.long_name;
         });
 
         const addrParts = addr.split(",");
 
-        // Remove city, state, zip, country from line 2
-        let addrLine2Parts = addrParts.slice(2).map(part => part.trim());
-        addrLine2Parts = addrLine2Parts.filter(part => {
-            part = part.trim().toLowerCase();
-            return part &&
-                (!city || !part.includes(city.toLowerCase())) &&
-                (!state || !part.includes(state.toLowerCase())) &&
-                (!zip || !part.includes(zip.toLowerCase())) &&
-                (!country || !part.includes(country.toLowerCase())) &&
-                !part.includes("usa");
-        });
+        console.log(addrParts);
+
+        // // Remove city, state, zip, country from line 2
+        // let addrLine2Parts = addrParts.slice(2).map(part => part.trim());
+        // addrLine2Parts = addrLine2Parts.filter(part => {
+        //     part = part.trim().toLowerCase();
+        //     return part &&
+        //         (!city || !part.includes(city.toLowerCase())) &&
+        //         (!state || !part.includes(state.toLowerCase())) &&
+        //         (!zip || !part.includes(zip.toLowerCase())) &&
+        //         (!country || !part.includes(country.toLowerCase())) &&
+        //         !part.includes("usa");
+        // });
 
         document.getElementById(address1Id).value = addrParts.slice(0, 2).join(",").trim();
-        document.getElementById(address2Id).value = addrLine2Parts.join(", ").trim();
-        document.getElementById(cityId).value = city;
-        document.getElementById(pincodeId).value = zip;
-        document.getElementById(countryId).value = country;
+        document.getElementById(address2Id).value = addrParts.slice(2, 5).join(",").trim();
+
+        document.getElementById(selectedAddressId).value = addrParts;
+
+        // document.getElementById(cityId).value = city;
+        // document.getElementById(pincodeId).value = zip;
+        // document.getElementById(countryId).value = country;
 
         // Optional: display full address somewhere
         document.getElementById(selectedAddressId).textContent = addr;
@@ -816,7 +835,6 @@
     });
 </script>
 
-
-
+@include('dealer.custom_code');
 
 </html>
