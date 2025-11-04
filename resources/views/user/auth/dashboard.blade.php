@@ -1407,7 +1407,10 @@
         <div class="container-fluid">
             <div class="row justify-content-between">
             <div class="col-lg-3 col-md-3 col-12">
-                <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" />
+                <div class="footer_logo">
+                    <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" />
+
+                </div>
                 <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span>
                 <button class="customBtn1">Become an Affiliate Customer</button> 
             </div>
@@ -1450,9 +1453,13 @@
                 <div class="footerNavLink">
                     <div class="footerNavLink_content ms-lg-auto ms-md-auto">
                         <h6>Get the App</h6>
-                        <div class="getTheApp d-flex align-items-end flex-column">
-                            <img src="{{asset('user/assets/images/play-store.svg')}}" class="img-fluid" />
-                            <img src="{{asset('user/assets/images/ios-app.svg')}}" class="img-fluid" />
+                        <div class="getTheApp gap-2 d-flex align-items-end flex-lg-column">
+                            <div style="width: 40%;">
+                                <img src="{{asset('user/assets/images/play-store.svg')}}" class="img-fluid" />
+                            </div>
+                            <div style="width: 40%;">
+                                <img src="{{asset('user/assets/images/ios-app.svg')}}" class="img-fluid" />
+                            </div>
                         </div>
                         <ul class="list-unstyled social_icon">
                             <li>

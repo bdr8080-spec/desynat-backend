@@ -153,5 +153,24 @@
     .desynat_navigation_bar_header{
         margin-top: 5px !important;
     }
+    .getTheApp img{
+        width: 100%;
+    }
+    .social_icon{
+        margin-top: 4% !important;
+            justify-content: center;
+    width: 100%;
+    }
+    .social_icon li{
+        /* padding: !important; */
+        text-align: center;
+        padding-right: 0 !important;
+    }
+    .social_icon li a img{
+        width: 50%;
+    }
+    .footer_logo{
+        width: 40%;
+    }
     
 }
