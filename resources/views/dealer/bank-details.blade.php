@@ -304,7 +304,8 @@
 
                                     <div class="form-group">
                                         <label for="name">IBAN</label>
-                                        <input type="text" class="form-control" placeholder="KW" name="iban"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter IBAN Number" name="iban"
                                             value="{{ old('iban', @$seller_bank->iban) }}">
                                     </div>
                                     @error('iban')
@@ -312,16 +313,17 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">SWIFT/BIC</label>
-                                        <input type="text" class="form-control" placeholder="Enter Swift"
-                                            name="swift" value="{{ old('bank_name', @$seller_bank->swift) }}">
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Swift" name="swift"
+                                            value="{{ old('bank_name', @$seller_bank->swift) }}">
                                     </div>
                                     @error('swift')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Bank Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Bank Name"
-                                            name="bank_name"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Bank Name" name="bank_name"
                                             value="{{ old('bank_name', @$seller_bank->bank_name) }}">
                                     </div>
                                     @error('bank_name')
@@ -329,9 +331,10 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Account holder name</label>
-                                        <input type="text" class="form-control"
+                                        <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Account holder name" name="account_holder_name"
-                                            value="{{ old('account_holder_name', @$seller_bank->account_holder_name) }}">
+                                            value="{{ old('account_holder_name', @$seller_bank->account_holder_name) }}"
+                                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
                                     </div>
                                     @error('account_holder_name')
                                         <span class="text-danger">{{ $message }}</span>
@@ -367,8 +370,8 @@
                                                             style="cursor:pointer;text-align:center;">
                                                             <img
                                                                 src="{{ asset('/dealer/assets/img/upload-icon.svg') }}">
-                                                            <div class="text-color-upload">Bank Statement or Bank
-                                                                Letter, PDF/JPG/PNG</div>
+                                                            <div class="text-color-upload">Upload proof of account
+                                                            </div>
                                                             <input type="file" accept="image/*" hidden
                                                                 onchange="showPreview(event,5)" name="upload_proof">
                                                         </label>

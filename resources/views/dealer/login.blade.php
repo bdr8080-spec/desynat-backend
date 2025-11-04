@@ -75,8 +75,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="w-100 LoginMobileDesign">
-                                                    <input type="text" class="form-control" value=""
-                                                        placeholder="Enter mobile number and email address"
+                                                    <input type="text" class="form-control notapplyspace"
+                                                        value="" placeholder="Mobile Number or Email Address"
                                                         name="email_mobile" id="LoginMobile">
                                                 </div>
                                             </div>
@@ -96,7 +96,8 @@
                                         @enderror
 
                                         <div class="form-group py-2 mb-4 text-center">
-                                            <a href="{{ route('seller.forgot') }}" class="link-color">Forgot Password ?
+                                            <a href="#" class="link-color">Forgot Password ?
+                                                {{-- {{ route('seller.forgot') }} --}}
                                             </a>
                                         </div>
                                         <div class="login-btn">
