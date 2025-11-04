@@ -387,7 +387,14 @@ class LoginController extends Controller
         'account_type.required'=>'Please select account type',
         'bank_name.required'=>'Please enter bank name',
         'account_holder_name.required'=>'Please enter account holder name',
-        'upload_proof.required'=>'Please upload upload proof',
+        'store_document.required'=>'Please upload store document',
+        'owner_document.required'=>'Please upload owner document',
+
+        'upload_proof.required_without' => 'Upload proof is required.',
+        'upload_proof.image' => 'The upload proof must be an image file.',
+        'upload_proof.mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed.',
+        'upload_proof.max' => 'The image size must not exceed 2MB.',
+
     ]);
 
         if ($validate->fails()) {
