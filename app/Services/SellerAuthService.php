@@ -37,7 +37,7 @@ class SellerAuthService
        $check=  seller::create($record);
 
         if($check){
-            return ['status'=>'success','message'=>"User Account Create Successfully",'data'=>$check];            
+            return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
         }
 
 
@@ -147,7 +147,7 @@ class SellerAuthService
 
           seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
   
-            return ['status'=>'success','message'=>"Bank Store information Save succesfully",'data'=>$store_information];            
+            return ['status'=>'success','message'=>"Document and Bank details Save succesfully",'data'=>$store_information];            
   
           }else{
             return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                

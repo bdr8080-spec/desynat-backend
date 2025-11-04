@@ -136,23 +136,6 @@
    * Phone Number
    */
 
-  $(function () {
-    const $input = $("#phone");
-
-    const iti = window.intlTelInput($input[0], {
-        initialCountry: "sa",
-        separateDialCode: true,
-        nationalMode: false,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/15.0.1/js/utils.js"
-    });
-
-    console.log(window.intlTelInputGlobals.getCountryData());
-
-    $input.on("focusout", function () {
-        const phoneNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
-        console.log(phoneNumber);
-    });
-});
 
 
 

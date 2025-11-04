@@ -17,18 +17,27 @@
         rel="stylesheet">
     <!-- Vendor CSS Files -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/css/intlTelInput.css" /> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/css/intlTelInput.css" />
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/bootstrap.min.css" rel="stylesheet">
     <!-- Main CSS File -->
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
+    <link href="{{ asset('/dealer') }}/assets/custom-file/css/custom.css" rel="stylesheet">
 
     <style>
         .country-option:hover {
             background-color: #f8f9fa;
         }
 
-        .country-radio:checked+img+span {
-            font-weight: 600;
+        .country-option img {
+            border-radius: 2px;
+        }
+
+        .dropdown-menu {
+            min-width: 250px;
+        }
+
+        #countrySearch {
+            border-radius: 6px;
         }
     </style>
 
@@ -111,8 +120,8 @@
                                         <label id="uploadLabel" style="cursor:pointer;text-align:center;">
                                             <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                                             <div>Upload Store Image </div>
-                                            <input type="file" accept="image/*" hidden onchange="showPreview(event)"
-                                                id="edit_imageUpload">
+                                            <input type="file" accept="image/*" hidden
+                                                onchange="showPreview(event)" id="edit_imageUpload">
                                         </label>
 
                                         @if (isset($store_info->store_image))
@@ -170,11 +179,23 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label for="name">Store Address</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Store Address" name="store_address"
                                             value="{{ old('store_address', @$store_info->store_address) }}">
+                                    </div> --}}
+
+                                    <div class="form-group">
+                                        <label for="name">Store Address</label>
+                                        <div class="store-map  position-relative">
+                                            <input type="text" class="form-control blockFirstTime"
+                                                placeholder="Enter Store Address" name="store_address"
+                                                value="{{ old('store_address', @$store_info->store_address) }}">
+                                            <div class="mapIcon" data-bs-toggle="offcanvas"
+                                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
+                                                    class="bi bi-crosshair "></i></div>
+                                        </div>
                                     </div>
 
                                     @error('store_address')
@@ -202,7 +223,7 @@
 
 
                                     <div class="form-group phone-pnl">
-                                        <label for="name">Store Phone Number</label>
+                                        <label for="name">Store Phone Number {{ $country['0']->name }}</label>
 
                                         <div class="form-group d-flex gap-2">
                                             {{-- <select name="country_code" class="form-select" style="width: 100px">
@@ -214,7 +235,7 @@
 
                                             {{-- country code start --}}
 
-                                            <div class="dropdown">
+                                            {{-- <div class="dropdown">
                                                 <button
                                                     class="btn btn-light border dropdown-toggle d-flex align-items-center"
                                                     type="button" id="countryDropdown" data-bs-toggle="dropdown"
@@ -249,7 +270,62 @@
                                                         </li>
                                                     @endforeach
                                                 </ul>
+                                            </div> --}}
+
+
+                                            <div class="dropdown w-100">
+                                                <button
+                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100"
+                                                    type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+
+                                                    <span id="selected-flag">
+                                                        <img src="{{ old('country_flag', $country[0]->flag1) }}"
+                                                            alt="flag" width="25" height="16">
+                                                    </span>
+                                                    <span id="selected-code" class="ms-2">
+                                                        {{ old('country_code', $country[0]->dial_code) }}
+                                                    </span>
+                                                </button>
+
+                                                <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown"
+                                                    style="max-height: 250px; overflow-y: auto; width: 100%;">
+
+                                                    <!-- Search box -->
+                                                    <li class="px-2 mb-2">
+                                                        <input type="text" id="countrySearch"
+                                                            class="form-control form-control-sm"
+                                                            placeholder="Search country...">
+                                                    </li>
+
+                                                    @foreach ($country as $index => $item)
+                                                        <li>
+                                                            <label
+                                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                style="cursor: pointer;">
+                                                                <input type="radio" name="country_code"
+                                                                    value="{{ $item->dial_code }}"
+                                                                    data-flag="{{ $item->flag1 }}"
+                                                                    data-name="{{ $item->name }}"
+                                                                    class="country-radio"
+                                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                    hidden>
+                                                                <img src="{{ $item->flag1 }}"
+                                                                    alt="Flag of {{ $item->name }}" width="25"
+                                                                    height="16">
+                                                                <span>{{ $item->dial_code }}
+                                                                    ({{ $item->name }})
+                                                                </span>
+                                                            </label>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             </div>
+
+
+
+
+
 
                                             {{-- country code end  --}}
 
@@ -307,18 +383,80 @@
     </div>
 
 
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h3 class="offcanvas-title">Add Address</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="maps-wapper">
+
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control" id="search-box" placeholder="Search address">
+                </div>
+                <div id="map"></div>
+
+                <div class="login-btn mt-5">
+                    <label for="name">Location</label>
+                    <p>HN-574, Street no,5 Block a new town hale </p>
+                </div>
+
+                <div class="login-btn mt-4">
+                    <a href="bank-details.php" class="btn btn-success w-100">Continue</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
 </body>
 
 
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
-<script
-    src="{{ asset('/dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk1iHVph8nvXAn0uigTvPzKDpb9cslR18&libraries=places">
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const countryRadios = document.querySelectorAll('.country-radio');
+        const selectedFlag = document.getElementById('selected-flag').querySelector('img');
+        const selectedCode = document.getElementById('selected-code');
+        const countryFlagInput = document.getElementById('country_flag');
+        const countrySearch = document.getElementById('countrySearch');
+
+        // Update selected flag and code when user picks a country
+        countryRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const flag = this.dataset.flag;
+                const dialCode = this.value;
+
+                selectedFlag.src = flag;
+                selectedCode.textContent = dialCode;
+                countryFlagInput.value = flag;
+            });
+        });
+
+        // Search filter
+        countrySearch.addEventListener('keyup', function() {
+            const filter = this.value.toLowerCase();
+            document.querySelectorAll('.country-option').forEach(option => {
+                const text = option.textContent.toLowerCase();
+                option.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+    });
+</script>
+
 
 
 <script>
@@ -399,7 +537,33 @@
     });
 </script>
 
+<script>
+    $(function() {
+        const map = new google.maps.Map($('#map')[0], {
+            center: {
+                lat: 20.5937,
+                lng: 78.9629
+            },
+            zoom: 5
+        });
+        const input = $('#search-box')[0];
+        const auto = new google.maps.places.Autocomplete(input);
+        const marker = new google.maps.Marker({
+            map
+        });
 
-@include('dealer.footer');
+        auto.addListener('place_changed', () => {
+            const place = auto.getPlace();
+            if (!place.geometry) return alert("No details for: " + place.name);
+            map.fitBounds(place.geometry.viewport || new google.maps.LatLngBounds(place.geometry
+                .location));
+            map.setZoom(15);
+            marker.setPosition(place.geometry.location);
+        });
+    });
+</script>
+
+
+
 
 </html>

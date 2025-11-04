@@ -1,26 +1,42 @@
 @media (min-width: 1200px) and (max-width: 1440px) {
     /* Your CSS rules go here */
-    
+
 }
+
 .form-switch .form-check-input {
     width: 2.8em;
     height: 20px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+.mapIcon {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 20px;
+    cursor: pointer;
 }
 
 /*--------------------------------------------------------------
 # Dashboard page
 --------------------------------------------------------------*/
 
-.title24{
+.title24 {
     font-size: var(--title24);
     color: var(--title-color);
     font-weight: 500;
 }
-.bg-header{
+
+.bg-header {
     background-color: var(--bg-header);
     padding: 15px;
     border-radius: 20px;
 }
+
 .dash-circle {
     height: 100px;
     width: 100px;
@@ -30,6 +46,7 @@
     align-items: center;
     justify-content: center;
 }
+
 .dash-content h5 {
     font-size: 16px;
     color: #000;

@@ -29,7 +29,7 @@ class UserAuthService
        $check=  User::create($record);
 
         if($check){
-            return ['status'=>'success','message'=>"User Account Create Successfully",'data'=>$check];            
+            return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
         }
 
 
@@ -53,7 +53,7 @@ class UserAuthService
         return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
     
       }else{
-        return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Invalid OTP",'data'=>(object)[]];                
       }
 
     }
