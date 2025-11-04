@@ -224,7 +224,8 @@
                     </div>
                 </div>
                 <div class="desynat_navigation_bar_header">
-                    <div class="row">
+                    <div class="container-fluid">
+                        <div class="row">
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
                                 <h6>Deliver to Reshab</h6>
@@ -660,6 +661,7 @@
                                 </ul>
                             </div>
                         </div>
+                    </div>
                     </div>
                     
                 </div>
@@ -1402,7 +1404,8 @@
     </section>
 
     <footer>
-        <div class="row justify-content-between">
+        <div class="container-fluid">
+            <div class="row justify-content-between">
             <div class="col-lg-3 col-md-3 col-12">
                 <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" />
                 <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span>
@@ -1468,6 +1471,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </footer>
     

@@ -1,7 +1,7 @@
 @media (max-width:1500px) {
     .customContainer{
         max-width: 1200px !important;
-        margin: 0 5% !important;
+        /* margin: 0 5% !important; */
     }
     .login_content_right{
         padding: 5% 9% !important;
@@ -86,7 +86,7 @@
 
    .customContainer{
         max-width: 500px !important;
-        margin: 0 5%;
+        /* margin: 0 5% !important; */
     }
         .login_content_left .left-imgone {
         top: 37.7% !important;
@@ -145,7 +145,7 @@
         padding: 5px !important;
     }
     .product-img img{
-        height: 130px;
+        height: 130px !important;
     }
     .navbar-brand{
         padding: 0;
