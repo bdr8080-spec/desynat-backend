@@ -25,7 +25,15 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                     </div>
-                    
+                    <div class="dropdown mobileLang customDropdonwHeader d-lg-none d-md-none d-block">
+                        <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
+                            <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                        </ul>
+                    </div>
                     <div class="header_nav_button_dropdown d-lg-flex d-md-flex d-none">
                             @if (Auth::guard('web')->check())
                             <div class="dropdown userDropdown">
@@ -279,10 +287,10 @@
                                                 </ul>
                                             </div>
                                             @else
-                                                <a class="customBtn1 mobileSignup customDropdonwHeader" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
+                                                <a class="customBtn1 mobileSignup" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                                             @endif
                                     
-                                            <div class="dropdown customDropdonwHeader">
+                                            <div class="dropdown ">
                                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
                                                 </button>
@@ -371,7 +379,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="dropdown customDropdonwHeader">
+                                            <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <span id="selectedCurrency">KWD</span>
                                                 </button>
@@ -452,15 +460,6 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                                </ul>
-                                            </div>
-                                            <div class="dropdown mobileLang customDropdonwHeader">
-                                                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
-                                                    <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                                                 </ul>
                                             </div>
                                         </div>

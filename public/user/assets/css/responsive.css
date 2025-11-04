@@ -95,7 +95,7 @@
         overflow-x: scroll;
     } */
     .header_nav_button_dropdown .customBtn1{
-            position: relative;
+            /* position: relative; */
             padding: 5px;
     }
     .header_nav_button_dropdown::-webkit-scrollbar-track
@@ -171,6 +171,14 @@
     }
     .footer_logo{
         width: 40%;
+    }
+    .customDropdonwHeader{
+        position: absolute;
+    right: 60px;
+    }
+    .customDropdonwHeader button{
+        padding: 5px;
+        border-radius: 5px !important;
     }
     
 }
