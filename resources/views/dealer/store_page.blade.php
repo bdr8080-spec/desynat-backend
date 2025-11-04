@@ -340,6 +340,6 @@
 </script>
 
 
-{{-- @include('dealer.footer'); --}}
+@include('dealer.footer');
 
 </html>

@@ -144,9 +144,33 @@ class LoginController extends Controller
             'country_code' => 'required',
             'email' => 'required|email|unique:sellers,email',
             'mobile' => 'required',
-            'password' => 'required',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+            ],
             'confirm_password' => 'required|same:password',
             'accept_terms'=>"required|in:1"
+        ],[
+            'profile_pic.required'=>'Please Upload profile Picture',
+            'first_name.required'    => 'Please enter your name',
+            'last_name.required'    => 'Please enter your last name',
+            'country_code.required' => 'Please select your country code',
+            'email.required'        => 'Please enter your email address',
+            'email.email'           => 'Please enter a valid email address',
+            'email.unique'          => 'This email address is already registered', 
+
+            'password.required'     => 'Please enter your password',
+            'password.min' => 'Password must be at least 8 characters long',
+            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+            'confirm_password.required' => 'Please confirm your password',
+            'confirm_password.same' => 'Password do not match',
+
+            'accept_terms.required' => 'Please accept the terms and conditions',
+            'accept_terms.in' => 'You must agree to the terms and conditions to continue',
+        
+        
         ]);
 
         if ($validate->fails()) {
@@ -164,7 +188,7 @@ class LoginController extends Controller
 
         $seller_id=$data['data']->id;
 
-        return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'Please verify OTP');
+        return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'OTP Sent Succesfully');
 
     }
 
@@ -178,21 +202,37 @@ class LoginController extends Controller
         return view('dealer.signup_otp',compact('seller_details'));
         }
 
+        // $validate = Validator::make($request->all(), [
+        //     'otp' => 'required|array|min:6',
+        //     'otp.*' => 'required|min:6' // each element (digit) is required and must be a single digit
+        // ], [
+        //     'otp.required' => 'Please enter your OTP.',
+        //     'otp.array' => 'OTP must be in a valid format.',
+        //     'otp.*.required' => 'All OTP digits are required.'
+        // ]);
+    
         $validate = Validator::make($request->all(), [
-            'otp' => 'required|array',
-            'otp.*' => 'required|digits:1' // each element (digit) is required and must be a single digit
+            'otp' => 'required|array|min:6',
+            'otp.*' => 'required|digits:1', // each input must be exactly one digit
         ], [
             'otp.required' => 'Please enter your OTP.',
             'otp.array' => 'OTP must be in a valid format.',
-            'otp.*.required' => 'All OTP digits are required.'
+            'otp.min' => 'All 6 OTP digits are required.',
+            'otp.*.required' => 'OTP Fields is required.',
+            'otp.*.digits' => 'Each OTP box must contain only one number.',
         ]);
-    
+        
+
         if ($validate->fails()) {
+
+            // dd($validate);
+
             return redirect()->back()
-                ->withErrors($validate)
-                ->withInput();
-        }
-    
+            ->withErrors($validate)
+            ->withInput();
+        
+         }
+
 
        $enteredOtp = implode('', $request->otp);
 
@@ -215,7 +255,7 @@ class LoginController extends Controller
        }else{
 
         return redirect()->back()
-        ->withErrors(['otp'=>'Otp Is Wrong'])
+        ->withErrors(['otp'=>'Otp Is Invalid'])
         ->withInput();
 
        }
