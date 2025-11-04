@@ -9,15 +9,30 @@
     <link href="{{ asset('/dealer') }}/assets/img/favicon.png" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/9.0.6/css/intlTelInput.css" rel="stylesheet" />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <!-- Vendor CSS Files -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/css/intlTelInput.css" />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/css/intlTelInput.css" /> --}}
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/bootstrap.min.css" rel="stylesheet">
     <!-- Main CSS File -->
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
+
+    <style>
+        .country-option:hover {
+            background-color: #f8f9fa;
+        }
+
+        .country-radio:checked+img+span {
+            font-weight: 600;
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -130,8 +145,8 @@
 
                                     <div class="form-group">
                                         <label for="name">Store Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Store name"
-                                            name="store_name"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Store name" name="store_name"
                                             value="{{ old('store_address', @$store_info->store_name) }}">
                                     </div>
 
@@ -157,8 +172,8 @@
 
                                     <div class="form-group">
                                         <label for="name">Store Address</label>
-                                        <input type="text" class="form-control" placeholder="Enter Store Address"
-                                            name="store_address"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Store Address" name="store_address"
                                             value="{{ old('store_address', @$store_info->store_address) }}">
                                     </div>
 
@@ -167,8 +182,8 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Address line 1</label>
-                                        <input type="text" class="form-control" placeholder="Enter Address line 1"
-                                            name="address_line1"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Address line 1" name="address_line1"
                                             value="{{ old('address_line1', @$store_info->address_line1) }}">
                                     </div>
                                     @error('address_line1')
@@ -176,8 +191,8 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Address line 2</label>
-                                        <input type="text" class="form-control" placeholder="Enter Address line 2"
-                                            name="address_line2"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Address line 2" name="address_line2"
                                             value="{{ old('address_line2', @$store_info->address_line2) }}">
                                     </div>
                                     @error('address_line2')
@@ -239,7 +254,7 @@
                                             {{-- country code end  --}}
 
 
-                                            <input class="form-control" type="number" id="phone"
+                                            <input class="form-control notapplyspace" type="number" id="phone"
                                                 placeholder="Enter Store Phone Number" name="store_phone"
                                                 value="{{ old('store_phone', @$store_info->store_phone) }}"
                                                 oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
@@ -256,8 +271,8 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Store mail Id</label>
-                                        <input type="Email" class="form-control" placeholder="Enter Store mail Id"
-                                            name="store_mail_id"
+                                        <input type="Email" class="form-control notapplyspace"
+                                            placeholder="Enter Store mail Id" name="store_mail_id"
                                             value="{{ old('store_mail_id', @$store_info->store_mail_id) }}">
                                     </div>
                                     @error('store_mail_id')
@@ -265,7 +280,7 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Bio</label>
-                                        <textarea class="form-control" rows="3" placeholder="Write a massage...." name="bio"> {{ old('bio', @$store_info->bio) }} </textarea>
+                                        <textarea class="form-control blockFirstTime" rows="3" placeholder="Write a massage...." name="bio"> {{ old('bio', @$store_info->bio) }} </textarea>
                                     </div>
                                     @error('bio')
                                         <span class="text-danger">{{ $message }}</span>
@@ -322,7 +337,11 @@
                 u.style.display = 'none';
             };
             rdr.readAsDataURL(f);
+
         }
+
+        f.value = '';
+
     }
 
     function removeImg() {

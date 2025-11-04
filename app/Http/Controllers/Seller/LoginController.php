@@ -296,7 +296,16 @@ class LoginController extends Controller
             // 'long'=>'required|nullable'
             
             ],[
-                'store_image'=>'Please Upload Store Image',
+                'store_image.required'=>'Please Upload Store Image',
+                'store_name.required' => 'Please Enter store name',
+                'store_address.required' => 'Please Enter store address',
+                'address_line1.required' => 'Please Enter store Address 1',
+                'address_line2.required' => 'Please Enter store Address 2',
+                'store_phone.required' => 'Please Enter store phone',
+            
+                'store_mail_id.required'        => 'Please enter your email address',
+                'store_mail_id.email'           => 'Please enter a valid email address',    
+                'bio'=>'Bio Field Is Required',
                 
             ]);
 

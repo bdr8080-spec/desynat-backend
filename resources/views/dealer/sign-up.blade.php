@@ -104,8 +104,9 @@
 
                                     <div class="form-group">
                                         <label for="name">First Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter First Name"
-                                            name="first_name" value="{{ old('first_name') }}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter First Name" name="first_name"
+                                            value="{{ old('first_name') }}">
                                         @error('first_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -113,16 +114,18 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Last Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Last Name"
-                                            name="last_name" value="{{ old('last_name') }}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter Last Name" name="last_name"
+                                            value="{{ old('last_name') }}">
                                         @error('last_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Email Address</label>
-                                        <input type="text" class="form-control" placeholder="Enter Email Address"
-                                            name="email" value="{{ old('email') }}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter Email Address" name="email"
+                                            value="{{ old('email') }}">
                                         @error('email')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -132,14 +135,14 @@
                                         <label for="name">Mobile Number</label>
 
                                         <div class="form-group d-flex gap-2">
-                                            <select name="country_code" class="form-select" style="width: 100px">
+                                            <select name="country_code " class="form-select" style="width: 100px">
                                                 @foreach ($country as $val)
                                                     <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
                                                     </option>
                                                 @endforeach
                                             </select>
 
-                                            <input class="form-control" type="number" id="phone"
+                                            <input class="form-control notapplyspace" type="number" id="phone"
                                                 placeholder="Enter mobile Number" name="mobile"
                                                 value="{{ old('mobile') }}"
                                                 oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
@@ -176,7 +179,7 @@
 
                                     <div class="form-group position-relative">
                                         <label for="password">Create Password</label>
-                                        <input type="password" class="form-control" id="password"
+                                        <input type="password" class="form-control notapplyspace" id="password"
                                             placeholder="Enter Password" name="password"
                                             value="{{ old('password') }}">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
@@ -186,7 +189,7 @@
                                     </div>
                                     <div class="form-group position-relative">
                                         <label for="password">Confirm Password</label>
-                                        <input type="password" class="form-control" id="password"
+                                        <input type="password" class="form-control notapplyspace" id="password"
                                             placeholder="Enter Confirm Password" name="confirm_password"
                                             value="{{ old('confirm_password') }}">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
@@ -329,5 +332,9 @@
         });
     });
 </script>
+
+
+@include('dealer.footer');
+
 
 </html>
