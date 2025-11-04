@@ -51,9 +51,13 @@ use App\Http\Controllers\Api\Admin\CountryController;
      Route::post('/accept_seller',[SellerController::class,'accept_seller']);
      Route::post('/reject_seller',[SellerController::class,'reject_seller']);
 
-     //country,city,zome management
+     //country,city,zone management
      Route::get('/get_cities',[CountryController::class,'get_cities']);
      Route::get('/get_service_cities',[CountryController::class,'get_service_cities']);
+     Route::post('/add_service_city',[CountryController::class,'add_service_city']);
+     Route::post('/change_service_city_status',[CountryController::class,'change_service_city_status']);
+     Route::post('/delete_service_city',[CountryController::class,'delete_service_city']);
+     Route::post('/add_zone',[CountryController::class,'add_zone']);
 
 
 
