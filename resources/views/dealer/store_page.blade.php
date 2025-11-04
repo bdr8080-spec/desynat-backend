@@ -95,7 +95,7 @@
                                     <div class="upload-image w-100">
                                         <label id="uploadLabel" style="cursor:pointer;text-align:center;">
                                             <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                                            <div>Upload Profile Photo</div>
+                                            <div>Upload Store Image </div>
                                             <input type="file" accept="image/*" hidden onchange="showPreview(event)"
                                                 id="edit_imageUpload">
                                         </label>
@@ -190,12 +190,54 @@
                                         <label for="name">Store Phone Number</label>
 
                                         <div class="form-group d-flex gap-2">
-                                            <select name="country_code" class="form-select" style="width: 100px">
+                                            {{-- <select name="country_code" class="form-select" style="width: 100px">
                                                 @foreach ($country as $val)
                                                     <option value="{{ $val->id }}"> {{ $val->dial_code }}
                                                     </option>
                                                 @endforeach
-                                            </select>
+                                            </select> --}}
+
+                                            {{-- country code start --}}
+
+                                            <div class="dropdown">
+                                                <button
+                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center"
+                                                    type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <span id="selected-flag">
+                                                        <img src="{{ $country[0]->flag1 }}" alt="flag"
+                                                            width="25" height="16">
+                                                    </span>
+                                                    <span id="selected-code"
+                                                        class="ms-2">{{ $country[0]->dial_code }}</span>
+                                                </button>
+
+                                                <ul class="dropdown-menu" aria-labelledby="countryDropdown"
+                                                    style="max-height: 250px; overflow-y: auto;">
+                                                    @foreach ($country as $index => $item)
+                                                        <li>
+                                                            <label
+                                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                style="cursor: pointer;">
+                                                                <input type="radio" name="country_code"
+                                                                    value="{{ $item->dial_code }}"
+                                                                    data-flag="{{ $item->flag1 }}"
+                                                                    class="country-radio"
+                                                                    {{ $index === 0 ? 'checked' : '' }} hidden>
+                                                                <img src="{{ $item->flag1 }}"
+                                                                    alt="Flag of {{ $item->name }}" width="25"
+                                                                    height="16">
+                                                                <span>{{ $item->dial_code }}
+                                                                    ({{ $item->name }})
+                                                                </span>
+                                                            </label>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+
+                                            {{-- country code end  --}}
+
 
                                             <input class="form-control" type="number" id="phone"
                                                 placeholder="Enter Store Phone Number" name="store_phone"
@@ -206,7 +248,6 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-
 
 
                                     </div>

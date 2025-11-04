@@ -217,11 +217,11 @@ class SellerAuthService
           if($get_user_details->admin_verify=='3'){
             return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
           }
-
-          if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
-            return ['status'=>'error','message'=>"Your Profile is Under Review",'data'=>(object)[]];                
-          }
-
+          
+          // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
+          //   return ['status'=>'success','message'=>"Your Profile is Under Review",'data'=>$get_user_details];                
+          // }
+          
 
             if(Hash::check($request->password,$get_user_details->password,)){
                 // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   

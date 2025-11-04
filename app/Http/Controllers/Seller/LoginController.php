@@ -295,6 +295,9 @@ class LoginController extends Controller
             // 'let'=>'required|nullable',
             // 'long'=>'required|nullable'
             
+            ],[
+                'store_image'=>'Please Upload Store Image',
+                
             ]);
 
             if ($validate->fails()) {
