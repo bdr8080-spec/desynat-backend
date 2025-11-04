@@ -9,6 +9,7 @@ use App\Helpers\ApiResponse;
 use App\Models\seller;
 
 use App\Services\SellerAuthService;
+use Illuminate\Validation\Rule;
 
 
 use Validator;
@@ -31,13 +32,26 @@ class AuthController extends Controller
           $check_user_already->delete();
         }
 
+        $check_mobile_already=seller::where('country_code',$request->country_code)->where('mobile',$request->mobile)->where('otp_verify','0')->first();
+        if($check_mobile_already){
+            $check_mobile_already->delete();
+          }
+
         $validate = Validator::make($request->all(), [
             'profile_pic' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'country_code' => 'required',
             'email' => 'required|email|unique:sellers,email',
-            'mobile' => 'required',
+            // 'mobile' => 'required',
+            
+            'mobile' => [
+            'required',
+            Rule::unique('sellers')->where(function ($query) use ($request) {
+                return $query->where('country_code', $request->country_code);
+            }),
+        ],
+
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'accept_terms'=>"required|in:1"

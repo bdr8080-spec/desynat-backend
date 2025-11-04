@@ -103,7 +103,10 @@
                 contentType: false, 
                 success: function (resp) {
                     if(resp.status == true){
-                        location.href = resp.redirect_url
+                        toastr.success(resp.message);
+                        setTimeout(() => {
+                             location.href = resp.redirect_url
+                        },1000);
                     }else{
                         toastr.error(resp.error);
                     }
