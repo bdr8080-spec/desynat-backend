@@ -75,8 +75,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="w-100 LoginMobileDesign">
-                                                    <input type="text" class="form-control" value=""
-                                                        placeholder="Enter mobile number and email address"
+                                                    <input type="text" class="form-control notapplyspace"
+                                                        value="" placeholder="Mobile Number or Email Address"
                                                         name="email_mobile" id="LoginMobile">
                                                 </div>
                                             </div>
