@@ -45,7 +45,7 @@
                     <!-- <input type="file" name="image" enctype="multipart/form-data"> -->
                     <div class="form-group position-relative password_icon mt-3">
                         <label for="">Full Name</label>
-                        <input type="text" name="full_name" class="form-control custom-password"
+                        <input type="text" name="full_name" class="form-control custom-password blockFirstTime"
                             placeholder="Enter Full Name" style="padding-right: 40px;" />
                     </div>
                     <span class="text-danger" id="error-full_name"></span>
@@ -122,7 +122,7 @@
                         <input class="form-check-input" type="checkbox" value="1" id="checkIndeterminate"
                             name="accept_terms">
                         <label class="form-check-label" for="checkIndeterminate">
-                            Please accept the<a href=""> terms and conditions</a>
+                            I accept the <a href="">Terms & Conditions</a> and <a href="">Policies</a>
                         </label>
                     </div>
                     <span class="text-danger" id="error-accept_terms"></span>
@@ -212,5 +212,26 @@
                 });
             });
         });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const restrictedInputs = document.querySelectorAll('.blockFirstTime');
+
+            restrictedInputs.forEach(input => {
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === ' ' && this.value.length === 0) {
+                        e.preventDefault();
+                    }
+                });
+
+                input.addEventListener('input', function () {
+                    if (this.value.startsWith(' ')) {
+                        this.value = this.value.trimStart();
+                    }
+                });
+            });
+        });
+
+
     </script>
 @endsection
