@@ -74,10 +74,14 @@ class LoginController extends Controller
         }
 
 
-        if(!$seller){                   
-        return redirect()->back()
-        ->withErrors(['password'=>'No Seller Account Found'])
-        ->withInput();
+        if(!$seller){        
+
+        // return redirect()->back()
+        // ->withErrors(['error'=>'No Seller Account Found'])
+        // ->withInput();
+
+        return redirect()->back()->with('error','No Seller Account Found');
+
         }
  
 
