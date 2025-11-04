@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('store_name');
             $table->string('country');
             $table->string('store_address');
-            $table->string('address_line1');
-            $table->string('address_line2');
+            $table->string('address_line1')->nullable();
+            $table->string('address_line2')->nullable();
             $table->string('store_phone');
             $table->string('store_mail_id');
             $table->longText('bio');
