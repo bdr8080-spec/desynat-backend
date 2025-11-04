@@ -137,3 +137,35 @@
         --section: 24px 0;
     }
 }
+
+
+@media (max-width:576px) {
+    :root{
+
+        --p-font-size:13px;
+        --p-font-height:19px;
+        --p-font-weight:400;
+
+        --nav-font-size:12px;
+        --nav-font-height:18px;
+        --nav-font-weight:400;
+
+        --heading3-font:18px;
+        --heading3-font-height:24px;
+        --heading3-font-weight:600;
+
+        --heading4-font:16px;
+        --heading4-font-height:22px;
+        --heading4-font-weight:700;
+
+        --heading5-font:14px;
+        --heading5-font-height:20px;
+        --heading5-font-weight:500;
+
+        --heading6-font:12px;
+        --heading6-font-height:16px;
+
+        --section: 20px 0;
+    }
+}
+
