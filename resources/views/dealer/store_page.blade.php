@@ -455,7 +455,7 @@
 
                 <div class="find-location d-flex gap-3 py-4">
                     <div><i class="bi bi-geo-alt-fill"></i></div>
-                    <p class="mb-0" id="selectedAddress">20 Cooper Square, New Delhi, ND 110020</p>
+                    <p class="mb-0" id="selectedAddress"> </p>
                 </div>
 
                 <!-- Hidden inputs -->
@@ -615,7 +615,10 @@
     const searchBoxId = "searchBox";
     const latId = "lat";
     const lngId = "lng";
-    const selectedAddressId = "store_address";
+    const selectedAddressId = "selectedAddress";
+    const selectedAddressStore_address = "store_address";
+
+    // selectedAddress
 
     function initMap() {
         if (navigator.geolocation) {
@@ -802,7 +805,9 @@
         document.getElementById(address1Id).value = addrParts.slice(0, 2).join(",").trim();
         document.getElementById(address2Id).value = addrParts.slice(2, 5).join(",").trim();
 
-        document.getElementById(selectedAddressId).value = addrParts;
+        document.getElementById(selectedAddressStore_address).value = addrParts;
+
+
 
         // document.getElementById(cityId).value = city;
         // document.getElementById(pincodeId).value = zip;
