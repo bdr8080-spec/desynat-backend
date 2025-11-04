@@ -80,7 +80,7 @@ class UserAuthService
                 
                 return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Please Enter correct password",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Please enter correct password",'data'=>(object)[]];                
             }
         
           }else{
