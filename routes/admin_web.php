@@ -6,6 +6,9 @@ use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\SellerController;
+use App\Http\Controllers\Admin\PlanController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -36,6 +39,17 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/addBrand', [BrandController::class, 'addBrand'])->name('addBrand');
         Route::post('/updateBrand/{id}', [BrandController::class, 'updateBrand'])->name('updateBrand');
 
+        //country,city,zone management
+        Route::get('/country-management', [CountryController::class, 'countryManagement'])->name('countryManagement');
+        Route::get('/manage-cities', [CountryController::class, 'manageCities'])->name('manageCities');
+        Route::get('/manage-zones', [CountryController::class, 'manageZones'])->name('manageZones');
+
+        //seller management
+        Route::get('/seller-management', [SellerController::class, 'sellerManagement'])->name('sellerManagement');
+
+        //subscription plan management
+        Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
+        Route::get('/manage-plans', [PlanController::class, 'managePlans'])->name('managePlans');
 
     });
 
