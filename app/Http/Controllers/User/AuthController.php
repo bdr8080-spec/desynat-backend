@@ -185,7 +185,7 @@ class AuthController extends Controller
                     Session::forget('verify-password');
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully',
+                        'message' => 'User Register Succesfully',
                         'redirect_url' => route('dashboard'),
                     ]);
                 }
