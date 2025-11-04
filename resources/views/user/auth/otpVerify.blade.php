@@ -4,6 +4,14 @@
 
 @section('content')
 
+@php
+    if (Session::get('verify-password') != '1') {
+        header('Location: ' . route('userRegister'));
+        exit;
+    }
+@endphp
+
+
     <div class="login_contenar">
         <header class="inner-header">
             <a><img src="assets/images/logo.svg" class="img-fluid" /></a>
