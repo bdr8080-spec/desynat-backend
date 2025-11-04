@@ -45,7 +45,7 @@ class AuthController extends Controller
 
 
         if($validate->fails()){
-            return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
            }
 
         $data=$this->SellerAuthService->register($request); // seller insert Code
@@ -68,7 +68,7 @@ class AuthController extends Controller
                ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
        if($req->type=='0'){
@@ -79,7 +79,7 @@ class AuthController extends Controller
             "country_code"=>"required" 
                ]);
         if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
         }
        }
 
@@ -105,7 +105,7 @@ class AuthController extends Controller
             ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->SellerAuthService->verify_otp($req);
@@ -140,7 +140,7 @@ class AuthController extends Controller
             ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->SellerAuthService->store_information_insert($req);
@@ -171,7 +171,7 @@ class AuthController extends Controller
             ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->SellerAuthService->store_document_and_bank_details($req);
@@ -191,7 +191,7 @@ class AuthController extends Controller
             ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->SellerAuthService->seller_review($req);
@@ -211,7 +211,7 @@ class AuthController extends Controller
             ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->SellerAuthService->seller_store_submit_request($req);
@@ -247,7 +247,7 @@ class AuthController extends Controller
             "country_code"=>"required" 
                ]);
         if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
         }
        }
 
@@ -272,7 +272,7 @@ class AuthController extends Controller
                ]);
 
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
        // when i use forgot password with Mobile
@@ -320,7 +320,7 @@ class AuthController extends Controller
                ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', 'Validation error',$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
         $data= $this->SellerAuthService->create_password($req);
