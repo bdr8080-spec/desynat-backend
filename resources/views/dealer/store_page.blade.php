@@ -192,9 +192,19 @@
                                             <input type="text" class="form-control blockFirstTime"
                                                 placeholder="Enter Store Address" name="store_address"
                                                 value="{{ old('store_address', @$store_info->store_address) }}">
-                                            <div class="mapIcon" data-bs-toggle="offcanvas"
+                                            {{-- <div class="mapIcon" data-bs-toggle="offcanvas"
                                                 data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
-                                                    class="bi bi-crosshair "></i></div>
+                                                    class="bi bi-crosshair "></i></div> --}}
+
+                                            <button class="btn btn-primary"
+                                                style="position: absolute;top: 50%;right: 0;background: none;color: var(--secondry-color);
+                                                    border: none;"
+                                                type="button" data-bs-toggle="offcanvas" data-bs-target="#gpspanel"
+                                                aria-controls="offcanvasExample">
+                                                <i class="bi bi-crosshair"></i>
+                                            </button>
+
+
                                         </div>
                                     </div>
 
@@ -383,7 +393,7 @@
     </div>
 
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    {{-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
             <h3 class="offcanvas-title">Add Address</h3>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -407,8 +417,47 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="gpspanel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Set Location</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="gps-wapper">
+
+                <div class="setup-maps mb-0 position-relative">
+
+
+                    <input id="searchBox" type="text" placeholder="Search your address"
+                        class="form-control position-absolute"
+                        style="top:10px;left:10px;width:300px;z-index:9999;padding:6px 10px;border-radius:4px;">
+
+                    <div id="googleMap" style="width: 100%; height: 500px;"></div>
+
+                    <div id="useCurrentLocation">
+                        <i class="bi bi-crosshair"></i> Use Current Location
+                    </div>
+                </div>
+
+                <div class="find-location d-flex gap-3 py-4">
+                    <div><i class="bi bi-geo-alt-fill"></i></div>
+                    <p class="mb-0" id="selectedAddress">20 Cooper Square, New Delhi, ND 110020</p>
+                </div>
+
+                <!-- Hidden inputs -->
+                <input type="hidden" id="lat" name="lat">
+                <input type="hidden" id="lng" name="lng">
+
+                <!-- Done button -->
+                <div class="setup-done">
+                    <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -537,29 +586,233 @@
     });
 </script>
 
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
+</script>
+
 <script>
-    $(function() {
-        const map = new google.maps.Map($('#map')[0], {
-            center: {
-                lat: 20.5937,
-                lng: 78.9629
-            },
-            zoom: 5
-        });
-        const input = $('#search-box')[0];
-        const auto = new google.maps.places.Autocomplete(input);
-        const marker = new google.maps.Marker({
-            map
+    let map, marker, circle, autocomplete;
+    let mapInitialized = false;
+
+    // IDs of input fields
+    const address1Id = "street_line_1";
+    const address2Id = "street_line_2";
+    const cityId = "city";
+    const pincodeId = "pincode";
+    const countryId = "country";
+    const searchBoxId = "searchBox";
+    const latId = "lat";
+    const lngId = "lng";
+    const selectedAddressId = "selectedAddress";
+
+    function initMap() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const currentLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    loadMap(currentLocation);
+                },
+                () => loadMap({
+                    lat: 0,
+                    lng: 0
+                }), {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        } else {
+            loadMap({
+                lat: 0,
+                lng: 0
+            });
+        }
+    }
+
+    function loadMap(loc) {
+        map = new google.maps.Map(document.getElementById("googleMap"), {
+            center: loc,
+            zoom: 13
         });
 
-        auto.addListener('place_changed', () => {
-            const place = auto.getPlace();
-            if (!place.geometry) return alert("No details for: " + place.name);
-            map.fitBounds(place.geometry.viewport || new google.maps.LatLngBounds(place.geometry
-                .location));
-            map.setZoom(15);
-            marker.setPosition(place.geometry.location);
+        marker = new google.maps.Marker({
+            position: loc,
+            map,
+            draggable: true
         });
+
+        circle = new google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.3,
+            map,
+            center: loc,
+            radius: 300
+        });
+
+        const input = document.getElementById(searchBoxId);
+
+        // Clear input fields on map load
+        [latId, lngId, address1Id, address2Id, cityId, pincodeId, countryId].forEach(id => {
+            document.getElementById(id).value = "";
+        });
+        input.value = "";
+        document.getElementById(selectedAddressId).textContent = "";
+
+        // Autocomplete setup
+        autocomplete = new google.maps.places.Autocomplete(input, {
+            fields: ["geometry", "name", "formatted_address", "address_components"]
+        });
+        autocomplete.bindTo("bounds", map);
+
+        autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            if (!place.geometry || !place.geometry.location) return;
+            updateLocation(place.geometry.location, place);
+        });
+
+        // Manual address input on blur
+        input.addEventListener("blur", () => {
+            const address = input.value.trim();
+            if (!address) return;
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                address
+            }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    updateLocation(results[0].geometry.location, results[0]);
+                } else {
+                    alert("Address not found!");
+                }
+            });
+        });
+
+        // Marker drag event
+        marker.addListener("dragend", () => {
+            updateLocation(marker.getPosition());
+        });
+
+        // Current location button
+        document.getElementById("useCurrentLocation").addEventListener("click", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        updateLocation({
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        });
+                    },
+                    () => alert("Failed to retrieve your location."), {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported.");
+            }
+        });
+    }
+
+    function updateLocation(loc, placeData = null) {
+        map.setCenter(loc);
+        map.setZoom(15);
+        marker.setPosition(loc);
+        circle.setCenter(loc);
+
+        const lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
+        const lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
+
+        document.getElementById(latId).value = lat;
+        document.getElementById(lngId).value = lng;
+
+        const geocoder = new google.maps.Geocoder();
+
+        if (placeData && placeData.address_components) {
+            populateAddressFields(placeData);
+        } else {
+            // Reverse geocode
+            geocoder.geocode({
+                location: {
+                    lat,
+                    lng
+                }
+            }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    populateAddressFields(results[0]);
+                } else {
+                    alert("Failed to retrieve address for this location.");
+                }
+            });
+        }
+    }
+
+    function populateAddressFields(place) {
+        const addr = place.formatted_address || "";
+        document.getElementById(searchBoxId).value = addr;
+
+        let city = "",
+            state = "",
+            zip = "",
+            country = "";
+
+        place.address_components.forEach(c => {
+            if (c.types.includes("locality")) city = c.long_name;
+            if (c.types.includes("administrative_area_level_1")) state = c.long_name;
+            if (c.types.includes("postal_code")) zip = c.long_name;
+            if (c.types.includes("country")) country = c.long_name;
+        });
+
+        const addrParts = addr.split(",");
+
+        // Remove city, state, zip, country from line 2
+        let addrLine2Parts = addrParts.slice(2).map(part => part.trim());
+        addrLine2Parts = addrLine2Parts.filter(part => {
+            part = part.trim().toLowerCase();
+            return part &&
+                (!city || !part.includes(city.toLowerCase())) &&
+                (!state || !part.includes(state.toLowerCase())) &&
+                (!zip || !part.includes(zip.toLowerCase())) &&
+                (!country || !part.includes(country.toLowerCase())) &&
+                !part.includes("usa");
+        });
+
+        document.getElementById(address1Id).value = addrParts.slice(0, 2).join(",").trim();
+        document.getElementById(address2Id).value = addrLine2Parts.join(", ").trim();
+        document.getElementById(cityId).value = city;
+        document.getElementById(pincodeId).value = zip;
+        document.getElementById(countryId).value = country;
+
+        // Optional: display full address somewhere
+        document.getElementById(selectedAddressId).textContent = addr;
+    }
+
+    // Initialize map when offcanvas opens
+    document.addEventListener("DOMContentLoaded", () => {
+        const gpsPanel = document.getElementById("gpspanel");
+        const openMapBtn = document.querySelector('[data-bs-target="#gpspanel"]');
+
+        if (gpsPanel && openMapBtn) {
+            gpsPanel.addEventListener("shown.bs.offcanvas", () => {
+                if (!mapInitialized) {
+                    setTimeout(() => {
+                        initMap();
+                        mapInitialized = true;
+                    }, 300);
+                } else {
+                    setTimeout(() => {
+                        google.maps.event.trigger(map, "resize");
+                        map.setCenter(marker.getPosition());
+                    }, 300);
+                }
+            });
+        }
     });
 </script>
 
