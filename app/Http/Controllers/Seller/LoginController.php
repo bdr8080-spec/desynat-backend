@@ -390,7 +390,7 @@ class LoginController extends Controller
         'store_document.required'=>'Please upload store document',
         'owner_document.required'=>'Please upload owner document',
 
-        'upload_proof.required_without' => 'Upload proof is required.',
+        'upload_proof.required_without' => 'Please upload proof of Account',
         'upload_proof.image' => 'The upload proof must be an image file.',
         'upload_proof.mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed.',
         'upload_proof.max' => 'The image size must not exceed 2MB.',
