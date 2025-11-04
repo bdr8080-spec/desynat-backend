@@ -2,3 +2,35 @@
     /* Your CSS rules go here */
     
 }
+.form-switch .form-check-input {
+    width: 2.8em;
+    height: 20px;
+}
+
+/*--------------------------------------------------------------
+# Dashboard page
+--------------------------------------------------------------*/
+
+.title24{
+    font-size: var(--title24);
+    color: var(--title-color);
+    font-weight: 500;
+}
+.bg-header{
+    background-color: var(--bg-header);
+    padding: 15px;
+    border-radius: 20px;
+}
+.dash-circle {
+    height: 100px;
+    width: 100px;
+    background-color: #DFBF8F4D;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dash-content h5 {
+    font-size: 16px;
+    color: #000;
+}

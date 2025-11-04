@@ -19,8 +19,7 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
     <link href="{{ asset('dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
     <link href="{{ asset('dealer') }}/assets/custom-file/css/custom.css" rel="stylesheet">
@@ -53,8 +52,21 @@
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-chat-text-fill"></i>
+                        <!-- <span class="badge bg-success badge-number">3</span> -->
+                    </a>
+                    <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                        <li class="dropdown-header">
+                            You have 3 new messages
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                    </ul> -->
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-bell"></i>
-                        <!-- <span class="badge bg-primary badge-number">4</span> -->
+                        <span class="badge bg-primary badge-number">4</span>
                     </a>
 
                     <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -65,18 +77,7 @@
                     </ul> -->
                 </li>
 
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-chat-left-text"></i>
-                        <span class="badge bg-success badge-number">3</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                        <li class="dropdown-header">
-                            You have 3 new messages
-                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                        </li>
-                    </ul>
-                </li> -->
+                
                 <!-- End Messages Nav -->
 
                 <li class="nav-item dropdown pe-3">
@@ -105,7 +106,24 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <div class="des-language">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="{{ asset('dealer') }}/assets/img/global.svg" class="img-fluid" /> EN
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
+                                <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
             </ul>
+           
+
         </nav>
 
     </header>
@@ -115,13 +133,13 @@
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <a class="nav-link sidebar-active border-radious-9 margin-20" href="index.php">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon" class="asideicon">
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20" href="">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/dash-ic.svg" alt="icon" class="asideicon">
+                <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon" class="asideicon">
                     <span>Product Management</span>
                 </a>
             </li>

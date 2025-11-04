@@ -93,26 +93,44 @@
 
                                     @csrf
 
-                                    <div class="otp-panel py-4">
-                                        <div class="otp-field" style="display: flex; gap: 8px;justify-content: center;">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 1)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 2)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 3)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 4)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 5)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 6)">
-                                        </div>
+
+                                    {{-- <div id="otp-inputs" class="d-flex gap-2">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                    </div> --}}
+
+
+                                    <div id="otp-inputs" class="d-flex gap-2">
+                                        @for ($i = 0; $i < 6; $i++)
+                                            <input type="text" name="otp[]" maxlength="1"
+                                                class="form-control text-center" oninput="moveNext(this)"
+                                                onkeydown="allowOnlyNumbers(event)">
+                                        @endfor
                                     </div>
 
-                                    @error('otp')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    {{-- Show OTP validation error --}}
+
+                                    @if ($errors->has('otp'))
+                                        <span class="text-danger d-block mt-1">{{ $errors->first('otp') }}</span>
+                                    @elseif ($errors->has('otp.*'))
+                                        <span class="text-danger d-block mt-1">{{ $errors->first('otp.*') }}</span>
+                                    @endif
 
                                     <div class="login-btn padding-top-60">
                                         <input type="submit" class="btn btn-success w-100" value="Verify">
@@ -156,6 +174,42 @@
             inputs.forEach((inp, j) => inp.value = val[j] || "");
         });
     });
+
+    // otp input tags
+
+
+    function moveNext(current) {
+        // Allow only numbers
+        current.value = current.value.replace(/[^0-9]/g, '');
+
+        if (current.value.length === 1) {
+            const next = current.nextElementSibling;
+            if (next && next.tagName === "INPUT") {
+                next.focus();
+            }
+        }
+    }
+
+    function allowOnlyNumbers(event) {
+        const key = event.key;
+
+        // Allow only digits and control keys
+        if (!/^[0-9]$/.test(key) && key !== "Backspace" && key !== "Tab" && key !== "ArrowLeft" && key !==
+            "ArrowRight") {
+            event.preventDefault();
+        }
+
+        // Move back on Backspace
+        if (key === "Backspace" && event.target.value === '') {
+            const prev = event.target.previousElementSibling;
+            if (prev && prev.tagName === "INPUT") {
+                prev.focus();
+            }
+        }
+    }
+</script>
+
+
 </script>
 
 @include('dealer.footer');
