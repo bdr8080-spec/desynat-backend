@@ -9,6 +9,7 @@ use App\Services\CountryService;
 use App\Models\country;
 use App\Models\City;
 use App\Models\ServiceCity;
+use App\Models\Zone;
 
 
 use Validator;
@@ -50,7 +51,7 @@ class CountryController extends Controller
         }
 
         try {
-            $data = $this->CategoryService->getCountries($request->country_id);
+            $data = $this->CountryService->getCities($request->country_id);
 
             if (isset($data['status']) && $data['status'] == 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -75,13 +76,115 @@ class CountryController extends Controller
         }
 
         try {
-            $data = $this->CategoryService->getServiceCities($request->country_id,$request->limit,$request->search);
+            $data = $this->CountryService->getServiceCities($request->country_id,$request->limit,$request->search);
 
             if (isset($data['status']) && $data['status'] == 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
             }
 
             return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function add_service_city(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'city_id' => 'required|exists:cities,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CountryService->addServiceCity($request);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function change_service_city_status(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'city_id' => 'required|exists:service_cities,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->CountryService->changeServiceCityStatus($request->city_id);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function delete_service_city(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'city_id' => 'required|exists:service_cities,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CountryService->deleteServiceCity($request->city_id);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function add_zone(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'country_id' => 'required|exists:countries,id',
+            'city_id' => 'required|exists:service_cities,id',
+            'name_english' => 'required|string|max:255',
+            'name_arabic' => 'required|string|max:255',
+            'coordinates' => 'required|array|min:3',
+            'coordinates.*.lat' => 'required|numeric',
+            'coordinates.*.lng' => 'required|numeric',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CountryService->addZone($request);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
 
         } catch (\Exception $e) {
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);

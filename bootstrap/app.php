@@ -7,6 +7,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use App\Http\Middleware\RedirectIfSellerAuthenticated;
+use App\Http\Middleware\LoginCheck;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,7 +21,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability'  => CheckForAnyAbility::class,
-            'is_seller'=>RedirectIfSellerAuthenticated::class    
+            'is_seller'=>RedirectIfSellerAuthenticated::class,
+            'guest_user'=>LoginCheck::class     
         ]);
 
        

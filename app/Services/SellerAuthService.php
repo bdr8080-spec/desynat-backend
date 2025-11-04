@@ -30,7 +30,8 @@ class SellerAuthService
           'accept_terms' => '1',
           'device_type' => $request->device_type,
           'device_token'=>$request->device_token,
-          'otp'=>$otp
+          'otp'=>$otp,
+          'lang'=>$request->lang??null
         ];
 
        $check=  seller::create($record);
@@ -131,7 +132,7 @@ class SellerAuthService
         $bank_data=[
           'user_id' => $request->user_id,
           'type'=> '1',
-          'account_type' => $request->account_type ,
+          'account_type' => strVal($request->account_type),
           'iban' => $request->iban ,
           'swift'=>$request->swift ,
           "bank_name"=>$request->bank_name ,

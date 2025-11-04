@@ -4,6 +4,14 @@
 
 @section('content')
 
+@php
+    if (Session::get('verify-password') != '1') {
+        header('Location: ' . route('userRegister'));
+        exit;
+    }
+@endphp
+
+
     <div class="login_contenar">
         <header class="inner-header">
             <a><img src="assets/images/logo.svg" class="img-fluid" /></a>
@@ -95,7 +103,10 @@
                 contentType: false, 
                 success: function (resp) {
                     if(resp.status == true){
-                        location.href = resp.redirect_url
+                        toastr.success(resp.message);
+                        setTimeout(() => {
+                             location.href = resp.redirect_url
+                        },1000);
                     }else{
                         toastr.error(resp.error);
                     }

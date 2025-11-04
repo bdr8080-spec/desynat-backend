@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\country;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
+use Session;
 
 class AuthController extends Controller
 {
@@ -100,11 +101,14 @@ class AuthController extends Controller
 
                 $id  = Crypt::encryptString($data->id);
 
+                Session::put('verify-password', '1');
                 return response()->json([
-                    'status'=>true,
-                    'message'=>'OTP sent to your mobile number succesfully ',
-                    'id'=>$id,
-                   ]);
+                                'status'=>true,
+                                'message'=>'OTP sent to your mobile number succesfully ',
+                                'id'=>$id,
+                            ]);
+
+
 
         }
 
@@ -168,16 +172,20 @@ class AuthController extends Controller
 
 
                 if ($request->forget_password == 'one') {
+                    
+                 Session::forget('verify-password');
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP verified successfully',
                         'redirect_url' => route('userCreatePassword', ['temp_user_id' => $request->id]),
                     ]);
+                    
                 } else {
                     Auth::guard('web')->login($user);
+                    Session::forget('verify-password');
                     return response()->json([
                         'status' => true,
-                        'message' => 'OTP verified successfully',
+                        'message' => 'User Register Succesfully',
                         'redirect_url' => route('dashboard'),
                     ]);
                 }
@@ -241,7 +249,7 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Invalid ' . $loginField . ' or password',
+                    'message' => 'User is not Regsiter',
                 ], 401);
             }
 
@@ -263,8 +271,8 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => false,
-                // 'message' => 'Invalid ' . $loginField . ' or password.',
-                'message'=>'User is not Regsiter'
+                'message' => 'Invalid ' . $loginField . ' or password',
+                // 'message'=>'User is not Regsiter'
             ], 401);
         }
 
@@ -318,7 +326,8 @@ class AuthController extends Controller
                 if ($user) {
                     $user->otp = $otp ;
                     $user->save();
-                   $id = Crypt::encryptString($user->id);
+                    $id = Crypt::encryptString($user->id);
+                    Session::put('verify-password', '1');
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP sent successfully',
@@ -463,7 +472,7 @@ class AuthController extends Controller
                     $user->save();
 
                     $id = Crypt::encryptString($user->id);
-
+                    Session::put('verify-password', '1');
                     return response()->json([
                         'status' => true,
                         'message' => 'OTP sent successfully',
@@ -489,7 +498,7 @@ class AuthController extends Controller
             request()->session()->invalidate();
             request()->session()->regenerateToken();
 
-            return redirect('/');
+            return redirect('user/login');
         }
 
 

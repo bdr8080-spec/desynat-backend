@@ -88,7 +88,7 @@
                                         <div class="imgshow">
                                             <img id="preview"
                                                 style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
-                                            <span id="remove " class="remove-ic"
+                                            <span id="remove" class="remove-ic"
                                                 style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                 onclick="removeImg()">&times;</span>
                                         </div>

@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\country;
 use App\Models\City;
 use App\Models\ServiceCity;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 
 
@@ -41,7 +42,7 @@ class CountryService
     {
         try {
 
-            $query = City::where('country_id', $countryId)->get();
+            $query = City::where('country_id', $countryId)->orderBy('name', 'asc')->get();
 
             if ($query->isEmpty()) {
                 return [
@@ -60,7 +61,7 @@ class CountryService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch subcategories: ' . $e->getMessage(),
+                'message' => 'Failed to fetch cities: ' . $e->getMessage(),
                 'data' => []
             ];
         }
@@ -82,7 +83,7 @@ class CountryService
             if ($cities->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No subcategories found for this category',
+                    'message' => 'No City found for this Country',
                     'data' => (object) []
                 ];
             }
@@ -101,6 +102,129 @@ class CountryService
             ];
         }
     }
+
+    public function addServiceCity(Request $request)
+    {
+        try {
+            $city = City::find($request->city_id);
+
+            if (!$city) {
+                return [
+                    'status' => 'error',
+                    'message' => 'City not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $serviceCity = ServiceCity::create([
+                'country_id' => $city->country_id, 
+                'name' => $city->name,             
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'City added successfully',
+                'data' => $serviceCity
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to create ServiceCity: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to create ServiceCity',
+                'data' => (object)[]
+            ];
+        }
+    }
+
+    public function changeServiceCityStatus($cityId)
+    {
+        try {
+            $city = ServiceCity::find($cityId);
+
+            if (!$city) {
+                return [
+                    'status' => 'error',
+                    'message' => 'City not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $city->status = $city->status == 1 ? 0 : 1;
+            $city->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'City status updated successfully',
+                'data' => $city
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch city: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function deleteServiceCity($cityId)
+    {
+        try {
+            $city = ServiceCity::find($cityId);
+
+            if (!$city) {
+                return [
+                    'status' => 'error',
+                    'message' => 'City not found',
+                    'data' => (object)[]
+                ];
+            }
+            $city->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'City deleted successfully',
+                'data' => []
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to delete city: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete city',
+                'data' => (object)[]
+            ];
+        }
+    }
+
+    public function addZone(Request $request)
+    {
+        try {
+            $zone = Zone::create([
+                'country_id' => $request->country_id,
+                'city_id' => $request->city_id,
+                'name_english' => $request->name_english,
+                'name_arabic' => $request->name_arabic,
+                'coordinates' => $request->coordinates,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Zone added successfully',
+                'data' => $zone,
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Failed to create Zone: ' . $e->getMessage());
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to create zone',
+                'data' => (object)[],
+            ];
+        }
+    }
+
 
 
 

@@ -197,9 +197,10 @@
                                                 @endforeach
                                             </select>
 
-                                            <input class="form-control" type="tel" id="phone"
+                                            <input class="form-control" type="number" id="phone"
                                                 placeholder="Enter Store Phone Number" name="store_phone"
-                                                value="{{ old('store_phone', @$store_info->store_phone) }}">
+                                                value="{{ old('store_phone', @$store_info->store_phone) }}"
+                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
 
                                             @error('country_code')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -214,7 +215,7 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Store mail Id</label>
-                                        <input type="text" class="form-control" placeholder="Enter Store mail Id"
+                                        <input type="Email" class="form-control" placeholder="Enter Store mail Id"
                                             name="store_mail_id"
                                             value="{{ old('store_mail_id', @$store_info->store_mail_id) }}">
                                     </div>
