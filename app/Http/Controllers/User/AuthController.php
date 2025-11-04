@@ -271,7 +271,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'status' => false,
-                'message' => 'Invalid ' . $loginField . ' or password.',
+                'message' => 'Invalid ' . $loginField . ' or password',
                 // 'message'=>'User is not Regsiter'
             ], 401);
         }
