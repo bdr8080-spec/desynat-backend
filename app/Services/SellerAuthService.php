@@ -131,7 +131,7 @@ class SellerAuthService
         $bank_data=[
           'user_id' => $request->user_id,
           'type'=> '1',
-          'account_type' => $request->account_type ,
+          'account_type' => strVal($request->account_type),
           'iban' => $request->iban ,
           'swift'=>$request->swift ,
           "bank_name"=>$request->bank_name ,
