@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('service_cities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade'); // Foreign key to countries
+            $table->foreignId('country_id')->constrained('countries')->onDelete('cascade');
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade'); 
             $table->string('name');
             $table->tinyInteger('status')->default(1)->comment('0-inactive, 1-active');
             $table->timestamps(); // created_at & updated_at
