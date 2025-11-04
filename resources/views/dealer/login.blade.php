@@ -96,7 +96,8 @@
                                         @enderror
 
                                         <div class="form-group py-2 mb-4 text-center">
-                                            <a href="{{ route('seller.forgot') }}" class="link-color">Forgot Password ?
+                                            <a href="#" class="link-color">Forgot Password ?
+                                                {{-- {{ route('seller.forgot') }} --}}
                                             </a>
                                         </div>
                                         <div class="login-btn">
