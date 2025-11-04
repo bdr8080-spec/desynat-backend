@@ -377,12 +377,15 @@ class LoginController extends Controller
     // 'store_document' => 'required|array',
     
         'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
-        "iban"=>"required",
-        'swift'=>'required',
+        // "iban"=>"required",
+        // 'swift'=>'required',
         'bank_name'=>'required',
         "account_holder_name"=>"required",
         'upload_proof' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|required_without:old_upload_proof',
         'old_upload_proof' => 'nullable|required_without:upload_proof', 
+    ],[
+        'account_type.required'=>''
+
     ]);
 
         if ($validate->fails()) {

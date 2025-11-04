@@ -177,8 +177,8 @@ class AuthController extends Controller
             'owner_document' => 'required|array',
             'store_document' => 'required|array',
             'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
-            "iban"=>"required",
-            'swift'=>'required',
+            // "iban"=>"required",
+            // 'swift'=>'required',
             'bank_name'=>'required',
             "account_holder_name"=>"required",
             'upload_proof'=>'required'
