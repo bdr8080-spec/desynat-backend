@@ -135,12 +135,54 @@
                                         <label for="name">Mobile Number</label>
 
                                         <div class="form-group d-flex gap-2">
-                                            <select name="country_code" class="form-select" style="width: 100px">
+                                            {{-- <select name="country_code" class="form-select" style="width: 100px">
                                                 @foreach ($country as $val)
                                                     <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
                                                     </option>
                                                 @endforeach
-                                            </select>
+                                            </select> --}}
+                                            <div class="dropdown">
+                                                <button
+                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                                    type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+
+                                                    <span id="selected-flag">
+                                                        <img src="{{ old('country_flag', $country[0]->flag1) }}"
+                                                            alt="flag" width="25" height="16">
+                                                    </span>
+                                                    <span id="selected-code" class="ms-2">
+                                                        {{ old('country_code', $country[0]->dial_code) }}
+                                                    </span>
+                                                </button>
+
+                                                <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown"
+                                                    style="max-height: 250px; overflow-y: auto; width: 100%;">
+
+                                                    @foreach ($country as $index => $item)
+                                                        <li>
+                                                            <label
+                                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                style="cursor: pointer;">
+                                                                <input type="radio" name="country_code"
+                                                                    value="{{ $item->dial_code }}"
+                                                                    data-flag="{{ $item->flag1 }}"
+                                                                    data-name="{{ $item->name }}"
+                                                                    class="country-radio"
+                                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                    hidden>
+                                                                <img src="{{ $item->flag1 }}"
+                                                                    alt="Flag of {{ $item->name }}" width="25"
+                                                                    height="16">
+                                                                <span>{{ $item->dial_code }}
+                                                                    ({{ $item->name }})
+                                                                </span>
+                                                            </label>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+
 
                                             <input class="form-control notapplyspace" type="number" id="phone"
                                                 placeholder="Enter mobile Number" name="mobile"
@@ -334,7 +376,6 @@
 </script>
 
 
-@include('dealer.footer');
-
+@include('dealer.custom_code');
 
 </html>
