@@ -135,12 +135,7 @@
                                         <label for="name">Mobile Number</label>
 
                                         <div class="form-group d-flex gap-2">
-                                            {{-- <select name="country_code" class="form-select" style="width: 100px">
-                                                @foreach ($country as $val)
-                                                    <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
-                                                    </option>
-                                                @endforeach
-                                            </select> --}}
+
                                             <div class="dropdown">
                                                 <button
                                                     class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
@@ -150,7 +145,9 @@
                                                     <span id="selected-flag">
                                                         <img src="{{ old('country_flag', $country[0]->flag1) }}"
                                                             alt="flag" width="25" height="16">
+
                                                     </span>
+
                                                     <span id="selected-code" class="ms-2">
                                                         {{ old('country_code', $country[0]->dial_code) }}
                                                     </span>
@@ -196,29 +193,6 @@
 
                                     </div>
 
-                                    {{-- <div class="form-group phone-pnl">
-                                        <select name="country_code">
-                                            @foreach ($country as $val)
-                                                <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('country_code')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div> --}}
-
-                                    {{-- <div class="form-group phone-pnl">
-                                        <label for="name">Mobile Number</label>
-                                        <input class="form-control" type="tel" id="phone"
-                                            placeholder="Enter mobile number" name="mobile"
-                                            value="{{ old('mobile') }}">
-                                        @error('mobile')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div> --}}
-
                                     <div class="form-group position-relative">
                                         <label for="password">Create Password</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
@@ -242,15 +216,16 @@
 
                                     <div class="form-check py-4">
                                         <input class="form-check-input" type="checkbox" value="1"
-                                            id="checkChecked" checked name="accept_terms">
+                                            id="checkChecked" name="accept_terms">
                                         <label class="form-check-label" for="checkChecked">
                                             I accept the <span class="title-color">Terms & Conditions </span> and <span
                                                 class="title-color">Policies</span>
                                         </label>
-                                        @error('accept_terms')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+
                                     </div>
+                                    @error('accept_terms')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
 
                                     <div class="login-btn">
                                         <input type="submit" name="submit" class="btn btn-success w-100"
@@ -299,47 +274,6 @@
 </script>
 
 <script>
-    // function showPreview(e) {
-    //     const f = e.target.files[0],
-    //         p = preview,
-    //         r = remove,
-    //         u = uploadLabel;
-
-    //     if (f) {
-    //         const rdr = new FileReader();
-    //         rdr.onload = x => {
-    //             p.src = x.target.result;
-    //             p.style.display = 'block';
-    //             r.style.display = 'inline';
-    //             u.style.display = 'none';
-    //         };
-    //         rdr.readAsDataURL(f);
-    //     }
-    // }
-
-    // function showPreview(e) {
-    //     const f = e.target.files[0],
-    //         p = preview,
-    //         r = remove,
-    //         u = uploadLabel;
-
-    //     if (f) {
-    //         const rdr = new FileReader();
-    //         rdr.onload = x => {
-    //             p.src = x.target.result;
-    //             p.style.display = 'block';
-    //             r.style.display = 'inline';
-    //             u.style.display = 'none';
-    //         };
-    //         rdr.readAsDataURL(f);
-    //     }
-
-    //     // ✅ Reset input so same file can be selected again
-    //     // e.target.value = '';
-    // }
-
-
-
     function removeImg() {
         preview.src = '';
         preview.style.display = 'none';
@@ -348,53 +282,6 @@
         $('#Profile_image').val('');
 
     }
-
-
-    // $(document).on('change', '#edit_imageUpload', function(event) {
-
-    //     event.preventDefault();
-    //     let file = $(this)[0].files[0];
-    //     let formData = new FormData();
-    //     formData.append('image', file);
-    //     // let name = formData.get('file').name;
-    //     let name = file.name;
-
-    //     sessionStorage.setItem('uploadedFileName', name);
-    //     let uploadfile = sessionStorage.getItem('uploadedFileName', name);
-    //     // $("#fileName").text(uploadfile);
-    //     $("#fileName").text(name); // Display the file name in the UI
-
-    //     $.ajax({
-    //         method: 'POST', // Corrected from the comment
-    //         url: "/api/upload",
-    //         headers: {
-    //             'Accept-Language': 'en'
-    //         },
-    //         data: formData,
-    //         cache: false,
-    //         contentType: false,
-    //         processData: false,
-    //         success: function(resp) {
-    //             $('#fileName').text(name);
-    //             window.setTimeout(function() {
-    //                 $('.submit').attr('disabled', false);
-    //                 $('.form-control').attr('readonly', false);
-    //                 $('.form-control').removeClass('disabled-link');
-    //                 $('.error-control').removeClass('disabled-link');
-    //                 $('.submit').html('Add');
-    //             }, 2000);
-    //             if (resp.status == 'success') {
-    //                 sessionStorage.setItem('FileUrl', resp.data);
-    //                 $('#Profile_image').val(resp.data.url);
-    //             }
-    //         },
-    //         error: function(xhr, textStatus, errorThrown) {
-    //             var response = xhr.responseJSON;
-    //             // Optionally handle errors here
-    //         }
-    //     });
-    // });
-
 
     function showPreviewAndUpload(e) {
         const file = e.target.files[0],
@@ -466,10 +353,24 @@
         $('#fileName').text('');
         $('#Profile_image').val('');
     });
+
+
+    $(document).ready(function() {
+        // When user types in any input or textarea
+        $(document).on('input', '.form-control, .form-check-input', function() {
+            // Check if input has a value (not empty)
+            if ($(this).val().trim() !== '') {
+                // Remove the nearby error message
+                $(this).closest('.form-group').find('.text-danger').fadeOut(200, function() {
+                    $(this).remove();
+                });
+            }
+        });
+    });
 </script>
 
 
-@include('dealer.footer');
+@include('dealer.custom_code');
 
 
 </html>
