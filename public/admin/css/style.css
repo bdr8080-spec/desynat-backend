@@ -63,7 +63,7 @@ th {
 li.nav-item.active {
     background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
     border-radius: 10px;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 .sidebar-dark .nav-item .nav-link {
     color: #000 !important;
@@ -344,8 +344,20 @@ h1 {
 }
 
 .sidebar .nav-item .nav-link span {
-    padding: 4px;
+    padding: 0px;
     padding-right: 10px;
+}
+ .nav-pills .nav-link {
+    color: #0E1C21;
+    font-size: 18px;
+    background: #fff;
+    margin: 8px 0px;
+    text-align: left;
+    padding: 7px;
+}
+ .nav-link {
+    display: flex;
+    justify-content: space-between;
 }
 
 #content .menu i {
@@ -976,7 +988,7 @@ table thead tr:nth-child(even) {
 .toggle-password {
     cursor: pointer;
     position: absolute;
-    bottom: 10px;
+    bottom: 15px;
     right: 10px;
 }
 
@@ -1213,7 +1225,7 @@ a.btn.btn-dark.customBtn {
 /* buttons end */
 
 .userManagecontent table thead tr th {
-    min-width: max-content;
+    min-width: 220px;
     vertical-align: middle;
     color: #000;
     /* background: transparent linear-gradient(164deg, #013b5100 0%, #c7a15c 100%) 0% 0% no-repeat; */
@@ -1536,10 +1548,7 @@ button[type="submit"] {
     width: 200px !important;
     margin: 0 auto;
 }
-.modal-dialog.modal-dialog-centered {
-    /* max-width: 880px; */
-    width: 100%;
-}
+
 .watch-box {
     max-width: 400px;
     margin: 0 auto;
@@ -1782,6 +1791,11 @@ button[type="submit"] {
  
     margin-top: 97px ;
 
+}
+.sidebar-dark .nav-item .nav-link {
+ 
+    font-size: 13px;
+ 
 }
 
 }
