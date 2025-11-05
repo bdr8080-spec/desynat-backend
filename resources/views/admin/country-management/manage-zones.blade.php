@@ -8,8 +8,15 @@
 
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <h2 class="h2">Manage Zone(UAE>Dubai)</h2>
+                 <div class="col-lg-6 col-md-6 col-12">
+                    <div class="d-flex align-items-center gap-3 mt-2">
+                        <div class="arrow">
+                            <a class="table-button" type="button" href="{{route('manageCities')}}">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </div>
+                        <h6 class="m-0">Manage Zone</h6>
+                    </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-12">
@@ -101,6 +108,86 @@
     </div>
 </div>
 
+<div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="exampleModalLabel">
+                    Add Zone
+                </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 
+                </button>
+            </div>
+            <div class="modal-body">
+                  <div class="">
+    
+
+    
+
+      <div id="map"></div>
+        <div class="form-row">
+        <input type="text" placeholder="Zone Name (In English)" />
+        <input type="text" placeholder="Zone Name (in Arabic)" />
+      
+      </div>
+    </div>
+  </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"
+  ></script>
+
+  <script>
+    let map, marker;
+
+    function initMap() {
+      const defaultLocation = { lat: 28.6139, lng: 77.209 }; // Delhi
+
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: defaultLocation,
+        zoom: 11,
+      });
+
+      marker = new google.maps.Marker({
+        position: defaultLocation,
+        map,
+        draggable: true,
+      });
+
+      const input = document.createElement("input");
+      input.id = "pac-input";
+      input.type = "text";
+      input.placeholder = "Search Box...";
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+
+      const searchBox = new google.maps.places.SearchBox(input);
+
+      map.addListener("bounds_changed", () => {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+        if (places.length === 0) return;
+
+        const place = places[0];
+        if (!place.geometry || !place.geometry.location) return;
+
+        map.setCenter(place.geometry.location);
+        map.setZoom(13);
+        marker.setPosition(place.geometry.location);
+      });
+    }
+
+    window.onload = initMap;
+  </script>
 
 @endsection

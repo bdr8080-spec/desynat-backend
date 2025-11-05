@@ -8,8 +8,15 @@
 
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <h2 class="h2">Subscription Plan</h2>
+               <div class="col-lg-6 col-md-6 col-12">
+                    <div class="d-flex align-items-center gap-3 mt-2">
+                        <div class="arrow">
+                            <a class="table-button" type="button" href="{{route('planManagement')}}">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </div>
+                        <h6 class="m-0">Subscription Plan</h6>
+                    </div>
                 </div>
 
                 <div class="col-lg-3 col-md-4 col-12">

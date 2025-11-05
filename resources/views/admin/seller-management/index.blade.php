@@ -303,12 +303,10 @@
                                             <i class="bi bi-star-fill"></i>
 
                                         </td>
-                                        <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal4">
+                                        <td> <a class="table-button" type="button" >
                                                 <i class="bi bi-eye-fill"></i>
                                             </a></td>
-                                        <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal4">
+                                        <td> <a class="table-button" type="button">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a></td>
                                         <td>
@@ -363,12 +361,10 @@
                                             <i class="bi bi-star-fill"></i>
 
                                         </td>
-                                        <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal2">
+                                        <td> <a class="table-button" type="button" >
                                                 <i class="bi bi-eye-fill"></i>
                                             </a></td>
-                                        <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal2">
+                                        <td> <a class="table-button" type="button">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a></td>
                                         <td>
