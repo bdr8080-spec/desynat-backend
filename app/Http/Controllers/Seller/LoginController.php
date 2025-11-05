@@ -125,12 +125,12 @@ class LoginController extends Controller
 
     public function register(Request $request){
 
-        if ($request->isMethod('get')) {
+        $country= country::all();
 
-            $country= country::all();
+        if ($request->isMethod('get')) {
+            
             return view('dealer.sign-up',compact('country'));
         }
-
 
         $check_user_already=seller::where('email',$request->email)->where('otp_verify','0')->first();
 

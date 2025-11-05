@@ -134,7 +134,7 @@
                                     <div class="form-group phone-pnl">
                                         <label for="name">Mobile Number</label>
 
-                                        <div class="form-group d-flex gap-2">
+                                        <div class="form-group d-flex gap-2 w-100">
 
                                             <div class="dropdown">
                                                 <button
@@ -180,16 +180,19 @@
                                                 </ul>
                                             </div>
 
+                                            <div class="w-100">
+                                                <input class="form-control notapplyspace" type="number"
+                                                    id="phone" placeholder="Enter mobile Number" name="mobile"
+                                                    value="{{ old('mobile') }}"
+                                                    oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
 
-                                            <input class="form-control notapplyspace" type="number" id="phone"
-                                                placeholder="Enter mobile Number" name="mobile"
-                                                value="{{ old('mobile') }}"
-                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+                                                @error('mobile')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
 
                                         </div>
-                                        @error('mobile')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+
 
                                     </div>
 
@@ -255,9 +258,9 @@
 
 
 <!-- Vendor JS Files -->
-<script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
+{{-- <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script> --}}
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script> --}}
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
