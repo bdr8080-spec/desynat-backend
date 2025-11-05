@@ -140,18 +140,14 @@
                                         @enderror
 
                                         <div class="form-group py-2 mb-4 text-center">
-                                            <a href="#" class="link-color">Forgot Password ?
-                                                {{-- {{ route('seller.forgot') }} --}}
+                                            <a href="{{ route('seller.forgot') }}" class="link-color">Forgot Password
+                                                ?
                                             </a>
                                         </div>
                                         <div class="login-btn">
-
                                             <input type="submit" class="btn btn-success w-100" name="submit"
                                                 value="login">
-
-                                            <!-- <a href="index.php" class="btn btn-success w-100">Login</a> -->
                                         </div>
-
                                 </form>
 
                                 <div class="sign-new mt-2 text-center">

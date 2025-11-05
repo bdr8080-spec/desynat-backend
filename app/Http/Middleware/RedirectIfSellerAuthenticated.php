@@ -18,32 +18,43 @@ class RedirectIfSellerAuthenticated
      */
     // public function handle(Request $request, Closure $next): Response
     public function handle($request, Closure $next, $guard = 'seller')
-    
     {
-        if (Auth::guard('seller')->check()) {
-        
-            $Seller_id=Auth::guard('seller')->user();
 
-            if($Seller_id->store_information=='0'){
-                return redirect()->route('seller.store_information',$Seller_id->id);
-            }
+        if (Auth::guard('seller')->check()) {   
+            $seller = Auth::guard('seller')->user();
 
-            if($Seller_id->bank_information=='0'){
-                return redirect()->route('seller.upload_document',$Seller_id->id);
+            
+            // If store info not completed and not already on store info page
+            if ($seller->store_information == '0') {
+
+                return redirect()->route('seller.store_information', $seller->id);
             }
             
-            if($Seller_id->admin_verify=='0'){
-                return redirect()->route('seller.upload_review',$Seller_id->id);
+            // If bank info not completed and not already on bank info page
+            if ($seller->bank_information == '0') {
+                return redirect()->route('seller.upload_document', $seller->id);
             }
 
-            if($Seller_id->admin_verify=='1'){
-                return redirect()->route('seller.review_submit_page',$Seller_id->id);
+            // If admin verification pending and not already on review upload page
+            if ($seller->admin_verify == '0') {
+                return redirect()->route('seller.upload_review', $seller->id);
             }
-            
-            // return redirect()->route('seller.review_submit_page',$Seller_id);
+
+            // If admin verification approved and not already on review submit page
+            if ($seller->admin_verify == '1') {
+                return redirect()->route('seller.review_submit_page', $seller->id);
+            }
+
+            return redirect()->route('seller.dashboard');
+          
+
+         return $next($request);
+
         }
 
-
+        
         return $next($request);
+    
     }
+
 }

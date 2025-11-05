@@ -164,11 +164,14 @@
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Store name" name="store_name"
                                             value="{{ old('store_address', @$store_info->store_name) }}">
+
+                                        @error('store_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
                                     </div>
 
-                                    @error('store_name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
                                     <div class="form-group">
                                         <label for="name">Choose Country</label>
@@ -184,11 +187,13 @@
                                             @endforeach
                                         </select>
 
+                                        @error('country')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
                                     </div>
 
-                                    @error('country')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
                                     {{-- <div class="form-group">
                                         <label for="name">Store Address</label>
@@ -215,31 +220,34 @@
 
 
                                         </div>
+                                        @error('store_address')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
-                                    @error('store_address')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Address line 1</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 1" name="address_line1"
                                             value="{{ old('address_line1', @$store_info->address_line1) }}"
                                             id="address_line1">
+                                        @error('address_line1')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('address_line1')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Address line 2</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 2" name="address_line2"
                                             value="{{ old('address_line2', @$store_info->address_line2) }}"
                                             id="address_line2">
+                                        @error('address_line2')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('address_line2')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
 
 
@@ -247,52 +255,6 @@
                                         <label for="name">Store Phone Number</label>
 
                                         <div class="form-group d-flex gap-2">
-                                            {{-- <select name="country_code" class="form-select" style="width: 100px">
-                                                @foreach ($country as $val)
-                                                    <option value="{{ $val->id }}"> {{ $val->dial_code }}
-                                                    </option>
-                                                @endforeach
-                                            </select> --}}
-
-                                            {{-- country code start --}}
-
-                                            {{-- <div class="dropdown">
-                                                <button
-                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center"
-                                                    type="button" id="countryDropdown" data-bs-toggle="dropdown"
-                                                    aria-expanded="false">
-                                                    <span id="selected-flag">
-                                                        <img src="{{ $country[0]->flag1 }}" alt="flag"
-                                                            width="25" height="16">
-                                                    </span>
-                                                    <span id="selected-code"
-                                                        class="ms-2">{{ $country[0]->dial_code }}</span>
-                                                </button>
-
-                                                <ul class="dropdown-menu" aria-labelledby="countryDropdown"
-                                                    style="max-height: 250px; overflow-y: auto;">
-                                                    @foreach ($country as $index => $item)
-                                                        <li>
-                                                            <label
-                                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
-                                                                style="cursor: pointer;">
-                                                                <input type="radio" name="country_code"
-                                                                    value="{{ $item->dial_code }}"
-                                                                    data-flag="{{ $item->flag1 }}"
-                                                                    class="country-radio"
-                                                                    {{ $index === 0 ? 'checked' : '' }} hidden>
-                                                                <img src="{{ $item->flag1 }}"
-                                                                    alt="Flag of {{ $item->name }}" width="25"
-                                                                    height="16">
-                                                                <span>{{ $item->dial_code }}
-                                                                    ({{ $item->name }})
-                                                                </span>
-                                                            </label>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div> --}}
-
 
                                             <div class="dropdown">
                                                 <button
@@ -336,46 +298,40 @@
                                                 </ul>
                                             </div>
 
-
-
-
-
-
                                             {{-- country code end  --}}
 
+                                            <div class="w-100">
+                                                <input class="form-control notapplyspace" type="number"
+                                                    id="phone" placeholder="Enter Store Phone Number"
+                                                    name="store_phone"
+                                                    value="{{ old('store_phone', @$store_info->store_phone) }}"
+                                                    oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
 
-                                            <input class="form-control notapplyspace" type="number" id="phone"
-                                                placeholder="Enter Store Phone Number" name="store_phone"
-                                                value="{{ old('store_phone', @$store_info->store_phone) }}"
-                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
-
-                                            @error('country_code')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                                @error('store_phone')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
-
-
                                     </div>
-                                    @error('store_phone')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Store email id</label>
                                         <input type="text" class="form-control notapplyspace"
                                             placeholder="Enter Store email Id" name="store_mail_id"
                                             value="{{ old('store_mail_id', @$store_info->store_mail_id) }}">
+                                        @error('store_mail_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('store_mail_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Bio</label>
                                         <textarea class="form-control blockFirstTime" rows="3" placeholder="Write a massage...." name="bio"> {{ old('bio', @$store_info->bio) }} </textarea>
-                                    </div>
-                                    @error('bio')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                        @error('bio')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
 
+                                    </div>
 
                                     <div class="login-btn mt-5">
                                         <input type="submit" class="btn btn-success w-100" value="Continue">
@@ -853,8 +809,26 @@
             });
         }
     });
+
+
+
+    $(document).ready(function() {
+        // When user types in any input or textarea
+        $(document).on('input', '.form-control, .form-check-input', function() {
+            // Check if input has a value (not empty)
+            if ($(this).val().trim() !== '') {
+                // Remove the nearby error message
+                $(this).closest('.form-group').find('.text-danger').fadeOut(200, function() {
+                    $(this).remove();
+                });
+            }
+        });
+    });
 </script>
 
-@include('dealer.custom_code');
+{{-- @include('dealer.custom_code'); --}}
+
+
+@include('dealer.layout.custom_code');
 
 </html>

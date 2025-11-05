@@ -257,9 +257,9 @@ class SellerAuthService
                 return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
               }
     
-              if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
-                return ['status'=>'error','message'=>"Wait for Admin To Accept Your Store",'data'=>(object)[]];                
-              }
+              // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
+              //   return ['status'=>'error','message'=>"Wait for Admin To Accept Your Store",'data'=>(object)[]];                
+              // }
     
                 $otp= config('services.otp');
 

@@ -228,20 +228,18 @@
 
 </body>
 
-
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
-<script
-    src="{{ asset('/dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
 
 
+{{-- @include('dealer.footer'); --}}
 
-@include('dealer.footer');
+@include('dealer.layout.custom_code');
 
 
 </html>

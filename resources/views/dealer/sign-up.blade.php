@@ -97,7 +97,7 @@
                                     <input type="hidden" name="profile_pic" id="Profile_image">
 
                                     @error('profile_pic')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" id="remove_error_message1">{{ $message }}</span>
                                     @enderror
 
                                     @csrf
@@ -221,7 +221,8 @@
 
                                     <div class="form-check py-4">
                                         <input class="form-check-input" type="checkbox" value="1"
-                                            id="checkChecked" name="accept_terms">
+                                            id="checkChecked" name="accept_terms"
+                                            {{ old('accept_terms') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="checkChecked">
                                             I accept the <span class="title-color">Terms & Conditions </span> and <span
                                                 class="title-color">Policies</span>
@@ -234,10 +235,8 @@
 
                                     <div class="login-btn">
                                         <input type="submit" name="submit" class="btn btn-success w-100"
-                                            value="Countinue">
-
+                                            value="continue">
                                     </div>
-
                                 </form>
 
                                 <div class="sign-new mt-2 text-center">
@@ -314,6 +313,9 @@
             let name = file.name;
             sessionStorage.setItem('uploadedFileName', name);
             $("#fileName").text(name);
+
+            $('#remove_error_message1').empty(); // remove error message
+
 
             $.ajax({
                 method: 'POST',
@@ -399,7 +401,10 @@
 </script>
 
 
-@include('dealer.custom_code');
+{{-- @include('dealer.custom_code'); --}}
+
+@include('dealer.layout.custom_code');
+
 
 
 </html>
