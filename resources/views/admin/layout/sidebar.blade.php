@@ -20,19 +20,19 @@
     </li>
     <li class="nav-item {{ Request::routeIs('sellerManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('sellerManagement') }}">
-            <span><img src="{{ asset('admin/image/brand-icon.svg') }}" alt="Seller Management" /></span>
+            <span><img src="{{ asset('admin/image/seller.svg') }}" alt="Seller Management" /></span>
             Seller Management
         </a>
     </li>
     <li class="nav-item {{ Request::routeIs('countryManagement') || Request::routeIs('manageCities') || Request::routeIs('manageZones') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('countryManagement') }}">
-            <span><img src="{{ asset('admin/image/category.svg') }}" alt="Country Management" /></span>
+            <span><img src="{{ asset('admin/image/country.svg') }}" alt="Country Management" /></span>
             Country,City & Zone Management
         </a>
     </li>
     <li class="nav-item {{ Request::routeIs('planManagement') || Request::routeIs('managePlans') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('planManagement') }}">
-            <span><img src="{{ asset('admin/image/category.svg') }}" alt="Plan Management" /></span>
+            <span><img src="{{ asset('admin/image/subscription.svg') }}" alt="Plan Management" /></span>
             Subscription Plan Management
         </a>
     </li>

@@ -63,8 +63,8 @@
                   </div>
                 </div> -->
 
-                <div class=" w-100">
-                  <table id="myTable" class="table w-100">
+                <div class="table-responsive ">
+                  <table id="myTable" class="table ">
                     <thead>
                       <tr>
                         <th scope="col">SR No.</th>
