@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="personal-list">
                                     <div class="lightName">Address</div>
-                                    <div class="title_black">{{ $review->store_info->address_line1 }}</div>
+                                    <div class="title_black">{{ $review->store_info->store_address }}</div>
                                 </div>
                                 <div class="personal-list">
                                     <div class="lightName">Phone Number</div>

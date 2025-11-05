@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Store Information</title>
+    <title>desynat seller</title>
     <!-- Favicons -->
     <link href="{{ asset('/dealer') }}/assets/img/favicon.png" rel="icon">
     <!-- Google Fonts -->

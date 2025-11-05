@@ -458,7 +458,7 @@ class LoginController extends Controller
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
-        return redirect()->route('seller.upload_review',$seller_id)->with('success', 'Store Document Save Successfully');
+        return redirect()->route('seller.upload_review',$seller_id)->with('success', 'Store Document and Bank details Save Successfully');
 
     }
 
