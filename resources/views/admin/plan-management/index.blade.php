@@ -14,9 +14,9 @@
 
             </div>
 
-            <div class="userManagecontent">planManagement
+            <div class="userManagecontent">
               <div class="">
-                <div class="align-items-end d-flex">
+                <!-- <div class="align-items-end d-flex">
                   <div
                     class="search-box"
                     style="position: relative; "
@@ -40,43 +40,39 @@
                       style="padding-left: 35px"
                     />
                   </div>
-                </div>
+                </div> -->
 
                 <div class="table-responsive w-100">
-                  <table class="table w-100">
+                  <table id="myTable" class="table w-100">
                     <thead>
-                      <tr>
-                        <th scope="col">SR No.</th>
-                        <th scope="col">Country Name</th>
-                        <th scope="col">Manage Plan</th>
-                      
-                      </tr>
+                        <tr>
+                            <th scope="col">SR No.</th>
+                            <th scope="col">Country Name</th>
+                            <th scope="col">Manage Plan</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Dubai  </td>
-                        <td>    <a
-                            class="btn btn-dark customBtn"
-                            href="{{route('managePlans')}}"
-                          >
-                            <span>Manage Plan</span>
-                          </a></td>
-                      
-                      </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Dubai  </td>
-                        <td>    <a
-                            class="btn btn-dark customBtn"
-                            href="{{route('managePlans')}}"
-                          >
-                            <span>Manage Plan</span>
-                          </a></td>
-                      
-                      </tr>
+                        @forelse($countries as $index => $country)
+                            <tr>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>{{ $country->name }}</td>
+                                <td>
+                                    <a 
+                                        class="btn btn-dark customBtn"
+                                        href="{{ route('managePlans', ['id' => $country->id]) }}"
+                                    >
+                                        <span>Manage Plan</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="text-center">No countries available</td>
+                            </tr>
+                        @endforelse
                     </tbody>
-                  </table>
+                </table>
+
                 </div>
               </div>
             </div>

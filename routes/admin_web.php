@@ -49,7 +49,7 @@ Route::group(['prefix'=>'admin'], function(){
 
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
-        Route::get('/manage-plans', [PlanController::class, 'managePlans'])->name('managePlans');
+        Route::get('/manage-plans/{id}', [PlanController::class, 'managePlans'])->name('managePlans');
 
     });
 
