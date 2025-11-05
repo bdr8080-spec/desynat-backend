@@ -154,7 +154,7 @@ class UserAuthService
         public function mobile_or_email_forgot_password($request){
 
             if($request->type=='0'){ // when i use Mobile No
-                $get_user_details=  User::where('country_code',$request->country_code)->orWhere('mobile',$request->mobile)->where('otp_verify','1')->first();
+                $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->mobile)->where('otp_verify','1')->first();
 
             }else{
                 $get_user_details=  User::where('email',$request->email)->where('otp_verify','1')->first();
