@@ -247,10 +247,10 @@
                                             I accept the <span class="title-color">Terms & Conditions </span> and <span
                                                 class="title-color">Policies</span>
                                         </label>
+                                        @error('accept_terms')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('accept_terms')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
 
                                     <div class="login-btn">
                                         <input type="submit" name="submit" class="btn btn-success w-100"
@@ -282,9 +282,7 @@
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
-<script
-    src="{{ asset('/dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
@@ -319,26 +317,27 @@
     //     }
     // }
 
-    function showPreview(e) {
-        const f = e.target.files[0],
-            p = preview,
-            r = remove,
-            u = uploadLabel;
+    // function showPreview(e) {
+    //     const f = e.target.files[0],
+    //         p = preview,
+    //         r = remove,
+    //         u = uploadLabel;
 
-        if (f) {
-            const rdr = new FileReader();
-            rdr.onload = x => {
-                p.src = x.target.result;
-                p.style.display = 'block';
-                r.style.display = 'inline';
-                u.style.display = 'none';
-            };
-            rdr.readAsDataURL(f);
-        }
+    //     if (f) {
+    //         const rdr = new FileReader();
+    //         rdr.onload = x => {
+    //             p.src = x.target.result;
+    //             p.style.display = 'block';
+    //             r.style.display = 'inline';
+    //             u.style.display = 'none';
+    //         };
+    //         rdr.readAsDataURL(f);
+    //     }
 
-        // ✅ Reset input so same file can be selected again
-        e.target.value = '';
-    }
+    //     // ✅ Reset input so same file can be selected again
+    //     // e.target.value = '';
+    // }
+
 
 
     function removeImg() {
@@ -351,53 +350,126 @@
     }
 
 
-    $(document).on('change', '#edit_imageUpload', function(event) {
+    // $(document).on('change', '#edit_imageUpload', function(event) {
 
-        event.preventDefault();
-        let file = $(this)[0].files[0];
-        let formData = new FormData();
-        formData.append('image', file);
-        // let name = formData.get('file').name;
-        let name = file.name;
+    //     event.preventDefault();
+    //     let file = $(this)[0].files[0];
+    //     let formData = new FormData();
+    //     formData.append('image', file);
+    //     // let name = formData.get('file').name;
+    //     let name = file.name;
 
-        sessionStorage.setItem('uploadedFileName', name);
-        let uploadfile = sessionStorage.getItem('uploadedFileName', name);
-        // $("#fileName").text(uploadfile);
-        $("#fileName").text(name); // Display the file name in the UI
+    //     sessionStorage.setItem('uploadedFileName', name);
+    //     let uploadfile = sessionStorage.getItem('uploadedFileName', name);
+    //     // $("#fileName").text(uploadfile);
+    //     $("#fileName").text(name); // Display the file name in the UI
 
-        $.ajax({
-            method: 'POST', // Corrected from the comment
-            url: "/api/upload",
-            headers: {
-                'Accept-Language': 'en'
-            },
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(resp) {
-                $('#fileName').text(name);
-                window.setTimeout(function() {
-                    $('.submit').attr('disabled', false);
-                    $('.form-control').attr('readonly', false);
-                    $('.form-control').removeClass('disabled-link');
-                    $('.error-control').removeClass('disabled-link');
-                    $('.submit').html('Add');
-                }, 2000);
-                if (resp.status == 'success') {
-                    sessionStorage.setItem('FileUrl', resp.data);
-                    $('#Profile_image').val(resp.data.url);
+    //     $.ajax({
+    //         method: 'POST', // Corrected from the comment
+    //         url: "/api/upload",
+    //         headers: {
+    //             'Accept-Language': 'en'
+    //         },
+    //         data: formData,
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false,
+    //         success: function(resp) {
+    //             $('#fileName').text(name);
+    //             window.setTimeout(function() {
+    //                 $('.submit').attr('disabled', false);
+    //                 $('.form-control').attr('readonly', false);
+    //                 $('.form-control').removeClass('disabled-link');
+    //                 $('.error-control').removeClass('disabled-link');
+    //                 $('.submit').html('Add');
+    //             }, 2000);
+    //             if (resp.status == 'success') {
+    //                 sessionStorage.setItem('FileUrl', resp.data);
+    //                 $('#Profile_image').val(resp.data.url);
+    //             }
+    //         },
+    //         error: function(xhr, textStatus, errorThrown) {
+    //             var response = xhr.responseJSON;
+    //             // Optionally handle errors here
+    //         }
+    //     });
+    // });
+
+
+    function showPreviewAndUpload(e) {
+        const file = e.target.files[0],
+            p = document.getElementById('preview'),
+            r = document.getElementById('remove'),
+            u = document.getElementById('uploadLabel');
+
+        if (file) {
+            // --- Preview the image ---
+            const reader = new FileReader();
+            reader.onload = x => {
+                p.src = x.target.result;
+                p.style.display = 'block';
+                r.style.display = 'inline';
+                u.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+
+            // --- Upload via AJAX ---
+            let formData = new FormData();
+            formData.append('image', file);
+
+            let name = file.name;
+            sessionStorage.setItem('uploadedFileName', name);
+            $("#fileName").text(name);
+
+            $.ajax({
+                method: 'POST',
+                url: "/api/upload",
+                headers: {
+                    'Accept-Language': 'en'
+                },
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(resp) {
+                    window.setTimeout(function() {
+                        $('.submit').attr('disabled', false);
+                        $('.form-control').attr('readonly', false);
+                        $('.form-control').removeClass('disabled-link');
+                        $('.error-control').removeClass('disabled-link');
+                        $('.submit').html('Add');
+                    }, 2000);
+
+                    if (resp.status === 'success') {
+                        sessionStorage.setItem('FileUrl', resp.data);
+                        $('#Profile_image').val(resp.data.url);
+                    }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                var response = xhr.responseJSON;
-                // Optionally handle errors here
-            }
-        });
+            });
+        }
+
+        // ✅ Reset input so same image can be selected again
+        e.target.value = '';
+    }
+
+    // Attach event listener
+    $(document).on('change', '#edit_imageUpload', showPreviewAndUpload);
+
+    // Optional: remove button logic
+    $(document).on('click', '#remove', function() {
+        $('#preview').hide().attr('src', '');
+        $('#remove').hide();
+        $('#uploadLabel').show();
+        $('#fileName').text('');
+        $('#Profile_image').val('');
     });
 </script>
 
 
-@include('dealer.custom_code');
+@include('dealer.footer');
+
 
 </html>

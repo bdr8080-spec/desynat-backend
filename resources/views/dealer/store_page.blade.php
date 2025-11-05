@@ -175,6 +175,7 @@
                                         <!-- <input type="text" class="form-control" placeholder="Enter Last Name" name="country" value="{{ old('country') }}"> -->
 
                                         <select name="country" class="form-control">
+                                            <option value=""> Please Select Country </option>
                                             @foreach ($country as $val)
                                                 <option value="{{ $val->id }}"> {{ $val->name }} </option>
                                             @endforeach
@@ -307,13 +308,6 @@
 
                                                 <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown"
                                                     style="max-height: 250px; overflow-y: auto; width: 100%;">
-
-                                                    <!-- Search box -->
-                                                    {{-- <li class="px-2 mb-2">
-                                                        <input type="text" id="countrySearch"
-                                                            class="form-control form-control-sm"
-                                                            placeholder="Search country...">
-                                                    </li> --}}
 
                                                     @foreach ($country as $index => $item)
                                                         <li>
