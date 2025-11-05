@@ -172,21 +172,16 @@
                                     <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}</td>
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
-                                            <!-- Edit button -->
                                             <a class="table-button" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $plan->id }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-
-                                            <!-- Delete button -->
                                             <a class="table-button" type="button" onclick="deletePlan({{ $plan->id }})">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
-
-                                            <!-- Toggle switch -->
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="planSwitch{{ $plan->id }}" {{ $plan->is_active ? 'checked' : '' }}>
+                                                    id="planSwitch{{ $plan->id }}" {{ $plan->status == 1 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="planSwitch{{ $plan->id }}"></label>
                                             </div>
                                         </div>
