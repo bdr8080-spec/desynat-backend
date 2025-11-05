@@ -58,7 +58,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="bank-details.php"><i class="bi bi-chevron-left"></i></a> Summary
+                                    <h1><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a> Summary
                                         information</h1>
                                 </div>
 
