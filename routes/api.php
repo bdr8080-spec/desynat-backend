@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('optimize',function(){
     Artisan::call('optimize');
     Artisan::call('config:clear');
-    // Artisan::call('cache:clear');
+    Artisan::call('cache:clear');
     return 'Application optimized successfully!';
 });
 
@@ -56,8 +56,3 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
 Route::post('upload', [CommonController::class, 'upload']);
 Route::get('country', [CommonController::class, 'country']);
-
-
-
-
-
