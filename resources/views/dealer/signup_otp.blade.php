@@ -58,7 +58,8 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="sign-up.php"><i class="bi bi-chevron-left"></i></a> OTP</h1>
+                                    <h1><a href="{{ url()->previous() }} "><i class="bi bi-chevron-left"></i></a> OTP
+                                    </h1>
                                 </div>
 
                                 <div class="step-progress py-4">
