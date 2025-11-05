@@ -301,6 +301,24 @@
 </script>
 
 <script>
+    // function showPreview(e) {
+    //     const f = e.target.files[0],
+    //         p = preview,
+    //         r = remove,
+    //         u = uploadLabel;
+
+    //     if (f) {
+    //         const rdr = new FileReader();
+    //         rdr.onload = x => {
+    //             p.src = x.target.result;
+    //             p.style.display = 'block';
+    //             r.style.display = 'inline';
+    //             u.style.display = 'none';
+    //         };
+    //         rdr.readAsDataURL(f);
+    //     }
+    // }
+
     function showPreview(e) {
         const f = e.target.files[0],
             p = preview,
@@ -317,7 +335,11 @@
             };
             rdr.readAsDataURL(f);
         }
+
+        // ✅ Reset input so same file can be selected again
+        e.target.value = '';
     }
+
 
     function removeImg() {
         preview.src = '';
