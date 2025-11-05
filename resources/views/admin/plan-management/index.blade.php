@@ -67,7 +67,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No countries available</td>
+                                <td colspan="3" class="text-center">No Plan available for this country</td>
                             </tr>
                         @endforelse
                     </tbody>
