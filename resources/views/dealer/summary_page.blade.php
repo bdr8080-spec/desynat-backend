@@ -174,14 +174,20 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="personal-list">
-                                    <div class="lightName">IBAN</div>
-                                    <div class="title_black">{{ $review->seller_bank_details->iban }}</div>
-                                </div>
-                                <div class="personal-list">
-                                    <div class="lightName">SWIFT/BIC</div>
-                                    <div class="title_black">{{ $review->seller_bank_details->swift }}</div>
-                                </div>
+                                @isset($review->seller_bank_details->iban)
+                                    <div class="personal-list">
+                                        <div class="lightName">IBAN</div>
+                                        <div class="title_black">{{ $review->seller_bank_details->iban }}</div>
+                                    </div>
+                                @endisset
+
+                                @isset($review->seller_bank_details->swift)
+                                    <div class="personal-list">
+                                        <div class="lightName">SWIFT/BIC</div>
+                                        <div class="title_black">{{ $review->seller_bank_details->swift }}</div>
+                                    </div>
+                                @endisset
+
                                 <div class="personal-list">
                                     <div class="lightName">Bank Name</div>
                                     <div class="title_black">{{ $review->seller_bank_details->bank_name }}</div>
