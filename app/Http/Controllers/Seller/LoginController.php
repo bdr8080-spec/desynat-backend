@@ -222,7 +222,7 @@ class LoginController extends Controller
             'otp.required' => 'Please enter your OTP.',
             'otp.array' => 'OTP must be in a valid format.',
             'otp.min' => 'All 6 OTP digits are required.',
-            'otp.*.required' => 'OTP Fields is required.',
+            'otp.*.required' => 'Please enter OTP',
             'otp.*.digits' => 'Each OTP box must contain only one number.',
         ]);
         
@@ -259,7 +259,7 @@ class LoginController extends Controller
        }else{
 
         return redirect()->back()
-        ->withErrors(['otp'=>'Otp Is Invalid'])
+        ->withErrors(['otp'=>'Invalid OTP'])
         ->withInput();
 
        }
