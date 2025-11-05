@@ -135,7 +135,7 @@
                                         <label for="name">Mobile Number</label>
 
                                         <div class="form-group d-flex gap-2">
-                                            <select name="country_code " class="form-select" style="width: 100px">
+                                            <select name="country_code" class="form-select" style="width: 100px">
                                                 @foreach ($country as $val)
                                                     <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
                                                     </option>

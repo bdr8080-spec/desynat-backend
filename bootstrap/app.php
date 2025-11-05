@@ -9,6 +9,8 @@ use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use App\Http\Middleware\RedirectIfSellerAuthenticated;
 use App\Http\Middleware\LoginCheck;
 
+use App\Http\Middleware\DisableBackBtn;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,7 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'abilities' => CheckAbilities::class,
             'ability'  => CheckForAnyAbility::class,
             'is_seller'=>RedirectIfSellerAuthenticated::class,
-            'guest_user'=>LoginCheck::class     
+            'guest_user'=>LoginCheck::class,
+            'prevent-back-history' => DisableBackBtn::class, // Add this line
+               
         ]);
 
        

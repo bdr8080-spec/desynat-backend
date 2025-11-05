@@ -8,7 +8,7 @@ use App\Http\Controllers\Seller\LoginController;
 Route::group(['prefix' => 'seller'], function () {
 
     
-    Route::middleware('is_seller')->group(function(){
+    Route::middleware(['is_seller','DisableBackBtn'])->group(function(){
 
     route::Match(['get','post'],'/login',[LoginController::class,'login'])->name('seller.login');
     route::Match(['get','post'],'/register',[LoginController::class,'register'])->name('seller.register');

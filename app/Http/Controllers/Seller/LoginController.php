@@ -137,6 +137,7 @@ class LoginController extends Controller
           $check_user_already->delete();
         }
    
+
         $validate = Validator::make($request->all(), [
             'profile_pic' => 'required',
             'first_name' => 'required',
@@ -154,14 +155,14 @@ class LoginController extends Controller
             'accept_terms'=>"required|in:1"
         ],[
             'profile_pic.required'=>'Please Upload profile Picture',
-            'first_name.required'    => 'Please enter your name',
-            'last_name.required'    => 'Please enter your last name',
-            'country_code.required' => 'Please select your country code',
-            'email.required'        => 'Please enter your email address',
+            'first_name.required'    => 'Please enter  name',
+            'last_name.required'    => 'Please enter last name',
+            'country_code.required' => 'Please select country code',
+            'email.required'        => 'Please enter email address',
             'email.email'           => 'Please enter a valid email address',
             'email.unique'          => 'This email address is already registered', 
 
-            'password.required'     => 'Please enter your password',
+            'password.required'     => 'Please enter password',
             'password.min' => 'Password must be at least 8 characters long',
             'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
             'confirm_password.required' => 'Please confirm your password',
@@ -174,6 +175,7 @@ class LoginController extends Controller
         ]);
 
         if ($validate->fails()) {
+            
             return redirect()->back()
                 ->withErrors($validate)
                 ->withInput(); // keep old input values
