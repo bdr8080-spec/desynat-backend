@@ -89,11 +89,12 @@ class LoginController extends Controller
           
            $seller_details=Auth::guard('seller')->user();
 
-           if($seller_details->admin_verify=='0'){
+           if($seller_details->admin_verify=='0' || $seller_details->admin_verify=='1'){
             return redirect()->back()
             ->withErrors(['password'=>'Seller Is Not verified By Admin'])
             ->withInput();
            }
+
 
            if($seller_details->admin_verify=='3'){
             return redirect()->back()
