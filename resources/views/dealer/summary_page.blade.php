@@ -102,7 +102,8 @@
                                 </div>
                                 <div class="personal-list">
                                     <div class="lightName">Phone Number</div>
-                                    <div class="title_black">{{ $review->store_info->store_phone }}</div>
+                                    <div class="title_black"> {{ $review->store_info->country_code }} -
+                                        {{ $review->store_info->store_phone }}</div>
                                 </div>
                                 <div class="personal-list">
                                     <div class="lightName">Mail Id</div>
