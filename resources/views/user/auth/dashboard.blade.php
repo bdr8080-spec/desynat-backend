@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <link href="{{asset('user/assets/css/owl.carousel.css')}}" rel="stylesheet" />
     <link href="{{asset('user/assets/css/style.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 </head>
 <body>
@@ -40,8 +41,75 @@
                                 <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
+                                <ul class="dropdown-menu dropdown-menu-end profileDropdown">
+                                    <li>
+                                        <div class="profileContenar d-flex align-items-center justify-conten-between">
+                                            <div class="profile d-flex align-items-center gap-3">
+                                                <div class="profileContenar_img">
+                                                    <img src="{{asset('user/assets/images/user.png')}}" class="img-fluid" />
+                                                </div>
+                                                <div class="profile_detail">
+                                                    <p>Ahmed Farhan</p>
+                                                    <label>farhan713@mail.com</label>
+                                                </div>  
+                                            </div>
+                                            <span><i class="bi bi-pencil"></i></span>                                                     
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="profile_buttons">
+                                            <div class="row">
+                                                <div class="col-lg-6 my-2">
+                                                    <button class="custom-btn3">My wallet</button>
+                                                </div>
+                                                <div class="col-lg-6 my-2">
+                                                    <button class="custom-btn3">My Orders</button>
+                                                </div>
+                                                <div class="col-lg-6 my-2">
+                                                    <button class="custom-btn3">My saved Cards</button>
+                                                </div>
+                                                <div class="col-lg-6 my-2">
+                                                    <button class="custom-btn3">Saved Addresses</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="list-unstyled profile_links">
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/terms.svg')}}" />
+                                                Terms & Condition
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/return.svg')}}" />
+                                                Return Policy</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/about-us.svg')}}" />
+                                                About Us</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/faq.svg')}}" />
+                                                FAQ's</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/change-lang.svg')}}" />
+                                                Change Language</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/cancel-policy.svg')}}" />
+                                                Cancellation Policy</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/exchange.svg')}}" />
+                                                Exchange Policy</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/support.svg')}}" />
+                                                Support</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/becom-affilit.svg')}}" />
+                                                Become An Affiliate</a></li>
+                                            <li><a href="">
+                                                <img src="{{asset('user/assets/images/profile-icon/setting.svg')}}" />
+                                                Settings</a></li>
+                                            <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li> -->
                                 </ul>
                             </div>
                             @else
@@ -237,8 +305,8 @@
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
                                 <h6>Deliver to Reshab</h6>
-                                <div class="d-flex align-self-center w-100">
-                                    <button>
+                                <div class="d-flex align-self-center w-100" >
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
                                         <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> Durgapur 
                                     </button>
                                     <span class="ms-lg-5 ms-md-3 ms-2">
@@ -283,6 +351,13 @@
                                                     <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li>
+                                                        <div class="profileContenar">
+                                                            <div class="profileContenar_img">
+                                                                <img src="{{asset('user/assets/images/user.png')}}" class="img-fluid" />
+                                                            </div>                                                        
+                                                        </div>
+                                                    </li>
                                                     <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
                                                 </ul>
                                             </div>
@@ -1480,6 +1555,37 @@
         </div>
         </div>
     </footer>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header  border-0">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <div class="form-group position-relative search">
+                    <input type="text" class="form-control" placeholder="Search address" />
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div>
+                    <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
+                </div>
+                <div class="">
+                    <h5>Location</h5>
+                    <p>HN- 547, Street no,5 Block d new town hale, Saudi Arabia</p>
+                </div>
+                <button class="customBtn">Change Location</button>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    </div>
     
     <script src="{{asset('user/assets/js/jquery-3.7.1.min.js')}}" ></script>
     <!-- <script src="assets/js/all.min.js" ></script> -->
