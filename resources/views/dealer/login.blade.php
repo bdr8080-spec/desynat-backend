@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title> Desyant Dealer </title>
     <!-- Favicons -->
-    <link href="{{ asset('dealer') }}/assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link

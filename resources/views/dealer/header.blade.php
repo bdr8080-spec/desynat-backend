@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Admin panel</title>
+    <title>desynat seller</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
-    <link href="{{ asset('dealer') }}/assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -19,7 +19,8 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
     <link href="{{ asset('dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
     <link href="{{ asset('dealer') }}/assets/custom-file/css/custom.css" rel="stylesheet">
@@ -77,7 +78,7 @@
                     </ul> -->
                 </li>
 
-                
+
                 <!-- End Messages Nav -->
 
                 <li class="nav-item dropdown pe-3">
@@ -122,7 +123,7 @@
                 </li>
 
             </ul>
-           
+
 
         </nav>
 
@@ -133,13 +134,15 @@
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <a class="nav-link sidebar-active border-radious-9 margin-20" href="index.php">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon"
+                        class="asideicon">
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20" href="">
-                <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon"
+                        class="asideicon">
                     <span>Product Management</span>
                 </a>
             </li>
