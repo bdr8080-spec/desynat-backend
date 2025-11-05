@@ -62,7 +62,7 @@
                                     @csrf
                                     <div class="form-group">
                                         <div class="form-group mt-4">
-                                            <label for="">Mobile or Email Address</label>
+                                            <label for="">Mobile Number or Email Address</label>
 
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class=" d-none LoginCountryCode">
@@ -87,7 +87,7 @@
 
                                         <div class="form-group position-relative">
                                             <label for="password">Password</label>
-                                            <input type="password" class="form-control" id="password"
+                                            <input type="password" class="form-control notapplyspace" id="password"
                                                 placeholder="Enter Your Password" name="password">
                                             <i class="toggle-password  bi bi-eye-slash "></i>
                                         </div>
