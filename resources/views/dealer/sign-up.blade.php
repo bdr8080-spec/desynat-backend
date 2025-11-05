@@ -247,10 +247,10 @@
                                             I accept the <span class="title-color">Terms & Conditions </span> and <span
                                                 class="title-color">Policies</span>
                                         </label>
-                                        @error('accept_terms')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
                                     </div>
+                                    @error('accept_terms')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
 
                                     <div class="login-btn">
                                         <input type="submit" name="submit" class="btn btn-success w-100"

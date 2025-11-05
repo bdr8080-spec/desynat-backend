@@ -155,9 +155,11 @@ class LoginController extends Controller
             'accept_terms'=>"required|in:1"
         ],[
             'profile_pic.required'=>'Please Upload profile Picture',
-            'first_name.required'    => 'Please enter  name',
+            'first_name.required'    => 'Please enter first name',
             'last_name.required'    => 'Please enter last name',
             'country_code.required' => 'Please select country code',
+            'mobile.required' => 'Please enter mobile number',
+            
             'email.required'        => 'Please enter email address',
             'email.email'           => 'Please enter a valid email address',
             'email.unique'          => 'This email address is already registered', 
