@@ -493,7 +493,7 @@ class LoginController extends Controller
         $request = (object) $request;
 
         $data= $this->SellerAuthService->seller_store_submit_request($request);
-        return view('dealer.signup-review')->with('success', 'Wait for Admin To Verify Your Details');;
+        return view('dealer.signup-review')->with('success', 'Wait for Admin To Verify Your Details');
     }
 
     public function logout(Request $request)
@@ -566,7 +566,7 @@ class LoginController extends Controller
 
     if(!$seller){                   
     return redirect()->back()
-    ->withErrors(['error'=>'No Seller Account Found'])
+    ->withErrors(['error'=>'Account not exists'])
     ->withInput();
     }
     
@@ -580,11 +580,10 @@ class LoginController extends Controller
         ->withErrors(['error'=>$data['message']])
         ->withInput();
     }
-
-
+    
     $seller_id= $data['data']->id."?forgot=yes";
-
-    return redirect()->route('seller.register_otp_verify',$seller_id);
+    
+    return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'forgot Password otp send successfully');
     
     }
 
@@ -596,8 +595,21 @@ class LoginController extends Controller
         }
 
        $validate = Validator::make($request->all(), [
-        'password' => 'required',
+        'password' => [
+            'required',
+            'string',
+            'min:8',
+            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+        ],
         'confirm_password'=>"required|same:password"
+           ],[
+
+            'password.required'     => 'Please enter password',
+            'password.min' => 'Password must be at least 8 characters long',
+            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+            'confirm_password.required' => 'Please confirm your password',
+            'confirm_password.same' => 'Password do not match',
+
            ]);
     
    if($validate->fails()){
@@ -625,8 +637,7 @@ class LoginController extends Controller
         ->withInput();
     }
     
-
-    return redirect()->route('seller.login');
+    return redirect()->route('seller.login')->with('success', 'Your Password reset Successfully');
 
     }
 

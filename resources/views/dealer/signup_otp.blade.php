@@ -213,7 +213,9 @@
 
 </script>
 
-@include('dealer.footer');
+{{-- @include('dealer.footer'); --}}
 
+
+@include('dealer.layout.custom_code');
 
 </html>

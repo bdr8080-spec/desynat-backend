@@ -1,6 +1,4 @@
-@include('dealer.header')
-
-
+@include('dealer.layout.header')
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
@@ -41,7 +39,7 @@
                                 <div class="title30">50</div>
                             </div>
                             <div class="dash-circle">
-                            <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
+                                <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -57,7 +55,7 @@
                                 <div class="title30">120</div>
                             </div>
                             <div class="dash-circle">
-                               <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
+                                <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -68,18 +66,18 @@
                                 <div class="title30">50</div>
                             </div>
                             <div class="dash-circle">
-                               <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
+                                <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                         <div class="dash-box border20 shadow20 p20 pnl-flex">
+                        <div class="dash-box border20 shadow20 p20 pnl-flex">
                             <div class="dash-content">
                                 <h5>Completed</h5>
                                 <div class="title30">50</div>
                             </div>
                             <div class="dash-circle">
-                               <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
+                                <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -90,7 +88,7 @@
                                 <div class="title30">51</div>
                             </div>
                             <div class="dash-circle">
-                               <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
+                                <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -107,7 +105,7 @@
                                 <div class="title30">120</div>
                             </div>
                             <div class="dash-circle">
-                            <img src="{{ asset('dealer') }}/assets/img/female.svg" alt="icon" class="img-fluid">
+                                <img src="{{ asset('dealer') }}/assets/img/female.svg" alt="icon" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -118,7 +116,7 @@
                                 <div class="title30">50</div>
                             </div>
                             <div class="dash-circle">
-                            <img src="{{ asset('dealer') }}/assets/img/female.svg" alt="icon" class="img-fluid">
+                                <img src="{{ asset('dealer') }}/assets/img/female.svg" alt="icon" class="img-fluid">
                             </div>
                         </div>
                     </div>
@@ -151,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-                
+
 
             </div>
         </div>
@@ -167,12 +165,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-               <div class="delete-body text-center p-3">
+                <div class="delete-body text-center p-3">
                     <div class="trash-box">
                         <i class="bi bi-trash3"></i>
                     </div>
                     <h4 class="domestic-title"> Are you sure you want to delete this domestic cost?</h4>
-               </div>
+                </div>
                 <div class="login-btn mt-4 d-flex justify-content-between gap-3">
                     <button type="button" class="btn btn-success w-100" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-danger-outline w-100">Delete</button>

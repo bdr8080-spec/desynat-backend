@@ -69,23 +69,26 @@
 
                                     <div class="form-group position-relative">
                                         <label for="password">Create Password</label>
-                                        <input type="password" class="form-control" id="password"
+                                        <input type="password" class="form-control notapplyspace" id="password"
                                             placeholder="Enter password" name="password">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
-                                    </div>
-                                    @error('password')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    <div class="form-group position-relative">
-                                        <label for="password">Confirm Password</label>
-                                        <input type="password" class="form-control" id="password"
-                                            placeholder="Enter confirm password" name="confirm_password">
-                                        <i class="toggle-password  bi bi-eye-slash "></i>
+                                        @error('password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
-                                    @error('confirm_password')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    <div class="form-group position-relative">
+                                        <label for="password">Confirm Password</label>
+                                        <input type="password" class="form-control notapplyspace" id="password"
+                                            placeholder="Enter confirm password" name="confirm_password">
+                                        <i class="toggle-password  bi bi-eye-slash "></i>
+
+                                        @error('confirm_password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+
 
                                     <div class="login-btn padding-top-60">
                                         {{-- <a href="#" class="btn btn-success w-100" data-bs-toggle="modal"
@@ -140,5 +143,6 @@
     });
 </script>
 
+@include('dealer.layout.custom_code');
 
 </html>

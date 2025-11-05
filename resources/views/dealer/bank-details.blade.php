@@ -84,7 +84,7 @@
                                     </div>
 
                                     @error('owner_document')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" id="remove_error_message1">{{ $message }}</span>
                                     @enderror
 
                                     <div class="owner-pnl">
@@ -277,7 +277,7 @@
                                     </div>
 
                                     @error('store_document')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" id="remove_error_message2">{{ $message }}</span>
                                     @enderror
 
                                     <div class="owner-pnl mt-4">
@@ -300,49 +300,58 @@
                                                     </label>
                                                 </div>
                                             </div>
+
+                                            @error('account_type')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+
                                         </div>
                                     </div>
-                                    @error('account_type')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
                                     <div class="form-group">
                                         <label for="name">IBAN</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter IBAN Number" name="iban"
                                             value="{{ old('iban', @$seller_bank->iban) }}">
+
+                                        @error('iban')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
                                     </div>
-                                    @error('iban')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">SWIFT/BIC</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Swift" name="swift"
                                             value="{{ old('bank_name', @$seller_bank->swift) }}">
+                                        @error('swift')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('swift')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Bank Name</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Bank Name" name="bank_name"
                                             value="{{ old('bank_name', @$seller_bank->bank_name) }}">
+                                        @error('bank_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('bank_name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Account holder name</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Account holder name" name="account_holder_name"
                                             value="{{ old('account_holder_name', @$seller_bank->account_holder_name) }}"
                                             oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
+                                        @error('account_holder_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('account_holder_name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
                                     <!-- <div class="owner-pnl">
                                         <div class="form-group">
@@ -405,7 +414,8 @@
                                                         </div>
                                                     </div>
                                                     @error('upload_proof')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <span class="text-danger"
+                                                            id="remove_error_message3">{{ $message }}</span>
                                                     @enderror
 
                                                 </div>
@@ -440,9 +450,7 @@
 
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
-<script
-    src="{{ asset('/dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 
 <!--Main JS File -->
@@ -461,6 +469,19 @@
             };
             reader.readAsDataURL(file);
         }
+
+        if (id == 1 || id == 2) {
+            $('#remove_error_message1').empty();
+        }
+
+        if (id == 3 || id == 4) {
+            $('#remove_error_message2').empty();
+        }
+        if (id == 5) {
+            $('#remove_error_message3').empty();
+        }
+
+
     }
 
     function removeImg(id, o_id) {
@@ -518,6 +539,6 @@
 </script>
 
 
-@include('dealer.footer');
+@include('dealer.layout.custom_code');
 
 </html>

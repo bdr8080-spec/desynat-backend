@@ -10,6 +10,7 @@ use App\Http\Middleware\RedirectIfSellerAuthenticated;
 use App\Http\Middleware\LoginCheck;
 
 use App\Http\Middleware\DisableBackBtn;
+use App\Http\Middleware\SellerAuthenticated;
 
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -26,6 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_seller'=>RedirectIfSellerAuthenticated::class,
             'guest_user'=>LoginCheck::class,
             'prevent-back-history' => DisableBackBtn::class, // Add this line
+            'seller_login' =>SellerAuthenticated::class
                
         ]);
 
