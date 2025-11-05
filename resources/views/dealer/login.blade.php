@@ -66,13 +66,57 @@
 
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class=" d-none LoginCountryCode">
-                                                    <select name="country_code" class="form-select"
+                                                    {{-- <select name="country_code" class="form-select"
                                                         style="width: 100px">
                                                         @foreach ($country as $item)
                                                             <option value="{{ $item->dial_code }}">
                                                                 {{ $item->dial_code }}</option>
                                                         @endforeach
-                                                    </select>
+                                                    </select> --}}
+
+                                                    <div class="dropdown">
+                                                        <button
+                                                            class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                                            type="button" id="countryDropdown"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+
+                                                            <span id="selected-flag">
+                                                                <img src="{{ old('country_flag', $country[0]->flag1) }}"
+                                                                    alt="flag" width="25" height="16">
+
+                                                            </span>
+
+                                                            <span id="selected-code" class="ms-2">
+                                                                {{ old('country_code', $country[0]->dial_code) }}
+                                                            </span>
+                                                        </button>
+
+                                                        <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+
+                                                            @foreach ($country as $index => $item)
+                                                                <li>
+                                                                    <label
+                                                                        class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                        style="cursor: pointer;">
+                                                                        <input type="radio" name="country_code"
+                                                                            value="{{ $item->dial_code }}"
+                                                                            data-flag="{{ $item->flag1 }}"
+                                                                            data-name="{{ $item->name }}"
+                                                                            class="country-radio"
+                                                                            {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                            hidden>
+                                                                        <img src="{{ $item->flag1 }}"
+                                                                            alt="Flag of {{ $item->name }}"
+                                                                            width="25" height="16">
+                                                                        <span>{{ $item->dial_code }}
+                                                                            ({{ $item->name }})
+                                                                        </span>
+                                                                    </label>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                                 <div class="w-100 LoginMobileDesign">
                                                     <input type="text" class="form-control notapplyspace"
@@ -161,6 +205,30 @@
     });
 </script>
 
-@include('dealer.footer');
+
+
+<script>
+    $(document).ready(function() {
+        // When a user selects a country (clicks a label)
+        $(document).on('click', '.country-option', function() {
+            let radio = $(this).find('.country-radio');
+            let flag = radio.data('flag');
+            let code = radio.val();
+            let name = radio.data('name');
+
+            // Update the flag and code shown on the button
+            $('#selected-flag img').attr('src', flag);
+            $('#selected-code').text(code);
+
+            // Set the radio input as checked
+            radio.prop('checked', true);
+
+            // Close the dropdown (Bootstrap 5)
+            $('#countryDropdown').dropdown('hide');
+        });
+    });
+</script>
+
+@include('dealer.custom_code');
 
 </html>
