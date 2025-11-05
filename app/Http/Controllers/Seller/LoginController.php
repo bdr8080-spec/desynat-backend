@@ -294,7 +294,7 @@ class LoginController extends Controller
             // 'address_line2'=>'required',
             'country'=>'required',
             "store_phone"=>"required|digits_between:7,15",
-            'store_mail_id'=>'required',
+            'store_mail_id'=>'required|email',
             'bio'=>'required',
             // 'let'=>'required|nullable',
             // 'long'=>'required|nullable'

@@ -358,7 +358,7 @@
                                     @enderror
                                     <div class="form-group">
                                         <label for="name">Store email id</label>
-                                        <input type="Email" class="form-control notapplyspace"
+                                        <input type="text" class="form-control notapplyspace"
                                             placeholder="Enter Store email Id" name="store_mail_id"
                                             value="{{ old('store_mail_id', @$store_info->store_mail_id) }}">
                                     </div>
