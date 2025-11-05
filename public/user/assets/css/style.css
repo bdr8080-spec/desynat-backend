@@ -107,6 +107,17 @@ section{
     text-align: center;
     text-decoration: none;
 }
+.custom-btn3{
+    background: #fff;
+    border: 1px solid var(--secondry2-color);
+    color: var(--third-color);
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 0;
+    font-size: var(--p-font-size);
+    line-height: var(--p-font-height);
+    font-weight: var(--p-font-weight);
+}
 .inner-header{
     background: var(--gradient-color5);
     padding: .5% 4%;
@@ -136,7 +147,7 @@ section{
 .userDropdown .dropdown-menu li a{
     margin: 0px !important;
 }
-.userDropdown button{
+.userDropdown button.btn{
     background: transparent;
     padding: 0;
     border: none;
@@ -721,13 +732,66 @@ section{
     display: flex;
 }
 .LoginCountryCode{
-    width: 74px;
     font-size: 14px;
 }
 
 .text-danger{
     display: block !important;
     text-align: start !important;
+}
+
+.profileDropdown{
+    width: 380px;
+}
+.profileContenar{
+    background: #FFF7EA;
+    padding: 30px 30px;
+}
+.profileContenar_img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.profile_detail p{
+    color: #000000;
+    font-weight: 600 !important;
+    margin-bottom: 0;
+}
+.profile_detail p{
+    color: #000000;
+    font-weight: 400 !important;
+    margin-bottom: 0;
+    font-size: 12px;
+}
+.profileContenar span{
+    color: #6E4527;
+}
+.profile_buttons{
+    margin: 15px;
+    background: var(--border-gradient-color4);
+    padding: 10px;
+    border-radius: 8px;
+}
+.profile_links li{
+    padding: 15px;
+}
+.profile_links li a{
+    position: relative;
+    font-size: var(--nav-font-size);
+    line-height: var(--nav-font-height);
+    font-weight: var(--nav-font-weight);
+    text-decoration: none;
+    width: 100%;
+    display: block;
+}
+.profile_links li a img{
+    margin-right: 8px;
+}
+.profile_links li a i{
+    position: absolute;
+    right: 0;
+    top: 5px;
 }
 
 /* index end */
