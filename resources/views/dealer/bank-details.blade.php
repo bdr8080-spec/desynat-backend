@@ -54,7 +54,8 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a> Upload
+                                    <h1><a href="{{ route('seller.store_information', Request()->id) }}"><i
+                                                class="bi bi-chevron-left"></i></a> Upload
                                         documents & Bank details</h1>
                                 </div>
 
@@ -391,13 +392,13 @@
                                                                 <img class="preview5"
                                                                     src="{{ $seller_bank->upload_proof }}"
                                                                     style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                                <span class="removeIcon5"
+                                                                <span class="removeIcon5 removebtn"
                                                                     style="display:block;cursor:pointer;font-size:24px;color:red;"
                                                                     onclick="removeImg(5)">&times;</span>
                                                             @else
                                                                 <img class="preview5"
                                                                     style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
-                                                                <span class="removeIcon5"
+                                                                <span class="removeIcon5 removebtn"
                                                                     style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                                     onclick="removeImg(5)">&times;</span>
                                                             @endif

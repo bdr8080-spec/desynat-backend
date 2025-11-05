@@ -174,10 +174,13 @@
                                         <label for="name">Choose Country</label>
                                         <!-- <input type="text" class="form-control" placeholder="Enter Last Name" name="country" value="{{ old('country') }}"> -->
 
-                                        <select name="country" class="form-control">
+                                        <select name="country" class="form-control form-select">
                                             <option value=""> Please Select Country </option>
                                             @foreach ($country as $val)
-                                                <option value="{{ $val->id }}"> {{ $val->name }} </option>
+                                                <option value="{{ $val->id }}"
+                                                    {{ old('country', @$store_info->country) == $val->id ? 'selected' : '' }}>
+                                                    {{ $val->name }}
+                                                </option>
                                             @endforeach
                                         </select>
 
