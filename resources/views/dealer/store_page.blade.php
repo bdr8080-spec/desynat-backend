@@ -357,9 +357,9 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="form-group">
-                                        <label for="name">Store mail Id</label>
+                                        <label for="name">Store email id</label>
                                         <input type="Email" class="form-control notapplyspace"
-                                            placeholder="Enter Store mail Id" name="store_mail_id"
+                                            placeholder="Enter Store email Id" name="store_mail_id"
                                             value="{{ old('store_mail_id', @$store_info->store_mail_id) }}">
                                     </div>
                                     @error('store_mail_id')
@@ -510,6 +510,28 @@
 
 
 <script>
+    // function showPreview(e) {
+    //     const f = e.target.files[0],
+    //         p = preview,
+    //         r = remove,
+    //         u = uploadLabel;
+
+    //     if (f) {
+    //         const rdr = new FileReader();
+    //         rdr.onload = x => {
+    //             p.src = x.target.result;
+    //             p.style.display = 'block';
+    //             r.style.display = 'inline';
+    //             u.style.display = 'none';
+    //         };
+    //         rdr.readAsDataURL(f);
+
+    //     }
+
+    //     f.value = '';
+
+    // }
+
     function showPreview(e) {
         const f = e.target.files[0],
             p = preview,
@@ -525,12 +547,12 @@
                 u.style.display = 'none';
             };
             rdr.readAsDataURL(f);
-
         }
 
-        f.value = '';
-
+        // ✅ Reset input so same file can be selected again
+        // e.target.value = '';
     }
+
 
     function removeImg() {
         preview.src = '';

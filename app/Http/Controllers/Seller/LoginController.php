@@ -302,14 +302,15 @@ class LoginController extends Controller
             ],[
                 'store_image.required'=>'Please Upload Store Image',
                 'store_name.required' => 'Please Enter store name',
+                'country.required'   =>   'please select country',
                 'store_address.required' => 'Please Enter store address',
                 'address_line1.required' => 'Please Enter store Address 1',
                 'address_line2.required' => 'Please Enter store Address 2',
-                'store_phone.required' => 'Please Enter store phone',
+                'store_phone.required' => 'Please Enter store phone number',
             
-                'store_mail_id.required'        => 'Please enter your email address',
-                'store_mail_id.email'           => 'Please enter a valid email address',    
-                'bio'=>'Bio Field Is Required',
+                'store_mail_id.required'        => 'Please enter store email id',
+                'store_mail_id.email'           => 'Please enter valid store email id',    
+                'bio'=>'Please enter bio',
                 
             ]);
 
