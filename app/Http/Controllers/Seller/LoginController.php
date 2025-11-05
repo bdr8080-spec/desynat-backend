@@ -31,10 +31,10 @@ class LoginController extends Controller
 
     public function login(Request $request){
 
+        $country= country::all();
 
         if ($request->isMethod('get')) {
-         $country= country::all();
-
+       
         return view('dealer.login',compact('country'));
         }
 

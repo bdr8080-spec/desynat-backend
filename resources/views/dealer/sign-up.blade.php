@@ -153,8 +153,7 @@
                                                     </span>
                                                 </button>
 
-                                                <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown"
-                                                    style="max-height: 250px; overflow-y: auto; width: 100%;">
+                                                <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
 
                                                     @foreach ($country as $index => $item)
                                                         <li>
@@ -190,6 +189,9 @@
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
+                                            @error('country_code')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
 
@@ -258,12 +260,14 @@
 
 
 <!-- Vendor JS Files -->
-{{-- <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script> --}}
+<script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script> --}}
+
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
+
+
 <script>
     $(".toggle-password").click(function() {
         $(this).toggleClass("bi-eye bi-eye-slash");
@@ -368,6 +372,28 @@
                     $(this).remove();
                 });
             }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // When a user selects a country (clicks a label)
+        $(document).on('click', '.country-option', function() {
+            let radio = $(this).find('.country-radio');
+            let flag = radio.data('flag');
+            let code = radio.val();
+            let name = radio.data('name');
+
+            // Update the flag and code shown on the button
+            $('#selected-flag img').attr('src', flag);
+            $('#selected-code').text(code);
+
+            // Set the radio input as checked
+            radio.prop('checked', true);
+
+            // Close the dropdown (Bootstrap 5)
+            $('#countryDropdown').dropdown('hide');
         });
     });
 </script>
