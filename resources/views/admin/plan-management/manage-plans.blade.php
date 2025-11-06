@@ -30,7 +30,7 @@
 
             <div class="userManagecontent">
                 <div class="">
-                    <div class="align-items-end d-flex">
+                    <!-- <div class="align-items-end d-flex">
                         <div class="search-box" style="position: relative">
                             <i class="bi bi-search" style="
                         position: absolute;
@@ -44,10 +44,10 @@
                             <input type="text" class="form-control" placeholder="Search for..."
                                 style="padding-left: 35px" />
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="table-responsive w-100">
-                        <table class="table w-100">
+                        <!-- <table class="table w-100">
                             <thead>
                                 <tr>
                                     <th scope="col">SR No.</th>
@@ -121,7 +121,81 @@
                                     </td>
                                 </tr>
                             </tbody>
+                        </table> -->
+                        <table id="myTable" class="table w-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SR No.</th>
+                                    <th scope="col">Subscription Plan Name(English)</th>
+                                    <th scope="col">Subscription Plan Name(Arabic)</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">No. of Products</th>
+                                    <th scope="col">No. of Videos</th>
+                                    <th scope="col">No. of Highlights</th>
+                                    <th scope="col">Stories</th>
+                                    <th scope="col">No. of Store Employees</th>
+                                    <th scope="col">Plan Price</th>
+                                    <th scope="col">Commission %</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($plans as $plan)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $plan->plan_name_english }}</td>
+                                    <td>{{ $plan->plan_name_arabic }}</td>
+                                    <td>
+                                        {{ $plan->duration }} 
+                                        @if($plan->duration_type == 1)
+                                            Month
+                                        @elseif($plan->duration_type == 2)
+                                            Year
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>{{ $plan->no_of_products }}</td>
+                                    <td>{{ $plan->no_of_videos }}</td>
+                                    <td>{{ $plan->no_of_highlights }}</td>
+                                    <td>
+                                        @if($plan->stories == 0)
+                                            Close
+                                        @elseif($plan->stories == 1)
+                                            Open
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
+                                    <td>N/A</td>
+                                    <td>KD {{ $plan->price }}</td>
+                                    <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}</td>
+                                    <td>
+                                        <div class="d-flex gap-3 justify-content-center">
+                                            <a class="table-button" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#editModal{{ $plan->id }}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a class="table-button" type="button" onclick="deletePlan({{ $plan->id }})">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="planSwitch{{ $plan->id }}" {{ $plan->status == 1 ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="planSwitch{{ $plan->id }}"></label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="11" class="text-center">No plans found for this country</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+
                         </table>
+
                     </div>
                 </div>
             </div>
