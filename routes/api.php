@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthController;
 
 use App\Http\Controllers\Api\User\UserDashboardController;
+use App\Http\Controllers\Api\User\ProfileController;
+
 
 use App\Http\Controllers\CommonController;
 
@@ -42,6 +44,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::get('/user-dashboard', [UserDashboardController::class,'index']);
 
+  Route::post('/change-password',[ProfileController::class, 'change_password']);
+  Route::post('/update-profile',[ProfileController::class, 'updateProfile']);
+
+
   Route::get('/logout', [UserDashboardController::class,'logout']);
   
 
@@ -56,8 +62,3 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
 Route::post('upload', [CommonController::class, 'upload']);
 Route::get('country', [CommonController::class, 'country']);
-
-
-
-
-
