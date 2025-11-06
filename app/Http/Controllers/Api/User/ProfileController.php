@@ -38,23 +38,23 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-               return ApiResponse::generateResponse('error', 'Validation Error', $validator->errors(), 422);
+               return ApiResponse::generateResponse('error',$validator->errors()->first(), $validator->errors(), 422);
         }
 
         $user = User::find($request->user()->id);
 
         if (!$user) {
-           return ApiResponse::generateResponse('error','User not found','',401);
+           return ApiResponse::generateResponse('error','User not found',(object)[],401);
         }
 
         if (!Hash::check($request->old_password, $user->password)) {
-            return ApiResponse::generateResponse("error", "Old password doesn't match","",400);
+            return ApiResponse::generateResponse("error", "Old password doesn't match",(object)[],400);
         }
 
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return ApiResponse::generateResponse("success", "Password changed successfully","", 201);
+        return ApiResponse::generateResponse("success", "Password changed successfully",(object)[], 201);
     }
 
 
@@ -66,7 +66,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         if (!$user) {
-            return ApiResponse::generateResponse('error', 'User not found', [], 404);
+            return ApiResponse::generateResponse('error', 'User not found', (object)[], 404);
         }
 
         return ApiResponse::generateResponse('success', 'User profile fetched successfully', $user, 200);
@@ -96,7 +96,7 @@ class ProfileController extends Controller
     $validator = Validator::make($request->all(), $rules, $messages);
 
     if ($validator->fails()) {
-        return ApiResponse::generateResponse('error', 'Validation Error', $validator->errors(), 422);
+        return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
     }
 
      $user = User::find($request->user()->id);
@@ -119,10 +119,10 @@ class ProfileController extends Controller
         $category = Category::orderBy('name', 'asc')->get();
 
         if ($category->isEmpty()) {
-            return ApiResponse::generateResponse('success', 'No categories found', [], 201);
+            return ApiResponse::generateResponse('success', 'No categories found', (object)[], 200);
         }
 
-        return ApiResponse::generateResponse('success', 'Category list fetched successfully', $category, 201);
+        return ApiResponse::generateResponse('success', 'Category list fetched successfully', $category, 200);
     }
 
    
@@ -135,7 +135,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-               return ApiResponse::generateResponse('error', 'Validation Error', $validator->errors(), 422);
+               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
         }
 
         $subCategory = SubCategory::where('category_id', $request->id)->get();
@@ -180,7 +180,7 @@ class ProfileController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
-            return ApiResponse::generateResponse('error', 'Validation Error', $validator->errors(), 422);
+            return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
         }
 
     
@@ -210,7 +210,7 @@ class ProfileController extends Controller
                     return ApiResponse::generateResponse('success', 'OTP sent successfully to old number', $data, 201);
                 }
 
-                return ApiResponse::generateResponse('error', "Old mobile number doesn't match", [], 400);
+                return ApiResponse::generateResponse('error', "Old mobile number doesn't match", (object)[], 400);
             }
 
             if ($request->type == '1') {
@@ -263,7 +263,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return ApiResponse::generateResponse('error', 'Validation Error', $validator->errors(), 422);
+            return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
         }
 
         $user = $request->user();
@@ -271,7 +271,7 @@ class ProfileController extends Controller
         $userDetails = UserContactChangeHistory::find($request->id);
 
         if (!$userDetails) {
-            return ApiResponse::generateResponse('error', 'No User Found', [], 404);
+            return ApiResponse::generateResponse('error', 'No User Found', (object)[], 404);
         }
 
 
@@ -284,7 +284,7 @@ class ProfileController extends Controller
             return ApiResponse::generateResponse('success', 'OTP verified successfully', $userDetails, 201);
         }
 
-        return ApiResponse::generateResponse('error', 'Invalid OTP. Please try again.', [], 400);
+        return ApiResponse::generateResponse('error', 'Invalid OTP. Please try again.', (object)[], 400);
     }
 
 
