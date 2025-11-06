@@ -149,7 +149,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="form-label">Plan Name
                                             (English)</label>
-                                        <input type="text" placeholder="" class="form-control"
+                                        <input type="text" placeholder="Enter plan name in english" class="form-control"
                                             aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="form-label">Plan Name
                                             (Arabic)</label>
-                                        <input type="text" placeholder="" class="form-control"
+                                        <input type="text" placeholder="Enter plan name in arabic" class="form-control"
                                             aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@
                                         <label for="exampleFormControlInput1" class="form-label">Duration</label>
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <input type="text" placeholder="" class="form-control"
+                                                <input type="text" placeholder="Enter duration" class="form-control"
                                                     aria-describedby="passwordHelpInline" />
                                             </div>
                                             <div class="col-lg-6">
@@ -190,7 +190,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="form-label">No. of Videos</label>
-                                        <input type="text" placeholder="" class="form-control"
+                                        <input type="text" placeholder="Enter no.of videos" class="form-control"
                                             aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>
@@ -199,7 +199,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="form-label">No. of Products</label>
-                                        <input type="text" placeholder="" class="form-control"
+                                        <input type="text" placeholder="Enter no.of product" class="form-control"
                                             aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="form-label">No. of
                                             Highlights</label>
-                                        <input type="text" placeholder="" class="form-control"
+                                        <input type="text" placeholder="Enter no.of highlights" class="form-control"
                                             aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="form-label">No. of Employee</label>
-                                        <input type="text" placeholder="" class="form-control"
+                                        <input type="text" placeholder="Enter no.of employee" class="form-control"
                                             aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>
@@ -227,7 +227,7 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1" class="form-label">Charges</label>
-                                        <input type="text" placeholder="" class="form-control"
+                                        <input type="text" placeholder="Enter charges" class="form-control"
                                             aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>

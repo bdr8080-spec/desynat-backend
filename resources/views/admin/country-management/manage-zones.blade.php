@@ -8,7 +8,7 @@
 
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
-                 <div class="col-lg-6 col-md-6 col-12">
+                <div class="col-lg-6 col-md-6 col-12">
                     <div class="d-flex align-items-center gap-3 mt-2">
                         <div class="arrow">
                             <a class="table-button" type="button" href="{{route('manageCities')}}">
@@ -120,67 +120,86 @@
                 </button>
             </div>
             <div class="modal-body">
-                  <div class="">
-    
+                <div class="">
 
-    
 
-      <div id="map"></div>
-        <div class="form-row">
-        <input type="text" placeholder="Zone Name (In English)" />
-        <input type="text" placeholder="Zone Name (in Arabic)" />
-      
-      </div>
-       <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                                    style="margin-top: 30px">
-                                    <a class="btn btn-dark customBtn" href=""> Submit</a>
+
+
+                    <div id="map"></div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1" class="form-label">No. of
+                                        Zone Name (In English)</label>
+                                    <input type="text" placeholder="Enter Zone Name" class="form-control"
+                                        aria-describedby="passwordHelpInline" />
                                 </div>
                             </div>
-    </div>
-  </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1" class="form-label">No. of
+                                        Zone Name (in Arabic)</label>
+                                    <input type="text" placeholder="Enter Zone Name" class="form-control"
+                                        aria-describedby="passwordHelpInline" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                            style="margin-top: 30px">
+                            <a class="btn btn-dark customBtn" href=""> Submit</a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
+</div>
 </div>
 
 
 
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"
-  ></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 
-  <script>
-    let map, marker;
+<script>
+let map, marker;
 
-    function initMap() {
-      const defaultLocation = { lat: 28.6139, lng: 77.209 }; // Delhi
+function initMap() {
+    const defaultLocation = {
+        lat: 28.6139,
+        lng: 77.209
+    }; // Delhi
 
-      map = new google.maps.Map(document.getElementById("map"), {
+    map = new google.maps.Map(document.getElementById("map"), {
         center: defaultLocation,
         zoom: 11,
-      });
+    });
 
-      marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         position: defaultLocation,
         map,
         draggable: true,
-      });
+    });
 
-      const input = document.createElement("input");
-      input.id = "pac-input";
-      input.type = "text";
-      input.placeholder = "Search Box...";
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+    const input = document.createElement("input");
+    input.id = "pac-input";
+    input.type = "text";
+    input.placeholder = "Search Box...";
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
-      const searchBox = new google.maps.places.SearchBox(input);
+    const searchBox = new google.maps.places.SearchBox(input);
 
-      map.addListener("bounds_changed", () => {
+    map.addListener("bounds_changed", () => {
         searchBox.setBounds(map.getBounds());
-      });
+    });
 
-      searchBox.addListener("places_changed", () => {
+    searchBox.addListener("places_changed", () => {
         const places = searchBox.getPlaces();
         if (places.length === 0) return;
 
@@ -190,10 +209,10 @@
         map.setCenter(place.geometry.location);
         map.setZoom(13);
         marker.setPosition(place.geometry.location);
-      });
-    }
+    });
+}
 
-    window.onload = initMap;
-  </script>
+window.onload = initMap;
+</script>
 
 @endsection
