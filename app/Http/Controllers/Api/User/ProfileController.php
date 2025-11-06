@@ -138,7 +138,7 @@ class ProfileController extends Controller
                return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
         }
 
-        $subCategory = SubCategory::where('category_id', $request->id)->get();
+        $subCategory = SubCategory::where('category_id', $request->category_id)->get();
 
         if ($subCategory->isEmpty()) {
             return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
