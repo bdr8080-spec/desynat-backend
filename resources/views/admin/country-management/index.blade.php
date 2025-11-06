@@ -12,7 +12,7 @@
 
             <div class="userManagecontent">
                 <div class="mt-4">
-                    <div class="align-items-end d-flex">
+                    <!-- <div class="align-items-end d-flex">
                         <div class="search-box" style="position: relative">
                             <i class="bi bi-search" style="
                         position: absolute;
@@ -26,59 +26,55 @@
                             <input type="text" class="form-control" placeholder="Search for..."
                                 style="padding-left: 35px" />
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="table-responsive w-100">
-                        <table class="table w-100">
+                        <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
                                     <th scope="col">SR No.</th>
                                     <th scope="col">Country Name</th>
                                     <th scope="col">Manage City</th>
-                                    <th scope="col">Action</th>
+                                    <!-- <th scope="col">Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
+                                @forelse ($countries as $index => $country)
+                                    <tr>
+                                        <th scope="row">{{ $index + 1 }}</th>
 
-                                    <td>UAE</td>
-                                    <td>
-                                        <a class="btn btn-dark customBtn" href="{{route('manageCities')}}">
-                                            <span>Manage</span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckChecked" />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
+                                        <td>{{ $country->name }}</td>
 
-                                    <td>Dubai</td>
-                                    <td>
-                                        <a class="btn btn-dark customBtn" href="manage-city.html">
-                                            <span>Manage</span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckChecked" />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                        <td>
+                                            <a class="btn btn-dark customBtn" href="{{ route('manageCities', ['id' => $country->id]) }}">
+                                                <span>Manage</span>
+                                            </a>
+                                        </td>
+
+                                        <!-- <td>
+                                            <div class="d-flex gap-3 justify-content-center">
+                                                <div class="form-check form-switch">
+                                                    <input 
+                                                        class="form-check-input toggleStatus" 
+                                                        type="checkbox" 
+                                                        role="switch"
+                                                        id="switch{{ $country->id }}"
+                                                        data-id="{{ $country->id }}"
+                                                        {{ $country->status == 1 ? 'checked' : '' }}
+                                                    />
+                                                    <label class="form-check-label"></label>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td> -->
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">No countries found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>

@@ -41,7 +41,7 @@ Route::group(['prefix'=>'admin'], function(){
 
         //country,city,zone management
         Route::get('/country-management', [CountryController::class, 'countryManagement'])->name('countryManagement');
-        Route::get('/manage-cities', [CountryController::class, 'manageCities'])->name('manageCities');
+        Route::get('/manage-cities/{id}', [CountryController::class, 'manageCities'])->name('manageCities');
         Route::get('/manage-zones', [CountryController::class, 'manageZones'])->name('manageZones');
 
         //seller management
