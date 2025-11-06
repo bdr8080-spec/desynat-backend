@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Seller\LoginController;
 use App\Http\Controllers\Seller\WebSellerDashboard;
+use App\Http\Controllers\Seller\SellerProductController;
 
 
 
@@ -35,9 +36,19 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/all-plans',[WebSellerDashboard::class,'all_plans'])->name('seller.all_plans');
     route::Match(['get','post'],'/single-plans/{id}',[WebSellerDashboard::class,'single_plans'])->name('seller.single_plans');
     
-
     route::Match(['get','post'],'/create-subcription',[WebSellerDashboard::class,'create_subcription'])->name('seller.create_subcription');
   
+
+    route::Match(['get','post'],'/skip-plan',[WebSellerDashboard::class,'skip_plan'])->name('seller.skip_plan');
+  
+
+    route::Match(['get','post'],'/products',[SellerProductController::class,'products'])->name('seller.products');
+    route::Match(['get','post'],'/Inventory-Management',[SellerProductController::class,'Inventory_Management'])->name('seller.Inventory_Management');
+    route::Match(['get','post'],'/Affilate-Commission',[SellerProductController::class,'Affilate_Commission'])->name('seller.Affilate_Commission');
+
+
+    
+
 
     });
     

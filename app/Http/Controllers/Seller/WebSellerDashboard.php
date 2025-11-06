@@ -121,6 +121,17 @@ class WebSellerDashboard extends Controller
       }
 
 
+    public function skip_plan(Request $request){
+        Cache::put('plan_page', 'yes', 60);
+        
+        return redirect()->route('seller.dashboard');
+
+    }
+
+
+
+
+
     public function create_subcription(Request $request){
 
         $validate = Validator::make($request->all(), [
