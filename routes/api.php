@@ -44,16 +44,21 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::get('/user-dashboard', [UserDashboardController::class,'index']);
 
+  Route::get('/view-profile',[ProfileController::class, 'viewProfile']);
   Route::post('/change-password',[ProfileController::class, 'change_password']);
   Route::post('/update-profile',[ProfileController::class, 'updateProfile']);
 
+  Route::post('/change-mobile-number', [ProfileController::class, 'changeMobileNumber']);
+  Route::post('/verify-otp', [ProfileController::class, 'verifyOtp']);
+
 
   Route::get('/logout', [UserDashboardController::class,'logout']);
-  
-
-
 
 });
+
+
+Route::get('user/category',[ProfileController::class, 'getCategories']);
+Route::get('user/sub-category',[ProfileController::class, 'getSubCategories']);
 
 
 
