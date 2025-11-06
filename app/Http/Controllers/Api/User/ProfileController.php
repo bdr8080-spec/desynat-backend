@@ -51,6 +51,11 @@ class ProfileController extends Controller
             return ApiResponse::generateResponse("error", "Old password doesn't match",(object)[],400);
         }
 
+        if (Hash::check($request->new_password, $user->password)) {
+            return ApiResponse::generateResponse("error", "New password cannot be the same as the old password",(object)[],400);
+        }
+
+
         $user->password = Hash::make($request->new_password);
         $user->save();
 
