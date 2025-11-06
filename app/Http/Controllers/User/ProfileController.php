@@ -12,4 +12,8 @@ class ProfileController extends Controller
     public function useProfile(){
         return view('user.profile.index');
     }
+
+    public function changePassword(){
+        return view('user.profile.changePassword');
+    }
 }
