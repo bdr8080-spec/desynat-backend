@@ -135,6 +135,12 @@
                         </div>
 
                     </div>
+                    <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                    style="margin-top: 30px">
+                                    <a class="btn btn-dark customBtn" href=""> Submit</a>
+                                </div>
+                            </div>
                 </div>
 
             </div>

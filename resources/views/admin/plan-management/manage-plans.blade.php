@@ -4,11 +4,11 @@
 
 <div id="content-wrapper" class="d-flex flex-column position-relative">
     <div id="content" class="">
-      
+
 
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
-               <div class="col-lg-6 col-md-6 col-12">
+                <div class="col-lg-6 col-md-6 col-12">
                     <div class="d-flex align-items-center gap-3 mt-2">
                         <div class="arrow">
                             <a class="table-button" type="button" href="{{route('planManagement')}}">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-4 col-12">
+                <div class="col-lg-6 col-md-4 col-12">
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
                             <span>Add Subscription Plan</span>
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="userManagecontent">
+            <div class="userManagecontent mt-5">
                 <div class="">
                     <!-- <div class="align-items-end d-flex">
                         <div class="search-box" style="position: relative">
@@ -65,19 +65,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse($plans as $plan)
+                                @forelse($plans as $plan)
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $plan->plan_name_english }}</td>
                                     <td>{{ $plan->plan_name_arabic }}</td>
                                     <td>
-                                        {{ $plan->duration }} 
+                                        {{ $plan->duration }}
                                         @if($plan->duration_type == 1)
-                                            Month
+                                        Month
                                         @elseif($plan->duration_type == 2)
-                                            Year
+                                        Year
                                         @else
-                                            N/A
+                                        N/A
                                         @endif
                                     </td>
                                     <td>{{ $plan->no_of_products }}</td>
@@ -85,48 +85,41 @@
                                     <td>{{ $plan->no_of_highlights }}</td>
                                     <td>
                                         @if($plan->stories == 0)
-                                            Close
+                                        Close
                                         @elseif($plan->stories == 1)
-                                            Open
+                                        Open
                                         @else
-                                            N/A
+                                        N/A
                                         @endif
                                     </td>
                                     <td>N/A</td>
                                     <td>KD {{ $plan->price }}</td>
-                                    <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}</td>
+                                    <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}
+                                    </td>
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
                                             <a class="table-button" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $plan->id }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <a
-                                                href="javascript:void(0);"
-                                                class="table-button text-danger deletePlan"
-                                                data-id="{{ $plan->id }}"
-                                            >
+                                            <a href="javascript:void(0);" class="table-button text-danger deletePlan"
+                                                data-id="{{ $plan->id }}">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
                                             <div class="form-check form-switch">
-                                                <input
-                                                    class="form-check-input toggleStatus"
-                                                    type="checkbox"
-                                                    role="switch"
-                                                    id="switch{{ $plan->id }}"
-                                                    data-id="{{ $plan->id }}"
-                                                    {{ $plan->status == 1 ? 'checked' : '' }}
-                                                />
+                                                <input class="form-check-input toggleStatus" type="checkbox"
+                                                    role="switch" id="switch{{ $plan->id }}" data-id="{{ $plan->id }}"
+                                                    {{ $plan->status == 1 ? 'checked' : '' }} />
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
+                                @empty
                                 <tr>
                                     <td colspan="11" class="text-center">No plans found for this country</td>
                                 </tr>
-                            @endforelse
-                        </tbody>
+                                @endforelse
+                            </tbody>
 
                         </table>
 
@@ -265,11 +258,18 @@
                                                 class="form-check-input me-2" />
                                             <label for="commissionYes" class="form-check-label">Yes</label>
                                         </div>
+
                                         <div class="col-lg-6 d-flex align-items-center">
                                             <input type="radio" id="commissionNo" name="commission" value="no"
                                                 class="form-check-input me-2" />
                                             <label for="commissionNo" class="form-check-label">No</label>
                                         </div>
+                                    </div>
+
+                                    <!-- Ye input field initially hidden rahegi -->
+                                    <div id="commissionInput" style="display: block;margin-top: 10px;width: 210px;">
+                                        <input type="text" placeholder="Enter commission details" class="form-control"
+                                            aria-describedby="passwordHelpInline" />
                                     </div>
                                 </div>
                             </div>
@@ -292,39 +292,39 @@
 
 <!-- Update plan status -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.toggleStatus').forEach(toggle => {
-        toggle.addEventListener('change', function () {
+        toggle.addEventListener('change', function() {
             let planId = this.getAttribute('data-id');
 
             fetch(`/admin/change_plan_status/${planId}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // toastr.success(data.message);
-                     if(data.status == 1){
-                        toastr.success(data.message); // Green for active
-                    } else {
-                        toastr.error(data.message);   // Red for deactivated
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     }
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                } else {
-                    toastr.error(data.message);
-                }
-            })
-            .catch(error => {
-                //console.error(error);
-                toastr.error('Something went wrong while updating status.');
-            });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // toastr.success(data.message);
+                        if (data.status == 1) {
+                            toastr.success(data.message); // Green for active
+                        } else {
+                            toastr.error(data.message); // Red for deactivated
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    //console.error(error);
+                    toastr.error('Something went wrong while updating status.');
+                });
         });
     });
 });
@@ -332,9 +332,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Delete Plan -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.deletePlan').forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             let planId = this.getAttribute('data-id');
 
             Swal.fire({
@@ -348,28 +348,43 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deletePlan/${planId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            toastr.success(data.message);
-                            this.closest('tr').remove();
-                        } else {
-                            toastr.error(data.message);
-                        }
-                    })
-                    .catch(() => {
-                        toastr.error('Something went wrong.');
-                    });
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                toastr.success(data.message);
+                                this.closest('tr').remove();
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
                 }
             });
         });
+    });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const yesRadio = document.getElementById("commissionYes");
+    const noRadio = document.getElementById("commissionNo");
+    const commissionInput = document.getElementById("commissionInput");
+
+    yesRadio.addEventListener("change", function() {
+        commissionInput.style.display = yesRadio.checked ? "block" : "none";
+    });
+
+    noRadio.addEventListener("change", function() {
+        commissionInput.style.display = noRadio.checked ? "none" : "block";
     });
 });
 </script>

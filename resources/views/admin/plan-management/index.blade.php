@@ -14,7 +14,7 @@
 
             </div>
 
-            <div class="userManagecontent">
+            <div class="userManagecontent mt-5">
               <div class="">
 
                 <div class="table-responsive w-100">
