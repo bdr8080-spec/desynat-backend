@@ -61,7 +61,7 @@
                                     <th scope="row">1</th>
                                     <td>Dubai </td>
                                     <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                            data-bs-target="#sentModal2">
+                                            data-bs-target="#sentModal3">
                                             <i class="bi bi-eye-fill"></i>
                                         </a></td>
                                     <td>
@@ -82,7 +82,7 @@
                                     <th scope="row">1</th>
                                     <td>Dubai </td>
                                     <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                            data-bs-target="#sentModal2">
+                                            data-bs-target="#sentModal3">
                                             <i class="bi bi-eye-fill"></i>
                                         </a></td>
                                     <td>
@@ -121,7 +121,21 @@
             </div>
             <div class="modal-body">
                 <div class="">
-
+                    <div class="align-items-end d-flex">
+                        <div class="search-box" style="position: relative">
+                            <i class="bi bi-search" style="
+                        position: absolute;
+                        left: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        font-size: 16px;
+                        color: #888;
+                      ">
+                            </i>
+                            <input type="text" class="form-control" placeholder="Search for..."
+                                style="padding-left: 35px" />
+                        </div>
+                    </div>
 
 
 
@@ -155,6 +169,46 @@
                             <a class="btn btn-dark customBtn" href=""> Submit</a>
                         </div>
                     </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sentModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5" id="exampleModalLabel">
+                  Zone Name
+                </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="align-items-end d-flex">
+                        <div class="search-box" style="position: relative">
+                            <i class="bi bi-search" style="
+                        position: absolute;
+                        left: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        font-size: 16px;
+                        color: #888;
+                      ">
+                            </i>
+                            <input type="text" class="form-control" placeholder="Search for..."
+                                style="padding-left: 35px" />
+                        </div>
+                    </div>
+
+
+
+                    <div id="map"></div>
+                  
+                   
                 </div>
             </div>
 

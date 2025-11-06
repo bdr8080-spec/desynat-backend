@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Seller\LoginController;
+use App\Http\Controllers\Seller\WebSellerDashboard;
+
+
 
 
 Route::group(['prefix' => 'seller'], function () {
@@ -27,7 +30,15 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/review_submit_page/{id}',[LoginController::class,'signup_review'])->name('seller.review_submit_page');    
     route::Match(['get','post'],'/logout',[LoginController::class,'logout'])->name('seller.logout');    
 
+    route::Match(['get','post'],'/dashboard',[WebSellerDashboard::class,'seller_dashboard'])->name('seller.dashboard');
+
+    route::Match(['get','post'],'/all-plans',[WebSellerDashboard::class,'all_plans'])->name('seller.all_plans');
+    route::Match(['get','post'],'/single-plans/{id}',[WebSellerDashboard::class,'single_plans'])->name('seller.single_plans');
     
+
+    route::Match(['get','post'],'/create-subcription',[WebSellerDashboard::class,'create_subcription'])->name('seller.create_subcription');
+  
+
     });
     
 
@@ -38,7 +49,6 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
 
 
-    route::Match(['get','post'],'/dashboard',[LoginController::class,'seller_dashboard'])->name('seller.dashboard');
 
 
 

@@ -9,6 +9,8 @@ use App\Models\Plan;
 
 use App\Models\SellerSubcriptionPlanBuy;
 
+use Carbon\carbon;
+
 
 
 use Hash;
@@ -354,13 +356,35 @@ class SellerAuthService
 
               public function create_Subcription_Order($request){
 
+                // convert start and exprire date from the  table
+                $plan_data= Plan::where('id',$request->plan_id)->first();
+
+                
+                $currentDateTime = Carbon::now();
+
+                if($plan_data){
+
+                if($plan_data->duration_type=='1'){ //month code
+
+                  $newDateTime = Carbon::now()->addMonth($plan_data->duration);
+
+                }else{  // year code
+                  $newDateTime = Carbon::now()->addYear($plan_data->duration);                   
+                }
+
+                }
+
+
                 $array_data=[
-                'transaction_id'=>$request->transaction_id,
-                'seller_id'=>$request->seller_id,
-                'plan_id' =>$request->plan_id,
-                'status' =>'0',
-                'payment_status'=>$request->payment_status,
-                ];
+                  'transaction_id'=>$request->transaction_id,
+                  'seller_id'=>$request->seller_id,
+                  'plan_id' =>$request->plan_id,
+                  'status' =>'0',
+                  'payment_status'=>$request->payment_status,
+                  'plan_start_date'=>$currentDateTime??null,
+                  'plan_end_date'=>$newDateTime??null,
+                  ];
+
 
                 $data= SellerSubcriptionPlanBuy::create($array_data);
   
