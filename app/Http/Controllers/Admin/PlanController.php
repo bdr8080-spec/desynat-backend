@@ -26,9 +26,6 @@ class PlanController extends Controller
         return view('admin.plan-management.index', compact('countries'));
     }
 
-    // public function managePlans(Request $request){
-    //     return view('admin.plan-management.manage-plans');
-    // }
     public function managePlans($id, Request $request)
     {
         $request->merge(['country_id' => $id]);
@@ -36,6 +33,45 @@ class PlanController extends Controller
         $plans = $plansResponse['data'];
         return view('admin.plan-management.manage-plans', compact('plans'));
     }
+
+   public function change_plan_status($id)
+    {
+        $data = $this->PlanService->changePlanStatus($id);
+
+        if ($data['status'] == 'success') {
+            $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
+  
+            return response()->json([
+                'success' => true,
+                'status' => $data['data']->status,
+                'message' => "Plan has been {$statusText} Successfully!"
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400); 
+        }
+    }
+
+
+    public function deletePlan($id)
+    {
+        $result = $this->PlanService->deletePlan($id);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
 
 
 

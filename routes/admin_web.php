@@ -50,6 +50,8 @@ Route::group(['prefix'=>'admin'], function(){
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
         Route::get('/manage-plans/{id}', [PlanController::class, 'managePlans'])->name('managePlans');
+        Route::post('/change_plan_status/{id}', [PlanController::class, 'change_plan_status'])->name('change_plan_status');
+        Route::post('/deletePlan/{id}', [PlanController::class, 'deletePlan'])->name('deletePlan');
 
     });
 

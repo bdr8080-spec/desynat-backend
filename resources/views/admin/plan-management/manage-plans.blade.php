@@ -176,13 +176,22 @@
                                                 data-bs-target="#editModal{{ $plan->id }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <a class="table-button" type="button" onclick="deletePlan({{ $plan->id }})">
+                                            <a
+                                                href="javascript:void(0);"
+                                                class="table-button text-danger deletePlan"
+                                                data-id="{{ $plan->id }}"
+                                            >
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="planSwitch{{ $plan->id }}" {{ $plan->status == 1 ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="planSwitch{{ $plan->id }}"></label>
+                                                <input
+                                                    class="form-check-input toggleStatus"
+                                                    type="checkbox"
+                                                    role="switch"
+                                                    id="switch{{ $plan->id }}"
+                                                    data-id="{{ $plan->id }}"
+                                                    {{ $plan->status == 1 ? 'checked' : '' }}
+                                                />
                                             </div>
                                         </div>
                                     </td>
@@ -355,3 +364,87 @@
 </div>
 
 @endsection
+
+<!-- Update plan status -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            let planId = this.getAttribute('data-id');
+
+            fetch(`/admin/change_plan_status/${planId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // toastr.success(data.message);
+                     if(data.status == 1){
+                        toastr.success(data.message); // Green for active
+                    } else {
+                        toastr.error(data.message);   // Red for deactivated
+                    }
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(data.message);
+                }
+            })
+            .catch(error => {
+                //console.error(error);
+                toastr.error('Something went wrong while updating status.');
+            });
+        });
+    });
+});
+</script>
+
+<!-- Delete Plan -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.deletePlan').forEach(button => {
+        button.addEventListener('click', function () {
+            let planId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deletePlan/${planId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            toastr.success(data.message);
+                            this.closest('tr').remove();
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    })
+                    .catch(() => {
+                        toastr.error('Something went wrong.');
+                    });
+                }
+            });
+        });
+    });
+});
+</script>
