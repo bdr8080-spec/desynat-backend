@@ -14,7 +14,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">Manage City(UAE)</h6>
+                        <h6 class="m-0">Manage City({{$country->name}})</h6>
                     </div>
                 </div>
 
@@ -29,7 +29,7 @@
 
             <div class="userManagecontent">
                 <div class="mt-4">
-                    <div class="align-items-end d-flex">
+                    <!-- <div class="align-items-end d-flex">
                         <div class="search-box" style="position: relative; ">
                             <i class="bi bi-search" style="
                         position: absolute;
@@ -43,10 +43,10 @@
                             <input type="text" class="form-control" placeholder="Search for..."
                                 style="padding-left: 35px" />
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="table-responsive w-100">
-                        <table class="table w-100">
+                        <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
                                     <th scope="col">SR No.</th>
@@ -56,52 +56,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Dubai </td>
-                                    <td> <a class="btn btn-dark customBtn" href="{{route('manageZones')}}">
-                                            <span>Manage</span>
-                                        </a></td>
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-
-
-                                            <a class="table-button" type="button">
-                                                <i class="bi bi-trash3-fill"></i>
+                                @forelse ($serviceCities as $index => $city)
+                                    <tr>
+                                        <th scope="row">{{ $index + 1 }}</th>
+                                        <td>{{ $city->name }}</td>
+                                        <td>
+                                            <a class="btn btn-dark customBtn"
+                                            href="{{ route('manageZones', ['id' => $city->id ]) }}">
+                                                <span>Manage</span>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-3 justify-content-center">
+                                                <a href="javascript:void(0);" class="table-button text-danger deleteCity"
+                                                    data-id="{{ $city->id }}">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </a>
 
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckChecked" />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input toggleStatus" type="checkbox"
+                                                        role="switch" id="switch{{ $city->id }}" data-id="{{ $city->id }}"
+                                                        {{ $city->status == 1 ? 'checked' : '' }} />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Dubai </td>
-                                    <td> <a class="btn btn-dark customBtn" href="{{route('manageZones')}}">
-                                            <span>Manage</span>
-                                        </a></td>
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-
-
-                                            <a class="table-button" type="button">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
-
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="flexSwitchCheckChecked" />
-                                                <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">No cities found for this country.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -125,22 +112,23 @@
                     <div class="col-lg-12">
 
                         <div class="form-group w-100">
-                            <label for="from" class="form-label">City Name</label>
-                            <select class="form-select form-select-lg" aria-label="Large select example">
-                                <option selected>Select City</option>
-                                <option value="1">City One</option>
-                                <option value="2">City Two</option>
-                                <option value="3">City Three</option>
+                            <label for="city_id" class="form-label">City Name</label>
+                            <select name="city_id" id="city_id" class="form-select form-select-lg" aria-label="Select City">
+                                <option value="" selected disabled>Select City</option>
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                @endforeach
                             </select>
+                            <span class="text-danger error-text city_id_err"></span>
                         </div>
+
 
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                                    style="margin-top: 30px">
-                                    <a class="btn btn-dark customBtn" href=""> Submit</a>
-                                </div>
-                            </div>
+                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
+                            <button type="button" id="addServiceCityBtn" class="btn btn-dark customBtn">Submit</button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -150,3 +138,138 @@
 
 
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<!-- add service city -->
+<script>
+$(document).ready(function() {
+
+    $('#addServiceCityBtn').on('click', function(e) {
+        e.preventDefault();
+
+        $('.error-text').text('');
+
+        let cityId = $('#city_id').val();
+
+        if (!cityId) {
+            $('.city_id_err').text('Please select a city.');
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('admin.addServiceCity') }}",
+            type: "POST",
+            data: {
+                city_id: cityId,
+                _token: "{{ csrf_token() }}"
+            },
+            beforeSend: function() {
+                $('#addServiceCityBtn').prop('disabled', true).text('Submitting...');
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+                    $('#sentModal2').modal('hide');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(response.message || 'Failed to add city');
+                }
+            },
+            error: function(xhr) {
+                toastr.error('Something went wrong! Please try again.');
+                console.error(xhr.responseText);
+            },
+            complete: function() {
+                $('#addServiceCityBtn').prop('disabled', false).text('Submit');
+            }
+        });
+    });
+
+});
+</script>
+
+<!-- Update service city status -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            let cityId = this.getAttribute('data-id');
+
+            fetch(`/admin/change_service_city_status/${cityId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // toastr.success(data.message);
+                        if (data.status == 1) {
+                            toastr.success(data.message); // Green for active
+                        } else {
+                            toastr.error(data.message); // Red for deactivated
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    //console.error(error);
+                    toastr.error('Something went wrong while updating status.');
+                });
+        });
+    });
+});
+</script>
+
+<!-- Delete service city -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.deleteCity').forEach(button => {
+        button.addEventListener('click', function() {
+            let cityId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deleteServiceCity/${cityId}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                toastr.success(data.message);
+                                this.closest('tr').remove();
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
+                }
+            });
+        });
+    });
+});
+</script>

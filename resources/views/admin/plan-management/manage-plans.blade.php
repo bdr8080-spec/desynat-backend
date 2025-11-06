@@ -312,8 +312,8 @@
             <div class="modal-body">
                 <div class="appointment-container">
                     <form class="editPlanForm" data-id="{{ $plan->id }}">
-                        <input type="text" name="plan_id" value="{{ $plan->id }}">
-                        <input type="text" name="country_id" value="{{ request()->segment(3) }}">
+                        <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                        <input type="hidden" name="country_id" value="{{ request()->segment(3) }}">
 
                         <div class="row">
                             <!-- Plan Name English -->

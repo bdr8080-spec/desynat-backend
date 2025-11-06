@@ -42,7 +42,11 @@ Route::group(['prefix'=>'admin'], function(){
         //country,city,zone management
         Route::get('/country-management', [CountryController::class, 'countryManagement'])->name('countryManagement');
         Route::get('/manage-cities/{id}', [CountryController::class, 'manageCities'])->name('manageCities');
-        Route::get('/manage-zones', [CountryController::class, 'manageZones'])->name('manageZones');
+        Route::get('/manage-zones/{id}', [CountryController::class, 'manageZones'])->name('manageZones');
+        Route::post('/addServiceCity', [CountryController::class, 'addServiceCity'])->name('admin.addServiceCity');
+        Route::post('/change_service_city_status/{id}', [CountryController::class, 'change_service_city_status'])->name('admin.change_service_city_status');
+        Route::post('/deleteServiceCity/{id}', [CountryController::class, 'deleteServiceCity'])->name('admin.deleteServiceCity');
+        Route::post('/add_zone', [CountryController::class, 'add_zone'])->name('admin.add_zone');
 
         //seller management
         Route::get('/seller-management', [SellerController::class, 'sellerManagement'])->name('sellerManagement');
