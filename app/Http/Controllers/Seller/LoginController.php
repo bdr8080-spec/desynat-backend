@@ -145,12 +145,18 @@ class LoginController extends Controller
             'last_name' => 'required',
             'country_code' => 'required',
             'email' => 'required|email|unique:sellers,email',
-            'mobile' => 'required',
+            // 'mobile' => 'required',
+            'mobile' => [
+            'required',
+            Rule::unique('sellers')->where(function ($query) use ($request) {
+                return $query->where('country_code', $request->country_code);
+            }),
+        ],
             'password' => [
                 'required',
                 'string',
-                'min:8',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                // 'min:8',
+                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
             ],
             'confirm_password' => 'required|same:password',
             'accept_terms'=>"required|in:1"
@@ -598,8 +604,8 @@ class LoginController extends Controller
         'password' => [
             'required',
             'string',
-            'min:8',
-            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+            // 'min:8',
+            // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
         ],
         'confirm_password'=>"required|same:password"
            ],[
