@@ -71,6 +71,93 @@ class PlanController extends Controller
         ], 200);
     }
 
+    public function add_plan(Request $request)
+    {
+        // Validation
+        $request->validate([
+            'country_id' => 'required|exists:countries,id',
+            'plan_name_english' => 'required|string',
+            'plan_name_arabic' => 'required|string',
+            'duration' => 'required|numeric',
+            'duration_type' => 'required|in:1,2',
+            'no_of_videos' => 'required|numeric',
+            'no_of_products' => 'required|numeric',
+            'no_of_highlights' => 'required|numeric',
+            'no_of_employee' => 'required|numeric',
+            'stories' => 'required|in:yes,no',
+            'price' => 'required|numeric',
+            'commission' => 'required|in:yes,no',
+            'commission_percentage' => 'required_if:commission,yes|nullable|numeric',
+        ]);
+
+        try {
+            $request->merge([
+                'stories' => $request->stories === 'yes' ? 1 : 0,
+                'commission' => $request->commission === 'yes' ? 1 : 0,
+            ]);
+
+            $plan = $this->PlanService->addPlan($request);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Plan added successfully',
+                'data' => $plan
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to create plan',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function update_plan(Request $request)
+    {
+        // Validation
+        $request->validate([
+            'plan_id' => 'required|exists:plans,id',
+            'country_id' => 'required|exists:countries,id',
+            'plan_name_english' => 'required|string',
+            'plan_name_arabic' => 'required|string',
+            'duration' => 'required|numeric',
+            'duration_type' => 'required|in:1,2',
+            'no_of_videos' => 'required|numeric',
+            'no_of_products' => 'required|numeric',
+            'no_of_highlights' => 'required|numeric',
+            'no_of_employee' => 'required|numeric',
+            'stories' => 'required|in:yes,no',
+            'price' => 'required|numeric',
+            'commission' => 'required|in:yes,no',
+            'commission_percentage' => 'required_if:commission,yes|nullable|numeric',
+        ]);
+
+        try {
+            // Convert yes/no to 1/0 for database
+            $request->merge([
+                'stories' => $request->stories === 'yes' ? 1 : 0,
+                'commission' => $request->commission === 'yes' ? 1 : 0,
+            ]);
+
+            $plan = $this->PlanService->updatePlan($request);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Plan updated successfully',
+                'data' => $plan,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to update plan',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+
 
 
 

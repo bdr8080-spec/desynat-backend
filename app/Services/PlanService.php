@@ -36,7 +36,7 @@ class PlanService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to create plan',
+                'message' => $e->getMessage(),
                 'data' => (object)[],
             ];
         }
