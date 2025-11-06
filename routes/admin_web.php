@@ -41,7 +41,7 @@ Route::group(['prefix'=>'admin'], function(){
 
         //country,city,zone management
         Route::get('/country-management', [CountryController::class, 'countryManagement'])->name('countryManagement');
-        Route::get('/manage-cities', [CountryController::class, 'manageCities'])->name('manageCities');
+        Route::get('/manage-cities/{id}', [CountryController::class, 'manageCities'])->name('manageCities');
         Route::get('/manage-zones', [CountryController::class, 'manageZones'])->name('manageZones');
 
         //seller management
@@ -50,6 +50,8 @@ Route::group(['prefix'=>'admin'], function(){
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
         Route::get('/manage-plans/{id}', [PlanController::class, 'managePlans'])->name('managePlans');
+        Route::post('/change_plan_status/{id}', [PlanController::class, 'change_plan_status'])->name('change_plan_status');
+        Route::post('/deletePlan/{id}', [PlanController::class, 'deletePlan'])->name('deletePlan');
 
     });
 
