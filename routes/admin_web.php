@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\PlanController;
 Route::group(['prefix'=>'admin'], function(){
 
     Route::match(['get','post'],'/login', [AuthController::class, 'adminLogin'])->name('adminLogin');
-    Route::match(['get','post'],'/change-password', [AuthController::class, 'changePassword'])->name('changePassword');
+    Route::match(['get','post'],'/change-password', [AuthController::class, 'changePassword'])->name('admin.changePassword');
     Route::match(['get','post'],'/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
     Route::match(['get','post'],'/verify-otp', [AuthController::class, 'optVerify'])->name('optVerify');
     Route::match(['get','post'],'/resend-otp', [AuthController::class, 'resendOtp'])->name('resendOtp');
@@ -41,7 +41,7 @@ Route::group(['prefix'=>'admin'], function(){
 
         //country,city,zone management
         Route::get('/country-management', [CountryController::class, 'countryManagement'])->name('countryManagement');
-        Route::get('/manage-cities', [CountryController::class, 'manageCities'])->name('manageCities');
+        Route::get('/manage-cities/{id}', [CountryController::class, 'manageCities'])->name('manageCities');
         Route::get('/manage-zones', [CountryController::class, 'manageZones'])->name('manageZones');
 
         //seller management
@@ -50,6 +50,10 @@ Route::group(['prefix'=>'admin'], function(){
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
         Route::get('/manage-plans/{id}', [PlanController::class, 'managePlans'])->name('managePlans');
+        Route::post('/change_plan_status/{id}', [PlanController::class, 'change_plan_status'])->name('admin.change_plan_status');
+        Route::post('/deletePlan/{id}', [PlanController::class, 'deletePlan'])->name('admin.deletePlan');
+        Route::post('/add_plan', [PlanController::class, 'add_plan'])->name('admin.add_plan');
+        Route::post('/update_plan', [PlanController::class, 'update_plan'])->name('admin.update_plan');
 
     });
 

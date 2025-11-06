@@ -99,7 +99,6 @@ class BrandService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to create Brand: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to create Brand',
@@ -134,7 +133,6 @@ class BrandService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to update brand: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to update brand',
@@ -164,7 +162,6 @@ class BrandService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to delete brand: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete brand',

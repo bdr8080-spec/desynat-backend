@@ -33,6 +33,16 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   Route::get('/logout', [SellerDashboardController::class,'logout']);
 
+  Route::get('/all-plans', [SellerDashboardController::class,'all_plans']);
+
+  Route::get('/single-plans-show/{id}', [SellerDashboardController::class,'single_plans_show']);
+
+
+  Route::post('/create-subcription-plan-buy', [SellerDashboardController::class,'create_subcription_plan_buy']);
+
+  Route::post('/payment-subcription-plan', [SellerDashboardController::class,'payment_subcription_plan']);
+
+
 });
 
 
@@ -41,5 +51,3 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
 
 });
-
-

@@ -155,7 +155,6 @@ class CategoryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to create subcategory: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to create subcategory',
@@ -190,7 +189,6 @@ class CategoryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to update category: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to update category',
@@ -220,7 +218,6 @@ class CategoryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to delete subcategory: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete subcategory',

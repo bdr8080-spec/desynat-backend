@@ -20,6 +20,7 @@ class PlanService
                 'no_of_videos' => $request->no_of_videos,
                 'no_of_products' => $request->no_of_products,
                 'no_of_highlights' => $request->no_of_highlights,
+                'no_of_employee' => $request->no_of_employee,
                 'stories' => $request->stories,
                 'price' => $request->price,
                 'commission' => $request->commission,
@@ -33,10 +34,9 @@ class PlanService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to create plan: ' . $e->getMessage());
             return [
                 'status' => 'error',
-                'message' => 'Failed to create plan',
+                'message' => $e->getMessage(),
                 'data' => (object)[],
             ];
         }
@@ -64,6 +64,7 @@ class PlanService
                 'no_of_videos' => $request->no_of_videos,
                 'no_of_products' => $request->no_of_products,
                 'no_of_highlights' => $request->no_of_highlights,
+                'no_of_employee' => $request->no_of_employee,
                 'stories' => $request->stories,
                 'price' => $request->price,
                 'commission' => $request->commission,
@@ -77,7 +78,6 @@ class PlanService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to update plan: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to update plan',
@@ -104,7 +104,6 @@ class PlanService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to fetch plans: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch plans',
@@ -133,7 +132,6 @@ class PlanService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to fetch plan details: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch plan details',
@@ -193,7 +191,6 @@ class PlanService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to delete city: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete plan',

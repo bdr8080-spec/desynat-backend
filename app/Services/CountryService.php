@@ -129,7 +129,6 @@ class CountryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to create ServiceCity: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to create ServiceCity',
@@ -189,7 +188,6 @@ class CountryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to delete city: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete city',
@@ -216,7 +214,6 @@ class CountryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to create Zone: ' . $e->getMessage());
 
             return [
                 'status' => 'error',
@@ -318,7 +315,6 @@ class CountryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to update zone: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to update zone',
@@ -378,7 +374,6 @@ class CountryService
             ];
 
         } catch (\Exception $e) {
-            Log::error('Failed to delete city: ' . $e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete zone',
