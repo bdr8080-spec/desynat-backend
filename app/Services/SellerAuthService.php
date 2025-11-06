@@ -5,6 +5,11 @@ use App\Models\seller;
 use App\Models\sellerStoreInformation;
 use App\Models\sellerDocument;
 use App\Models\Bankdetails;
+use App\Models\Plan;
+
+use App\Models\SellerSubcriptionPlanBuy;
+
+
 
 use Hash;
 
@@ -315,7 +320,106 @@ class SellerAuthService
               }
         
             }
-    
+
+
+            public function seller_allPlan($request){
+
+
+              $data= Plan::where('country_id',$request->country_id)->get();
+
+              if($data->isNotEmpty()){
+                return ['status'=>'success','message'=>"All Plans fetch Successfully",'data'=>$data];            
+                }else{
+                  return ['status'=>'error','message'=>"No Plan Found",'data'=>(object)[]];                
+                }
+
+              }
+
+
+            public function seller_single_allPlan($request){
+
+
+              $data= Plan::where('id',$request->plan_id)->first();
+
+              if($data){
+            
+                  return ['status'=>'success','message'=>"single Plans fetch Successfully",'data'=>$data];            
+              
+                }else{
+                  return ['status'=>'error','message'=>"No Plan Found",'data'=>(object)[]];                
+                }
+          
+              }
+
+
+              public function create_Subcription_Order($request){
+
+                $array_data=[
+                'transaction_id'=>$request->transaction_id,
+                'seller_id'=>$request->seller_id,
+                'plan_id' =>$request->plan_id,
+                'status' =>'0',
+                'payment_status'=>$request->payment_status,
+                ];
+
+                $data= SellerSubcriptionPlanBuy::create($array_data);
+  
+                if($data){
+              
+                    return ['status'=>'success','message'=>"Subcription Order Create Successfully",'data'=>$data];            
+                
+                  }else{
+                    return ['status'=>'error','message'=>"error found",'data'=>(object)[]];                
+                  }
+            
+                }
+  
+
+              public function complete_Subcription_Order($request){
+
+                if($request->payment_status=='1'){
+                  $msg="Subcription Plan Buy Successfully";
+                  $status='1';
+                 }else{
+                  $msg="Subcription Plan Payment Rejected";
+                  $status='2';
+                 }
+
+                $array_data=[
+                'transaction_id'=>$request->transaction_id,
+                'payment_status'=>$request->payment_status,
+                'status'=>$status,
+                'online_transaction_id'=>$request->online_transaction_id
+                ];
+
+                $data= SellerSubcriptionPlanBuy::where('transaction_id',$request->transaction_id)->first();
+  
+              
+                if($data){
+
+                  $seller_id=$data->seller_id;
+
+                 $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$seller_id)->where('status','1')->first(); // check seller Plan
+
+                 if($check_plan){
+                  return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 
+                 }
+
+                  if($data->payment_status!=='0'){
+                    return ['status'=>'error','message'=>"Payment is Already Paid or cancelled",'data'=>(object)[]];                
+                  }
+                  
+                 $data->update($array_data);
+
+                 
+                 return ['status'=>'success','message'=>$msg,'data'=>$data];            
+                
+                  }else{
+                    return ['status'=>'error','message'=>"error found",'data'=>(object)[]];                
+                  }
+            
+                }
+              
 
             
         
