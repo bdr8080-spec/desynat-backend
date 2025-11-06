@@ -38,6 +38,9 @@ return [
     // 'otp'=> Rand('111111','999999'),
     'otp'=> '123456',
 
+    'google_map_key'=>[
+        'key'=>env('GOOGLE_MAP_KEY')??'AIzaSyBk1iHVph8nvXAn0uigTvPzKDpb9cslR18'
+    ]
 
 
 ];

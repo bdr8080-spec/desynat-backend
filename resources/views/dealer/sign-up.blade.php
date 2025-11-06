@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Sign up </title>
+    <title>desynat seller</title>
     <!-- Favicons -->
-    <link href="{{ asset('/dealer') }}/assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -97,15 +97,16 @@
                                     <input type="hidden" name="profile_pic" id="Profile_image">
 
                                     @error('profile_pic')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" id="remove_error_message1">{{ $message }}</span>
                                     @enderror
 
                                     @csrf
 
                                     <div class="form-group">
                                         <label for="name">First Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter First Name"
-                                            name="first_name" value="{{ old('first_name') }}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter First Name" name="first_name"
+                                            value="{{ old('first_name') }}">
                                         @error('first_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -113,16 +114,18 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Last Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Last Name"
-                                            name="last_name" value="{{ old('last_name') }}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter Last Name" name="last_name"
+                                            value="{{ old('last_name') }}">
                                         @error('last_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Email Address</label>
-                                        <input type="text" class="form-control" placeholder="Enter Email Address"
-                                            name="email" value="{{ old('email') }}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter Email Address" name="email"
+                                            value="{{ old('email') }}">
                                         @error('email')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -131,52 +134,73 @@
                                     <div class="form-group phone-pnl">
                                         <label for="name">Mobile Number</label>
 
-                                        <div class="form-group d-flex gap-2">
-                                            <select name="country_code" class="form-select" style="width: 100px">
-                                                @foreach ($country as $val)
-                                                    <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                        <div class="form-group d-flex gap-2 w-100">
 
-                                            <input class="form-control" type="tel" id="phone"
-                                                placeholder="Enter mobile Number" name="mobile"
-                                                value="{{ old('mobile') }}"
-                                                oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+                                            <div class="dropdown">
+                                                <button
+                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                                    type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+
+                                                    <span id="selected-flag">
+                                                        <img src="{{ old('country_flag', $country[0]->flag1) }}"
+                                                            alt="flag" width="25" height="16">
+
+                                                    </span>
+
+                                                    <span id="selected-code" class="ms-2">
+                                                        {{ old('country_code', $country[0]->dial_code) }}
+                                                    </span>
+                                                </button>
+
+                                                <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+
+                                                    @foreach ($country as $index => $item)
+                                                        <li>
+                                                            <label
+                                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                style="cursor: pointer;">
+                                                                <input type="radio" name="country_code"
+                                                                    value="{{ $item->dial_code }}"
+                                                                    data-flag="{{ $item->flag1 }}"
+                                                                    data-name="{{ $item->name }}"
+                                                                    class="country-radio"
+                                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                    hidden>
+                                                                <img src="{{ $item->flag1 }}"
+                                                                    alt="Flag of {{ $item->name }}" width="25"
+                                                                    height="16">
+                                                                <span>{{ $item->dial_code }}
+                                                                    ({{ $item->name }})
+                                                                </span>
+                                                            </label>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+
+                                            <div class="w-100">
+                                                <input class="form-control notapplyspace" type="number"
+                                                    id="phone" placeholder="Enter mobile Number" name="mobile"
+                                                    value="{{ old('mobile') }}"
+                                                    oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+
+                                                @error('mobile')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            @error('country_code')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
 
                                         </div>
-                                        @error('mobile')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+
 
                                     </div>
 
-                                    {{-- <div class="form-group phone-pnl">
-                                        <select name="country_code">
-                                            @foreach ($country as $val)
-                                                <option value="{{ $val->dial_code }}"> {{ $val->dial_code }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('country_code')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div> --}}
-
-                                    {{-- <div class="form-group phone-pnl">
-                                        <label for="name">Mobile Number</label>
-                                        <input class="form-control" type="tel" id="phone"
-                                            placeholder="Enter mobile number" name="mobile"
-                                            value="{{ old('mobile') }}">
-                                        @error('mobile')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div> --}}
-
                                     <div class="form-group position-relative">
                                         <label for="password">Create Password</label>
-                                        <input type="password" class="form-control" id="password"
+                                        <input type="password" class="form-control notapplyspace" id="password"
                                             placeholder="Enter Password" name="password"
                                             value="{{ old('password') }}">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
@@ -186,7 +210,7 @@
                                     </div>
                                     <div class="form-group position-relative">
                                         <label for="password">Confirm Password</label>
-                                        <input type="password" class="form-control" id="password"
+                                        <input type="password" class="form-control notapplyspace" id="password"
                                             placeholder="Enter Confirm Password" name="confirm_password"
                                             value="{{ old('confirm_password') }}">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
@@ -197,22 +221,22 @@
 
                                     <div class="form-check py-4">
                                         <input class="form-check-input" type="checkbox" value="1"
-                                            id="checkChecked" checked name="accept_terms">
+                                            id="checkChecked" name="accept_terms"
+                                            {{ old('accept_terms') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="checkChecked">
                                             I accept the <span class="title-color">Terms & Conditions </span> and <span
                                                 class="title-color">Policies</span>
                                         </label>
-                                        @error('accept_terms')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+
                                     </div>
+                                    @error('accept_terms')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
 
                                     <div class="login-btn">
                                         <input type="submit" name="submit" class="btn btn-success w-100"
-                                            value="Countinue">
-
+                                            value="continue">
                                     </div>
-
                                 </form>
 
                                 <div class="sign-new mt-2 text-center">
@@ -237,12 +261,12 @@
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
-<script
-    src="{{ asset('/dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
+
+
 <script>
     $(".toggle-password").click(function() {
         $(this).toggleClass("bi-eye bi-eye-slash");
@@ -256,24 +280,6 @@
 </script>
 
 <script>
-    function showPreview(e) {
-        const f = e.target.files[0],
-            p = preview,
-            r = remove,
-            u = uploadLabel;
-
-        if (f) {
-            const rdr = new FileReader();
-            rdr.onload = x => {
-                p.src = x.target.result;
-                p.style.display = 'block';
-                r.style.display = 'inline';
-                u.style.display = 'none';
-            };
-            rdr.readAsDataURL(f);
-        }
-    }
-
     function removeImg() {
         preview.src = '';
         preview.style.display = 'none';
@@ -283,51 +289,122 @@
 
     }
 
+    function showPreviewAndUpload(e) {
+        const file = e.target.files[0],
+            p = document.getElementById('preview'),
+            r = document.getElementById('remove'),
+            u = document.getElementById('uploadLabel');
 
-    $(document).on('change', '#edit_imageUpload', function(event) {
+        if (file) {
+            // --- Preview the image ---
+            const reader = new FileReader();
+            reader.onload = x => {
+                p.src = x.target.result;
+                p.style.display = 'block';
+                r.style.display = 'inline';
+                u.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
 
-        event.preventDefault();
-        let file = $(this)[0].files[0];
-        let formData = new FormData();
-        formData.append('image', file);
-        // let name = formData.get('file').name;
-        let name = file.name;
+            // --- Upload via AJAX ---
+            let formData = new FormData();
+            formData.append('image', file);
 
-        sessionStorage.setItem('uploadedFileName', name);
-        let uploadfile = sessionStorage.getItem('uploadedFileName', name);
-        // $("#fileName").text(uploadfile);
-        $("#fileName").text(name); // Display the file name in the UI
+            let name = file.name;
+            sessionStorage.setItem('uploadedFileName', name);
+            $("#fileName").text(name);
 
-        $.ajax({
-            method: 'POST', // Corrected from the comment
-            url: "/api/upload",
-            headers: {
-                'Accept-Language': 'en'
-            },
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function(resp) {
-                $('#fileName').text(name);
-                window.setTimeout(function() {
-                    $('.submit').attr('disabled', false);
-                    $('.form-control').attr('readonly', false);
-                    $('.form-control').removeClass('disabled-link');
-                    $('.error-control').removeClass('disabled-link');
-                    $('.submit').html('Add');
-                }, 2000);
-                if (resp.status == 'success') {
-                    sessionStorage.setItem('FileUrl', resp.data);
-                    $('#Profile_image').val(resp.data.url);
+            $('#remove_error_message1').empty(); // remove error message
+
+
+            $.ajax({
+                method: 'POST',
+                url: "/api/upload",
+                headers: {
+                    'Accept-Language': 'en'
+                },
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(resp) {
+                    window.setTimeout(function() {
+                        $('.submit').attr('disabled', false);
+                        $('.form-control').attr('readonly', false);
+                        $('.form-control').removeClass('disabled-link');
+                        $('.error-control').removeClass('disabled-link');
+                        $('.submit').html('Add');
+                    }, 2000);
+
+                    if (resp.status === 'success') {
+                        sessionStorage.setItem('FileUrl', resp.data);
+                        $('#Profile_image').val(resp.data.url);
+                    }
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
                 }
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                var response = xhr.responseJSON;
-                // Optionally handle errors here
+            });
+        }
+
+        // ✅ Reset input so same image can be selected again
+        e.target.value = '';
+    }
+
+    // Attach event listener
+    $(document).on('change', '#edit_imageUpload', showPreviewAndUpload);
+
+    // Optional: remove button logic
+    $(document).on('click', '#remove', function() {
+        $('#preview').hide().attr('src', '');
+        $('#remove').hide();
+        $('#uploadLabel').show();
+        $('#fileName').text('');
+        $('#Profile_image').val('');
+    });
+
+
+    $(document).ready(function() {
+        // When user types in any input or textarea
+        $(document).on('input', '.form-control, .form-check-input', function() {
+            // Check if input has a value (not empty)
+            if ($(this).val().trim() !== '') {
+                // Remove the nearby error message
+                $(this).closest('.form-group').find('.text-danger').fadeOut(200, function() {
+                    $(this).remove();
+                });
             }
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        // When a user selects a country (clicks a label)
+        $(document).on('click', '.country-option', function() {
+            let radio = $(this).find('.country-radio');
+            let flag = radio.data('flag');
+            let code = radio.val();
+            let name = radio.data('name');
+
+            // Update the flag and code shown on the button
+            $('#selected-flag img').attr('src', flag);
+            $('#selected-code').text(code);
+
+            // Set the radio input as checked
+            radio.prop('checked', true);
+
+            // Close the dropdown (Bootstrap 5)
+            $('#countryDropdown').dropdown('hide');
+        });
+    });
+</script>
+
+
+{{-- @include('dealer.custom_code'); --}}
+
+@include('dealer.layout.custom_code');
+
+
 
 </html>

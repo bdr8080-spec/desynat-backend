@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\SellerController;
 use App\Http\Controllers\Api\Admin\CountryController;
+use App\Http\Controllers\Api\Admin\PlanController;
 
 
 // Admin APi M1
@@ -40,6 +41,7 @@ use App\Http\Controllers\Api\Admin\CountryController;
       Route::post('/add_brand',[BrandController::class,'add_brand']);
       Route::post('/update_brand',[BrandController::class,'update_brand']);
       Route::post('/delete_brand',[BrandController::class,'delete_brand']);
+      //M1 api ends
 
      //M2 Api Starts
 
@@ -57,7 +59,22 @@ use App\Http\Controllers\Api\Admin\CountryController;
      Route::post('/add_service_city',[CountryController::class,'add_service_city']);
      Route::post('/change_service_city_status',[CountryController::class,'change_service_city_status']);
      Route::post('/delete_service_city',[CountryController::class,'delete_service_city']);
+     Route::get('/get_zones',[CountryController::class,'get_zones']);
+     Route::get('/get_zone_details',[CountryController::class,'get_zone_details']);
      Route::post('/add_zone',[CountryController::class,'add_zone']);
+     Route::post('/update_zone',[CountryController::class,'update_zone']);
+     Route::post('/change_zone_status',[CountryController::class,'change_zone_status']);
+     Route::post('/delete_zone',[CountryController::class,'delete_zone']);
+
+     //Plan Management
+     Route::post('/add_plan',[PlanController::class,'add_plan']);
+     Route::post('/update_plan',[PlanController::class,'update_plan']);
+     Route::get('/get_plans',[PlanController::class,'get_plans']);
+     Route::get('/get_plan_details',[PlanController::class,'get_plan_details']);
+     Route::post('/change_plan_status',[PlanController::class,'change_plan_status']);
+     Route::post('/delete_plan',[PlanController::class,'delete_plan']);
+     
+     //M2 api ends
 
 
 

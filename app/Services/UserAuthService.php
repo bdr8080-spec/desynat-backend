@@ -29,7 +29,7 @@ class UserAuthService
        $check=  User::create($record);
 
         if($check){
-            return ['status'=>'success','message'=>"User Account Create Successfully",'data'=>$check];            
+            return ['status'=>'success','message'=>"OTP sent succesfully",'data'=>$check];            
         }
 
 
@@ -53,7 +53,7 @@ class UserAuthService
         return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
     
       }else{
-        return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Invalid OTP",'data'=>(object)[]];                
       }
 
     }
@@ -80,7 +80,7 @@ class UserAuthService
                 
                 return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Please Enter correct password",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Please enter correct password",'data'=>(object)[]];                
             }
         
           }else{
@@ -154,7 +154,7 @@ class UserAuthService
         public function mobile_or_email_forgot_password($request){
 
             if($request->type=='0'){ // when i use Mobile No
-                $get_user_details=  User::where('country_code',$request->country_code)->orWhere('mobile',$request->mobile)->where('otp_verify','1')->first();
+                $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->mobile)->where('otp_verify','1')->first();
 
             }else{
                 $get_user_details=  User::where('email',$request->email)->where('otp_verify','1')->first();

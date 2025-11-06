@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Sign up OTP Verification </title>
+    <title>desynat seller </title>
     <!-- Favicons -->
-    <link href="{{ asset('/dealer') }}/assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -58,7 +58,8 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="sign-up.php"><i class="bi bi-chevron-left"></i></a> OTP</h1>
+                                    <h1><a href="{{ url()->previous() }} "><i class="bi bi-chevron-left"></i></a> OTP
+                                    </h1>
                                 </div>
 
                                 <div class="step-progress py-4">
@@ -93,26 +94,44 @@
 
                                     @csrf
 
-                                    <div class="otp-panel py-4">
-                                        <div class="otp-field" style="display: flex; gap: 8px;justify-content: center;">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 1)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 2)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 3)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 4)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 5)">
-                                            <input type="text" name="otp[]" maxlength="1" class="form-control"
-                                                oninput="moveNext(this, 6)">
-                                        </div>
+
+                                    {{-- <div id="otp-inputs" class="d-flex gap-2">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                        <input type="text" name="otp[]" maxlength="1"
+                                            class="form-control text-center" oninput="moveNext(this)"
+                                            onkeydown="allowOnlyNumbers(event)">
+                                    </div> --}}
+
+
+                                    <div id="otp-inputs" class="d-flex gap-2">
+                                        @for ($i = 0; $i < 6; $i++)
+                                            <input type="text" name="otp[]" maxlength="1"
+                                                class="form-control text-center" oninput="moveNext(this)"
+                                                onkeydown="allowOnlyNumbers(event)">
+                                        @endfor
                                     </div>
 
-                                    @error('otp')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    {{-- Show OTP validation error --}}
+
+                                    @if ($errors->has('otp'))
+                                        <span class="text-danger d-block mt-1">{{ $errors->first('otp') }}</span>
+                                    @elseif ($errors->has('otp.*'))
+                                        <span class="text-danger d-block mt-1">{{ $errors->first('otp.*') }}</span>
+                                    @endif
 
                                     <div class="login-btn padding-top-60">
                                         <input type="submit" class="btn btn-success w-100" value="Verify">
@@ -156,9 +175,47 @@
             inputs.forEach((inp, j) => inp.value = val[j] || "");
         });
     });
+
+    // otp input tags
+
+
+    function moveNext(current) {
+        // Allow only numbers
+        current.value = current.value.replace(/[^0-9]/g, '');
+
+        if (current.value.length === 1) {
+            const next = current.nextElementSibling;
+            if (next && next.tagName === "INPUT") {
+                next.focus();
+            }
+        }
+    }
+
+    function allowOnlyNumbers(event) {
+        const key = event.key;
+
+        // Allow only digits and control keys
+        if (!/^[0-9]$/.test(key) && key !== "Backspace" && key !== "Tab" && key !== "ArrowLeft" && key !==
+            "ArrowRight") {
+            event.preventDefault();
+        }
+
+        // Move back on Backspace
+        if (key === "Backspace" && event.target.value === '') {
+            const prev = event.target.previousElementSibling;
+            if (prev && prev.tagName === "INPUT") {
+                prev.focus();
+            }
+        }
+    }
 </script>
 
-@include('dealer.footer');
 
+</script>
+
+{{-- @include('dealer.footer'); --}}
+
+
+@include('dealer.layout.custom_code');
 
 </html>

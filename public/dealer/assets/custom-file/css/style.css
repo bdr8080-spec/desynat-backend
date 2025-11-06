@@ -40,7 +40,13 @@
   --plan-gold: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
   --plan-green: linear-gradient(182.18deg, #17854C 28.73%, #2DFF92 120.46%);
   --border-color: #DFBF8F;
+  --bg-header: #FFF7EA;
 
+  --title24: 20px;
+  --title-color: #040404;
+  --gold-color: #F3D1A2;
+  --title30: 25px;
+  --text-red: red;
 
 }
 
@@ -153,6 +159,38 @@ label {
   border-radius: 11px;
 }
 
+.date-form-pnl .form-control {
+  padding: 8px;
+  border: 1px solid #c5c3c3;
+}
+
+.gold-title {
+  color: var(--gold-color);
+}
+
+.shadow20 {
+  box-shadow: 0px 4px 20px 0px #00000014;
+}
+
+.border20 {
+  border-radius: 10px;
+}
+
+.p20 {
+  padding: 20px;
+}
+
+.pnl-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title30 {
+  font-size: var(--title30);
+  font-weight: 600;
+  color: #000;
+}
 
 /*--------------------------------------------------------------
 # Main
@@ -617,6 +655,7 @@ label {
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
   background: var(--bg-multiple);
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 .header .toggle-sidebar-btn {
@@ -1052,10 +1091,6 @@ label {
   top: -3px;
 }
 
-.imgshow_Width {
-  width: "100%"
-}
-
 .text-color-upload {
   color: var(--title-dark);
 }
@@ -1177,4 +1212,21 @@ label {
   position: absolute;
   top: 2px;
   right: -22px;
+}
+
+.removebtn {
+  position: absolute;
+  top: 2px;
+  right: -22px;
+  font-size: 28px;
+  color: var(--text-red);
+}
+
+.gpsmap {
+  position: absolute;
+  right: 0;
+  bottom: 50%;
+  transform: translate(-5px, 24px);
+  font-size: 22px;
+  background: #fff;
 }

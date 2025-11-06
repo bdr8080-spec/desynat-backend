@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Bank Details</title>
+    <title>desynat seller</title>
     <!-- Favicons -->
-    <link href="{{ asset('/dealer') }}/assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -54,7 +54,8 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a> Upload
+                                    <h1><a href="{{ route('seller.store_information', Request()->id) }}"><i
+                                                class="bi bi-chevron-left"></i></a> Upload
                                         documents & Bank details</h1>
                                 </div>
 
@@ -83,7 +84,7 @@
                                     </div>
 
                                     @error('owner_document')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" id="remove_error_message1">{{ $message }}</span>
                                     @enderror
 
                                     <div class="owner-pnl">
@@ -99,38 +100,39 @@
                                                             <div class="text-color-upload">Document 1</div>
                                                             <input type="file" name="owner_document[]"
                                                                 accept="image/*" hidden onchange="showPreview(event,1)">
-                                                        </label>
-                                                        <div class="imgshow">
-                                                            {{-- <img class="preview1"
+
+                                                            <div class="imgshow">
+                                                                {{-- <img class="preview1"
                                                                 style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
                                                             <span class="removeIcon1"
                                                                 style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                                 onclick="removeImg(1)">&times;</span> --}}
 
-                                                            <div class="imgshow">
+                                                                <div class="imgshow">
 
-                                                                @if (isset($owner_document['0']))
-                                                                    <input type="text" accept="image/*" hidden
-                                                                        name="old_owner_document[]"
-                                                                        class="inputImage1"
-                                                                        value="{{ $owner_document['0']->document_path }}">
+                                                                    @if (isset($owner_document['0']))
+                                                                        <input type="text" accept="image/*" hidden
+                                                                            name="old_owner_document[]"
+                                                                            class="inputImage1"
+                                                                            value="{{ $owner_document['0']->document_path }}">
 
-                                                                    <img class="preview1"
-                                                                        src="{{ $owner_document['0']->document_path }}"
-                                                                        style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                                    <span class="removeIcon1"
-                                                                        style="display:block;cursor:pointer;font-size:24px;color:red;"
-                                                                        onclick="removeImg(1,{{ $owner_document['0']->id }})">&times;</span>
-                                                                @else
-                                                                    <img class="preview1"
-                                                                        style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
-                                                                    <span class="removeIcon1"
-                                                                        style="display:none;cursor:pointer;font-size:24px;color:red;"
-                                                                        onclick="removeImg(1)">&times;</span>
-                                                                @endif
+                                                                        <img class="preview1"
+                                                                            src="{{ $owner_document['0']->document_path }}"
+                                                                            style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
+                                                                        <span class="removeIcon1 removebtn"
+                                                                            style="display:block;cursor:pointer;font-size:24px;color:red;"
+                                                                            onclick="removeImg(1,{{ $owner_document['0']->id }})">&times;</span>
+                                                                    @else
+                                                                        <img class="preview1"
+                                                                            style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
+                                                                        <span class="removeIcon1 removebtn"
+                                                                            style="display:none;cursor:pointer;font-size:24px;color:red;"
+                                                                            onclick="removeImg(1)">&times;</span>
+                                                                    @endif
+                                                                </div>
+
                                                             </div>
-
-                                                        </div>
+                                                        </label>
                                                     </div>
                                                 </div>
 
@@ -146,8 +148,8 @@
                                                             <input type="file" name="owner_document[]"
                                                                 accept="image/*" hidden
                                                                 onchange="showPreview(event,2)">
-                                                        </label>
-                                                        {{-- <div class="imgshow">
+
+                                                            {{-- <div class="imgshow">
                                                             <img class="preview2"
                                                                 style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
                                                             <span class="removeIcon2"
@@ -155,27 +157,28 @@
                                                                 onclick="removeImg(2)">&times;</span>
                                                         </div> --}}
 
-                                                        <div class="imgshow">
-                                                            @if (isset($owner_document['1']))
-                                                                <input type="text" accept="image/*" hidden
-                                                                    name="old_owner_document[]" class="inputImage2"
-                                                                    value="{{ $owner_document['1']->document_path }}">
+                                                            <div class="imgshow">
+                                                                @if (isset($owner_document['1']))
+                                                                    <input type="text" accept="image/*" hidden
+                                                                        name="old_owner_document[]"
+                                                                        class="inputImage2"
+                                                                        value="{{ $owner_document['1']->document_path }}">
 
-                                                                <img class="preview2"
-                                                                    src="{{ $owner_document['1']->document_path }}"
-                                                                    style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                                <span class="removeIcon2"
-                                                                    style="display:block;cursor:pointer;font-size:24px;color:red;"
-                                                                    onclick="removeImg(2,{{ $owner_document['1']->id }})">&times;</span>
-                                                            @else
-                                                                <img class="preview2"
-                                                                    style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
-                                                                <span class="removeIcon2"
-                                                                    style="display:none;cursor:pointer;font-size:24px;color:red;"
-                                                                    onclick="removeImg(2)">&times;</span>
-                                                            @endif
-                                                        </div>
-
+                                                                    <img class="preview2"
+                                                                        src="{{ $owner_document['1']->document_path }}"
+                                                                        style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
+                                                                    <span class="removeIcon2 removebtn"
+                                                                        style="display:block;cursor:pointer;font-size:24px;color:red;"
+                                                                        onclick="removeImg(2,{{ $owner_document['1']->id }})">&times;</span>
+                                                                @else
+                                                                    <img class="preview2"
+                                                                        style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
+                                                                    <span class="removeIcon2 removebtn"
+                                                                        style="display:none;cursor:pointer;font-size:24px;color:red;"
+                                                                        onclick="removeImg(2)">&times;</span>
+                                                                @endif
+                                                            </div>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,33 +198,33 @@
                                                             <input type="file" name="store_document[]"
                                                                 accept="image/*" hidden
                                                                 onchange="showPreview(event,3)">
-                                                        </label>
-                                                        <div class="imgshow">
 
                                                             <div class="imgshow">
-                                                                @if (isset($store_document['0']))
-                                                                    <input type="text" accept="image/*" hidden
-                                                                        name="old_store_document[]"
-                                                                        class="inputImage3"
-                                                                        value="{{ $store_document['0']->document_path }}">
 
-                                                                    <img class="preview3"
-                                                                        src="{{ $store_document['0']->document_path }}"
-                                                                        style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                                    <span class="removeIcon3"
-                                                                        style="display:block;cursor:pointer;font-size:24px;color:red;"
-                                                                        onclick="removeImg(3,{{ $store_document['0']->id }})">&times;</span>
-                                                                @else
-                                                                    <img class="preview3"
-                                                                        style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
-                                                                    <span class="removeIcon3"
-                                                                        style="display:none;cursor:pointer;font-size:24px;color:red;"
-                                                                        onclick="removeImg(3)">&times;</span>
-                                                                @endif
+                                                                <div class="imgshow">
+                                                                    @if (isset($store_document['0']))
+                                                                        <input type="text" accept="image/*" hidden
+                                                                            name="old_store_document[]"
+                                                                            class="inputImage3"
+                                                                            value="{{ $store_document['0']->document_path }}">
+
+                                                                        <img class="preview3"
+                                                                            src="{{ $store_document['0']->document_path }}"
+                                                                            style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
+                                                                        <span class="removeIcon3 removebtn"
+                                                                            style="display:block;cursor:pointer;font-size:24px;color:red;"
+                                                                            onclick="removeImg(3,{{ $store_document['0']->id }})">&times;</span>
+                                                                    @else
+                                                                        <img class="preview3"
+                                                                            style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
+                                                                        <span class="removeIcon3 removebtn"
+                                                                            style="display:none;cursor:pointer;font-size:24px;color:red;"
+                                                                            onclick="removeImg(3)">&times;</span>
+                                                                    @endif
+                                                                </div>
+
                                                             </div>
-
-                                                        </div>
-
+                                                        </label>
                                                     </div>
                                                 </div>
 
@@ -236,8 +239,8 @@
                                                             <input type="file" name="store_document[]"
                                                                 accept="image/*" hidden
                                                                 onchange="showPreview(event,4)">
-                                                        </label>
-                                                        {{-- <div class="imgshow">
+
+                                                            {{-- <div class="imgshow">
                                                             <img class="preview4"
                                                                 style="display:none;max-width:100%;margin-top:10px;border-radius:8px;">
                                                             <span class="removeIcon4"
@@ -245,27 +248,28 @@
                                                                 onclick="removeImg(4)">&times;</span>
                                                         </div> --}}
 
-                                                        <div class="imgshow">
-                                                            @if (isset($store_document['1']))
-                                                                <input type="text" accept="image/*" hidden
-                                                                    name="old_store_document[]" class="inputImage4"
-                                                                    value="{{ $store_document['1']->document_path }}">
+                                                            <div class="imgshow">
+                                                                @if (isset($store_document['1']))
+                                                                    <input type="text" accept="image/*" hidden
+                                                                        name="old_store_document[]"
+                                                                        class="inputImage4"
+                                                                        value="{{ $store_document['1']->document_path }}">
 
-                                                                <img class="preview4"
-                                                                    src="{{ $store_document['1']->document_path }}"
-                                                                    style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                                <span class="removeIcon4"
-                                                                    style="display:block;cursor:pointer;font-size:24px;color:red;"
-                                                                    onclick="removeImg(4,{{ $store_document['1']->id }})">&times;</span>
-                                                            @else
-                                                                <img class="preview4"
-                                                                    style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
-                                                                <span class="removeIcon4"
-                                                                    style="display:none;cursor:pointer;font-size:24px;color:red;"
-                                                                    onclick="removeImg(4)">&times;</span>
-                                                            @endif
-                                                        </div>
-
+                                                                    <img class="preview4"
+                                                                        src="{{ $store_document['1']->document_path }}"
+                                                                        style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
+                                                                    <span class="removeIcon4 removebtn"
+                                                                        style="display:block;cursor:pointer;font-size:24px;color:red;"
+                                                                        onclick="removeImg(4,{{ $store_document['1']->id }})">&times;</span>
+                                                                @else
+                                                                    <img class="preview4"
+                                                                        style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
+                                                                    <span class="removeIcon4 removebtn"
+                                                                        style="display:none;cursor:pointer;font-size:24px;color:red;"
+                                                                        onclick="removeImg(4)">&times;</span>
+                                                                @endif
+                                                            </div>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -273,7 +277,7 @@
                                     </div>
 
                                     @error('store_document')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" id="remove_error_message2">{{ $message }}</span>
                                     @enderror
 
                                     <div class="owner-pnl mt-4">
@@ -296,46 +300,58 @@
                                                     </label>
                                                 </div>
                                             </div>
+
+                                            @error('account_type')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+
                                         </div>
                                     </div>
-                                    @error('account_type')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
                                     <div class="form-group">
                                         <label for="name">IBAN</label>
-                                        <input type="text" class="form-control" placeholder="KW" name="iban"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter IBAN Number" name="iban"
                                             value="{{ old('iban', @$seller_bank->iban) }}">
+
+                                        @error('iban')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+
                                     </div>
-                                    @error('iban')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">SWIFT/BIC</label>
-                                        <input type="text" class="form-control" placeholder="Enter Swift"
-                                            name="swift" value="{{ old('bank_name', @$seller_bank->swift) }}">
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Swift" name="swift"
+                                            value="{{ old('bank_name', @$seller_bank->swift) }}">
+                                        @error('swift')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('swift')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Bank Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Bank Name"
-                                            name="bank_name"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Bank Name" name="bank_name"
                                             value="{{ old('bank_name', @$seller_bank->bank_name) }}">
+                                        @error('bank_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('bank_name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
                                     <div class="form-group">
                                         <label for="name">Account holder name</label>
-                                        <input type="text" class="form-control"
+                                        <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Account holder name" name="account_holder_name"
-                                            value="{{ old('account_holder_name', @$seller_bank->account_holder_name) }}">
+                                            value="{{ old('account_holder_name', @$seller_bank->account_holder_name) }}"
+                                            oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
+                                        @error('account_holder_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                    @error('account_holder_name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
                                     <!-- <div class="owner-pnl">
                                         <div class="form-group">
@@ -367,8 +383,8 @@
                                                             style="cursor:pointer;text-align:center;">
                                                             <img
                                                                 src="{{ asset('/dealer/assets/img/upload-icon.svg') }}">
-                                                            <div class="text-color-upload">Bank Statement or Bank
-                                                                Letter, PDF/JPG/PNG</div>
+                                                            <div class="text-color-upload">Upload proof of account
+                                                            </div>
                                                             <input type="file" accept="image/*" hidden
                                                                 onchange="showPreview(event,5)" name="upload_proof">
                                                         </label>
@@ -385,20 +401,21 @@
                                                                 <img class="preview5"
                                                                     src="{{ $seller_bank->upload_proof }}"
                                                                     style="display:block;max-width:100%;margin-top:10px;border-radius:8px;">
-                                                                <span class="removeIcon5"
+                                                                <span class="removeIcon5 removebtn"
                                                                     style="display:block;cursor:pointer;font-size:24px;color:red;"
                                                                     onclick="removeImg(5)">&times;</span>
                                                             @else
                                                                 <img class="preview5"
                                                                     style="display:none;max-width:100%;margin-top:10px;border-radius:8px;width=100%">
-                                                                <span class="removeIcon5"
+                                                                <span class="removeIcon5 removebtn"
                                                                     style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                                     onclick="removeImg(5)">&times;</span>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     @error('upload_proof')
-                                                        <span class="text-danger">{{ $message }}</span>
+                                                        <span class="text-danger"
+                                                            id="remove_error_message3">{{ $message }}</span>
                                                     @enderror
 
                                                 </div>
@@ -433,9 +450,7 @@
 
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
-<script
-    src="{{ asset('/dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 
 <!--Main JS File -->
@@ -454,6 +469,19 @@
             };
             reader.readAsDataURL(file);
         }
+
+        if (id == 1 || id == 2) {
+            $('#remove_error_message1').empty();
+        }
+
+        if (id == 3 || id == 4) {
+            $('#remove_error_message2').empty();
+        }
+        if (id == 5) {
+            $('#remove_error_message3').empty();
+        }
+
+
     }
 
     function removeImg(id, o_id) {
@@ -511,6 +539,6 @@
 </script>
 
 
-@include('dealer.footer');
+@include('dealer.layout.custom_code');
 
 </html>

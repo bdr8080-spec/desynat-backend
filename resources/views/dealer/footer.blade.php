@@ -20,8 +20,39 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-
 <script>
+    document.querySelectorAll('.notapplyspace').forEach(function(input) {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === ' ') {
+                e.preventDefault();
+            }
+        });
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const restrictedInputs = document.querySelectorAll('.blockFirstTime');
+
+        restrictedInputs.forEach(input => {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === ' ' && this.value.length === 0) {
+                    e.preventDefault();
+                }
+            });
+
+            input.addEventListener('input', function() {
+                if (this.value.startsWith(' ')) {
+                    this.value = this.value.trimStart();
+                }
+            });
+        });
+    });
+
+
+
+
+
+
     new DataTable('#example');
 
     @if (session('success'))

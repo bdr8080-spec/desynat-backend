@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title> Desyant Dealer </title>
     <!-- Favicons -->
-    <link href="{{ asset('dealer') }}/assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -62,23 +62,65 @@
                                     @csrf
                                     <div class="form-group">
                                         <div class="form-group mt-4">
-                                            <label for="">Mobile or Email Address</label>
+                                            <label for="">Mobile Number or Email Address</label>
 
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class=" d-none LoginCountryCode">
-                                                    <select name="country_code" class="form-select"
+                                                    {{-- <select name="country_code" class="form-select"
                                                         style="width: 100px">
-
-                                                        class="country form-select form-control" style="width: 100px">
                                                         @foreach ($country as $item)
                                                             <option value="{{ $item->dial_code }}">
                                                                 {{ $item->dial_code }}</option>
                                                         @endforeach
-                                                    </select>
+                                                    </select> --}}
+
+                                                    <div class="dropdown">
+                                                        <button
+                                                            class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                                            type="button" id="countryDropdown"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+
+                                                            <span id="selected-flag">
+                                                                <img src="{{ old('country_flag', $country[0]->flag1) }}"
+                                                                    alt="flag" width="25" height="16">
+
+                                                            </span>
+
+                                                            <span id="selected-code" class="ms-2">
+                                                                {{ old('country_code', $country[0]->dial_code) }}
+                                                            </span>
+                                                        </button>
+
+                                                        <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+
+                                                            @foreach ($country as $index => $item)
+                                                                <li>
+                                                                    <label
+                                                                        class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                        style="cursor: pointer;">
+                                                                        <input type="radio" name="country_code"
+                                                                            value="{{ $item->dial_code }}"
+                                                                            data-flag="{{ $item->flag1 }}"
+                                                                            data-name="{{ $item->name }}"
+                                                                            class="country-radio"
+                                                                            {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                            hidden>
+                                                                        <img src="{{ $item->flag1 }}"
+                                                                            alt="Flag of {{ $item->name }}"
+                                                                            width="25" height="16">
+                                                                        <span>{{ $item->dial_code }}
+                                                                            ({{ $item->name }})
+                                                                        </span>
+                                                                    </label>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
                                                 <div class="w-100 LoginMobileDesign">
-                                                    <input type="text" class="form-control" value=""
-                                                        placeholder="Enter mobile number and email address"
+                                                    <input type="text" class="form-control notapplyspace"
+                                                        value="" placeholder="Mobile Number or Email Address"
                                                         name="email_mobile" id="LoginMobile">
                                                 </div>
                                             </div>
@@ -89,7 +131,7 @@
 
                                         <div class="form-group position-relative">
                                             <label for="password">Password</label>
-                                            <input type="password" class="form-control" id="password"
+                                            <input type="password" class="form-control notapplyspace" id="password"
                                                 placeholder="Enter Your Password" name="password">
                                             <i class="toggle-password  bi bi-eye-slash "></i>
                                         </div>
@@ -98,17 +140,14 @@
                                         @enderror
 
                                         <div class="form-group py-2 mb-4 text-center">
-                                            <a href="{{ route('seller.forgot') }}" class="link-color">Forgot Password ?
+                                            <a href="{{ route('seller.forgot') }}" class="link-color">Forgot Password
+                                                ?
                                             </a>
                                         </div>
                                         <div class="login-btn">
-
                                             <input type="submit" class="btn btn-success w-100" name="submit"
                                                 value="login">
-
-                                            <!-- <a href="index.php" class="btn btn-success w-100">Login</a> -->
                                         </div>
-
                                 </form>
 
                                 <div class="sign-new mt-2 text-center">
@@ -161,5 +200,31 @@
         }
     });
 </script>
+
+
+
+<script>
+    $(document).ready(function() {
+        // When a user selects a country (clicks a label)
+        $(document).on('click', '.country-option', function() {
+            let radio = $(this).find('.country-radio');
+            let flag = radio.data('flag');
+            let code = radio.val();
+            let name = radio.data('name');
+
+            // Update the flag and code shown on the button
+            $('#selected-flag img').attr('src', flag);
+            $('#selected-code').text(code);
+
+            // Set the radio input as checked
+            radio.prop('checked', true);
+
+            // Close the dropdown (Bootstrap 5)
+            $('#countryDropdown').dropdown('hide');
+        });
+    });
+</script>
+
+@include('dealer.custom_code');
 
 </html>

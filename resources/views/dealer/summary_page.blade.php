@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Summary Information</title>
+    <title>desynat seller</title>
     <!-- Favicons -->
-    <link href="{{ asset('/dealer') }}/assets/img/favicon.png" rel="icon">
+    <link href="{{ asset('/dealer') }}/assets/img/desynat_fav_ic.svg" rel="icon">
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -58,7 +58,7 @@
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
                                 <div class="cmn-header mb-3">
-                                    <h1><a href="bank-details.php"><i class="bi bi-chevron-left"></i></a> Summary
+                                    <h1><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a> Summary
                                         information</h1>
                                 </div>
 
@@ -98,11 +98,12 @@
                                 </div>
                                 <div class="personal-list">
                                     <div class="lightName">Address</div>
-                                    <div class="title_black">{{ $review->store_info->address_line1 }}</div>
+                                    <div class="title_black">{{ $review->store_info->store_address }}</div>
                                 </div>
                                 <div class="personal-list">
                                     <div class="lightName">Phone Number</div>
-                                    <div class="title_black">{{ $review->store_info->store_phone }}</div>
+                                    <div class="title_black"> {{ $review->store_info->country_code }} -
+                                        {{ $review->store_info->store_phone }}</div>
                                 </div>
                                 <div class="personal-list">
                                     <div class="lightName">Mail Id</div>
@@ -173,14 +174,20 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="personal-list">
-                                    <div class="lightName">IBAN</div>
-                                    <div class="title_black">{{ $review->seller_bank_details->iban }}</div>
-                                </div>
-                                <div class="personal-list">
-                                    <div class="lightName">SWIFT/BIC</div>
-                                    <div class="title_black">{{ $review->seller_bank_details->swift }}</div>
-                                </div>
+                                @isset($review->seller_bank_details->iban)
+                                    <div class="personal-list">
+                                        <div class="lightName">IBAN</div>
+                                        <div class="title_black">{{ $review->seller_bank_details->iban }}</div>
+                                    </div>
+                                @endisset
+
+                                @isset($review->seller_bank_details->swift)
+                                    <div class="personal-list">
+                                        <div class="lightName">SWIFT/BIC</div>
+                                        <div class="title_black">{{ $review->seller_bank_details->swift }}</div>
+                                    </div>
+                                @endisset
+
                                 <div class="personal-list">
                                     <div class="lightName">Bank Name</div>
                                     <div class="title_black">{{ $review->seller_bank_details->bank_name }}</div>
@@ -221,20 +228,18 @@
 
 </body>
 
-
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
-<script
-    src="{{ asset('/dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
 
 
+{{-- @include('dealer.footer'); --}}
 
-@include('dealer.footer');
+@include('dealer.layout.custom_code');
 
 
 </html>

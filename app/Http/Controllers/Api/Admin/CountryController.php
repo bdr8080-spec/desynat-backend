@@ -161,6 +161,55 @@ class CountryController extends Controller
         }
     }
 
+    public function get_zones(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'country_id' => 'required|exists:countries,id',
+            'city_id' => 'required|exists:service_cities,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->CountryService->getZones($request->country_id,$request->city_id,$request->limit,$request->search);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function get_zone_details(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'zone_id' => 'required|exists:zones,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->CountryService->getZoneDetailsById($request->zone_id);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
     public function add_zone(Request $request)
     {
         $validate = Validator::make($request->all(), [
@@ -190,6 +239,86 @@ class CountryController extends Controller
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+
+    public function update_zone(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'zone_id' => 'required|exists:zones,id',
+            'country_id' => 'required|exists:countries,id',
+            'city_id' => 'required|exists:service_cities,id',
+            'name_english' => 'required|string|max:255',
+            'name_arabic' => 'required|string|max:255',
+            'coordinates' => 'required|array|min:3',
+            'coordinates.*.lat' => 'required|numeric',
+            'coordinates.*.lng' => 'required|numeric',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CountryService->updateZone($request);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function change_zone_status(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'zone_id' => 'required|exists:zones,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->CountryService->changeZoneStatus($request->zone_id);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function delete_zone(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'zone_id' => 'required|exists:zones,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->CountryService->deleteZone($request->zone_id);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

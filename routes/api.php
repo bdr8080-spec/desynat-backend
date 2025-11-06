@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Artisan;
 Route::get('optimize',function(){
     Artisan::call('optimize');
     Artisan::call('config:clear');
-    // Artisan::call('cache:clear');
+    Artisan::call('cache:clear');
     return 'Application optimized successfully!';
 });
 

@@ -31,10 +31,10 @@ class LoginController extends Controller
 
     public function login(Request $request){
 
+        $country= country::all();
 
         if ($request->isMethod('get')) {
-         $country= country::all();
-
+       
         return view('dealer.login',compact('country'));
         }
 
@@ -74,10 +74,14 @@ class LoginController extends Controller
         }
 
 
-        if(!$seller){                   
-        return redirect()->back()
-        ->withErrors(['password'=>'No Seller Account Found'])
-        ->withInput();
+        if(!$seller){        
+
+        // return redirect()->back()
+        // ->withErrors(['error'=>'No Seller Account Found'])
+        // ->withInput();
+
+        return redirect()->back()->with('error','No Seller Account Found');
+
         }
  
 
@@ -85,11 +89,12 @@ class LoginController extends Controller
           
            $seller_details=Auth::guard('seller')->user();
 
-           if($seller_details->admin_verify=='0'){
+           if($seller_details->admin_verify=='0' || $seller_details->admin_verify=='1'){
             return redirect()->back()
             ->withErrors(['password'=>'Seller Is Not verified By Admin'])
             ->withInput();
            }
+
 
            if($seller_details->admin_verify=='3'){
             return redirect()->back()
@@ -120,12 +125,12 @@ class LoginController extends Controller
 
     public function register(Request $request){
 
-        if ($request->isMethod('get')) {
+        $country= country::all();
 
-            $country= country::all();
+        if ($request->isMethod('get')) {
+            
             return view('dealer.sign-up',compact('country'));
         }
-
 
         $check_user_already=seller::where('email',$request->email)->where('otp_verify','0')->first();
 
@@ -133,19 +138,53 @@ class LoginController extends Controller
           $check_user_already->delete();
         }
    
+
         $validate = Validator::make($request->all(), [
             'profile_pic' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
             'country_code' => 'required',
             'email' => 'required|email|unique:sellers,email',
-            'mobile' => 'required',
-            'password' => 'required',
+            // 'mobile' => 'required',
+            'mobile' => [
+            'required',
+            Rule::unique('sellers')->where(function ($query) use ($request) {
+                return $query->where('country_code', $request->country_code);
+            }),
+        ],
+            'password' => [
+                'required',
+                'string',
+                // 'min:8',
+                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+            ],
             'confirm_password' => 'required|same:password',
             'accept_terms'=>"required|in:1"
+        ],[
+            'profile_pic.required'=>'Please Upload profile Picture',
+            'first_name.required'    => 'Please enter first name',
+            'last_name.required'    => 'Please enter last name',
+            'country_code.required' => 'Please select country code',
+            'mobile.required' => 'Please enter mobile number',
+            
+            'email.required'        => 'Please enter email address',
+            'email.email'           => 'Please enter a valid email address',
+            'email.unique'          => 'This email address is already registered', 
+
+            'password.required'     => 'Please enter password',
+            'password.min' => 'Password must be at least 8 characters long',
+            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+            'confirm_password.required' => 'Please confirm your password',
+            'confirm_password.same' => 'Password do not match',
+
+            'accept_terms.required' => 'Please accept the terms and conditions',
+            'accept_terms.in' => 'You must agree to the terms and conditions to continue',
+        
+        
         ]);
 
         if ($validate->fails()) {
+            
             return redirect()->back()
                 ->withErrors($validate)
                 ->withInput(); // keep old input values
@@ -160,7 +199,7 @@ class LoginController extends Controller
 
         $seller_id=$data['data']->id;
 
-        return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'Please verify OTP');
+        return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'OTP Sent Succesfully');
 
     }
 
@@ -174,21 +213,37 @@ class LoginController extends Controller
         return view('dealer.signup_otp',compact('seller_details'));
         }
 
+        // $validate = Validator::make($request->all(), [
+        //     'otp' => 'required|array|min:6',
+        //     'otp.*' => 'required|min:6' // each element (digit) is required and must be a single digit
+        // ], [
+        //     'otp.required' => 'Please enter your OTP.',
+        //     'otp.array' => 'OTP must be in a valid format.',
+        //     'otp.*.required' => 'All OTP digits are required.'
+        // ]);
+    
         $validate = Validator::make($request->all(), [
-            'otp' => 'required|array',
-            'otp.*' => 'required|digits:1' // each element (digit) is required and must be a single digit
+            'otp' => 'required|array|min:6',
+            'otp.*' => 'required|digits:1', // each input must be exactly one digit
         ], [
             'otp.required' => 'Please enter your OTP.',
             'otp.array' => 'OTP must be in a valid format.',
-            'otp.*.required' => 'All OTP digits are required.'
+            'otp.min' => 'All 6 OTP digits are required.',
+            'otp.*.required' => 'Please enter OTP',
+            'otp.*.digits' => 'Each OTP box must contain only one number.',
         ]);
-    
+        
+
         if ($validate->fails()) {
+
+            // dd($validate);
+
             return redirect()->back()
-                ->withErrors($validate)
-                ->withInput();
-        }
-    
+            ->withErrors($validate)
+            ->withInput();
+        
+         }
+
 
        $enteredOtp = implode('', $request->otp);
 
@@ -211,7 +266,7 @@ class LoginController extends Controller
        }else{
 
         return redirect()->back()
-        ->withErrors(['otp'=>'Otp Is Wrong'])
+        ->withErrors(['otp'=>'Invalid OTP'])
         ->withInput();
 
        }
@@ -242,15 +297,28 @@ class LoginController extends Controller
             'store_name' => 'required',
             'country'=>"required",
             "store_address"=>"required",
-            'address_line1'=>'required',
-            'address_line2'=>'required',
+            // 'address_line1'=>'required',
+            // 'address_line2'=>'required',
             'country'=>'required',
-            "store_phone"=>"required",
-            'store_mail_id'=>'required',
+            "store_phone"=>"required|digits_between:7,15",
+            'store_mail_id'=>'required|email',
             'bio'=>'required',
             // 'let'=>'required|nullable',
             // 'long'=>'required|nullable'
             
+            ],[
+                'store_image.required'=>'Please Upload Store Image',
+                'store_name.required' => 'Please Enter store name',
+                'country.required'   =>   'please select country',
+                'store_address.required' => 'Please Enter store address',
+                'address_line1.required' => 'Please Enter store Address 1',
+                'address_line2.required' => 'Please Enter store Address 2',
+                'store_phone.required' => 'Please Enter store phone number',
+            
+                'store_mail_id.required'        => 'Please enter store email id',
+                'store_mail_id.email'           => 'Please enter valid store email id',    
+                'bio'=>'Please enter bio',
+                
             ]);
 
             if ($validate->fails()) {
@@ -321,12 +389,24 @@ class LoginController extends Controller
     // 'store_document' => 'required|array',
     
         'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
-        "iban"=>"required",
-        'swift'=>'required',
+        // "iban"=>"required",
+        // 'swift'=>'required',
         'bank_name'=>'required',
         "account_holder_name"=>"required",
         'upload_proof' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|required_without:old_upload_proof',
         'old_upload_proof' => 'nullable|required_without:upload_proof', 
+    ],[
+        'account_type.required'=>'Please select account type',
+        'bank_name.required'=>'Please enter bank name',
+        'account_holder_name.required'=>'Please enter account holder name',
+        'store_document.required'=>'Please upload store document',
+        'owner_document.required'=>'Please upload owner document',
+
+        'upload_proof.required_without' => 'Please upload proof of Account',
+        'upload_proof.image' => 'The upload proof must be an image file.',
+        'upload_proof.mimes' => 'Only JPG, JPEG, PNG, and WEBP formats are allowed.',
+        'upload_proof.max' => 'The image size must not exceed 2MB.',
+
     ]);
 
         if ($validate->fails()) {
@@ -385,7 +465,7 @@ class LoginController extends Controller
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
-        return redirect()->route('seller.upload_review',$seller_id)->with('success', 'Store Document Save Successfully');
+        return redirect()->route('seller.upload_review',$seller_id)->with('success', 'Store Document and Bank details Save Successfully');
 
     }
 
@@ -419,7 +499,7 @@ class LoginController extends Controller
         $request = (object) $request;
 
         $data= $this->SellerAuthService->seller_store_submit_request($request);
-        return view('dealer.signup-review')->with('success', 'Wait for Admin To Verify Your Details');;
+        return view('dealer.signup-review')->with('success', 'Wait for Admin To Verify Your Details');
     }
 
     public function logout(Request $request)
@@ -492,7 +572,7 @@ class LoginController extends Controller
 
     if(!$seller){                   
     return redirect()->back()
-    ->withErrors(['error'=>'No Seller Account Found'])
+    ->withErrors(['error'=>'Account not exists'])
     ->withInput();
     }
     
@@ -506,11 +586,10 @@ class LoginController extends Controller
         ->withErrors(['error'=>$data['message']])
         ->withInput();
     }
-
-
+    
     $seller_id= $data['data']->id."?forgot=yes";
-
-    return redirect()->route('seller.register_otp_verify',$seller_id);
+    
+    return redirect()->route('seller.register_otp_verify',$seller_id)->with('success', 'forgot Password otp send successfully');
     
     }
 
@@ -522,8 +601,21 @@ class LoginController extends Controller
         }
 
        $validate = Validator::make($request->all(), [
-        'password' => 'required',
+        'password' => [
+            'required',
+            'string',
+            // 'min:8',
+            // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+        ],
         'confirm_password'=>"required|same:password"
+           ],[
+
+            'password.required'     => 'Please enter password',
+            'password.min' => 'Password must be at least 8 characters long',
+            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+            'confirm_password.required' => 'Please confirm your password',
+            'confirm_password.same' => 'Password do not match',
+
            ]);
     
    if($validate->fails()){
@@ -551,8 +643,7 @@ class LoginController extends Controller
         ->withInput();
     }
     
-
-    return redirect()->route('seller.login');
+    return redirect()->route('seller.login')->with('success', 'Your Password reset Successfully');
 
     }
 
