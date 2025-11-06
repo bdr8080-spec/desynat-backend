@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\country;
+use App\Models\all_countrie;
+
 
 class CommonController extends Controller
 {
@@ -67,12 +69,20 @@ class CommonController extends Controller
 
      $all_country=country::get();
 
-    return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully',$all_country, 200);
+    return ApiResponse::generateResponse('success', 'All Seller Country Details fetch Successfully',$all_country, 200);
        
-
-
-
     }
+
+
+    public function all_country(Request $request){
+        
+        $all_country=all_countrie::get();
+   
+       return ApiResponse::generateResponse('success', 'All Country Details fetch Successfully',$all_country, 200);
+       
+       }
+
+    
 
 
 }

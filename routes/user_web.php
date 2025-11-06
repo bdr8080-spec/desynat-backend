@@ -3,6 +3,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\ProfileController;
+
 
 
   Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
@@ -20,7 +22,8 @@ use App\Http\Controllers\User\AuthController;
 });
 
    
-
+   Route::get('/prfoile', [ProfileController::class, 'useProfile'])->name('useProfile');
+   Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('changePassword');
    Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
 
 

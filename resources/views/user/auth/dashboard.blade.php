@@ -53,7 +53,7 @@
                                                     <label>farhan713@mail.com</label>
                                                 </div>  
                                             </div>
-                                            <span><i class="bi bi-pencil"></i></span>                                                     
+                                            <span ><i class="bi bi-pencil"></i></span>                                                     
                                         </div>
                                     </li>
                                     <li>
