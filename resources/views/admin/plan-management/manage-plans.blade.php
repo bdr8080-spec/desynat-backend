@@ -58,7 +58,7 @@
                                     <th scope="col">No. of Videos</th>
                                     <th scope="col">No. of Highlights</th>
                                     <th scope="col">Stories</th>
-                                    <th scope="col">No. of Store Employees</th>
+                                    <th scope="col">No. of Employees</th>
                                     <th scope="col">Plan Price</th>
                                     <th scope="col">Commission %</th>
                                     <th scope="col">Action</th>
@@ -92,7 +92,7 @@
                                         N/A
                                         @endif
                                     </td>
-                                    <td>N/A</td>
+                                    <td>{{ $plan->no_of_employee }}</td>
                                     <td>KD {{ $plan->price }}</td>
                                     <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}
                                     </td>

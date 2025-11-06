@@ -11,7 +11,7 @@
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="d-flex align-items-center gap-3 mt-2">
                         <div class="arrow">
-                            <a class="table-button" type="button" href="{{route('manageCities')}}">
+                            <a class="table-button" type="button" href="">
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
