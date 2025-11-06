@@ -373,18 +373,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+ <!-- commission perecntage input field open close -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const yesRadio = document.getElementById("commissionYes");
     const noRadio = document.getElementById("commissionNo");
     const commissionInput = document.getElementById("commissionInput");
 
-    yesRadio.addEventListener("change", function() {
+    function toggleCommissionInput() {
         commissionInput.style.display = yesRadio.checked ? "block" : "none";
-    });
+    }
+    toggleCommissionInput();
+    yesRadio.addEventListener("change", toggleCommissionInput);
+    noRadio.addEventListener("change", toggleCommissionInput);
+});
+</script>
 
-    noRadio.addEventListener("change", function() {
-        commissionInput.style.display = noRadio.checked ? "none" : "block";
+<!-- page refresh while closing add modal -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('sentModal2');
+    modal.addEventListener('hidden.bs.modal', function () {
+        location.reload(); 
     });
 });
 </script>

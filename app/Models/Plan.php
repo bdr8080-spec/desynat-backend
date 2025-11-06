@@ -18,6 +18,7 @@ class Plan extends Model
         'no_of_videos',
         'no_of_products',
         'no_of_highlights',
+        'no_of_employee',
         'stories',
         'price',
         'commission',
