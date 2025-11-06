@@ -287,7 +287,7 @@
                     if (response.success) {
                         toastr.success(response.message);
                         setTimeout(function() {
-                            window.location.href = "{{ route('changePassword') }}";
+                            window.location.href = "{{ route('admin.changePassword') }}";
                         }, 2000); 
                     }
                 },

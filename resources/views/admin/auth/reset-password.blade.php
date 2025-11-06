@@ -304,7 +304,7 @@
 
             // Now do AJAX call
             $.ajax({
-                url: '{{ route("changePassword") }}',
+                url: '{{ route("admin.changePassword") }}',
                 type: 'POST',
                 data: {
                     email: email,
