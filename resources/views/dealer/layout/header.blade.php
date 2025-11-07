@@ -87,7 +87,7 @@
                         data-bs-toggle="dropdown">
                         <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
                             class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Seller</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <!-- <li>
@@ -133,17 +133,24 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link sidebar-active border-radious-9 margin-20" href="index.php">
+                <a class="nav-link border-radious-9 margin-20  {{ Request::is('seller/dashboard') ? 'sidebar-active' : '' }}" href="{{ route('seller.dashboard') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon"
                         class="asideicon">
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/products') ? 'sidebar-active' : '' }}" href="{{ route('seller.products') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon"
                         class="asideicon">
                     <span>Product Management</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/Inventory-Management') ? 'sidebar-active' : '' }}" href="{{ route('seller.Inventory_Management') }}">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/inventory.svg" alt="icon"
+                        class="asideicon">
+                    <span>Inventory Management</span>
                 </a>
             </li>
 

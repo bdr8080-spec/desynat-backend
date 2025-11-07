@@ -51,3 +51,15 @@
     font-size: 16px;
     color: #000;
 }
+.tabs-panel #pills-tab {
+    border: 1px solid #ac875e;
+    border-radius: 10px;
+}
+.tabs-panel .nav-link {
+    line-height: 38px;
+    border-right: 1px solid #b9946b;
+    color: #000;
+}
+.tabs-panel .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background: var(--tab-active-bg);
+}
