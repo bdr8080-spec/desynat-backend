@@ -265,7 +265,7 @@
                         </form>
 
                         <div class="table-responsive">
-                            <table id="myTable" class="table">
+                            <table id="myTable1" class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Sr.No</th>
@@ -469,7 +469,7 @@
                         </form>
 
                         <div class="table-responsive">
-                            <table id="myTable" class="table">
+                            <table id="myTable2" class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Sr.No</th>
