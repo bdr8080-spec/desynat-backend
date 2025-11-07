@@ -71,3 +71,11 @@ Route::group(['prefix' => 'seller'], function () {
 
 
 });
+
+
+
+
+Route::fallback(function () {
+
+    return view('404');
+});
