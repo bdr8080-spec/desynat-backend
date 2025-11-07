@@ -332,8 +332,13 @@ class SellerAuthService
 
             public function seller_allPlan($request){
 
+              if(!isset($request->country_id)){
+                return ['status'=>'error','message'=>"seller Store Information Not Found ",'data'=>(object)[]];               
+              }
+              
 
               $data= Plan::where('country_id',$request->country_id)->get();
+
 
               if($data->isNotEmpty()){
                 return ['status'=>'success','message'=>"All Plans fetch Successfully",'data'=>$data];            
