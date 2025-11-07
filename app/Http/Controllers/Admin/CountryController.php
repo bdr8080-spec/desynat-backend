@@ -122,6 +122,74 @@ class CountryController extends Controller
         }
     }
 
+    public function update_zone(Request $request)
+    {
+        $request->validate([
+            'zone_id' => 'required|integer|exists:zones,id',
+            'country_id' => 'required|integer|exists:countries,id',
+            'city_id' => 'required|integer|exists:service_cities,id',
+            'name_english' => 'required|string|max:255',
+            'name_arabic' => 'required|string|max:255',
+            'coordinates' => 'required|array|min:3',
+            'coordinates.*.lat' => 'required|numeric',
+            'coordinates.*.lng' => 'required|numeric',
+        ]);
+
+        $result = $this->CountryService->updateZone($request);
+
+        if ($result['status'] === 'success') {
+            return response()->json([
+                'status' => 'success',
+                'message' => $result['message'],
+                'data' => $result['data']
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message'],
+                'data' => $result['data']
+            ], 500);
+        }
+    }
+
+    public function deleteZone($id)
+    {
+        $result = $this->CountryService->deleteZone($id);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function change_zone_status($id)
+    {
+        $data = $this->CountryService->changeZoneStatus($id);
+
+        if ($data['status'] == 'success') {
+            $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
+  
+            return response()->json([
+                'success' => true,
+                'status' => $data['data']->status,
+                'message' => "Zone has been {$statusText} Successfully!"
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400); 
+        }
+    }
+
+
 
 
 }
