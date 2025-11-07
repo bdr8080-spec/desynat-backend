@@ -20,6 +20,7 @@ class SellerManagementService
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
+                    'subcription_plan'
                 ]);
 
             if (!empty($request->country_id)) {
@@ -55,6 +56,7 @@ class SellerManagementService
                 $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
                 $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
                 $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+                $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
                 return $data;
             });
 
@@ -93,6 +95,7 @@ class SellerManagementService
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
+                    'subcription_plan'
                 ]);
 
             if (!empty($request->country_id1)) {
@@ -128,6 +131,7 @@ class SellerManagementService
                 $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
                 $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
                 $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+                $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
                 return $data;
             });
 
@@ -166,6 +170,7 @@ class SellerManagementService
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
+                    'subcription_plan'
                 ]);
 
             if (!empty($request->country_id2)) {
@@ -201,6 +206,7 @@ class SellerManagementService
                 $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
                 $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
                 $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+                $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
                 return $data;
             });
 
@@ -235,6 +241,7 @@ class SellerManagementService
                 'owner_document',
                 'store_document',
                 'seller_bank_details',
+                'subcription_plan'
             ])->find($sellerId);
 
             if (!$seller) {
@@ -250,6 +257,7 @@ class SellerManagementService
             $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
             $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
             $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+            $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
 
             return [
                 'status' => 'success',
