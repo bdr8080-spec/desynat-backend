@@ -119,6 +119,7 @@ class SellerDashboardController extends Controller
             'transaction_id'=>$tranasaction_id,
             'seller_id'=>$seller_details->id,
             'plan_id' =>$request->plan_id,
+            "payment_method"=>$request->payment_method??'online',
             'payment_status'=>'0',
         ];
 

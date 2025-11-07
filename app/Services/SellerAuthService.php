@@ -389,6 +389,7 @@ class SellerAuthService
                   'payment_status'=>$request->payment_status,
                   'plan_start_date'=>$currentDateTime??null,
                   'plan_end_date'=>$newDateTime??null,
+                  'payment_method'=>$request->payment_method
                   ];
 
 
