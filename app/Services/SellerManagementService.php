@@ -52,13 +52,17 @@ class SellerManagementService
 
             $seller_details->getCollection()->transform(function ($seller) {
                 $data = $seller->toArray();
-                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
-                $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
+                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                    ? $seller->subcription_plan->toArray()
+                    : null;
+
                 return $data;
             });
+
 
             if ($seller_details->isEmpty()) {
                 return [
@@ -127,11 +131,14 @@ class SellerManagementService
 
             $seller_details->getCollection()->transform(function ($seller) {
                 $data = $seller->toArray();
-                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
-                $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
+                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                    ? $seller->subcription_plan->toArray()
+                    : null;
+
                 return $data;
             });
 
@@ -202,11 +209,14 @@ class SellerManagementService
 
             $seller_details->getCollection()->transform(function ($seller) {
                 $data = $seller->toArray();
-                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
-                $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
+                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                    ? $seller->subcription_plan->toArray()
+                    : null;
+
                 return $data;
             });
 
@@ -253,11 +263,14 @@ class SellerManagementService
             }
 
             $data = $seller->toArray();
-            $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-            $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-            $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-            $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
-            $data['subcription_plan'] = $seller->subcription_plan ? $seller->subcription_plan->toArray() : []; 
+            $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+            $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+            $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+            $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+            $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                ? $seller->subcription_plan->toArray()
+                : null;
+
 
             return [
                 'status' => 'success',
