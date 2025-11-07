@@ -10,14 +10,14 @@
             <div class="d-flex justify-content-center">
                 <ul class="nav nav-pills tabs-pnl custom" id="pills-tab" role="tablist">
                     <li class="nav-item m-1" role="presentation">
-                        <button class="nav-link active customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
+                        <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                             aria-selected="false">
                             New
                         </button>
                     </li>
                     <li class="nav-item m-1" role="presentation">
-                        <button class="nav-link customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
+                        <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                             aria-selected="true">
                             Approved
