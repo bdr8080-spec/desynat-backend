@@ -329,6 +329,43 @@ class SellerManagementService
         }
     }
 
+    public function blockUnblockSeller($sellerId)
+    {
+        try {
+            $seller = seller::find($sellerId);
+
+            if (!$seller) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Seller not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $previousStatus = $seller->is_block; 
+            $seller->is_block = $seller->is_block == 0 ? 1 : 0;
+            $seller->save();
+
+            // Set the message based on the previous status
+            $message = $seller->is_block == 1
+                ? 'Seller blocked successfully'
+                : 'Seller unblocked successfully';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $seller
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
 
 
 
