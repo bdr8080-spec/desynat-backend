@@ -208,7 +208,7 @@ class ProfileController extends Controller
                         'country_code' => $request->country_code,
                         'mobile'       => $request->mobile,
                         'otp'          => $otp,
-                        'type'         => $request->type,
+                        'type'         => '0',
                         'status'       => '0',
                     ]);
 
@@ -225,7 +225,7 @@ class ProfileController extends Controller
                     'country_code' => $request->country_code,
                     'mobile'       => $request->mobile,
                     'otp'          => $otp,
-                    'type'         => $request->type,
+                    'type'         => '0',
                     'status'       => '0',
                 ]);
 
@@ -243,6 +243,7 @@ class ProfileController extends Controller
                 'user_id' => $user->id,
                 'email'   => $request->email,
                 'otp'     => $otp,
+                'type'    => '1',
                 'status'  => '0',
             ]);
 
