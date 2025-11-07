@@ -265,7 +265,7 @@
                         </form>
 
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="myTable" class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Sr.No</th>
@@ -469,7 +469,7 @@
                         </form>
 
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="myTable" class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Sr.No</th>
@@ -966,6 +966,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </script>
+
+
 
 
 
