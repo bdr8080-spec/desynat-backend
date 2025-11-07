@@ -80,45 +80,99 @@ class ProfileController extends Controller
     
 
 
-     // update Profile
-  
-     public function updateProfile(Request $request)
+     // update Profile  
+    public function updateProfile(Request $request)
     {
-    $rules = [
-        'full_name'    => 'required',
-        'country_code' => 'required',
-        'mobile'       => 'required',
-        'email'=> 'required'
-    ];
+        $rules = [
+            'full_name'    => 'required',
+            'country_code' => 'required',
+            'mobile'       => 'required',
+            'email'        => 'required|email',
+        ];
 
-    $messages = [
-        'full_name.required'    => 'Please enter your full name.',
-        'country_code.required' => 'Please select your country code.',
-        'mobile.required'       => 'Please enter your mobile number.',
-        'email.required' =>        'Please enter your email address',
-    ];
+        $messages = [
+            'full_name.required'    => 'Please enter your full name.',
+            'country_code.required' => 'Please select your country code.',
+            'mobile.required'       => 'Please enter your mobile number.',
+            'email.required'        => 'Please enter your email address.',
+            'email.email'           => 'Please enter a valid email address.',
+        ];
 
-    $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
-    if ($validator->fails()) {
-        return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
+        if ($validator->fails()) {
+            return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
+        }
+
+        $user = $request->user();
+
+        $emailVerified = false;
+        $mobileVerified = false;
+
+      
+        if ($user->email == $request->email) {
+            $emailVerified = true;
+        } else {
+            $emailChange = UserContactChangeHistory::where([
+                ['email', $request->email], 
+                ['type', '1'], 
+            ])->latest()->first();
+
+            if ($emailChange && $emailChange->otp_verify == '1') {
+                $emailVerified = true;
+            } else {
+                return ApiResponse::generateResponse('error', 'Email is not verified.', '', 422);
+            }
+        }
+
+       
+        if ($user->country_code == $request->country_code && $user->mobile == $request->mobile) {
+            $mobileVerified = true;
+        } else {
+            $mobileChange = UserContactChangeHistory::where([
+                ['country_code', $request->country_code],
+                ['mobile', $request->mobile],
+                ['type', '0'], 
+            ])->latest()->first();
+
+            if ($mobileChange && $mobileChange->otp_verify == '1') {
+                $mobileVerified = true;
+            } else {
+                return ApiResponse::generateResponse('error', 'Mobile number is not verified.', '', 422);
+            }
+        }
+
+      
+        if ($emailVerified && $mobileVerified) {
+            $user->profile_image = $request->image ?? $user->profile_image;
+            $user->full_name     = $request->full_name;
+            $user->country_code  = $request->country_code;
+            $user->mobile        = $request->mobile;
+            $user->email         = $request->email;
+            $user->save();
+
+      
+            if (isset($emailChange)) {
+                $emailChange->update(['status' => '1']);
+            }
+            if (isset($mobileChange)) {
+                $mobileChange->update(['status' => '1']);
+            }
+
+            return ApiResponse::generateResponse('success', 'Profile updated successfully', $user, 200);
+        }
+
+        return ApiResponse::generateResponse('error', 'Verification required for mobile or email.', '', 422);
     }
 
-     $user = User::find($request->user()->id);
 
-    $user->profile_image = $request->image;
-    $user->full_name = $request->full_name;
-    $user->country_code = $request->country_code;
-    $user->mobile = $request->mobile;
-    $user->email = $request->email;
-    $user->save();
-
-      return ApiResponse::generateResponse('success', 'Profile updated successfully', $user, 200);
-    }
+     
 
      
 
  
+
+     // fetch category
     public function getCategories()
     {
         $category = Category::orderBy('name', 'asc')->get();
@@ -208,6 +262,7 @@ class ProfileController extends Controller
                         'country_code' => $request->country_code,
                         'mobile'       => $request->mobile,
                         'otp'          => $otp,
+                        'type'         => '0',
                         'status'       => '0',
                     ]);
 
@@ -224,6 +279,7 @@ class ProfileController extends Controller
                     'country_code' => $request->country_code,
                     'mobile'       => $request->mobile,
                     'otp'          => $otp,
+                    'type'         => '0',
                     'status'       => '0',
                 ]);
 
@@ -241,6 +297,7 @@ class ProfileController extends Controller
                 'user_id' => $user->id,
                 'email'   => $request->email,
                 'otp'     => $otp,
+                'type'    => '1',
                 'status'  => '0',
             ]);
 
