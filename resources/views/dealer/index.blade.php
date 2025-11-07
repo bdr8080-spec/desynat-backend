@@ -182,4 +182,4 @@
 
 
 
-@include('dealer.footer');
+@include('dealer.layout.footer');

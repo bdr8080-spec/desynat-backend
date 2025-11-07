@@ -51,7 +51,7 @@ class WebSellerDashboard extends Controller
 
         $plans=$plans['data'];
 
-        Cache::put('plan_page', 'yes', 30);
+        Cache::put('plan_page', 'yes', 60);
 
         // session::put(['plan'=>'1']);
 
@@ -119,7 +119,6 @@ class WebSellerDashboard extends Controller
     return view('dealer.package-page',compact('plans'));
 
       }
-
 
 
     public function skip_plan(Request $request){
