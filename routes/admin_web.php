@@ -53,6 +53,9 @@ Route::group(['prefix'=>'admin'], function(){
 
         //seller management
         Route::get('/seller-management', [SellerController::class, 'sellerManagement'])->name('sellerManagement');
+        Route::post('/blockUnblockSeller/{id}', [SellerController::class, 'blockUnblockSeller'])->name('admin.blockUnblockSeller');
+        Route::post('/acceptSeller/{id}', [SellerController::class, 'acceptSeller'])->name('admin.acceptSeller');
+        Route::post('/rejectSeller/{id}', [SellerController::class, 'rejectSeller'])->name('admin.rejectSeller');
 
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
