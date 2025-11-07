@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Seller\LoginController;
+use App\Http\Controllers\Seller\WebSellerDashboard;
+use App\Http\Controllers\Seller\SellerProductController;
+
+
 
 
 Route::group(['prefix' => 'seller'], function () {
@@ -27,7 +31,25 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/review_submit_page/{id}',[LoginController::class,'signup_review'])->name('seller.review_submit_page');    
     route::Match(['get','post'],'/logout',[LoginController::class,'logout'])->name('seller.logout');    
 
+    route::Match(['get','post'],'/dashboard',[WebSellerDashboard::class,'seller_dashboard'])->name('seller.dashboard');
+
+    route::Match(['get','post'],'/all-plans',[WebSellerDashboard::class,'all_plans'])->name('seller.all_plans');
+    route::Match(['get','post'],'/single-plans/{id}',[WebSellerDashboard::class,'single_plans'])->name('seller.single_plans');
     
+    route::Match(['get','post'],'/create-subcription',[WebSellerDashboard::class,'create_subcription'])->name('seller.create_subcription');
+  
+
+    route::Match(['get','post'],'/skip-plan',[WebSellerDashboard::class,'skip_plan'])->name('seller.skip_plan');
+  
+
+    route::Match(['get','post'],'/products',[SellerProductController::class,'products'])->name('seller.products');
+    route::Match(['get','post'],'/Inventory-Management',[SellerProductController::class,'Inventory_Management'])->name('seller.Inventory_Management');
+    route::Match(['get','post'],'/Affilate-Commission',[SellerProductController::class,'Affilate_Commission'])->name('seller.Affilate_Commission');
+
+
+    
+
+
     });
     
 
@@ -38,7 +60,6 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
 
 
-    route::Match(['get','post'],'/dashboard',[LoginController::class,'seller_dashboard'])->name('seller.dashboard');
 
 
 
@@ -49,4 +70,12 @@ Route::group(['prefix' => 'seller'], function () {
 
 
 
+});
+
+
+
+
+Route::fallback(function () {
+
+    return view('404');
 });

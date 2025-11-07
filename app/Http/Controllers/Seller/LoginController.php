@@ -650,17 +650,15 @@ class LoginController extends Controller
    
 
 
-    public function seller_dashboard(Request $request){
-        return view('dealer.index');
-    }
-
-
     public function removeImage(Request $request){
             
         sellerDocument::where('id',$request->id)->delete();
         return ApiResponse::generateResponse('success', 'Image Remove Successfully',(object)[],200);
     
     }
+
+
+
     
 
 

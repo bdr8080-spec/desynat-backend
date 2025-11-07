@@ -52,6 +52,7 @@ use App\Http\Controllers\Api\Admin\PlanController;
      Route::get('/get_seller_details',[SellerController::class,'get_seller_details']);
      Route::post('/accept_seller',[SellerController::class,'accept_seller']);
      Route::post('/reject_seller',[SellerController::class,'reject_seller']);
+     Route::post('/block_unblock_seller',[SellerController::class,'block_unblock_seller']);
 
      //country,city,zone management
      Route::get('/get_cities',[CountryController::class,'get_cities']);

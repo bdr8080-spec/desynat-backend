@@ -42,16 +42,28 @@ Route::group(['prefix'=>'admin'], function(){
         //country,city,zone management
         Route::get('/country-management', [CountryController::class, 'countryManagement'])->name('countryManagement');
         Route::get('/manage-cities/{id}', [CountryController::class, 'manageCities'])->name('manageCities');
-        Route::get('/manage-zones', [CountryController::class, 'manageZones'])->name('manageZones');
+        Route::get('/manage-zones/{id}', [CountryController::class, 'manageZones'])->name('manageZones');
+        Route::post('/addServiceCity', [CountryController::class, 'addServiceCity'])->name('admin.addServiceCity');
+        Route::post('/change_service_city_status/{id}', [CountryController::class, 'change_service_city_status'])->name('admin.change_service_city_status');
+        Route::post('/deleteServiceCity/{id}', [CountryController::class, 'deleteServiceCity'])->name('admin.deleteServiceCity');
+        Route::post('/add_zone', [CountryController::class, 'add_zone'])->name('admin.add_zone');
+        Route::post('/update_zone', [CountryController::class, 'update_zone'])->name('admin.update_zone');
+        Route::post('/deleteZone/{id}', [CountryController::class, 'deleteZone'])->name('admin.deleteZone');
+        Route::post('/change_zone_status/{id}', [CountryController::class, 'change_zone_status'])->name('admin.change_zone_status');
 
         //seller management
         Route::get('/seller-management', [SellerController::class, 'sellerManagement'])->name('sellerManagement');
+        Route::post('/blockUnblockSeller/{id}', [SellerController::class, 'blockUnblockSeller'])->name('admin.blockUnblockSeller');
+        Route::post('/acceptSeller/{id}', [SellerController::class, 'acceptSeller'])->name('admin.acceptSeller');
+        Route::post('/rejectSeller/{id}', [SellerController::class, 'rejectSeller'])->name('admin.rejectSeller');
 
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
         Route::get('/manage-plans/{id}', [PlanController::class, 'managePlans'])->name('managePlans');
-        Route::post('/change_plan_status/{id}', [PlanController::class, 'change_plan_status'])->name('change_plan_status');
-        Route::post('/deletePlan/{id}', [PlanController::class, 'deletePlan'])->name('deletePlan');
+        Route::post('/change_plan_status/{id}', [PlanController::class, 'change_plan_status'])->name('admin.change_plan_status');
+        Route::post('/deletePlan/{id}', [PlanController::class, 'deletePlan'])->name('admin.deletePlan');
+        Route::post('/add_plan', [PlanController::class, 'add_plan'])->name('admin.add_plan');
+        Route::post('/update_plan', [PlanController::class, 'update_plan'])->name('admin.update_plan');
 
     });
 

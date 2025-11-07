@@ -11,11 +11,11 @@
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="d-flex align-items-center gap-3 mt-2">
                         <div class="arrow">
-                            <a class="table-button" type="button" href="">
+                            <a class="table-button" type="button" href="{{ route('manageCities', ['id' => $country->id]) }}">
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">Manage Zone</h6>
+                        <h6 class="m-0">Manage Zone({{$country->name}}->{{$city->name}})</h6>
                     </div>
                 </div>
 
@@ -30,77 +30,64 @@
 
             <div class="userManagecontent">
                 <div class="mt-4">
-                    <div class="align-items-end d-flex">
-                        <div class="search-box" style="position: relative; ">
-                            <i class="bi bi-search" style="
-                        position: absolute;
-                        left: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        font-size: 16px;
-                        color: #888;
-                      ">
-                            </i>
-                            <input type="text" class="form-control" placeholder="Search for..."
-                                style="padding-left: 35px" />
-                        </div>
-                    </div>
-
                     <div class="table-responsive w-100">
-                        <table class="table w-100">
+                        <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
                                     <th scope="col">SR No.</th>
-                                    <th scope="col">Zone Name</th>
+                                    <th scope="col">Zone Name(English)</th>
+                                    <th scope="col">Zone Name(Arabic)</th>
                                     <th scope="col">View on Map</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Dubai </td>
-                                    <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                            data-bs-target="#sentModal3">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a></td>
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-                                            <a class="table-button" type="button">
-                                                <i class="bi bi-pencil-square"></i>
+                                @forelse($zones as $index => $zone)
+                                    <tr>
+                                        <th scope="row">{{ $index + 1 }}</th>
+                                        <td>{{ $zone->name_english }}</td>
+                                        <td>{{ $zone->name_arabic }}</td>
+                                        <td>
+                                            <a class="viewZoneBtn" type="button" data-bs-toggle="modal" data-bs-target="#sentModal3"
+                                                data-name-english="{{ $zone->name_english }}"
+                                                data-name-arabic="{{ $zone->name_arabic }}"
+                                                data-coordinates='@json($zone->coordinates)'>
+                                                <i class="bi bi-eye-fill"></i>
                                             </a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-3 justify-content-center">
+                                                <a href="javascript:void(0);" 
+                                                    class="editZoneBtn text-primary"
+                                                    data-zone-id="{{ $zone->id }}"
+                                                    data-name-english="{{ $zone->name_english }}"
+                                                    data-name-arabic="{{ $zone->name_arabic }}"
+                                                    data-coordinates='@json($zone->coordinates)'>
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
 
-                                            <a class="table-button" type="button">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
+                                                <a href="javascript:void(0);" class="table-button text-danger deleteZone"
+                                                    data-id="{{ $zone->id }}">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </a>
 
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input toggleStatus" type="checkbox"
+                                                        role="switch" id="switch{{ $zone->id }}" data-id="{{ $zone->id }}"
+                                                        {{ $zone->status == 1 ? 'checked' : '' }} />
+                                                </div>
 
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Dubai </td>
-                                    <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                            data-bs-target="#sentModal3">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a></td>
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-                                            <a class="table-button" type="button">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-
-                                            <a class="table-button" type="button">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
-
-
-                                        </div>
-                                    </td>
-                                </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">No zones found.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -108,165 +95,634 @@
     </div>
 </div>
 
+<!-- add modal -->
 <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5" id="exampleModalLabel">
-                    Add Zone
-                </h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                </button>
+                <h3 class="modal-title fs-5" id="exampleModalLabel">Add Zone</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="">
-                    <div class="align-items-end d-flex">
-                        <div class="search-box" style="position: relative">
-                            <i class="bi bi-search" style="
-                        position: absolute;
-                        left: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        font-size: 16px;
-                        color: #888;
-                      ">
-                            </i>
-                            <input type="text" class="form-control" placeholder="Search for..."
-                                style="padding-left: 35px" />
-                        </div>
+
+                <div id="map" style="height: 400px; width: 100%;"></div>
+                <span id="error_zone_coordinates" style="color: red; font-size: 14px;"></span>
+
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <label class="form-label">Zone Name (English)</label>
+                        <input type="text" id="zone_name_en" placeholder="Enter Zone Name in Enlish" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <div class="text-danger mt-1" id="error_zone_name_en"></div>
                     </div>
-
-
-
-                    <div id="map"></div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1" class="form-label">No. of
-                                        Zone Name (In English)</label>
-                                    <input type="text" placeholder="Enter Zone Name" class="form-control"
-                                        aria-describedby="passwordHelpInline" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1" class="form-label">No. of
-                                        Zone Name (in Arabic)</label>
-                                    <input type="text" placeholder="Enter Zone Name" class="form-control"
-                                        aria-describedby="passwordHelpInline" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                            style="margin-top: 30px">
-                            <a class="btn btn-dark customBtn" href=""> Submit</a>
-                        </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Zone Name (Arabic)</label>
+                        <input type="text" id="zone_name_ar" placeholder="Enter Zone Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <div class="text-danger mt-1" id="error_zone_name_ar"></div>
                     </div>
                 </div>
-            </div>
 
+                <input type="hidden" id="zoneCoordinates" name="coordinates" />
+                <input type="hidden" id="country_id" value="{{ $country->id }}">
+                <input type="hidden" id="city_id" value="{{ $city->id }}">
+
+                <div class="mt-3 text-center">
+                    <button class="btn btn-dark customBtn" id="submitZone">Submit</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="sentModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+
+<!-- edit modal -->
+<div class="modal fade" id="updateZoneModal" tabindex="-1" aria-labelledby="updateZoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5" id="exampleModalLabel">
-                  Zone Name
-                </h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                </button>
+                <h3 class="modal-title fs-5" id="updateZoneModalLabel">Update Zone</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="">
-                    <div class="align-items-end d-flex">
-                        <div class="search-box" style="position: relative">
-                            <i class="bi bi-search" style="
-                        position: absolute;
-                        left: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        font-size: 16px;
-                        color: #888;
-                      ">
-                            </i>
-                            <input type="text" class="form-control" placeholder="Search for..."
-                                style="padding-left: 35px" />
-                        </div>
+
+                <div id="updateMap" style="height: 400px; width: 100%;"></div>
+                <span id="update_error_zone_coordinates" style="color: red; font-size: 14px;"></span>
+
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <label class="form-label">Zone Name (English)</label>
+                        <input type="text" id="update_zone_name_en" placeholder="Enter Zone Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <div class="text-danger mt-1" id="update_error_zone_name_en"></div>
                     </div>
+                    <div class="col-lg-6">
+                        <label class="form-label">Zone Name (Arabic)</label>
+                        <input type="text" id="update_zone_name_ar" placeholder="Enter Zone Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <div class="text-danger mt-1" id="update_error_zone_name_ar"></div>
+                    </div>
+                </div>
 
+                <input type="hidden" id="update_zoneCoordinates" name="coordinates" />
+                <input type="hidden" id="country_id" value="{{ $country->id }}">
+                <input type="hidden" id="city_id" value="{{ $city->id }}">
+                <input type="hidden" id="update_zone_id" />
 
-
-                    <div id="map"></div>
-                  
-                   
+                <div class="mt-3 text-center">
+                    <button class="btn btn-dark customBtn" id="updateSubmitZone">Update</button>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+
+<!-- View Modal -->
+<div class="modal fade" id="sentModal3" tabindex="-1" aria-labelledby="sentModal3Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sentModal3Label">Zone Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Zone Name (English):</strong> <span id="view_zone_name_en"></span></p>
+                <p><strong>Zone Name (Arabic):</strong> <span id="view_zone_name_ar"></span></p>
+                <div id="viewMap" style="width: 100%; height: 400px;"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
-
-<script>
-let map, marker;
-
-function initMap() {
-    const defaultLocation = {
-        lat: 28.6139,
-        lng: 77.209
-    }; // Delhi
-
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: defaultLocation,
-        zoom: 11,
-    });
-
-    marker = new google.maps.Marker({
-        position: defaultLocation,
-        map,
-        draggable: true,
-    });
-
-    const input = document.createElement("input");
-    input.id = "pac-input";
-    input.type = "text";
-    input.placeholder = "Search Box...";
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-
-    const searchBox = new google.maps.places.SearchBox(input);
-
-    map.addListener("bounds_changed", () => {
-        searchBox.setBounds(map.getBounds());
-    });
-
-    searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        if (places.length === 0) return;
-
-        const place = places[0];
-        if (!place.geometry || !place.geometry.location) return;
-
-        map.setCenter(place.geometry.location);
-        map.setZoom(13);
-        marker.setPosition(place.geometry.location);
-    });
-}
-
-window.onload = initMap;
-</script>
 
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places,drawing"></script>
+
+
+<!-- add zone -->
+<script>
+    let map, polygon;
+    let cityName = "{{ $city->name }}";
+
+    function loadGoogleMaps() {
+        const script = document.createElement('script');
+        script.src = "https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places,drawing&callback=initMap";
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+
+    // Initialize Map
+    function initMap() {
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ address: cityName }, (results, status) => {
+            if (status === "OK") {
+                const defaultLocation = results[0].geometry.location;
+
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: defaultLocation,
+                    zoom: 13,
+                });
+
+                const drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                        position: google.maps.ControlPosition.TOP_CENTER,
+                        drawingModes: ['polygon']
+                    },
+                    polygonOptions: {
+                        editable: true,
+                        draggable: false
+                    }
+                });
+                drawingManager.setMap(map);
+
+                // Capture polygon
+                google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+                    if (polygon) polygon.setMap(null); 
+                    polygon = event.overlay;
+                    updateAddZoneCoords(polygon);
+
+                    polygon.getPath().addListener('set_at', () => updateAddZoneCoords(polygon));
+                    polygon.getPath().addListener('insert_at', () => updateAddZoneCoords(polygon));
+                    polygon.getPath().addListener('remove_at', () => updateAddZoneCoords(polygon));
+                });
+
+            } else {
+                //alert("Geocode was not successful: " + status);
+            }
+        });
+    }
+
+    // Update coordinates textarea
+    function updateAddZoneCoords(polygon) {
+        const path = polygon.getPath();
+        const coords = [];
+
+        for (let i = 0; i < path.getLength(); i++) {
+            coords.push({ lat: path.getAt(i).lat(), lng: path.getAt(i).lng() });
+        }
+
+        if (coords.length > 0) coords.push(coords[0]);
+
+        document.getElementById("zoneCoordinates").value = JSON.stringify(coords);
+
+        if (coords.length > 0) $('#error_zone_coordinates').text('');
+    }
+
+    $(document).ready(function() {
+        loadGoogleMaps();
+
+        $('#zone_name_en').on('input', function() { $('#error_zone_name_en').text(''); });
+        $('#zone_name_ar').on('input', function() { $('#error_zone_name_ar').text(''); });
+
+        $('#submitZone').on('click', function() {
+            let zoneNameEn = $('#zone_name_en').val().trim();
+            let zoneNameAr = $('#zone_name_ar').val().trim();
+            let coordinates = $('#zoneCoordinates').val().trim();
+            let countryId = $('#country_id').val();
+            let cityId = $('#city_id').val(); 
+
+            let valid = true;
+
+            if (!zoneNameEn) { $('#error_zone_name_en').text('Enter Zone Name in English'); valid = false; }
+            if (!zoneNameAr) { $('#error_zone_name_ar').text('Enter Zone Name in Arabic'); valid = false; }
+
+            if (!coordinates || coordinates === '[]') {
+                $('#error_zone_coordinates').text('Please draw a polygon on the map');
+                valid = false;
+            } else {
+                $('#error_zone_coordinates').text('');
+            }
+
+            if (!valid) return;
+
+            $.ajax({
+                url: "{{ route('admin.add_zone') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    country_id: countryId,
+                    city_id: cityId,
+                    name_english: zoneNameEn,
+                    name_arabic: zoneNameAr,
+                    coordinates: JSON.parse(coordinates) 
+                },
+                success: function(res) {
+                    if (res.status === 'success') {
+                       toastr.success(res.message);
+                        $('#sentModal2').modal('hide');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(res.message || 'Failed to add zone');
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                    //alert('Something went wrong!');
+                }
+            });
+        });
+    });
+
+</script>
+
+
+<!-- update zone -->
+<script>
+    let updateMap, updatePolygon;
+    let updateCityName = "{{ $city->name }}";
+    let zoneId = null;
+
+    function loadGoogleMapsForUpdate(callback) {
+        if (typeof google !== 'undefined' && google.maps) {
+            callback();
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = "https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&libraries=places,drawing";
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+
+        script.onload = callback;
+    }
+
+    function initUpdateMap(existingCoords = []) {
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ address: updateCityName }, (results, status) => {
+            if (status === "OK") {
+                const defaultLocation = results[0].geometry.location;
+
+                updateMap = new google.maps.Map(document.getElementById("updateMap"), {
+                    center: defaultLocation,
+                    zoom: 13,
+                });
+
+                const drawingManager = new google.maps.drawing.DrawingManager({
+                    drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                    drawingControl: true,
+                    drawingControlOptions: {
+                        position: google.maps.ControlPosition.TOP_CENTER,
+                        drawingModes: ['polygon']
+                    },
+                    polygonOptions: {
+                        editable: true,
+                        draggable: false
+                    }
+                });
+
+                drawingManager.setMap(updateMap);
+
+                // Remove old polygon if any before drawing new one
+                if (updatePolygon) {
+                    updatePolygon.setMap(null);
+                    updatePolygon = null;
+                }
+
+                //  If there are existing coordinates, draw polygon initially
+                if (existingCoords && existingCoords.length > 0) {
+                    const polygonPath = existingCoords.map(coord => ({
+                        lat: parseFloat(coord.lat),
+                        lng: parseFloat(coord.lng)
+                    }));
+
+                    updatePolygon = new google.maps.Polygon({
+                        paths: polygonPath,
+                        editable: true,
+                        draggable: false,
+                        map: updateMap
+                    });
+
+                    // Fit map to polygon bounds
+                    const bounds = new google.maps.LatLngBounds();
+                    polygonPath.forEach(coord => bounds.extend(coord));
+                    updateMap.fitBounds(bounds);
+
+                    updatePolygonCoords(updatePolygon);
+
+                    // Listen to polygon changes
+                    updatePolygon.getPath().addListener('set_at', () => updatePolygonCoords(updatePolygon));
+                    updatePolygon.getPath().addListener('insert_at', () => updatePolygonCoords(updatePolygon));
+                    updatePolygon.getPath().addListener('remove_at', () => updatePolygonCoords(updatePolygon));
+                }
+
+                // Capture new polygon drawing, remove old polygon if user draws new one
+                google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+                    //  Remove previous polygon from map if it exists
+                    if (updatePolygon) {
+                        updatePolygon.setMap(null);
+                    }
+
+                    updatePolygon = event.overlay;
+                    updatePolygonCoords(updatePolygon);
+
+                    // Attach listeners to update coordinates on edit
+                    updatePolygon.getPath().addListener('set_at', () => updatePolygonCoords(updatePolygon));
+                    updatePolygon.getPath().addListener('insert_at', () => updatePolygonCoords(updatePolygon));
+                    updatePolygon.getPath().addListener('remove_at', () => updatePolygonCoords(updatePolygon));
+                });
+            }
+        });
+    }
+
+    // Update coordinates textarea
+    function updatePolygonCoords(polygon) {
+        const path = polygon.getPath();
+        const coords = [];
+
+        for (let i = 0; i < path.getLength(); i++) {
+            coords.push({ lat: path.getAt(i).lat(), lng: path.getAt(i).lng() });
+        }
+
+        // Close polygon loop
+        if (coords.length > 0) coords.push(coords[0]);
+
+        document.getElementById("update_zoneCoordinates").value = JSON.stringify(coords);
+
+        if (coords.length > 0) $('#update_error_zone_coordinates').text('');
+    }
+
+    $(document).on('click', '.editZoneBtn', function () {
+        const zoneIdVal = $(this).data('zone-id');
+        const nameEn = $(this).data('name-english');
+        const nameAr = $(this).data('name-arabic');
+        const coordinates = $(this).data('coordinates');
+
+        $('#update_zone_name_en').val(nameEn);
+        $('#update_zone_name_ar').val(nameAr);
+        $('#update_zone_id').val(zoneIdVal);
+        $('#update_zoneCoordinates').val(JSON.stringify(coordinates));
+
+        zoneId = zoneIdVal;
+
+        $('#updateZoneModal').modal('show');
+
+        // Load Google Maps and initialize map with existing polygon coordinates
+        loadGoogleMapsForUpdate(() => {
+            setTimeout(() => {
+                initUpdateMap(coordinates);
+            }, 500);
+        });
+    });
+
+    $('#updateZoneModal').on('shown.bs.modal', function () {
+        if (typeof google !== 'undefined' && updateMap) {
+            google.maps.event.trigger(updateMap, 'resize');
+            if (updatePolygon) {
+                const bounds = new google.maps.LatLngBounds();
+                updatePolygon.getPath().forEach(c => bounds.extend(c));
+                updateMap.fitBounds(bounds);
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        $('#update_zone_name_en').on('input', function () {
+            $('#update_error_zone_name_en').text('');
+        });
+        $('#update_zone_name_ar').on('input', function () {
+            $('#update_error_zone_name_ar').text('');
+        });
+
+        $('#updateSubmitZone').on('click', function () {
+            let zoneNameEn = $('#update_zone_name_en').val().trim();
+            let zoneNameAr = $('#update_zone_name_ar').val().trim();
+            let coordinates = $('#update_zoneCoordinates').val().trim();
+            let zoneId = $('#update_zone_id').val();
+            let countryId = $('#country_id').val();
+            let cityId = $('#city_id').val();
+
+            let valid = true;
+
+            if (!zoneNameEn) {
+                $('#update_error_zone_name_en').text('Enter Zone Name in English');
+                valid = false;
+            }
+            if (!zoneNameAr) {
+                $('#update_error_zone_name_ar').text('Enter Zone Name in Arabic');
+                valid = false;
+            }
+
+            if (!coordinates || coordinates === '[]') {
+                $('#update_error_zone_coordinates').text('Please draw a polygon on the map');
+                valid = false;
+            } else {
+                $('#update_error_zone_coordinates').text('');
+            }
+
+            if (!valid) return;
+
+            $.ajax({
+                url: "{{ route('admin.update_zone') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    country_id: countryId,
+                    city_id: cityId,
+                    zone_id: zoneId,
+                    name_english: zoneNameEn,
+                    name_arabic: zoneNameAr,
+                    coordinates: JSON.parse(coordinates)
+                },
+                success: function (res) {
+                    if (res.status === 'success') {
+                        toastr.success(res.message);
+                        $('#updateZoneModal').modal('hide');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(res.message || 'Failed to update zone');
+                    }
+                },
+                error: function (err) {
+                   // console.log(err);
+                    toastr.error('Something went wrong while updating!');
+                }
+            });
+        });
+    });
+</script>
+
+<!-- view zone -->
+<script>
+    let viewMap, viewPolygon;
+    function loadGoogleMapsForView(callback) {
+        if (typeof google !== 'undefined' && google.maps) {
+            callback();
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = "https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}";
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+
+        script.onload = callback;
+    }
+
+    function initViewMap(zoneNameEn, zoneNameAr, coordinates) {
+        $('#view_zone_name_en').text(zoneNameEn);
+        $('#view_zone_name_ar').text(zoneNameAr);
+
+        if (viewPolygon) {
+            viewPolygon.setMap(null);
+            viewPolygon = null;
+        }
+
+        const defaultLocation = coordinates.length > 0
+            ? { lat: parseFloat(coordinates[0].lat), lng: parseFloat(coordinates[0].lng) }
+            : { lat: 0, lng: 0 };
+
+        viewMap = new google.maps.Map(document.getElementById('viewMap'), {
+            center: defaultLocation,
+            zoom: 13,
+        });
+
+        if (coordinates.length > 0) {
+            const path = coordinates.map(coord => ({
+                lat: parseFloat(coord.lat),
+                lng: parseFloat(coord.lng)
+            }));
+
+            viewPolygon = new google.maps.Polygon({
+                paths: path,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: viewMap,
+                editable: false, 
+                draggable: false
+            });
+
+            const bounds = new google.maps.LatLngBounds();
+            path.forEach(p => bounds.extend(p));
+            viewMap.fitBounds(bounds);
+        }
+    }
+
+    $(document).on('click', '.viewZoneBtn', function () {
+        const zoneNameEn = $(this).data('name-english') || '';
+        const zoneNameAr = $(this).data('name-arabic') || '';
+        const coordinates = $(this).data('coordinates') || [];
+
+        $('#sentModal3').modal('show');
+
+        // Load map
+        loadGoogleMapsForView(() => {
+            setTimeout(() => {
+                initViewMap(zoneNameEn, zoneNameAr, coordinates);
+            }, 300); 
+        });
+    });
+
+    $('#sentModal3').on('shown.bs.modal', function () {
+        if (viewMap) {
+            google.maps.event.trigger(viewMap, 'resize');
+            if (viewPolygon) {
+                const bounds = new google.maps.LatLngBounds();
+                viewPolygon.getPath().forEach(c => bounds.extend(c));
+                viewMap.fitBounds(bounds);
+            }
+        }
+    });
+</script>
+
+<!-- delete zone -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.deleteZone').forEach(button => {
+        button.addEventListener('click', function() {
+            let zoneId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deleteZone/${zoneId}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                toastr.success(data.message);
+                                this.closest('tr').remove();
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
+                }
+            });
+        });
+    });
+});
+</script>
+
+<!-- Update zone status -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            let zoneId = this.getAttribute('data-id');
+
+            fetch(`/admin/change_zone_status/${zoneId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // toastr.success(data.message);
+                        if (data.status == 1) {
+                            toastr.success(data.message); // Green for active
+                        } else {
+                            toastr.error(data.message); // Red for deactivated
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    //console.error(error);
+                    toastr.error('Something went wrong while updating status.');
+                });
+        });
+    });
+});
+</script>
+
+
+
+
+
+

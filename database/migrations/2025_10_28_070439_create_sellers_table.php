@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('bank_information')->default('0')->comment('0 not upload 1 upload');
 
             $table->string('lang')->nullable()->comment('Language ');
+            $table->tinyInteger('is_block')->default(0)->comment('0 no, 1 yes');
 
             
 

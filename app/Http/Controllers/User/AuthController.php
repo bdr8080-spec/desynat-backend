@@ -538,6 +538,6 @@ class AuthController extends Controller
 
 
     public function dashboard(){
-      return view('user.auth.dashboard');
+      return view('user.dashboard.dashboard');
     }
 }
