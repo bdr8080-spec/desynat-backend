@@ -27,6 +27,67 @@ class SellerController extends Controller
         return view('admin.seller-management.index',compact('newSellers','countries','approvedSellers','rejectedSellers'));
     }
 
+    public function blockUnblockSeller($sellerId)
+    {
+        $result = $this->SellerManagementService->blockUnblockSeller($sellerId);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function acceptSeller($sellerId)
+    {
+        $result = $this->SellerManagementService->acceptSeller($sellerId);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function rejectSeller(Request $request, $sellerId)
+    {
+        $rejectReason = $request->input('reject_reason');
+
+        if (empty($rejectReason)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Reject reason is required.'
+            ], 400);
+        }
+
+        $result = $this->SellerManagementService->rejectSeller($sellerId, $rejectReason);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+
 
 
 }

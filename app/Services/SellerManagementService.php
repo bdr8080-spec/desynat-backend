@@ -346,7 +346,6 @@ class SellerManagementService
             $seller->is_block = $seller->is_block == 0 ? 1 : 0;
             $seller->save();
 
-            // Set the message based on the previous status
             $message = $seller->is_block == 1
                 ? 'Seller blocked successfully'
                 : 'Seller unblocked successfully';
@@ -364,6 +363,8 @@ class SellerManagementService
             ];
         }
     }
+
+    
 
 
 

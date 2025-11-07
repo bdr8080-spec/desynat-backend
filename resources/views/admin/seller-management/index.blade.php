@@ -192,8 +192,10 @@
 
                                             <td>
                                                 <div class="d-flex gap-3 justify-content-center">
-                                                    <a class="table-button" type="button"><i class="bi bi-check-circle-fill"></i></a>
-                                                    <a class="table-button" data-bs-toggle="modal" data-bs-target="#xcircle" type="button">
+                                                    <a class="table-button acceptSeller" type="button" data-id="{{ $seller['id'] }}">
+                                                        <i class="bi bi-check-circle-fill"></i>
+                                                    </a>
+                                                    <a class="table-button" data-bs-toggle="modal" data-bs-target="#xcircle" type="button" data-id="{{ $seller['id'] }}">
                                                         <i class="bi bi-x-circle-fill"></i>
                                                     </a>
                                                 </div>
@@ -387,8 +389,8 @@
                                                 </a></td>
                                             <td>
                                                 <div class="form-check form-switch" style="justify-content: center;">
-                                                    <input class="form-check-input" type="checkbox" type="button"
-                                                        role="switch" id="flexSwitchCheckChecked">
+                                                    <input class="form-check-input toggleStatus" type="checkbox" id="flexSwitchCheckChecked" data-id="{{ $seller['id'] }}" 
+                                                    {{ $seller['is_block'] == 1 ? 'checked' : '' }}> 
                                                     <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                                 </div>
                                             </td>
@@ -644,17 +646,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="div">
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Reason For Rejection</label>
-
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <textarea class="form-control" id="rejectReason" rows="3"></textarea>
+                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reject Reason</div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger" id="submitReject">Reject Seller</button>
                 </div>
             </div>
         </div>
@@ -818,6 +822,142 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 </script>
+
+<!-- block unblock seller -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            let sellerId = this.getAttribute('data-id');
+            let isChecked = this.checked; 
+
+            fetch(`/admin/blockUnblockSeller/${sellerId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ is_block: isChecked ? 1 : 0 })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    if (isChecked) {
+                        toastr.success(data.message); 
+                    } else {
+                        toastr.success(data.message); 
+                    }
+                    setTimeout(() => {
+                        location.reload(); 
+                    }, 2000);
+                } else {
+                    toastr.error(data.message);
+                    this.checked = !isChecked; 
+                }
+            })
+            .catch(error => {
+                toastr.error('Something went wrong while updating status.');
+                this.checked = !isChecked;
+            });
+        });
+    });
+});
+</script>
+
+<!-- accept seller -->
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.acceptSeller').forEach(button => {
+        button.addEventListener('click', function () {
+            let sellerId = this.getAttribute('data-id');
+
+            fetch(`/admin/acceptSeller/${sellerId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ seller_id: sellerId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    toastr.success(data.message);  
+                    setTimeout(() => {
+                        location.reload();  
+                    }, 2000);  
+                } else {
+                    toastr.error(data.message); 
+                }
+            })
+            .catch(error => {
+                toastr.error('Something went wrong while accepting the seller.');
+            });
+        });
+    });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let sellerId = null; 
+
+    document.querySelectorAll('.table-button').forEach(button => {
+        button.addEventListener('click', function () {
+            sellerId = this.getAttribute('data-id'); 
+        });
+    });
+
+    document.getElementById('submitReject').addEventListener('click', function () {
+        var rejectReason = document.getElementById('rejectReason').value;
+        var errorMessage = document.getElementById('error-message');
+
+        if (rejectReason.trim() === '') {
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+            if (sellerId) {
+                fetch(`/admin/rejectSeller/${sellerId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ reject_reason: rejectReason })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        toastr.success(data.message); 
+                        setTimeout(() => {
+                        $('#xcircle').modal('hide');
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message); 
+                    }
+                })
+                .catch(error => {
+                    toastr.error('Something went wrong while rejecting the seller.');
+                });
+            }
+        }
+    });
+
+    // Remove error message when typing starts
+    document.getElementById('rejectReason').addEventListener('input', function () {
+        var errorMessage = document.getElementById('error-message');
+        errorMessage.style.display = 'none'; // Hide error message when typing
+    });
+});
+
+
+</script>
+
 
 
 
