@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desynat</title>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/responsive.css" rel="stylesheet" />
+    <link href="{{ asset('user/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('user/assets/css/responsive.css') }}" rel="stylesheet" />
     <!-- <link href="assets/css/fontawesome.min.css" rel="stylesheet" /> -->
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/9.0.6/css/intlTelInput.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('user/assets/images/desynat_fav_ic.svg') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/9.0.6/css/intlTelInput.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="{{ asset('user/assets/css/style.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </head>
 <body>
@@ -539,15 +544,17 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="form-group">
+                <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
                     <input type="text" class="form-control" placeholder="Faizan Ansari" />
+                    <a href="" class="change">Change</a>
                 </div>
             </div>
             <div class="col-lg-12 mt-3">
-                <div class="form-group">
+                <div class="form-group mobile position-relative">
                     <label for="">Email Id</label>
                     <input type="email" class="form-control" placeholder="faizanansari@mail.com" />
+                    <a class="change">Change</a>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -556,44 +563,11 @@
         </div>
     </div>
 
-
-    <!-- //change password -->
-    <div class="my-profile customContainer">
-        <div class="d-flex align-items-center mt-3 justify-content-between">
-            <a href=""><i class="fa-solid fa-chevron-left"></i>Change Password</a>
-        </div>
-
-        <div class="row mt-5">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label for="">Old Password</label>
-                    <input type="text" class="form-control" placeholder="Enter Password" />
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label for="">Enter New Password</label>
-                    <input type="text" class="form-control" placeholder="Enter New Password" />
-                </div>
-            </div>
-            <div class="col-lg-6 mt-3">
-                <div class="form-group">
-                    <label for="">Confirm Password</label>
-                    <input type="text" class="form-control" placeholder="Re-Enter Password" />
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <button class="customBtn w-100 mt-4">Save</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="assets/js/jquery-3.7.1.min.js" ></script>
-    <!-- <script src="assets/js/all.min.js" ></script> -->
-    <script src="assets/js/bootstrap.bundle.min.js" ></script>
-    <!-- <script src="assets/js/fontawesome.min.js" ></script> -->
-    <script src="assets/js/custom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{{asset('user/assets/js/jquery-3.7.1.min.js')}}" ></script>
+    <script src="{{asset('user/assets/js/bootstrap.bundle.min.js')}}" ></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/intlTelInput.js"></script>
+     <script src="{{asset('user/assets/js/custom.js')}}"></script>
     <script>
         $(document).ready(function () {
             $("#fileInput").change(function (e) {

@@ -253,7 +253,7 @@ section{
     top: 50%;
     right: 10px;
 }
-.toggle-passwordone, .toggle-password, .toggle-passwordtwo{
+.toggle-passwordone, .toggle-password, .toggle-passwordtwo, .mobile .change{
     position: absolute; right: 10px; top: 38px; cursor: pointer;
 }
 .login_content_content p{
@@ -792,6 +792,61 @@ section{
     position: absolute;
     right: 0;
     top: 5px;
+}
+
+.my-profile a{
+    font-size: var(--heading3-font);
+    line-height: var(--heading3-font-height);
+    font-weight: 500 !important;
+    color: var(--third-color);
+    text-decoration: none;
+}
+.my-profile button{
+    width: fit-content;
+    margin: 0;
+}
+.my-profile .customBtn2{
+    border-radius: 12px;
+}
+.my-profile .profile .profileContainer_img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.my-profile .profile .profileContainer_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.my-profile .form-group label{
+    color: var(--third-color);
+}
+.changeImageText {
+  color: var(--secondry2-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.changeImageText:hover {
+  color: #0056b3;
+}
+.my-profile .form-group input.form-control{
+    padding: 12px;
+}
+.mobile input{
+    background: #C0BBBB3D;
+}
+.mobile .change{
+    border: 1px solid #8D6744;
+    background: #fff;
+    border-radius: 10px;
+    color: #9E7853;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 600;
+    padding: 5px;
 }
 
 /* index end */

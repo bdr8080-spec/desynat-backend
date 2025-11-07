@@ -28,3 +28,17 @@ use App\Http\Controllers\User\ProfileController;
 
 
  });
+
+
+ Route::match(['get', 'post'], '/route1', function () {
+     return view('user.profile.index');
+});
+ Route::match(['get', 'post'], '/route2', function () {
+     return view('user.profile.changePassword');
+});
+ Route::match(['get', 'post'], '/route3', function () {
+     return view('user.profile.profileChangeNumberOtp');
+});
+ Route::match(['get', 'post'], '/route4', function () {
+     return view('user.profile.profileChangeEmailOtp');
+});
