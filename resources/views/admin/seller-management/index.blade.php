@@ -372,12 +372,21 @@
                                                     N/A
                                                 @endif
                                             </td>
-                                            <td>Lorem </td>
-                                            <td>32</td>
-                                            <td>2</td>
-                                            <td>KD10000</td>
-                                            <td>KD 2000</td>
-                                            <td>4
+                                            @php
+                                                $planName = 'N/A';
+                                                if (!empty($seller['subcription_plan'])) {
+                                                    $plan = \App\Models\Plan::find($seller['subcription_plan'][0]['plan_id']);
+                                                    if ($plan) {
+                                                        $planName = $plan->plan_name_english;
+                                                    }
+                                                }
+                                            @endphp
+                                            <td>{{ $planName ?? 'N/A'}}</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>KD 0</td>
+                                            <td>KD 0</td>
+                                            <td>0
                                                 <i class="bi bi-star-fill"></i>
 
                                             </td>
