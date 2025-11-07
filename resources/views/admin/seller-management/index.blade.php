@@ -73,24 +73,24 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-12 col-12">
+                                <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn" style="margin-top: 56px">
                                             <span>Reset</span>
                                         </a>
                                     </div>
                                 </div>
                                 <!-- Export Button -->
-                                <div class="col-lg-2 col-md-12 col-12">
+                                <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                                        <a class="btn btn-dark customBtn " style="margin-top: 56px">
                                             <span>Export</span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="table-responsive">
+                        <div class="table-responsive mt-5">
                             <table id="myTable" class="table">
                                 <thead>
                                     <tr>
@@ -246,17 +246,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-12 col-12">
+                                <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn " style="margin-top: 56px">
                                             <span>Reset</span>
                                         </a>
                                     </div>
                                 </div>
                                 <!-- Export Button -->
-                                <div class="col-lg-2 col-md-12 col-12">
+                                <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                                        <a class="btn btn-dark customBtn " style="margin-top: 56px">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -264,7 +264,7 @@
                             </div>
                         </form>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive mt-5">
                             <table id="myTable1" class="table">
                                 <thead>
                                     <tr>
@@ -450,17 +450,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-12 col-12">
+                                <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                                        <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn" style="margin-top: 56px">
                                             <span>Reset</span>
                                         </a>
                                     </div>
                                 </div>
                                 <!-- Export Button -->
-                                <div class="col-lg-2 col-md-12 col-12">
+                                <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                                        <a class="btn btn-dark customBtn " style="margin-top: 56px">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -468,7 +468,7 @@
                             </div>
                         </form>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive mt-5">
                             <table id="myTable2" class="table">
                                 <thead>
                                     <tr>
