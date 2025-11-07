@@ -210,13 +210,12 @@ class SellerAuthService
 
         if($request->type=='0'){
 
-          $get_user_details=  seller::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+          $get_user_details=  seller::with('subcription_plan')->where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
   
         }else{
-          $get_user_details=  seller::where('email',$request->email_mobile)->where('otp_verify','1')->first();
+          $get_user_details=  seller::with('subcription_plan')->where('email',$request->email_mobile)->where('otp_verify','1')->first();
   
         }
-
 
         
         if($get_user_details){
@@ -234,6 +233,13 @@ class SellerAuthService
                 // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
                 
                 $get_user_details->accessToken = $get_user_details->createToken('seller-token', ['seller'])->plainTextToken;
+
+                if(count($get_user_details->subcription_plan) > 0){
+                  $get_user_details->subcription_plan_check ='1';
+                }else{
+                  $get_user_details->subcription_plan_check ='0';
+                }
+
 
                 // $user->createToken('seller-token', ['seller'])->plainTextToken;
 
