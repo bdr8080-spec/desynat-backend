@@ -33,6 +33,12 @@ class Plan extends Model
 
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(country::class);
     }
+
+    public function country_info()
+    {
+        return $this->belongsTo(country::class, 'country_id', 'id');
+    }
+    
 }
