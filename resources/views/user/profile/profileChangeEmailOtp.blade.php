@@ -10,7 +10,7 @@
         <div class="login_content login_content_right">
             <div class="login_content_content align-self-center">
                 <div class="otp-page">
-                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> OTP</h3>
+                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> Email Verfication</h3>
                     <h5 class="otp_sent">Email verification link has been sent to your <span>email@example.com</span></h5>
                     <!-- <div class="otp-container mt-3">
                         <input type="text" maxlength="1" class="otp-input" id="otp1" />
