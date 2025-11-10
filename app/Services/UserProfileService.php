@@ -34,7 +34,7 @@ class UserProfileService
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return ['status'=>'success','message'=>"Password changed successfully",'data'=>(object)$user];
+        return ['status'=>'success','message'=>"Password changed successfully",'data'=>$user];
         // return ApiResponse::generateResponse("success", "Password changed successfully",(object)[], 201);
     }
 
@@ -56,7 +56,7 @@ class UserProfileService
             $userDetails->otp_verify = '1';
             $userDetails->status = '1';
             $userDetails->save();
-            return ['status'=>'success','message'=>"OTP verified successfully",'data'=>(object)$userDetails];
+            return ['status'=>'success','message'=>"OTP verified successfully",'data'=>$userDetails];
             // return ApiResponse::generateResponse('success', 'OTP verified successfully', $userDetails, 201);
         }
 
@@ -71,11 +71,11 @@ class UserProfileService
         $subCategory = SubCategory::where('category_id', $request->category_id)->get();
 
         if ($subCategory->isEmpty()) {
-             return ['status'=>'success','message'=>"No sub categories found",'data'=>(object)[]];
+             return ['status'=>'success','message'=>"No sub categories found",'data'=>[]];
             // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
         }
 
-        return ['status'=>'success','message'=>"Sub category list fetched successfully",'data'=>(object)$subCategory];
+        return ['status'=>'success','message'=>"Sub category list fetched successfully",'data'=>$subCategory];
         // return ApiResponse::generateResponse('success', 'Sub category list fetched successfully', $subCategory, 201);
     }
 
@@ -87,11 +87,11 @@ class UserProfileService
 
 
         if ($category->isEmpty()) {
-             return ['status'=>'success','message'=>"No categories found",'data'=>(object)[]];
+             return ['status'=>'success','message'=>"No categories found",'data'=>[]];
             // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
         }
 
-        return ['status'=>'success','message'=>"Category list fetched successfully",'data'=>(object)$category];
+        return ['status'=>'success','message'=>"Category list fetched successfully",'data'=>$category];
         // return ApiResponse::generateResponse('success', 'Sub category list fetched successfully', $subCategory, 201);
     }
 

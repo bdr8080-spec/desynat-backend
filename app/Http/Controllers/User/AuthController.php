@@ -10,10 +10,17 @@ use App\Models\country;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
 use Session;
+use App\Services\UserProfileService;
+use App\Models\SubCategory;
+
+
 
 class AuthController extends Controller
 {
     //  
+
+
+
     public function userRegister(Request $request){
         if($request->isMethod('get')){
             $country =   country::all();
@@ -537,7 +544,9 @@ class AuthController extends Controller
 
 
 
-    public function dashboard(){
-      return view('user.dashboard.dashboard');
+    public function dashboard(Request $request){    
+        $subCategory = SubCategory::orderBy('name_english','desc')->get();
+
+      return view('user.dashboard.dashboard', compact('subCategory'));
     }
 }

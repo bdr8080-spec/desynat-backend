@@ -641,36 +641,19 @@
                     <div class="col-lg-6">
                         <div class="mb-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Complete Reject
-                                </label>
+                                <input class="form-check-input" type="radio" name="reject_type" id="rejectComplete" value="complete" checked>
+                                <label class="form-check-label" for="rejectComplete">Complete Reject</label>
                             </div>
-
-
                         </div>
-
-
-
                     </div>
                     <div class="col-lg-6">
                         <div class="mb-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2">
-                                    Document Reject
-                                </label>
+                                <input class="form-check-input" type="radio" name="reject_type" id="rejectDocument" value="document">
+                                <label class="form-check-label" for="rejectDocument">Document Reject</label>
                             </div>
-
-
                         </div>
-
-
-
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
