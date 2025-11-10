@@ -144,8 +144,7 @@
                                         <td>
                                             @if(!empty($seller['owner_document']))
                                             <a class="table-button view-owner-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal4" data-documents='@json($seller['
-                                                owner_document'])'>
+                                                data-bs-target="#sentModal4" data-documents='@json($seller['owner_document'])'>                              
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -155,8 +154,7 @@
                                         <td>
                                             @if(!empty($seller['store_document']))
                                             <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal5" data-documents='@json($seller['
-                                                store_document'])' data-doc-type="Owner Documents">
+                                                data-bs-target="#sentModal5" data-documents='@json($seller['store_document'])' data-doc-type="Owner Documents">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -166,8 +164,7 @@
                                         <td>
                                             @if(!empty($seller['seller_bank_details']))
                                             <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#bankModal" data-bank='@json($seller['
-                                                seller_bank_details'])'>
+                                                data-bs-target="#bankModal" data-bank='@json($seller['seller_bank_details'])'>
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -324,9 +321,7 @@
                                         <td>{{ $seller['store_info']['bio'] ?? 'N/A' }}</td>
                                         <td>
                                             @if(!empty($seller['owner_document']))
-                                            <a class="table-button view-owner-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal4" data-documents='@json($seller['
-                                                owner_document'])'>
+                                            <a class="table-button view-owner-btn" type="button" data-bs-toggle="modal" data-bs-target="#sentModal4" data-documents='@json($seller['owner_document'])'>
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -336,8 +331,7 @@
                                         <td>
                                             @if(!empty($seller['store_document']))
                                             <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal5" data-documents='@json($seller['
-                                                store_document'])' data-doc-type="Owner Documents">
+                                                data-bs-target="#sentModal5" data-documents='@json($seller['store_document'])' data-doc-type="Owner Documents">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -347,8 +341,7 @@
                                         <td>
                                             @if(!empty($seller['seller_bank_details']))
                                             <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#bankModal" data-bank='@json($seller['
-                                                seller_bank_details'])'>
+                                                data-bs-target="#bankModal" data-bank='@json($seller['seller_bank_details'])'>
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -517,8 +510,7 @@
                                         <td>
                                             @if(!empty($seller['owner_document']))
                                             <a class="table-button view-owner-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal4" data-documents='@json($seller['
-                                                owner_document'])'>
+                                                data-bs-target="#sentModal4" data-documents='@json($seller['owner_document'])'>
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -528,8 +520,7 @@
                                         <td>
                                             @if(!empty($seller['store_document']))
                                             <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal5" data-documents='@json($seller['
-                                                store_document'])' data-doc-type="Owner Documents">
+                                                data-bs-target="#sentModal5" data-documents='@json($seller['store_document'])' data-doc-type="Owner Documents">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -539,8 +530,7 @@
                                         <td>
                                             @if(!empty($seller['seller_bank_details']))
                                             <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#bankModal" data-bank='@json($seller['
-                                                seller_bank_details'])'>
+                                                data-bs-target="#bankModal" data-bank='@json($seller['seller_bank_details'])'>
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
