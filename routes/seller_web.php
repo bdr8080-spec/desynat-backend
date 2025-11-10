@@ -46,6 +46,9 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/Inventory-Management',[SellerProductController::class,'Inventory_Management'])->name('seller.Inventory_Management');
     route::Match(['get','post'],'/Affilate-Commission',[SellerProductController::class,'Affilate_Commission'])->name('seller.Affilate_Commission');
 
+    route::Match(['get','post'],'/Add-product',[SellerProductController::class,'Add_product'])->name('seller.Add_product');
+    route::Match(['get','post'],'/view-product',[SellerProductController::class,'view_product'])->name('seller.view_product');
+
 
     
 

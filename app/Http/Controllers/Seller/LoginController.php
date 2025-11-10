@@ -102,15 +102,12 @@ class LoginController extends Controller
             ->withInput();
            }
 
-
-           return redirect()->route('seller.dashboard');
-
-
-
+           return redirect()->route('seller.dashboard')->with('success','Login successfully');
+           
 
         }{
             return redirect()->back()
-            ->withErrors(['password'=>'Login Details Is Wrong'])
+            ->withErrors(['password'=>'Please enter correct password'])
             ->withInput();
 
         }

@@ -115,22 +115,16 @@
   /**
    * Initiate Datatables
    */
-  const datatables = select('.datatable', true)
-  datatables.forEach(datatable => {
-    new simpleDatatables.DataTable(datatable, {
-      perPageSelect: [5, 10, 15, ["All", -1]],
-      columns: [{
-          select: 2,
-          sortSequence: ["desc", "asc"]
-        },
-        {
-          select: 3,
-          sortSequence: ["desc"]
-        },
-       
-      ]
-    });
-  })
+  $('.datatable').DataTable({
+    paging: true,
+    searching: true,
+    info: true,
+    ordering: false, 
+    lengthMenu: [[5, 10, 15, -1], [5, 10, 15, "All"]],
+    responsive: true,
+    
+  });
+
 
  /**
    * Phone Number

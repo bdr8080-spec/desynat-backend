@@ -215,7 +215,6 @@
         </div>
     </div>
 
-
 </body>
 
 
@@ -226,6 +225,10 @@
 
 <!--Main JS File -->
 <script src="{{ asset('dealer') }}/assets/custom-file/js/main.js"></script>
+
+
+
+@include('dealer.layout.custom_code');
 
 
 </html>
