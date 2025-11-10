@@ -28,9 +28,13 @@ use App\Http\Controllers\User\ProfileController;
 
    Route::match(['get', 'post'], '/old-number-send-otp', [ProfileController::class, 'oldNumberSendOtp'])->name('userOldNumberSendOtp');
    Route::match(['get', 'post'], '/old-number-verify', [ProfileController::class, 'oldNumberVerify'])->name('userOldNumberVerify');
+   Route::match(['get', 'post'], '/new-number-verify', [ProfileController::class, 'newNumberVerify'])->name('userNewNumberVerify');
    
+
    Route::match(['get','post'], '/update-new-number', [ProfileController::class, 'updateNewNumber'])->name('userUpdateNewNumber');
- });
+   Route::match(['get','post'],'/update-email-address',[ProfileController::class, 'updateEmailAddress'])->name('userUpdateNewEmail');
+
+  });
 
 
 //  Route::match(['get', 'post'], '/route1', function () {

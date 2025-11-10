@@ -115,21 +115,19 @@ class ProfileController extends Controller
             ->withInput();
     }
 
-
     $user = $request->user();
-    $otp =   config('services.otp');
+    $otp = config('services.otp');
 
-    UserContactChangeHistory::where('user_id', $user->id)->update(['status' => '1']); 
-
+    UserContactChangeHistory::where('user_id', $user->id)->update(['status' => '1']);
 
     if ($for === 'mobile') {
-  
-        if ($type == '0') { 
+
+        if ($type == '0') {
             if (
                 $user->country_code === $request->country_code &&
                 $user->mobile === $request->mobile
             ) {
-               $data = UserContactChangeHistory::create([
+                $data = UserContactChangeHistory::create([
                     'user_id'      => $user->id,
                     'country_code' => $request->country_code,
                     'mobile'       => $request->mobile,
@@ -137,15 +135,21 @@ class ProfileController extends Controller
                     'type'         => '0',
                     'status'       => '0',
                 ]);
-                
-                return redirect()->route('userOldNumberVerify',['country_code'=>$user->country_code, 'mobile'=>$user->mobile,'id'=> encrypt($data->id),])->with('success', 'OTP sent successfully to your old mobile number.');
+
+                return redirect()->route('userOldNumberVerify', [
+                    'country_code' => $user->country_code,
+                    'mobile'       => $user->mobile,
+                    'id'           => encrypt($data->id),
+                    'type'         => '0',
+                    'for'          => 'mobile',
+                ])->with('success', 'OTP sent successfully to your old mobile number.');
             }
 
             return redirect()->back()->with('error', "Old mobile number doesn't match our records.");
         }
 
         if ($type == '1') {
-         $data =   UserContactChangeHistory::create([
+            $data = UserContactChangeHistory::create([
                 'user_id'      => $user->id,
                 'country_code' => $request->country_code,
                 'mobile'       => $request->mobile,
@@ -154,29 +158,59 @@ class ProfileController extends Controller
                 'status'       => '0',
             ]);
 
-            return redirect()->route('userOldNumberVerify',['country_code'=>$data->country_code, 'mobile'=>$data->mobile,'id'=> encrypt($data->id),])->with('success', 'OTP sent successfully to your new mobile number.');
+            return redirect()->route('userOldNumberVerify', [
+                'country_code' => $data->country_code,
+                'mobile'       => $data->mobile,
+                'id'           => encrypt($data->id),
+                'type'         => '1',
+                'for'          => 'mobile',
+            ])->with('success', 'OTP sent successfully to your new mobile number.');
         }
     }
 
-
     if ($for === 'email') {
-        if ($type == '0' && $user->email !== $request->email) {
-            return redirect()->back()->with('error', "Old email doesn't match our records.");
+        if ($type == '0') {
+            if ($user->email !== $request->email) {
+                return redirect()->back()->with('error', "Old email doesn't match our records.");
+            }
+
+            $data = UserContactChangeHistory::create([
+                'user_id' => $user->id,
+                'email'   => $request->email,
+                'otp'     => $otp,
+                'type'    => '1',
+                'status'  => '0',
+            ]);
+
+            return redirect()->route('userOldNumberVerify', [
+                'email' => $data->email,
+                'id'    => encrypt($data->id),
+                'type'  => '0',
+                'for'   => 'email',
+            ])->with('success', 'OTP sent successfully to your old email.');
         }
 
-       $data = UserContactChangeHistory::create([
-            'user_id' => $user->id,
-            'email'   => $request->email,
-            'otp'     => $otp,
-            'type'    => $type,
-            'status'  => '0',
-        ]);
+        if ($type == '1') {
+            $data = UserContactChangeHistory::create([
+                'user_id' => $user->id,
+                'email'   => $request->email,
+                'otp'     => $otp,
+                'type'    => '1',
+                'status'  => '0',
+            ]);
 
-        return redirect()->route('userOldNumberVerify',['email'=>$data->email, 'id'=> encrypt($data->id),])->with('success', 'OTP sent successfully to your email');
+            return redirect()->route('userOldNumberVerify', [
+                'email' => $data->email,
+                'id'    => encrypt($data->id),
+                'type'  => '1',
+                'for'   => 'email',
+            ])->with('success', 'OTP sent successfully to your new email.');
+        }
     }
 
     return redirect()->back()->with('error', 'Something went wrong. Please try again.');
 }
+
 
 
 
@@ -188,7 +222,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
                 'id'  => 'required',
                 'otp' => 'required|array',
-                'otp.*' => 'required|digits:1', // each digit should be a single number
+                'otp.*' => 'required|digits:1',
             ], [
                 'id.required' => 'Verification ID is missing.',
                 'otp.required' => 'Please enter OTP.',
@@ -223,17 +257,18 @@ class ProfileController extends Controller
 
         }
 
-      
+        
         return response()->json([
             'status'=>true,
             'message'=>$data['message'],
-            'type'=>$data['data']['type'],
         ]);
 
         }
     }
 
 
+    
+    
     public function updateNewNumber(Request $request){
                if($request->isMethod('get')){
                   $country =   country::all();
@@ -243,6 +278,6 @@ class ProfileController extends Controller
 
 
     public function updateEmailAddress(){
-                    return view('user.profile.profileChangeNumber');  
+                    return view('user.profile.profileChangeEmailOtp');  
     }
 }

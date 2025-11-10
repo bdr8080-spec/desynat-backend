@@ -36,50 +36,85 @@
      
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-     
-    <script>
+        <script>
+ 
 
-        $(document).on('submit', '#verifyOtp', function (e) {
-            e.preventDefault();
-            let data = new FormData(this);
-            
-            $('#verifyBtn').prop('disabled', true);
 
-            $.ajax({
-                url: "{{ route('userOldNumberVerify') }}",
-                method: "POST",
-                data: data,
-                processData: false,
-                contentType: false, 
-                success: function (resp) {
-                    if(resp.status == true){
-                             toastr.success(resp.message);
+    $(document).on('submit', '#verifyOtp', function (e) {
+        e.preventDefault();
+        let data = new FormData(this);
+        $('#verifyBtn').prop('disabled', true);
 
-                     if(resp.type == '0'){
-                        setTimeout(() => {
-                             location.href = "update-new-number";
-                        }, 1000);
-                     }else{
-                        setTimeout(() => {
-                             location.href = "profile";
-                        }, 1000);
-                     }
+        $.ajax({
+            url: "{{ route('userOldNumberVerify') }}",
+            method: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (resp) {
+                if (resp.status === true) {
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const type = urlParams.get('type');
+                    const formFor = urlParams.get('for');
+
+                   
+                    if (formFor === 'mobile') {
+                        toastr.success(resp.message);
+                        if (type === '0') {
+                            setTimeout(() => {
+                                location.href = "update-new-number";
+                            }, 1000);
+                        } else if (type === '1') {
+                            toastr.success("Mobile Number Change Successfully");
+                            setTimeout(() => {
+                                location.href = "profile";
+                            }, 1000);
+                        }
+                    } else if (formFor === 'email') {
+                        if (type === '0') {
+                            setTimeout(() => {
+                                location.href = "update-email-address";
+                            }, 1000);
+                        } else if (type === '1') {
+                            toastr.success("Email Address Change Successfully");
+                            setTimeout(() => {
+                                location.href = "profile";
+                            }, 1000);
+                        }
                     }
-
-                    if(resp.status == false){
-                       toastr.error(resp.error);  
-                    }
-
-                },
-                error: function (xhr) {
-                   toastr.error(xhr.responseJSON.message);
-                },
-                complete: function () {
-                   $('#verifyBtn').prop('disabled', false);
+                } else {
+                    toastr.error(resp.error || "Something went wrong. Please try again.");
                 }
-            });
+            },
+            error: function (xhr) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    toastr.error(xhr.responseJSON.message);
+                } else {
+                    toastr.error("An error occurred while processing your request.");
+                }
+            },
+            complete: function () {
+                $('#verifyBtn').prop('disabled', false);
+            }
         });
+    });
 
 
-    </script>
+
+    @if (session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+
+    @if (session('error'))
+        toastr.error("{{ session('error') }}");
+    @endif
+
+    @if ($errors->any())
+        toastr.error("{{ $errors->first() }}");
+    @endif
+</script>
+
+
+
  @endsection

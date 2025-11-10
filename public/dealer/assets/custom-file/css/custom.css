@@ -4,6 +4,18 @@
     width: 2.8em;
     height: 20px;
 }
+.label-flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 0px 0px;
+    font-size: 13px;
+    color: #666;
+}
+.label-flex label {
+    font-size: 15px;
+    color: #000;
+    margin-bottom: 3px;
+}
 
 #map {
     height: 400px;
@@ -23,6 +35,57 @@
 .visitor-pnl .form-check-label {
     font-size: 12px;
     color: #000;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+}
+
+/* hide default radio */
+.radio-group input[type="radio"] {
+    display: none;
+}
+
+/* custom circle */
+.custom-radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #f3f3f3;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* inner dot when checked */
+.radio-group input[type="radio"]:checked + .custom-radio::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #a68058;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* label text */
+.radio-label {
+    font-size: 15px;
+    color: #000;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* hover effect */
+.radio-group:hover .custom-radio {
+    border-color: #aaa;
 }
 
 /*--------------------------------------------------------------

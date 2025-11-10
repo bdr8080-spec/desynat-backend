@@ -4,7 +4,7 @@
 @section('content')
     <div class="my-profile customContainer">
         <div class="d-flex align-items-center mt-3 justify-content-between">
-            <i class="fa-solid fa-chevron-left"></i> My Profile (edit)
+            <a href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i></a> My Profile (edit)
             <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock"></i>Change Password</a>
         </div>
 
@@ -27,8 +27,8 @@
             <div class="col-lg-6">
                 <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
-                    <input type="text" name="country_code" value="{{$user->country_code}}">
-                    <input type="text" class="form-control" placeholder="Please enter mobile number" value="{{$user->mobile}}"/>            
+                    <input type="text" name="country_code" value="{{$user->country_code}}" readonly>
+                    <input type="text" class="form-control" placeholder="Please enter mobile number" value="{{$user->mobile}}" readonly/>            
                     <a class="change"
                     href="{{ route('userOldNumberSendOtp', [
                         'mobile' => $user->mobile,
@@ -43,7 +43,7 @@
             <div class="col-lg-12 mt-3">
                 <div class="form-group mobile position-relative">
                     <label for="">Email Id</label>
-                    <input type="email" class="form-control" placeholder="Please enter email address" value="{{$user->email}}" />
+                    <input type="email" class="form-control" placeholder="Please enter email address" value="{{$user->email}}"  readonly/>
                     <a class="change"
                            href="{{ route('userOldNumberSendOtp', [
                         'email' => $user->email,
