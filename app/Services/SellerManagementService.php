@@ -172,7 +172,7 @@ class SellerManagementService
         try {
             $limit = (int)($request->input('limit', 10)); 
 
-            $query = seller::where('admin_verify', '3')
+            $query = seller::whereIn('admin_verify', ['3', '4'])
                 ->with([
                     'store_info.country_info',
                     'owner_document',
@@ -367,7 +367,7 @@ class SellerManagementService
             if ($rejectType === 'complete') {
                 $seller->admin_verify = '3';
             } elseif ($rejectType === 'document') {
-                $seller->admin_verify = '0';
+                $seller->admin_verify = '4';
                 $seller->bank_information = '0';
             }
 

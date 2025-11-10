@@ -930,6 +930,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('submitReject').addEventListener('click', function() {
         var rejectReason = document.getElementById('rejectReason').value;
+        var rejectType = document.querySelector('input[name="reject_type"]:checked').value;
         var errorMessage = document.getElementById('error-message');
 
         if (rejectReason.trim() === '') {
@@ -945,7 +946,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             'Accept': 'application/json'
                         },
                         body: JSON.stringify({
-                            reject_reason: rejectReason
+                            reject_reason: rejectReason,
+                            reject_type: rejectType
                         })
                     })
                     .then(response => response.json())
