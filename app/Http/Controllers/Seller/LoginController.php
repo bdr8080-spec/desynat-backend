@@ -104,6 +104,18 @@ class LoginController extends Controller
             ->withInput();
            }
 
+
+
+           if($seller_details->admin_verify=='4'){
+            // return redirect()->back()
+            // ->withErrors(['password'=>'Seller Document is Rejected By Admin'])
+            // ->withInput();
+            
+            return redirect()->route('seller.upload_document',$seller_details->id)->with('error','Seller Document is Rejected By Admin Please Upload Again');
+        
+        }
+        
+
            return redirect()->route('seller.dashboard')->with('success','Login successfully');
            
 
@@ -346,12 +358,26 @@ class LoginController extends Controller
 
         if ($request->isMethod('get')) {
 
-           $seller_data=Auth::guard('seller')->user()->id;
+           $seller_details=Auth::guard('seller')->user();
 
+           $seller_data=$seller_details->id;
+
+           if($seller_details->admin_verify!=='4'){
+           
            $owner_document=sellerDocument::where('seller_id',$seller_data)->where('document_type','1')->where('status','1')->get();
            $store_document=sellerDocument::where('seller_id',$seller_data)->where('document_type','2')->where('status','1')->get();
-
            $seller_bank=Bankdetails::where('user_id',$seller_data)->first();
+           
+        }else{
+       
+            $owner_document=[];
+            $store_document=[];
+            $seller_bank= (object)[];
+        
+        }
+
+
+
         return view('dealer.bank-details',compact('owner_document','store_document','seller_bank'));
 
     }
@@ -388,8 +414,8 @@ class LoginController extends Controller
     // 'store_document' => 'required|array',
     
         'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
-        // "iban"=>"required",
-        // 'swift'=>'required',
+        "iban"=>"required",
+        'swift'=>'required',
         'bank_name'=>'required',
         "account_holder_name"=>"required",
         'upload_proof' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|required_without:old_upload_proof',

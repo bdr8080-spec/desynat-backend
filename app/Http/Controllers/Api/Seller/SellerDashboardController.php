@@ -165,10 +165,9 @@ class SellerDashboardController extends Controller
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
-    
     }
 
-    
+
     public function seller_profile(Request $request){
 
         $user_details=$request->user();
