@@ -16,15 +16,17 @@ return new class extends Migration
             $table->string('transaction_id');
             $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('plan_id');
-            $table->enum('status',['0','1'])->default('0')->comment('0 inactive 1 active');
-
+           
             $table->string('plan_start_date')->nullable();
             $table->string('plan_end_date')->nullable();
             
-
-            
             $table->string('online_transaction_id')->nullable();
             $table->string('payment_status')->nullable()->comment('0 not paid 1 Paid 2 cancel');
+            $table->enum('status',['0','1'])->default('0')->comment('0 inactive 1 active');
+
+            $table->string('payment_method')->nullable();
+            
+
             $table->foreign('seller_id')
             ->references('id')
             ->on('sellers')

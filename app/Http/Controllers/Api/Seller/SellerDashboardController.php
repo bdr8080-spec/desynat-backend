@@ -70,7 +70,7 @@ class SellerDashboardController extends Controller
       $data= $this->SellerAuthService->seller_allPlan($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
-        return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        return ApiResponse::generateResponse('error', $data['message'],[],400);
     }
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
@@ -119,6 +119,7 @@ class SellerDashboardController extends Controller
             'transaction_id'=>$tranasaction_id,
             'seller_id'=>$seller_details->id,
             'plan_id' =>$request->plan_id,
+            "payment_method"=>$request->payment_method??'online',
             'payment_status'=>'0',
         ];
 

@@ -20,6 +20,7 @@ class SellerManagementService
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
+                    'subcription_plan'
                 ]);
 
             if (!empty($request->country_id)) {
@@ -51,12 +52,17 @@ class SellerManagementService
 
             $seller_details->getCollection()->transform(function ($seller) {
                 $data = $seller->toArray();
-                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                    ? $seller->subcription_plan->toArray()
+                    : null;
+
                 return $data;
             });
+
 
             if ($seller_details->isEmpty()) {
                 return [
@@ -93,23 +99,24 @@ class SellerManagementService
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
+                    'subcription_plan'
                 ]);
 
-            if (!empty($request->country_id)) {
+            if (!empty($request->country_id1)) {
                 $query->whereHas('store_info', function ($q) use ($request) {
-                    $q->where('country', $request->country_id);
+                    $q->where('country', $request->country_id1);
                 });
             }
 
-            if (!empty($request->from_date) && !empty($request->to_date)) {
+            if (!empty($request->from_date1) && !empty($request->to_date1)) {
                 $query->whereBetween('created_at', [
-                    $request->from_date . ' 00:00:00',
-                    $request->to_date . ' 23:59:59'
+                    $request->from_date1 . ' 00:00:00',
+                    $request->to_date1 . ' 23:59:59'
                 ]);
-            } elseif (!empty($request->from_date)) {
-                $query->whereDate('created_at', '>=', $request->from_date);
-            } elseif (!empty($request->to_date)) {
-                $query->whereDate('created_at', '<=', $request->to_date);
+            } elseif (!empty($request->from_date1)) {
+                $query->whereDate('created_at', '>=', $request->from_date1);
+            } elseif (!empty($request->to_date1)) {
+                $query->whereDate('created_at', '<=', $request->to_date1);
             }
 
             if (!empty($request->search)) {
@@ -124,10 +131,14 @@ class SellerManagementService
 
             $seller_details->getCollection()->transform(function ($seller) {
                 $data = $seller->toArray();
-                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                    ? $seller->subcription_plan->toArray()
+                    : null;
+
                 return $data;
             });
 
@@ -166,23 +177,24 @@ class SellerManagementService
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
+                    'subcription_plan'
                 ]);
 
-            if (!empty($request->country_id)) {
+            if (!empty($request->country_id2)) {
                 $query->whereHas('store_info', function ($q) use ($request) {
-                    $q->where('country', $request->country_id);
+                    $q->where('country', $request->country_id2);
                 });
             }
 
-            if (!empty($request->from_date) && !empty($request->to_date)) {
+            if (!empty($request->from_date2) && !empty($request->to_date2)) {
                 $query->whereBetween('created_at', [
-                    $request->from_date . ' 00:00:00',
-                    $request->to_date . ' 23:59:59'
+                    $request->from_date2 . ' 00:00:00',
+                    $request->to_date2 . ' 23:59:59'
                 ]);
-            } elseif (!empty($request->from_date)) {
-                $query->whereDate('created_at', '>=', $request->from_date);
+            } elseif (!empty($request->from_date2)) {
+                $query->whereDate('created_at', '>=', $request->from_date2);
             } elseif (!empty($request->to_date)) {
-                $query->whereDate('created_at', '<=', $request->to_date);
+                $query->whereDate('created_at', '<=', $request->to_date2);
             }
 
             if (!empty($request->search)) {
@@ -197,10 +209,14 @@ class SellerManagementService
 
             $seller_details->getCollection()->transform(function ($seller) {
                 $data = $seller->toArray();
-                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                    ? $seller->subcription_plan->toArray()
+                    : null;
+
                 return $data;
             });
 
@@ -235,6 +251,7 @@ class SellerManagementService
                 'owner_document',
                 'store_document',
                 'seller_bank_details',
+                'subcription_plan'
             ])->find($sellerId);
 
             if (!$seller) {
@@ -246,10 +263,14 @@ class SellerManagementService
             }
 
             $data = $seller->toArray();
-            $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : [];
-            $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : [];
-            $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : [];
-            $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : [];
+            $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+            $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+            $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+            $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+            $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
+                ? $seller->subcription_plan->toArray()
+                : null;
+
 
             return [
                 'status' => 'success',
@@ -328,6 +349,44 @@ class SellerManagementService
             ];
         }
     }
+
+    public function blockUnblockSeller($sellerId)
+    {
+        try {
+            $seller = seller::find($sellerId);
+
+            if (!$seller) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Seller not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $previousStatus = $seller->is_block; 
+            $seller->is_block = $seller->is_block == 0 ? 1 : 0;
+            $seller->save();
+
+            $message = $seller->is_block == 1
+                ? 'Seller blocked successfully'
+                : 'Seller unblocked successfully';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $seller
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    
+
 
 
 

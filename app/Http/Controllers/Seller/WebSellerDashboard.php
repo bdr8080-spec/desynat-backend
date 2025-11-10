@@ -154,6 +154,7 @@ class WebSellerDashboard extends Controller
             'seller_id'=>$seller_details->id,
             'plan_id' =>$request->plan_id,
             'payment_status'=>'0',
+            "payment_method"=>$request->payment_method??'online'
         ];
 
       $data= $this->SellerAuthService->create_Subcription_Order($request_data);

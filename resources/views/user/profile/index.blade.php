@@ -25,15 +25,17 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="form-group">
+                <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
                     <input type="text" class="form-control" placeholder="Faizan Ansari" />
+                    <a href="" class="change">Change</a>
                 </div>
             </div>
             <div class="col-lg-12 mt-3">
-                <div class="form-group">
+                <div class="form-group mobile position-relative">
                     <label for="">Email Id</label>
                     <input type="email" class="form-control" placeholder="faizanansari@mail.com" />
+                    <a class="change">Change</a>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -42,7 +44,5 @@
         </div>
     </div>
 
-
-  
 
  @endsection

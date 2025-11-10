@@ -47,9 +47,15 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/change_service_city_status/{id}', [CountryController::class, 'change_service_city_status'])->name('admin.change_service_city_status');
         Route::post('/deleteServiceCity/{id}', [CountryController::class, 'deleteServiceCity'])->name('admin.deleteServiceCity');
         Route::post('/add_zone', [CountryController::class, 'add_zone'])->name('admin.add_zone');
+        Route::post('/update_zone', [CountryController::class, 'update_zone'])->name('admin.update_zone');
+        Route::post('/deleteZone/{id}', [CountryController::class, 'deleteZone'])->name('admin.deleteZone');
+        Route::post('/change_zone_status/{id}', [CountryController::class, 'change_zone_status'])->name('admin.change_zone_status');
 
         //seller management
         Route::get('/seller-management', [SellerController::class, 'sellerManagement'])->name('sellerManagement');
+        Route::post('/blockUnblockSeller/{id}', [SellerController::class, 'blockUnblockSeller'])->name('admin.blockUnblockSeller');
+        Route::post('/acceptSeller/{id}', [SellerController::class, 'acceptSeller'])->name('admin.acceptSeller');
+        Route::post('/rejectSeller/{id}', [SellerController::class, 'rejectSeller'])->name('admin.rejectSeller');
 
         //subscription plan management
         Route::get('/plan-management', [PlanController::class, 'planManagement'])->name('planManagement');
