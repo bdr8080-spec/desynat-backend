@@ -151,10 +151,23 @@
                                             N/A
                                             @endif
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             @if(!empty($seller['store_document']))
                                             <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#sentModal5" data-documents='@json($seller['store_document'])' data-doc-type="Owner Documents">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                            @else
+                                            N/A
+                                            @endif
+                                        </td> -->
+                                        <td>
+                                            @if(!empty($seller['store_document']) || !empty($seller['store_info']['store_image']))
+                                            <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#sentModal5"
+                                                data-documents='@json($seller['store_document'])'
+                                                data-store-image="{{ $seller['store_info']['store_image'] ?? '' }}"
+                                                data-doc-type="Owner Documents">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -328,10 +341,23 @@
                                             N/A
                                             @endif
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             @if(!empty($seller['store_document']))
                                             <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#sentModal5" data-documents='@json($seller['store_document'])' data-doc-type="Owner Documents">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                            @else
+                                            N/A
+                                            @endif
+                                        </td> -->
+                                        <td>
+                                            @if(!empty($seller['store_document']) || !empty($seller['store_info']['store_image']))
+                                            <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#sentModal5"
+                                                data-documents='@json($seller['store_document'])'
+                                                data-store-image="{{ $seller['store_info']['store_image'] ?? '' }}"
+                                                data-doc-type="Owner Documents">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -517,10 +543,23 @@
                                             N/A
                                             @endif
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             @if(!empty($seller['store_document']))
                                             <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#sentModal5" data-documents='@json($seller['store_document'])' data-doc-type="Owner Documents">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                            @else
+                                            N/A
+                                            @endif
+                                        </td> -->
+                                        <td>
+                                            @if(!empty($seller['store_document']) || !empty($seller['store_info']['store_image']))
+                                            <a class="table-button view-store-btn" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#sentModal5"
+                                                data-documents='@json($seller['store_document'])'
+                                                data-store-image="{{ $seller['store_info']['store_image'] ?? '' }}"
+                                                data-doc-type="Owner Documents">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
                                             @else
@@ -613,7 +652,7 @@
 </div>
 
 <!-- store-modal -->
-<div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
@@ -624,6 +663,37 @@
                 <div id="documentContainer1"
                     class="appointment-container d-flex flex-wrap gap-3 justify-content-center">
                 </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- store-modal -->
+<div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Store Details</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- ✅ Store Image Section -->
+                <div id="storeImageSection" class="text-center mb-4" style="display: none;">
+                    <h5>Store Image</h5>
+                    <img id="storeImage" src="" alt="Store Image"
+                        class="img-fluid rounded border shadow-sm mt-2"
+                        style="max-width: 250px; height: auto;">
+                </div>
+
+                <!-- ✅ Store Documents Section -->
+                <div class="text-center mb-3">
+                    <h5>Store Documents</h5>
+                </div>
+                <div id="documentContainer1"
+                    class="appointment-container d-flex flex-wrap gap-3 justify-content-center">
+                </div>
+
             </div>
         </div>
     </div>
@@ -743,15 +813,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- store document -->
 <script>
+// document.addEventListener('DOMContentLoaded', function() {
+//     const documentButtons = document.querySelectorAll('.view-store-btn');
+//     const documentContainer = document.getElementById('documentContainer1');
+
+//     if (!documentContainer) return;
+
+//     documentButtons.forEach(button => {
+//         button.addEventListener('click', function() {
+//             documentContainer.innerHTML = '';
+//             let documents = [];
+//             try {
+//                 documents = JSON.parse(this.getAttribute('data-documents') || '[]');
+//             } catch (e) {
+//                 console.error('Failed to parse documents JSON', e);
+//             }
+
+//             if (documents.length === 0) {
+//                 documentContainer.innerHTML =
+//                     '<p class="text-muted">No documents available.</p>';
+//                 return;
+//             }
+//             documents.forEach(doc => {
+//                 const imgPath = doc.document_path;
+
+//                 const img = document.createElement('img');
+//                 img.src = imgPath;
+//                 img.alt = 'Document';
+//                 img.classList.add('img-fluid', 'rounded', 'border', 'm-2');
+//                 img.style.maxWidth = '200px';
+//                 img.style.maxHeight = '200px';
+//                 img.style.cursor = 'pointer';
+
+//                 img.addEventListener('click', () => window.open(imgPath, '_blank'));
+
+//                 documentContainer.appendChild(img);
+//             });
+//         });
+//     });
+// });
 document.addEventListener('DOMContentLoaded', function() {
     const documentButtons = document.querySelectorAll('.view-store-btn');
     const documentContainer = document.getElementById('documentContainer1');
+    const storeImageSection = document.getElementById('storeImageSection');
+    const storeImage = document.getElementById('storeImage');
 
     if (!documentContainer) return;
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
             documentContainer.innerHTML = '';
+            storeImageSection.style.display = 'none';
+            storeImage.src = '';
+
+            const imageUrl = this.getAttribute('data-store-image');
+            if (imageUrl && imageUrl !== 'null' && imageUrl !== '') {
+                storeImage.src = imageUrl;
+                storeImageSection.style.display = 'block';
+                storeImage.onclick = () => window.open(imageUrl, '_blank');
+            } else {
+                storeImage.onclick = null; 
+            }
+
             let documents = [];
             try {
                 documents = JSON.parse(this.getAttribute('data-documents') || '[]');
@@ -764,6 +887,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<p class="text-muted">No documents available.</p>';
                 return;
             }
+
             documents.forEach(doc => {
                 const imgPath = doc.document_path;
 
@@ -776,7 +900,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 img.style.cursor = 'pointer';
 
                 img.addEventListener('click', () => window.open(imgPath, '_blank'));
-
                 documentContainer.appendChild(img);
             });
         });
