@@ -84,13 +84,57 @@
 
                                         <div class="d-flex align-items-center gap-3">
                                             <div class=" d-none LoginCountryCode">
-                                                <select name="country_code" id=""
+                                                {{-- <select name="country_code" id=""
                                                     class="country form-control form-select" style="width:100px">
                                                     @foreach ($country as $item)
                                                         <option value="{{ $item->dial_code }}">
                                                             {{ $item->dial_code }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
+
+                                                <div class="dropdown">
+                                                    <button
+                                                        class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                                        type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+
+                                                        <span id="selected-flag">
+                                                            <img src="{{ old('country_flag', $country[0]->flag1) }}"
+                                                                alt="flag" width="25" height="16">
+
+                                                        </span>
+
+                                                        <span id="selected-code" class="ms-2">
+                                                            {{ old('country_code', $country[0]->dial_code) }}
+                                                        </span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+
+                                                        @foreach ($country as $index => $item)
+                                                            <li>
+                                                                <label
+                                                                    class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                    style="cursor: pointer;">
+                                                                    <input type="radio" name="country_code"
+                                                                        value="{{ $item->dial_code }}"
+                                                                        data-flag="{{ $item->flag1 }}"
+                                                                        data-name="{{ $item->name }}"
+                                                                        class="country-radio"
+                                                                        {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                        hidden>
+                                                                    <img src="{{ $item->flag1 }}"
+                                                                        alt="Flag of {{ $item->name }}"
+                                                                        width="25" height="16">
+                                                                    <span>{{ $item->dial_code }}
+                                                                        ({{ $item->name }})
+                                                                    </span>
+                                                                </label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+
                                             </div>
                                             <div class="w-100 LoginMobileDesign">
                                                 <input type="text" class="form-control" value=""
@@ -132,9 +176,7 @@
 <!-- Vendor JS Files -->
 <script src="{{ asset('dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 <script src="{{ asset('dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
-<script
-    src="{{ asset('dealer') }}/https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js"></script>
 
 <!--Main JS File -->
 <script src="{{ asset('dealer') }}/assets/custom-file/js/main.js"></script>
