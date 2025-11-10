@@ -804,36 +804,6 @@
         </div>
     </footer>
 
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header  border-0">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div>
-                <div class="form-group position-relative search">
-                    <input type="text" class="form-control" placeholder="Search address" />
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
-                <div>
-                    <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
-                </div>
-                <div class="">
-                    <h5>Location</h5>
-                    <p>HN- 547, Street no,5 Block d new town hale, Saudi Arabia</p>
-                </div>
-                <button class="customBtn">Change Location</button>
-            </div>
-
-        </div>
-        </div>
-    </div>
-    </div>
     
     <script src="{{asset('user/assets/js/jquery-3.7.1.min.js')}}" ></script>
     <!-- <script src="assets/js/all.min.js" ></script> -->
