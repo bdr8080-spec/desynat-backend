@@ -6,7 +6,7 @@
 
 
         <div class="inner-content management">
-            <h2 class="h2">Seller management</h2>
+            <h2 class="h2">SELLER MANAGEMENT</h2> 
             <div class="d-flex justify-content-center">
                 <ul class="nav nav-pills tabs-pnl custom" id="pills-tab" role="tablist">
                     <li class="nav-item m-1" role="presentation">

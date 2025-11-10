@@ -15,7 +15,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">Manage Zone({{$country->name}}->{{$city->name}})</h6>
+                        <h6 class="m-0">MANAGE ZONE({{$country->name}}->{{$city->name}})</h6> 
                     </div>
                 </div>
 
