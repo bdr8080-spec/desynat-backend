@@ -22,6 +22,8 @@ use Validator;
 
 use App\Services\SellerAuthService;
 
+use Illuminate\Support\Facades\Cache;
+
 class LoginController extends Controller
 {
  
@@ -501,7 +503,11 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        
+        Cache::forget('plan_page');
         Auth::guard('seller')->logout();
+
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
