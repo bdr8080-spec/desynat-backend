@@ -304,7 +304,7 @@
                                         <th scope="col">Average Rating</th>
                                         <th scope="col">View Reels</th>
                                         <th scope="col">View Highlights</th>
-                                        <th scope="col">Block/Unblock</th>
+                                        <th scope="col">Unblock/Block</th>
 
                                     </tr>
                                 </thead>
@@ -982,7 +982,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.status === 'success') {
                         if (isChecked) {
-                            toastr.success(data.message);
+                            toastr.error(data.message);
                         } else {
                             toastr.success(data.message);
                         }
