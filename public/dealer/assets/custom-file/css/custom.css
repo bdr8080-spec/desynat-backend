@@ -20,10 +20,25 @@
     font-size: 20px;
     cursor: pointer;
 }
+.padding-top-40{
+    padding-top: 50px;
+}
+.visitor-pnl .form-check-label {
+    font-size: 12px;
+    color: #000;
+}
 
 /*--------------------------------------------------------------
 # Dashboard page
 --------------------------------------------------------------*/
+.total-revenu {
+    background: var(--revenu);
+}
+.font-34{
+    font-size: var(--font-34);
+    color: #000;
+    font-weight: 600;
+}
 
 .title24 {
     font-size: var(--title24);

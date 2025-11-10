@@ -27,14 +27,10 @@
 
     <!-- Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
     <!-- jQuery (required by Toastr) -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
 
 </head>
 
@@ -52,8 +48,8 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-chat-text-fill"></i>
+                    <a class="nav-link nav-icon" data-bs-toggle="dropdown">
+                        <img src="{{ asset('dealer') }}/assets/img/chat.svg" alt="icon" class="bell-icon">
                         <!-- <span class="badge bg-success badge-number">3</span> -->
                     </a>
                     <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
@@ -65,8 +61,8 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-bell"></i>
+                    <a class="nav-link nav-icon" data-bs-toggle="dropdown">
+                        <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
                         <span class="badge bg-primary badge-number">4</span>
                     </a>
 
