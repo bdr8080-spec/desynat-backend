@@ -306,7 +306,7 @@ class SellerManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Seller accepted successfully',
+                'message' => 'Seller Approve Successfully',
                 'data' => $seller
             ];
 
@@ -344,7 +344,7 @@ class SellerManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Seller rejected successfully',
+                'message' => 'Seller Rejected Successfully',
                 'data' => $seller
             ];
 

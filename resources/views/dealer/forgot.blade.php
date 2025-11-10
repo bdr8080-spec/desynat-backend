@@ -60,18 +60,19 @@
                                 <form action="{{ route('seller.forgot') }}" method="Post">
                                     <div class="cmn-header">
                                         <h1><a href="login.php"><i class="bi bi-chevron-left"></i></a> Forgot Password
+
                                         </h1>
                                     </div>
 
                                     <div class="group-radio-btn d-flex gap-4 py-3">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="type" id="r1"
-                                                value="0" checked>
+                                                value="0" {{ old('type') == 0 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="r1">Mobile Number</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="type" id="r2"
-                                                value="1">
+                                                value="1" {{ old('type') == 1 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="r2">Email Address</label>
                                         </div>
                                     </div>
@@ -79,11 +80,11 @@
                                     @csrf
 
 
-                                    <div class="form-group mt-4">
-                                        <label for="">Mobile or Email Address</label>
+                                    <div class="form-group mt-4" id="mobileDiv">
+                                        <label for="">Mobile Number</label>
 
                                         <div class="d-flex align-items-center gap-3">
-                                            <div class=" d-none LoginCountryCode">
+                                            <div class="LoginCountryCode">
                                                 {{-- <select name="country_code" id=""
                                                     class="country form-control form-select" style="width:100px">
                                                     @foreach ($country as $item)
@@ -137,19 +138,40 @@
 
                                             </div>
                                             <div class="w-100 LoginMobileDesign">
-                                                <input type="text" class="form-control" value=""
-                                                    placeholder="Enter mobile number and email address"
-                                                    name="email_mobile" id="LoginMobile">
+
+
+                                                <input type="text" class="form-control notapplyspace"
+                                                    value="" placeholder="Enter mobile number" name="mobile"
+                                                    id="LoginMobile">
+
+                                                @error('mobile')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
+
                                         </div>
                                     </div>
-                                    @error('email_mobile')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
+                                    <div class="form-group mt-3 " id="emailDiv">
+
+                                        <label for="">Enter Email Address</label>
+
+                                        <div class="w-100 LoginMobileDesign">
+                                            <input type="text" class="form-control notapplyspace" value=""
+                                                placeholder="Enter email address" name="email" id="LoginMobile">
+                                        </div>
+                                        @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+
 
                                     @error('error')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
+
+
 
 
 
@@ -196,7 +218,65 @@
             $('.LoginMobileDesign').addClass('col-12').removeClass('col-9');
         }
     });
+
+
+    $(document).ready(function() {
+        // When a user selects a country (clicks a label)
+        $(document).on('click', '.country-option', function() {
+            let radio = $(this).find('.country-radio');
+            let flag = radio.data('flag');
+            let code = radio.val();
+            let name = radio.data('name');
+
+            // Update the flag and code shown on the button
+            $('#selected-flag img').attr('src', flag);
+            $('#selected-code').text(code);
+
+            // Set the radio input as checked
+            radio.prop('checked', true);
+
+            // Close the dropdown (Bootstrap 5)
+            $('#countryDropdown').dropdown('hide');
+        });
+
+    });
+
+
+    $(document).ready(function() {
+        $('input[name="type"]').on('change', function() {
+            if ($(this).val() == '0') {
+                // Show mobile input
+                $('#mobileDiv').removeClass('d-none');
+                $('#emailDiv').addClass('d-none');
+            } else {
+                // Show email input
+                $('#emailDiv').removeClass('d-none');
+                $('#mobileDiv').addClass('d-none');
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        const selectedType = $('input[name="type"]:checked').val();
+
+        if (selectedType == '1') {
+            $('#emailDiv').removeClass('d-none');
+            $('#mobileDiv').addClass('d-none');
+        }
+
+        if (selectedType == '0') {
+            $('#mobileDiv').removeClass('d-none');
+            $('#emailDiv').addClass('d-none');
+        }
+
+
+
+    });
 </script>
+
+
+
+@include('dealer.layout.custom_code');
 
 
 </html>
