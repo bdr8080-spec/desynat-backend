@@ -49,8 +49,8 @@
                                                     <img src="{{asset('user/assets/images/user.png')}}" class="img-fluid" />
                                                 </div>
                                                 <div class="profile_detail">
-                                                    <p>Ahmed Farhan</p>
-                                                    <label>farhan713@mail.com</label>
+                                                    <p>{{Auth::guard('web')->user()->full_name}}</p>
+                                                    <label>{{Auth::guard('web')->user()->email}}</label>
                                                 </div>  
                                             </div>
                                             <a href="{{route('userProfile')}}">

@@ -304,7 +304,7 @@
                                         <th scope="col">Average Rating</th>
                                         <th scope="col">View Reels</th>
                                         <th scope="col">View Highlights</th>
-                                        <th scope="col">Block/Unblock</th>
+                                        <th scope="col">Unblock/Block</th>
 
                                     </tr>
                                 </thead>
@@ -731,7 +731,7 @@
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Reason For Rejection</label>
                                 <textarea class="form-control" id="rejectReason" rows="3"></textarea>
-                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reject Reason</div>
+                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reason</div>
                             </div>
                         </div>
                     </div>
@@ -983,7 +983,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.status === 'success') {
                         if (isChecked) {
-                            toastr.success(data.message);
+                            toastr.error(data.message);
                         } else {
                             toastr.success(data.message);
                         }

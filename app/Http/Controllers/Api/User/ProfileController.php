@@ -299,6 +299,9 @@ class ProfileController extends Controller
 
          $data = $this->UserProfileService->verifyOtp($request);
 
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
