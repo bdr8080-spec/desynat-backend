@@ -376,8 +376,8 @@ class SellerManagementService
             $seller->save();
 
             $message = $seller->is_block == 1
-                ? 'Seller blocked successfully'
-                : 'Seller unblocked successfully';
+                ? 'Seller Blocked Successfully'
+                : 'Seller Unblocked Successfully';
 
             return [
                 'status' => 'success',

@@ -163,9 +163,6 @@ $(document).ready(function() {
                 city_id: cityId,
                 _token: "{{ csrf_token() }}"
             },
-            beforeSend: function() {
-                $('#addServiceCityBtn').prop('disabled', true).text('Submitting...');
-            },
             success: function(response) {
                 if (response.status === 'success') {
                     toastr.success(response.message);

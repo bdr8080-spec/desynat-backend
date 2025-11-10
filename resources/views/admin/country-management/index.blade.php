@@ -6,7 +6,7 @@
         <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
                 <div class="col-lg-6 col-md-6 col-12">
-                    <h2 class="h2">Country , City & Zone Management</h2>
+                    <h2 class="h2">COUNTRY , CITY & ZONE MANAGEMENT</h2>
                 </div>
             </div>
 

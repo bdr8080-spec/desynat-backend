@@ -304,7 +304,7 @@
                                         <th scope="col">Average Rating</th>
                                         <th scope="col">View Reels</th>
                                         <th scope="col">View Highlights</th>
-                                        <th scope="col">Block/Unblock</th>
+                                        <th scope="col">Unblock/Block</th>
 
                                     </tr>
                                 </thead>
@@ -637,7 +637,7 @@
 
 <!-- id-modal -->
 <div class="modal fade" id="sentModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <h2 class="h2">Documents</h2>
@@ -669,7 +669,7 @@
 </div> -->
 <!-- store-modal -->
 <div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <h2 class="h2">Store Details</h2>
@@ -683,7 +683,7 @@
                     <h5>Store Image</h5>
                     <img id="storeImage" src="" alt="Store Image"
                         class="img-fluid rounded border shadow-sm mt-2"
-                        style="max-width: 250px; height: auto;">
+                        style="width: 250px;height: 177px;">
                 </div>
 
                 <!--  Store Documents Section -->
@@ -736,9 +736,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-danger" id="submitReject">Reject Seller</button>
-                </div>
+             
+                  <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
+                                        <a type="button" class="btn btn-dark customBtn" id="submitReject">Reject Seller</a>
+                                    </div>
             </div>
          
         </div>
@@ -982,7 +983,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(data => {
                     if (data.status === 'success') {
                         if (isChecked) {
-                            toastr.success(data.message);
+                            toastr.error(data.message);
                         } else {
                             toastr.success(data.message);
                         }
