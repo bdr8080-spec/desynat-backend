@@ -48,7 +48,7 @@
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-chat-text-fill"></i>
+                        <img src="{{ asset('dealer') }}/assets/img/chat.svg" alt="icon" class="bell-icon">
                         <!-- <span class="badge bg-success badge-number">3</span> -->
                     </a>
                     <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
@@ -61,8 +61,8 @@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                        <i class="bi bi-bell"></i>
-                        <span class="badge bg-primary badge-number">4</span>
+                        <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
+                        <!-- <span class="badge bg-primary badge-number">4</span> -->
                     </a>
 
                     <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -82,7 +82,7 @@
                         data-bs-toggle="dropdown">
                         <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
                             class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">Seller</span>
+                        <!-- <span class="d-none d-md-block dropdown-toggle ps-2">Seller</span> -->
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <!-- <li>

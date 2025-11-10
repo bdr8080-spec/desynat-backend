@@ -42,7 +42,7 @@
   --border-color: #DFBF8F;
   --bg-header: #FFF7EA;
 
-  --title24: 24px;
+  --title24: 22px;
   --title-color: #040404;
   --gold-color: #F3D1A2;
   --title30: 25px;
@@ -745,7 +745,7 @@ label {
 
 .header-nav .nav-icon {
   font-size: 22px;
-  margin-right: 25px;
+  margin-right: 10px;
   position: relative;
   height: 40px;
   width: 40px;
