@@ -4,7 +4,7 @@
 @section('content')
     <div class="my-profile customContainer">
         <div class="d-flex align-items-center mt-3 justify-content-between">
-            <i class="fa-solid fa-chevron-left"></i> My Profile (edit)
+            <a href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i></a> My Profile (edit)
             <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock"></i>Change Password</a>
         </div>
 
