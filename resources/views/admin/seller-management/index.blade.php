@@ -731,7 +731,7 @@
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Reason For Rejection</label>
                                 <textarea class="form-control" id="rejectReason" rows="3"></textarea>
-                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reject Reason</div>
+                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reason</div>
                             </div>
                         </div>
                     </div>
