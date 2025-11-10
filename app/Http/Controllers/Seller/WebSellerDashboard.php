@@ -73,7 +73,6 @@ class WebSellerDashboard extends Controller
 
 
         $seller_details=Auth::guard('seller')->user();
-
   
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details->id)->first();
     
@@ -88,13 +87,17 @@ class WebSellerDashboard extends Controller
           $plans= $this->SellerAuthService->seller_allPlan($request_data);
     
         if(isset($plans['status']) && $plans['status']=='error' ){
-            return view('dealer.index',compact('seller_details'))->with('error','No Plan Found');;
+            return view('dealer.index',compact('seller_details'))->with('error','No Plan Found');
         }
 
         $plans=$plans['data'];
 
          return view('dealer.planlist',compact('seller_details','plans'));
            
+        }else{
+
+            return  redirect()->route('seller.dashboard')->with('error','No Plan Found');
+
         }
 
 

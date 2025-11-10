@@ -22,8 +22,8 @@
 <body>
     <div class="login-header">
         <div class="des-logo">
-            <a href="#"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image"
-                    class="img-fluid logo-login"> </a>
+            <a href="{{ route('seller.dashboard') }}"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg"
+                    alt="image" class="img-fluid logo-login"> </a>
         </div>
         <div class="des-language">
             <div class="dropdown">
