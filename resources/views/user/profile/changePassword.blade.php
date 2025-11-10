@@ -5,58 +5,82 @@
   <!-- //change password -->
     <div class="my-profile customContainer">
         <div class="d-flex align-items-center mt-3 justify-content-between">
-            <a href=""><i class="fa-solid fa-chevron-left"></i>Change Password</a>
+            <a href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i>Change Password</a>
         </div>
-
+        <form id="changePassword">
+            @csrf
         <div class="row mt-5">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">Old Password</label>
-                    <input type="text" class="form-control" placeholder="Enter Password" />
+                    <input type="text" class="form-control" placeholder="Enter Password"  name="old_password"/>
+                    <p class="text-danger" id="error-old_password"></p>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">Enter New Password</label>
-                    <input type="text" class="form-control" placeholder="Enter New Password" />
+                    <input type="text" class="form-control" placeholder="Enter New Password" name="new_password"/>
+                    <p class="text-danger" id="error-new_password"></p>
                 </div>
             </div>
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">Confirm Password</label>
-                    <input type="text" class="form-control" placeholder="Re-Enter Password" />
+                    <input type="text" class="form-control" placeholder="Re-Enter Password" name="confirm_password" />
+                    <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
             <div class="col-lg-12">
-                <button class="customBtn w-100 mt-4">Save</button>
+                <button  type="submit"  class="customBtn w-100 mt-4" id="loginButtom">Save</button>
             </div>
         </div>
+        </form>
+
     </div>
 
-<<<<<<< HEAD
-    <script src="assets/js/jquery-3.7.1.min.js" ></script>
-    <!-- <script src="assets/js/all.min.js" ></script> -->
-    <script src="assets/js/bootstrap.bundle.min.js" ></script>
-    <!-- <script src="assets/js/fontawesome.min.js" ></script> -->
-    <script src="assets/js/custom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
-        $(document).ready(function () {
-            $("#fileInput").change(function (e) {
-                const file = e.target.files[0];
-                if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    $("#profileImg").attr("src", event.target.result);
-                };
-                reader.readAsDataURL(file);
+
+        $(document).on('submit', '#changePassword', function (e) {
+            e.preventDefault();
+            let data = new FormData(this);
+            
+            $('#loginButtom').prop('disabled', true);
+
+            $.ajax({
+                url: "{{ route('userChangePassword') }}",
+                method: "POST",
+                data: data,
+                processData: false,
+                contentType: false, 
+                success: function (resp) {
+                    if(resp.status == true){
+                             toastr.success(resp.message);
+                        setTimeout(() => {
+                             location.href = "/";
+                        }, 1000);
+                    }
+
+                    if(resp.status == false){
+                        for (const key in resp.errors) {
+                            console.log(resp.errors[key])
+                            $(`#error-${key}`).html(resp.errors[key]);
+                        }   
+                    }
+
+                },
+                error: function (xhr) {
+                   toastr.error(xhr.responseJSON.message);
+                },
+                complete: function () {
+                   $('#loginButtom').prop('disabled', false);
                 }
             });
-            });
-    </script>
+        });
 
-</body>
-</html>
-=======
+
+    </script>
 @endsection
->>>>>>> f03c6780fb25643899526ee80148b4d64f288a42
+

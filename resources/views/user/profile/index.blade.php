@@ -4,8 +4,8 @@
 @section('content')
     <div class="my-profile customContainer">
         <div class="d-flex align-items-center mt-3 justify-content-between">
-            <a href=""><i class="fa-solid fa-chevron-left"></i> My Profile (edit)</a>
-            <button class="customBtn2"><i class="fa-solid fa-lock"></i>Change Password</button>
+            <i class="fa-solid fa-chevron-left"></i> My Profile (edit)
+            <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock"></i>Change Password</a>
         </div>
 
         <div class="row mt-5">
@@ -28,14 +28,14 @@
                 <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
                     <input type="text" class="form-control" placeholder="Faizan Ansari" />
-                    <a href="" class="change">Change</a>
+                    <a href="{{('/route3')}}" class="change">Change</a>
                 </div>
             </div>
             <div class="col-lg-12 mt-3">
                 <div class="form-group mobile position-relative">
                     <label for="">Email Id</label>
                     <input type="email" class="form-control" placeholder="faizanansari@mail.com" />
-                    <a class="change">Change</a>
+                    <a class="change" href="{{url('/route6')}}">Change</a>
                 </div>
             </div>
             <div class="col-lg-12">

@@ -22,8 +22,8 @@ use App\Http\Controllers\User\ProfileController;
 });
 
    
-   Route::get('/profile', [ProfileController::class, 'useProfile'])->name('useProfile');
-   Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
+   Route::get('/profile', [ProfileController::class, 'userProfile'])->name('userProfile');
+   Route::match(['get','post'],'/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
    Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
 
 
@@ -40,5 +40,11 @@ use App\Http\Controllers\User\ProfileController;
      return view('user.profile.profileChangeNumberOtp');
 });
  Route::match(['get', 'post'], '/route4', function () {
+     return view('user.profile.profileChangeNumber');
+});
+ Route::match(['get', 'post'], '/route5', function () {
+     return view('user.profile.verificationCode');
+});
+ Route::match(['get', 'post'], '/route6', function () {
      return view('user.profile.profileChangeEmailOtp');
 });
