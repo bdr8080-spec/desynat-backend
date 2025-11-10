@@ -5,17 +5,12 @@
 <script src="{{ asset('dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 <script src="{{ asset('dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 <!--Main JS File -->
-<script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
-
+<script src="{{ asset('dealer') }}/assets/custom-file/table-lib/table-data.js"></script>
 <script src="{{ asset('dealer') }}/assets/custom-file/js/main.js"></script>
-
-
 <!-- Toastr CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
 <!-- jQuery (required by Toastr) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <!-- Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
