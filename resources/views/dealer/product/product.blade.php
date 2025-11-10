@@ -3,7 +3,7 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Product Management</div>
-        <a href="#" class="btn btn-success">Add New Product</a>
+        <a href="{{ route('seller.Add_product') }}" class="btn btn-success">Add New Product</a>
     </div>
 
     <div class="tabs-panel py-4">
