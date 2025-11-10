@@ -81,7 +81,7 @@
 
 
                                     <div class="form-group mt-4" id="mobileDiv">
-                                        <label for="">Mobile or Email Address</label>
+                                        <label for="">Mobile Number</label>
 
                                         <div class="d-flex align-items-center gap-3">
                                             <div class="LoginCountryCode">
