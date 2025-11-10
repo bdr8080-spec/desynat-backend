@@ -13,26 +13,26 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">Old Password</label>
-                    <input type="text" class="form-control" placeholder="Enter Password"  name="old_password"/>
+                    <input type="text" class="form-control notapplyspace" placeholder="Enter Password"  name="old_password"/>
                     <p class="text-danger" id="error-old_password"></p>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">Enter New Password</label>
-                    <input type="text" class="form-control" placeholder="Enter New Password" name="new_password"/>
+                    <input type="text" class="form-control notapplyspace" placeholder="Enter New Password" name="new_password"/>
                     <p class="text-danger" id="error-new_password"></p>
                 </div>
             </div>
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">Confirm Password</label>
-                    <input type="text" class="form-control" placeholder="Re-Enter Password" name="confirm_password" />
+                    <input type="text" class="form-control notapplyspace" placeholder="Re-Enter Password" name="confirm_password" />
                     <p class="text-danger" id="error-confirm_password"></p>
                 </div>
             </div>
             <div class="col-lg-12">
-                <button  type="submit"  class="customBtn w-100 mt-4" id="loginButtom">Save</button>
+                <button  type="submit"  class="customBtn w-100 mt-4" id="loginButtom">Update</button>
             </div>
         </div>
         </form>
@@ -59,7 +59,7 @@
                     if(resp.status == true){
                              toastr.success(resp.message);
                         setTimeout(() => {
-                             location.href = "/";
+                             location.href = "/profile";
                         }, 1000);
                     }
 

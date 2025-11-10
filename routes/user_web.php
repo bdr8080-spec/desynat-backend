@@ -26,19 +26,22 @@ use App\Http\Controllers\User\ProfileController;
    Route::match(['get','post'],'/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
    Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
 
-
+   Route::match(['get', 'post'], '/old-number-send-otp', [ProfileController::class, 'oldNumberSendOtp'])->name('userOldNumberSendOtp');
+   Route::match(['get', 'post'], '/old-number-verify', [ProfileController::class, 'oldNumberVerify'])->name('userOldNumberVerify');
+   
+   Route::match(['get','post'], '/update-new-number', [ProfileController::class, 'updateNewNumber'])->name('userUpdateNewNumber');
  });
 
 
- Route::match(['get', 'post'], '/route1', function () {
-     return view('user.profile.index');
-});
- Route::match(['get', 'post'], '/route2', function () {
-     return view('user.profile.changePassword');
-});
- Route::match(['get', 'post'], '/route3', function () {
-     return view('user.profile.profileChangeNumberOtp');
-});
+//  Route::match(['get', 'post'], '/route1', function () {
+//      return view('user.profile.index');
+// });
+//  Route::match(['get', 'post'], '/route2', function () {
+//      return view('user.profile.changePassword');
+// });
+//  Route::match(['get', 'post'], '/route3', function () {
+//      return view('user.profile.profileChangeNumberOtp');
+// });
  Route::match(['get', 'post'], '/route4', function () {
      return view('user.profile.profileChangeNumber');
 });
