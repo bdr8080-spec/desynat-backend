@@ -8,4 +8,9 @@ class sellerStoreInformation extends Model
 {
     protected $guarded=[];
 
+    public function country_info()
+    {
+        return $this->belongsTo(Country::class, 'country', 'id');
+    }
+
 }
