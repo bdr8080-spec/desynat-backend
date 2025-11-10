@@ -4,8 +4,8 @@
 @section('content')
     <div class="my-profile customContainer">
         <div class="d-flex align-items-center mt-3 justify-content-between">
-            <a href=""><i class="fa-solid fa-chevron-left"></i> My Profile (edit)</a>
-            <button class="customBtn2"><i class="fa-solid fa-lock"></i>Change Password</button>
+            <i class="fa-solid fa-chevron-left"></i> My Profile (edit)
+            <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock"></i>Change Password</a>
         </div>
 
         <div class="row mt-5">
