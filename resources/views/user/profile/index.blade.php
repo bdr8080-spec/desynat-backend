@@ -21,21 +21,37 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">Name</label>
-                    <input type="text" class="form-control" placeholder="Faizan Ansari" />
+                    <input type="text" class="form-control" placeholder="Please enter full name" value="{{$user->full_name}}" />
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
-                    <input type="text" class="form-control" placeholder="Faizan Ansari" />
-                    <a href="{{('/route3')}}" class="change">Change</a>
+                    <input type="text" name="country_code" value="{{$user->country_code}}">
+                    <input type="text" class="form-control" placeholder="Please enter mobile number" value="{{$user->mobile}}"/>            
+                    <a class="change"
+                    href="{{ route('userOldNumberSendOtp', [
+                        'mobile' => $user->mobile,
+                        'country_code' => $user->country_code,
+                        'for' => 'mobile',
+                        'type' => '0'
+                    ]) }}">
+                    Change
+                    </a>
                 </div>
             </div>
             <div class="col-lg-12 mt-3">
                 <div class="form-group mobile position-relative">
                     <label for="">Email Id</label>
-                    <input type="email" class="form-control" placeholder="faizanansari@mail.com" />
-                    <a class="change" href="{{url('/route6')}}">Change</a>
+                    <input type="email" class="form-control" placeholder="Please enter email address" value="{{$user->email}}" />
+                    <a class="change"
+                           href="{{ route('userOldNumberSendOtp', [
+                        'email' => $user->email,
+                        'for' => 'email',
+                        'type' => '0'
+                    ]) }}">
+                    Change
+                    </a>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -44,5 +60,8 @@
         </div>
     </div>
 
+
+    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
  @endsection
