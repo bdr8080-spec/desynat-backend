@@ -559,12 +559,12 @@ class LoginController extends Controller
     if($request->type=='0'){
         $validate = Validator::make($request->all(), [
             'country_code'=>"required",
-            'email_mobile'=>"required"
+            'mobile'=>"required"
         ]);
 
        if($validate->fails()){
         return redirect()->back()
-        ->withErrors(['error'=>'Mobile Number Is required'])
+        ->withErrors(['mobile'=>'Mobile Number Is required'])
         ->withInput();
      }
        }
@@ -572,37 +572,37 @@ class LoginController extends Controller
     // when i use forgot password with Email
         if($request->type=='1'){
         $validate = Validator::make($request->all(), [
-            'email_mobile'=>"required",
+            'email'=>"required",
         ]);
 
         if($validate->fails()){
 
-            return redirect()->back()
-            ->withErrors(['error'=>'Email Address Is required'])
+         return redirect()->back()
+            ->withErrors(['email'=>'Email Address Is required'])
         ->withInput();
         }
         }
 
-    $loginField = filter_var($request->email_mobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+    // $loginField = filter_var($request->email_mobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
 
-    if ($loginField === 'mobile') {
+    if ($request->type === '0') {
         $credentials = [
             'type'=>'0',
             'country_code' => $request->country_code,
-            'mobile'       => $request->email_mobile,
+            'mobile'       => $request->mobile,
         ];
 
-        $seller = seller::where('mobile', $request->email_mobile)
+        $seller = seller::where('mobile', $request->mobile)
                     ->where('country_code', $request->country_code)
                     ->where('otp_verify','1')
                     ->first();
     } else {
         $credentials = [
             'type'=>'1',
-            'email'    => $request->email_mobile,
+            'email'    => $request->email,
         ];
         
-        $seller = seller::where('email', $request->email_mobile)->where('otp_verify','1')->first();
+        $seller = seller::where('email', $request->email)->where('otp_verify','1')->first();
     }
 
 
