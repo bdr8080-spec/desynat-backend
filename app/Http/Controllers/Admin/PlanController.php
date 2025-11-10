@@ -30,6 +30,7 @@ class PlanController extends Controller
         $request->merge(['country_id' => $id]);
         $plansResponse = $this->PlanService->getPlans($request);
         $plans = $plansResponse['data'];
+        //dd($plans);
         return view('admin.plan-management.manage-plans', compact('plans'));
     }
 
