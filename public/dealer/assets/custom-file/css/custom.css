@@ -20,10 +20,25 @@
     font-size: 20px;
     cursor: pointer;
 }
+.padding-top-40{
+    padding-top: 50px;
+}
+.visitor-pnl .form-check-label {
+    font-size: 12px;
+    color: #000;
+}
 
 /*--------------------------------------------------------------
 # Dashboard page
 --------------------------------------------------------------*/
+.total-revenu {
+    background: var(--revenu);
+}
+.font-34{
+    font-size: var(--font-34);
+    color: #000;
+    font-weight: 600;
+}
 
 .title24 {
     font-size: var(--title24);
@@ -62,4 +77,63 @@
 }
 .tabs-panel .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     background: var(--tab-active-bg);
+}
+.dt-column-title {
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+}
+table.dataTable > tbody > tr > td {
+    padding: 8px 10px;
+    font-size: 15px;
+    text-align: center;
+}
+.dt-length {
+    display: none;
+}
+.dt-search {
+    display: none;
+}
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-filter {
+    display: flex;
+    gap: 15px;
+}
+
+.width-50{
+    min-width: 210px;
+}
+table.dataTable > tbody > tr:last-child > * {
+    border-bottom: none;
+    text-align: center;
+}
+table.dataTable > thead > tr > th{
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background: #F2F2F2;
+}
+table.dataTable {
+    border-radius: 10px 12px 0px 0px;
+    overflow: hidden;
+}
+.pro-image{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+}
+.table>tbody {
+    vertical-align: middle;
+}
+
+.dt-column-order {
+    display: none;
+}
+.eyebtn {
+    color: #333;
+    font-size: 18px;
 }

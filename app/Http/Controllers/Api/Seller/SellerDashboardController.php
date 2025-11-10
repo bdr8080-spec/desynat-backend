@@ -165,9 +165,19 @@ class SellerDashboardController extends Controller
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
-    
     }
-    
+
+
+    public function seller_profile(Request $request){
+
+        $user_details=$request->user();
+        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$user_details->id)->first();
+        
+        return ApiResponse::generateResponse('success','Seller Dashboard fetch Successfully',$seller_details, 200);
+
+
+    }
+
     
 
     

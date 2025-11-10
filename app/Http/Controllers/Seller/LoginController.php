@@ -22,6 +22,8 @@ use Validator;
 
 use App\Services\SellerAuthService;
 
+use Illuminate\Support\Facades\Cache;
+
 class LoginController extends Controller
 {
  
@@ -90,27 +92,43 @@ class LoginController extends Controller
            $seller_details=Auth::guard('seller')->user();
 
            if($seller_details->admin_verify=='0' || $seller_details->admin_verify=='1'){
+
+            Auth::guard('seller')->logout();
+
+
             return redirect()->back()
             ->withErrors(['password'=>'Seller Is Not verified By Admin'])
             ->withInput();
            }
-
-
+           
            if($seller_details->admin_verify=='3'){
+
+            $msg="Your Account is Rejected By admin $seller_details->reject_reason";
+
+            Auth::guard('seller')->logout();
+            
             return redirect()->back()
-            ->withErrors(['password'=>'Seller Is Rejected By Admin'])
+            ->withErrors(['password'=>$msg])
             ->withInput();
+            
            }
 
+           if($seller_details->admin_verify=='4'){
+            // return redirect()->back()
+            // ->withErrors(['password'=>'Seller Document is Rejected By Admin'])
+            // ->withInput();
+            
+            return redirect()->route('seller.upload_document',$seller_details->id)->with('error','Your Document is Rejected By Admin Please Upload Again');
+        
+        }
+        
 
-           return redirect()->route('seller.dashboard');
-
-
-
+           return redirect()->route('seller.dashboard')->with('success','Login successfully');
+           
 
         }{
             return redirect()->back()
-            ->withErrors(['password'=>'Login Details Is Wrong'])
+            ->withErrors(['password'=>'Please enter correct password'])
             ->withInput();
 
         }
@@ -347,12 +365,26 @@ class LoginController extends Controller
 
         if ($request->isMethod('get')) {
 
-           $seller_data=Auth::guard('seller')->user()->id;
+           $seller_details=Auth::guard('seller')->user();
 
+           $seller_data=$seller_details->id;
+
+           if($seller_details->admin_verify!=='4'){
+           
            $owner_document=sellerDocument::where('seller_id',$seller_data)->where('document_type','1')->where('status','1')->get();
            $store_document=sellerDocument::where('seller_id',$seller_data)->where('document_type','2')->where('status','1')->get();
-
            $seller_bank=Bankdetails::where('user_id',$seller_data)->first();
+           
+        }else{
+       
+            $owner_document=[];
+            $store_document=[];
+            $seller_bank= (object)[];
+        
+        }
+
+
+
         return view('dealer.bank-details',compact('owner_document','store_document','seller_bank'));
 
     }
@@ -389,8 +421,8 @@ class LoginController extends Controller
     // 'store_document' => 'required|array',
     
         'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
-        // "iban"=>"required",
-        // 'swift'=>'required',
+        "iban"=>"required",
+        'swift'=>'required',
         'bank_name'=>'required',
         "account_holder_name"=>"required",
         'upload_proof' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|required_without:old_upload_proof',
@@ -504,7 +536,11 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        
+        Cache::forget('plan_page');
         Auth::guard('seller')->logout();
+
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
@@ -523,12 +559,12 @@ class LoginController extends Controller
     if($request->type=='0'){
         $validate = Validator::make($request->all(), [
             'country_code'=>"required",
-            'email_mobile'=>"required"
+            'mobile'=>"required"
         ]);
 
        if($validate->fails()){
         return redirect()->back()
-        ->withErrors(['error'=>'Mobile Number Is required'])
+        ->withErrors(['mobile'=>'Mobile Number Is required'])
         ->withInput();
      }
        }
@@ -536,37 +572,37 @@ class LoginController extends Controller
     // when i use forgot password with Email
         if($request->type=='1'){
         $validate = Validator::make($request->all(), [
-            'email_mobile'=>"required",
+            'email'=>"required",
         ]);
 
         if($validate->fails()){
 
-            return redirect()->back()
-            ->withErrors(['error'=>'Email Address Is required'])
+         return redirect()->back()
+            ->withErrors(['email'=>'Email Address Is required'])
         ->withInput();
         }
         }
 
-    $loginField = filter_var($request->email_mobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+    // $loginField = filter_var($request->email_mobile, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
 
-    if ($loginField === 'mobile') {
+    if ($request->type === '0') {
         $credentials = [
             'type'=>'0',
             'country_code' => $request->country_code,
-            'mobile'       => $request->email_mobile,
+            'mobile'       => $request->mobile,
         ];
 
-        $seller = seller::where('mobile', $request->email_mobile)
+        $seller = seller::where('mobile', $request->mobile)
                     ->where('country_code', $request->country_code)
                     ->where('otp_verify','1')
                     ->first();
     } else {
         $credentials = [
             'type'=>'1',
-            'email'    => $request->email_mobile,
+            'email'    => $request->email,
         ];
         
-        $seller = seller::where('email', $request->email_mobile)->where('otp_verify','1')->first();
+        $seller = seller::where('email', $request->email)->where('otp_verify','1')->first();
     }
 
 

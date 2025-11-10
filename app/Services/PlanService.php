@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Plan;
+use App\Models\country;
 use Illuminate\Http\Request;
 
 
@@ -89,7 +90,7 @@ class PlanService
     public function getPlans(Request $request)
     {
         try {
-            $query = Plan::query();
+            $query = Plan::with('country_info');
 
             if ($request->has('country_id')) {
                 $query->where('country_id', $request->country_id);
@@ -115,7 +116,7 @@ class PlanService
     public function getPlanDetails($id)
     {
         try {
-            $plan = Plan::find($id);
+            $plan = Plan::with('country_info')->find($id);
 
             if (!$plan) {
                 return [

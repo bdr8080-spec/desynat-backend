@@ -22,7 +22,8 @@ class SellerAuthenticated
 
         if (Auth::guard('seller')->check()) {   
           $seller = Auth::guard('seller')->user();
-             
+          
+
           return $next($request);
           
         }else{

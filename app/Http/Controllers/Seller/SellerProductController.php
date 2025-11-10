@@ -25,6 +25,16 @@ class SellerProductController extends Controller
 
     }
     
+    public function Add_product(){
+
+        return view('dealer.product.Add_product');
+
+    }
+    public function view_product(){
+
+        return view('dealer.product.view_product');
+
+    }
 
     
 
