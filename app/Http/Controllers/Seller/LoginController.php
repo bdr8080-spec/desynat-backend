@@ -92,26 +92,33 @@ class LoginController extends Controller
            $seller_details=Auth::guard('seller')->user();
 
            if($seller_details->admin_verify=='0' || $seller_details->admin_verify=='1'){
+
+            Auth::guard('seller')->logout();
+
+
             return redirect()->back()
             ->withErrors(['password'=>'Seller Is Not verified By Admin'])
             ->withInput();
            }
-
-
+           
            if($seller_details->admin_verify=='3'){
+
+            $msg="Your Account is Rejected By admin $seller_details->reject_reason";
+
+            Auth::guard('seller')->logout();
+            
             return redirect()->back()
-            ->withErrors(['password'=>'Seller Is Rejected By Admin'])
+            ->withErrors(['password'=>$msg])
             ->withInput();
+            
            }
-
-
 
            if($seller_details->admin_verify=='4'){
             // return redirect()->back()
             // ->withErrors(['password'=>'Seller Document is Rejected By Admin'])
             // ->withInput();
             
-            return redirect()->route('seller.upload_document',$seller_details->id)->with('error','Seller Document is Rejected By Admin Please Upload Again');
+            return redirect()->route('seller.upload_document',$seller_details->id)->with('error','Your Document is Rejected By Admin Please Upload Again');
         
         }
         
