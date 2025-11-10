@@ -319,38 +319,6 @@ class SellerManagementService
         }
     }
 
-    // public function rejectSeller($sellerId, $rejectReason)
-    // {
-    //     try {
-    //         $seller = seller::find($sellerId);
-
-    //         if (!$seller) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'Seller not found',
-    //                 'data' => (object) []
-    //             ];
-    //         }
-
-    //         $seller->admin_verify = '3';
-    //         $seller->reject_reason = $rejectReason; 
-    //         $seller->save();
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Seller rejected successfully',
-    //             'data' => $seller
-    //         ];
-
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to reject seller: ' . $e->getMessage(),
-    //             'data' => []
-    //         ];
-    //     }
-    // }
-
     public function rejectSeller($sellerId, $rejectReason, $rejectType)
     {
         try {

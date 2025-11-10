@@ -122,6 +122,7 @@ class SellerController extends Controller
         $validate = Validator::make($request->all(), [
             'seller_id' => 'required|exists:sellers,id',
             'reject_reason' => 'required|string|max:1000',
+            'reject_type' => 'required|string',
         ]);
 
         if ($validate->fails()) {
@@ -129,7 +130,7 @@ class SellerController extends Controller
         }
 
         try {
-            $data = $this->SellerManagementService->rejectSeller($request->seller_id,$request->reject_reason);
+            $data = $this->SellerManagementService->rejectSeller($request->seller_id,$request->reject_reason,$request->reject_type);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
