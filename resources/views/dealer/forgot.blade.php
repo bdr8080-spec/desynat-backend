@@ -160,11 +160,12 @@
                                             <input type="text" class="form-control notapplyspace" value=""
                                                 placeholder="Enter email address" name="email" id="LoginMobile">
                                         </div>
+                                        @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
 
-                                    @error('email')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+
 
                                     @error('error')
                                         <span class="text-danger">{{ $message }}</span>
