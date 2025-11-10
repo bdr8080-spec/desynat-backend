@@ -678,7 +678,7 @@
 
             <div class="modal-body">
 
-                <!-- ✅ Store Image Section -->
+                <!-- Store Image Section -->
                 <div id="storeImageSection" class="text-center mb-4" style="display: none;">
                     <h5>Store Image</h5>
                     <img id="storeImage" src="" alt="Store Image"
@@ -686,7 +686,7 @@
                         style="max-width: 250px; height: auto;">
                 </div>
 
-                <!-- ✅ Store Documents Section -->
+                <!--  Store Documents Section -->
                 <div class="text-center mb-3">
                     <h5>Store Documents</h5>
                 </div>
