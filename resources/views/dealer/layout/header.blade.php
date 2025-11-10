@@ -43,7 +43,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="">
-            <a href="#" class="logo">
+            <a href="{{ route('seller.dashboard') }}" class="logo">
                 <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -133,21 +133,24 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20  {{ Request::is('seller/dashboard') ? 'sidebar-active' : '' }}" href="{{ route('seller.dashboard') }}">
+                <a class="nav-link border-radious-9 margin-20  {{ Request::is('seller/dashboard') ? 'sidebar-active' : '' }}"
+                    href="{{ route('seller.dashboard') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon"
                         class="asideicon">
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/products') ? 'sidebar-active' : '' }}" href="{{ route('seller.products') }}">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/products') ? 'sidebar-active' : '' }}"
+                    href="{{ route('seller.products') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon"
                         class="asideicon">
                     <span>Product Management</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/Inventory-Management') ? 'sidebar-active' : '' }}" href="{{ route('seller.Inventory_Management') }}">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/Inventory-Management') ? 'sidebar-active' : '' }}"
+                    href="{{ route('seller.Inventory_Management') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/inventory.svg" alt="icon"
                         class="asideicon">
                     <span>Inventory Management</span>
