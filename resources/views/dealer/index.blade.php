@@ -181,5 +181,4 @@
 </div>
 
 
-
-@include('dealer.layout.footer');
+@include('dealer.layout.custom_code');

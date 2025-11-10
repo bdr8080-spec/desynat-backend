@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\seller;
+use App\Models\country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 
@@ -16,7 +17,7 @@ class SellerManagementService
 
             $query = seller::where('admin_verify', '1')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -95,7 +96,7 @@ class SellerManagementService
 
             $query = seller::where('admin_verify', '2')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -173,7 +174,7 @@ class SellerManagementService
 
             $query = seller::where('admin_verify', '3')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -247,7 +248,7 @@ class SellerManagementService
     {
         try {
             $seller = seller::with([
-                'store_info',
+                'store_info.country_info',
                 'owner_document',
                 'store_document',
                 'seller_bank_details',
@@ -318,7 +319,39 @@ class SellerManagementService
         }
     }
 
-    public function rejectSeller($sellerId, $rejectReason)
+    // public function rejectSeller($sellerId, $rejectReason)
+    // {
+    //     try {
+    //         $seller = seller::find($sellerId);
+
+    //         if (!$seller) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'Seller not found',
+    //                 'data' => (object) []
+    //             ];
+    //         }
+
+    //         $seller->admin_verify = '3';
+    //         $seller->reject_reason = $rejectReason; 
+    //         $seller->save();
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Seller rejected successfully',
+    //             'data' => $seller
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to reject seller: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+    public function rejectSeller($sellerId, $rejectReason, $rejectType)
     {
         try {
             $seller = seller::find($sellerId);
@@ -331,8 +364,14 @@ class SellerManagementService
                 ];
             }
 
-            $seller->admin_verify = '3';
-            $seller->reject_reason = $rejectReason; 
+            if ($rejectType === 'complete') {
+                $seller->admin_verify = '3';
+            } elseif ($rejectType === 'document') {
+                $seller->admin_verify = '0';
+                $seller->bank_information = '0';
+            }
+
+            $seller->reject_reason = $rejectReason;
             $seller->save();
 
             return [
@@ -349,6 +388,7 @@ class SellerManagementService
             ];
         }
     }
+
 
     public function blockUnblockSeller($sellerId)
     {
