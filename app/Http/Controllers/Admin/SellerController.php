@@ -64,6 +64,7 @@ class SellerController extends Controller
     public function rejectSeller(Request $request, $sellerId)
     {
         $rejectReason = $request->input('reject_reason');
+        $rejectType = $request->input('reject_type');
 
         if (empty($rejectReason)) {
             return response()->json([
@@ -71,8 +72,14 @@ class SellerController extends Controller
                 'message' => 'Reject reason is required.'
             ], 400);
         }
+        if (empty($rejectType)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Reject type is required.'
+            ], 400);
+        }
 
-        $result = $this->SellerManagementService->rejectSeller($sellerId, $rejectReason);
+        $result = $this->SellerManagementService->rejectSeller($sellerId, $rejectReason, $rejectType);
 
         if ($result['status'] === 'error') {
             return response()->json([
