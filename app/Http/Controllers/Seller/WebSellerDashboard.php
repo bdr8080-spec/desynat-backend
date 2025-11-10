@@ -174,11 +174,12 @@ class WebSellerDashboard extends Controller
   $complete_payment= $this->SellerAuthService->complete_Subcription_Order($request_data);
 
   if(isset($complete_payment['status']) && $complete_payment['status']=='error'){
-    return redrect()->back()->with('error',$complete_payment['message']);
+    return redirect()->back()->with('error',$complete_payment['message']);
 }
 
-return view('dealer.index',compact('seller_details'))->with('success','You are successfully purchase a Plan');
-    
+
+return  redirect()->route('seller.dashboard')->with('success','You are successfully purchase a Plan');
+
     }
 
       
