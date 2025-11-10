@@ -16,7 +16,7 @@ class SellerManagementService
 
             $query = seller::where('admin_verify', '1')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -95,7 +95,7 @@ class SellerManagementService
 
             $query = seller::where('admin_verify', '2')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -173,7 +173,7 @@ class SellerManagementService
 
             $query = seller::where('admin_verify', '3')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -247,7 +247,7 @@ class SellerManagementService
     {
         try {
             $seller = seller::with([
-                'store_info',
+                'store_info.country_info',
                 'owner_document',
                 'store_document',
                 'seller_bank_details',
