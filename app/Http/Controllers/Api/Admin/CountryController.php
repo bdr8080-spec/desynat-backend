@@ -137,6 +137,7 @@ class CountryController extends Controller
         }
     }
 
+
     public function delete_service_city(Request $request)
     {
         $validate = Validator::make($request->all(), [
@@ -150,16 +151,30 @@ class CountryController extends Controller
         try {
             $result = $this->CountryService->deleteServiceCity($request->city_id);
 
-            if ($result['status'] === 'error') {
-                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            if ($result['status'] === 'success') {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $result['message'] ?? 'Service City deleted successfully',
+                    'data' => null
+                ], 200);
             }
 
-            return ApiResponse::generateResponse('success', $result['message'], $result['data'] ?? null, 200);
-            
+            // Handle failure case
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message'] ?? 'Failed to delete city',
+                'data' => (object)[]
+            ], 400);
+
         } catch (\Exception $e) {
-            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+                'data' => (object)[]
+            ], 500);
         }
     }
+
 
     public function get_zones(Request $request)
     {
