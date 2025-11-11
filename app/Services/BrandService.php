@@ -12,7 +12,7 @@ class BrandService
     public function getBrand($request)
     {
         try {
-            $limit = $request->input('limit', 10);
+            $limit = $request->input('limit');
             $limit = (int)$limit;
 
             $query = Brand::query();

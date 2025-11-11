@@ -62,9 +62,9 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label d-none">To:</label>
+                                        <label for="to" class="form-label">Select Country</label>
                                         <select name="country_id" id="country_id"
-                                            class="form-select form-select-lg mt-4"
+                                            class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm').submit();">
                                             <option value="">Select country</option>
                                             @foreach($countries as $country)
@@ -243,9 +243,10 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label d-none">To:</label>
+                                                                                <label for="to" class="form-label">Select Country</label>
+
                                         <select name="country_id1" id="country_id"
-                                            class="form-select form-select-lg mt-4"
+                                            class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm1').submit();">
                                             <option value="">Select country</option>
                                             @foreach($countries as $country)
@@ -304,7 +305,7 @@
                                         <th scope="col">Average Rating</th>
                                         <th scope="col">View Reels</th>
                                         <th scope="col">View Highlights</th>
-                                        <th scope="col">Unblock/Block</th>
+                                        <th scope="col">Block/Unblock</th>
 
                                     </tr>
                                 </thead>
@@ -413,7 +414,7 @@
                                             <div class="form-check form-switch" style="justify-content: center;">
                                                 <input class="form-check-input toggleStatus" type="checkbox"
                                                     id="flexSwitchCheckChecked" data-id="{{ $seller['id'] }}"
-                                                    {{ $seller['is_block'] == 1 ? 'checked' : '' }}>
+                                                    {{ $seller['is_block'] == 0 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                             </div>
                                         </td>
@@ -453,9 +454,10 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label d-none">To:</label>
+                                                                              <label for="to" class="form-label">Select Country</label>
+
                                         <select name="country_id2" id="country_id"
-                                            class="form-select form-select-lg mt-4"
+                                            class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm2').submit();">
                                             <option value="">Select country</option>
                                             @foreach($countries as $country)
@@ -611,7 +613,7 @@
                 <h3 class="modal-title fs-5">Bank Details</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
+            <!-- <div class="modal-body">
                 <div class="form-group mb-2">
                     <label class="form-label">IBAN</label>
                     <input type="text" class="form-control" id="modalIban" readonly>
@@ -628,7 +630,26 @@
                     <label class="form-label">Account Holder Name</label>
                     <input type="text" class="form-control" id="modalHolderName" readonly>
                 </div>
-            </div>
+            </div> -->
+                <table class="details-table">
+                    <tr>
+                        <th>IBAN</th>
+                        <td id="modalIban"></td>
+                    </tr>
+                    <tr>
+                        <th>SWIFT</th>
+                        <td id="modalSwift"></td>
+                    </tr>
+                    <tr>
+                        <th>Bank Name</th>
+                        <td id="modalBankName"></td>
+                    </tr>
+                    <tr>
+                        <th>Account Holder Name</th>
+                        <td id="modalHolderName"></td>
+                    </tr>
+                </table>
+
         </div>
     </div>
 </div>
@@ -644,7 +665,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="documentContainer" class="appointment-container d-flex flex-wrap gap-3 justify-content-center">
+                <div id="documentContainer" class="appointment-container d-flex flex-wrap  justify-content-center">
                 </div>
             </div>
         </div>
@@ -691,7 +712,7 @@
                     <h5>Store Documents</h5>
                 </div>
                 <div id="documentContainer1"
-                    class="appointment-container d-flex flex-wrap gap-3 justify-content-center">
+                    class="appointment-container d-flex flex-wrap justify-content-center">
                 </div>
 
             </div>
@@ -757,7 +778,7 @@
             <div class="modal-body text-center">
                 <a id="accountProofLink" href="#" target="_blank">
                     <img id="accountProofImage" src="" alt="Account Proof" class="img-fluid rounded border"
-                        style="cursor:pointer;">
+                        style="cursor:pointer;width: 200px;height: 200px;">
                 </a>
             </div>
         </div>
@@ -914,10 +935,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.view-bank-btn').forEach(button => {
         button.addEventListener('click', function() {
             const bank = JSON.parse(this.getAttribute('data-bank') || '{}');
-            document.getElementById('modalIban').value = bank.iban || '';
-            document.getElementById('modalSwift').value = bank.swift || '';
-            document.getElementById('modalBankName').value = bank.bank_name || '';
-            document.getElementById('modalHolderName').value = bank.account_holder_name || '';
+            document.getElementById('modalIban').textContent = bank.iban || 'N/A';
+            document.getElementById('modalSwift').textContent = bank.swift || 'N/A';
+            document.getElementById('modalBankName').textContent = bank.bank_name || 'N/A';
+            document.getElementById('modalHolderName').textContent = bank.account_holder_name || 'N/A';
         });
     });
 });
@@ -976,16 +997,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        is_block: isChecked ? 1 : 0
+                        is_block: isChecked ? 0 : 1
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
                         if (isChecked) {
-                            toastr.error(data.message);
-                        } else {
                             toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message);
                         }
                         setTimeout(() => {
                             location.reload();

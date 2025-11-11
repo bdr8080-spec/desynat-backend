@@ -4,14 +4,15 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Validator;
 use App\Models\User;
 use App\Models\country;
 use Illuminate\Support\Facades\Crypt;
-use Auth;
-use Session;
 use App\Services\UserProfileService;
+use App\Models\Category;
 use App\Models\SubCategory;
+use Auth;
+use Validator;
+use Session;
 
 
 
@@ -545,7 +546,13 @@ class AuthController extends Controller
 
 
     public function dashboard(Request $request){    
-        $subCategory = SubCategory::orderBy('name_english','desc')->get();
+
+    $subCategory = SubCategory::orderBy('name_english','desc')->get();
+    
+    if($request->ajax()){
+            $subCategory = SubCategory::where('category_id', $request->id)->orderBy('name_english','desc')->get();
+            return view('user.dashboard.subCategory', compact('subCategory'))->render();
+        }
 
       return view('user.dashboard.dashboard', compact('subCategory'));
     }

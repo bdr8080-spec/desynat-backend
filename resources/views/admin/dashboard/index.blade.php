@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-lg-6">
-                        <h2 class="h2">Welcome to Dashboard</h2>
+                        <h2 class="h2">WELCOME TO DASHBOARD</h2> 
                     </div>
                     <div class="col-lg-6">
                         <div class="filter-box d-flex align-items-center justify-content-end">

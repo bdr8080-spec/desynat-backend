@@ -1,4 +1,4 @@
-@extends('user.layout.app')
+@extends('user.profile.layout.app')
 
 @section('content')
     <div class="login_contenar">
@@ -32,88 +32,84 @@
                 </form>
             </div>
         </div>
-     </div>
+    </div>
      
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <script>
- 
+    <script>
 
+        $(document).on('submit', '#verifyOtp', function (e) {
+            e.preventDefault();
+            let data = new FormData(this);
+            $('#verifyBtn').prop('disabled', true);
 
-    $(document).on('submit', '#verifyOtp', function (e) {
-        e.preventDefault();
-        let data = new FormData(this);
-        $('#verifyBtn').prop('disabled', true);
+            $.ajax({
+                url: "{{ route('userOldNumberVerify') }}",
+                method: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (resp) {
+                    if (resp.status === true) {
 
-        $.ajax({
-            url: "{{ route('userOldNumberVerify') }}",
-            method: "POST",
-            data: data,
-            processData: false,
-            contentType: false,
-            success: function (resp) {
-                if (resp.status === true) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const type = urlParams.get('type');
+                        const formFor = urlParams.get('for');
 
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const type = urlParams.get('type');
-                    const formFor = urlParams.get('for');
-
-                   
-                    if (formFor === 'mobile') {
-                        toastr.success(resp.message);
-                        if (type === '0') {
-                            setTimeout(() => {
-                                location.href = "update-new-number";
-                            }, 1000);
-                        } else if (type === '1') {
-                            toastr.success("Mobile Number Change Successfully");
-                            setTimeout(() => {
-                                location.href = "profile";
-                            }, 1000);
+                    
+                        if (formFor === 'mobile') {
+                            toastr.success(resp.message);
+                            if (type === '0') {
+                                setTimeout(() => {
+                                    location.href = "update-new-number";
+                                }, 1000);
+                            } else if (type === '1') {
+                                toastr.success("Mobile Number Change Successfully");
+                                setTimeout(() => {
+                                    location.href = "profile";
+                                }, 1000);
+                            }
+                        } else if (formFor === 'email') {
+                            if (type === '0') {
+                                setTimeout(() => {
+                                    location.href = "update-email-address";
+                                }, 1000);
+                            } else if (type === '1') {
+                                toastr.success("Email Address Change Successfully");
+                                setTimeout(() => {
+                                    location.href = "profile";
+                                }, 1000);
+                            }
                         }
-                    } else if (formFor === 'email') {
-                        if (type === '0') {
-                            setTimeout(() => {
-                                location.href = "update-email-address";
-                            }, 1000);
-                        } else if (type === '1') {
-                            toastr.success("Email Address Change Successfully");
-                            setTimeout(() => {
-                                location.href = "profile";
-                            }, 1000);
-                        }
+                    } else {
+                        toastr.error(resp.error || "Something went wrong. Please try again.");
                     }
-                } else {
-                    toastr.error(resp.error || "Something went wrong. Please try again.");
+                },
+                error: function (xhr) {
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        toastr.error(xhr.responseJSON.message);
+                    } else {
+                        toastr.error("An error occurred while processing your request.");
+                    }
+                },
+                complete: function () {
+                    $('#verifyBtn').prop('disabled', false);
                 }
-            },
-            error: function (xhr) {
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    toastr.error(xhr.responseJSON.message);
-                } else {
-                    toastr.error("An error occurred while processing your request.");
-                }
-            },
-            complete: function () {
-                $('#verifyBtn').prop('disabled', false);
-            }
+            });
         });
-    });
 
+        @if (session('success'))
+            toastr.success("{{ session('success') }}");
+        @endif
 
+        @if (session('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
 
-    @if (session('success'))
-        toastr.success("{{ session('success') }}");
-    @endif
-
-    @if (session('error'))
-        toastr.error("{{ session('error') }}");
-    @endif
-
-    @if ($errors->any())
-        toastr.error("{{ $errors->first() }}");
-    @endif
-</script>
+        @if ($errors->any())
+            toastr.error("{{ $errors->first() }}");
+        @endif
+    </script>
 
 
 

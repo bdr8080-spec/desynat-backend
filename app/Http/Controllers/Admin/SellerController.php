@@ -22,6 +22,7 @@ class SellerController extends Controller
         $countries = $this->CountryService->getCountries()['data'];
         $newSellers = $this->SellerManagementService->getNewSellers($request)['data'];
         $approvedSellers = $this->SellerManagementService->getApprovedSellers($request)['data'];
+        //dd($approvedSellers);
         $rejectedSellers = $this->SellerManagementService->getRejectedSellers($request)['data'];
         //dd($newSellers);
         return view('admin.seller-management.index',compact('newSellers','countries','approvedSellers','rejectedSellers'));

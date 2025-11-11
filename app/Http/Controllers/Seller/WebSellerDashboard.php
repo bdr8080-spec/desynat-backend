@@ -25,18 +25,25 @@ class WebSellerDashboard extends Controller
 
     public function seller_dashboard(Request $request){
 
+        // if i got payment Then Show This message
+        if($request->payment=='yes'){
+        session()->flash('success', 'You have successfully purchased a plan!');
+        return  redirect()->route('seller.dashboard');
+        }
+
+
+
+
         $seller_details=Auth::guard('seller')->user();
 
-  
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details->id)->first();
-    
 
-   $plan_page=Cache::get('plan_page');
+       $plan_page=Cache::get('plan_page');
 
 
    if($plan_page!=='yes'){
 
-        if(count($seller_details->subcription_plan) <= 0 ){
+    if(count($seller_details->subcription_plan) <= 0 ){
 
             $request_data=(object )[
                 'seller_id'=>$seller_details->id,
@@ -53,31 +60,23 @@ class WebSellerDashboard extends Controller
 
         Cache::put('plan_page', 'yes', 60);
 
-        // session::put(['plan'=>'1']);
-
-        // seller.all_plans'
         return redirect()->route('seller.all_plans')->with('success','Please purchase a Plan for Better option');
                    
         }
-
+        
     }
-
 
           return view('dealer.index',compact('seller_details'));
       }
 
 
-
-
     public function all_plans(Request $request){
-
 
         $seller_details=Auth::guard('seller')->user();
   
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details->id)->first();
     
-        if(count($seller_details->subcription_plan) <= 0 ){
-
+        if($seller_details){
 
             $request_data=(object )[
                 'seller_id'=>$seller_details->id,
@@ -95,7 +94,7 @@ class WebSellerDashboard extends Controller
          return view('dealer.planlist',compact('seller_details','plans'));
            
         }else{
-
+    
             return  redirect()->route('seller.dashboard')->with('error','No Plan Found');
 
         }
@@ -139,6 +138,9 @@ class WebSellerDashboard extends Controller
 
         $validate = Validator::make($request->all(), [
             'plan_id' => 'required|exists:plans,id',
+            'payment_method'=>"required"
+        ],[
+            'payment_method.required'=>"Payment Method is required"
         ]);
 
         if ($validate->fails()) {
@@ -163,10 +165,20 @@ class WebSellerDashboard extends Controller
       $data= $this->SellerAuthService->create_Subcription_Order($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
-        return redrect()->back()->with('error',$data['message']);
+        return redirect()->back()->with('error',$data['message']);
     }
 
+
     $data=$data['data'];
+    
+    if($request->payment_method=='Myfatoorah'){
+
+        return redirect()->to('/myfatoorah/' . $data->transaction_id); // send To Payment Gateway
+    }
+
+
+    
+
 
     $request_data=(object )[
         'transaction_id'=>$data->transaction_id,

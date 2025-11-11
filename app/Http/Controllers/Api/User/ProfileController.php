@@ -184,7 +184,7 @@ class ProfileController extends Controller
             $rules = [
                 'country_code' => 'required|string|max:10',
                 'mobile'       => 'required|string|max:20',
-                'type'         => 'required|in:0,1', // 0 = old, 1 = new
+                'type'         => 'required|in:0,1',
             ];
 
             $messages = [
@@ -239,7 +239,7 @@ class ProfileController extends Controller
                     return ApiResponse::generateResponse('success', 'OTP sent successfully to old number', $data, 201);
                 }
 
-                return ApiResponse::generateResponse('error', "Old mobile number doesn't match", (object)[], 400);
+                return ApiResponse::generateResponse('error', "Old mobile number does not match", (object)[], 400);
             }
 
             if ($request->type == '1') {
