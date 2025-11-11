@@ -468,7 +468,7 @@ section{
     padding: 10px
 }
 .header_nav_button_dropdown li.dropdown-item{
-    width: 290px;
+    width: auto;
 }
 .header_nav_button_dropdown li.dropdown-item:hover{
     border: 1px solid var(--secondry2-color);
@@ -510,7 +510,8 @@ section{
     position: absolute;
     left: 0;
     right: 0 !important;
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
     margin: 0 !important;
     border-radius: 0;
     background-color: #FAFAFA;
