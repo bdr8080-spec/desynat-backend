@@ -386,6 +386,14 @@ class SellerAuthService
                 }
 
 
+                $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$request->seller_id)->where('status','1')->first(); // check seller Plan
+
+                if($check_plan){
+                 return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 
+                }
+
+
+
                 $array_data=[
                   'transaction_id'=>$request->transaction_id,
                   'seller_id'=>$request->seller_id,

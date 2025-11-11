@@ -2,7 +2,8 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
-        <div class="title24">Dashboard</div>
+        <div class="title24">Dashboard
+        </div>
     </div>
 
     <div class="row">
@@ -174,7 +175,7 @@
                             <input class="form-check-input" type="radio" name="radio" id="r2">
                             <label class="form-check-label" for="r2">Total Customer visits</label>
                         </div>
-                    
+
                         <div class="show-date d-flex gap-2">
                             <div class="date-form-pnl">
                                 <input type="date" class="form-control">
@@ -223,31 +224,32 @@
 </div>
 
 
-@include('dealer.layout.footer');
 
 <script>
     const ctx = document.getElementById('pointChart').getContext('2d');
 
     const pointChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug','Sep'],
-        datasets: [{
-          label: 'Monthly Sales',
-          data: [12, 19, 8, 25, 18, 30,50,30],
-          borderColor: '#55000099',
-          borderWidth: 2,
-          tension: 0.3,       
-          fill: false,     
-          pointStyle: 'circle', // point shape
-          pointRadius: 6,
-          pointHoverRadius: 8,
-          backgroundColor: '#F3D1A2'
-        }]
-      },
-      options: {
-        responsive: true,
-  
-      }
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            datasets: [{
+                label: 'Monthly Sales',
+                data: [12, 19, 8, 25, 18, 30, 50, 30],
+                borderColor: '#55000099',
+                borderWidth: 2,
+                tension: 0.3,
+                fill: false,
+                pointStyle: 'circle', // point shape
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                backgroundColor: '#F3D1A2'
+            }]
+        },
+        options: {
+            responsive: true,
+
+        }
     });
-  </script>
+</script>
+
+@include('dealer.layout.custom_code');
