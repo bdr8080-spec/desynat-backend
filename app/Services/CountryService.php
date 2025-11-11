@@ -72,7 +72,7 @@ class CountryService
         try {
             $limit = !empty($limit) ? (int)$limit : null;
 
-            $query = ServiceCity::with('city_info')->where('country_id', $countryId);
+            $query = ServiceCity::with(['city_info', 'country'])->where('country_id', $countryId);
 
             if (!empty($search)) {
                 $query->where('name', 'like', '%' . $search . '%');
