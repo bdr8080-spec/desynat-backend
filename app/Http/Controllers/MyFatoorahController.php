@@ -146,8 +146,11 @@ class MyFatoorahController extends Controller {
                 $subcription_data->update(['payment_status'=>'1','status'=>'1','online_transaction_id'=>$data->InvoiceId]);
                 
                 session()->flash('success', 'You have successfully purchased a plan!');
+                // return  redirect()->to('seller/dashboard?payment=yes');
+                
+                $url="seller/single-plans/$subcription_data->plan_id?payment=yes";
 
-                return  redirect()->to('seller/dashboard?payment=yes');
+                return  redirect()->to($url);
 
             }
 

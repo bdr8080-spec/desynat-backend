@@ -1,10 +1,10 @@
 
-@extends('user.profile.layout.app')
+@extends('user.layout.app')
 
 @section('content')
     <div class="my-profile customContainer">
         <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
-            <a href="{{route('dashboard')}}" class="my-profie-nav"><i class="fa-solid fa-chevron-left"></i> My Profile (edit)</a>
+            <div class="my-profie-nav"><a class="text-black" href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i></a> My Profile (edit)</div>
             <div>
                 <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock pe-3"></i>Change Password</a>
             </div>

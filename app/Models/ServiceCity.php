@@ -20,6 +20,10 @@ class ServiceCity extends Model
      */
     public function country()
     {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->belongsTo(country::class, 'country_id', 'id');
+    }
+    public function city_info()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
     }
 }

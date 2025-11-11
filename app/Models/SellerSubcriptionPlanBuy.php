@@ -17,5 +17,10 @@ class SellerSubcriptionPlanBuy extends Model
             
         }
 
+        public function plan_info()
+        {
+            return $this->belongsTo(Plan::class, 'plan_id', 'id');
+        }
+
 
 }

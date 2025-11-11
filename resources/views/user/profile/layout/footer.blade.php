@@ -14,7 +14,7 @@
 </script>
 
 
-    <script>
+  <script>
 let map, marker, autocomplete;
 let mapInitialized = false;
 
@@ -34,22 +34,22 @@ function initMap(currentLoc) {
     });
 
     const input = document.querySelector('#changeLocation input[type="text"]');
-    const addressDisplay = document.querySelector("#changeLocation p");
+    const addressDisplay = document.querySelector('#changeLocation p');
 
-    // Initialize autocomplete
+    // Initialize Autocomplete
     autocomplete = new google.maps.places.Autocomplete(input, {
         fields: ["geometry", "formatted_address", "address_components"],
     });
     autocomplete.bindTo("bounds", map);
 
-    // When user selects a place
+    // When user selects from autocomplete
     autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
         if (!place.geometry || !place.geometry.location) return;
         updateLocation(place.geometry.location, place.formatted_address, place.address_components);
     });
 
-    // When marker dragged
+    // When marker is dragged
     marker.addListener("dragend", () => {
         const pos = marker.getPosition();
         updateLocation(pos);
@@ -60,8 +60,9 @@ function initMap(currentLoc) {
 
 function updateLocation(loc, formattedAddress = null, addressComponents = null) {
     const input = document.querySelector('#changeLocation input[type="text"]');
-    const addressDisplay = document.querySelector("#changeLocation p");
-    const citySpan = document.getElementById("city");
+    const addressDisplay = document.querySelector('#changeLocation p');
+    const cityField = document.getElementById('cityField');
+    const locationUpdate = document.getElementById('locationUpdate');
 
     map.setCenter(loc);
     marker.setPosition(loc);
@@ -71,32 +72,23 @@ function updateLocation(loc, formattedAddress = null, addressComponents = null) 
 
     const geocoder = new google.maps.Geocoder();
 
-    const fillCity = (components) => {
-        if (!components) return;
-        let city = "";
-        for (let comp of components) {
-            if (comp.types.includes("locality") || comp.types.includes("administrative_area_level_2")) {
-                city = comp.long_name;
-                break;
-            }
-        }
-        if (citySpan) citySpan.textContent = city || "—";
-    };
-
     if (formattedAddress) {
+        // Directly use formatted address
         input.value = formattedAddress;
         addressDisplay.textContent = formattedAddress;
-        fillCity(addressComponents);
+        locationUpdate.textContent = formattedAddress;
+        if (cityField) cityField.textContent = formattedAddress; 
     } else {
+        // Get address via reverse geocoding
         geocoder.geocode({ location: { lat, lng } }, (results, status) => {
             if (status === "OK" && results[0]) {
                 input.value = results[0].formatted_address;
                 addressDisplay.textContent = results[0].formatted_address;
-                fillCity(results[0].address_components);
+                if (cityField) cityField.textContent = results[0].formatted_address; 
             } else {
                 input.value = "";
                 addressDisplay.textContent = "Address not found.";
-                if (citySpan) citySpan.textContent = "—";
+                if (cityField) cityField.value = "";
             }
         });
     }
@@ -113,7 +105,7 @@ function loadMapWithCurrentLocation() {
                 initMap(userLoc);
             },
             () => {
-                const fallback = { lat: 20.5937, lng: 78.9629 }; // Default: India
+                const fallback = { lat: 20.5937, lng: 78.9629 }; // Default India
                 initMap(fallback);
             },
             { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -302,6 +294,38 @@ document.addEventListener("DOMContentLoaded", () => {
     @if(session('info'))
         toastr.info("{{ session('info') }}");
     @endif
+</script>
+
+
+<!-- component scroll -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  function adjustProfileHeight() {
+    const profile = document.querySelector(".my-profile");
+    const footer = document.querySelector("footer"); // update if your footer has another selector
+    const footerHeight = footer ? footer.offsetHeight : 80; // fallback if no footer
+    const windowHeight = window.innerHeight;
+
+    if (window.innerWidth <= 992) {
+      // For smaller screens → make scrollable
+      profile.style.height = `calc(${windowHeight}px - ${footerHeight + 20}px)`;
+      profile.style.overflowY = "auto";
+      profile.style.paddingBottom = `${footerHeight + 30}px`;
+    } else {
+      // For large screens → auto height
+      profile.style.height = "auto";
+      profile.style.overflowY = "visible";
+      profile.style.paddingBottom = "40px";
+    }
+  }
+
+  // Run on page load
+  adjustProfileHeight();
+
+  // Re-run when window resizes
+  window.addEventListener("resize", adjustProfileHeight);
+});
 </script>
 
 </body>

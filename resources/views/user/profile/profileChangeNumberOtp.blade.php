@@ -27,9 +27,37 @@
                         <input type="text" maxlength="1" class="otp-input" id="otp5" name="otp[]" />
                         <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
                     </div>
+                     <div class="resend-otp-container"
+                            style="display: flex;justify-content: center;margin-top:20px !important;xmargin:0 auto; align-items: center; gap: 10px;">
+                            <button type="button" class="customBtnresend" >Resend
+                                OTP</button>
+                            <span id="otpTimer" style="color: red;"></span>
+                        </div>
                     <button type="submit" class="customBtn mt-5" id="verifyBtn">Verify OTP</button>
                 </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="verifiedConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="assets/images/success.svg" class="img-fluid" />
+                    <p id="updateMessage">Mobile Number Changed successfully !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="modal fade" id="verifiedConfirmEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="assets/images/success.svg" class="img-fluid" />
+                    <p id="updateMessage">Email Address Change Successfully !</p>
+                </div>
             </div>
         </div>
     </div>
@@ -64,7 +92,7 @@
                                     location.href = "update-new-number";
                                 }, 1000);
                             } else if (type === '1') {
-                                toastr.success("Mobile Number Change Successfully");
+                                $('#verifiedConfirm').modal('show');
                                 setTimeout(() => {
                                     location.href = "profile";
                                 }, 1000);
@@ -75,7 +103,7 @@
                                     location.href = "update-email-address";
                                 }, 1000);
                             } else if (type === '1') {
-                                toastr.success("Email Address Change Successfully");
+                                $('#verifiedConfirmEmail').modal('show');
                                 setTimeout(() => {
                                     location.href = "profile";
                                 }, 1000);

@@ -25,15 +25,6 @@
      </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="verifiedConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <img src="assets/images/success.svg" class="img-fluid" />
-                    <p>Mobile Number Changed successfully !</p>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
 
  @endsection

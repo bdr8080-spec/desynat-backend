@@ -13,6 +13,12 @@
    .customContainer{
         max-width: 1064px !important;
     }
+    .my-profile{
+        margin-bottom: 10%;
+    }
+    .my-profile {
+        height: calc(100vh - 100px); /* example for larger mobile footer */
+    }
 }
 
 @media (max-width:991px) {
@@ -25,6 +31,10 @@
     }
     .login_content_content .form-group input, .login_content_content .dropdown button{
         font-size: 12px !important;
+    }
+    .customNavbar .dropdown-menu.sell_clothes.show{
+        transform: none !important;
+        min-width: 100% !important;
     }
 
 }
@@ -96,6 +106,11 @@
      .header_nav_button_dropdown{
         gap: 5px !important;
      }
+
+     .search {
+        width: 40px;
+        transition: all 0.3s ease;
+    }
 }
 
 @media (max-width:568px) {
@@ -133,6 +148,20 @@
     .categorie_cotent-img{
         height: 140px !important;
     }
+    .dropdown-menu-end[data-bs-popper]{
+        left: 0;
+        transform: translate(-50%, 0%);
+        min-width: 280px;
+        right: auto;
+        width: 100%;
+    }
+    .langu.dropdown-menu-end[data-bs-popper]{
+        transform: translate(-70%, 0%) !important;
+    }
+    .profileContenar{
+            padding: 20px 20px;
+    }
+    
     /* .header_nav_button_dropdown .customBtn1{
         min-width: 120px;
     } */
