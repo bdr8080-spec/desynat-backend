@@ -51,9 +51,11 @@ use App\Models\Category;
                                                     <label>{{Auth::guard('web')->user()->email ?? ''}}</label>
                                                 </div>  
                                             </div>
-                                            <a href="{{route('userProfile')}}">
-                                                <span><i class="bi bi-pencil"></i></span>                                                     
-                                            </a>
+                                            <div class="ms-auto">
+                                                <a href="{{route('userProfile')}}">
+                                                    <span><i class="bi bi-pencil"></i></span>                                                     
+                                                </a>
+                                            </div>
                                         </div>
                                     </li>
                                     <li>
