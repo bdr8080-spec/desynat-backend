@@ -19,29 +19,16 @@
     <header class="header-main">
         <nav class="navbar navbar-expand-lg">
             <div class="w-100">
-                <div class="container-fluid d-flex align-self-center justify-content-between flex-wrap mobileResponsive">
-                    <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont">
+                <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
+                    <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
                         <a class="navbar-brand" href="#"><img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" /></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    <div class="dropdown mobileLang customDropdonwHeader d-lg-none d-md-none d-block">
-                        <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
-                            <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
-                        </ul>
-                    </div>
-                    <div class="header_nav_button_dropdown d-lg-flex d-md-flex d-none">
+                        <div class="header_nav_button_dropdown d-flex">
                             @if (Auth::guard('web')->check())
-                            <div class="dropdown userDropdown">
+                            <div class="dropdown dropdown-center userDropdown">
                                 <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end profileDropdown">
+                                <ul class="dropdown-menu profileDropdown">
                                     <li>
                                         <div class="profileContenar d-flex align-items-center justify-conten-between">
                                             <div class="profile d-flex align-items-center gap-3">
@@ -118,11 +105,11 @@
                                 <a class="customBtn1 mobileSignup" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                             @endif
                     
-                        <div class="dropdown">
+                        <div class="dropdown dropdown-center mobileLang">
                             <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
                             </button>
-                            <ul class="dropdown-menu custom-dropdown-menu  dropdown-menu-end" aria-labelledby="countryDropdownBtn">
+                            <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="countryDropdownBtn">
                                 <li class="topDropdonw">
                                     <p>Change Country
                                         <i class="fa-solid fa-xmark"></i>
@@ -207,11 +194,11 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="dropdown">
+                        <div class="dropdown dropdown-center mobileLang">
                             <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span id="selectedCurrency">KWD</span>
                             </button>
-                            <ul class="dropdown-menu custom-dropdown-menu currency dropdown-menu-end">
+                            <ul class="dropdown-menu custom-dropdown-menu currency">
                                 <li class="topDropdonw">
                                     <p>Change Currency
                                         <i class="fa-solid fa-xmark"></i>
@@ -290,16 +277,24 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="dropdown mobileLang">
+                        <div class="dropdown dropdown-center mobileLang">
                             <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
+                            <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
                                 <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                             </ul>
                         </div>
                     </div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                    </div>
+                    
+                    
+                    
                 </div>
                 <div class="desynat_navigation_bar_header">
                     <div class="container-fluid">
@@ -345,202 +340,7 @@
                             </div>
                             <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap">
-                                    <li>
-                                        <div class="header_nav_button_dropdown d-lg-none d-md-none d-flex">
-                                            @if (Auth::guard('web')->check())
-                                            <div class="dropdown userDropdown">
-                                                <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <div class="profileContenar">
-                                                            <div class="profileContenar_img">
-                                                                <img src="{{asset('user/assets/images/user.png')}}" class="img-fluid" />
-                                                            </div>                                                        
-                                                        </div>
-                                                    </li>
-                                                    <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
-                                                </ul>
-                                            </div>
-                                            @else
-                                                <a class="customBtn1 mobileSignup" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
-                                            @endif
                                     
-                                            <div class="dropdown ">
-                                                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
-                                                </button>
-                                                <ul class="dropdown-menu custom-dropdown-menu  dropdown-menu-end" aria-labelledby="countryDropdownBtn">
-                                                    <li class="topDropdonw">
-                                                        <p>Change Country
-                                                            <i class="fa-solid fa-xmark"></i>
-                                                        </p>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Kuwait" data-flag="{{asset('user/assets/images/flags/kuwait.svg')}}">
-                                                        <div class="d-flex align-self-center justify-content-between">
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">Kuwait</span>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Bahrain" data-flag="{{asset('user/assets/images/flags/bahrain.svg')}}">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">Bahrain</span>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{asset('user/assets/images/flags/bahrain.svg')}}" />
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Qatar" data-flag="{{asset('user/assets/images/flags/qatar.svg')}}">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">Qatar</span>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{asset('user/assets/images/flags/qatar.svg')}}" />
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Saudi Arabia" data-flag="{{asset('user/assets/images/flags/saudi-arabia.svg')}}">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">Saudi Arabia</span>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{asset('user/assets/images/flags/saudi-arabia.svg')}}" />
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="UAE" data-flag="{{asset('user/assets/images/flags/uae.svg')}}">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio"> 
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">UAE</span>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{asset('user/assets/images/flags/uae.svg')}}" />
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Oman" data-flag="{{asset('user/assets/images/flags/oman.svg')}}">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">Oman</span>
-                                                                </label>
-                                                            </div>
-                                                            <img src="{{asset('user/assets/images/flags/oman.svg')}}" />
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span id="selectedCurrency">KWD</span>
-                                                </button>
-                                                <ul class="dropdown-menu custom-dropdown-menu currency dropdown-menu-end">
-                                                    <li class="topDropdonw">
-                                                        <p>Change Currency
-                                                            <i class="fa-solid fa-xmark"></i>
-                                                        </p>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Kuwait">
-                                                        <div class="d-flex align-self-center justify-content-between">
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">KWD</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Bahrain">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">BHD</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Qatar">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">QAR</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Saudi Arabia">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">SAR</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="UAE">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">AED</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="dropdown-item" data-country="Oman">
-                                                        <div class="d-flex align-self-center justify-content-between">
-
-                                                            <div class="radio-group">
-                                                                <label class="custom-radio">
-                                                                    <input type="radio" name="gender" value="male" checked />
-                                                                    <span class="radio-mark"></span>
-                                                                    <span class="label-text">OMR</span>
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             men

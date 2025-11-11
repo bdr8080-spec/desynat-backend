@@ -77,8 +77,24 @@
     /* .customDropdonwHeader{
         width: calc(100% / 4) !important;
     } */
-     .header_nav_button_dropdown{
+     /* .header_nav_button_dropdown{
         margin-top: 10px;
+     } */
+     .mobileResponsive .navbar-toggler{
+        border: none;
+        padding: 0;
+     }
+     .mobileLang .dropdown-toggle{
+        padding: 0 !important;
+        border: none;
+     }
+
+     .userDropdown button.btn{
+        width: 26px !important;
+        height: 26px !important;
+     }
+     .header_nav_button_dropdown{
+        gap: 5px !important;
      }
 }
 
