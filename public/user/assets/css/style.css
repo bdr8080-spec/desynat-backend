@@ -467,9 +467,9 @@ section{
     border-radius: 6px;
     padding: 10px
 }
-.header_nav_button_dropdown li.dropdown-item{
+/* .header_nav_button_dropdown li.dropdown-item{
     width: 290px;
-}
+} */
 .header_nav_button_dropdown li.dropdown-item:hover{
     border: 1px solid var(--secondry2-color);
 }

@@ -133,6 +133,15 @@
     .categorie_cotent-img{
         height: 140px !important;
     }
+    .dropdown-menu-end[data-bs-popper]{
+        left: 50%;
+        right: 50%;
+        transform: translate(-43%, 0%);
+        width: 290px;
+    }
+    .profileContenar{
+            padding: 20px 20px;
+    }
     /* .header_nav_button_dropdown .customBtn1{
         min-width: 120px;
     } */
