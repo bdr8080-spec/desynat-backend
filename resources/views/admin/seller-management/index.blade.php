@@ -62,9 +62,9 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label d-none">To:</label>
+                                        <label for="to" class="form-label">Select Country</label>
                                         <select name="country_id" id="country_id"
-                                            class="form-select form-select-lg mt-4"
+                                            class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm').submit();">
                                             <option value="">Select country</option>
                                             @foreach($countries as $country)
@@ -243,9 +243,10 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label d-none">To:</label>
+                                                                                <label for="to" class="form-label">Select Country</label>
+
                                         <select name="country_id1" id="country_id"
-                                            class="form-select form-select-lg mt-4"
+                                            class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm1').submit();">
                                             <option value="">Select country</option>
                                             @foreach($countries as $country)
@@ -453,9 +454,10 @@
                                 <!-- Country Filter -->
                                 <div class="col-lg-3 col-md-12 col-12">
                                     <div class="form-group mt-4 w-100">
-                                        <label for="to" class="form-label d-none">To:</label>
+                                                                              <label for="to" class="form-label">Select Country</label>
+
                                         <select name="country_id2" id="country_id"
-                                            class="form-select form-select-lg mt-4"
+                                            class="form-select form-select-lg "
                                             onchange="document.getElementById('filterForm2').submit();">
                                             <option value="">Select country</option>
                                             @foreach($countries as $country)
