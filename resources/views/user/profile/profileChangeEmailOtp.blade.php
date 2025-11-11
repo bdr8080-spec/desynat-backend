@@ -1,4 +1,4 @@
-@extends('user.layout.app')
+@extends('user.profile.layout.app')
 
 @section('content')
     <div class="login_contenar">

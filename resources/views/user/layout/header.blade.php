@@ -12,7 +12,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" />
      <link href="{{ asset('user/assets/css/style.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-
+<style>
+    .pac-container {
+        z-index: 9999;
+    }
+</style>
 </head>
 <body>
     
@@ -21,7 +25,7 @@
             <div class="w-100">
                 <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
-                        <a class="navbar-brand" href="#"><img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" /></a>
+                        <a class="navbar-brand" href="{{route('dashboard')}}"><img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" /></a>
                         <div class="header_nav_button_dropdown d-flex">
                             @if (Auth::guard('web')->check())
                             <div class="dropdown dropdown-center userDropdown">
@@ -304,7 +308,7 @@
                                 <h6>Deliver to Reshab</h6>
                                 <div class="d-flex align-self-center w-100" >
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
-                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> Durgapur 
+                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="city">Noida</span> 
                                     </button>
                                     <span class="ms-lg-5 ms-md-3 ms-2">
                                         <i class="fa-solid fa-chevron-down"></i>
@@ -564,8 +568,8 @@
                         <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
                     </div>
                     <div class="">
-                        <h5>Location</h5>
-                        <p>HN- 547, Street no,5 Block d new town hale, Saudi Arabia</p>
+                        <h5>Current Location</h5>
+                        <p></p>
                     </div>
                     <button class="customBtn">Change Location</button>
                 </div>
@@ -574,3 +578,7 @@
             </div>
         </div>
     </div>
+
+
+
+
