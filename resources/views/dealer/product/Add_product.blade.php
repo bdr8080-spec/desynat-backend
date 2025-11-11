@@ -237,8 +237,288 @@
                     <input type="text" class="form-control" placeholder="Eg.32D">
                 </div>
             </div>
+            <div class="col-lg-3">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Total Stocks</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.13208">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>SKU</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="20019">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>SKU Threshold value</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="20019">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Price</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="KD299">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Actual Price</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.KD 299.00">
+                </div>
+            </div>
         </div>
        
+    </div>
+
+    <div class="pt-3">
+        <div class="title24">Discounted Price</div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                    <div class="check_radio">
+                        <label class="radio-group">
+                            <input type="radio" name="radio" checked>
+                            <span class="custom-radio"></span>
+                            <span class="radio-label">Percentage</span>
+                        </label>
+                    </div>
+                    <div class="check_radio">
+                        <label class="radio-group">
+                            <input type="radio" name="radio">
+                            <span class="custom-radio"></span>
+                            <span class="radio-label">Fixed Price</span>
+                        </label>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Percentage</label>
+                    </div>
+                    <select class="form-select form-control" aria-label="Default select example">
+                        <option selected>Eg.10%</option>
+                        <option value="1">One</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Final Price</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.KD 299.00">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Set Min.cart quantity</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.20">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Set Max.cart quantity</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.20">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-3">
+        <div class="title24">Is this product returnable?</div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                    <div class="check_radio">
+                        <label class="radio-group">
+                            <input type="radio" name="radio" checked>
+                            <span class="custom-radio"></span>
+                            <span class="radio-label">Percentage</span>
+                        </label>
+                    </div>
+                    <div class="check_radio">
+                        <label class="radio-group">
+                            <input type="radio" name="radio">
+                            <span class="custom-radio"></span>
+                            <span class="radio-label">Fixed Price</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>If Yes,Total days for returning</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.KD 299.00">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Is this product exchangeable?</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.15 days">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="pt-3">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="title24">Review & ratings allowed?</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="title24">Affiliated Product?</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="title24">Customized products?</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="title24">Ready to ship?</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="title24">Cash on delivery allowed?</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="title24">Upload Size Chart</div>
+    <div class="product-pnls mt-4">
+        <div class="upload-image" style="height:170px;">
+            <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
+                <div>Upload Size Chart</div>
+                <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;">
+            </label>
+        </div>
+
+        <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer"></div>
     </div>
 
 
