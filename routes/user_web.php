@@ -22,7 +22,7 @@ use App\Http\Controllers\User\ProfileController;
 });
 
    
-   Route::get('/profile', [ProfileController::class, 'userProfile'])->name('userProfile');
+   Route::match(['get','post'],'/profile', [ProfileController::class, 'userProfile'])->name('userProfile');
    Route::match(['get','post'],'/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
    Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
 
