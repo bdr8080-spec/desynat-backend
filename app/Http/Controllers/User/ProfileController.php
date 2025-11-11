@@ -124,59 +124,61 @@ class ProfileController extends Controller
     $for = $request->input('for');
     $type = $request->input('type');
 
-       if ($for === 'mobile') {
+     if ($for === 'mobile') {
             $rules = [
                 'country_code' => 'required|string|max:10',
-                'mobile'       => 'required|string|max:20',
+                'mobile'       => ['required', 'regex:/^[0-9]{7,15}$/', 'string', 'max:20'],
                 'type'         => 'required|in:0,1',
             ];
 
             $messages = [
                 'country_code.required' => 'Please enter your country code',
                 'mobile.required'       => 'Please enter your mobile number',
+                'mobile.regex'          => 'Mobile number must contain 7 to 15 digits',
                 'type.required'         => 'Please specify whether it is old or new number',
+                'type.in'               => 'Type must be 0 (old number) or 1 (new number)',
             ];
 
-        if ($request->type == '0') {
-            $rules['mobile'] = [
-                'required', 'string', 'max:20',
-                Rule::exists('users', 'mobile')->where('country_code', $request->country_code)
+        
+            if ($request->type == '0') {
+                $rules['mobile'][] = Rule::exists('users', 'mobile')
+                    ->where('country_code', $request->country_code);
+            } else {
+                $rules['mobile'][] = Rule::unique('users', 'mobile')
+                    ->where('country_code', $request->country_code);
+            }
+
+        } elseif ($for === 'email') {
+
+            $rules = [
+                'email' => ['required', 'email'],
+                'type'  => 'required|in:0,1',
             ];
+
+            $messages = [
+                'email.required' => 'Please enter your email address',
+                'email.email'    => 'Please enter a valid email address',
+                'type.required'  => 'Please specify whether it is old or new email',
+                'type.in'        => 'Type must be 0 (old email) or 1 (new email)',
+            ];
+
+            if ($request->type == '0') {
+                $rules['email'][] = Rule::exists('users', 'email');
+            } else {
+                $rules['email'][] = Rule::unique('users', 'email');
+            }
+
         } else {
-            $rules['mobile'] = [
-                'required', 'string', 'max:20',
-                Rule::unique('users', 'mobile')->where('country_code', $request->country_code)
-            ];
+            return redirect()->back()->with('error', 'Invalid "for" value. Use either "mobile" or "email"');
         }
 
-    } elseif ($for === 'email') {
-        $rules = [
-            'email' => ['required', 'email'],
-            'type'  => 'required|in:0,1',
-        ];
 
-        $messages = [
-            'email.required' => 'Please enter your email address',
-            'email.email'    => 'Please enter a valid email address',
-        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($request->type == '0') {
-            $rules['email'][] = Rule::exists('users', 'email');
-        } else {
-            $rules['email'][] = Rule::unique('users', 'email');
-        }
-    } else {
-        return redirect()->back()->with('error', 'Invalid "for" value. Use either "mobile" or "email"');
-    }
-
-    $validator = Validator::make($request->all(), $rules, $messages);
-
-    if ($validator->fails()) {
-        $firstError = $validator->errors()->first();
-        return redirect()->back()
-            ->with('error', $firstError)
-            ->withInput();
-    }
+        if ($validator->fails()) {
+            $firstError = $validator->errors()->first();
+            return redirect()->back()->with('error', $firstError)->withInput();
+        }  
 
 
 
