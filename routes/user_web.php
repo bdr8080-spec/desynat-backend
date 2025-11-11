@@ -19,6 +19,8 @@ use App\Http\Controllers\User\ProfileController;
     Route::match(['get', 'post'], '/create-password', [AuthController::class, 'userCreatePassword'])->name('userCreatePassword');
     Route::match(['get', 'post'], '/login-with-otp', [AuthController::class, 'loginWithOtp'])->name('loginWithOtp');
     Route::post('/resend-otp', [AuthController::class, 'resendOtp'])->name('userResendOtp');
+    Route::get('/category', [ProfileController::class, 'category']);
+
 });
 
    
@@ -45,12 +47,12 @@ use App\Http\Controllers\User\ProfileController;
 //  Route::match(['get', 'post'], '/route3', function () {
 //      return view('user.profile.profileChangeNumberOtp');
 // });
- Route::match(['get', 'post'], '/route4', function () {
-     return view('user.profile.profileChangeNumber');
-});
- Route::match(['get', 'post'], '/route5', function () {
-     return view('user.profile.verificationCode');
-});
- Route::match(['get', 'post'], '/route6', function () {
-     return view('user.profile.profileChangeEmailOtp');
-});
+//  Route::match(['get', 'post'], '/route4', function () {
+//      return view('user.profile.profileChangeNumber');
+// });
+//  Route::match(['get', 'post'], '/route5', function () {
+//      return view('user.profile.verificationCode');
+// });
+//  Route::match(['get', 'post'], '/route6', function () {
+//      return view('user.profile.profileChangeEmailOtp');
+// });
