@@ -118,9 +118,14 @@ class WebSellerDashboard extends Controller
 
     $plans=$plans['data'];
 
-    return view('dealer.package-page',compact('plans'));
+    if($request->payment=='yes'){
+        session()->flash('success1', 'You have successfully purchased a plan!');
+        return  redirect()->route('seller.single_plans', $id);
+    }       
 
-      }
+    return view('dealer.package-page',compact('plans'));
+    
+    }
 
 
     public function skip_plan(Request $request){

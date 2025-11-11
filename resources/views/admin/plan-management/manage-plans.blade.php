@@ -15,7 +15,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">SUBSRIPTION PLAN </h6> 
+                        <h6 class="m-0">SUBSCRIPTION PLAN </h6> 
                     </div>
                 </div>
 
@@ -250,7 +250,7 @@
                                 <div class="form-group mb-3">
                                     <label>Stories</label>
                                     <div class="row">
-                                        <div class="col-lg-6 d-flex align-items-center">
+                                        <div class="col-lg-4 d-flex align-items-center">
                                             <input type="radio" id="storiesYes" name="stories" value="yes" class="form-check-input me-2" checked>
                                             <label for="storiesYes" class="form-check-label">Yes</label>
                                         </div>
@@ -268,7 +268,7 @@
                                 <div class="form-group mb-3">
                                     <label>Commission</label>
                                     <div class="row">
-                                        <div class="col-lg-6 d-flex align-items-center">
+                                        <div class="col-lg-4 d-flex align-items-center">
                                             <input type="radio" id="commissionYes" name="commission" value="yes" class="form-check-input me-2">
                                             <label for="commissionYes" class="form-check-label">Yes</label>
                                         </div>
@@ -281,7 +281,11 @@
 
                                     <!-- Commission Percentage -->
                                     <div id="commissionInput" style="display:none; margin-top:10px;">
+                                        <div class="input-with-percent">
                                         <input type="text" name="commission_percentage" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
+                          <span class="percent-symbol">%</span>
+                     </div>
+
                                         <span class="text-danger error-text commission_percentage_err"></span>
                                     </div>
                                 </div>
@@ -403,11 +407,15 @@
                             <div class="col-lg-12">
                                 <label>Stories</label>
                                 <div class="row">
-                                    <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" name="stories" value="yes" > Yes
+                                    <div class="col-lg-4 d-flex align-items-center">
+                                        <input type="radio" name="stories" value="yes" style="
+    margin: 7px;"
+ > Yes
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" name="stories" value="no" > No
+                                        <input type="radio" name="stories" value="no" style="
+    margin: 7px;"
+> No
                                     </div>
                                 </div>
                                 <span class="text-danger error-text stories_err"></span>
@@ -417,17 +425,25 @@
                             <div class="col-lg-12">
                                 <label>Commission</label>
                                 <div class="row">
-                                    <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" class="commissionRadio" name="commission" value="yes" > Yes
+                                    <div class="col-lg-4 d-flex align-items-center">
+                                        <input type="radio" class="commissionRadio" name="commission" value="yes"style="
+    margin: 7px;"
+ > Yes
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" class="commissionRadio" name="commission" value="no" > No
+                                        <input type="radio" class="commissionRadio" name="commission" value="no" style="
+    margin: 7px;"
+> No
                                     </div>
                                 </div>
                                 <span class="text-danger error-text commission_err"></span>
 
                                 <div class="commissionInput" style="margin-top:10px;">
+                                <div class="input-with-percent">
                                     <input type="text" name="commission_percentage" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
+  <span class="percent-symbol">%</span>
+</div>
+
                                     <span class="text-danger error-text commission_percentage_err"></span>
                                 </div>
                             </div>
