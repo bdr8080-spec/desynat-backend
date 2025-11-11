@@ -21,7 +21,7 @@ class UserProfileService
         }
 
         if (!Hash::check($request->old_password, $user->password)) {
-             return ['status'=>'error','message'=>"Old password doesn't match",'data'=>(object)[]];
+             return ['status'=>'error','message'=>"Old Password is not correct",'data'=>(object)[]];
             // return ApiResponse::generateResponse("error", "Old password doesn't match",(object)[],400);
         }
 
