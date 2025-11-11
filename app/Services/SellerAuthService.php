@@ -386,6 +386,14 @@ class SellerAuthService
                 }
 
 
+                $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$request->seller_id)->where('status','1')->where('payment_status','1')->first(); // check seller Plan
+
+                if($check_plan){
+                 return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 
+                }
+
+
+
                 $array_data=[
                   'transaction_id'=>$request->transaction_id,
                   'seller_id'=>$request->seller_id,
@@ -394,7 +402,8 @@ class SellerAuthService
                   'payment_status'=>$request->payment_status,
                   'plan_start_date'=>$currentDateTime??null,
                   'plan_end_date'=>$newDateTime??null,
-                  'payment_method'=>$request->payment_method
+                  'payment_method'=>$request->payment_method,
+                  'amount' =>$plan_data->price
                   ];
 
 
@@ -435,7 +444,7 @@ class SellerAuthService
 
                   $seller_id=$data->seller_id;
 
-                 $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$seller_id)->where('status','1')->first(); // check seller Plan
+                 $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$seller_id)->where('status','1')->where('payment_status','1')->first(); // check seller Plan
 
                  if($check_plan){
                   return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 

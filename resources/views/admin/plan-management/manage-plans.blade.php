@@ -15,7 +15,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">Subscription Plan</h6>
+                        <h6 class="m-0">SUBSCRIPTION PLAN </h6> 
                     </div>
                 </div>
 
@@ -163,8 +163,8 @@
                         <div class="row">
                             <input type="hidden" name="country_id" value="{{ request()->segment(3) }}" >
                             <!-- Plan Name English -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (English)</label>
                                     <input type="text" name="plan_name_english" placeholder="Enter plan name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_english_err"></span>
@@ -172,8 +172,8 @@
                             </div>
 
                             <!-- Plan Name Arabic -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (Arabic)</label>
                                     <input type="text" name="plan_name_arabic" placeholder="Enter plan name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
@@ -182,16 +182,15 @@
 
                             <!-- Duration -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Duration</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="duration" placeholder="Enter duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
+                                            <input type="text" name="duration" placeholder="Set duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
                                             <span class="text-danger error-text duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="duration_type" class="form-select">
-                                                <option value="">Select Duration</option>
                                                 <option value="1">Months</option>
                                                 <option value="2">Years</option>
                                             </select>
@@ -202,8 +201,8 @@
                             </div>
 
                             <!-- No. of Videos -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Videos</label>
                                     <input type="text" name="no_of_videos" placeholder="Enter number of videos" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_videos_err"></span>
@@ -211,8 +210,8 @@
                             </div>
 
                             <!-- No. of Products -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Products</label>
                                     <input type="text" name="no_of_products" placeholder="Enter number of products" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_products_err"></span>
@@ -220,8 +219,8 @@
                             </div>
 
                             <!-- No. of Highlights -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Highlights</label>
                                     <input type="text" name="no_of_highlights" placeholder="Enter number of highlights" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_highlights_err"></span>
@@ -229,8 +228,8 @@
                             </div>
 
                             <!-- No. of Employee -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Employees</label>
                                     <input type="text" name="no_of_employee" placeholder="Enter number of employees" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_employee_err"></span>
@@ -238,21 +237,21 @@
                             </div>
 
                             <!-- Charges -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Charges</label>
-                                    <input type="text" name="price" placeholder="Enter charges" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label>Plan Price</label>
+                                    <input type="text" name="price" placeholder="Enter Plan Price" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
                                     <span class="text-danger error-text price_err"></span>
                                 </div>
                             </div>
 
                             <!-- Stories -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Stories</label>
                                     <div class="row">
-                                        <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="storiesYes" name="stories" value="yes" class="form-check-input me-2">
+                                        <div class="col-lg-4 d-flex align-items-center">
+                                            <input type="radio" id="storiesYes" name="stories" value="yes" class="form-check-input me-2" checked>
                                             <label for="storiesYes" class="form-check-label">Yes</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
@@ -266,15 +265,15 @@
 
                             <!-- Commission -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Commission</label>
                                     <div class="row">
-                                        <div class="col-lg-6 d-flex align-items-center">
+                                        <div class="col-lg-4 d-flex align-items-center">
                                             <input type="radio" id="commissionYes" name="commission" value="yes" class="form-check-input me-2">
                                             <label for="commissionYes" class="form-check-label">Yes</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="commissionNo" name="commission" value="no" class="form-check-input me-2">
+                                            <input type="radio" id="commissionNo" name="commission" value="no" class="form-check-input me-2" checked>
                                             <label for="commissionNo" class="form-check-label">No</label>
                                         </div>
                                     </div>
@@ -282,7 +281,11 @@
 
                                     <!-- Commission Percentage -->
                                     <div id="commissionInput" style="display:none; margin-top:10px;">
-                                        <input type="text" name="commission_percentage" placeholder="Enter commission percentage" class="form-control">
+                                        <div class="input-with-percent">
+                                        <input type="text" name="commission_percentage" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
+                          <span class="percent-symbol">%</span>
+                     </div>
+
                                         <span class="text-danger error-text commission_percentage_err"></span>
                                     </div>
                                 </div>
@@ -311,43 +314,43 @@
 
             <div class="modal-body">
                 <div class="appointment-container">
-                    <form class="editPlanForm" data-id="{{ $plan->id }}">
-                        <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                    <form class="editPlanForm">
+                        <input type="hidden" name="plan_id" value="">
                         <input type="hidden" name="country_id" value="{{ request()->segment(3) }}">
 
                         <div class="row">
                             <!-- Plan Name English -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (English)</label>
-                                    <input type="text" name="plan_name_english" value="{{ $plan->plan_name_english }}" oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control">
+                                    <input type="text" name="plan_name_english" value="" oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_english_err"></span>
                                 </div>
                             </div>
 
                             <!-- Plan Name Arabic -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (Arabic)</label>
-                                    <input type="text" name="plan_name_arabic" value="{{ $plan->plan_name_arabic }}" oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control">
+                                    <input type="text" name="plan_name_arabic" value="" oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
                                 </div>
                             </div>
 
                             <!-- Duration -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Duration</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="duration" value="{{ $plan->duration }}" placeholder="Enter duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
+                                            <input type="text" name="duration" value="" placeholder="Enter duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
                                             <span class="text-danger error-text duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="duration_type" class="form-select">
                                                 <option value="">Select Duration</option>
-                                                <option value="1" {{ $plan->duration_type == 1 ? 'selected' : '' }}>Months</option>
-                                                <option value="2" {{ $plan->duration_type == 2 ? 'selected' : '' }}>Years</option>
+                                                <option value="1" >Months</option>
+                                                <option value="2" >Years</option>
                                             </select>
                                             <span class="text-danger error-text duration_type_err"></span>
                                         </div>
@@ -356,46 +359,63 @@
                             </div>
 
                             <!-- Numeric Fields -->
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Videos</label>
-                                <input type="text" name="no_of_videos" value="{{ $plan->no_of_videos }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
+                                <input type="text" name="no_of_videos" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_videos_err"></span>
+                                </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Products</label>
-                                <input type="text" name="no_of_products" value="{{ $plan->no_of_products }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
+                                <input type="text" name="no_of_products" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_products_err"></span>
+                                  </div>
+                          
                             </div>
 
-                            <div class="col-lg-12">
+                            
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Highlights</label>
-                                <input type="text" name="no_of_highlights" value="{{ $plan->no_of_highlights }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
+                                <input type="text" name="no_of_highlights" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_highlights_err"></span>
+                               </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Employees</label>
-                                <input type="text" name="no_of_employee" value="{{ $plan->no_of_employee }}" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
+                                <input type="text" name="no_of_employee" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_employee_err"></span>
+                            </div>
+                            
                             </div>
 
                             <!-- Charges -->
-                            <div class="col-lg-12">
-                                <label>Charges</label>
-                                <input type="text" name="price" value="{{ $plan->price }}" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
+                                <label>Plan Price</label>
+                                <input type="text" name="price" value="" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
                                 <span class="text-danger error-text price_err"></span>
+                               </div>
                             </div>
 
                             <!-- Stories -->
                             <div class="col-lg-12">
                                 <label>Stories</label>
                                 <div class="row">
-                                    <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" name="stories" value="yes" {{ $plan->stories == 1 ? 'checked' : '' }}> Yes
+                                    <div class="col-lg-4 d-flex align-items-center">
+                                        <input type="radio" name="stories" value="yes" style="
+    margin: 7px;"
+ > Yes
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" name="stories" value="no" {{ $plan->stories == 0 ? 'checked' : '' }}> No
+                                        <input type="radio" name="stories" value="no" style="
+    margin: 7px;"
+> No
                                     </div>
                                 </div>
                                 <span class="text-danger error-text stories_err"></span>
@@ -405,17 +425,25 @@
                             <div class="col-lg-12">
                                 <label>Commission</label>
                                 <div class="row">
-                                    <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" class="commissionRadio" name="commission" value="yes" {{ $plan->commission == 1 ? 'checked' : '' }}> Yes
+                                    <div class="col-lg-4 d-flex align-items-center">
+                                        <input type="radio" class="commissionRadio" name="commission" value="yes"style="
+    margin: 7px;"
+ > Yes
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
-                                        <input type="radio" class="commissionRadio" name="commission" value="no" {{ $plan->commission == 0 ? 'checked' : '' }}> No
+                                        <input type="radio" class="commissionRadio" name="commission" value="no" style="
+    margin: 7px;"
+> No
                                     </div>
                                 </div>
                                 <span class="text-danger error-text commission_err"></span>
 
-                                <div class="commissionInput" style="margin-top:10px; {{ $plan->commission == 1 ? '' : 'display:none;' }}">
-                                    <input type="text" name="commission_percentage" value="{{ $plan->commission_percentage }}" placeholder="Enter commission percentage" class="form-control">
+                                <div class="commissionInput" style="margin-top:10px;">
+                                <div class="input-with-percent">
+                                    <input type="text" name="commission_percentage" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
+  <span class="percent-symbol">%</span>
+</div>
+
                                     <span class="text-danger error-text commission_percentage_err"></span>
                                 </div>
                             </div>
@@ -594,7 +622,7 @@ $(document).ready(function() {
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
             success: function(response){
                 if(response.status === 'success'){
-                    toastr.success(response.message, 'Success');
+                    toastr.success(response.message);
                     setTimeout(() => {
                         $('#sentModal2').modal('hide');
                         location.reload();

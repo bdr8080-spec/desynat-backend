@@ -22,8 +22,8 @@
 <body>
     <div class="login-header">
         <div class="des-logo">
-            <a href="#"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image"
-                    class="img-fluid logo-login"> </a>
+            <a href="{{ route('seller.dashboard') }}"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg"
+                    alt="image" class="img-fluid logo-login"> </a>
         </div>
         <div class="des-language">
             <div class="dropdown">
@@ -104,10 +104,25 @@
                                     </div>
                                     <div class="payment">SELECT PAYMENT METHOD</div>
 
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment_method"
+                                            value="Myfatoorah" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Myfatoorah
+                                        </label>
+                                    </div>
+
+                                    @error('payment_method')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+
                                     <div class="total-pnl mt-4">
                                         <div class="tamount">Total Amount</div>
                                         <div class="price-kd">KD {{ $plans->price }}</div>
                                     </div>
+
+
                                     <div class="py-3 mt-3">
 
                                         <input type="submit" name="submit" value="Pay Now"
@@ -122,16 +137,31 @@
                         </form>
 
                     </div>
-
-
-
-
                 </div>
             </div>
 
 
         </div>
     </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+                        <div class="title24 py-3">Plan Purchased Successfully!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 </body>
@@ -145,5 +175,16 @@
 <!--Main JS File -->
 <script src="{{ asset('dealer') }}/assets/custom-file/js/main.js"></script>
 
+@include('dealer.layout.custom_code');
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success1'))
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        @endif
+    });
+</script>
 
 </html>

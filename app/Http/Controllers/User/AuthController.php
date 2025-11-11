@@ -4,16 +4,25 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Validator;
 use App\Models\User;
 use App\Models\country;
 use Illuminate\Support\Facades\Crypt;
+use App\Services\UserProfileService;
+use App\Models\Category;
+use App\Models\SubCategory;
+use Illuminate\Validation\Rule;
 use Auth;
+use Validator;
 use Session;
+
+
 
 class AuthController extends Controller
 {
     //  
+
+
+
     public function userRegister(Request $request){
         if($request->isMethod('get')){
             $country =   country::all();
@@ -44,7 +53,13 @@ class AuthController extends Controller
                     'country_code' => 'required',
                     // 'image'=> 'required',
                     'email' => 'required|email|unique:users,email',
-                    'mobile' => 'required|digits_between:7,15',
+                    'mobile'=> [
+                            'required',
+                            'digits_between:7,15',
+                            Rule::unique('users')->where(function ($query) use ($request) {
+                                return $query->where('country_code', $request->country_code);
+                            }),
+                        ],
                     'password' => [
                             'required',
                             'string',
@@ -537,7 +552,15 @@ class AuthController extends Controller
 
 
 
-    public function dashboard(){
-      return view('user.dashboard.dashboard');
+    public function dashboard(Request $request){    
+
+    $subCategory = SubCategory::orderBy('name_english','desc')->get();
+    
+    if($request->ajax()){
+            $subCategory = SubCategory::where('category_id', $request->id)->orderBy('name_english','desc')->get();
+            return view('user.dashboard.subCategory', compact('subCategory'))->render();
+        }
+
+      return view('user.dashboard.dashboard', compact('subCategory'));
     }
 }

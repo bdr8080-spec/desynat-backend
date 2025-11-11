@@ -5,18 +5,26 @@ namespace App\Http\Controllers\Api\user;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+use Hash;
 use App\Models\User;
+use App\Models\UserContactChangeHistory;
+use App\Helpers\ApiResponse;
+use App\Services\UserProfileService;
 use App\Models\Category;
 use App\Models\SubCategory;
-use App\Models\UserContactChangeHistory;
-use Hash;
-use App\Helpers\ApiResponse;
+
 
 
 
 class ProfileController extends Controller
 {
     //
+
+    public function __construct(UserProfileService $UserProfileService){
+
+        $this->UserProfileService=$UserProfileService;
+
+    }
 
     public function change_password(Request $request)
     {
@@ -41,25 +49,22 @@ class ProfileController extends Controller
                return ApiResponse::generateResponse('error',$validator->errors()->first(), $validator->errors(), 422);
         }
 
-        $user = User::find($request->user()->id);
+        $request_data = (object )[
+            'id'=>$request->user()->id,
+            'old_password'=>$request->old_password,
+            'new_password'=>$request->new_password,
+        ];
 
-        if (!$user) {
-           return ApiResponse::generateResponse('error','User not found',(object)[],401);
+        $data = $this->UserProfileService->ChangePassword($request_data);
+        
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
         }
 
-        if (!Hash::check($request->old_password, $user->password)) {
-            return ApiResponse::generateResponse("error", "Old password doesn't match",(object)[],400);
-        }
-
-        if (Hash::check($request->new_password, $user->password)) {
-            return ApiResponse::generateResponse("error", "New password cannot be the same as the old password",(object)[],400);
-        }
-
-
-        $user->password = Hash::make($request->new_password);
-        $user->save();
-
-        return ApiResponse::generateResponse("success", "Password changed successfully",(object)[], 201);
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+       
     }
 
 
@@ -167,45 +172,9 @@ class ProfileController extends Controller
 
 
      
-
-     
-
  
 
-     // fetch category
-    public function getCategories()
-    {
-        $category = Category::orderBy('name', 'asc')->get();
-
-        if ($category->isEmpty()) {
-            return ApiResponse::generateResponse('success', 'No categories found', (object)[], 200);
-        }
-
-        return ApiResponse::generateResponse('success', 'Category list fetched successfully', $category, 200);
-    }
-
-   
-    public function getSubCategories(Request $request)
-    {
-        $rules = [
-            'category_id' => 'required|integer|exists:categories,id'
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
-        }
-
-        $subCategory = SubCategory::where('category_id', $request->category_id)->get();
-
-        if ($subCategory->isEmpty()) {
-            return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
-        }
-
-        return ApiResponse::generateResponse('success', 'Sub category list fetched successfully', $subCategory, 201);
-    }
-
+ 
 
     // change mobile number
 
@@ -215,7 +184,7 @@ class ProfileController extends Controller
             $rules = [
                 'country_code' => 'required|string|max:10',
                 'mobile'       => 'required|string|max:20',
-                'type'         => 'required|in:0,1', // 0 = old, 1 = new
+                'type'         => 'required|in:0,1',
             ];
 
             $messages = [
@@ -270,7 +239,7 @@ class ProfileController extends Controller
                     return ApiResponse::generateResponse('success', 'OTP sent successfully to old number', $data, 201);
                 }
 
-                return ApiResponse::generateResponse('error', "Old mobile number doesn't match", (object)[], 400);
+                return ApiResponse::generateResponse('error', "Old mobile number does not match", (object)[], 400);
             }
 
             if ($request->type == '1') {
@@ -328,27 +297,57 @@ class ProfileController extends Controller
             return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
         }
 
-        $user = $request->user();
+         $data = $this->UserProfileService->verifyOtp($request);
 
-        $userDetails = UserContactChangeHistory::find($request->id);
-
-        if (!$userDetails) {
-            return ApiResponse::generateResponse('error', 'No User Found', (object)[], 404);
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
         }
 
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
-        if ($userDetails->otp === $request->otp) {
-            $userDetails->otp = null;
-            $userDetails->otp_verify = '1';
-            $userDetails->status = '1';
-            $userDetails->save();
 
-            return ApiResponse::generateResponse('success', 'OTP verified successfully', $userDetails, 201);
-        }
-
-        return ApiResponse::generateResponse('error', 'Invalid OTP. Please try again.', (object)[], 400);
     }
 
+
+
+    // fetch category
+    public function getCategories(Request $request)
+    {
+        $category = Category::orderBy('name', 'asc')->get();
+
+        if ($category->isEmpty()) {
+            return ApiResponse::generateResponse('success', 'No categories found', (object)[], 200);
+        }
+
+        $data = $this->UserProfileService->getCategories($request);
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
+    // fetch sub category
+    public function getSubCategories(Request $request)
+    {
+        $rules = [
+            'category_id' => 'required|integer|exists:categories,id'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
+        }
+
+
+         $data = $this->UserProfileService->getSubCategories($request);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+        }
+
+       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+     
+    }
 
    
     

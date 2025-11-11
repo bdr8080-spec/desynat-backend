@@ -7,11 +7,11 @@
           <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
               <div class="col-lg-6 col-md-6 col-12">
-                <h2 class="h2">Category & Sub-Category Management</h2>
+                <h2 class="h2">CATEGORY & SUB-CATEGORY MANAGEMENT</h2> 
               </div>
             </div>
 
-            <div class="userManagecontent">
+            <div class="userManagecontent mt-5 ">
               <div class="">
                 <!-- <div class="align-items-end d-flex">
                   <div class="search-box" style="position: relative">
@@ -36,8 +36,8 @@
                   </div>
                 </div> -->
 
-                <div class="table-responsive">
-                  <table id="myTable" class="table">
+                <div class="table-responsive w-100">
+                  <table id="myTable" class="table w-100">
                     <thead>
                       <tr>
                         <th scope="col">SR No.</th>

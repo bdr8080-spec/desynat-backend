@@ -70,9 +70,9 @@ class CountryService
     public function getServiceCities($countryId, $limit = null, $search = null)
     {
         try {
-            $limit = !empty($limit) ? (int)$limit : 10;
+            $limit = !empty($limit) ? (int)$limit : null;
 
-            $query = ServiceCity::where('country_id', $countryId);
+            $query = ServiceCity::with(['city_info', 'country'])->where('country_id', $countryId);
 
             if (!empty($search)) {
                 $query->where('name', 'like', '%' . $search . '%');
@@ -184,7 +184,7 @@ class CountryService
             return [
                 'status' => 'success',
                 'message' => 'City deleted successfully',
-                'data' => []
+                'data' => null
             ];
 
         } catch (\Exception $e) {
@@ -226,12 +226,12 @@ class CountryService
     public function getZones($countryId, $cityId, $limit = null, $search = null)
     {
         try {
-            $limit = !empty($limit) ? (int)$limit : 10;
+            $limit = !empty($limit) ? (int)$limit : null;
 
             $query = Zone::where('country_id', $countryId)->where('city_id',$cityId);
 
             if (!empty($search)) {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name_english', 'like', '%' . $search . '%');
             }
             $query->orderBy('id', 'desc');
             $zones = $query->paginate($limit);

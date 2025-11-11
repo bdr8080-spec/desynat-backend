@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\seller;
+use App\Models\country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 
@@ -12,11 +13,11 @@ class SellerManagementService
     public function getNewSellers($request)
     {
         try {
-            $limit = (int)($request->input('limit', 10)); 
+            $limit = (int)($request->input('limit')); 
 
             $query = seller::where('admin_verify', '1')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -91,11 +92,11 @@ class SellerManagementService
     public function getApprovedSellers($request)
     {
         try {
-            $limit = (int)($request->input('limit', 10)); 
+            $limit = (int)($request->input('limit')); 
 
             $query = seller::where('admin_verify', '2')
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -169,11 +170,11 @@ class SellerManagementService
     public function getRejectedSellers($request)
     {
         try {
-            $limit = (int)($request->input('limit', 10)); 
+            $limit = (int)($request->input('limit')); 
 
-            $query = seller::where('admin_verify', '3')
+            $query = seller::whereIn('admin_verify', ['3', '4'])
                 ->with([
-                    'store_info',
+                    'store_info.country_info',
                     'owner_document',
                     'store_document',
                     'seller_bank_details',
@@ -247,11 +248,11 @@ class SellerManagementService
     {
         try {
             $seller = seller::with([
-                'store_info',
+                'store_info.country_info',
                 'owner_document',
                 'store_document',
                 'seller_bank_details',
-                'subcription_plan'
+                'subcription_plan.plan_info',
             ])->find($sellerId);
 
             if (!$seller) {
@@ -305,7 +306,7 @@ class SellerManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Seller accepted successfully',
+                'message' => 'Seller Approve Successfully',
                 'data' => $seller
             ];
 
@@ -318,7 +319,7 @@ class SellerManagementService
         }
     }
 
-    public function rejectSeller($sellerId, $rejectReason)
+    public function rejectSeller($sellerId, $rejectReason, $rejectType)
     {
         try {
             $seller = seller::find($sellerId);
@@ -331,13 +332,19 @@ class SellerManagementService
                 ];
             }
 
-            $seller->admin_verify = '3';
-            $seller->reject_reason = $rejectReason; 
+            if ($rejectType === 'complete') {
+                $seller->admin_verify = '3';
+            } elseif ($rejectType === 'document') {
+                $seller->admin_verify = '4';
+                $seller->bank_information = '0';
+            }
+
+            $seller->reject_reason = $rejectReason;
             $seller->save();
 
             return [
                 'status' => 'success',
-                'message' => 'Seller rejected successfully',
+                'message' => 'Seller Rejected Successfully',
                 'data' => $seller
             ];
 
@@ -349,6 +356,7 @@ class SellerManagementService
             ];
         }
     }
+
 
     public function blockUnblockSeller($sellerId)
     {
@@ -368,8 +376,8 @@ class SellerManagementService
             $seller->save();
 
             $message = $seller->is_block == 1
-                ? 'Seller blocked successfully'
-                : 'Seller unblocked successfully';
+                ? 'Seller Blocked Successfully'
+                : 'Seller Unblocked Successfully';
 
             return [
                 'status' => 'success',

@@ -99,7 +99,7 @@
 
                 </div>
                  <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('userRegister')}}">Sign up</a></p>
-                 <p class="guest">Continue As a Guest</p>
+                 <p class="guest"><a href="{{route('dashboard')}}">Continue As a Guest</a></p>
             </div>
         </div>
     </div>

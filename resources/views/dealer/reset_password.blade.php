@@ -68,9 +68,9 @@
                                     @enderror
 
                                     <div class="form-group position-relative">
-                                        <label for="password">Create Password</label>
+                                        <label for="password">Create New Password</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter password" name="password">
+                                            placeholder="Enter new password" name="password">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
                                         @error('password')
                                             <span class="text-danger">{{ $message }}</span>
@@ -125,11 +125,8 @@
 </body>
 
 
-<!-- Vendor JS Files -->
-<script src="assets/custom-file/js/jquery.min.js"></script>
-<script src="assets/custom-file/js/bootstrap.bundle.min.js"></script>
-<!--Main JS File -->
-<script src="assets/custom-file/js/main.js"></script>
+
+@include('dealer.layout.footer');
 
 <script>
     $(".toggle-password").click(function() {
@@ -143,6 +140,6 @@
     });
 </script>
 
-@include('dealer.layout.custom_code');
+
 
 </html>

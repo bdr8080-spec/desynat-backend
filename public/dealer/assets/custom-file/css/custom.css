@@ -1,11 +1,24 @@
-@media (min-width: 1200px) and (max-width: 1440px) {
-    /* Your CSS rules go here */
 
-}
 
 .form-switch .form-check-input {
     width: 2.8em;
     height: 20px;
+}
+.label-flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 0px 0px;
+    font-size: 13px;
+    color: #666;
+}
+.label-flex label {
+    font-size: 15px;
+    color: #000;
+    margin-bottom: 3px;
+}
+.sub-form .form-control {
+    border-radius: 10px;
+    line-height: 1.75;
 }
 
 #map {
@@ -20,10 +33,76 @@
     font-size: 20px;
     cursor: pointer;
 }
+.padding-top-40{
+    padding-top: 50px;
+}
+.visitor-pnl .form-check-label {
+    font-size: 12px;
+    color: #000;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+}
+
+/* hide default radio */
+.radio-group input[type="radio"] {
+    display: none;
+}
+
+/* custom circle */
+.custom-radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #f3f3f3;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* inner dot when checked */
+.radio-group input[type="radio"]:checked + .custom-radio::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #a68058;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* label text */
+.radio-label {
+    font-size: 15px;
+    color: #000;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* hover effect */
+.radio-group:hover .custom-radio {
+    border-color: #aaa;
+}
 
 /*--------------------------------------------------------------
 # Dashboard page
 --------------------------------------------------------------*/
+.total-revenu {
+    background: var(--revenu);
+}
+.font-34{
+    font-size: var(--font-34);
+    color: #000;
+    font-weight: 600;
+}
 
 .title24 {
     font-size: var(--title24);
@@ -62,4 +141,109 @@
 }
 .tabs-panel .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     background: var(--tab-active-bg);
+}
+.dt-column-title {
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+}
+table.dataTable > tbody > tr > td {
+    padding: 8px 10px;
+    font-size: 15px;
+    text-align: center;
+}
+.dt-length {
+    display: none;
+}
+.dt-search {
+    display: none;
+}
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-filter {
+    display: flex;
+    gap: 15px;
+}
+
+.width-50{
+    min-width: 210px;
+}
+table.dataTable > tbody > tr:last-child > * {
+    border-bottom: none;
+    text-align: center;
+}
+table.dataTable > thead > tr > th{
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background: #F2F2F2;
+}
+table.dataTable {
+    border-radius: 10px 12px 0px 0px;
+    overflow: hidden;
+}
+.pro-image{
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+}
+.table>tbody {
+    vertical-align: middle;
+}
+
+.dt-column-order {
+    display: none;
+}
+.eyebtn {
+    color: #333;
+    font-size: 18px;
+}
+
+/*--------------------------------------------------------------
+# Add product multiple images
+--------------------------------------------------------------*/
+.product-pnls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.multiple-img {
+    height: 160px;
+    width: 100%;
+    overflow: hidden;
+    margin-left: 20px;
+}
+.multiple-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+@media (min-width: 1140px) and (max-width: 1280px) {
+    .dash-circle {
+        height: 80px;
+        width: 80px;
+    }
+    .title24 {
+        font-size: 17px;
+    }
+    .dash-content h5 {
+        font-size: 14px;
+    }
+    .font-34 {
+        font-size: 24px;
+    }
+    .p20 {
+        padding: 10px;
+    }
+    .title30 {
+        font-size: 18px;
+    }
+    .sidebar-nav .nav-link {
+        font-size: 12px;
+    }
+
 }

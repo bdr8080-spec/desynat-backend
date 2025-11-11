@@ -22,8 +22,8 @@
 <body>
     <div class="login-header">
         <div class="des-logo">
-            <a href="#"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image"
-                    class="img-fluid logo-login"> </a>
+            <a href="{{ route('seller.dashboard') }}"><img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg"
+                    alt="image" class="img-fluid logo-login"> </a>
         </div>
         <div class="des-language">
             <div class="dropdown">
@@ -38,6 +38,13 @@
             </div>
         </div>
     </div>
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="login-wapper">
         <div class="login-grid-bg planheight"></div>
@@ -210,11 +217,10 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="{{ route('seller.skip_plan') }}">Skip</a>
+                <a href="{{ route('seller.skip_plan') }}" class="link-color">Skip</a>
             </div>
         </div>
     </div>
-
 
 </body>
 
@@ -226,6 +232,10 @@
 
 <!--Main JS File -->
 <script src="{{ asset('dealer') }}/assets/custom-file/js/main.js"></script>
+
+
+
+@include('dealer.layout.custom_code');
 
 
 </html>

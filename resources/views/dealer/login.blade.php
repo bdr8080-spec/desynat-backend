@@ -225,6 +225,6 @@
     });
 </script>
 
-@include('dealer.custom_code');
+@include('dealer.layout.custom_code');
 
 </html>

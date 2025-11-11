@@ -42,11 +42,13 @@
   --border-color: #DFBF8F;
   --bg-header: #FFF7EA;
 
-  --title24: 20px;
+  --title24: 22px;
   --title-color: #040404;
   --gold-color: #F3D1A2;
   --title30: 25px;
   --text-red: red;
+  --revenu:linear-gradient(99.65deg, rgba(97, 255, 105, 0.08) -23.79%, rgba(23, 133, 76, 0.08) 123.4%);
+  --font-34:34px;
 
 }
 
@@ -161,7 +163,7 @@ label {
 
 .date-form-pnl .form-control {
   padding: 8px;
-  border: 1px solid #c5c3c3;
+  border: 1px solid #C0BBBB;
 }
 
 .gold-title {
@@ -340,9 +342,9 @@ label {
 }
 
 .form-control {
-  padding: 13px;
+  padding: 10px;
   font-size: 15px;
-  border: 1px solid #c5c3c3;
+  border: 1px solid #C0BBBB;
 }
 
 .form-control:focus {
@@ -447,7 +449,7 @@ label {
   width: 100%;
   color: #141414;
   text-align: center;
-  padding: 10px;
+  padding: 8px;
   border-radius: 6px;
   border: 1px solid #ddd;
 }
@@ -743,7 +745,7 @@ label {
 
 .header-nav .nav-icon {
   font-size: 22px;
-  margin-right: 25px;
+  margin-right: 10px;
   position: relative;
   height: 40px;
   width: 40px;

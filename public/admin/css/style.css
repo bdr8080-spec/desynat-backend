@@ -194,10 +194,10 @@ hr {
 .form-group select.form-control,
 .form-group select.form-select {
     width: 100%;
-    padding: 6px 10px;
+    padding: 9px 5px;
     border: 1px solid var(--secondry-color);
     border-radius: 5px;
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .form-control-arabic {
@@ -988,7 +988,7 @@ table thead tr:nth-child(even) {
 .toggle-password {
     cursor: pointer;
     position: absolute;
-    bottom: 15px;
+    bottom: 7px;
     right: 10px;
 }
 
@@ -1221,11 +1221,18 @@ a.btn.btn-dark.customBtn {
     /* line-height: 18px; */
         font-size: 20px;
 }
+button.btn.btn-dark.customBtn {
+    border: 1px solid rgba(168, 130, 79, 1);
+    background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+    color: #fff;
+    /* line-height: 18px; */
+    font-size: 20px;
+}
 
 /* buttons end */
 
 .userManagecontent table thead tr th {
-    min-width: 220px;
+    min-width: 134px;
     vertical-align: middle;
     color: #000;
     /* background: transparent linear-gradient(164deg, #013b5100 0%, #c7a15c 100%) 0% 0% no-repeat; */
@@ -1464,8 +1471,9 @@ a.nav-link.active {
 }
 
 .form-group label {
-    margin-bottom: 5px;
+       margin-bottom: 3px;
     /* font-weight: bold; */
+    font-size: 18px;
 }
 
 .form-group input,
@@ -1692,7 +1700,7 @@ button[type="submit"] {
 .custom-topbar {
     background: linear-gradient(90deg, #c08f53, #a36a2a) !important;
     height: 74px;
-    border-radius: 6px;
+    /* border-radius: 6px; */
     padding: 0 25px;
     display: flex;
     align-items: center;
@@ -1839,11 +1847,13 @@ button[type="submit"] {
 }
 
     input[type="text"] {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      outline: none;
+        outline: none;
+    /* width: 100%; */
+    padding: 9px 5px;
+    border: 1px solid var(--secondry-color);
+    border-radius: 5px;
+    font-size: 15px;
+
     }
 
     button {
@@ -1887,3 +1897,46 @@ button[type="submit"] {
       font-size: 14px;
       outline: none;
     }
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table th,
+.details-table td {
+  text-align: left;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.details-table th {
+  width: 50%;
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+
+.details-table tr:hover {
+  background-color: #f2f2f2;
+}
+.right-section {
+    padding: 43px;
+}
+.sidebar-dark .nav-item.active .nav-link {
+  color: #fff !important;
+}
+.input-with-percent {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+}
+
+.input-with-percent input {
+  width: 150px; 
+}
+
+.percent-symbol {
+  font-weight: bold;
+  font-size: 16px;
+}

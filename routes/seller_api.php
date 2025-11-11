@@ -42,6 +42,8 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   Route::post('/payment-subcription-plan', [SellerDashboardController::class,'payment_subcription_plan']);
 
+  Route::post('/seller-profile', [SellerDashboardController::class,'seller_profile']);
+
 
 });
 

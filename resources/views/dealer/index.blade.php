@@ -2,7 +2,8 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl">
-        <div class="title24">Dashboard</div>
+        <div class="title24">Dashboard
+        </div>
     </div>
 
     <div class="row">
@@ -21,7 +22,7 @@
             <div class="py-4">
                 <div class="title24">Total Products <span class="gold-title">(127)</span></div>
                 <div class="row mt-3">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex">
                             <div class="dash-content">
                                 <h5>Active</h5>
@@ -32,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex">
                             <div class="dash-content">
                                 <h5>In-Active</h5>
@@ -48,7 +49,7 @@
             <div class="py-2">
                 <div class="title24">Total Orders <span class="gold-title">(14)</span></div>
                 <div class="row mt-3">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex mb-4">
                             <div class="dash-content">
                                 <h5>New</h5>
@@ -59,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex mb-3">
                             <div class="dash-content">
                                 <h5>Ongoing</h5>
@@ -70,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex">
                             <div class="dash-content">
                                 <h5>Completed</h5>
@@ -81,7 +82,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex">
                             <div class="dash-content">
                                 <h5>Cancelled</h5>
@@ -98,7 +99,7 @@
             <div class="py-4">
                 <div class="title24">Total Staffs <span class="gold-title">(07)</span></div>
                 <div class="row mt-3">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex py-3">
                             <div class="dash-content">
                                 <h5>Active</h5>
@@ -109,7 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="dash-box border20 shadow20 p20 pnl-flex py-3">
                             <div class="dash-content">
                                 <h5>In-Active</h5>
@@ -126,8 +127,8 @@
         </div>
 
         <div class="col-lg-6 col-xxl-6">
-            <div class="bg-header mt-3">
-                <div class="group-radio-btn d-flex gap-4 align-items-center">
+            <div class="bg-header mt-3 visitor-pnl">
+                <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="radio" id="r1" checked>
                         <label class="form-check-label" for="r1">Today</label>
@@ -140,7 +141,7 @@
                         <input class="form-check-input" type="radio" name="radio" id="r3">
                         <label class="form-check-label" for="r3">This Month</label>
                     </div>
-                    <div class="show-date d-flex gap-2">
+                    <div class="show-date d-flex gap-2  flex-wrap">
                         <div class="date-form-pnl">
                             <input type="date" class="form-control">
                         </div>
@@ -149,9 +150,51 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
+            <div class="total-revenu border20 shadow20 p20 mt-5">
+                <div class="total-revenu-box pnl-flex">
+                    <div class="dash-content">
+                        <h5>Total Revenue Generated</h5>
+                        <h1 class="font-34 py-3">KD 12,542</h1>
+                    </div>
+                    <div class="total-revenu-image">
+                        <img src="{{ asset('dealer') }}/assets/img/profit.svg" alt="icon" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+
+            <div class="padding-top-40 visitor-pnl">
+                <div class="title24">Visitor analytics</div>
+                <div class="bg-header-white mt-3">
+                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio" id="r1" checked>
+                            <label class="form-check-label" for="r1">Total Order Conversion</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio" id="r2">
+                            <label class="form-check-label" for="r2">Total Customer visits</label>
+                        </div>
+
+                        <div class="show-date d-flex gap-2">
+                            <div class="date-form-pnl">
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="date-form-pnl">
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="show-chart padding-top-40">
+                <div class="dash-box border20 shadow20 p20">
+                    <canvas id="pointChart"></canvas>
+                </div>
+            </div>
+
+
         </div>
 
     </div>
@@ -181,5 +224,32 @@
 </div>
 
 
+
+<script>
+    const ctx = document.getElementById('pointChart').getContext('2d');
+
+    const pointChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+            datasets: [{
+                label: 'Monthly Sales',
+                data: [12, 19, 8, 25, 18, 30, 50, 30],
+                borderColor: '#55000099',
+                borderWidth: 2,
+                tension: 0.3,
+                fill: false,
+                pointStyle: 'circle', // point shape
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                backgroundColor: '#F3D1A2'
+            }]
+        },
+        options: {
+            responsive: true,
+
+        }
+    });
+</script>
 
 @include('dealer.layout.footer');

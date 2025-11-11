@@ -1,3 +1,8 @@
+@media (max-width:1800px) {
+    .customNavbar ul li.nav-item a.nav-link{
+        padding: 10px 10px 10px 18px;
+    }
+}
 @media (max-width:1500px) {
     .customContainer{
         max-width: 1200px !important;
@@ -6,12 +11,26 @@
     .login_content_right{
         padding: 5% 9% !important;
     }
+
+    
 }
 
 @media (max-width:1200px) {
 
    .customContainer{
         max-width: 1064px !important;
+    }
+    .my-profile{
+        margin-bottom: 10%;
+    }
+    .my-profile {
+        height: calc(100vh - 100px); /* example for larger mobile footer */
+    }
+    footer{
+        position: static !important;
+    }
+    .getTheApp{
+        flex-direction: column !important;
     }
 }
 
@@ -25,6 +44,10 @@
     }
     .login_content_content .form-group input, .login_content_content .dropdown button{
         font-size: 12px !important;
+    }
+    .customNavbar .dropdown-menu.sell_clothes.show{
+        transform: none !important;
+        min-width: 100% !important;
     }
 
 }
@@ -77,9 +100,30 @@
     /* .customDropdonwHeader{
         width: calc(100% / 4) !important;
     } */
-     .header_nav_button_dropdown{
+     /* .header_nav_button_dropdown{
         margin-top: 10px;
+     } */
+     .mobileResponsive .navbar-toggler{
+        border: none;
+        padding: 0;
      }
+     .mobileLang .dropdown-toggle{
+        padding: 0 !important;
+        border: none;
+     }
+
+     .userDropdown button.btn{
+        width: 26px !important;
+        height: 26px !important;
+     }
+     .header_nav_button_dropdown{
+        gap: 5px !important;
+     }
+
+     .search {
+        width: 40px;
+        transition: all 0.3s ease;
+    }
 }
 
 @media (max-width:568px) {
@@ -114,6 +158,23 @@
     {
         background-color: #000000;
     }
+    .categorie_cotent-img{
+        height: 140px !important;
+    }
+    .dropdown-menu-end[data-bs-popper]{
+        left: 0;
+        transform: translate(-50%, 0%);
+        min-width: 280px;
+        right: auto;
+        width: 100%;
+    }
+    .langu.dropdown-menu-end[data-bs-popper]{
+        transform: translate(-70%, 0%) !important;
+    }
+    .profileContenar{
+            padding: 20px 20px;
+    }
+    
     /* .header_nav_button_dropdown .customBtn1{
         min-width: 120px;
     } */
@@ -122,6 +183,9 @@
         width: 100% !important;
         padding: 5px !important;
     } */
+     .categorie_cotent h3{
+        font-size: 15px !important;
+    }
     
     .navbar-toggler .navbar-toggler-icon{
         width: 20px;
