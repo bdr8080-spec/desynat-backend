@@ -606,7 +606,7 @@ $(document).ready(function() {
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
             success: function(response){
                 if(response.status === 'success'){
-                    toastr.success(response.message, 'Success');
+                    toastr.success(response.message);
                     setTimeout(() => {
                         $('#sentModal2').modal('hide');
                         location.reload();
