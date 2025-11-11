@@ -132,9 +132,9 @@ class ProfileController extends Controller
             ];
 
             $messages = [
-                'country_code.required' => 'Please enter your country code.',
-                'mobile.required'       => 'Please enter your mobile number.',
-                'type.required'         => 'Please specify whether it is old or new number.',
+                'country_code.required' => 'Please enter your country code',
+                'mobile.required'       => 'Please enter your mobile number',
+                'type.required'         => 'Please specify whether it is old or new number',
             ];
 
         if ($request->type == '0') {
@@ -156,8 +156,8 @@ class ProfileController extends Controller
         ];
 
         $messages = [
-            'email.required' => 'Please enter your email address.',
-            'email.email'    => 'Please enter a valid email address.',
+            'email.required' => 'Please enter your email address',
+            'email.email'    => 'Please enter a valid email address',
         ];
 
         if ($request->type == '0') {
@@ -166,7 +166,7 @@ class ProfileController extends Controller
             $rules['email'][] = Rule::unique('users', 'email');
         }
     } else {
-        return redirect()->back()->with('error', 'Invalid "for" value. Use either "mobile" or "email".');
+        return redirect()->back()->with('error', 'Invalid "for" value. Use either "mobile" or "email"');
     }
 
     $validator = Validator::make($request->all(), $rules, $messages);

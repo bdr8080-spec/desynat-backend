@@ -79,7 +79,7 @@
                                 <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn"
-                                            style="margin-top: 56px">
+                                            style="margin-top: 70px">
                                             <span>Reset</span>
                                         </a>
                                     </div>
@@ -87,7 +87,7 @@
                                 <!-- Export Button -->
                                 <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn " style="margin-top: 56px">
+                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -261,7 +261,7 @@
                                 <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn "
-                                            style="margin-top: 56px">
+                                            style="margin-top: 70px">
                                             <span>Reset</span>
                                         </a>
                                     </div>
@@ -269,7 +269,7 @@
                                 <!-- Export Button -->
                                 <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn " style="margin-top: 56px">
+                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -472,7 +472,7 @@
                                 <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn"
-                                            style="margin-top: 56px">
+                                            style="margin-top: 70px">
                                             <span>Reset</span>
                                         </a>
                                     </div>
@@ -480,7 +480,7 @@
                                 <!-- Export Button -->
                                 <div class="col-lg-1 col-md-12 col-12">
                                     <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn " style="margin-top: 56px">
+                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
                                             <span>Export</span>
                                         </a>
                                     </div>

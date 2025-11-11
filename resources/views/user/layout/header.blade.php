@@ -47,8 +47,8 @@ use App\Models\Category;
                                                     <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" class="img-fluid" />
                                                 </div>
                                                 <div class="profile_detail">
-                                                    <p>{{Auth::guard('web')->user()->full_name}}</p>
-                                                    <label>{{Auth::guard('web')->user()->email}}</label>
+                                                    <p>{{Auth::guard('web')->user()->full_name ?? ''}}</p>
+                                                    <label>{{Auth::guard('web')->user()->email ?? ''}}</label>
                                                 </div>  
                                             </div>
                                             <a href="{{route('userProfile')}}">
@@ -312,10 +312,10 @@ use App\Models\Category;
                         <div class="row">
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
-                                <h6>Deliver to Reshab</h6>
+                                <h6>Deliver to {{@Auth::guard('web')->user()->full_name}}</h6>
                                 <div class="d-flex align-self-center w-100" >
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
-                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="city">Noida</span> 
+                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
                                     </button>
                                     <span class="ms-lg-5 ms-md-3 ms-2">
                                         <i class="fa-solid fa-chevron-down"></i>
@@ -359,9 +359,9 @@ use App\Models\Category;
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
 
-                                            <div class="row justify-content-between">
+                                            <div class="row justify-content-between flex-lg-nowrap">
                                                 @foreach ($item->subCategories as $value)
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-3 col-md-4 col-12">
                                                     <div class="clothes_content">
                                                         <p>{{$value->name_english}}</p>
                                                         <ul class="list-unstyled">
@@ -404,30 +404,30 @@ use App\Models\Category;
 
 
     <!-- Modal -->
-    <div class="modal fade" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade location" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header  border-0">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <div class="form-group position-relative search">
-                        <input type="text" class="form-control" placeholder="Search address" />
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <div>
-                        <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
-                    </div>
-                    <div class="">
-                        <h5>Current Location</h5>
-                        <p></p>
-                    </div>
-                    <button class="customBtn">Change Location</button>
+                <div class="modal-header  border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group position-relative search w-100">
+                            <input type="text" class="form-control" placeholder="Search address" />
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div>
+                            <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
+                        </div>
+                        <div class="">
+                            <h5>Location</h5>
+                            <p id="locationUpdate"></p>
+                        </div>
+                        <button class="customBtn" data-bs-dismiss="modal" aria-label="Close">Change Location</button>
+                    </div>
 
-            </div>
+                </div>
             </div>
         </div>
     </div>
