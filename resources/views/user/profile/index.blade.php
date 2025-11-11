@@ -72,40 +72,39 @@
         </form>
     </div>
 
-
     
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-        <script>
-$(document).on('submit', '#updateProfile', function (e) {
-    e.preventDefault();
+    <script>
+        $(document).on('submit', '#updateProfile', function (e) {
+            e.preventDefault();
 
-    let data = new FormData(this);
-    $('#updateProfileBtn').prop('disabled', true);
+            let data = new FormData(this);
+            $('#updateProfileBtn').prop('disabled', true);
 
-    $.ajax({
-        url: "{{ route('userProfile') }}",
-        method: "POST",
-        data: data,
-        processData: false,
-        contentType: false,
-        success: function (resp) {
-            if (resp.status === true) {
-                toastr.success(resp.message || "Profile updated successfully.");
-             
-            } else {
-               $('#error-full_name').html(resp.error);
-            }
-        },
-        error: function (xhr) {
-          
-        },
-        complete: function () {
-            $('#updateProfileBtn').prop('disabled', false);
-        }
-    });
-});
-</script>
+            $.ajax({
+                url: "{{ route('userProfile') }}",
+                method: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (resp) {
+                    if (resp.status === true) {
+                        toastr.success(resp.message || "Profile updated successfully.");
+                    
+                    } else {
+                    $('#error-full_name').html(resp.error);
+                    }
+                },
+                error: function (xhr) {
+                
+                },
+                complete: function () {
+                    $('#updateProfileBtn').prop('disabled', false);
+                }
+            });
+        });
+    </script>
 
  @endsection
