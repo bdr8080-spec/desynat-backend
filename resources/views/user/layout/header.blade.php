@@ -421,7 +421,7 @@ use App\Models\Category;
                             <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
                         </div>
                         <div class="">
-                            <h5>Current Location</h5>
+                            <h5>Location</h5>
                             <p id="locationUpdate"></p>
                         </div>
                         <button class="customBtn">Change Location</button>
