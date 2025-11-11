@@ -217,7 +217,7 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="{{ route('seller.skip_plan') }}">Skip</a>
+                <a href="{{ route('seller.skip_plan') }}" class="link-color">Skip</a>
             </div>
         </div>
     </div>
