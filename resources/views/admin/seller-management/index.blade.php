@@ -305,7 +305,7 @@
                                         <th scope="col">Average Rating</th>
                                         <th scope="col">View Reels</th>
                                         <th scope="col">View Highlights</th>
-                                        <th scope="col">Unblock/Block</th>
+                                        <th scope="col">Block/Unblock</th>
 
                                     </tr>
                                 </thead>
@@ -414,7 +414,7 @@
                                             <div class="form-check form-switch" style="justify-content: center;">
                                                 <input class="form-check-input toggleStatus" type="checkbox"
                                                     id="flexSwitchCheckChecked" data-id="{{ $seller['id'] }}"
-                                                    {{ $seller['is_block'] == 1 ? 'checked' : '' }}>
+                                                    {{ $seller['is_block'] == 0 ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                             </div>
                                         </td>
@@ -997,16 +997,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        is_block: isChecked ? 1 : 0
+                        is_block: isChecked ? 0 : 1
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
                         if (isChecked) {
-                            toastr.error(data.message);
-                        } else {
                             toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message);
                         }
                         setTimeout(() => {
                             location.reload();
