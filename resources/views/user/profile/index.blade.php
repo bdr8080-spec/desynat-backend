@@ -3,9 +3,11 @@
 
 @section('content')
     <div class="my-profile customContainer">
-        <div class="d-flex align-items-center mt-3 justify-content-between">
-            <a href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i></a> My Profile (edit)
-            <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock"></i>Change Password</a>
+        <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
+            <a href="{{route('dashboard')}}" class="my-profie-nav"><i class="fa-solid fa-chevron-left"></i> My Profile (edit)</a>
+            <div>
+                <a href="{{route('userChangePassword')}}" class="customBtn2"><i class="fa-solid fa-lock pe-3"></i>Change Password</a>
+            </div>
         </div>
 
         <div class="row mt-5">
@@ -18,17 +20,17 @@
                     <input type="file" id="fileInput" accept="image/*" hidden />
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">Name</label>
                     <input type="text" class="form-control" placeholder="Please enter full name" value="{{$user->full_name}}" />
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 mt-3">
                 <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
-                    <input type="text" name="country_code" value="{{$user->country_code}}" readonly>
-                    <input type="text" class="form-control" placeholder="Please enter mobile number" value="{{$user->mobile}}" readonly/>            
+                    <input type="text" name="country_code" class="tag" value="{{$user->country_code}}" readonly>
+                    <input type="text" class="form-control number" placeholder="Please enter mobile number" value="{{$user->mobile}}" readonly/>            
                     <a class="change"
                     href="{{ route('userOldNumberSendOtp', [
                         'mobile' => $user->mobile,
