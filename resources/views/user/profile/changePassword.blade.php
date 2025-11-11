@@ -1,11 +1,11 @@
-@extends('user.layout.app')
+@extends('user.profile.layout.app')
 
 @section('content')
 
   <!-- //change password -->
     <div class="my-profile customContainer">
         <div class="d-flex align-items-center mt-3 justify-content-between">
-            <a href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i>Change Password</a>
+            <span><a class="text-black" href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i></a>Change Password</span>
         </div>
         <form id="changePassword">
             @csrf
