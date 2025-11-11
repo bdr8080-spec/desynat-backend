@@ -33,6 +33,28 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="verifiedConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="assets/images/success.svg" class="img-fluid" />
+                    <p id="updateMessage">Mobile Number Changed successfully !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="modal fade" id="verifiedConfirmEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="assets/images/success.svg" class="img-fluid" />
+                    <p id="updateMessage">Email Address Change Successfully !</p>
+                </div>
+            </div>
+        </div>
+    </div>
      
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -64,7 +86,7 @@
                                     location.href = "update-new-number";
                                 }, 1000);
                             } else if (type === '1') {
-                                toastr.success("Mobile Number Change Successfully");
+                                $('#verifiedConfirm').modal('show');
                                 setTimeout(() => {
                                     location.href = "profile";
                                 }, 1000);
@@ -75,7 +97,7 @@
                                     location.href = "update-email-address";
                                 }, 1000);
                             } else if (type === '1') {
-                                toastr.success("Email Address Change Successfully");
+                                $('#verifiedConfirmEmail').modal('show');
                                 setTimeout(() => {
                                     location.href = "profile";
                                 }, 1000);
