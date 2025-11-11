@@ -54,8 +54,6 @@ ul li a{
     margin: 0 auto;
     overflow-y: auto; /* scrolls only when needed */
     overflow-x: hidden;
-    height: calc(100vh - 80px); /* subtract footer height */
-    padding-bottom: 20px; /* to avoid content touching footer */
 }
 
 section{
@@ -709,7 +707,7 @@ section{
 }
 .premiumImg{
     width: 100%;
-    height: 100%;
+    height: 470px;
 }
 .premiumImg img{
     width: 100%;
@@ -915,9 +913,6 @@ section{
 footer{
     background: var(--gradient-color);
     padding: 3% 2% 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;    
 }
 footer span{
     font-size: var(--nav-font-size);
