@@ -143,8 +143,10 @@ class MyFatoorahController extends Controller {
               if($subcription_data){
                 $subcription_data->update(['payment_status'=>'1','status'=>'1']);
 
-                return redirect()->route('seller.all_plans')->with('success', 'Your Payment is Paid Successfully');
-
+                // return redirect()->route('seller.all_plans')->with('success', 'Your Payment is Paid Successfully');
+                
+                return  redirect()->route('seller.dashboard')->with('success','You are successfully purchase a Plan');
+                
             }
 
             }else{
