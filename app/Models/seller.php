@@ -44,7 +44,7 @@ class seller extends Authenticatable
 
 
     public function subcription_plan(){
-        return $this->hasmany(SellerSubcriptionPlanBuy::class,'seller_id','id')->where('status','1');
+        return $this->hasmany(SellerSubcriptionPlanBuy::class,'seller_id','id')->where('status','1')->where('payment_status','1');
     }
 
     

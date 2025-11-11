@@ -47,8 +47,8 @@ use App\Models\Category;
                                                     <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" class="img-fluid" />
                                                 </div>
                                                 <div class="profile_detail">
-                                                    <p>{{Auth::guard('web')->user()->full_name}}</p>
-                                                    <label>{{Auth::guard('web')->user()->email}}</label>
+                                                    <p>{{Auth::guard('web')->user()->full_name ?? ''}}</p>
+                                                    <label>{{Auth::guard('web')->user()->email ?? ''}}</label>
                                                 </div>  
                                             </div>
                                             <a href="{{route('userProfile')}}">
@@ -312,7 +312,7 @@ use App\Models\Category;
                         <div class="row">
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
-                                <h6>Deliver to Reshab</h6>
+                                <h6>Deliver to {{@Auth::guard('web')->user()->full_name}}</h6>
                                 <div class="d-flex align-self-center w-100" >
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
                                         <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
@@ -404,7 +404,7 @@ use App\Models\Category;
 
 
     <!-- Modal -->
-    <div class="modal fade" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade location" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header  border-0">
@@ -413,7 +413,7 @@ use App\Models\Category;
                 </div>
                 <div class="modal-body">
                     <div>
-                        <div class="form-group position-relative search">
+                        <div class="form-group position-relative search w-100">
                             <input type="text" class="form-control" placeholder="Search address" />
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
@@ -424,7 +424,7 @@ use App\Models\Category;
                             <h5>Location</h5>
                             <p id="locationUpdate"></p>
                         </div>
-                        <button class="customBtn">Change Location</button>
+                        <button class="customBtn" data-bs-dismiss="modal" aria-label="Close">Change Location</button>
                     </div>
 
                 </div>
