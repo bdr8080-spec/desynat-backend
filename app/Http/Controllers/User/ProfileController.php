@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Services\UserProfileService;
 use App\Models\country;
 use App\Models\User;
-use App\Models\Category;
 use App\Models\UserContactChangeHistory;
 use App\Helpers\ApiResponse;
 use Validator;
@@ -323,9 +322,6 @@ class ProfileController extends Controller
     }
 
 
-    public function Category(){
-        $data = Category::with('subCategories')->get();
-        dd($data);
-    }
+
 
 }

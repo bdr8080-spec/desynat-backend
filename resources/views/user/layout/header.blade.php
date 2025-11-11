@@ -17,6 +17,13 @@
         z-index: 9999;
     }
 </style>
+
+@php
+use App\Models\Category;
+
+         $data = Category::with('subCategories')->get();
+@endphp
+
 </head>
 <body>
     
@@ -343,188 +350,34 @@
                                 </div>
                             </div>
                             <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
+                               
                                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap">
-                                    
+                                    @foreach ($data as $item)
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            men
+                                            {{$item->name}}
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
 
                                             <div class="row justify-content-between">
-                                                <div class="col-lg-2">
+                                                @foreach ($item->subCategories as $value)
+                                                    <div class="col-lg-2">
                                                     <div class="clothes_content">
-                                                        <p>CLOTHING</p>
+                                                        <p>{{$value->name_english}}</p>
                                                         <ul class="list-unstyled">
-                                                            <li>
+                                                            {{-- <li>
                                                                 <a href="">Shirt</a>
-                                                            </li>
+                                                            </li> --}}
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>SHOES</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Sneakers</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>WATCHES</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Leather</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>EYEWEAR</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Sunglasses</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>Exclusive</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Shirts</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                                @endforeach
+                                                
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Women
-                                        </a>
-                                        <div class="dropdown-menu sell_clothes">
-
-                                            <div class="row justify-content-between">
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>CLOTHING</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Shirt</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>SHOES</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Sneakers</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>WATCHES</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Leather</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>EYEWEAR</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Sunglasses</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>Exclusive</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Shirts</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            KIds
-                                        </a>
-                                        <div class="dropdown-menu sell_clothes">
-
-                                            <div class="row justify-content-between">
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>CLOTHING</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Shirt</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>SHOES</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Sneakers</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>WATCHES</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Leather</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>EYEWEAR</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Sunglasses</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <div class="clothes_content">
-                                                        <p>Exclusive</p>
-                                                        <ul class="list-unstyled">
-                                                            <li>
-                                                                <a href="">Shirts</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @endforeach
+            
                                     <li class="nav-item">
                                         <a class="nav-link active" aria-current="page" href="#">Best Selling</a>
                                     </li>

@@ -19,8 +19,6 @@ use App\Http\Controllers\User\ProfileController;
     Route::match(['get', 'post'], '/create-password', [AuthController::class, 'userCreatePassword'])->name('userCreatePassword');
     Route::match(['get', 'post'], '/login-with-otp', [AuthController::class, 'loginWithOtp'])->name('loginWithOtp');
     Route::post('/resend-otp', [AuthController::class, 'resendOtp'])->name('userResendOtp');
-    Route::get('/category', [ProfileController::class, 'category']);
-
 });
 
    
