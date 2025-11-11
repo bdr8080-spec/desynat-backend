@@ -13,7 +13,7 @@ class SellerManagementService
     public function getNewSellers($request)
     {
         try {
-            $limit = (int)($request->input('limit', 10)); 
+            $limit = (int)($request->input('limit')); 
 
             $query = seller::where('admin_verify', '1')
                 ->with([
@@ -92,7 +92,7 @@ class SellerManagementService
     public function getApprovedSellers($request)
     {
         try {
-            $limit = (int)($request->input('limit', 10)); 
+            $limit = (int)($request->input('limit')); 
 
             $query = seller::where('admin_verify', '2')
                 ->with([
@@ -170,7 +170,7 @@ class SellerManagementService
     public function getRejectedSellers($request)
     {
         try {
-            $limit = (int)($request->input('limit', 10)); 
+            $limit = (int)($request->input('limit')); 
 
             $query = seller::whereIn('admin_verify', ['3', '4'])
                 ->with([

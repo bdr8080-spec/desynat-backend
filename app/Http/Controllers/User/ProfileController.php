@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\UserProfileService;
 use App\Models\country;
+use App\Models\User;
 use App\Models\UserContactChangeHistory;
 use App\Helpers\ApiResponse;
 use Validator;
@@ -21,9 +22,48 @@ class ProfileController extends Controller
     }
 
     public function userProfile(Request $request){
+         $user = $request->user();
+             if($request->isMethod('get')){
+                    return view('user.profile.index', compact('user'));
+             }else{
 
-        $user = $request->user();
-        return view('user.profile.index', compact('user'));
+                   
+               $rules = [
+                    'full_name' => 'required',
+                ];
+
+                $messages = [
+                    'full_name.required'     => 'Please enter full name.',
+                ];
+
+                $validator = Validator::make($request->all(), $rules, $messages);
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status'=>false,
+                        'error'=>$validator->errors()->first()
+                    ]);
+                }
+
+               if($request->image){
+                 $dir = 'profile_image/';
+                 $image_path = $this->image_upload($request->image, $dir);
+                 
+                }
+
+                $data = User::where('id', $user->id)->update([
+                    'full_name'     => $request->full_name,
+                    'profile_image' => $image_path ?? $request->old_image,
+                ]);
+
+                    return response()->json([
+                        'status'=>true,
+                        'message'=>"Profile Update Successfully"
+                    ]);
+
+
+             }
+    
     }
 
     public function changePassword(Request $request){
