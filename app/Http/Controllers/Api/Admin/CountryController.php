@@ -154,7 +154,7 @@ class CountryController extends Controller
                 return ApiResponse::generateResponse('error', $result['message'], [], 400);
             }
 
-            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'] ?? null, 200);
             
         } catch (\Exception $e) {
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);

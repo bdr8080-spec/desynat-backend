@@ -19,7 +19,7 @@
     <header class="header-main">
         <nav class="navbar navbar-expand-lg">
             <div class="w-100">
-                <div class="d-flex align-self-center justify-content-between flex-wrap mobileResponsive">
+                <div class="container-fluid d-flex align-self-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont">
                         <a class="navbar-brand" href="#"><img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" /></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

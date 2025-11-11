@@ -57,7 +57,8 @@
                             <div class="w-100 LoginMobileDesign">
                                 <input type="text" class="form-control notapplyspace"
                                     placeholder="Please enter mobile number"
-                                    name="mobile" id="LoginMobile">
+                                    name="mobile" id="LoginMobile" maxlength="15"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                             </div>
 
                         </div>
