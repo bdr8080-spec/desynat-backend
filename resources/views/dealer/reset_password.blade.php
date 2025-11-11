@@ -126,7 +126,8 @@
 
 
 
-@include('dealer.layout.custom_code');
+@include('dealer.layout.footer');
+
 <script>
     $(".toggle-password").click(function() {
         $(this).toggleClass("bi-eye bi-eye-slash");
