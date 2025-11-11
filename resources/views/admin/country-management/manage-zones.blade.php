@@ -727,7 +727,7 @@
 
 <!-- add and update zone -->
 <script>
-    //add map initialization
+
     let map, polygon, drawingManager, autocomplete, geocoder;
     let cityName = "{{ $city->name }}";
 
@@ -741,6 +741,7 @@
             }
 
             const defaultLocation = results[0].geometry.location;
+
             map = new google.maps.Map(document.getElementById("map"), {
                 center: defaultLocation,
                 zoom: 13,
@@ -754,6 +755,7 @@
                 if (e.key === 'Enter') e.preventDefault();
             });
 
+            // move the autocomplete dropdown inside the modal
             setTimeout(() => {
                 const pacContainer = document.querySelector('.pac-container');
                 if (pacContainer) {
@@ -762,14 +764,19 @@
                 }
             }, 500);
 
+            // when user selects a place from search
             autocomplete.addListener('place_changed', () => {
                 const place = autocomplete.getPlace();
                 if (!place.geometry) return;
+
                 map.setCenter(place.geometry.location);
-                map.setZoom(15);
-                createAddPolygonAroundPlace(place.geometry.location);
+                map.setZoom(14);
+
+                // ✅ create polygon that covers the full place viewport
+                createAddPolygonFromPlaceViewport(place);
             });
 
+            // allow manual polygon drawing
             drawingManager = new google.maps.drawing.DrawingManager({
                 drawingMode: google.maps.drawing.OverlayType.POLYGON,
                 drawingControl: true,
@@ -793,24 +800,40 @@
         });
     }
 
-    function createAddPolygonAroundPlace(center) {
-        const radius = 0.002; // ~200m
-        if (polygon) polygon.setMap(null);
-
-        const coords = [];
-        for (let i = 0; i < 360; i += 10) {
-            const angle = i * (Math.PI / 180);
-            coords.push({
-                lat: center.lat() + radius * Math.cos(angle),
-                lng: center.lng() + radius * Math.sin(angle)
-            });
+    function createAddPolygonFromPlaceViewport(place) {
+        if (!place.geometry || !place.geometry.viewport) {
+            console.warn('No viewport found for this place');
+            return;
         }
+
+        const bounds = place.geometry.viewport;
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+
+        const nw = { lat: ne.lat(), lng: sw.lng() };
+        const se = { lat: sw.lat(), lng: ne.lng() };
+
+        const coords = [
+            { lat: ne.lat(), lng: ne.lng() },
+            se,
+            { lat: sw.lat(), lng: sw.lng() },
+            nw,
+            { lat: ne.lat(), lng: ne.lng() } // close loop
+        ];
+
+        if (polygon) polygon.setMap(null);
 
         polygon = new google.maps.Polygon({
             paths: coords,
             editable: true,
-            draggable: false
+            draggable: false,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.15
         });
+
         polygon.setMap(map);
         updateAddZoneCoords(polygon);
     }
@@ -826,7 +849,7 @@
         if (coords.length > 0) $('#error_zone_coordinates').text('');
     }
 
-    //update map initialization
+   //map initialization
     let updateMap, updatePolygon, updateAutocomplete, updateDrawingManager, updateGeocoder;
     let updateCityName = "{{ $city->name }}";
     let zoneId = null;
@@ -866,9 +889,12 @@
             updateAutocomplete.addListener('place_changed', () => {
                 const place = updateAutocomplete.getPlace();
                 if (!place.geometry) return;
+
                 updateMap.setCenter(place.geometry.location);
-                updateMap.setZoom(15);
-                createUpdatePolygonAroundPlace(place.geometry.location);
+                updateMap.setZoom(14);
+
+                // ✅ use viewport area for update polygon as well
+                createUpdatePolygonFromPlaceViewport(place);
             });
 
             updateDrawingManager = new google.maps.drawing.DrawingManager({
@@ -916,23 +942,38 @@
         });
     }
 
-    function createUpdatePolygonAroundPlace(center) {
-        const radius = 0.002;
-        if (updatePolygon) updatePolygon.setMap(null);
-
-        const coords = [];
-        for (let i = 0; i < 360; i += 10) {
-            const angle = i * (Math.PI / 180);
-            coords.push({
-                lat: center.lat() + radius * Math.cos(angle),
-                lng: center.lng() + radius * Math.sin(angle)
-            });
+    function createUpdatePolygonFromPlaceViewport(place) {
+        if (!place.geometry || !place.geometry.viewport) {
+            console.warn('No viewport found for this place');
+            return;
         }
+
+        const bounds = place.geometry.viewport;
+        const ne = bounds.getNorthEast();
+        const sw = bounds.getSouthWest();
+
+        const nw = { lat: ne.lat(), lng: sw.lng() };
+        const se = { lat: sw.lat(), lng: ne.lng() };
+
+        const coords = [
+            { lat: ne.lat(), lng: ne.lng() },
+            se,
+            { lat: sw.lat(), lng: sw.lng() },
+            nw,
+            { lat: ne.lat(), lng: ne.lng() }
+        ];
+
+        if (updatePolygon) updatePolygon.setMap(null);
 
         updatePolygon = new google.maps.Polygon({
             paths: coords,
             editable: true,
-            draggable: false
+            draggable: false,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.15
         });
 
         updatePolygon.setMap(updateMap);
@@ -950,7 +991,7 @@
         if (coords.length > 0) $('#update_error_zone_coordinates').text('');
     }
 
-    //DOM(add-update)
+    //add update
     $(document).ready(function () {
         $('#sentModal2').on('shown.bs.modal', function () {
             if (typeof google !== 'undefined') initAddMap();
@@ -1062,7 +1103,6 @@
         });
     });
 </script>
-
 
 
 <!-- delete zone -->

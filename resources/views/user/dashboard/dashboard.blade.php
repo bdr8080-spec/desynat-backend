@@ -20,9 +20,9 @@
         </div>
     </div>
 
-    <section class="customContainer categorie_contenar">
+    <section class="customContainer categorie_contenar" id="subCategorySection">
         <h3>Categories</h3>
-        <div class="row">
+       <div class="row"> 
           @forelse ($subCategory as $item)
             <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
                 <div class="categorie_cotent">
@@ -729,7 +729,30 @@
 
     
 
-    
+    <script>
+
+        function handleSubCategory(id) {
+                $.ajax({
+                    url: "{{ route('dashboard') }}", 
+                    method: "GET",
+                    data: { id: id }, 
+                    beforeSend: function () {
+                        $('#verifyBtn').prop('disabled', true);
+                    },
+                    success: function (resp) {
+                       $('#subCategorySection').html(resp);
+                    },
+                    error: function (xhr) {
+                    
+                    },
+                    complete: function () {
+                        $('#verifyBtn').prop('disabled', false);
+                    }
+                });
+            }
+
+
+    </script>
     
   
 @endsection
