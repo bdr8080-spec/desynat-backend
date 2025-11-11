@@ -354,7 +354,7 @@ use App\Models\Category;
                                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap">
                                     @foreach ($data as $item)
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="handleSubCategory({{$item->id}})">
                                             {{$item->name}}
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
@@ -432,6 +432,7 @@ use App\Models\Category;
         </div>
     </div>
 
+   
 
 
 

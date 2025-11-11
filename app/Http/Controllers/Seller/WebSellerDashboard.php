@@ -28,6 +28,7 @@ class WebSellerDashboard extends Controller
         // if i got payment Then Show This message
         if($request->payment=='yes'){
         session()->flash('success', 'You have successfully purchased a plan!');
+        return  redirect()->route('seller.dashboard');
         }
 
 
