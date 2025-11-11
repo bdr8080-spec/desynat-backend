@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Services\UserProfileService;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Validation\Rule;
 use Auth;
 use Validator;
 use Session;
@@ -52,7 +53,13 @@ class AuthController extends Controller
                     'country_code' => 'required',
                     // 'image'=> 'required',
                     'email' => 'required|email|unique:users,email',
-                    'mobile' => 'required|digits_between:7,15',
+                    'mobile'=> [
+                            'required',
+                            'digits_between:7,15',
+                            Rule::unique('users')->where(function ($query) use ($request) {
+                                return $query->where('country_code', $request->country_code);
+                            }),
+                        ],
                     'password' => [
                             'required',
                             'string',
