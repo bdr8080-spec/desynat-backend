@@ -89,6 +89,155 @@
      <script src="{{asset('user/assets/js/owl.carousel.js')}}"></script>
     <script src="{{asset('user/assets/js/custom.js')}}"></script>
     
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
+</script>
+
+{{-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgQDchsw2ozHfX4A6edkVnFdGx4Y2qJsM&callback=initMap&libraries=places&loading=async"></script> --}}
+
+{{-- map --}}
+
+    <script>
+let map, marker, autocomplete;
+let mapInitialized = false;
+
+function initMap(currentLoc) {
+    map = new google.maps.Map(document.getElementById("googleMap"), {
+        center: currentLoc,
+        zoom: 15,
+    });
+
+    // 🔴 Red Marker
+    marker = new google.maps.Marker({
+        position: currentLoc,
+        map,
+        draggable: true,
+        icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        },
+    });
+
+    const input = document.querySelector('#changeLocation input[type="text"]');
+    const addressDisplay = document.querySelector("#changeLocation p");
+
+    // Initialize autocomplete
+    autocomplete = new google.maps.places.Autocomplete(input, {
+        fields: ["geometry", "formatted_address", "address_components"],
+    });
+    autocomplete.bindTo("bounds", map);
+
+    // When user selects a place
+    autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry || !place.geometry.location) return;
+        updateLocation(place.geometry.location, place.formatted_address, place.address_components);
+    });
+
+    // When marker dragged
+    marker.addListener("dragend", () => {
+        const pos = marker.getPosition();
+        updateLocation(pos);
+    });
+
+    updateLocation(currentLoc);
+}
+
+function updateLocation(loc, formattedAddress = null, addressComponents = null) {
+    const input = document.querySelector('#changeLocation input[type="text"]');
+    const addressDisplay = document.querySelector("#changeLocation p");
+    const citySpan = document.getElementById("city");
+
+    map.setCenter(loc);
+    marker.setPosition(loc);
+
+    const lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
+    const lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
+
+    const geocoder = new google.maps.Geocoder();
+
+    const fillCity = (components) => {
+        if (!components) return;
+        let city = "";
+        for (let comp of components) {
+            if (comp.types.includes("locality") || comp.types.includes("administrative_area_level_2")) {
+                city = comp.long_name;
+                break;
+            }
+        }
+        if (citySpan) citySpan.textContent = city || "—";
+    };
+
+    if (formattedAddress) {
+        input.value = formattedAddress;
+        addressDisplay.textContent = formattedAddress;
+        fillCity(addressComponents);
+    } else {
+        geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+            if (status === "OK" && results[0]) {
+                input.value = results[0].formatted_address;
+                addressDisplay.textContent = results[0].formatted_address;
+                fillCity(results[0].address_components);
+            } else {
+                input.value = "";
+                addressDisplay.textContent = "Address not found.";
+                if (citySpan) citySpan.textContent = "—";
+            }
+        });
+    }
+}
+
+function loadMapWithCurrentLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLoc = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                initMap(userLoc);
+            },
+            () => {
+                const fallback = { lat: 20.5937, lng: 78.9629 }; // Default: India
+                initMap(fallback);
+            },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+    } else {
+        const fallback = { lat: 20.5937, lng: 78.9629 };
+        initMap(fallback);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modalEl = document.getElementById("changeLocation");
+
+    modalEl.addEventListener("shown.bs.modal", () => {
+        if (!mapInitialized) {
+            const imgPlaceholder = modalEl.querySelector("img");
+            if (imgPlaceholder) {
+                const mapDiv = document.createElement("div");
+                mapDiv.id = "googleMap";
+                mapDiv.style.height = "300px";
+                mapDiv.style.borderRadius = "10px";
+                imgPlaceholder.replaceWith(mapDiv);
+            }
+
+            setTimeout(() => {
+                loadMapWithCurrentLocation();
+                mapInitialized = true;
+            }, 400);
+        } else {
+            setTimeout(() => {
+                google.maps.event.trigger(map, "resize");
+                map.setCenter(marker.getPosition());
+            }, 300);
+        }
+    });
+});
+</script>
+
+
+
 
      <script>
         $('.customOwlcarousel').owlCarousel({

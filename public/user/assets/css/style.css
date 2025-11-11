@@ -488,6 +488,7 @@ section{
     line-height: var(--nav-font-height);
     font-weight: 400 !important;
     padding: 0;
+    color: var(--third-color);
 }
 .desynat_navigation_bar_header .track_location h6{
     font-weight: 400 !important;
@@ -809,11 +810,18 @@ section{
     top: 5px;
 }
 
-.my-profile a{
+.my-profile a.customBtn2{
+    font-size: var(--p-font-size);
+    line-height: var(--p-font-height);
+    font-weight: 500 !important;
+    color: var(--secondry3-color);
+    text-decoration: none;
+}
+.my-profie-nav{
+    color: var(--third-color);
     font-size: var(--heading3-font);
     line-height: var(--heading3-font-height);
     font-weight: 500 !important;
-    color: var(--third-color);
     text-decoration: none;
 }
 .my-profile button{
@@ -862,6 +870,19 @@ section{
     line-height: 18px;
     font-weight: 600;
     padding: 5px;
+}
+.mobile .tag{
+    position: absolute;
+    top: 66%;
+    transform: translateY(-50%);
+    width: 66px;
+    padding: 11px;
+    left: 0px;
+    border: 1px solid var(--secondry3-color);
+    border-radius: 5px 0 0 5px;
+}
+.mobile .number{
+    padding-left: 70px !important;
 }
 
 /* index end */

@@ -163,8 +163,8 @@
                         <div class="row">
                             <input type="hidden" name="country_id" value="{{ request()->segment(3) }}" >
                             <!-- Plan Name English -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (English)</label>
                                     <input type="text" name="plan_name_english" placeholder="Enter plan name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_english_err"></span>
@@ -172,8 +172,8 @@
                             </div>
 
                             <!-- Plan Name Arabic -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (Arabic)</label>
                                     <input type="text" name="plan_name_arabic" placeholder="Enter plan name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
@@ -182,16 +182,16 @@
 
                             <!-- Duration -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Duration</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="duration" placeholder="Enter duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
+                                            <input type="text" name="duration" placeholder="Set duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
                                             <span class="text-danger error-text duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="duration_type" class="form-select">
-                                                <option value="">Select Duration</option>
+                                                <option value="">Days</option>
                                                 <option value="1">Months</option>
                                                 <option value="2">Years</option>
                                             </select>
@@ -202,8 +202,8 @@
                             </div>
 
                             <!-- No. of Videos -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Videos</label>
                                     <input type="text" name="no_of_videos" placeholder="Enter number of videos" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_videos_err"></span>
@@ -211,8 +211,8 @@
                             </div>
 
                             <!-- No. of Products -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Products</label>
                                     <input type="text" name="no_of_products" placeholder="Enter number of products" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_products_err"></span>
@@ -220,8 +220,8 @@
                             </div>
 
                             <!-- No. of Highlights -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Highlights</label>
                                     <input type="text" name="no_of_highlights" placeholder="Enter number of highlights" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_highlights_err"></span>
@@ -229,8 +229,8 @@
                             </div>
 
                             <!-- No. of Employee -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>No. of Employees</label>
                                     <input type="text" name="no_of_employee" placeholder="Enter number of employees" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_employee_err"></span>
@@ -238,17 +238,17 @@
                             </div>
 
                             <!-- Charges -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Charges</label>
-                                    <input type="text" name="price" placeholder="Enter charges" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
+                                    <label>Plan Price</label>
+                                    <input type="text" name="price" placeholder="Enter Plan Price" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
                                     <span class="text-danger error-text price_err"></span>
                                 </div>
                             </div>
 
                             <!-- Stories -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Stories</label>
                                     <div class="row">
                                         <div class="col-lg-6 d-flex align-items-center">
@@ -266,7 +266,7 @@
 
                             <!-- Commission -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Commission</label>
                                     <div class="row">
                                         <div class="col-lg-6 d-flex align-items-center">
@@ -282,7 +282,7 @@
 
                                     <!-- Commission Percentage -->
                                     <div id="commissionInput" style="display:none; margin-top:10px;">
-                                        <input type="text" name="commission_percentage" placeholder="Enter commission percentage" class="form-control">
+                                        <input type="text" name="commission_percentage" placeholder="Enter commission percentage" class="form-control w-50">
                                         <span class="text-danger error-text commission_percentage_err"></span>
                                     </div>
                                 </div>
@@ -290,7 +290,7 @@
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-dark customBtn">Submit</button>
+                                <a type="submit" class="btn btn-dark customBtn">Submit</a>
                             </div>
                         </div>
                     </form>
@@ -317,8 +317,8 @@
 
                         <div class="row">
                             <!-- Plan Name English -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (English)</label>
                                     <input type="text" name="plan_name_english" value="" oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_english_err"></span>
@@ -326,8 +326,8 @@
                             </div>
 
                             <!-- Plan Name Arabic -->
-                            <div class="col-lg-12">
-                                <div class="form-group">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-3">
                                     <label>Plan Name (Arabic)</label>
                                     <input type="text" name="plan_name_arabic" value="" oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
@@ -336,7 +336,7 @@
 
                             <!-- Duration -->
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label>Duration</label>
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -356,35 +356,47 @@
                             </div>
 
                             <!-- Numeric Fields -->
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Videos</label>
                                 <input type="text" name="no_of_videos" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_videos_err"></span>
+                                </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Products</label>
                                 <input type="text" name="no_of_products" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_products_err"></span>
+                                  </div>
+                          
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Highlights</label>
                                 <input type="text" name="no_of_highlights" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_highlights_err"></span>
+                               </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
                                 <label>No. of Employees</label>
                                 <input type="text" name="no_of_employee" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
                                 <span class="text-danger error-text no_of_employee_err"></span>
                             </div>
+                            
+                            </div>
 
                             <!-- Charges -->
-                            <div class="col-lg-12">
-                                <label>Charges</label>
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
+                                <label>Plan Price</label>
                                 <input type="text" name="price" value="" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
                                 <span class="text-danger error-text price_err"></span>
+</div>
                             </div>
 
                             <!-- Stories -->
@@ -415,13 +427,13 @@
                                 <span class="text-danger error-text commission_err"></span>
 
                                 <div class="commissionInput" style="margin-top:10px;">
-                                    <input type="text" name="commission_percentage" value="" placeholder="Enter commission percentage" class="form-control">
+                                    <input type="text" name="commission_percentage" value="" placeholder="Enter commission percentage" class="form-control w-50">
                                     <span class="text-danger error-text commission_percentage_err"></span>
                                 </div>
                             </div>
 
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-dark customBtn">Update</button>
+                                <a type="submit" class="btn btn-dark customBtn">Update</a>
                             </div>
                         </div>
                     </form>
