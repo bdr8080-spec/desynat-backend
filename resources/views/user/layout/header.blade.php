@@ -35,16 +35,16 @@ use App\Models\Category;
                         <a class="navbar-brand" href="{{route('dashboard')}}"><img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" /></a>
                         <div class="header_nav_button_dropdown d-flex">
                             @if (Auth::guard('web')->check())
-                            <div class="dropdown dropdown-center userDropdown">
+                            <div class="dropdown-center userDropdown">
                                 <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
                                 </button>
-                                <ul class="dropdown-menu profileDropdown">
+                                <ul class="dropdown-menu dropdown-menu-end profileDropdown">
                                     <li>
                                         <div class="profileContenar d-flex align-items-center justify-conten-between">
                                             <div class="profile d-flex align-items-center gap-3">
                                                 <div class="profileContenar_img">
-                                                    <img src="{{asset('user/assets/images/user.png')}}" class="img-fluid" />
+                                                    <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" class="img-fluid" />
                                                 </div>
                                                 <div class="profile_detail">
                                                     <p>{{Auth::guard('web')->user()->full_name}}</p>
@@ -116,11 +116,11 @@ use App\Models\Category;
                                 <a class="customBtn1 mobileSignup" href="{{route('userLogin')}}"><i class="fa-regular fa-user"></i> SIGN IN/SIGN UP</a>
                             @endif
                     
-                        <div class="dropdown dropdown-center mobileLang">
+                        <div class="dropdown-center mobileLang">
                             <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
                             </button>
-                            <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="countryDropdownBtn">
+                            <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu" aria-labelledby="countryDropdownBtn">
                                 <li class="topDropdonw">
                                     <p>Change Country
                                         <i class="fa-solid fa-xmark"></i>
@@ -205,11 +205,11 @@ use App\Models\Category;
                                 </li>
                             </ul>
                         </div>
-                        <div class="dropdown dropdown-center mobileLang">
+                        <div class="dropdown-center mobileLang">
                             <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span id="selectedCurrency">KWD</span>
                             </button>
-                            <ul class="dropdown-menu custom-dropdown-menu currency">
+                            <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
                                 <li class="topDropdonw">
                                     <p>Change Currency
                                         <i class="fa-solid fa-xmark"></i>
@@ -288,11 +288,11 @@ use App\Models\Category;
                                 </li>
                             </ul>
                         </div>
-                        <div class="dropdown dropdown-center mobileLang">
+                        <div class="dropdown-center mobileLang">
                             <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
                             </button>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end langu">
                                 <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
                                 <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                             </ul>
