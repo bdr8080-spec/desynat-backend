@@ -252,7 +252,7 @@ class SellerManagementService
                 'owner_document',
                 'store_document',
                 'seller_bank_details',
-                'subcription_plan'
+                'subcription_plan.plan_info',
             ])->find($sellerId);
 
             if (!$seller) {

@@ -40,5 +40,6 @@ class Plan extends Model
     {
         return $this->belongsTo(country::class, 'country_id', 'id');
     }
+
     
 }
