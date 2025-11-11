@@ -191,7 +191,6 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="duration_type" class="form-select">
-                                                <option value="">Days</option>
                                                 <option value="1">Months</option>
                                                 <option value="2">Years</option>
                                             </select>
@@ -252,7 +251,7 @@
                                     <label>Stories</label>
                                     <div class="row">
                                         <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="storiesYes" name="stories" value="yes" class="form-check-input me-2">
+                                            <input type="radio" id="storiesYes" name="stories" value="yes" class="form-check-input me-2" checked>
                                             <label for="storiesYes" class="form-check-label">Yes</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
@@ -274,7 +273,7 @@
                                             <label for="commissionYes" class="form-check-label">Yes</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="commissionNo" name="commission" value="no" class="form-check-input me-2">
+                                            <input type="radio" id="commissionNo" name="commission" value="no" class="form-check-input me-2" checked>
                                             <label for="commissionNo" class="form-check-label">No</label>
                                         </div>
                                     </div>
@@ -290,7 +289,7 @@
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <a type="submit" class="btn btn-dark customBtn">Submit</a>
+                                <button type="submit" class="btn btn-dark customBtn">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -373,6 +372,7 @@
                           
                             </div>
 
+                            
                             <div class="col-lg-6">
                                  <div class="form-group mb-3">
                                 <label>No. of Highlights</label>
@@ -396,7 +396,7 @@
                                 <label>Plan Price</label>
                                 <input type="text" name="price" value="" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
                                 <span class="text-danger error-text price_err"></span>
-</div>
+                               </div>
                             </div>
 
                             <!-- Stories -->
@@ -433,7 +433,7 @@
                             </div>
 
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <a type="submit" class="btn btn-dark customBtn">Update</a>
+                                <button type="submit" class="btn btn-dark customBtn">Update</button>
                             </div>
                         </div>
                     </form>

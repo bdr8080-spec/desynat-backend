@@ -26,6 +26,9 @@
     .login_content_content .form-group input, .login_content_content .dropdown button{
         font-size: 12px !important;
     }
+    .customNavbar .dropdown-menu.sell_clothes.show{
+        transform: none !important;
+    }
 
 }
 
@@ -134,14 +137,19 @@
         height: 140px !important;
     }
     .dropdown-menu-end[data-bs-popper]{
-        left: 50%;
-        right: 50%;
-        transform: translate(-43%, 0%);
-        width: 290px;
+        left: 0;
+        transform: translate(-50%, 0%);
+        min-width: 280px;
+        right: auto;
+        width: 100%;
+    }
+    .langu.dropdown-menu-end[data-bs-popper]{
+        transform: translate(-70%, 0%) !important;
     }
     .profileContenar{
             padding: 20px 20px;
     }
+    
     /* .header_nav_button_dropdown .customBtn1{
         min-width: 120px;
     } */

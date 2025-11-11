@@ -13,6 +13,10 @@ use Exception;
 
 
 
+Use Auth;
+use Validator;
+use App\Models\seller;
+use Illuminate\Support\Facades\Cache;
 use App\Models\SellerSubcriptionPlanBuy;
 
 
@@ -133,26 +137,25 @@ class MyFatoorahController extends Controller {
 
 
             if($data->InvoiceStatus=='Paid'){
-
+                
               $transaction_id=$data->CustomerReference;
               $subcription_data =SellerSubcriptionPlanBuy::with('seller_details')->where('transaction_id',$transaction_id)->first();
+           
               if($subcription_data){
-                $subcription_data->update(['payment_status'=>'1','status'=>'1']);
-                return Redirect()->route('seller.dashboard')->with('success','Your Payment is Paid Successfully');
-              }
 
-            }else{
-                return Redirect()->route('seller.dashboard')->with('error','Your Payment is Failed');
+                $subcription_data->update(['payment_status'=>'1','status'=>'1','online_transaction_id'=>$data->InvoiceId]);
+                
+                session()->flash('success', 'You have successfully purchased a plan!');
+
+                return  redirect()->to('seller/dashboard?payment=yes');
+
             }
 
+            }else{
+                return redirect()->route('seller.all_plans')->with('error','Your Payment is Failed');
+            }
 
-
-
-
-
-
-
-
+            
 
         } catch (Exception $ex) {
             $exMessage = __('myfatoorah.' . $ex->getMessage());

@@ -39,6 +39,13 @@
         </div>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="login-wapper">
         <div class="login-grid-bg planheight"></div>
         <div class="container-fluid custom-container">
@@ -210,7 +217,7 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="{{ route('seller.skip_plan') }}">Skip</a>
+                <a href="{{ route('seller.skip_plan') }}" class="link-color">Skip</a>
             </div>
         </div>
     </div>
