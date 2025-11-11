@@ -48,7 +48,7 @@
                 <div class="footerNavLink">
                     <div class="footerNavLink_content ms-lg-auto ms-md-auto">
                         <h6>Get the App</h6>
-                        <div class="getTheApp gap-2 d-flex align-items-end flex-lg-column">
+                        <div class="getTheApp gap-2 d-flex align-items-end">
                             <div style="width: 40%;">
                                 <img src="{{asset('user/assets/images/play-store.svg')}}" class="img-fluid" />
                             </div>

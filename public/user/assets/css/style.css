@@ -905,6 +905,7 @@ section{
     padding-left: 70px !important;
 }
 
+
 /* index end */
 
 
@@ -913,6 +914,10 @@ section{
 footer{
     background: var(--gradient-color);
     padding: 3% 2% 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;    
+    z-index: 1;
 }
 footer span{
     font-size: var(--nav-font-size);

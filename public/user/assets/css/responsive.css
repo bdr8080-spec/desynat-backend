@@ -19,6 +19,12 @@
     .my-profile {
         height: calc(100vh - 100px); /* example for larger mobile footer */
     }
+    footer{
+        position: static !important;
+    }
+    .getTheApp{
+        flex-direction: column !important;
+    }
 }
 
 @media (max-width:991px) {
