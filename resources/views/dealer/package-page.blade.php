@@ -146,19 +146,21 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="text-center">
-            <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
-            <div class="title24 py-3">Plan Purchased Successfully!</div>
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+                        <div class="title24 py-3">Plan Purchased Successfully!</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
+
+
 
 
 
@@ -174,5 +176,15 @@
 <script src="{{ asset('dealer') }}/assets/custom-file/js/main.js"></script>
 
 @include('dealer.layout.custom_code');
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success1'))
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        @endif
+    });
+</script>
 
 </html>
