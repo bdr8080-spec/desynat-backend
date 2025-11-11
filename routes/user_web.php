@@ -45,12 +45,12 @@ use App\Http\Controllers\User\ProfileController;
 //  Route::match(['get', 'post'], '/route3', function () {
 //      return view('user.profile.profileChangeNumberOtp');
 // });
- Route::match(['get', 'post'], '/route4', function () {
-     return view('user.profile.profileChangeNumber');
-});
- Route::match(['get', 'post'], '/route5', function () {
-     return view('user.profile.verificationCode');
-});
- Route::match(['get', 'post'], '/route6', function () {
-     return view('user.profile.profileChangeEmailOtp');
-});
+//  Route::match(['get', 'post'], '/route4', function () {
+//      return view('user.profile.profileChangeNumber');
+// });
+//  Route::match(['get', 'post'], '/route5', function () {
+//      return view('user.profile.verificationCode');
+// });
+//  Route::match(['get', 'post'], '/route6', function () {
+//      return view('user.profile.profileChangeEmailOtp');
+// });

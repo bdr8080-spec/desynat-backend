@@ -320,4 +320,8 @@ class ProfileController extends Controller
     public function updateEmailAddress(){
                     return view('user.profile.profileChangeEmailOtp');  
     }
+
+
+
+
 }
