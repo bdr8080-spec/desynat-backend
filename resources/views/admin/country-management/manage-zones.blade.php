@@ -1105,8 +1105,6 @@
 </script>
 
 
-
-
 <!-- delete zone -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
