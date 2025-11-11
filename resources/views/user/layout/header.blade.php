@@ -47,8 +47,8 @@ use App\Models\Category;
                                                     <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" class="img-fluid" />
                                                 </div>
                                                 <div class="profile_detail">
-                                                    <p>{{Auth::guard('web')->user()->full_name}}</p>
-                                                    <label>{{Auth::guard('web')->user()->email}}</label>
+                                                    <p>{{Auth::guard('web')->user()->full_name ?? ''}}</p>
+                                                    <label>{{Auth::guard('web')->user()->email ?? ''}}</label>
                                                 </div>  
                                             </div>
                                             <a href="{{route('userProfile')}}">
@@ -312,7 +312,7 @@ use App\Models\Category;
                         <div class="row">
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
-                                <h6>Deliver to {{Auth::guard('web')->user()->full_name}}</h6>
+                                <h6>Deliver to {{@Auth::guard('web')->user()->full_name}}</h6>
                                 <div class="d-flex align-self-center w-100" >
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
                                         <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 

@@ -84,7 +84,7 @@ function updateLocation(loc, formattedAddress = null, addressComponents = null) 
             if (status === "OK" && results[0]) {
                 input.value = results[0].formatted_address;
                 addressDisplay.textContent = results[0].formatted_address;
-                if (cityField) cityField.value = results[0].formatted_address; 
+                if (cityField) cityField.textContent = results[0].formatted_address; 
             } else {
                 input.value = "";
                 addressDisplay.textContent = "Address not found.";

@@ -72,7 +72,7 @@ class CountryService
         try {
             $limit = !empty($limit) ? (int)$limit : null;
 
-            $query = ServiceCity::with('city_info')->where('country_id', $countryId);
+            $query = ServiceCity::with(['city_info', 'country'])->where('country_id', $countryId);
 
             if (!empty($search)) {
                 $query->where('name', 'like', '%' . $search . '%');
@@ -231,7 +231,7 @@ class CountryService
             $query = Zone::where('country_id', $countryId)->where('city_id',$cityId);
 
             if (!empty($search)) {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name_english', 'like', '%' . $search . '%');
             }
             $query->orderBy('id', 'desc');
             $zones = $query->paginate($limit);
