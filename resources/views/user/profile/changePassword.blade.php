@@ -59,7 +59,7 @@
                     if(resp.status == true){
                              toastr.success(resp.message);
                         setTimeout(() => {
-                             location.href = "/profile";
+                             location.href = "/";
                         }, 1000);
                     }
 
