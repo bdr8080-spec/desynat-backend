@@ -137,16 +137,29 @@
                         </form>
 
                     </div>
-
-
-
-
                 </div>
             </div>
 
 
         </div>
     </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-center">
+            <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+            <div class="title24 py-3">Plan Purchased Successfully!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 </body>
