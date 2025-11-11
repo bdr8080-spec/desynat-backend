@@ -25,6 +25,13 @@ class WebSellerDashboard extends Controller
 
     public function seller_dashboard(Request $request){
 
+        // if i got payment Then Show This message
+        if($request->payment=='yes'){
+        session()->flash('success', 'You have successfully purchased a plan!');
+        return  redirect()->route('seller.dashboard');
+        }
+
+
 
 
         $seller_details=Auth::guard('seller')->user();
@@ -56,10 +63,8 @@ class WebSellerDashboard extends Controller
         return redirect()->route('seller.all_plans')->with('success','Please purchase a Plan for Better option');
                    
         }
-
+        
     }
-
-
 
           return view('dealer.index',compact('seller_details'));
       }

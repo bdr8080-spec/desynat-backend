@@ -135,18 +135,20 @@ class MyFatoorahController extends Controller {
 
             $response = ['IsSuccess' => true, 'Message' => $message, 'Data' => $data];
 
-            if($data->InvoiceStatus=='Paid'){
 
+            if($data->InvoiceStatus=='Paid'){
+                
               $transaction_id=$data->CustomerReference;
               $subcription_data =SellerSubcriptionPlanBuy::with('seller_details')->where('transaction_id',$transaction_id)->first();
            
               if($subcription_data){
-                $subcription_data->update(['payment_status'=>'1','status'=>'1']);
 
-                // return redirect()->route('seller.all_plans')->with('success', 'Your Payment is Paid Successfully');
+                $subcription_data->update(['payment_status'=>'1','status'=>'1','online_transaction_id'=>$data->InvoiceId]);
                 
-                return  redirect()->route('seller.dashboard')->with('success','You are successfully purchase a Plan');
-                
+                session()->flash('success', 'You have successfully purchased a plan!');
+
+                return  redirect()->to('seller/dashboard?payment=yes');
+
             }
 
             }else{
