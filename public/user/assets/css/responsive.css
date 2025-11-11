@@ -114,6 +114,9 @@
     {
         background-color: #000000;
     }
+    .categorie_cotent-img{
+        height: 140px !important;
+    }
     /* .header_nav_button_dropdown .customBtn1{
         min-width: 120px;
     } */
@@ -122,6 +125,9 @@
         width: 100% !important;
         padding: 5px !important;
     } */
+     .categorie_cotent h3{
+        font-size: 15px !important;
+    }
     
     .navbar-toggler .navbar-toggler-icon{
         width: 20px;

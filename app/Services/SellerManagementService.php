@@ -306,7 +306,7 @@ class SellerManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Seller accepted successfully',
+                'message' => 'Seller Approve Successfully',
                 'data' => $seller
             ];
 
@@ -344,7 +344,7 @@ class SellerManagementService
 
             return [
                 'status' => 'success',
-                'message' => 'Seller rejected successfully',
+                'message' => 'Seller Rejected Successfully',
                 'data' => $seller
             ];
 
@@ -376,8 +376,8 @@ class SellerManagementService
             $seller->save();
 
             $message = $seller->is_block == 1
-                ? 'Seller blocked successfully'
-                : 'Seller unblocked successfully';
+                ? 'Seller Blocked Successfully'
+                : 'Seller Unblocked Successfully';
 
             return [
                 'status' => 'success',

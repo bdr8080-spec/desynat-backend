@@ -18,7 +18,7 @@
                   <i class="fas fa-angle-left"></i>
                 </a>
               </div>
-              <h6 class="m-0">Manage Sub-Category</h6>
+              <h6 class="m-0">MANAGE SUB-CATEGORY</h6>
             </div>
               </div>
 

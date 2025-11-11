@@ -14,7 +14,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">Manage City({{$country->name}})</h6>
+                        <h6 class="m-0">MANAGE CITY({{$country->name}})</h6> 
                     </div>
                 </div>
 
@@ -162,9 +162,6 @@ $(document).ready(function() {
             data: {
                 city_id: cityId,
                 _token: "{{ csrf_token() }}"
-            },
-            beforeSend: function() {
-                $('#addServiceCityBtn').prop('disabled', true).text('Submitting...');
             },
             success: function(response) {
                 if (response.status === 'success') {
