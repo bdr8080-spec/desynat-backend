@@ -290,7 +290,7 @@
 
                             <!-- Submit Button -->
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <a type="submit" class="btn btn-dark customBtn">Submit</a>
+                                <button type="submit" class="btn btn-dark customBtn">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -396,7 +396,7 @@
                                 <label>Plan Price</label>
                                 <input type="text" name="price" value="" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
                                 <span class="text-danger error-text price_err"></span>
-</div>
+                               </div>
                             </div>
 
                             <!-- Stories -->
@@ -433,7 +433,7 @@
                             </div>
 
                             <div class="col-lg-12 d-flex justify-content-center mt-3">
-                                <a type="submit" class="btn btn-dark customBtn">Update</a>
+                                <button type="submit" class="btn btn-dark customBtn">Update</button>
                             </div>
                         </div>
                     </form>
