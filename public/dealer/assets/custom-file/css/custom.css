@@ -16,6 +16,10 @@
     color: #000;
     margin-bottom: 3px;
 }
+.sub-form .form-control {
+    border-radius: 10px;
+    line-height: 1.75;
+}
 
 #map {
     height: 400px;
@@ -197,6 +201,26 @@ table.dataTable {
     color: #333;
     font-size: 18px;
 }
+
+/*--------------------------------------------------------------
+# Add product multiple images
+--------------------------------------------------------------*/
+.product-pnls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.multiple-img {
+    height: 160px;
+    width: 100%;
+    overflow: hidden;
+    margin-left: 20px;
+}
+.multiple-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
 
 @media (min-width: 1140px) and (max-width: 1280px) {
     .dash-circle {

@@ -281,7 +281,7 @@
 
                                     <!-- Commission Percentage -->
                                     <div id="commissionInput" style="display:none; margin-top:10px;">
-                                        <input type="text" name="commission_percentage" placeholder="Enter commission percentage" class="form-control w-50">
+                                        <input type="text" name="commission_percentage" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
                                         <span class="text-danger error-text commission_percentage_err"></span>
                                     </div>
                                 </div>
@@ -427,7 +427,7 @@
                                 <span class="text-danger error-text commission_err"></span>
 
                                 <div class="commissionInput" style="margin-top:10px;">
-                                    <input type="text" name="commission_percentage" value="" placeholder="Enter commission percentage" class="form-control w-50">
+                                    <input type="text" name="commission_percentage" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
                                     <span class="text-danger error-text commission_percentage_err"></span>
                                 </div>
                             </div>
@@ -606,7 +606,7 @@ $(document).ready(function() {
             headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
             success: function(response){
                 if(response.status === 'success'){
-                    toastr.success(response.message, 'Success');
+                    toastr.success(response.message);
                     setTimeout(() => {
                         $('#sentModal2').modal('hide');
                         location.reload();
