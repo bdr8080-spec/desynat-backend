@@ -1887,3 +1887,26 @@ button[type="submit"] {
       font-size: 14px;
       outline: none;
     }
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table th,
+.details-table td {
+  text-align: left;
+  padding: 10px 16px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.details-table th {
+  width: 50%;
+  background-color: #f9f9f9;
+  font-weight: 600;
+}
+
+.details-table tr:hover {
+  background-color: #f2f2f2;
+}

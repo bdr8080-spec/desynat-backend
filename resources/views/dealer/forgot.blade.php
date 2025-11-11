@@ -59,7 +59,8 @@
                             <div class="login-grid-2">
                                 <form action="{{ route('seller.forgot') }}" method="Post">
                                     <div class="cmn-header">
-                                        <h1><a href="login.php"><i class="bi bi-chevron-left"></i></a> Forgot Password
+                                        <h1><a href="{{ route('seller.login') }}"><i class="bi bi-chevron-left"></i></a>
+                                            Forgot Password
 
                                         </h1>
                                     </div>

@@ -104,10 +104,25 @@
                                     </div>
                                     <div class="payment">SELECT PAYMENT METHOD</div>
 
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="payment_method"
+                                            value="Myfatoorah" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Myfatoorah
+                                        </label>
+                                    </div>
+
+                                    @error('payment_method')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+
                                     <div class="total-pnl mt-4">
                                         <div class="tamount">Total Amount</div>
                                         <div class="price-kd">KD {{ $plans->price }}</div>
                                     </div>
+
+
                                     <div class="py-3 mt-3">
 
                                         <input type="submit" name="submit" value="Pay Now"
