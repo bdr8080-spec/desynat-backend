@@ -44,7 +44,7 @@ use App\Models\Category;
                                         <div class="profileContenar d-flex align-items-center justify-conten-between">
                                             <div class="profile d-flex align-items-center gap-3">
                                                 <div class="profileContenar_img">
-                                                    <img src="{{asset('user/assets/images/user.png')}}" class="img-fluid" />
+                                                    <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" class="img-fluid" />
                                                 </div>
                                                 <div class="profile_detail">
                                                     <p>{{Auth::guard('web')->user()->full_name}}</p>

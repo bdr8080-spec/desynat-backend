@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\UserContactChangeHistory;
 use App\Helpers\ApiResponse;
 use Validator;
+use Illuminate\Validation\Rule;
+
 
 class ProfileController extends Controller
 {
@@ -122,21 +124,34 @@ class ProfileController extends Controller
     $for = $request->input('for');
     $type = $request->input('type');
 
-    if ($for === 'mobile') {
-        $rules = [
-            'country_code' => 'required|string|max:10',
-            'mobile'       => 'required|string|max:20',
-            'type'         => 'required|in:0,1',
-        ];
+       if ($for === 'mobile') {
+            $rules = [
+                'country_code' => 'required|string|max:10',
+                'mobile'       => 'required|string|max:20',
+                'type'         => 'required|in:0,1',
+            ];
 
-        $messages = [
-            'country_code.required' => 'Please enter your country code.',
-            'mobile.required'       => 'Please enter your mobile number.',
-            'type.required'         => 'Please specify whether it is old or new number.',
-        ];
+            $messages = [
+                'country_code.required' => 'Please enter your country code.',
+                'mobile.required'       => 'Please enter your mobile number.',
+                'type.required'         => 'Please specify whether it is old or new number.',
+            ];
+
+        if ($request->type == '0') {
+            $rules['mobile'] = [
+                'required', 'string', 'max:20',
+                Rule::exists('users', 'mobile')->where('country_code', $request->country_code)
+            ];
+        } else {
+            $rules['mobile'] = [
+                'required', 'string', 'max:20',
+                Rule::unique('users', 'mobile')->where('country_code', $request->country_code)
+            ];
+        }
+
     } elseif ($for === 'email') {
         $rules = [
-            'email' => 'required|email',
+            'email' => ['required', 'email'],
             'type'  => 'required|in:0,1',
         ];
 
@@ -144,16 +159,26 @@ class ProfileController extends Controller
             'email.required' => 'Please enter your email address.',
             'email.email'    => 'Please enter a valid email address.',
         ];
+
+        if ($request->type == '0') {
+            $rules['email'][] = Rule::exists('users', 'email');
+        } else {
+            $rules['email'][] = Rule::unique('users', 'email');
+        }
     } else {
         return redirect()->back()->with('error', 'Invalid "for" value. Use either "mobile" or "email".');
     }
 
     $validator = Validator::make($request->all(), $rules, $messages);
+
     if ($validator->fails()) {
+        $firstError = $validator->errors()->first();
         return redirect()->back()
-            ->withErrors($validator)
+            ->with('error', $firstError)
             ->withInput();
     }
+
+
 
     $user = $request->user();
     $otp = config('services.otp');
