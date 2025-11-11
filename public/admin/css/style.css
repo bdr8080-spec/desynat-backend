@@ -1218,8 +1218,15 @@ a.btn.btn-dark.customBtn {
     border: 1px solid rgba(168, 130, 79, 1);
     background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
     color: #fff;
-    /* line-height: 18px; */
+    line-height: 18px;
         font-size: 20px;
+}
+button.btn.btn-dark.customBtn {
+    border: 1px solid rgba(168, 130, 79, 1);
+    background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+    color: #fff;
+    line-height: 18px;
+    font-size: 20px;
 }
 
 /* buttons end */
@@ -1840,11 +1847,13 @@ button[type="submit"] {
 }
 
     input[type="text"] {
-      flex: 1;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      outline: none;
+        outline: none;
+    /* width: 100%; */
+    padding: 9px 5px;
+    border: 1px solid var(--secondry-color);
+    border-radius: 5px;
+    font-size: 15px;
+
     }
 
     button {
@@ -1916,4 +1925,18 @@ button[type="submit"] {
 }
 .sidebar-dark .nav-item.active .nav-link {
   color: #fff !important;
+}
+.input-with-percent {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+}
+
+.input-with-percent input {
+  width: 150px; 
+}
+
+.percent-symbol {
+  font-weight: bold;
+  font-size: 16px;
 }
