@@ -281,7 +281,11 @@
 
                                     <!-- Commission Percentage -->
                                     <div id="commissionInput" style="display:none; margin-top:10px;">
-                                        <input type="text" name="commission_percentage" placeholder="Enter commission percentage" class="form-control w-50">
+                                        <div class="input-with-percent">
+                                        <input type="text" name="commission_percentage" placeholder="Enter commission " class="form-control w-50">
+                          <span class="percent-symbol">%</span>
+                     </div>
+
                                         <span class="text-danger error-text commission_percentage_err"></span>
                                     </div>
                                 </div>
@@ -427,7 +431,11 @@
                                 <span class="text-danger error-text commission_err"></span>
 
                                 <div class="commissionInput" style="margin-top:10px;">
-                                    <input type="text" name="commission_percentage" value="" placeholder="Enter commission percentage" class="form-control w-50">
+                                <div class="input-with-percent">
+  <input type="text" name="commission_percentage" placeholder="Enter commission" class="form-control w-50">
+  <span class="percent-symbol">%</span>
+</div>
+
                                     <span class="text-danger error-text commission_percentage_err"></span>
                                 </div>
                             </div>
