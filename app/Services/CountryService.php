@@ -70,7 +70,7 @@ class CountryService
     public function getServiceCities($countryId, $limit = null, $search = null)
     {
         try {
-            $limit = !empty($limit) ? (int)$limit : 10;
+            $limit = !empty($limit) ? (int)$limit : null;
 
             $query = ServiceCity::where('country_id', $countryId);
 
@@ -226,7 +226,7 @@ class CountryService
     public function getZones($countryId, $cityId, $limit = null, $search = null)
     {
         try {
-            $limit = !empty($limit) ? (int)$limit : 10;
+            $limit = !empty($limit) ? (int)$limit : null;
 
             $query = Zone::where('country_id', $countryId)->where('city_id',$cityId);
 
