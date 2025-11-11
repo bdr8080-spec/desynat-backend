@@ -27,6 +27,12 @@
                         <input type="text" maxlength="1" class="otp-input" id="otp5" name="otp[]" />
                         <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
                     </div>
+                     <div class="resend-otp-container"
+                            style="display: flex;justify-content: center;margin-top:20px !important;xmargin:0 auto; align-items: center; gap: 10px;">
+                            <button type="button" class="customBtnresend" >Resend
+                                OTP</button>
+                            <span id="otpTimer" style="color: red;"></span>
+                        </div>
                     <button type="submit" class="customBtn mt-5" id="verifyBtn">Verify OTP</button>
                 </div>
                 </form>
