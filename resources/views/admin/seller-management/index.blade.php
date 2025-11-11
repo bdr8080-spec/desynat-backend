@@ -611,7 +611,7 @@
                 <h3 class="modal-title fs-5">Bank Details</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
+            <!-- <div class="modal-body">
                 <div class="form-group mb-2">
                     <label class="form-label">IBAN</label>
                     <input type="text" class="form-control" id="modalIban" readonly>
@@ -628,7 +628,26 @@
                     <label class="form-label">Account Holder Name</label>
                     <input type="text" class="form-control" id="modalHolderName" readonly>
                 </div>
-            </div>
+            </div> -->
+                <table class="details-table">
+                    <tr>
+                        <th>IBAN</th>
+                        <td id="modalIban"></td>
+                    </tr>
+                    <tr>
+                        <th>SWIFT</th>
+                        <td id="modalSwift"></td>
+                    </tr>
+                    <tr>
+                        <th>Bank Name</th>
+                        <td id="modalBankName"></td>
+                    </tr>
+                    <tr>
+                        <th>Account Holder Name</th>
+                        <td id="modalHolderName"></td>
+                    </tr>
+                </table>
+
         </div>
     </div>
 </div>
@@ -644,7 +663,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div id="documentContainer" class="appointment-container d-flex flex-wrap gap-3 justify-content-center">
+                <div id="documentContainer" class="appointment-container d-flex flex-wrap  justify-content-center">
                 </div>
             </div>
         </div>
@@ -691,7 +710,7 @@
                     <h5>Store Documents</h5>
                 </div>
                 <div id="documentContainer1"
-                    class="appointment-container d-flex flex-wrap gap-3 justify-content-center">
+                    class="appointment-container d-flex flex-wrap justify-content-center">
                 </div>
 
             </div>
@@ -757,7 +776,7 @@
             <div class="modal-body text-center">
                 <a id="accountProofLink" href="#" target="_blank">
                     <img id="accountProofImage" src="" alt="Account Proof" class="img-fluid rounded border"
-                        style="cursor:pointer;">
+                        style="cursor:pointer;width: 200px;height: 200px;">
                 </a>
             </div>
         </div>
@@ -914,10 +933,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.view-bank-btn').forEach(button => {
         button.addEventListener('click', function() {
             const bank = JSON.parse(this.getAttribute('data-bank') || '{}');
-            document.getElementById('modalIban').value = bank.iban || '';
-            document.getElementById('modalSwift').value = bank.swift || '';
-            document.getElementById('modalBankName').value = bank.bank_name || '';
-            document.getElementById('modalHolderName').value = bank.account_holder_name || '';
+            document.getElementById('modalIban').textContent = bank.iban || 'N/A';
+            document.getElementById('modalSwift').textContent = bank.swift || 'N/A';
+            document.getElementById('modalBankName').textContent = bank.bank_name || 'N/A';
+            document.getElementById('modalHolderName').textContent = bank.account_holder_name || 'N/A';
         });
     });
 });

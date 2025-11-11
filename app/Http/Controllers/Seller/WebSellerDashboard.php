@@ -27,9 +27,9 @@ class WebSellerDashboard extends Controller
 
         $seller_details=Auth::guard('seller')->user();
 
-  
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details->id)->first();
-    
+
+        
 
    $plan_page=Cache::get('plan_page');
 
@@ -139,6 +139,9 @@ class WebSellerDashboard extends Controller
 
         $validate = Validator::make($request->all(), [
             'plan_id' => 'required|exists:plans,id',
+            'payment_method'=>"required"
+        ],[
+            'payment_method.required'=>"Payment Method is required"
         ]);
 
         if ($validate->fails()) {
@@ -167,6 +170,13 @@ class WebSellerDashboard extends Controller
     }
 
     $data=$data['data'];
+
+    if($request->payment_method=='Myfatoorah'){
+
+        return redirect()->to('/myfatoorah/' . $data->transaction_id); // send To Payment Gateway
+    }
+
+
 
     $request_data=(object )[
         'transaction_id'=>$data->transaction_id,

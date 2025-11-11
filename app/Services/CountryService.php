@@ -184,7 +184,7 @@ class CountryService
             return [
                 'status' => 'success',
                 'message' => 'City deleted successfully',
-                'data' => []
+                'data' => null
             ];
 
         } catch (\Exception $e) {
