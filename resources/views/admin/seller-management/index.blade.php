@@ -629,25 +629,25 @@
                     <input type="text" class="form-control" id="modalHolderName" readonly>
                 </div>
             </div> -->
-                 <table class="details-table">
-        <tr>
-          <th>IBAN</th>
-          <td ></td>
-        </tr>
-        <tr>
-          <th>SWIFT</th>
-          <td>ABCDEF1234</td>
-        </tr>
-        <tr>
-          <th>Bank Name</th>
-          <td>National Bank of Dubai</td>
-        </tr>
-        <tr>
-          <th>Account Holder Name</th>
-          <td>John Doe</td>
-        </tr>
-      
-      </table>
+                <table class="details-table">
+                    <tr>
+                        <th>IBAN</th>
+                        <td id="modalIban"></td>
+                    </tr>
+                    <tr>
+                        <th>SWIFT</th>
+                        <td id="modalSwift"></td>
+                    </tr>
+                    <tr>
+                        <th>Bank Name</th>
+                        <td id="modalBankName"></td>
+                    </tr>
+                    <tr>
+                        <th>Account Holder Name</th>
+                        <td id="modalHolderName"></td>
+                    </tr>
+                </table>
+
         </div>
     </div>
 </div>
@@ -933,10 +933,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.view-bank-btn').forEach(button => {
         button.addEventListener('click', function() {
             const bank = JSON.parse(this.getAttribute('data-bank') || '{}');
-            document.getElementById('modalIban').value = bank.iban || '';
-            document.getElementById('modalSwift').value = bank.swift || '';
-            document.getElementById('modalBankName').value = bank.bank_name || '';
-            document.getElementById('modalHolderName').value = bank.account_holder_name || '';
+            document.getElementById('modalIban').textContent = bank.iban || 'N/A';
+            document.getElementById('modalSwift').textContent = bank.swift || 'N/A';
+            document.getElementById('modalBankName').textContent = bank.bank_name || 'N/A';
+            document.getElementById('modalHolderName').textContent = bank.account_holder_name || 'N/A';
         });
     });
 });
