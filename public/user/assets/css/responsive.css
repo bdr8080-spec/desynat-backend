@@ -13,6 +13,12 @@
    .customContainer{
         max-width: 1064px !important;
     }
+    .my-profile{
+        margin-bottom: 10%;
+    }
+    .my-profile {
+        height: calc(100vh - 100px); /* example for larger mobile footer */
+    }
 }
 
 @media (max-width:991px) {
