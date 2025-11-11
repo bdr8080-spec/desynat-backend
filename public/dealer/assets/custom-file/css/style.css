@@ -163,7 +163,7 @@ label {
 
 .date-form-pnl .form-control {
   padding: 8px;
-  border: 1px solid #c5c3c3;
+  border: 1px solid #C0BBBB;
 }
 
 .gold-title {
@@ -344,7 +344,7 @@ label {
 .form-control {
   padding: 10px;
   font-size: 15px;
-  border: 1px solid #c5c3c3;
+  border: 1px solid #C0BBBB;
 }
 
 .form-control:focus {
