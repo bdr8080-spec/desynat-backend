@@ -41,7 +41,7 @@ class CategoryService
     public function getSubCategoriesByCategoryId($categoryId, $limit = null, $search = null)
     {
         try {
-            $limit = !empty($limit) ? (int)$limit : 10;
+            $limit = !empty($limit) ? (int)$limit : null;
 
             $query = SubCategory::where('category_id', $categoryId);
 
