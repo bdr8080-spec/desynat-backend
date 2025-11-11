@@ -13,7 +13,7 @@
                     @csrf
                     <input type="hidden" value="{{request()->id}}" name="id">
                 <div class="otp-page">
-                    <h3 class="h3-heading"><span><i class="fa-solid fa-chevron-left"></i></span> OTP</h3>
+                    <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="fa-solid fa-chevron-left"></i></a></span> OTP</h3>
                     @if (request()->email)
                           <h5 class="otp_sent">To change email address. a verification code has been sent <span>{{request()->email}}</span></h5>
                     @else
