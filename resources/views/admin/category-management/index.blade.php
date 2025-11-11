@@ -11,7 +11,7 @@
               </div>
             </div>
 
-            <div class="userManagecontent">
+            <div class="userManagecontent mt-5 ">
               <div class="">
                 <!-- <div class="align-items-end d-flex">
                   <div class="search-box" style="position: relative">
@@ -36,8 +36,8 @@
                   </div>
                 </div> -->
 
-                <div class="table-responsive">
-                  <table id="myTable" class="table">
+                <div class="table-responsive w-100">
+                  <table id="myTable" class="table w-100">
                     <thead>
                       <tr>
                         <th scope="col">SR No.</th>
