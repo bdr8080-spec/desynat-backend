@@ -315,7 +315,7 @@ use App\Models\Category;
                                 <h6>Deliver to Reshab</h6>
                                 <div class="d-flex align-self-center w-100" >
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
-                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="city">Noida</span> 
+                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
                                     </button>
                                     <span class="ms-lg-5 ms-md-3 ms-2">
                                         <i class="fa-solid fa-chevron-down"></i>
@@ -421,8 +421,8 @@ use App\Models\Category;
                         <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
                     </div>
                     <div class="">
-                        <h5>Current Location</h5>
-                        <p></p>
+                        <h5>Location</h5>
+                        <p id="locationUpdate"></p>
                     </div>
                     <button class="customBtn">Change Location</button>
                 </div>
