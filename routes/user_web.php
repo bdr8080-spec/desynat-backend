@@ -26,9 +26,8 @@ use App\Http\Controllers\User\ProfileController;
    Route::match(['get','post'],'/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
    Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
 
-   Route::match(['get', 'post'], '/old-number-send-otp', [ProfileController::class, 'oldNumberSendOtp'])->name('userOldNumberSendOtp');
-   Route::match(['get', 'post'], '/old-number-verify', [ProfileController::class, 'oldNumberVerify'])->name('userOldNumberVerify');
-   Route::match(['get', 'post'], '/new-number-verify', [ProfileController::class, 'newNumberVerify'])->name('userNewNumberVerify');
+  Route::match(['get', 'post'], '/old-number-send-otp', [ProfileController::class, 'oldNumberSendOtp'])->name('userOldNumberSendOtp');
+  Route::match(['get', 'post'], '/verify-contact-otp', [ProfileController::class, 'oldNumberVerify'])->name('userOldNumberVerify');
    
 
    Route::match(['get','post'], '/update-new-number', [ProfileController::class, 'updateNewNumber'])->name('userUpdateNewNumber');
