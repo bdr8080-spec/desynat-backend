@@ -359,9 +359,9 @@ use App\Models\Category;
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
 
-                                            <div class="row justify-content-between">
+                                            <div class="row justify-content-between flex-lg-nowrap">
                                                 @foreach ($item->subCategories as $value)
-                                                    <div class="col-lg-2">
+                                                    <div class="col-lg-3 col-md-4 col-12">
                                                     <div class="clothes_content">
                                                         <p>{{$value->name_english}}</p>
                                                         <ul class="list-unstyled">
@@ -407,27 +407,27 @@ use App\Models\Category;
     <div class="modal fade" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <div class="modal-header  border-0">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <div class="form-group position-relative search">
-                        <input type="text" class="form-control" placeholder="Search address" />
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <div>
-                        <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
-                    </div>
-                    <div class="">
-                        <h5>Current Location</h5>
-                        <p></p>
-                    </div>
-                    <button class="customBtn">Change Location</button>
+                <div class="modal-header  border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group position-relative search">
+                            <input type="text" class="form-control" placeholder="Search address" />
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div>
+                            <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
+                        </div>
+                        <div class="">
+                            <h5>Current Location</h5>
+                            <p></p>
+                        </div>
+                        <button class="customBtn">Change Location</button>
+                    </div>
 
-            </div>
+                </div>
             </div>
         </div>
     </div>

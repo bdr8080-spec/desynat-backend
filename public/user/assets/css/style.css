@@ -494,28 +494,40 @@ section{
     font-weight: 400 !important;
     margin-bottom: 0;
 }
- .search i{
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translate(10px, -50%);
- }
-.search input{
-    width: 100%;
-    background: rgb(255 255 255 / 50%);
-    padding: 10px 0 10px 30px;
-    font-size: 16px;
+.search {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.search .form-control {
+  width: 100%;
+  transition: all 0.3s ease;
+  padding-left: 35px;
+}
+
+/* Search icon styling */
+.search i {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--third-color);
 }
 .customNavbar .dropdown-menu.sell_clothes.show {
     position: absolute;
     left: 0;
     right: 0 !important;
-    max-width: 600px;
+    min-width: 600px;
     width: 100%;
     margin: 0 !important;
     border-radius: 0;
     background-color: #FAFAFA;
     transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+    overflow-x: scroll;
 }
 .customNavbar .dropdown-menu.sell_clothes{
     padding: 20px;
@@ -523,6 +535,7 @@ section{
 .customNavbar .sell_clothes .clothes_content p{
     font-weight: 500 !important;
     color: var(--secondry2-color);
+    margin-bottom: 5px;
 }
 .customNavbar ul li.nav-item a.nav-link{
     padding: 10px 10px 10px 30px;
