@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('status',['0','1'])->default('0')->comment('0 inactive 1 active');
 
             $table->string('payment_method')->nullable();
-            
+            $table->string('amount')->nullable();            
 
             $table->foreign('seller_id')
             ->references('id')
