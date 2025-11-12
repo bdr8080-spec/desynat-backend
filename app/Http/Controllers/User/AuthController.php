@@ -301,9 +301,9 @@ class AuthController extends Controller
             }else{   
             
                 if ($request->forgetPassword == '1') {
-                    $rules['mobile'] = 'required|digits:10|exists:users,mobile';
+                    $rules['mobile'] = 'required|digits_between:7,15|exists:users,mobile';
                     $messages['mobile.required'] = 'Please enter your mobile number';
-                    $messages['mobile.digits'] = 'Mobile number must be 10 digits';
+                    $messages['mobile.digits_between'] = 'Mobile number must be between 7 and 15 digits';
                     $messages['mobile.exists'] = 'This mobile number is not registered';
                 }
 
@@ -442,13 +442,13 @@ class AuthController extends Controller
                 if ($request->forgetPassword == '1') {
                     $rules = [
                         'country_code' => 'required',
-                        'mobile' => 'required|digits:10',
+                        'mobile' => 'required|digits_between:7,15',
                     ];
 
                     $messages = [
                         'country_code.required' => 'Please select your country code',
                         'mobile.required' => 'Please enter your mobile number',
-                        'mobile.digits' => 'Mobile number must be 10 digits',
+                        'mobile.digits' => 'Mobile number must be between 7 and 15 digits',
                     ];
                 } else {
                     $rules = [
