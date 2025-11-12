@@ -68,22 +68,56 @@
 
     <script>
 
-        $(document).on('click', '#resendOtp', function() {
-            let id = $(this).data('id');
-            $.ajax({
-                url: "{{ route('updateResendOtp') }}",
-                type: 'GET',
-                data: {
-                    id: id
-                },
-                success: function(response) {
+     $(document).ready(function() {
+    let $btn = $('#resendOtp');
+    let seconds = 30;
+
+ 
+    $btn.prop('disabled', true).text(`Resend OTP (${seconds}s)`);
+
+
+    let initialTimer = setInterval(function() {
+        seconds--;
+        $btn.text(`Resend OTP (${seconds}s)`);
+        if (seconds <= 0) {
+            clearInterval(initialTimer);
+            $btn.prop('disabled', false).text('Resend OTP');
+        }
+    }, 1000);
+
+    $(document).on('click', '#resendOtp', function() {
+        let id = $(this).data('id');
+        $btn.prop('disabled', true).text('Sending...');
+
+        $.ajax({
+            url: "{{ route('updateResendOtp') }}",
+            type: 'GET',
+            data: { id: id },
+            success: function(response) {
                 toastr.success(response.message);
-                },
-                error: function(xhr) {
-                    toastr.error(response.message)
-                }
-            });
+
+                // Restart 30s countdown after success
+                let seconds = 30;
+                $btn.text(`Resend OTP (${seconds}s)`);
+
+                let countdown = setInterval(function() {
+                    seconds--;
+                    $btn.text(`Resend OTP (${seconds}s)`);
+
+                    if (seconds <= 0) {
+                        clearInterval(countdown);
+                        $btn.prop('disabled', false).text('Resend OTP');
+                    }
+                }, 1000);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+                $btn.prop('disabled', false).text('Resend OTP');
+            }
         });
+    });
+});
+
 
 
         function resenOtp(id) {
