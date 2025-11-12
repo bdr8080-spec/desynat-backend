@@ -272,23 +272,6 @@
     });
 </script>
 
-
-<script>
-    window.addEventListener("popstate", function(event) {
-        // This event fires when the user clicks the browser's back or forward button
-
-        // Example: redirect user to a specific page
-        if (window.location.pathname === '/seller/all-plans') {
-            window.location.href = "{{ route('seller.all_plans') }}";
-        }
-    });
-</script>
-
-
 @include('dealer.layout.custom_code');
-
-
-
-
 
 </html>
