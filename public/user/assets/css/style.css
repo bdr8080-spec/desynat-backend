@@ -5,6 +5,19 @@ body{
     font-family: "Poppins", sans-serif;
     margin: 0px;
     padding: 0px;
+    min-height: 100vh;              /* Full viewport height */
+  display: flex;
+  flex-direction: column; 
+}
+.mid-content{
+    flex: 1; /* this pushes the footer down */
+}
+.header-main{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
 }
 h1{
     font-size: var(--heading1-font) !important;
@@ -120,6 +133,9 @@ section{
     line-height: var(--p-font-height);
     font-weight: var(--p-font-weight);
 }
+.customBtn5{
+    background: var(--gradient-color6) !important;
+}
 .inner-header{
     background: var(--gradient-color5);
     padding: .5% 4%;
@@ -135,6 +151,7 @@ section{
 }
 .header-main .navbar-brand{
     width: 13%;
+    height: 100%;
 }
 .header-main .navbar-brand img{
     width: 100%;
@@ -416,8 +433,9 @@ section{
     font-weight: 400 !important;
     color: #222222;
 }
-.otp-page h5 span{
+.otp-page h5 span, .otp_sent span{
     color: var(--secondry2-color);
+    font-weight: 600;
 }
 .otp-page .otp_sent{
     margin: 36px 0;
@@ -505,7 +523,9 @@ section{
     max-width: 100% !important;
     width: 100% !important;
 }
-
+.track_location{
+        width: 80%;
+}
 .search .form-control {
   width: 100%;
   transition: all 0.3s ease;
@@ -513,7 +533,7 @@ section{
   background: rgb(255 255 255 / 50%);
 }
 .customBtnLocation{
-    width: 180px;
+    min-width: auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -526,7 +546,7 @@ section{
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
-  max-width: calc(100% - 0px);
+  max-width: calc(auto - 0px);
 }
 
 /* Search icon styling */
@@ -547,13 +567,50 @@ section{
     width: 100%;
     margin: 0 !important;
     border-radius: 0;
-    background-color: transparent;
+    background-color: #fff;
     transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
-    overflow-x: scroll;
 }
+.sell_clothes { position: relative; overflow: hidden; padding: 10px; }
+.scroll-wrapper { position: relative; display: flex; align-items: center; }
+.scroll-content {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 10px;
+  padding: 10px 40px; /* leave space for arrows */
+  scrollbar-width: none;
+}
+.scroll-content::-webkit-scrollbar { display: none; }
+
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: var(--third-color);
+  font-size: 12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  border: none;
+}
+.scroll-left { left: -11px; }
+.scroll-right { right: -11px; }
+
+.sell_clothes .scroll-arrow { opacity: 0.9; }
 .customNavbar .dropdown-menu.sell_clothes{
     padding: 20px;
+}
+.sell_clothes:hover .scroll-btn {
+  opacity: 1;
+  pointer-events: auto;
+  display: block !important;
 }
 .customNavbar .sell_clothes .clothes_content p{
     font-weight: 500 !important;
@@ -566,6 +623,9 @@ section{
 .customNavbar ul li.nav-item a.nav-link{
     padding: 10px 12px;
     text-transform: uppercase;
+    font-size: var(--p-font-size) !important;
+    line-height: var(--p-font-height) !important;
+    font-weight: var(--p-font-weight) !important;
 }
 .customNavbar ul li.nav-item a.nav-link:active{
     border-bottom: 2px solid var(--secondry2-color);
@@ -691,6 +751,7 @@ section{
 .suggestedStore_img{
     width: 120px;
     height: 120px;
+    margin: 0 auto;
 }
 
 .product-content {
@@ -844,7 +905,7 @@ section{
 .profile_links li a img{
     margin-right: 8px;
 }
-.profile_links li a i{
+.profile_links li a i.i_icon{
     position: absolute;
     right: 0;
     top: 5px;
@@ -893,7 +954,7 @@ section{
 }
 
 .changeImageText:hover {
-  color: #0056b3;
+  color: var(--secondry2-color);
 }
 .my-profile .form-group input.form-control{
     padding: 12px;
@@ -915,15 +976,17 @@ section{
     position: absolute;
     top: 66%;
     transform: translateY(-50%);
-    width: 66px;
-    padding: 11px;
+    width: 50px;
+    padding: 8px 0 8px 8px;
     left: 0px;
-    border: 1px solid var(--secondry3-color);
+    border: none;
+    background: transparent;
     border-radius: 5px 0 0 5px;
 }
 .mobile .number{
-    padding-left: 70px !important;
+    padding-left: 50px !important;
 }
+.my-profile{}
 
 
 /* index end */
@@ -934,11 +997,12 @@ section{
 footer{
     background: var(--gradient-color);
     padding: 3% 2% 0;
-    position: fixed;
+    /* position: fixed;
     width: 100%;
     bottom: 0;    
-    z-index: 1;
+    z-index: 1; */
 }
+
 footer span{
     font-size: var(--nav-font-size);
     line-height: var(--nav-font-height);

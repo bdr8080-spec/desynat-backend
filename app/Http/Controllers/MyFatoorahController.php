@@ -75,7 +75,9 @@ class MyFatoorahController extends Controller {
             $curlData = $this->getPayLoadData($order_array);
 
             $mfObj   = new MyFatoorahPayment($this->mfConfig);
+
             $payment = $mfObj->getInvoiceURL($curlData, $paymentId, $orderId, $sessionId);
+            
 
             return redirect($payment['invoiceURL']);
         } catch (Exception $ex) {
@@ -155,7 +157,11 @@ class MyFatoorahController extends Controller {
             }
 
             }else{
-                return redirect()->route('seller.all_plans')->with('error','Your Payment is Failed');
+
+                $url="seller/all-plans?payment=no";
+                return  redirect()->to($url);
+
+                // return redirect()->route('seller.all_plans')->with('error','Your Payment is Failed');
             }
 
             

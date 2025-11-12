@@ -14,7 +14,7 @@
 
     <div class="login_contenar">
         <header class="inner-header">
-            <a><img src="assets/images/logo.svg" class="img-fluid" /></a>
+            <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
@@ -61,7 +61,7 @@
                         <h5 class="otp_sent">
                             6 digit OTP has been sent to your registered
                             @if (request()->type == '2')
-                                Email Address: <span>{{ $user->email }}</span>
+                                Email Address: <span >{{ $user->email }}</span>
                             @else
                                 Mobile Number: <span>{{ $user->country_code }} {{ $user->mobile }}</span>
                             @endif
@@ -88,7 +88,7 @@
                                 OTP</button>
                             <span id="otpTimer" style="color: red;"></span>
                         </div>
-                        <button type="submit" class="customBtn mt-5" id="otpVerifyBtn">Verify OTP</button>
+                        <button type="submit" class="customBtn customBtn5 mt-5" id="otpVerifyBtn">Verify OTP</button>
                     </form>
                 </div>
             </div>

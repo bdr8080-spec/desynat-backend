@@ -55,7 +55,14 @@
                     @foreach ($plans as $key => $item)
                         <div class="col-lg-3 col-md-4">
                             <div class="plan-card plan-shadow">
-                                <div class="plan-header  text-center bg-yellow-1 ">
+                                <div
+                                    class="plan-header  text-center 
+                                     @if ($key == 0) bg-yellow-1 
+                                      @elseif($key == 1)  bg-yellow-2
+                                      @elseif($key == 2)  bg-yellow-3
+                                      @elseif($key == 3)  bg-yellow-4
+                                      @else
+                                      bg-yellow-1 @endif ">
 
                                     {{ $item->plan_name_english }}
 
@@ -74,16 +81,16 @@
                                     <ul class="list-inline">
                                         <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
                                             Products:
-                                            <span>{{ $item->no_of_products }}</span>
+                                            <span class="font-600">{{ $item->no_of_products }}</span>
                                         </li>
                                         <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
                                             Videos
                                             (Reels)
-                                            : <span>{{ $item->no_of_videos }}</span>
+                                            : <span class="font-600">{{ $item->no_of_videos }}</span>
                                         </li>
                                         <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
                                             Highlights:
-                                            <span>{{ $item->no_of_highlights }} </span>
+                                            <span class="font-600">{{ $item->no_of_highlights }} </span>
                                         </li>
 
                                         @if ($item->stories == '1')
@@ -97,9 +104,13 @@
                                         <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">5 Store
                                             Employees
                                         </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
-                                            <span>2.5%</span>
-                                        </li>
+
+                                        @if ($item->commission == '1')
+                                            <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
+                                                <span class="font-600">{{ $item->commission_percentage }} %</span>
+                                            </li>
+                                        @endif
+
                                     </ul>
                                     <div class="py-3">
                                         <a href="{{ route('seller.single_plans', $item->id) }}"
@@ -222,6 +233,23 @@
         </div>
     </div>
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+                        <div class="title24 py-3">Your Payment is failed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 
@@ -235,7 +263,20 @@
 
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success1'))
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        @endif
+    });
+</script>
+
+
 @include('dealer.layout.custom_code');
+
+
+
 
 
 </html>

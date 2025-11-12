@@ -72,6 +72,12 @@ class WebSellerDashboard extends Controller
 
     public function all_plans(Request $request){
 
+
+        if($request->payment=='no'){
+            session()->flash('error', 'You payment is failed Please try again');
+            return  redirect()->route('seller.all_plans');
+        }     
+
         $seller_details=Auth::guard('seller')->user();
   
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$seller_details->id)->first();

@@ -80,36 +80,55 @@ use App\Models\Category;
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/terms.svg')}}" />
                                                 Terms & Condition
-                                                <i class="fa-solid fa-chevron-right"></i>
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
                                             </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/return.svg')}}" />
-                                                Return Policy</a></li>
+                                                Return Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/about-us.svg')}}" />
-                                                About Us</a></li>
+                                                About Us
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/faq.svg')}}" />
-                                                FAQ's</a></li>
+                                                FAQ's
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/change-lang.svg')}}" />
-                                                Change Language</a></li>
+                                                Change Language
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/cancel-policy.svg')}}" />
-                                                Cancellation Policy</a></li>
+                                                Cancellation Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/exchange.svg')}}" />
-                                                Exchange Policy</a></li>
+                                                Exchange Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/support.svg')}}" />
-                                                Support</a></li>
+                                                Support
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/becom-affilit.svg')}}" />
-                                                Become An Affiliate</a></li>
+                                                Become An Affiliate
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/setting.svg')}}" />
-                                                Settings</a></li>
-                                            <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
+                                                Settings
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
+                                            <li>
+                                                <a class="dropdown-item text-center" href="{{route('userLogout')}}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                                         </ul>
                                     </li>
                                     <!-- <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li> -->
@@ -317,10 +336,10 @@ use App\Models\Category;
                             <div class="track_location">
                                 <h6>Deliver to {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
                                 <div class="d-flex align-self-center w-100" data-bs-toggle="modal" data-bs-target="#changeLocation">
-                                    <button type="button" class="customBtnLocation btn btn-primary" >
-                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
+                                    <button type="button" class="customBtnLocation btn" >
+                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid me-2" /> <span id="cityField"></span> 
                                     </button>
-                                    <span class="ms-lg-5 ms-md-3 ms-2">
+                                    <span class="">
                                         <i class="fa-solid fa-chevron-down"></i>
                                     </span>
                                 </div>
@@ -343,21 +362,28 @@ use App\Models\Category;
                                             {{$item->name}}
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
-
-                                            <div class="row justify-content-between flex-lg-nowrap">
-                                                @foreach ($item->subCategories as $value)
-                                                    <div class="col-lg-3 col-md-4 col-12">
-                                                    <div class="clothes_content">
-                                                        <p>{{$value->name_english}}</p>
-                                                        <ul class="list-unstyled">
-                                                            {{-- <li>
-                                                                <a href="">Shirt</a>
-                                                            </li> --}}
-                                                        </ul>
+                                            <div class="scroll-wrapper">
+                                                <button class="scroll-arrow scroll-btn scroll-left" type="button" aria-label="scroll left">
+                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                </button>
+                                                <div class="scroll-content row justify-content-between flex-lg-nowrap">
+                                                    @foreach ($item->subCategories as $value)
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="clothes_content">
+                                                            <p>{{$value->name_english}}</p>
+                                                            <ul class="list-unstyled">
+                                                                {{-- <li>
+                                                                    <a href="">Shirt</a>
+                                                                </li> --}}
+                                                            </ul>
+                                                        </div>
                                                     </div>
+                                                    @endforeach
+                                                    
                                                 </div>
-                                                @endforeach
-                                                
+                                                <button class="scroll-arrow scroll-btn scroll-right" type="button" aria-label="scroll right">
+                                                    <i class="fa-solid fa-chevron-right"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </li>
@@ -398,7 +424,7 @@ use App\Models\Category;
                 </div>
                 <div class="modal-body">
                     <div>
-                        <div class="form-group position-relative search w-100">
+                        <div class="form-group position-relative search w-100 mb-3">
                             <input type="text" class="form-control" placeholder="Search address" />
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
