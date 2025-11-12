@@ -349,6 +349,48 @@ class ProfileController extends Controller
     }
 
 
+ public function updateResendOtp(Request $request)
+{
+    try {
+        // Ensure the ID is present
+        if (!$request->has('id')) {
+            return response()->json([
+                'status' => false,
+                'message' => 'ID is required.',
+            ], 400);
+        }
+
+        $id = decrypt($request->id);
+
+        
+        $data = UserContactChangeHistory::find($id);
+        if (!$data) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Record not found.',
+            ], 404);
+        }
+
+        $otp = config('services.otp');
+        $data->otp = $otp;
+        $data->save();
+
+
+        return response()->json([
+            'status' => true,
+            'message' => 'OTP resent successfully.',
+            'otp' => $otp,
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Something went wrong: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+
+
 
 
 }
