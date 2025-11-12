@@ -38,13 +38,44 @@ class CountryService
         }
     }
 
+    // public function getCities($countryId)
+    // {
+    //     try {
+
+    //         $query = City::where('country_id', $countryId)->orderBy('name', 'asc')->get();
+
+    //         if ($query->isEmpty()) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => 'No cities found for this country',
+    //                 'data' => (object) []
+    //             ];
+    //         }
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Cities fetched successfully',
+    //             'data' => $query
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch cities: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+
     public function getCities($countryId)
     {
         try {
+            $cities = City::where('country_id', $countryId)
+                        ->orderBy('name', 'asc')
+                        ->get();
 
-            $query = City::where('country_id', $countryId)->orderBy('name', 'asc')->get();
-
-            if ($query->isEmpty()) {
+            if ($cities->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No cities found for this country',
@@ -52,10 +83,26 @@ class CountryService
                 ];
             }
 
+            $excludedCities = $cities->filter(function ($city) use ($countryId) {
+                return !ServiceCity::where('country_id', $countryId)
+                                ->where('city_id', $city->id)
+                                ->exists(); 
+            });
+
+            if ($excludedCities->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'All cities are already added in the Service Cities table',
+                    'data' => (object) []
+                ];
+            }
+
+            $excludedCities = $excludedCities->values();
+
             return [
                 'status' => 'success',
                 'message' => 'Cities fetched successfully',
-                'data' => $query
+                'data' => $excludedCities
             ];
 
         } catch (\Exception $e) {
@@ -66,6 +113,8 @@ class CountryService
             ];
         }
     }
+
+
 
     public function getServiceCities($countryId, $limit = null, $search = null)
     {
