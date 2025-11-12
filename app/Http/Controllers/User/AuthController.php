@@ -201,7 +201,7 @@ class AuthController extends Controller
                     return response()->json([
                     'status' => true,
                     'message' => $request->type == 1 
-                        ? 'Logged in successfully' 
+                        ? 'Login successfully' 
                         : 'User registered successfully',
                     'redirect_url' => route('dashboard'),
                 ]);
