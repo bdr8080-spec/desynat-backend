@@ -995,9 +995,13 @@ section{
     border-radius: 5px 0 0 5px;
 }
 .mobile .number{
-    padding-left: 50px !important;
+    padding-left: 100px !important;
 }
-.my-profile{}
+.mobile .tag input{
+    width: 60px;
+    background: transparent;
+        border: none;
+}
 
 
 /* index end */
