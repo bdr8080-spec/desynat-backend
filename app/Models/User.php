@@ -55,4 +55,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+      public function country()
+    {
+        return $this->belongsTo(country::class, 'country_code', 'dial_code');
+    }
 }
