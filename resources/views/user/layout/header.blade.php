@@ -363,13 +363,10 @@ use App\Models\Category;
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
                                             <div class="scroll-wrapper">
-                                                <div class="scroll-arrow scroll-left">
+                                                <button class="scroll-arrow scroll-btn scroll-left" type="button" aria-label="scroll left">
                                                     <i class="fa-solid fa-chevron-left"></i>
-                                                </div>
-                                                <div class="scroll-arrow scroll-right">
-                                                    <i class="fa-solid fa-chevron-right"></i>
-                                                </div>
-                                                <div class="row justify-content-between flex-lg-nowrap">
+                                                </button>
+                                                <div class="scroll-content row justify-content-between flex-lg-nowrap">
                                                     @foreach ($item->subCategories as $value)
                                                         <div class="col-lg-3 col-md-4 col-12">
                                                         <div class="clothes_content">
@@ -384,6 +381,9 @@ use App\Models\Category;
                                                     @endforeach
                                                     
                                                 </div>
+                                                <button class="scroll-arrow scroll-btn scroll-right" type="button" aria-label="scroll right">
+                                                    <i class="fa-solid fa-chevron-right"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </li>

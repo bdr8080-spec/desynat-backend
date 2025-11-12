@@ -559,53 +559,45 @@ section{
     transform: translate(-50%, 0%);
     overflow-x: scroll;
 }
-
-.scroll-wrapper {
-  position: relative;
-}
-
+.sell_clothes { position: relative; overflow: hidden; padding: 10px; }
+.scroll-wrapper { position: relative; display: flex; align-items: center; }
 .scroll-content {
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
-  scrollbar-width: none; /* hide scrollbar for Firefox */
+  gap: 10px;
+  padding: 10px 40px; /* leave space for arrows */
+  scrollbar-width: none;
 }
-
-.scroll-content::-webkit-scrollbar {
-  display: none; /* hide scrollbar for Chrome/Safari */
-}
+.scroll-content::-webkit-scrollbar { display: none; }
 
 .scroll-arrow {
   position: absolute;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
-  background: rgba(110, 69, 39, 0.8);
+  background: rgba(0,0,0,0.6);
   color: #fff;
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  border: none;
 }
+.scroll-left { left: 6px; }
+.scroll-right { right: 6px; }
 
-.scroll-right {
-  right: 0;
-}
-
-.scroll-left {
-  left: 0;
-}
-
-.sell_clothes:hover .scroll-arrow {
-  opacity: 1; /* Show arrows on hover */
-}
+.sell_clothes .scroll-arrow { opacity: 0.9; }
 .customNavbar .dropdown-menu.sell_clothes{
     padding: 20px;
+}
+.sell_clothes:hover .scroll-btn {
+  opacity: 1;
+  pointer-events: auto;
+  display: block !important;
 }
 .customNavbar .sell_clothes .clothes_content p{
     font-weight: 500 !important;

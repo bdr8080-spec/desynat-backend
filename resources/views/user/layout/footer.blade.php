@@ -464,22 +464,66 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // scroll on category
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
         const scrollContainer = document.querySelector(".scroll-content");
         const leftArrow = document.querySelector(".scroll-left");
         const rightArrow = document.querySelector(".scroll-right");
 
-        // scroll step size (width of 1 column roughly)
-        const scrollAmount = 300;
+        if (!scrollContainer || !leftArrow || !rightArrow) return;
 
-        rightArrow.addEventListener("click", () => {
-            scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        // Scroll amount per click (one column width + spacing)
+        const scrollAmount = scrollContainer.children[0]
+            ? scrollContainer.children[0].offsetWidth + 20
+            : 300;
+
+        // Prevent dropdown from closing on click
+        function safeClickHandler(e, callback) {
+            e.stopPropagation();
+            e.preventDefault();
+            if (callback) callback();
+        }
+
+        // Scroll right smoothly
+        rightArrow.addEventListener("click", (e) => {
+            safeClickHandler(e, () => {
+                scrollContainer.scrollBy({
+                    left: scrollAmount,
+                    behavior: "smooth"
+                });
+            });
         });
 
-        leftArrow.addEventListener("click", () => {
-            scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+        // Scroll left smoothly
+        leftArrow.addEventListener("click", (e) => {
+            safeClickHandler(e, () => {
+                scrollContainer.scrollBy({
+                    left: -scrollAmount,
+                    behavior: "smooth"
+                });
+            });
         });
+
+        // Prevent closing when clicking inside the scroll container
+        scrollContainer.addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
+        // Show/hide arrows based on scroll position
+        function updateArrows() {
+            const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            leftArrow.style.display = scrollContainer.scrollLeft > 10 ? 'flex' : 'none';
+            rightArrow.style.display = scrollContainer.scrollLeft < maxScrollLeft - 10 ? 'flex' : 'none';
+        }
+
+        // Update arrows on scroll
+        scrollContainer.addEventListener("scroll", updateArrows);
+        window.addEventListener("resize", updateArrows);
+
+        // Initial check
+        updateArrows();
     });
+
+
 </script>
 
 </body>
