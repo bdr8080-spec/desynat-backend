@@ -27,15 +27,15 @@
                         <input type="text" maxlength="1" class="otp-input" id="otp5" name="otp[]" />
                         <input type="text" maxlength="1" class="otp-input" id="otp6" name="otp[]" />
                     </div>
-                     <div class="resend-otp-container"
+                        <div class="resend-otp-container"
                             style="display: flex;justify-content: center;margin-top:20px !important;xmargin:0 auto; align-items: center; gap: 10px;">
                            <button type="button" class="customBtnresend" data-id="{{ request()->id }}" id="resendOtp">
-                            Resend OTP
-                        </button>
+                                Resend OTP
+                            </button>
 
                             <span id="otpTimer" style="color: red;"></span>
                         </div>
-                    <button type="submit" class="customBtn mt-5" id="verifyBtn">Verify OTP</button>
+                    <button type="submit" class="customBtn customBtn5 mt-5" id="verifyBtn">Verify OTP</button>
                 </div>
                 </form>
             </div>
@@ -68,22 +68,22 @@
 
     <script>
 
-    $(document).on('click', '#resendOtp', function() {
-    let id = $(this).data('id');
-    $.ajax({
-        url: "{{ route('updateResendOtp') }}",
-        type: 'GET',
-        data: {
-            id: id
-        },
-        success: function(response) {
-           toastr.success(response.message);
-        },
-        error: function(xhr) {
-            toastr.error(response.message)
-        }
-    });
-});
+        $(document).on('click', '#resendOtp', function() {
+            let id = $(this).data('id');
+            $.ajax({
+                url: "{{ route('updateResendOtp') }}",
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(response) {
+                toastr.success(response.message);
+                },
+                error: function(xhr) {
+                    toastr.error(response.message)
+                }
+            });
+        });
 
 
         function resenOtp(id) {
@@ -173,6 +173,50 @@
         @if ($errors->any())
             toastr.error("{{ $errors->first() }}");
         @endif
+    </script>
+
+    <script>
+        function startOtpTimer() {
+            let button = document.getElementById('resendOtpBtn');
+            let timerDisplay = document.getElementById('otpTimer');
+            let timer = 50; // seconds
+
+            button.disabled = true;
+            timerDisplay.innerText = `${timer}s`;
+
+            let countdown = setInterval(() => {
+                timer--;
+                timerDisplay.innerText = `${timer}s`;
+
+                if (timer <= 0) {
+                    clearInterval(countdown);
+                    button.disabled = false;
+                    timerDisplay.innerText = ""; // Hide timer after completion
+                }
+            }, 1000);
+        }
+
+        function resendOtp() {
+            let id = "{{ request()->temp_user_id }}";
+
+            // Restart the timer
+            startOtpTimer();
+
+            $.ajax({
+                url: "{{ route('userResendOtp') }}",
+                type: "POST",
+                data: {
+                    id: id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(resp) {
+                    toastr.success(resp.message);
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+                }
+            });
+        }
     </script>
 
 

@@ -18,7 +18,7 @@
                         <input type="text" maxlength="1" class="otp-input" id="otp3" />
                         <input type="text" maxlength="1" class="otp-input" id="otp4" />
                     </div>
-                    <a type="button" class="customBtn mt-5" href="" data-bs-toggle="modal" data-bs-target="#verifiedConfirm">Verify OTP</a>
+                    <a type="button" class="customBtn customBtn5 mt-5" href="" data-bs-toggle="modal" data-bs-target="#verifiedConfirm">Verify OTP</a>
                 </div>
             </div>
         </div>
