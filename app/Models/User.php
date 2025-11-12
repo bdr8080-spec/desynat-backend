@@ -56,6 +56,12 @@ class User extends Authenticatable
         ];
     }
 
+
+      public function country()
+    {
+        return $this->belongsTo(country::class, 'country_code', 'dial_code');
+    }
+
     public function country_info()
     {
         return $this->belongsTo(all_countrie::class, 'country_code', 'dial_code');
