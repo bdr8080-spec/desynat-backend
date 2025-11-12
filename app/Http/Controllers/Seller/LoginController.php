@@ -428,6 +428,9 @@ class LoginController extends Controller
         'upload_proof' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048|required_without:old_upload_proof',
         'old_upload_proof' => 'nullable|required_without:upload_proof', 
     ],[
+        'iban.required' =>'please enter IBAN number',
+        'swift.required' =>'please enter SWIFT\BIC number',
+        
         'account_type.required'=>'Please select account type',
         'bank_name.required'=>'Please enter bank name',
         'account_holder_name.required'=>'Please enter account holder name',
