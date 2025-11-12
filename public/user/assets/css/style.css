@@ -153,6 +153,10 @@ section{
     width: 13%;
     height: 100%;
 }
+h3.mid-headng{
+    font-weight: 500 !important;
+}
+
 .header-main .navbar-brand img{
     width: 100%;
     height: 100%;
@@ -483,6 +487,9 @@ section{
 }
 .header_nav_button_dropdown .dropdown-menu.show{
     padding: 0;
+    min-height: 600px;
+    overflow-y: scroll;
+    height: 100%;
 }
 .header_nav_button_dropdown .dropdown-menu .dropdown-item{
     margin: 10px;
@@ -744,9 +751,15 @@ section{
     color: var(--secondry2-color);
     width: 32px;
     height: 32px;
+    padding: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.share-btn img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .categorie_cotent-img{
     width: 100%;
@@ -800,6 +813,8 @@ section{
 .premiumImg{
     width: 100%;
     height: 470px;
+    border-radius: 12px;
+    overflow: hidden;
 }
 .premiumImg img{
     width: 100%;
@@ -894,6 +909,7 @@ section{
 }
 .profileContenar span{
     color: #6E4527;
+        font-size: 18px;
 }
 .profile_buttons{
     margin: 15px;
@@ -912,6 +928,9 @@ section{
     text-decoration: none;
     width: 100%;
     display: block;
+}
+.profile_links li a:hover, .profile_links li a:active{
+    background: transparent !important;
 }
 .profile_links li a img{
     margin-right: 8px;

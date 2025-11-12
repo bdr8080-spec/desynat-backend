@@ -21,7 +21,7 @@
     </div>
 
     <section class="customContainer categorie_contenar" id="subCategorySection">
-        <h3>Categories</h3>
+        <h3 class="mid-headng">Categories</h3>
        <div class="row"> 
           @forelse ($subCategory as $item)
             <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
@@ -42,7 +42,7 @@
     </section>
 
     <div class="customContainer suggestStore">
-        <h3>Suggested Stores</h3>
+        <h3 class="mid-headng mb-3">Suggested Stores</h3>
         <div class="suggestStore_contenar">
             <div class="owl-carousel storeCarousel">
             <div class="item">
@@ -216,13 +216,13 @@
     </div>
 
     <section class="bestSelling customContainer">
-        <h3>Best Selling</h3>
+        <h3 class="mid-headng mb-3">Best Selling</h3>
         <div class="owl-carousel bestSellingCarousel">
             <div class="item">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -246,7 +246,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -270,7 +270,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -294,7 +294,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -318,7 +318,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -342,7 +342,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -366,20 +366,19 @@
     </section>
 
     <div class="customContainer">
-        <h3>Browse some Premium stores</h3>
+        <h3 class="mid-headng mb-3">Browse some Premium stores</h3>
         <div class="premiumImg">
             <img src="{{asset('user/assets/images/premium.svg')}}" class="img-fluid" />
         </div>
     </div>
 
     <section class="bestSelling customContainer mt-3">
-        <h3>Top Rated</h3>
+        <h3 class="mid-headng mb-3">Top Rated</h3>
         <div class="owl-carousel topRatedCarousel">
             <div class="item">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -403,7 +402,6 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -427,7 +425,6 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -451,7 +448,6 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -475,7 +471,6 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -499,7 +494,6 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -523,20 +517,20 @@
     </section>
 
     <div class="customContainer">
-        <h3>Browse some discounted deals</h3>
+        <h3 class="mid-headng mb-3">Browse some discounted deals</h3>
         <div class="premiumImg">
             <img src="{{asset('user/assets/images/discount-deals.svg')}}" class="img-fluid" />
         </div>
     </div>
 
-    <section class="customContainer mt-3">
-        <h3>Newest Products</h3>
+    <section class="customContainer mt-3">  
+        <h3 class="mid-headng mb-0">Newest Products</h3>
         <div class="row">
             <div class="col-lg-3 col-md-4 col-6 my-3">
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -560,7 +554,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -584,7 +578,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -608,7 +602,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -632,7 +626,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -656,7 +650,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
@@ -680,31 +674,7 @@
                 <div class="product-card">
                     <div class="product-img">
                         <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
-                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                    </div>
-                    <div class="product-content">
-                        <h5>3pcs Set (by Abaya)</h5>
-                        <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                        <span>(123K)</span>
-                        </div>
-                        <div class="price">
-                        <strong>KD 239</strong>
-                        <span class="old-price">KD 299</span>
-                        <span class="discount">20% off</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-6 my-3">
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="{{asset('user/assets/images/product.svg')}}" alt="Product">
-                        <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                        <button class="share-btn"><img src="{{asset('user/assets/images/share_icon.svg')}}" /></button>
                         <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
                     <div class="product-content">
