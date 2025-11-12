@@ -619,7 +619,7 @@ h3.mid-headng{
   z-index: 10;
   border: none;
 }
-.scroll-left { left: 5px; background: transparent; color: var(--secondry2-color);}
+.scroll-left { left: 0px; background: transparent; color: var(--secondry2-color);}
 .scroll-right { right: 5px; background: transparent; color: var(--secondry2-color);}
 
 .sell_clothes .scroll-arrow { opacity: 0.9; }
