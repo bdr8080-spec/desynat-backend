@@ -52,6 +52,8 @@ ul li a{
     max-width: 1443px;
     width: 100%;
     margin: 0 auto;
+    overflow-y: auto; /* scrolls only when needed */
+    overflow-x: hidden;
 }
 
 section{
@@ -497,7 +499,7 @@ section{
 .search {
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 100%;
 }
 .location .search{
     max-width: 100% !important;
@@ -508,6 +510,23 @@ section{
   width: 100%;
   transition: all 0.3s ease;
   padding-left: 35px;
+  background: rgb(255 255 255 / 50%);
+}
+.customBtnLocation{
+    width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+.customBtnLocation span{
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: calc(100% - 0px);
 }
 
 /* Search icon styling */
@@ -528,7 +547,7 @@ section{
     width: 100%;
     margin: 0 !important;
     border-radius: 0;
-    background-color: #FAFAFA;
+    background-color: transparent;
     transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
     overflow-x: scroll;
@@ -541,8 +560,11 @@ section{
     color: var(--secondry2-color);
     margin-bottom: 5px;
 }
+.customNavbar ul li.nav-item{
+    margin: 0 10px;
+}
 .customNavbar ul li.nav-item a.nav-link{
-    padding: 10px 10px 10px 30px;
+    padding: 10px 12px;
     text-transform: uppercase;
 }
 .customNavbar ul li.nav-item a.nav-link:active{
@@ -705,7 +727,7 @@ section{
 }
 .premiumImg{
     width: 100%;
-    height: 100%;
+    height: 470px;
 }
 .premiumImg img{
     width: 100%;
@@ -903,6 +925,7 @@ section{
     padding-left: 70px !important;
 }
 
+
 /* index end */
 
 
@@ -910,8 +933,11 @@ section{
 
 footer{
     background: var(--gradient-color);
-        padding: 3% 2% 0;
-    
+    padding: 3% 2% 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;    
+    z-index: 1;
 }
 footer span{
     font-size: var(--nav-font-size);

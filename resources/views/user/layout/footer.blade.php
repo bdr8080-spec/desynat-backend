@@ -48,7 +48,7 @@
                 <div class="footerNavLink">
                     <div class="footerNavLink_content ms-lg-auto ms-md-auto">
                         <h6>Get the App</h6>
-                        <div class="getTheApp gap-2 d-flex align-items-end flex-lg-column">
+                        <div class="getTheApp gap-2 d-flex align-items-end">
                             <div style="width: 40%;">
                                 <img src="{{asset('user/assets/images/play-store.svg')}}" class="img-fluid" />
                             </div>
@@ -92,6 +92,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
 </script>
+
 
 <script>
 let map, marker, autocomplete;
@@ -143,8 +144,8 @@ function updateLocation(loc, formattedAddress = null, addressComponents = null) 
     const cityField = document.getElementById('cityField');
     const locationUpdate = document.getElementById('locationUpdate');
 
-    map.setCenter(loc);
-    marker.setPosition(loc);
+    map?.setCenter(loc);
+    marker?.setPosition(loc);
 
     const lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
     const lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
@@ -155,19 +156,18 @@ function updateLocation(loc, formattedAddress = null, addressComponents = null) 
         // Directly use formatted address
         input.value = formattedAddress;
         addressDisplay.textContent = formattedAddress;
-        locationUpdate.textContent = formattedAddress;
-        if (cityField) cityField.textContent = formattedAddress; 
+        if (locationUpdate) locationUpdate.textContent = formattedAddress;
+        if (cityField) cityField.textContent = formattedAddress;
     } else {
-        // Get address via reverse geocoding
+        // Reverse geocoding to get address
         geocoder.geocode({ location: { lat, lng } }, (results, status) => {
             if (status === "OK" && results[0]) {
-                input.value = results[0].formatted_address;
-                addressDisplay.textContent = results[0].formatted_address;
-                if (cityField) cityField.textContent = results[0].formatted_address; 
+                const addr = results[0].formatted_address;
+                input.value = addr;
+                addressDisplay.textContent = addr;
+                if (cityField) cityField.textContent = addr;
             } else {
-                input.value = "";
-                addressDisplay.textContent = "Address not found.";
-                if (cityField) cityField.value = "";
+                if (cityField) cityField.textContent = "Address not found.";
             }
         });
     }
@@ -195,9 +195,39 @@ function loadMapWithCurrentLocation() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const modalEl = document.getElementById("changeLocation");
+// ✅ Automatically show current address in cityField on page reload
+function showCurrentLocationInCityField() {
+    const cityField = document.getElementById('cityField');
+    if (!cityField) return;
 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                const geocoder = new google.maps.Geocoder();
+                geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+                    if (status === "OK" && results[0]) {
+                        cityField.textContent = results[0].formatted_address;
+                    } else {
+                        cityField.textContent = "Location not found.";
+                    }
+                });
+            },
+            () => {
+                cityField.textContent = "Unable to fetch location.";
+            }
+        );
+    } else {
+        cityField.textContent = "Geolocation not supported.";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // ✅ Show address in cityField immediately when page loads
+    showCurrentLocationInCityField();
+
+    const modalEl = document.getElementById("changeLocation");
     modalEl.addEventListener("shown.bs.modal", () => {
         if (!mapInitialized) {
             const imgPlaceholder = modalEl.querySelector("img");
@@ -377,6 +407,60 @@ document.addEventListener("DOMContentLoaded", () => {
     @if(session('info'))
         toastr.info("{{ session('info') }}");
     @endif
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  function isVisible(element) {
+    // Check if element exists and is actually visible
+    if (!element) return false;
+    const style = window.getComputedStyle(element);
+    return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+  }
+
+  function adjustProfileHeight() {
+    const profile = document.querySelector(".mid-content");
+    const footer = document.querySelector("footer");
+    const header = document.querySelector("header");
+    if (!profile) return;
+
+    const footerVisible = isVisible(footer);
+    const footerHeight = footerVisible && footer ? footer.offsetHeight : 0;
+    const headerHeight = header ? header.offsetHeight : 0;
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+
+    // ✅ Script sirf 1024px se zyada screens par chale
+    if (windowWidth > 1024) {
+      const availableHeight = windowHeight - (headerHeight + footerHeight + (footerVisible ? 50 : 0));
+      profile.style.height = availableHeight + "px";
+      profile.style.overflowY = "auto";
+      profile.style.paddingBottom = "0";
+    } else {
+      // ❌ Mobile/tablet me disable
+      profile.style.height = "auto";
+      profile.style.overflowY = "visible";
+      profile.style.paddingBottom = "0";
+    }
+  }
+
+  // Run on load
+  adjustProfileHeight();
+
+  // Recalculate on resize/orientation change
+  window.addEventListener("resize", adjustProfileHeight);
+  window.addEventListener("orientationchange", adjustProfileHeight);
+
+  // Observe footer height changes (only when visible)
+  const footer = document.querySelector("footer");
+  if (footer) {
+    const observer = new ResizeObserver(() => {
+      if (window.innerWidth > 1024) adjustProfileHeight();
+    });
+    observer.observe(footer);
+  }
+});
 </script>
 
 </body>

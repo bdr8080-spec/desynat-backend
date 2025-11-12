@@ -7,6 +7,7 @@
         <link href="{{ asset('user/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('user/assets/css/responsive.css') }}" rel="stylesheet" />
     <!-- <link href="assets/css/fontawesome.min.css" rel="stylesheet" /> -->
+     <link rel="icon" type="image/x-icon" href="{{ asset('user/assets/images/desynat_fav_ic.svg') }}">
      <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/9.0.6/css/intlTelInput.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" />
@@ -37,7 +38,7 @@ use App\Models\Category;
                             @if (Auth::guard('web')->check())
                             <div class="dropdown-center userDropdown">
                                 <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
+                                    <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" alt="" height="50px" width="80px" /> 
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end profileDropdown">
                                     <li>
@@ -51,9 +52,11 @@ use App\Models\Category;
                                                     <label>{{Auth::guard('web')->user()->email ?? ''}}</label>
                                                 </div>  
                                             </div>
-                                            <a href="{{route('userProfile')}}">
-                                                <span><i class="bi bi-pencil"></i></span>                                                     
-                                            </a>
+                                            <div class="ms-auto">
+                                                <a href="{{route('userProfile')}}">
+                                                    <span><i class="bi bi-pencil"></i></span>                                                     
+                                                </a>
+                                            </div>
                                         </div>
                                     </li>
                                     <li>
@@ -312,9 +315,9 @@ use App\Models\Category;
                         <div class="row">
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
-                                <h6>Deliver to {{@Auth::guard('web')->user()->full_name}}</h6>
-                                <div class="d-flex align-self-center w-100" >
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
+                                <h6>Deliver to {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
+                                <div class="d-flex align-self-center w-100" data-bs-toggle="modal" data-bs-target="#changeLocation">
+                                    <button type="button" class="customBtnLocation btn btn-primary" >
                                         <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
                                     </button>
                                     <span class="ms-lg-5 ms-md-3 ms-2">
@@ -323,35 +326,17 @@ use App\Models\Category;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-6 col-6  d-lg-block d-md-block d-none">
+                        <div class="col-lg-4 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="form-group position-relative search">
                                 <input type="text" class="form-control" placeholder="Search Product or Brand" />
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-12">
-                            <div class="d-lg-none d-md-none d-block">
-                                <div class="track_location">
-                                    <h6>Deliver to Reshab</h6>
-                                    <div class="d-flex align-self-center w-100">
-                                        <button>
-                                            <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> Durgapur 
-                                        </button>
-                                        <span class="ms-lg-5 ms-md-3 ms-2">
-                                            <i class="fa-solid fa-chevron-down"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-none d-md-none d-block">
-                                <div class="form-group position-relative search">
-                                    <input type="text" class="form-control" placeholder="Search Product or Brand" />
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </div>
-                            </div>
+                        <div class="col-lg-6 col-12">
+                            
                             <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
                                
-                                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap">
+                                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 w-100 justify-content-end flex-wrap">
                                     @foreach ($data as $item)
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="handleSubCategory({{$item->id}})">

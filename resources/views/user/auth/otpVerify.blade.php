@@ -72,6 +72,7 @@
                         @csrf
                         <input type="hidden" name="id" value="{{ request()->temp_user_id }}">
                         <input type="hidden" name="forget_password" value="{{ request()->forget_password }}">
+                        <input type="hidden" name="type" value="{{request()->type}}">
                         <div class="otp-container mt-3">
                             <input type="text" maxlength="1" class="otp-input" id="otp1" name="otp[]" />
                             <input type="text" maxlength="1" class="otp-input" id="otp2" name="otp[]" />
