@@ -80,7 +80,8 @@
                                     </div>
 
                                     <div class="w-100">
-                                        <input type="number" class="form-control" name="mobile" placeholder="Enter Mobile Number">
+                                        <input type="number" class="form-control" name="mobile" placeholder="Enter Mobile Number" maxlength="15"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                                     </div>
                                 </div>
                             </div>

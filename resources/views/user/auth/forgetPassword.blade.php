@@ -77,7 +77,8 @@
 
                             </div>
                             <div class="w-100">
-                                <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                                <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile" maxlength="15"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                             </div>
                         </div>
                         <p class="text-danger" id="error-mobile"></p>
