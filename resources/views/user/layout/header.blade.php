@@ -316,8 +316,8 @@ use App\Models\Category;
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
                                 <h6>Deliver to {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
-                                <div class="d-flex align-self-center w-100" >
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
+                                <div class="d-flex align-self-center w-100" data-bs-toggle="modal" data-bs-target="#changeLocation">
+                                    <button type="button" class="customBtnLocation btn btn-primary" >
                                         <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
                                     </button>
                                     <span class="ms-lg-5 ms-md-3 ms-2">
@@ -336,7 +336,7 @@ use App\Models\Category;
                             
                             <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
                                
-                                <ul class="navbar-nav mb-2 mb-lg-0 w-100">
+                                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 w-100 justify-content-end flex-wrap">
                                     @foreach ($data as $item)
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="handleSubCategory({{$item->id}})">

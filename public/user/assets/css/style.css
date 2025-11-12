@@ -499,7 +499,7 @@ section{
 .search {
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 100%;
 }
 .location .search{
     max-width: 100% !important;
@@ -510,6 +510,23 @@ section{
   width: 100%;
   transition: all 0.3s ease;
   padding-left: 35px;
+  background: rgb(255 255 255 / 50%);
+}
+.customBtnLocation{
+    width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+.customBtnLocation span{
+    overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: calc(100% - 0px);
 }
 
 /* Search icon styling */
@@ -530,7 +547,7 @@ section{
     width: 100%;
     margin: 0 !important;
     border-radius: 0;
-    background-color: #FAFAFA;
+    background-color: transparent;
     transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
     overflow-x: scroll;
