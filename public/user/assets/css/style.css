@@ -526,7 +526,7 @@ h3.mid-headng{
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block;
-    max-width: 140px;
+    max-width: 220px;
     width: 100%;
     overflow: hidden;
 }
