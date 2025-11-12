@@ -33,7 +33,9 @@ use App\Http\Controllers\User\ProfileController;
    Route::match(['get','post'], '/update-new-number', [ProfileController::class, 'updateNewNumber'])->name('userUpdateNewNumber');
    Route::match(['get','post'],'/update-email-address',[ProfileController::class, 'updateEmailAddress'])->name('userUpdateNewEmail');
 
-  });
+   Route::get('/update-resend-otp', [ProfileController::class, 'updateResendOtp'])->name('updateResendOtp');
+
+   });
 
 
 //  Route::match(['get', 'post'], '/route1', function () {

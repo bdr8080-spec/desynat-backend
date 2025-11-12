@@ -3,7 +3,7 @@
 @section('content')
     <div class="login_contenar">
         <header class="inner-header">
-            <a><img src="assets/images/logo.svg" class="img-fluid" /></a>
+            <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="assets/images/global.svg" class="img-fluid" /> EN
@@ -77,7 +77,8 @@
 
                             </div>
                             <div class="w-100">
-                                <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile">
+                                <input type="number" class="form-control"  value="" placeholder="Enter Mobile Number" name="mobile" maxlength="15"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
                             </div>
                         </div>
                         <p class="text-danger" id="error-mobile"></p>
@@ -89,7 +90,7 @@
                         <input class="form-control notapplyspace" type="email" placeholder="Enter Mobile Number" name="email">
                           <p class="text-danger" id="error-email"></p>
                     </div>
-                    <button type="submit" class="customBtn mt-4">Continue</button>
+                    <button type="submit" class="customBtn customBtn5 mt-4">Continue</button>
                     </form>
 
                 </div>

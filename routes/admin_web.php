@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DeliveryBoyController;
+use App\Http\Controllers\Admin\ReasonController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -64,6 +67,15 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/deletePlan/{id}', [PlanController::class, 'deletePlan'])->name('admin.deletePlan');
         Route::post('/add_plan', [PlanController::class, 'add_plan'])->name('admin.add_plan');
         Route::post('/update_plan', [PlanController::class, 'update_plan'])->name('admin.update_plan');
+
+        //user management
+        Route::get('/user-management', [UserController::class, 'userManagement'])->name('admin.userManagement');
+
+        //delivery boy management
+        Route::get('/delivery-boy-management', [DeliveryBoyController::class, 'deliveryBoyManagement'])->name('admin.deliveryBoyManagement');
+
+        //user management
+        Route::get('/reason-management', [ReasonController::class, 'reasonManagement'])->name('admin.reasonManagement');
 
     });
 

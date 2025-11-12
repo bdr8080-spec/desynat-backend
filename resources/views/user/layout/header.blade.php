@@ -7,6 +7,7 @@
         <link href="{{ asset('user/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('user/assets/css/responsive.css') }}" rel="stylesheet" />
     <!-- <link href="assets/css/fontawesome.min.css" rel="stylesheet" /> -->
+     <link rel="icon" type="image/x-icon" href="{{ asset('user/assets/images/desynat_fav_ic.svg') }}">
      <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/9.0.6/css/intlTelInput.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet" />
@@ -37,7 +38,7 @@ use App\Models\Category;
                             @if (Auth::guard('web')->check())
                             <div class="dropdown-center userDropdown">
                                 <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="{{Auth::guard('web')->user()->profile_image}}" alt="" height="50px" width="80px" /> 
+                                    <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" alt="" height="50px" width="80px" /> 
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end profileDropdown">
                                     <li>
@@ -51,9 +52,11 @@ use App\Models\Category;
                                                     <label>{{Auth::guard('web')->user()->email ?? ''}}</label>
                                                 </div>  
                                             </div>
-                                            <a href="{{route('userProfile')}}">
-                                                <span><i class="bi bi-pencil"></i></span>                                                     
-                                            </a>
+                                            <div class="ms-auto">
+                                                <a href="{{route('userProfile')}}">
+                                                    <span><i class="bi bi-pencil"></i></span>                                                     
+                                                </a>
+                                            </div>
                                         </div>
                                     </li>
                                     <li>
@@ -77,36 +80,55 @@ use App\Models\Category;
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/terms.svg')}}" />
                                                 Terms & Condition
-                                                <i class="fa-solid fa-chevron-right"></i>
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
                                             </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/return.svg')}}" />
-                                                Return Policy</a></li>
+                                                Return Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/about-us.svg')}}" />
-                                                About Us</a></li>
+                                                About Us
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/faq.svg')}}" />
-                                                FAQ's</a></li>
+                                                FAQ's
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/change-lang.svg')}}" />
-                                                Change Language</a></li>
+                                                Change Language
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/cancel-policy.svg')}}" />
-                                                Cancellation Policy</a></li>
+                                                Cancellation Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/exchange.svg')}}" />
-                                                Exchange Policy</a></li>
+                                                Exchange Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/support.svg')}}" />
-                                                Support</a></li>
+                                                Support
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/becom-affilit.svg')}}" />
-                                                Become An Affiliate</a></li>
+                                                Become An Affiliate
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/setting.svg')}}" />
-                                                Settings</a></li>
-                                            <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
+                                                Settings
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
+                                            <li>
+                                                <a class="dropdown-item text-center" href="{{route('userLogout')}}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                                         </ul>
                                     </li>
                                     <!-- <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li> -->
@@ -312,67 +334,56 @@ use App\Models\Category;
                         <div class="row">
                         <div class="col-lg-2 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="track_location">
-                                <h6>Deliver to {{@Auth::guard('web')->user()->full_name}}</h6>
-                                <div class="d-flex align-self-center w-100" >
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#changeLocation">
-                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
+                                <h6>Deliver to {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
+                                <div class="d-flex align-self-center w-100" data-bs-toggle="modal" data-bs-target="#changeLocation">
+                                    <button type="button" class="customBtnLocation btn" >
+                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid me-2" /> <span id="cityField"></span> 
                                     </button>
-                                    <span class="ms-lg-5 ms-md-3 ms-2">
+                                    <span class="">
                                         <i class="fa-solid fa-chevron-down"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-6 col-6  d-lg-block d-md-block d-none">
+                        <div class="col-lg-4 col-md-6 col-6  d-lg-block d-md-block d-none">
                             <div class="form-group position-relative search">
                                 <input type="text" class="form-control" placeholder="Search Product or Brand" />
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-12">
-                            <div class="d-lg-none d-md-none d-block">
-                                <div class="track_location">
-                                    <h6>Deliver to Reshab</h6>
-                                    <div class="d-flex align-self-center w-100">
-                                        <button>
-                                            <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> Durgapur 
-                                        </button>
-                                        <span class="ms-lg-5 ms-md-3 ms-2">
-                                            <i class="fa-solid fa-chevron-down"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-none d-md-none d-block">
-                                <div class="form-group position-relative search">
-                                    <input type="text" class="form-control" placeholder="Search Product or Brand" />
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </div>
-                            </div>
+                        <div class="col-lg-6 col-12">
+                            
                             <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
                                
-                                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap">
+                                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 w-100 justify-content-end flex-wrap">
                                     @foreach ($data as $item)
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="handleSubCategory({{$item->id}})">
                                             {{$item->name}}
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
-
-                                            <div class="row justify-content-between flex-lg-nowrap">
-                                                @foreach ($item->subCategories as $value)
-                                                    <div class="col-lg-3 col-md-4 col-12">
-                                                    <div class="clothes_content">
-                                                        <p>{{$value->name_english}}</p>
-                                                        <ul class="list-unstyled">
-                                                            {{-- <li>
-                                                                <a href="">Shirt</a>
-                                                            </li> --}}
-                                                        </ul>
+                                            <div class="scroll-wrapper">
+                                                <button class="scroll-arrow scroll-btn scroll-left" type="button" aria-label="scroll left">
+                                                    <i class="fa-solid fa-chevron-left"></i>
+                                                </button>
+                                                <div class="scroll-content row justify-content-between flex-lg-nowrap">
+                                                    @foreach ($item->subCategories as $value)
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="clothes_content">
+                                                            <p>{{$value->name_english}}</p>
+                                                            <ul class="list-unstyled">
+                                                                {{-- <li>
+                                                                    <a href="">Shirt</a>
+                                                                </li> --}}
+                                                            </ul>
+                                                        </div>
                                                     </div>
+                                                    @endforeach
+                                                    
                                                 </div>
-                                                @endforeach
-                                                
+                                                <button class="scroll-arrow scroll-btn scroll-right" type="button" aria-label="scroll right">
+                                                    <i class="fa-solid fa-chevron-right"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </li>
@@ -413,7 +424,7 @@ use App\Models\Category;
                 </div>
                 <div class="modal-body">
                     <div>
-                        <div class="form-group position-relative search w-100">
+                        <div class="form-group position-relative search w-100 mb-3">
                             <input type="text" class="form-control" placeholder="Search address" />
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>

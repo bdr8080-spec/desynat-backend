@@ -37,7 +37,7 @@
                     <input type="hidden" name="for" value="email">
                     <input type="hidden" name="type" value="1"> 
 
-                    <button type="submit" class="customBtn mt-5 w-100">Continue</button>
+                    <button type="submit" class="customBtn customBtn5 mt-5 w-100">Continue</button>
                 </div>
             </div>
         </form>

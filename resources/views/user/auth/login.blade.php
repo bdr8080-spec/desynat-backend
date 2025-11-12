@@ -5,7 +5,7 @@
 @section('content')
     <div class="login_contenar">
         <header class="inner-header">
-            <a><img src="assets/images/logo.svg" class="img-fluid" /></a>
+            <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="assets/images/global.svg" class="img-fluid" /> EN
@@ -66,7 +66,8 @@
 
                          </div> 
                          <div class="w-100 LoginMobileDesign">
-                           <input type="text" class="form-control notapplyspace"  value="" placeholder="Please enter mobile number or email address" name="mobileOrEmail" id="LoginMobile">
+                           <input type="text" class="form-control notapplyspace"  value="" placeholder="Please enter mobile number or email address" name="mobileOrEmail" id="LoginMobile"
+                           />
                         </div>
                     </div>
                 </div>
@@ -99,7 +100,7 @@
 
                 </div>
                  <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('userRegister')}}">Sign up</a></p>
-                 <p class="guest">Continue As a Guest</p>
+                 <p class="guest"><a href="{{route('dashboard')}}">Continue As a Guest</a></p>
             </div>
         </div>
     </div>

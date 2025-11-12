@@ -36,6 +36,24 @@
             Subscription Plan Management
         </a>
     </li>
+    <li class="nav-item {{ Request::routeIs('admin.userManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.userManagement') }}">
+            <span><img src="{{ asset('admin/image/users-01.svg') }}" alt="Plan Management" /></span>
+            User Management
+        </a>
+    </li>
+    <li class="nav-item {{ Request::routeIs('admin.deliveryBoyManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.deliveryBoyManagement') }}">
+            <span><img src="{{ asset('admin/image/image-user-check.svg') }}" alt="Plan Management" /></span>
+            Delivery Boy Management
+        </a>
+    </li>
+    <li class="nav-item {{ Request::routeIs('admin.reasonManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.reasonManagement') }}">
+            <span><img src="{{ asset('admin/image/help-circle.svg') }}" alt="Plan Management" /></span>
+            Reason Management
+        </a>
+    </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
             <span><img src="{{ asset('admin/image/logout.svg') }}" alt="Logout" /></span>

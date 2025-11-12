@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Services\UserProfileService;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Validation\Rule;
 use Auth;
 use Validator;
 use Session;
@@ -52,12 +53,18 @@ class AuthController extends Controller
                     'country_code' => 'required',
                     // 'image'=> 'required',
                     'email' => 'required|email|unique:users,email',
-                    'mobile' => 'required|digits_between:7,15',
+                    'mobile'=> [
+                            'required',
+                            'digits_between:7,15',
+                            Rule::unique('users')->where(function ($query) use ($request) {
+                                return $query->where('country_code', $request->country_code);
+                            }),
+                        ],
                     'password' => [
                             'required',
-                            'string',
-                            'min:8',
-                            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                            // 'string',
+                            // 'min:8',
+                            // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
                         ],
                     'confirm_password' => 'required|same:password',
                     'accept_terms' => 'required|in:1',
@@ -192,10 +199,13 @@ class AuthController extends Controller
                     Auth::guard('web')->login($user);
                     Session::forget('verify-password');
                     return response()->json([
-                        'status' => true,
-                        'message' => 'User Register Succesfully',
-                        'redirect_url' => route('dashboard'),
-                    ]);
+                    'status' => true,
+                    'message' => $request->type == 1 
+                        ? 'Login successfully' 
+                        : 'User registered successfully',
+                    'redirect_url' => route('dashboard'),
+                ]);
+
                 }
     
             } else {
@@ -294,9 +304,9 @@ class AuthController extends Controller
             }else{   
             
                 if ($request->forgetPassword == '1') {
-                    $rules['mobile'] = 'required|digits:10|exists:users,mobile';
+                    $rules['mobile'] = 'required|digits_between:7,15|exists:users,mobile';
                     $messages['mobile.required'] = 'Please enter your mobile number';
-                    $messages['mobile.digits'] = 'Mobile number must be 10 digits';
+                    $messages['mobile.digits_between'] = 'Mobile number must be between 7 and 15 digits';
                     $messages['mobile.exists'] = 'This mobile number is not registered';
                 }
 
@@ -364,17 +374,17 @@ class AuthController extends Controller
                 $rules = [
                     'password' => [
                         'required',
-                        'string',
-                        'min:8',
-                        'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                        // 'string',
+                        // 'min:8',
+                        // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
                     ],
                     'confirm_password' => 'required|same:password',
                     ];
 
                 $messages = [
-                'password.required' => 'Please Enter New password',
-                'password.min' => 'Password must be at least 8 characters long',
-                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
+                 'password.required' => 'Please Enter New password',
+                // 'password.min' => 'Password must be at least 8 characters long',
+                // 'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
                 'confirm_password.required' => 'Please enter confirm password',
                 'confirm_password.same' => 'Passwords do not match',
                 ];
@@ -435,13 +445,13 @@ class AuthController extends Controller
                 if ($request->forgetPassword == '1') {
                     $rules = [
                         'country_code' => 'required',
-                        'mobile' => 'required|digits:10',
+                        'mobile' => 'required|digits_between:7,15',
                     ];
 
                     $messages = [
                         'country_code.required' => 'Please select your country code',
                         'mobile.required' => 'Please enter your mobile number',
-                        'mobile.digits' => 'Mobile number must be 10 digits',
+                        'mobile.digits' => 'Mobile number must be between 7 and 15 digits',
                     ];
                 } else {
                     $rules = [

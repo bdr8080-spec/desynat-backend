@@ -27,6 +27,7 @@ return new class extends Migration
             $table->longText('let')->nullable();
             $table->longText('long')->nullable();
             $table->rememberToken();
+            $table->string('status')->default('1')->comment('0 inactive,1 active');
             $table->timestamps();
         });
 

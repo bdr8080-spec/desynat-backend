@@ -1,7 +1,8 @@
 @include('user.layout.header')
 
-<div >
+<div class="mid-content">
 @yield('content')
 </div>
 
 @include('user.profile.layout.footer')
+
