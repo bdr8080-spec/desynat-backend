@@ -49,15 +49,15 @@
                             <div class="plan-circle plan-shadow p-3">
                                 <div class="pkg-list">
                                     <h6>Package Name</h6>
-                                    <h6>{{ $plans->plan_name_english }}</h6>
+                                    <h6 class="font-600">{{ $plans->plan_name_english }}</h6>
                                 </div>
                                 <div class="pkg-list">
                                     <h6>Price</h6>
-                                    <h6>KD {{ $plans->price }}</h6>
+                                    <h6 class="font-600">KD {{ $plans->price }}</h6>
                                 </div>
                                 <div class="pkg-list">
                                     <h6>Duration</h6>
-                                    <h6>{{ $plans->duration }} @if ($plans->duration_type == '1')
+                                    <h6 class="font-600">{{ $plans->duration }} @if ($plans->duration_type == '1')
                                             Month
                                         @else
                                             Year
@@ -69,20 +69,20 @@
                             <div class="plan-body p-3">
                                 <ul class="list-inline">
                                     <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of Products:
-                                        <span>{{ $plans->no_of_products }}</span>
+                                        <span class="font-600">{{ $plans->no_of_products }}</span>
                                     </li>
                                     <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of Videos
-                                        (Reels): <span>{{ $plans->no_of_videos }}</span></li>
+                                        (Reels): <span class="font-600">{{ $plans->no_of_videos }}</span></li>
                                     <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
                                         Highlights:
-                                        <span>{{ $plans->no_of_highlights }}</span>
+                                        <span class="font-600">{{ $plans->no_of_highlights }}</span>
                                     </li>
                                     <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">15 stories within 24
                                         hours</li>
                                     <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">5 Store Employees
                                     </li>
                                     <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
-                                        <span>2.5%</span>
+                                        <span class="font-600">2.5%</span>
                                     </li>
                                 </ul>
                             </div>

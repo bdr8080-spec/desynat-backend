@@ -223,7 +223,7 @@
     </div>
 </div>
 
-
+@include('dealer.layout.footer');
 
 <script>
     const ctx = document.getElementById('pointChart').getContext('2d');
@@ -251,5 +251,3 @@
         }
     });
 </script>
-
-@include('dealer.layout.footer');

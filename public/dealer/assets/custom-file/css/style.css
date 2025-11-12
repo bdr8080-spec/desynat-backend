@@ -47,8 +47,8 @@
   --gold-color: #F3D1A2;
   --title30: 25px;
   --text-red: red;
-  --revenu:linear-gradient(99.65deg, rgba(97, 255, 105, 0.08) -23.79%, rgba(23, 133, 76, 0.08) 123.4%);
-  --font-34:34px;
+  --revenu: linear-gradient(99.65deg, rgba(97, 255, 105, 0.08) -23.79%, rgba(23, 133, 76, 0.08) 123.4%);
+  --font-34: 34px;
 
 }
 
@@ -368,6 +368,10 @@ label {
 }
 
 .link-color {
+  color: var(--text-dark);
+}
+
+.link-color:hover {
   color: var(--text-dark);
 }
 
@@ -1231,4 +1235,27 @@ label {
   transform: translate(-5px, 24px);
   font-size: 22px;
   background: #fff;
+}
+
+.font-600 {
+  font-weight: 600 !important;
+  font-size: 19px;
+}
+
+
+@media (min-width:1024px) and (max-width:1240px) {
+  .planheight {
+    height: 270px !important;
+  }
+
+  .plan-body li {
+    line-height: 2.5;
+    font-size: 12px;
+  }
+
+  .plan-body.p-3 {
+    padding: 10px !important;
+  }
+
+
 }
