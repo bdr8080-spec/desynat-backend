@@ -74,7 +74,7 @@ Route::group(['prefix'=>'admin'], function(){
         //delivery boy management
         Route::get('/delivery-boy-management', [DeliveryBoyController::class, 'deliveryBoyManagement'])->name('admin.deliveryBoyManagement');
 
-        //user management
+        //reason management
         Route::get('/reason-management', [ReasonController::class, 'reasonManagement'])->name('admin.reasonManagement');
 
     });
