@@ -339,10 +339,11 @@ class CountryService
 
             $zone->status = $zone->status == 1 ? 0 : 1;
             $zone->save();
+            $message = $zone->status == 1 ? 'Zone unblock successfully' : 'Zone block successfully';
 
             return [
                 'status' => 'success',
-                'message' => 'Zone status updated successfully',
+                'message' => $message,
                 'data' => $zone
             ];
         } catch (\Exception $e) {
