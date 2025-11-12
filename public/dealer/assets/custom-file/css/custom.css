@@ -244,7 +244,7 @@ table.dataTable {
 }
 
 
-@media (min-width: 1140px) and (max-width: 1280px) {
+@media (min-width: 1140px) and (max-width: 1440px) {
     .dash-circle {
         height: 80px;
         width: 80px;
