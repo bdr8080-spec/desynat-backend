@@ -45,7 +45,7 @@
                     </div>
                     <span class="text-danger" id="error-confirm_password"></span>
 
-                    <button type="submit" class="customBtn mt-4">Done</a>
+                    <button type="submit" class="customBtn customBtn5 mt-4">Done</a>
                 </div>
                 </form>
             </div>

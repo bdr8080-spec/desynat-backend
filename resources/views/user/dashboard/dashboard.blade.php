@@ -29,7 +29,7 @@
                     <div class="categorie_cotent-img">
                         <img src="{{$item->image}}" class="img-fluid" />
                     </div>
-                    <h3>{{$item->name_english}}</h3>
+                    <h3 class="mt-3">{{$item->name_english}}</h3>
                 </div>
             </div>
           @empty

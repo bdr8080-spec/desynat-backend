@@ -120,6 +120,9 @@ section{
     line-height: var(--p-font-height);
     font-weight: var(--p-font-weight);
 }
+.customBtn5{
+    background: var(--gradient-color6) !important;
+}
 .inner-header{
     background: var(--gradient-color5);
     padding: .5% 4%;
@@ -416,8 +419,9 @@ section{
     font-weight: 400 !important;
     color: #222222;
 }
-.otp-page h5 span{
+.otp-page h5 span, .otp_sent span{
     color: var(--secondry2-color);
+    font-weight: 600;
 }
 .otp-page .otp_sent{
     margin: 36px 0;
@@ -691,6 +695,7 @@ section{
 .suggestedStore_img{
     width: 120px;
     height: 120px;
+    margin: 0 auto;
 }
 
 .product-content {
@@ -844,7 +849,7 @@ section{
 .profile_links li a img{
     margin-right: 8px;
 }
-.profile_links li a i{
+.profile_links li a i.i_icon{
     position: absolute;
     right: 0;
     top: 5px;
@@ -893,7 +898,7 @@ section{
 }
 
 .changeImageText:hover {
-  color: #0056b3;
+  color: var(--secondry2-color);
 }
 .my-profile .form-group input.form-control{
     padding: 12px;
@@ -915,14 +920,15 @@ section{
     position: absolute;
     top: 66%;
     transform: translateY(-50%);
-    width: 66px;
-    padding: 11px;
+    width: 50px;
+    padding: 8px 0 8px 8px;
     left: 0px;
-    border: 1px solid var(--secondry3-color);
+    border: none;
+    background: transparent;
     border-radius: 5px 0 0 5px;
 }
 .mobile .number{
-    padding-left: 70px !important;
+    padding-left: 50px !important;
 }
 
 

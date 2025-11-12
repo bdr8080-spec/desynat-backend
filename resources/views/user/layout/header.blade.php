@@ -80,36 +80,55 @@ use App\Models\Category;
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/terms.svg')}}" />
                                                 Terms & Condition
-                                                <i class="fa-solid fa-chevron-right"></i>
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
                                             </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/return.svg')}}" />
-                                                Return Policy</a></li>
+                                                Return Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/about-us.svg')}}" />
-                                                About Us</a></li>
+                                                About Us
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/faq.svg')}}" />
-                                                FAQ's</a></li>
+                                                FAQ's
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/change-lang.svg')}}" />
-                                                Change Language</a></li>
+                                                Change Language
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/cancel-policy.svg')}}" />
-                                                Cancellation Policy</a></li>
+                                                Cancellation Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/exchange.svg')}}" />
-                                                Exchange Policy</a></li>
+                                                Exchange Policy
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/support.svg')}}" />
-                                                Support</a></li>
+                                                Support
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/becom-affilit.svg')}}" />
-                                                Become An Affiliate</a></li>
+                                                Become An Affiliate
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
                                             <li><a href="">
                                                 <img src="{{asset('user/assets/images/profile-icon/setting.svg')}}" />
-                                                Settings</a></li>
-                                            <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li>
+                                                Settings
+                                                <i class="fa-solid fa-chevron-right i_icon"></i>
+                                            </a></li>
+                                            <li>
+                                                <a class="dropdown-item text-center" href="{{route('userLogout')}}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                                         </ul>
                                     </li>
                                     <!-- <li><a class="dropdown-item text-center" href="{{route('userLogout')}}">Logout</a></li> -->
@@ -317,7 +336,7 @@ use App\Models\Category;
                             <div class="track_location">
                                 <h6>Deliver to {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
                                 <div class="d-flex align-self-center w-100" data-bs-toggle="modal" data-bs-target="#changeLocation">
-                                    <button type="button" class="customBtnLocation btn btn-primary" >
+                                    <button type="button" class="customBtnLocation btn" >
                                         <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
                                     </button>
                                     <span class="ms-lg-5 ms-md-3 ms-2">
@@ -398,7 +417,7 @@ use App\Models\Category;
                 </div>
                 <div class="modal-body">
                     <div>
-                        <div class="form-group position-relative search w-100">
+                        <div class="form-group position-relative search w-100 mb-3">
                             <input type="text" class="form-control" placeholder="Search address" />
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </div>
