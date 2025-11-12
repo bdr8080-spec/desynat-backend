@@ -411,57 +411,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  function isVisible(element) {
-    // Check if element exists and is actually visible
-    if (!element) return false;
-    const style = window.getComputedStyle(element);
-    return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
-  }
+    // padding between bottom and mid-content
+    $(document).ready(function () {
+        function adjustContentPadding() {
+            const $header = $('header');
+            const $footer = $('footer');
+            const $content = $('.mid-content');
 
-  function adjustProfileHeight() {
-    const profile = document.querySelector(".mid-content");
-    const footer = document.querySelector("footer");
-    const header = document.querySelector("header");
-    if (!profile) return;
+            if (!$content.length) return; // safety check
 
-    const footerVisible = isVisible(footer);
-    const footerHeight = footerVisible && footer ? footer.offsetHeight : 0;
-    const headerHeight = header ? header.offsetHeight : 0;
-    const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
+            const windowHeight = $(window).height();
+            const headerHeight = $header.outerHeight() || 0;
+            const footerHeight = $footer.outerHeight() || 0;
+            const contentHeight = $content.outerHeight() || 0;
 
-    // ✅ Script sirf 1024px se zyada screens par chale
-    if (windowWidth > 1024) {
-      const availableHeight = windowHeight - (headerHeight + footerHeight + (footerVisible ? 50 : 0));
-      profile.style.height = availableHeight + "px";
-      profile.style.overflowY = "auto";
-      profile.style.paddingBottom = "0";
-    } else {
-      // ❌ Mobile/tablet me disable
-      profile.style.height = "auto";
-      profile.style.overflowY = "visible";
-      profile.style.paddingBottom = "0";
-    }
-  }
+            // total height excluding padding
+            const totalHeight = headerHeight + footerHeight + contentHeight;
 
-  // Run on load
-  adjustProfileHeight();
+            // remaining space after accounting for header and footer
+            const remaining = windowHeight - totalHeight;
 
-  // Recalculate on resize/orientation change
-  window.addEventListener("resize", adjustProfileHeight);
-  window.addEventListener("orientationchange", adjustProfileHeight);
+            if (remaining > 0) {
+                // divide remaining height into top & bottom padding
+                const pad = remaining / 2;
 
-  // Observe footer height changes (only when visible)
-  const footer = document.querySelector("footer");
-  if (footer) {
-    const observer = new ResizeObserver(() => {
-      if (window.innerWidth > 1024) adjustProfileHeight();
+                // Add padding + adjust for fixed header overlap
+                $content.css({
+                    'padding-top': (pad + headerHeight) + 'px',
+                    'padding-bottom': pad + 'px'
+                });
+            } else {
+                // fallback when content is tall enough
+                $content.css({
+                    'padding-top': headerHeight + 20 + 'px',
+                    'padding-bottom': '20px'
+                });
+            }
+        }
+
+        // Run on load
+        adjustContentPadding();
+
+        // Run on window resize
+        $(window).on('resize', adjustContentPadding);
     });
-    observer.observe(footer);
-  }
-});
-
 
     // scroll on category
     document.addEventListener('DOMContentLoaded', function () {
