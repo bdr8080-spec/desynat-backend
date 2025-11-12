@@ -40,7 +40,7 @@
     </div>
 
     <div class="login-wapper">
-        <div class="login-grid-bg planheight"></div>
+        <div class="login-grid-bg2 planheight"></div>
         <div class="container">
             <div class="plan-wapper">
                 <div class="row">

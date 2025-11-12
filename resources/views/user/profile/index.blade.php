@@ -38,8 +38,10 @@
             <div class="col-lg-6 mt-3">
                 <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
+                    <img src="{{$user->country->flag1}}" alt="country_flag"  class="tag">
                     <input type="text" name="country_code" class="tag" value="{{$user->country_code}}" readonly>
                     <input type="text" class="form-control number" placeholder="Please enter mobile number" value="{{$user->mobile}}" name="mobile" readonly/>            
+                    </span>
                     <a class="change"
                     href="{{ route('userOldNumberSendOtp', [
                         'mobile' => $user->mobile,
