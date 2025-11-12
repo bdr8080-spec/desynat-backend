@@ -107,7 +107,7 @@
 
                                         @if ($item->commission == '1')
                                             <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
-                                                <span class="font-600">{{ $item->commission_percentage }}</span>
+                                                <span class="font-600">{{ $item->commission_percentage }} %</span>
                                             </li>
                                         @endif
 
@@ -233,6 +233,23 @@
         </div>
     </div>
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+                        <div class="title24 py-3">Your Payment is failed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 
@@ -246,7 +263,20 @@
 
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (session('success1'))
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+        @endif
+    });
+</script>
+
+
 @include('dealer.layout.custom_code');
+
+
+
 
 
 </html>

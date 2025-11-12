@@ -157,7 +157,11 @@ class MyFatoorahController extends Controller {
             }
 
             }else{
-                return redirect()->route('seller.all_plans')->with('error','Your Payment is Failed');
+
+                $url="seller/all-plans?payment=no";
+                return  redirect()->to($url);
+
+                // return redirect()->route('seller.all_plans')->with('error','Your Payment is Failed');
             }
 
             
