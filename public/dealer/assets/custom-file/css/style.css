@@ -372,7 +372,7 @@ label {
 }
 
 .link-color:hover {
-  color: var(--text-dark);
+  color: #b59168;
 }
 
 .login-grid-reset {
@@ -1243,7 +1243,7 @@ label {
 }
 
 
-@media (min-width:1024px) and (max-width:1240px) {
+@media (min-width:1024px) and (max-width:1280px) {
   .planheight {
     height: 270px !important;
   }
