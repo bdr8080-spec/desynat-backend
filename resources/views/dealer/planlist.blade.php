@@ -47,7 +47,7 @@
     @endif
 
     <div class="login-wapper">
-        <div class="login-grid-bg planheight"></div>
+        <div class="login-grid-bg2 planheight"></div>
         <div class="container-fluid custom-container">
             <div class="plan-wapper">
                 <div class="row">
@@ -269,6 +269,18 @@
             var successModal = new bootstrap.Modal(document.getElementById('successModal'));
             successModal.show();
         @endif
+    });
+</script>
+
+
+<script>
+    window.addEventListener("popstate", function(event) {
+        // This event fires when the user clicks the browser's back or forward button
+
+        // Example: redirect user to a specific page
+        if (window.location.pathname === '/seller/all-plans') {
+            window.location.href = "{{ route('seller.all_plans') }}";
+        }
     });
 </script>
 

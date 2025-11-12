@@ -13,10 +13,8 @@
                 <div class="login_content_content align-self-center">
                     <div class="otp-page">
                         <h3 class="h3-heading">
-                            <a href="javascript:history.back()" class="text-dark me-2">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </a>
-                            Change Mobile Number
+                            <a href="{{ url()->previous() }}" class="text-dark me-2">
+                                <i class="fa-solid fa-chevron-left"></i></a>Change Mobile Number
                         </h3>
 
                         <h5 class="otp_sent">
