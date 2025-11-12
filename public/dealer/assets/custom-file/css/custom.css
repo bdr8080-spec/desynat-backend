@@ -1,9 +1,8 @@
-
-
 .form-switch .form-check-input {
     width: 2.8em;
     height: 20px;
 }
+
 .label-flex {
     display: flex;
     justify-content: space-between;
@@ -11,11 +10,13 @@
     font-size: 13px;
     color: #666;
 }
+
 .label-flex label {
     font-size: 15px;
     color: #000;
     margin-bottom: 3px;
 }
+
 .sub-form .form-control {
     border-radius: 10px;
     line-height: 1.75;
@@ -33,9 +34,11 @@
     font-size: 20px;
     cursor: pointer;
 }
-.padding-top-40{
+
+.padding-top-40 {
     padding-top: 50px;
 }
+
 .visitor-pnl .form-check-label {
     font-size: 12px;
     color: #000;
@@ -67,7 +70,7 @@
 }
 
 /* inner dot when checked */
-.radio-group input[type="radio"]:checked + .custom-radio::after {
+.radio-group input[type="radio"]:checked+.custom-radio::after {
     content: "";
     width: 10px;
     height: 10px;
@@ -98,7 +101,8 @@
 .total-revenu {
     background: var(--revenu);
 }
-.font-34{
+
+.font-34 {
     font-size: var(--font-34);
     color: #000;
     font-weight: 600;
@@ -130,66 +134,81 @@
     font-size: 16px;
     color: #000;
 }
+
 .tabs-panel #pills-tab {
     border: 1px solid #ac875e;
     border-radius: 10px;
 }
+
 .tabs-panel .nav-link {
     line-height: 38px;
     border-right: 1px solid #b9946b;
     color: #000;
 }
-.tabs-panel .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+
+.tabs-panel .nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
     background: var(--tab-active-bg);
 }
+
 .dt-column-title {
     font-weight: 500;
     font-size: 16px;
     text-align: center;
 }
-table.dataTable > tbody > tr > td {
+
+table.dataTable>tbody>tr>td {
     padding: 8px 10px;
     font-size: 15px;
     text-align: center;
 }
+
 .dt-length {
     display: none;
 }
+
 .dt-search {
     display: none;
 }
+
 .table-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .search-filter {
     display: flex;
     gap: 15px;
 }
 
-.width-50{
+.width-50 {
     min-width: 210px;
 }
-table.dataTable > tbody > tr:last-child > * {
+
+table.dataTable>tbody>tr:last-child>* {
     border-bottom: none;
     text-align: center;
 }
-table.dataTable > thead > tr > th{
+
+table.dataTable>thead>tr>th {
     padding: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     background: #F2F2F2;
 }
+
 table.dataTable {
     border-radius: 10px 12px 0px 0px;
     overflow: hidden;
 }
-.pro-image{
+
+.pro-image {
     height: 50px;
     width: 50px;
     border-radius: 50px;
     border: 1px solid #ddd;
 }
+
 .table>tbody {
     vertical-align: middle;
 }
@@ -197,6 +216,7 @@ table.dataTable {
 .dt-column-order {
     display: none;
 }
+
 .eyebtn {
     color: #333;
     font-size: 18px;
@@ -209,12 +229,14 @@ table.dataTable {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
+
 .multiple-img {
     height: 160px;
     width: 100%;
     overflow: hidden;
     margin-left: 20px;
 }
+
 .multiple-img img {
     height: 100%;
     width: 100%;
@@ -227,23 +249,33 @@ table.dataTable {
         height: 80px;
         width: 80px;
     }
+
     .title24 {
         font-size: 17px;
     }
+
     .dash-content h5 {
         font-size: 14px;
     }
+
     .font-34 {
         font-size: 24px;
     }
+
     .p20 {
         padding: 10px;
     }
+
     .title30 {
         font-size: 18px;
     }
+
     .sidebar-nav .nav-link {
         font-size: 12px;
+    }
+
+    .planheight {
+        height: 270px !important;
     }
 
 }

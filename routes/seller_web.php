@@ -54,7 +54,6 @@ Route::group(['prefix' => 'seller'], function () {
     
 
 
-
     route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
     route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
     route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
