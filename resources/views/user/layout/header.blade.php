@@ -337,9 +337,9 @@ use App\Models\Category;
                                 <h6>Deliver to {{@Auth::guard('web')->user()->full_name ?? 'Guest'}}</h6>
                                 <div class="d-flex align-self-center w-100" data-bs-toggle="modal" data-bs-target="#changeLocation">
                                     <button type="button" class="customBtnLocation btn" >
-                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid" /> <span id="cityField">Noida</span> 
+                                        <img src="{{asset('user/assets/images/Icon.svg')}}" class="img-fluid me-2" /> <span id="cityField"></span> 
                                     </button>
-                                    <span class="ms-lg-5 ms-md-3 ms-2">
+                                    <span class="">
                                         <i class="fa-solid fa-chevron-down"></i>
                                     </span>
                                 </div>
@@ -362,21 +362,28 @@ use App\Models\Category;
                                             {{$item->name}}
                                         </a>
                                         <div class="dropdown-menu sell_clothes">
-
-                                            <div class="row justify-content-between flex-lg-nowrap">
-                                                @foreach ($item->subCategories as $value)
-                                                    <div class="col-lg-3 col-md-4 col-12">
-                                                    <div class="clothes_content">
-                                                        <p>{{$value->name_english}}</p>
-                                                        <ul class="list-unstyled">
-                                                            {{-- <li>
-                                                                <a href="">Shirt</a>
-                                                            </li> --}}
-                                                        </ul>
-                                                    </div>
+                                            <div class="scroll-wrapper">
+                                                <div class="scroll-arrow scroll-left">
+                                                    <i class="fa-solid fa-chevron-left"></i>
                                                 </div>
-                                                @endforeach
-                                                
+                                                <div class="scroll-arrow scroll-right">
+                                                    <i class="fa-solid fa-chevron-right"></i>
+                                                </div>
+                                                <div class="row justify-content-between flex-lg-nowrap">
+                                                    @foreach ($item->subCategories as $value)
+                                                        <div class="col-lg-3 col-md-4 col-12">
+                                                        <div class="clothes_content">
+                                                            <p>{{$value->name_english}}</p>
+                                                            <ul class="list-unstyled">
+                                                                {{-- <li>
+                                                                    <a href="">Shirt</a>
+                                                                </li> --}}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+                                                    
+                                                </div>
                                             </div>
                                         </div>
                                     </li>

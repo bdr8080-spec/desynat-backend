@@ -461,6 +461,25 @@ document.addEventListener("DOMContentLoaded", function () {
     observer.observe(footer);
   }
 });
+
+
+    // scroll on category
+    $(document).ready(function () {
+        const scrollContainer = document.querySelector(".scroll-content");
+        const leftArrow = document.querySelector(".scroll-left");
+        const rightArrow = document.querySelector(".scroll-right");
+
+        // scroll step size (width of 1 column roughly)
+        const scrollAmount = 300;
+
+        rightArrow.addEventListener("click", () => {
+            scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        });
+
+        leftArrow.addEventListener("click", () => {
+            scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+        });
+    });
 </script>
 
 </body>

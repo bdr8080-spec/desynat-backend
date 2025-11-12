@@ -138,6 +138,7 @@ section{
 }
 .header-main .navbar-brand{
     width: 13%;
+    height: 100%;
 }
 .header-main .navbar-brand img{
     width: 100%;
@@ -509,7 +510,9 @@ section{
     max-width: 100% !important;
     width: 100% !important;
 }
-
+.track_location{
+        width: 80%;
+}
 .search .form-control {
   width: 100%;
   transition: all 0.3s ease;
@@ -517,7 +520,7 @@ section{
   background: rgb(255 255 255 / 50%);
 }
 .customBtnLocation{
-    width: 180px;
+    min-width: auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -530,7 +533,7 @@ section{
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
-  max-width: calc(100% - 0px);
+  max-width: calc(auto - 0px);
 }
 
 /* Search icon styling */
@@ -551,10 +554,55 @@ section{
     width: 100%;
     margin: 0 !important;
     border-radius: 0;
-    background-color: transparent;
+    background-color: #fff;
     transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
     overflow-x: scroll;
+}
+
+.scroll-wrapper {
+  position: relative;
+}
+
+.scroll-content {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* hide scrollbar for Firefox */
+}
+
+.scroll-content::-webkit-scrollbar {
+  display: none; /* hide scrollbar for Chrome/Safari */
+}
+
+.scroll-arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background: rgba(110, 69, 39, 0.8);
+  color: #fff;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-right {
+  right: 0;
+}
+
+.scroll-left {
+  left: 0;
+}
+
+.sell_clothes:hover .scroll-arrow {
+  opacity: 1; /* Show arrows on hover */
 }
 .customNavbar .dropdown-menu.sell_clothes{
     padding: 20px;
@@ -570,6 +618,9 @@ section{
 .customNavbar ul li.nav-item a.nav-link{
     padding: 10px 12px;
     text-transform: uppercase;
+    font-size: var(--p-font-size) !important;
+    line-height: var(--p-font-height) !important;
+    font-weight: var(--p-font-weight) !important;
 }
 .customNavbar ul li.nav-item a.nav-link:active{
     border-bottom: 2px solid var(--secondry2-color);

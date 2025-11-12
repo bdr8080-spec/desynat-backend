@@ -11,6 +11,9 @@
     .login_content_right{
         padding: 5% 9% !important;
     }
+    .customNavbar ul li.nav-item a.nav-link{
+        padding: 10px 6px !important;
+    }
 
     
 }
@@ -32,10 +35,18 @@
     .getTheApp{
         flex-direction: column !important;
     }
+    .customNavbar ul li.nav-item{
+        margin: 0 5px !important;
+    }
+    .customNavbar ul li.nav-item a.nav-link{
+        padding: 10px 4px !important;
+    }
+    .desynat_navigation_bar_header .track_location h6{
+        font-size: 13px !important;
+    }
 }
 
 @media (max-width:991px) {
-
    .customContainer{
         max-width: 800px !important;
     }
