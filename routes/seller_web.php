@@ -12,7 +12,7 @@ use App\Http\Controllers\Seller\SellerProductController;
 Route::group(['prefix' => 'seller'], function () {
 
 
-    Route::middleware(['is_seller'])->group(function(){
+    Route::middleware(['is_seller','prevent-back-history'])->group(function(){
         
     route::Match(['get','post'],'/login',[LoginController::class,'login'])->name('seller.login');
     route::Match(['get','post'],'/register',[LoginController::class,'register'])->name('seller.register');
@@ -23,7 +23,7 @@ Route::group(['prefix' => 'seller'], function () {
  
 
 
-    Route::middleware(['seller_login'])->group(function(){
+    Route::middleware(['seller_login','prevent-back-history'])->group(function(){
     
     route::Match(['get','post'],'/store_information/{id}',[LoginController::class,'store_information'])->name('seller.store_information');
     route::Match(['get','post'],'/upload_document/{id}',[LoginController::class,'upload_document'])->name('seller.upload_document');
@@ -50,9 +50,6 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/view-product',[SellerProductController::class,'view_product'])->name('seller.view_product');
 
 
-    
-
-
     });
     
 
@@ -61,9 +58,6 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
     route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
     route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
-
-
-
 
 
     route::Match(['get','post'],'/removeImage',[LoginController::class,'removeImage'])->name('seller.removeImage');    

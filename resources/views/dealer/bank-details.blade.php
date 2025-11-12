@@ -324,7 +324,7 @@
                                     <div class="form-group">
                                         <label for="name">SWIFT/BIC</label>
                                         <input type="text" class="form-control blockFirstTime"
-                                            placeholder="Enter Swift" name="swift"
+                                            placeholder="Enter SWIFT/BIC Number" name="swift"
                                             value="{{ old('bank_name', @$seller_bank->swift) }}">
                                         @error('swift')
                                             <span class="text-danger">{{ $message }}</span>

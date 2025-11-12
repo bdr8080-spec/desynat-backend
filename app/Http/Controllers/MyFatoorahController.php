@@ -75,7 +75,9 @@ class MyFatoorahController extends Controller {
             $curlData = $this->getPayLoadData($order_array);
 
             $mfObj   = new MyFatoorahPayment($this->mfConfig);
+
             $payment = $mfObj->getInvoiceURL($curlData, $paymentId, $orderId, $sessionId);
+            
 
             return redirect($payment['invoiceURL']);
         } catch (Exception $ex) {
