@@ -372,9 +372,15 @@ use App\Models\Category;
                                                         <div class="clothes_content">
                                                             <p>{{$value->name_english}}</p>
                                                             <ul class="list-unstyled">
-                                                                {{-- <li>
+                                                                <li>
                                                                     <a href="">Shirt</a>
-                                                                </li> --}}
+                                                                </li>
+                                                                <li>
+                                                                    <a href="">Shirt</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="">Shirt</a>
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>

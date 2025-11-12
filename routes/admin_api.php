@@ -8,10 +8,11 @@ use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\SellerController;
 use App\Http\Controllers\Api\Admin\CountryController;
 use App\Http\Controllers\Api\Admin\PlanController;
+use App\Http\Controllers\Api\Admin\UserController;
 
 
 // Admin APi M1
- Route::group(['prefix' => 'admin'], function () {   
+Route::group(['prefix' => 'admin'], function () {   
     Route::post('/admin_login',[AuthController::class,'admin_login']);
     Route::post('/admin_forgot_password',[AuthController::class,'admin_forgot_password']);
     Route::post('/admin_verify_otp',[AuthController::class,'admin_verify_otp']);
@@ -77,10 +78,19 @@ use App\Http\Controllers\Api\Admin\PlanController;
      
      //M2 api ends
 
+     //M3 api starts
+
+     //user management
+     Route::get('/get_users',[UserController::class,'getUsers']);
+     Route::get('/get_user_details',[UserController::class,'get_user_details']);
+     Route::post('/block_unblock_user',[UserController::class,'block_unblock_user']);
+     Route::post('/add_user_wallet_amount',[UserController::class,'add_user_wallet_amount']);
 
 
 
-    });
+
+
+   });
 
 
 });

@@ -5,7 +5,8 @@
   <!-- //change password -->
     <div class="my-profile customContainer" style="margin-bottom: 10%;">
         <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
-            <div class="my-profile-nav"><a class="text-black" href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i></a>Change Password</div>
+            <div class="my-profie-nav">
+                <a class="text-black" href="{{route('userProfile')}}"><i class="fa-solid fa-chevron-left"></i></a>Change Password</div>
         </div>
         <form id="changePassword">
             @csrf

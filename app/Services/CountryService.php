@@ -152,10 +152,11 @@ class CountryService
 
             $city->status = $city->status == 1 ? 0 : 1;
             $city->save();
+            $message = $city->status == 1 ? 'City unblock successfully' : 'City block successfully';
 
             return [
                 'status' => 'success',
-                'message' => 'City status updated successfully',
+                'message' => $message,
                 'data' => $city
             ];
         } catch (\Exception $e) {
@@ -338,10 +339,11 @@ class CountryService
 
             $zone->status = $zone->status == 1 ? 0 : 1;
             $zone->save();
+            $message = $zone->status == 1 ? 'Zone unblock successfully' : 'Zone block successfully';
 
             return [
                 'status' => 'success',
-                'message' => 'Zone status updated successfully',
+                'message' => $message,
                 'data' => $zone
             ];
         } catch (\Exception $e) {
