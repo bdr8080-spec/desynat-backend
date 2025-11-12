@@ -200,7 +200,7 @@ class AuthController extends Controller
                     Session::forget('verify-password');
                     return response()->json([
                     'status' => true,
-                    'message' => $request->type() == 1 
+                    'message' => $request->type == 1 
                         ? 'Logged in successfully' 
                         : 'User registered successfully',
                     'redirect_url' => route('dashboard'),
