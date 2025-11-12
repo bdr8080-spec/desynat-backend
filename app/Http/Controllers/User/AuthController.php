@@ -225,7 +225,7 @@ class AuthController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                'mobileOrEmail' => 'required',
+                'mobileOrEmail' => 'required|digits_between:7,15',
                 'password' => 'required|min:6',
             ], [
                 'mobileOrEmail.required' => 'Please enter your mobile number or email address',
@@ -379,9 +379,9 @@ class AuthController extends Controller
                     ];
 
                 $messages = [
-                'password.required' => 'Please Enter New password',
-                'password.min' => 'Password must be at least 8 characters long',
-                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
+                 'password.required' => 'Please Enter New password',
+                // 'password.min' => 'Password must be at least 8 characters long',
+                // 'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
                 'confirm_password.required' => 'Please enter confirm password',
                 'confirm_password.same' => 'Passwords do not match',
                 ];
