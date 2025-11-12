@@ -379,5 +379,59 @@ document.addEventListener("DOMContentLoaded", () => {
     @endif
 </script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  function isVisible(element) {
+    // Check if element exists and is actually visible
+    if (!element) return false;
+    const style = window.getComputedStyle(element);
+    return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
+  }
+
+  function adjustProfileHeight() {
+    const profile = document.querySelector(".mid-content");
+    const footer = document.querySelector("footer");
+    const header = document.querySelector("header");
+    if (!profile) return;
+
+    const footerVisible = isVisible(footer);
+    const footerHeight = footerVisible && footer ? footer.offsetHeight : 0;
+    const headerHeight = header ? header.offsetHeight : 0;
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+
+    // ✅ Script sirf 1024px se zyada screens par chale
+    if (windowWidth > 1024) {
+      const availableHeight = windowHeight - (headerHeight + footerHeight + (footerVisible ? 50 : 0));
+      profile.style.height = availableHeight + "px";
+      profile.style.overflowY = "auto";
+      profile.style.paddingBottom = "0";
+    } else {
+      // ❌ Mobile/tablet me disable
+      profile.style.height = "auto";
+      profile.style.overflowY = "visible";
+      profile.style.paddingBottom = "0";
+    }
+  }
+
+  // Run on load
+  adjustProfileHeight();
+
+  // Recalculate on resize/orientation change
+  window.addEventListener("resize", adjustProfileHeight);
+  window.addEventListener("orientationchange", adjustProfileHeight);
+
+  // Observe footer height changes (only when visible)
+  const footer = document.querySelector("footer");
+  if (footer) {
+    const observer = new ResizeObserver(() => {
+      if (window.innerWidth > 1024) adjustProfileHeight();
+    });
+    observer.observe(footer);
+  }
+});
+</script>
+
 </body>
 </html>

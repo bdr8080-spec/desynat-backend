@@ -1,3 +1,8 @@
+@media (max-width:1800px) {
+    .customNavbar ul li.nav-item a.nav-link{
+        padding: 10px 10px 10px 18px;
+    }
+}
 @media (max-width:1500px) {
     .customContainer{
         max-width: 1200px !important;
@@ -6,6 +11,8 @@
     .login_content_right{
         padding: 5% 9% !important;
     }
+
+    
 }
 
 @media (max-width:1200px) {

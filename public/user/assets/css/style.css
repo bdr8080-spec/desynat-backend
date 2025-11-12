@@ -543,8 +543,11 @@ section{
     color: var(--secondry2-color);
     margin-bottom: 5px;
 }
+.customNavbar ul li.nav-item{
+    margin: 0 10px;
+}
 .customNavbar ul li.nav-item a.nav-link{
-    padding: 10px 10px 10px 30px;
+    padding: 10px 12px;
     text-transform: uppercase;
 }
 .customNavbar ul li.nav-item a.nav-link:active{
