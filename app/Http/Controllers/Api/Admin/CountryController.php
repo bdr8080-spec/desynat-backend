@@ -310,29 +310,6 @@ class CountryController extends Controller
         }
     }
 
-    // public function delete_zone(Request $request)
-    // {
-    //     $validate = Validator::make($request->all(), [
-    //         'zone_id' => 'required|exists:zones,id',
-    //     ]);
-
-    //     if ($validate->fails()) {
-    //         return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
-    //     }
-
-    //     try {
-    //         $result = $this->CountryService->deleteZone($request->zone_id);
-
-    //         if ($result['status'] === 'error') {
-    //             return ApiResponse::generateResponse('error', $result['message'], [], 400);
-    //         }
-
-    //         return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
-            
-    //     } catch (\Exception $e) {
-    //         return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
-    //     }
-    // }
 
     public function delete_zone(Request $request)
     {
