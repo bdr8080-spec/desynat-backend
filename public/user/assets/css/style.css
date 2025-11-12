@@ -272,9 +272,12 @@ section{
     top: 50%;
     right: 10px;
 }
-.toggle-passwordone, .toggle-password, .toggle-passwordtwo, .mobile .change{
+.toggle-passwordone, .toggle-password, .toggle-passwordtwo{
     position: absolute; right: 10px; top: 38px; cursor: pointer;
 }
+ .mobile .change{
+    position: absolute; right: 10px; top: 70%; cursor: pointer; transform: translate(0, -60%);text-decoration: none;
+ }
 .login_content_content p{
     font-size: var(--nav-font-size) !important;
     line-height: var(--nav-font-height) !important;
@@ -513,6 +516,12 @@ section{
 .desynat_navigation_bar_header .track_location h6{
     font-weight: 400 !important;
     margin-bottom: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 140px;
+    width: 100%;
+    overflow: hidden;
 }
 .search {
   position: relative;
@@ -569,7 +578,6 @@ section{
     border-radius: 0;
     background-color: #fff;
     transform: translate(-50%, 0%);
-    transform: translate(-50%, 0%);
 }
 .sell_clothes { position: relative; overflow: hidden; padding: 10px; }
 .scroll-wrapper { position: relative; display: flex; align-items: center; }
@@ -577,8 +585,8 @@ section{
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 10px;
-  padding: 10px 40px; /* leave space for arrows */
+  gap: 5px;
+  padding: 10px 20px; /* leave space for arrows */
   scrollbar-width: none;
 }
 .scroll-content::-webkit-scrollbar { display: none; }
@@ -600,18 +608,21 @@ section{
   z-index: 10;
   border: none;
 }
-.scroll-left { left: -11px; }
-.scroll-right { right: -11px; }
+.scroll-left { left: 5px; background: rgb(110 69 39 / 50%); color: var(--secondry2-color);}
+.scroll-right { right: 5px; background: rgb(110 69 39 / 50%); color: var(--secondry2-color);}
 
 .sell_clothes .scroll-arrow { opacity: 0.9; }
 .customNavbar .dropdown-menu.sell_clothes{
-    padding: 20px;
+    padding: 10px 0;
 }
 .sell_clothes:hover .scroll-btn {
   opacity: 1;
   pointer-events: auto;
   display: block !important;
 }
+/* .clothes_content{
+    height: auto;
+} */
 .customNavbar .sell_clothes .clothes_content p{
     font-weight: 500 !important;
     color: var(--secondry2-color);
@@ -977,7 +988,7 @@ section{
     top: 66%;
     transform: translateY(-50%);
     width: 50px;
-    padding: 8px 0 8px 8px;
+    padding: 9px 0 9px 8px;
     left: 0px;
     border: none;
     background: transparent;
