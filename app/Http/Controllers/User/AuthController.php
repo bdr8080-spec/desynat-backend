@@ -199,10 +199,13 @@ class AuthController extends Controller
                     Auth::guard('web')->login($user);
                     Session::forget('verify-password');
                     return response()->json([
-                        'status' => true,
-                        'message' => 'User Register Succesfully',
-                        'redirect_url' => route('dashboard'),
-                    ]);
+                    'status' => true,
+                    'message' => $request->type == 1 
+                        ? 'Login successfully' 
+                        : 'User registered successfully',
+                    'redirect_url' => route('dashboard'),
+                ]);
+
                 }
     
             } else {
