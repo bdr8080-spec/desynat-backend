@@ -619,8 +619,8 @@ h3.mid-headng{
   z-index: 10;
   border: none;
 }
-.scroll-left { left: 5px; background: rgb(110 69 39 / 50%); color: var(--secondry2-color);}
-.scroll-right { right: 5px; background: rgb(110 69 39 / 50%); color: var(--secondry2-color);}
+.scroll-left { left: 5px; background: transparent; color: var(--secondry2-color);}
+.scroll-right { right: 5px; background: transparent; color: var(--secondry2-color);}
 
 .sell_clothes .scroll-arrow { opacity: 0.9; }
 .customNavbar .dropdown-menu.sell_clothes{
