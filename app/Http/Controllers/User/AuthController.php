@@ -62,9 +62,9 @@ class AuthController extends Controller
                         ],
                     'password' => [
                             'required',
-                            'string',
-                            'min:8',
-                            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                            // 'string',
+                            // 'min:8',
+                            // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
                         ],
                     'confirm_password' => 'required|same:password',
                     'accept_terms' => 'required|in:1',
@@ -371,9 +371,9 @@ class AuthController extends Controller
                 $rules = [
                     'password' => [
                         'required',
-                        'string',
-                        'min:8',
-                        'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                        // 'string',
+                        // 'min:8',
+                        // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
                     ],
                     'confirm_password' => 'required|same:password',
                     ];
