@@ -152,10 +152,11 @@ class CountryService
 
             $city->status = $city->status == 1 ? 0 : 1;
             $city->save();
+            $message = $city->status == 1 ? 'City unblock successfully' : 'City block successfully';
 
             return [
                 'status' => 'success',
-                'message' => 'City status updated successfully',
+                'message' => $message,
                 'data' => $city
             ];
         } catch (\Exception $e) {
