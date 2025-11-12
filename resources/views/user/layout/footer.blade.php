@@ -411,8 +411,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 <script>
+    // padding between bottom and mid-content
+    $(document).ready(function () {
+        function adjustContentPadding() {
+            const $header = $('header');
+            const $footer = $('footer');
+            const $content = $('.mid-content');
 
+            if (!$content.length) return; // safety check
 
+            const windowHeight = $(window).height();
+            const headerHeight = $header.outerHeight() || 0;
+            const footerHeight = $footer.outerHeight() || 0;
+            const contentHeight = $content.outerHeight() || 0;
+
+            // total height excluding padding
+            const totalHeight = headerHeight + footerHeight + contentHeight;
+
+            // remaining space after accounting for header and footer
+            const remaining = windowHeight - totalHeight;
+
+            if (remaining > 0) {
+                // divide remaining height into top & bottom padding
+                const pad = remaining / 2;
+
+                // Add padding + adjust for fixed header overlap
+                $content.css({
+                    'padding-top': (pad + headerHeight) + 'px',
+                    'padding-bottom': pad + 'px'
+                });
+            } else {
+                // fallback when content is tall enough
+                $content.css({
+                    'padding-top': headerHeight + 20 + 'px',
+                    'padding-bottom': '20px'
+                });
+            }
+        }
+
+        // Run on load
+        adjustContentPadding();
+
+        // Run on window resize
+        $(window).on('resize', adjustContentPadding);
+    });
 
     // scroll on category
     document.addEventListener('DOMContentLoaded', function () {
