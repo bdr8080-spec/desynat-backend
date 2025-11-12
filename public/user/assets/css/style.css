@@ -645,7 +645,7 @@ h3.mid-headng{
     line-height: var(--p-font-height) !important;
     font-weight: var(--p-font-weight) !important;
 }
-.customNavbar ul li.nav-item a.nav-link:active{
+.customNavbar ul li.nav-item a.nav-link:active, .customNavbar ul li.nav-item a.nav-link:hover{
     border-bottom: 2px solid var(--secondry2-color);
     color: var(--secondry2-color) !important;
 }
