@@ -61,4 +61,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(country::class, 'country_code', 'dial_code');
     }
+
+    public function country_info()
+    {
+        return $this->belongsTo(all_countrie::class, 'country_code', 'dial_code');
+    }
+
+    public function wallet_info()
+    {
+        return $this->hasOne(UserWallet::class, 'user_id', 'id');
+    }
+
 }
