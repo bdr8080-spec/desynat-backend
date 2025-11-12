@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Admin\SellerController;
 use App\Http\Controllers\Api\Admin\CountryController;
 use App\Http\Controllers\Api\Admin\PlanController;
 use App\Http\Controllers\Api\Admin\UserController;
+use App\Http\Controllers\Api\Admin\ReasonController;
 
 
 // Admin APi M1
@@ -85,6 +86,13 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_user_details',[UserController::class,'get_user_details']);
      Route::post('/block_unblock_user',[UserController::class,'block_unblock_user']);
      Route::post('/add_user_wallet_amount',[UserController::class,'add_user_wallet_amount']);
+
+     //reason management
+     Route::get('/get_reasons',[ReasonController::class,'get_reasons']);
+     Route::post('/change_reason_status',[ReasonController::class,'change_reason_status']);
+     Route::post('/add_reason',[ReasonController::class,'add_reason']);
+     Route::post('/update_reason',[ReasonController::class,'update_reason']);
+     Route::post('/delete_reason',[ReasonController::class,'delete_reason']);
 
 
 
