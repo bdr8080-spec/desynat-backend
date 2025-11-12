@@ -570,7 +570,6 @@ section{
     background-color: #fff;
     transform: translate(-50%, 0%);
     transform: translate(-50%, 0%);
-    overflow-x: scroll;
 }
 .sell_clothes { position: relative; overflow: hidden; padding: 10px; }
 .scroll-wrapper { position: relative; display: flex; align-items: center; }
@@ -588,10 +587,11 @@ section{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  width: 36px;
-  height: 36px;
+  background: transparent;
+  color: var(--third-color);
+  font-size: 12px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -600,8 +600,8 @@ section{
   z-index: 10;
   border: none;
 }
-.scroll-left { left: 6px; }
-.scroll-right { right: 6px; }
+.scroll-left { left: -11px; }
+.scroll-right { right: -11px; }
 
 .sell_clothes .scroll-arrow { opacity: 0.9; }
 .customNavbar .dropdown-menu.sell_clothes{
