@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Cache;
 use App\Services\SellerAuthService;
 
 
+use App\Helpers\ApiResponse;
+
+
 
 class WebSellerDashboard extends Controller
 {
@@ -207,6 +210,32 @@ class WebSellerDashboard extends Controller
 return  redirect()->route('seller.dashboard')->with('success','You are successfully purchase a Plan');
 
     }
+
+
+    
+
+
+    public function web_store_on_off(Request $request){
+
+
+        $seller_details=Auth::guard('seller')->user();
+
+
+        $request_data=(object )[
+            'seller_id'=>$seller_details->id,
+        ];
+
+
+     $data= $this->SellerAuthService->seller_storeOnOff($request_data);
+      
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+      }
 
       
 
