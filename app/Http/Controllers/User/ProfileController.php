@@ -8,6 +8,7 @@ use App\Services\UserProfileService;
 use App\Models\country;
 use App\Models\User;
 use App\Models\UserCurrentLocation;
+use App\Models\all_countrie;
 use App\Models\UserContactChangeHistory;
 use App\Helpers\ApiResponse;
 use Validator;
@@ -340,7 +341,7 @@ class ProfileController extends Controller
     
     public function updateNewNumber(Request $request){
                if($request->isMethod('get')){
-                  $country =   country::all();
+                  $country =   all_countrie::all();
                     return view('user.profile.profileChangeNumber', compact('country'));
         }
     }
