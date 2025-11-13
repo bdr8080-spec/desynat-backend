@@ -398,8 +398,8 @@
                                         <td>{{ $planName ?? 'N/A'}}</td>
                                         <td>0</td>
                                         <td>0</td>
-                                        <td>KD 0</td>
-                                        <td>KD 0</td>
+                                        <td>0 KD</td>
+                                        <td>0 KD</td>
                                         <td>0
                                             <i class="bi bi-star-fill"></i>
 
