@@ -155,12 +155,12 @@
                 <div class="row mt-3">
                     <div class="col-lg-6">
                         <label class="form-label">Zone Name (English)</label>
-                        <input type="text" id="zone_name_en" placeholder="Enter Zone Name in Enlish" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <input type="text" id="zone_name_en" placeholder="Enter Zone Name in Enlish" oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" class="form-control" />
                         <div class="text-danger mt-1" id="error_zone_name_en"></div>
                     </div>
                     <div class="col-lg-6">
                         <label class="form-label">Zone Name (Arabic)</label>
-                        <input type="text" id="zone_name_ar" placeholder="Enter Zone Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <input type="text" id="zone_name_ar" placeholder="Enter Zone Name in Arabic" oninput="this.value=this.value.replace(/[^\u0600-\u06FF0-9 ]/g,'').replace(/^\s+/,'')" class="form-control" />
                         <div class="text-danger mt-1" id="error_zone_name_ar"></div>
                     </div>
                 </div>
@@ -234,12 +234,12 @@
                 <div class="row mt-3">
                     <div class="col-lg-6">
                         <label class="form-label">Zone Name (English)</label>
-                        <input type="text" id="update_zone_name_en" placeholder="Enter Zone Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <input type="text" id="update_zone_name_en" placeholder="Enter Zone Name in English" oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" class="form-control" />
                         <div class="text-danger mt-1" id="update_error_zone_name_en"></div>
                     </div>
                     <div class="col-lg-6">
                         <label class="form-label">Zone Name (Arabic)</label>
-                        <input type="text" id="update_zone_name_ar" placeholder="Enter Zone Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                        <input type="text" id="update_zone_name_ar" placeholder="Enter Zone Name in Arabic" oninput="this.value=this.value.replace(/[^\u0600-\u06FF0-9 ]/g,'').replace(/^\s+/,'')" class="form-control" />
                         <div class="text-danger mt-1" id="update_error_zone_name_ar"></div>
                     </div>
                 </div>

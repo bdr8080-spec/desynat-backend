@@ -257,6 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             if (data.status === 'success') {
                                 toastr.success(data.message);
                                 this.closest('tr').remove();
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2000);
                             } else {
                                 toastr.error(data.message);
                             }

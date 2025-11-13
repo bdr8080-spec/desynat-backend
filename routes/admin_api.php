@@ -83,6 +83,7 @@ Route::group(['prefix' => 'admin'], function () {
 
      //user management
      Route::get('/get_users',[UserController::class,'getUsers']);
+     Route::get('/get_user_countries_list',[UserController::class,'get_user_countries_list']);
      Route::get('/get_user_details',[UserController::class,'get_user_details']);
      Route::post('/block_unblock_user',[UserController::class,'block_unblock_user']);
      Route::post('/add_user_wallet_amount',[UserController::class,'add_user_wallet_amount']);

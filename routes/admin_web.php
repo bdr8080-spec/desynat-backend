@@ -70,6 +70,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //user management
         Route::get('/user-management', [UserController::class, 'userManagement'])->name('admin.userManagement');
+        Route::post('/blockUnblockUser/{id}', [UserController::class, 'blockUnblockUser'])->name('admin.blockUnblockUser');
+        Route::post('/addUserWalletAmount', [UserController::class, 'addUserWalletAmount'])->name('admin.addUserWalletAmount');
 
         //delivery boy management
         Route::get('/delivery-boy-management', [DeliveryBoyController::class, 'deliveryBoyManagement'])->name('admin.deliveryBoyManagement');

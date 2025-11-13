@@ -24,7 +24,7 @@ class ProfileController extends Controller
     }
 
     public function userProfile(Request $request){
-         $user = User::with('country')->where('id',$request->user()->id)->first();
+         $user = User::with('country_info')->where('id',$request->user()->id)->first();
         
              if($request->isMethod('get')){
                     return view('user.profile.index', compact('user'));
