@@ -78,6 +78,10 @@ Route::group(['prefix'=>'admin'], function(){
 
         //reason management
         Route::get('/reason-management', [ReasonController::class, 'reasonManagement'])->name('admin.reasonManagement');
+        Route::post('/blockUnblockReason/{id}', [ReasonController::class, 'blockUnblockReason'])->name('admin.blockUnblockReason');
+        Route::post('/deleteReason/{id}', [ReasonController::class, 'deleteReason'])->name('admin.deleteReason');
+        Route::post('/add_reason', [ReasonController::class, 'add_reason'])->name('admin.add_reason');
+        Route::post('/update_reason', [ReasonController::class, 'update_reason'])->name('admin.update_reason');
 
     });
 
