@@ -5,6 +5,7 @@ use App\Models\country;
 use App\Models\City;
 use App\Models\ServiceCity;
 use App\Models\Zone;
+use App\Models\all_countrie;
 use Illuminate\Http\Request;
 
 
@@ -37,36 +38,6 @@ class CountryService
             ];
         }
     }
-
-    // public function getCities($countryId)
-    // {
-    //     try {
-
-    //         $query = City::where('country_id', $countryId)->orderBy('name', 'asc')->get();
-
-    //         if ($query->isEmpty()) {
-    //             return [
-    //                 'status' => 'success',
-    //                 'message' => 'No cities found for this country',
-    //                 'data' => (object) []
-    //             ];
-    //         }
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Cities fetched successfully',
-    //             'data' => $query
-    //         ];
-
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to fetch cities: ' . $e->getMessage(),
-    //             'data' => []
-    //         ];
-    //     }
-    // }
-
 
     public function getCities($countryId)
     {
@@ -429,6 +400,34 @@ class CountryService
                 'status' => 'error',
                 'message' => 'Failed to delete zone',
                 'data' => (object)[]
+            ];
+        }
+    }
+
+    public function getUserAllCountries()
+    {
+        try {
+            $countries = all_countrie::orderBy('name', 'asc')->get();
+
+            if ($countries->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No countries found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Countries fetched successfully',
+                'data' => $countries
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch countries: ' . $e->getMessage(),
+                'data' => []
             ];
         }
     }

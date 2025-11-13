@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 use App\Services\UserManagementService;
 use App\Models\User;
+use App\Services\CountryService;
 
 
 use Validator;
@@ -14,9 +15,10 @@ use Validator;
 class UserController extends Controller
 {
 
-    public function __construct(UserManagementService $UserManagementService){
+    public function __construct(UserManagementService $UserManagementService, CountryService $CountryService){
 
         $this->UserManagementService=$UserManagementService;
+        $this->CountryService = $CountryService;
 
     }
 
@@ -98,6 +100,22 @@ class UserController extends Controller
 
         try {
             $data = $this->UserManagementService->addUserWalletAmount($request->user_id,$request->amount);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function get_user_countries_list(Request $request)
+    {
+        try {
+            $data = $this->CountryService->getUserAllCountries();
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
