@@ -52,17 +52,38 @@
             <div class="plan-wapper">
                 <div class="row">
 
+                    @php
+                        // Define your color set
+                        $back_color = [
+                            '#ffc107',
+                            '#fd7e14',
+                            '#d63384',
+                            '#212529',
+                            '#6610f2',
+                            '#198754',
+                            '#dc3545',
+                            '#dc3545',
+                            '#664d03',
+                            '#0a3622',
+                            '#198754',
+                            '#20c997',
+                        ];
+
+                        // Shuffle the colors once so they appear in random order
+                        shuffle($back_color);
+                    @endphp
+
+
                     @foreach ($plans as $key => $item)
+                        @php
+                            // Pick a random color for each plan
+                            $color = $back_color[$key % count($back_color)];
+
+                        @endphp
+
                         <div class="col-lg-3 col-md-4">
                             <div class="plan-card plan-shadow">
-                                <div
-                                    class="plan-header  text-center 
-                                     @if ($key == 0) bg-yellow-1 
-                                      @elseif($key == 1)  bg-yellow-2
-                                      @elseif($key == 2)  bg-yellow-3
-                                      @elseif($key == 3)  bg-yellow-4
-                                      @else
-                                      bg-yellow-1 @endif ">
+                                <div class="plan-header  text-center " style="background-color: {{ $color }}">
 
                                     {{ $item->plan_name_english }}
 
@@ -272,23 +293,6 @@
     });
 </script>
 
-
-<script>
-    window.addEventListener("popstate", function(event) {
-        // This event fires when the user clicks the browser's back or forward button
-
-        // Example: redirect user to a specific page
-        if (window.location.pathname === '/seller/all-plans') {
-            window.location.href = "{{ route('seller.all_plans') }}";
-        }
-    });
-</script>
-
-
 @include('dealer.layout.custom_code');
-
-
-
-
 
 </html>
