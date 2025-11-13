@@ -114,8 +114,8 @@ class UserManagementService
             $user->save();
 
             $message = $user->status == 1
-                ? 'User Activated Successfully'
-                : 'User Deactivated Successfully';
+                ? 'User unblocked Successfully'
+                : 'User blocked Successfully';
 
             return [
                 'status' => 'success',
