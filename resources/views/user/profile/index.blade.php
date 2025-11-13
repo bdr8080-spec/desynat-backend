@@ -39,7 +39,7 @@
                 <div class="form-group mobile position-relative">
                     <label for="">Mobile No.</label>
                     <div class="d-flex align-items-center gap-2 mb-2 tag" >
-                        <img src="{{$user->country->flag1}}" alt="country_flag"  >
+                        <img src="{{$user->country_info->flag}}" alt="country_flag"  >
                     <input type="text" name="country_code" value="{{$user->country_code}}" readonly>
                     </div>
                     <input type="text" class="form-control number" placeholder="Please enter mobile number" value="{{$user->mobile}}" name="mobile" readonly/>            
