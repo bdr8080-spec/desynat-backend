@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Services\UserProfileService;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\all_countrie;
 use Illuminate\Validation\Rule;
 use Auth;
 use Validator;
@@ -25,7 +26,7 @@ class AuthController extends Controller
 
     public function userRegister(Request $request){
         if($request->isMethod('get')){
-            $country =   country::all();
+            $country =   all_countrie::all();
                   return view('user.auth.register', compact('country')); 
         }else{
 
@@ -223,7 +224,7 @@ class AuthController extends Controller
         public function userLogin(Request $request)
         {
             if ($request->isMethod('get')) {
-                $country = country::all();
+                $country = all_countrie::all();
                 return view('user.auth.login', compact('country'));
             }
 
@@ -299,7 +300,7 @@ class AuthController extends Controller
 
         public function userForgetPassword(Request $request){
                if ($request->isMethod('get')) {
-                $country =   country::all();
+                $country =   all_countrie::all();
                 return view('user.auth.forgetPassword', compact('country'));
             }else{   
             
@@ -434,7 +435,7 @@ class AuthController extends Controller
         public function loginWithOtp(Request $request){
 
                    if ($request->isMethod('get')) {
-                        $country =   country::all();
+                        $country =   all_countrie::all();
                         return view('user.auth.loginWithOtp', compact('country'));
             }else{
 

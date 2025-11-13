@@ -42,7 +42,7 @@
                                         <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
                                                 id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span id="selected-flag">
-                                                <img src="{{ $country[0]->flag1 }}" alt="flag" width="25" height="16">
+                                                <img src="{{ $country[0]->flag }}" alt="flag" width="25" height="16">
                                             </span>
                                             <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
                                         </button>
@@ -53,10 +53,10 @@
                                                     <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
                                                         <input type="radio" name="country_code"
                                                             value="{{ $item->dial_code }}"
-                                                            data-flag="{{ $item->flag1 }}"
+                                                            data-flag="{{ $item->flag }}"
                                                             class="country-radio"
                                                             {{ $index === 0 ? 'checked' : '' }} hidden>
-                                                        <img src="{{ $item->flag1 }}" alt="Flag of {{ $item->name }}" width="25" height="16">
+                                                        <img src="{{ $item->flag }}" alt="Flag of {{ $item->name }}" width="25" height="16">
                                                         <span>{{ $item->dial_code }} ({{ $item->name }})</span>
                                                     </label>
                                                 </li>
