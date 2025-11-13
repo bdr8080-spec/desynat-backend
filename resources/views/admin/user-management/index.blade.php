@@ -95,7 +95,7 @@
                             @endphp
 
                             <td>
-                                KD 
+                                
                                 @if($amount !== null && $amount !== 'N/A')
                                     @if(fmod($amount, 1) == 0)
                                         {{ number_format($amount, 0) }}
@@ -105,6 +105,7 @@
                                 @else
                                     0
                                 @endif
+                                KD
                             </td>
                             <td>
                                 <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2" data-user-id="{{ $user['id'] }}">

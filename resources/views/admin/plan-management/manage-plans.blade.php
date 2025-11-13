@@ -93,7 +93,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $plan->no_of_employee }}</td>
-                                    <td>KD {{ $plan->price }}</td>
+                                    <td>{{ $plan->price }} KD</td>
                                     <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}
                                     </td>
                                     <td>
