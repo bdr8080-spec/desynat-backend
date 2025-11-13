@@ -178,6 +178,29 @@ class SellerDashboardController extends Controller
 
     }
 
+
+    public function store_on_off(Request $request){
+
+        $user_details=$request->user();
+   
+        $request_data=(object )[
+            'seller_id'=>$user_details->id,
+        ];
+
+     $data= $this->SellerAuthService->seller_storeOnOff($request_data);
+      
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
+
+    
+
     
 
     

@@ -6,6 +6,8 @@
         </div>
     </div>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <div class="row">
         <div class="col-lg-6 col-xxl-6">
             <div class="bg-header d-flex justify-content-between mt-3 align-items-center">
@@ -13,7 +15,8 @@
                 <div class="d-flex gap-3">
                     <div class="buy">Busy/On</div>
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault"
+                            onclick="store_availbilityfunction(this)" @if (@$seller_details->store_info->Store_Availability == 1) checked @endif>
                         <label class="form-check-label" for="switchCheckDefault"></label>
                     </div>
                 </div>
@@ -250,4 +253,38 @@
 
         }
     });
+
+
+    function store_availbilityfunction(checkbox) {
+
+        $.ajax({
+            url: "{{ url('seller/web_store_on_off') }}",
+            type: "get",
+            data: {
+                "_token": "{{ csrf_token() }}",
+            },
+            dataType: "json",
+            beforeSend: function() {
+                $('#loader').show()
+            },
+            success: function(data) {
+                console.log(data.data)
+
+                if (data.data.Store_Availability == 1) {
+                    toastr.success(data.message);
+                }
+
+                if (data.data.Store_Availability == 0) {
+                    toastr.error(data.message);
+                }
+
+
+            },
+            error: function() {
+                alert("Fail")
+            }
+        })
+
+
+    }
 </script>
