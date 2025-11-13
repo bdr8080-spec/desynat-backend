@@ -35,6 +35,8 @@ use App\Http\Controllers\User\ProfileController;
 
    Route::get('/update-resend-otp', [ProfileController::class, 'updateResendOtp'])->name('updateResendOtp');
 
+   Route::post('/save-current-location', [ProfileController::class, 'saveCurrentLocation'])->name('userSaveCurrentLocation');
+
    });
 
 

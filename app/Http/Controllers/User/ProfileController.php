@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\UserProfileService;
 use App\Models\country;
 use App\Models\User;
+use App\Models\UserCurrentLocation;
 use App\Models\UserContactChangeHistory;
 use App\Helpers\ApiResponse;
 use Validator;
@@ -391,7 +392,34 @@ class ProfileController extends Controller
     }
 }
 
+// save currenct location
 
+ public function saveCurrentLocation(Request $request)
+{
+
+    if ($request->user() && $request->user()->id) {
+        $data = UserCurrentLocation::updateOrCreate(
+            ['user_id' => $request->user()->id],
+            [
+                'latitude'  => $request->latitude,
+                'longitude' => $request->longitude,
+                'address'   => $request->address,
+            ]
+        );
+
+        return response()->json([
+            'status'  => true,
+            'message' => 'Address changed successfully!',
+            'data'    => $data,
+        ]);
+    }
+
+        return response()->json([
+            'status'  => false,  
+            'message' => '',
+        ]);
+
+}
 
 
 }
