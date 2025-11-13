@@ -81,15 +81,15 @@
 
                         @endphp
 
-                        <div class="col-lg-3 col-md-4">
-                            <div class="plan-card plan-shadow">
+                        <div class="col-lg-3 col-md-4 d-flex justify-items-stretch">
+                            <div class="plan-card plan-shadow w-100">
                                 <div class="plan-header  text-center " style="background-color: {{ $color }}">
 
                                     {{ $item->plan_name_english }}
 
                                 </div>
                                 <div class="plan-content text-center plan-shadow">
-                                    <h4>KD {{ $item->price }} </h4>
+                                    <h4>{{ $item->price }} KD </h4>
                                     <div>for {{ $item->duration }} @if ($item->duration_type == '1')
                                             Month
                                         @else
@@ -138,10 +138,9 @@
                                             class="btn btn-success w-100">Purchase</a>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
+                      
                     @endforeach
 
 
