@@ -70,12 +70,18 @@ Route::group(['prefix'=>'admin'], function(){
 
         //user management
         Route::get('/user-management', [UserController::class, 'userManagement'])->name('admin.userManagement');
+        Route::post('/blockUnblockUser/{id}', [UserController::class, 'blockUnblockUser'])->name('admin.blockUnblockUser');
+        Route::post('/addUserWalletAmount', [UserController::class, 'addUserWalletAmount'])->name('admin.addUserWalletAmount');
 
         //delivery boy management
         Route::get('/delivery-boy-management', [DeliveryBoyController::class, 'deliveryBoyManagement'])->name('admin.deliveryBoyManagement');
 
         //reason management
         Route::get('/reason-management', [ReasonController::class, 'reasonManagement'])->name('admin.reasonManagement');
+        Route::post('/blockUnblockReason/{id}', [ReasonController::class, 'blockUnblockReason'])->name('admin.blockUnblockReason');
+        Route::post('/deleteReason/{id}', [ReasonController::class, 'deleteReason'])->name('admin.deleteReason');
+        Route::post('/add_reason', [ReasonController::class, 'add_reason'])->name('admin.add_reason');
+        Route::post('/update_reason', [ReasonController::class, 'update_reason'])->name('admin.update_reason');
 
     });
 

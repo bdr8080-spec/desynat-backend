@@ -464,6 +464,34 @@ class SellerAuthService
                   }
             
                 }
+
+
+
+                public function seller_storeOnOff($request){
+
+
+                 $store_information= sellerStoreInformation::where('seller_id', $request->seller_id)->first();
+                  
+      
+                  if($store_information){
+
+                    if($store_information->Store_Availability=='0'){
+                      $status=1;
+                      $message="Seller Store Store Availability On";
+                    }else{
+                      $status=0;
+                      $message="Seller Store Store Availability Off";
+                    }
+
+                    $store_information->update(['Store_Availability'=>$status]);
+
+                    return ['status'=>'success','message'=>$message,'data'=>$store_information];            
+                  
+                    }else{
+                      return ['status'=>'error','message'=>"Seller No Store Found",'data'=>(object)[]];                
+                    }
+              
+                  }
               
 
             

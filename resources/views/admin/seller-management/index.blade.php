@@ -835,45 +835,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- store document -->
 <script>
-// document.addEventListener('DOMContentLoaded', function() {
-//     const documentButtons = document.querySelectorAll('.view-store-btn');
-//     const documentContainer = document.getElementById('documentContainer1');
-
-//     if (!documentContainer) return;
-
-//     documentButtons.forEach(button => {
-//         button.addEventListener('click', function() {
-//             documentContainer.innerHTML = '';
-//             let documents = [];
-//             try {
-//                 documents = JSON.parse(this.getAttribute('data-documents') || '[]');
-//             } catch (e) {
-//                 console.error('Failed to parse documents JSON', e);
-//             }
-
-//             if (documents.length === 0) {
-//                 documentContainer.innerHTML =
-//                     '<p class="text-muted">No documents available.</p>';
-//                 return;
-//             }
-//             documents.forEach(doc => {
-//                 const imgPath = doc.document_path;
-
-//                 const img = document.createElement('img');
-//                 img.src = imgPath;
-//                 img.alt = 'Document';
-//                 img.classList.add('img-fluid', 'rounded', 'border', 'm-2');
-//                 img.style.maxWidth = '200px';
-//                 img.style.maxHeight = '200px';
-//                 img.style.cursor = 'pointer';
-
-//                 img.addEventListener('click', () => window.open(imgPath, '_blank'));
-
-//                 documentContainer.appendChild(img);
-//             });
-//         });
-//     });
-// });
 document.addEventListener('DOMContentLoaded', function() {
     const documentButtons = document.querySelectorAll('.view-store-btn');
     const documentContainer = document.getElementById('documentContainer1');

@@ -44,6 +44,10 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   Route::post('/seller-profile', [SellerDashboardController::class,'seller_profile']);
 
+  // M3 Api 
+
+  Route::get('/store_on_off', [SellerDashboardController::class,'store_on_off']);
+
 
 });
 
