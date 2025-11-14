@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Admin\CountryController;
 use App\Http\Controllers\Api\Admin\PlanController;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\ReasonController;
+use App\Http\Controllers\Api\Admin\DeliveryBoyController;
 
 
 // Admin APi M1
@@ -94,6 +95,12 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/add_reason',[ReasonController::class,'add_reason']);
      Route::post('/update_reason',[ReasonController::class,'update_reason']);
      Route::post('/delete_reason',[ReasonController::class,'delete_reason']);
+
+     //delivery boy management
+     Route::get('/get_delivery_boys',[DeliveryBoyController::class,'getDeliveryBoys']);
+     Route::get('/get_deliveryboy_details',[DeliveryBoyController::class,'get_deliveryboy_details']);
+     Route::post('/block_unblock_deliveryboy',[DeliveryBoyController::class,'block_unblock_deliveryboy']);
+     Route::post('/delete_deliveryboy',[DeliveryBoyController::class,'delete_deliveryboy']);
 
 
 

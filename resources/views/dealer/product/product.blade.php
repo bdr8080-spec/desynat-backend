@@ -28,6 +28,7 @@
                     <div class="table-header">
                         <div class="search-field">
                             <div class="from-group position-relative">
+                                <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
                                 <input type="search" class="form-control" placeholder="Search">
                             </div>
                         </div>
