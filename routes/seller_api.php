@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\Seller\AuthController;
 
 use App\Http\Controllers\Api\Seller\SellerDashboardController;
 
+use App\Http\Controllers\Api\Seller\SellerProductController;
+
+
 use App\Http\Controllers\CommonController;
 
 
@@ -56,6 +59,12 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     Route::get('all-color',[CommonController::class, 'get_color']);
     Route::get('all-size',[CommonController::class, 'get_size']);
+
+
+    
+    Route::post('add-product',[SellerProductController::class, 'add_product']);
+
+
 
 
 });
