@@ -8,9 +8,9 @@
             <img src="{{asset('user/assets/images/right-img.svg')}}" class="left-imgtwo" />
         </div>
         <div class="login_content login_content_right">
+            <div class="login_content_content align-self-center">
                 <form action="{{ route('userOldNumberSendOtp') }}" method="POST">
             @csrf
-            <div class="login_content_content align-self-center">
                 <div class="otp-page">
                     <h3 class="h3-heading">
                         <a href="javascript:history.back()" class="text-dark me-2">
@@ -37,8 +37,8 @@
 
                     <button type="submit" class="customBtn customBtn5 mt-5 w-100">Continue</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
         </div>
      </div>
 

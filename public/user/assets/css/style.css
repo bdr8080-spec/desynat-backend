@@ -242,6 +242,16 @@ h3.mid-headng{
     align-items: start;
     justify-content: center;
     margin: 0 auto;
+}
+.mb-45{
+    margin-bottom: 10% !important;
+}
+.becomSeller a{
+    color: var(--third-color);
+    font-size: var(--heading5-font);
+    line-height: var(--p-font-height);
+    font-weight: 400;
+    text-decoration: none;
     
 }
 .login_content_right{
@@ -250,6 +260,8 @@ h3.mid-headng{
     overflow-x: hidden;
     overflow-y: scroll;
     height: 100%;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
 }
 .login_content_content{
     width: 100%;
