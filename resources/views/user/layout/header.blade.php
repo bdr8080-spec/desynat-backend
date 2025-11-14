@@ -59,7 +59,7 @@ use App\Models\UserCurrentLocation;
                             </div>
 
                             <div class="dropdown-center userDropdown">
-                                <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="    padding: 5px 10px !important;">
                                     <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" alt="" height="50px" width="80px" /> 
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end profileDropdown">
@@ -161,7 +161,7 @@ use App\Models\UserCurrentLocation;
                             @endif
                     
                         <div class="dropdown-center mobileLang">
-                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px 10px !important;">
                                 <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu" aria-labelledby="countryDropdownBtn">
@@ -247,10 +247,13 @@ use App\Models\UserCurrentLocation;
                                         <img src="{{asset('user/assets/images/flags/oman.svg')}}" />
                                     </div>
                                 </li>
+                                <li>
+                                    <button class="customBtn customBtn5 mt-lg-5 mt-md-3 mt-3">Save</button>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown-center mobileLang">
-                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px 10px !important;">
                                 <span id="selectedCurrency">KWD</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
@@ -330,10 +333,13 @@ use App\Models\UserCurrentLocation;
                                         </div>
                                     </div>
                                 </li>
+                                <li>
+                                    <button class="customBtn customBtn5 mt-lg-5 mt-md-3 mt-3">Save</button>
+                                </li>
                             </ul>
                         </div>
                         <div class="dropdown-center mobileLang">
-                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px 10px !important;">
                                 <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end langu">
