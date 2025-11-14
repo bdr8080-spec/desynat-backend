@@ -8648,10 +8648,6 @@
     "platform": {
         "php": "^8.2"
     },
-<<<<<<< HEAD
     "platform-dev": {},
-=======
-    "platform-dev": [],
->>>>>>> 0606711f0735aba4e5c06086b2a26ea178dbbb09
     "plugin-api-version": "2.6.0"
 }
