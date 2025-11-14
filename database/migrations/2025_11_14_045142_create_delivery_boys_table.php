@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('address_line2')->nullable();
             $table->string('city');
             $table->string('state');
+            $table->string('let')->nullable();
+            $table->string('long')->nullable();
             $table->foreignId('country_id')->default(1)->constrained('countries')->onDelete('cascade'); // assuming there's a 'countries' table
             $table->foreignId('zone_id')->constrained('zones')->onDelete('cascade'); // assuming there's a 'zones' table
             $table->string('otp')->nullable();
