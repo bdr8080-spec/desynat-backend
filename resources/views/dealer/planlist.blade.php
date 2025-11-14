@@ -89,7 +89,7 @@
 
                                 </div>
                                 <div class="plan-content text-center plan-shadow">
-                                    <h4>{{ $item->price }} KD </h4>
+                                    <h4> {{ $item->price }} KD </h4>
                                     <div>for {{ $item->duration }} @if ($item->duration_type == '1')
                                             Month
                                         @else
@@ -134,15 +134,11 @@
 
                                     </ul>
                                     <div class="py-3 btn-purchase">
-                                        <a href="{{ route('seller.single_plans', $item->id) }}"
-                                            class="btn btn-success w-100">Purchase</a>
+                                        <a href="{{ route('seller.single_plans', $item->id) }}" class="btn btn-success w-100">Purchase</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                      
-                      
-
                     @endforeach
 
 
