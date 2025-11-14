@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('no_of_employee');
             $table->tinyInteger('stories')->comment('0 - close, 1 - open');
             $table->decimal('price', 10, 2)->comment('Plan price');
+            $table->decimal('discounted_price', 10, 2)->nullable()->comment('New Plan price');
             $table->tinyInteger('commission')->comment('0 - no, 1 - yes');
             $table->decimal('commission_percentage', 5, 2)->nullable()->comment('Commission percentage');
             $table->tinyInteger('status')->default(1)->comment('0 - inactive, 1 - active');

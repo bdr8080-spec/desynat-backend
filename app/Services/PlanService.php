@@ -45,6 +45,7 @@ class PlanService
 
     public function updatePlan(Request $request)
     {
+       // dd($request->all());
         try {
             $plan = Plan::find($request->plan_id);
 
@@ -68,6 +69,7 @@ class PlanService
                 'no_of_employee' => $request->no_of_employee,
                 'stories' => $request->stories,
                 'price' => $request->price,
+                'discounted_price' => $request->discounted_price,
                 'commission' => $request->commission,
                 'commission_percentage' => $request->commission_percentage ?? null,
             ]);
