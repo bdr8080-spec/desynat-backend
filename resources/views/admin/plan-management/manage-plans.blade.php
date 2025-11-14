@@ -60,6 +60,7 @@
                                     <th scope="col">Stories</th>
                                     <th scope="col">No. of Employees</th>
                                     <th scope="col">Plan Price</th>
+                                    <th scope="col">New Plan Price</th>
                                     <th scope="col">Commission %</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -94,6 +95,7 @@
                                     </td>
                                     <td>{{ $plan->no_of_employee }}</td>
                                     <td>{{ $plan->price }} KD</td>
+                                    <td>{{ $plan->discounted_price ? $plan->discounted_price . ' KD' : 'N/A' }}</td>
                                     <td>{{ $plan->commission_percentage === null ? 'No' : $plan->commission_percentage . '%' }}
                                     </td>
                                     <td>
@@ -114,6 +116,7 @@
                                                 data-no-of-highlights="{{ $plan->no_of_highlights }}"
                                                 data-no-of-employees="{{ $plan->no_of_employee }}"
                                                 data-price="{{ $plan->price }}"
+                                                data-discounted-price="{{ $plan->discounted_price }}"
                                                 data-stories="{{ $plan->stories }}"
                                                 data-commission="{{ $plan->commission }}"
                                                 data-commission-percentage="{{ $plan->commission_percentage }}">
@@ -402,6 +405,13 @@
                                 <span class="text-danger error-text price_err"></span>
                                </div>
                             </div>
+                            <div class="col-lg-6">
+                                 <div class="form-group mb-3">
+                                <label>New Plan Price</label>
+                                <input type="text" name="discounted_price" value="" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
+                                <span class="text-danger error-text price_err"></span>
+                               </div>
+                            </div>
 
                             <!-- Stories -->
                             <div class="col-lg-12">
@@ -673,6 +683,7 @@ $(document).ready(function() {
         var no_of_highlights = button.data('no-of-highlights');
         var no_of_employees = button.data('no-of-employees');
         var price = button.data('price');
+        var discount_price = button.data('discounted-price');
         var stories = button.data('stories');
         var commission = button.data('commission');
         var commission_percentage = button.data('commission-percentage');
@@ -687,6 +698,7 @@ $(document).ready(function() {
         $('#editModal').find('input[name="no_of_highlights"]').val(no_of_highlights);
         $('#editModal').find('input[name="no_of_employee"]').val(no_of_employees);
         $('#editModal').find('input[name="price"]').val(price);
+        $('#editModal').find('input[name="discounted_price"]').val(discount_price);
         $('#editModal').find('input[name="stories"]').prop('checked', false);
     $('#editModal').find('input[name="stories"][value="' + (stories == 1 ? 'yes' : 'no') + '"]').prop('checked', true);
 

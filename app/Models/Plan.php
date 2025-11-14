@@ -21,6 +21,7 @@ class Plan extends Model
         'no_of_employee',
         'stories',
         'price',
+        'discounted_price',
         'commission',
         'commission_percentage',
         'status',
@@ -28,6 +29,7 @@ class Plan extends Model
 
     protected $casts = [
         'price' => 'float',
+        'discounted_price' => 'float',
         'commission_percentage' => 'float',
     ];
 
