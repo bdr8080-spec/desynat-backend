@@ -64,7 +64,7 @@ class PlanService
                 'duration' => $request->duration,
                 'duration_type' => $request->duration_type,
                 'new_duration' => $request->new_duration,
-                'New_duration_type' => $request->New_duration_type,
+                'new_duration_type' => $request->new_duration_type,
                 'no_of_videos' => $request->no_of_videos,
                 'no_of_products' => $request->no_of_products,
                 'no_of_highlights' => $request->no_of_highlights,
