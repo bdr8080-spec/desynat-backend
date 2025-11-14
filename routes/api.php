@@ -25,6 +25,7 @@ Route::get('optimize',function(){
 
 require __DIR__.'/admin_api.php';
 require __DIR__.'/seller_api.php';
+require __DIR__.'/deliveryboy_api.php';
 
 
 // User APi M1
