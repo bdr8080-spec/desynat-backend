@@ -508,6 +508,11 @@ h3.mid-headng{
     height: fit-content;
     width: 300px;
 }
+.header_nav_button_dropdown .profileDropdown.show{
+    min-height: 100%;
+    width: 400px;
+    overflow-y: scroll;
+}
 .header_nav_button_dropdown .dropdown-menu .dropdown-item{
     margin: 10px 0;
     border: 1px solid var(--toxic-color);
