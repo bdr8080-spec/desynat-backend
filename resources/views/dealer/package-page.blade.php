@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="pkg-list">
                                     <h6>Price</h6>
-                                    <h6 class="font-600">{{ $plans->price }} KD </h6>
+                                    <h6 class="font-600"> KD {{ $plans->price }} </h6>
                                 </div>
                                 <div class="pkg-list">
                                     <h6>Duration</h6>

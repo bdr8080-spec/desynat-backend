@@ -89,7 +89,7 @@
 
                                 </div>
                                 <div class="plan-content text-center plan-shadow">
-                                    <h4>{{ $item->price }} KD </h4>
+                                    <h4> KD {{ $item->price }} </h4>
                                     <div>for {{ $item->duration }} @if ($item->duration_type == '1')
                                             Month
                                         @else
@@ -140,7 +140,6 @@
                                 </div>
                             </div>
                         </div>
-                      
                     @endforeach
 
 
