@@ -2,7 +2,7 @@
 @extends('user.layout.app')
 
 @section('content')
-    <div class="my-profile customContainer my-lg-3 my-2 mb-4">
+    <div class="my-profile customContainer my-lg-5 my-2 mb-4">
         <div class="d-lg-flex d-md-flex d-block align-items-center mt-3 justify-content-between">
             <div class="my-profie-nav"><a class="text-black" href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i></a> My Profile (edit)</div>
             <div>
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="col-lg-12">
-                <button type="submit" class="customBtn w-100 mt-4" id="updateProfileBtn">Save</button>
+                <button type="submit" class="customBtn w-100 mt-4 mb-45" id="updateProfileBtn">Save</button>
             </div>
         </div>
         </form>

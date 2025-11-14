@@ -116,6 +116,7 @@ class PlanController extends Controller
 
     public function update_plan(Request $request)
     {
+       // dd($request->all());
         // Validation
         $request->validate([
             'plan_id' => 'required|exists:plans,id',

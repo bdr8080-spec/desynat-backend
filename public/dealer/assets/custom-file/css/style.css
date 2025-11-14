@@ -149,6 +149,7 @@ label {
 
 .planheight {
   background: var(--plan-bg);
+  height: 290px;
 }
 
 .plan-shadow {
