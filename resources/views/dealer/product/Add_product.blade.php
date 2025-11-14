@@ -14,21 +14,21 @@
                 <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="radio" checked>
+                            <input type="radio" name="categoryName" checked>
                             <span class="custom-radio"></span>
                             <span class="radio-label">Women</span>
                         </label>
                     </div>
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="radio">
+                            <input type="radio" name="categoryName">
                             <span class="custom-radio"></span>
                             <span class="radio-label">Men</span>
                         </label>
                     </div>
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="radio">
+                            <input type="radio" name="categoryName">
                             <span class="custom-radio"></span>
                             <span class="radio-label">Children</span>
                         </label>
@@ -108,52 +108,48 @@
         </div>
     </div>
 
-    <div class="mt-3">
-         <div class="title24">Specifications</div>
-    </div>
-    <div class="specifications-pnl">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Name</label>
-                        <span>In English</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter name">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Feature</label>
-                        <span>In English</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter feature">
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-md-6">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Name</label>
-                        <span>In Arabic</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter name">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Feature</label>
-                        <span>In Arabic</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter feature">
-                </div>
-            </div>
+    <div class="mt-3 d-flex justify-content-between py-3">
+        <div class="title24">Specifications</div>
+        <div class="sep-icon" id="addmore">
+            <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add">
         </div>
     </div>
+    <div class="specifications-pnl">
+        <div class="append-panel">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="sub-form">
+                        <div class="label-flex">
+                            <label>Name</label>
+                            <span>In English</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Enter name">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="append-flex">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Feature</label>
+                                <span>In Arabic</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Enter feature">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        
+    </div>
+
+    
 
     <div class="product-pnls mt-4">
         <div class="upload-image" style="height:170px;">
             <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                <div>Upload Profile Photo</div>
+                <div class="mt-3">Upload Profile Photo</div>
                 <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;">
             </label>
         </div>
@@ -269,7 +265,7 @@
                     <input type="text" class="form-control" placeholder="KD299">
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-6">
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Actual Price</label>
@@ -288,14 +284,14 @@
                 <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="radio" checked>
+                            <input type="radio" name="percentage" checked>
                             <span class="custom-radio"></span>
                             <span class="radio-label">Percentage</span>
                         </label>
                     </div>
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="radio">
+                            <input type="radio" name="percentage">
                             <span class="custom-radio"></span>
                             <span class="radio-label">Fixed Price</span>
                         </label>
@@ -325,6 +321,16 @@
                     <input type="text" class="form-control" placeholder="Eg.KD 299.00">
                 </div>
             </div>
+            
+        </div>
+
+        <div class="row py-3 mt-4">
+            <div class="col-lg-12 col-md-12">
+                <button type="button" class="btn cancel-outline w-100">Add Another Variant</button>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="sub-form">
                     <div class="label-flex">
@@ -342,6 +348,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="pt-3">
@@ -351,14 +358,14 @@
                 <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="radio" checked>
+                            <input type="radio" name="percentage1" checked>
                             <span class="custom-radio"></span>
                             <span class="radio-label">Percentage</span>
                         </label>
                     </div>
                     <div class="check_radio">
                         <label class="radio-group">
-                            <input type="radio" name="radio">
+                            <input type="radio" name="percentage1">
                             <span class="custom-radio"></span>
                             <span class="radio-label">Fixed Price</span>
                         </label>
@@ -551,4 +558,46 @@ $('#edit_imageUpload').on('change', e => {
     $('#previewContainer').append(imgBox);
   });
 });
+
+</script>
+
+<script>
+
+   // ADD NEW ROW
+    $("#addmore").click(function () {
+       $(".append-panel").append(`
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Name</label>
+                        <span>In English</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter name">
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="append-flex">
+                    <div class="sub-form">
+                        <div class="label-flex">
+                            <label>Feature</label>
+                            <span>In Arabic</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Enter feature">
+                    </div>
+                    <div class="remove-btn"><i class="bi bi-x-circle"></i></div>
+                </div>
+            </div>
+        </div>
+       `)
+       
+    });
+
+    // REMOVE ROW
+    $(document).on("click", ".remove-btn", function () {
+        $(this).closest(".row").remove();
+    });
+
+    
 </script>

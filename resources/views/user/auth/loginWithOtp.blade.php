@@ -7,14 +7,17 @@
  <div class="login_contenar">
         <header class="inner-header">
             <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="assets/images/global.svg" class="img-fluid" /> EN
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
-                    <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
-                </ul>
+            <div class="d-flex align-items-center becomSeller">
+                <a href="">Become a seller</a>
+                <div class="dropdown ms-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/images/global.svg" class="img-fluid" /> EN
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
+                        <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                    </ul>
+                </div>
             </div>
         </header>
         <div class="login_content login_content_left">

@@ -6,14 +6,17 @@
     <div class="login_contenar">
         <header class="inner-header">
             <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="assets/images/global.svg" class="img-fluid" /> EN
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
-                    <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
-                </ul>
+            <div class="d-flex align-items-center becomSeller">
+                <a href="" class="customBtn1">Become a seller</a>
+                <div class="dropdown" style="margin-left:20%;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/images/global.svg" class="img-fluid" /> EN
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
+                        <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                    </ul>
+                </div>
             </div>
         </header>
         <div class="login_content login_content_left">
@@ -25,7 +28,10 @@
             <div class="login_content_content">
             <form id="userLogin">
                 @csrf
-                <h4>Sign In</h4>
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4>Sign In</h4>
+                <p class="guest"><a href="{{route('dashboard')}}">Continue As a Guest</a></p>
+                </div>
                 <h3>Welcome back !</h3>
                 <div class="form-group mt-lg-4 mt-md-3 mt-2">
                     <label for="">Mobile Number or Email Address</label>
@@ -100,7 +106,7 @@
 
                 </div>
                  <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('userRegister')}}">Sign up</a></p>
-                 <p class="guest"><a href="{{route('dashboard')}}">Continue As a Guest</a></p>
+                 
             </div>
         </div>
     </div>

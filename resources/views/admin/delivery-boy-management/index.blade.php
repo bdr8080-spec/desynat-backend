@@ -36,8 +36,8 @@
                 </div>
                 <div class="col-lg-6 col-md-12 col-12">
                     <div class="d-flex justify-content-end  mt-5">
-                        <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                            <span>Add Delivery Boy</span>
+                        <a class="btn btn-dark customBtn"  href="{{route('admin.deliveryboy_reg_step1')}}">
+                            <span >Add Delivery Boy</span>
                         </a>
                     </div>
                 </div>
@@ -124,8 +124,7 @@
                             <td>437897594875</td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
-                                    <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a>
+                                    <a class="table-button" href="{{route('admin.edit_deliveryboy_step1')}}"><i  class="bi bi-pencil-square"></i></a>
 
                                     <a class="table-button" type="button" id="delete_category">
                                         <i class="bi bi-trash3-fill"></i>
@@ -156,16 +155,36 @@
 
             <div class="modal-body">
 
-                <div class="text-center mb-4" style="display: none;">
+             <div class="text-center mb-4">
 
+    <div class="text-center mb-3">
+        <h5>Documents</h5>
+    </div>
 
-                    <div class="text-center mb-3">
-                        <h5> Documents</h5>
-                    </div>
-                    <div class="appointment-container d-flex flex-wrap justify-content-center">
-                    </div>
+    <div class="appointment-container d-flex flex-wrap justify-content-center">
+        
+        <!-- Static Image 1 -->
+        <div class="m-2">
+            <img src="/admin/image/download.jpeg" 
+                 alt="Document 1" 
+                 width="150" 
+                 height="150" 
+                 style="border: 1px solid #ccc; border-radius: 10px;">
+        </div>
 
-                </div>
+        <!-- Static Image 2 -->
+        <div class="m-2">
+            <img src="/admin/image/download.jpeg" 
+                 alt="Document 2" 
+                 width="150" 
+                 height="150" 
+                 style="border: 1px solid #ccc; border-radius: 10px;">
+        </div>
+
+    </div>
+
+</div>
+
             </div>
         </div>
     </div>
