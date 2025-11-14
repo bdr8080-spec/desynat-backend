@@ -106,7 +106,7 @@ class UserProfileService
     // get categories
     public function getCategories($request){
         
-        $category = Category::all();
+        $category = Category::orderBy('id', 'asc')->get();
 
 
         if ($category->isEmpty()) {
