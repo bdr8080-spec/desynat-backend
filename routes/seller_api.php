@@ -57,3 +57,8 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
 
 });
+
+
+Route::get('/upload_color', [SellerDashboardController::class,'upload_color']);
+
+Route::get('/all_color', [SellerDashboardController::class,'upload_color']);
