@@ -503,13 +503,13 @@ h3.mid-headng{
     color: #6E4527;
 }
 .header_nav_button_dropdown .dropdown-menu.show{
-    padding: 0;
-    min-height: 600px;
-    overflow-y: scroll;
-    height: 100%;
+    padding: 10px;
+    max-height: 600px;
+    height: fit-content;
+    width: 300px;
 }
 .header_nav_button_dropdown .dropdown-menu .dropdown-item{
-    margin: 10px;
+    margin: 10px 0;
     border: 1px solid var(--toxic-color);
     border-radius: 6px;
     padding: 10px
@@ -522,6 +522,11 @@ h3.mid-headng{
 }
 .desynat_navigation_bar_header{
     margin-top: 18px;
+}
+.user_nav_inner_profile{
+    display: flex;
+    gap: 30px;
+    margin-right: 10px;
 }
 /* .desynat_navigation_bar_header .track_location{
     display: flex;

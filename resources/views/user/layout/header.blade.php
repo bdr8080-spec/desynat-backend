@@ -42,6 +42,22 @@ use App\Models\UserCurrentLocation;
                         <a class="navbar-brand" href="{{route('dashboard')}}"><img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" /></a>
                         <div class="header_nav_button_dropdown d-flex">
                             @if (Auth::guard('web')->check())
+                            
+                            <div class="user_nav_inner_profile">
+                                <span>
+                                    <img src="{{asset('user/assets/images/chat.svg')}}" class=img-fluid />
+                                </span>
+                                <span>
+                                    <img src="{{asset('user/assets/images/like_dislike.svg')}}" class=img-fluid />
+                                </span>
+                                <span>
+                                    <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
+                                </span>
+                                <span>
+                                    <img src="{{asset('user/assets/images/noti.svg')}}" class=img-fluid />
+                                </span>
+                            </div>
+
                             <div class="dropdown-center userDropdown">
                                 <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" alt="" height="50px" width="80px" /> 
