@@ -135,7 +135,7 @@
     </nav>
 
     <div class="auth-wrapper ">
- <div class="wrapper-inner">
+
         <!-- LEFT SIDE -->
         <div class="auth-left">
             <div class="brand-header">
@@ -194,7 +194,7 @@
                 </div>
             </div>
         </div>
-  </div>
+ 
     </div>
 
     </div>
