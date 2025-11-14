@@ -313,11 +313,6 @@ class ProfileController extends Controller
     // fetch category
     public function getCategories(Request $request)
     {
-        // $category = Category::orderBy('id', 'asc')->get();
-
-        // if ($category->isEmpty()) {
-        //     return ApiResponse::generateResponse('success', 'No categories found', (object)[], 200);
-        // }
 
         $data = $this->UserProfileService->getCategories($request);
 

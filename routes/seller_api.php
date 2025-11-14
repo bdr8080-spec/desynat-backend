@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\Seller\AuthController;
 
 use App\Http\Controllers\Api\Seller\SellerDashboardController;
 
+use App\Http\Controllers\CommonController;
+
 
 // M1 Milestone 
 Route::group(['prefix' => 'seller'], function () {
@@ -46,7 +48,14 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   // M3 Api 
 
-  Route::get('/store_on_off', [SellerDashboardController::class,'store_on_off']);
+    Route::get('/store_on_off', [SellerDashboardController::class,'store_on_off']);
+
+    Route::get('category',[CommonController::class, 'getCategories']);
+    Route::get('sub-category',[CommonController::class, 'getSubCategories']);
+    Route::get('all-brand',[CommonController::class, 'get_brand']);
+
+    Route::get('all-color',[CommonController::class, 'get_color']);
+    Route::get('all-size',[CommonController::class, 'get_size']);
 
 
 });
