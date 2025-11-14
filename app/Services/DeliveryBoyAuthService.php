@@ -27,6 +27,10 @@ class DeliveryBoyAuthService
         
         if($get_user_details){
 
+            if($get_user_details->status=='0'){
+                return ['status'=>'error','message'=>"Your Account is blocked By Admin",'data'=>(object)[]];                
+            }
+
             if(Hash::check($request->password,$get_user_details->password,)){  
                 
                 $get_user_details->accessToken = $get_user_details->createToken('delivery-boy-token', ['delivery-boy'])->plainTextToken;
