@@ -42,7 +42,7 @@
   --border-color: #DFBF8F;
   --bg-header: #FFF7EA;
 
-  --title24: 22px;
+  --title24: 20px;
   --title-color: #040404;
   --gold-color: #F3D1A2;
   --title30: 25px;
@@ -126,6 +126,7 @@ label {
 .sidebar-active {
   background: var(--tab-active-bg);
   color: #fff !important;
+  box-shadow: 0px 4px 4px 0px #FF4F9A1F;
 }
 
 .border-radious-9 {
@@ -137,7 +138,7 @@ label {
 }
 
 .asideicon {
-  width: 15px;
+  width: 17px;
   margin-right: 8px;
 }
 
@@ -165,6 +166,7 @@ label {
 .date-form-pnl .form-control {
   padding: 8px;
   border: 1px solid #C0BBBB;
+  max-width: 140px;
 }
 
 .gold-title {
@@ -329,6 +331,7 @@ label {
 .login-grid-2 h1 {
   font-size: var(--h1);
   color: #000;
+  font-weight: 600;
 }
 
 .login-grid-2 h2 {
@@ -644,7 +647,6 @@ label {
 }
 
 .logo img {
-  max-height: 50px;
   margin-right: 6px;
 }
 
@@ -660,9 +662,9 @@ label {
   z-index: 997;
   height: 70px;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
-  background: var(--bg-multiple);
   padding-left: 20px;
   padding-right: 20px;
+  background: linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%);
 }
 
 .header .toggle-sidebar-btn {
@@ -931,7 +933,9 @@ label {
   height: 8px;
   background-color: #fff;
 }
-
+.sidebar-active img {
+  filter: invert(2);
+}
 .sidebar::-webkit-scrollbar-thumb {
   background-color: #aab7cf;
 }
@@ -989,10 +993,10 @@ label {
 .sidebar-nav .nav-link {
   display: flex;
   align-items: center;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--text-black);
-  padding: 12px 13px;
+  padding: 10px 13px;
 }
 
 .sidebar-nav .nav-link.active {
@@ -1002,7 +1006,7 @@ label {
   font-weight: 600;
   color: #fff;
   transition: 0.3;
-  padding: 12px 15px;
+  padding: 10px 15px;
   border-radius: 4px;
   background: linear-gradient(90deg, #8B6034 -285.18%, #A8824F -154.28%, #F3D893 126.22%, #FFE69E 172.97%, #E2C07C 322.57%, #A57033 649.82%);
 }
@@ -1189,6 +1193,17 @@ label {
   border-radius: 0px 0px 20px 20px;
   padding: 13px;
   color: var(--title-dark);
+}
+.btn-purchase {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  left: 0;
+  right: 0;
+  padding: 20px;
+}
+.plan-body {
+  margin-bottom: 30px;
 }
 
 .plan-card {

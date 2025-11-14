@@ -40,8 +40,9 @@
 }
 
 .visitor-pnl .form-check-label {
-    font-size: 12px;
+    font-size: 15px;
     color: #000;
+    font-weight: 500;
 }
 
 .radio-group {
@@ -49,6 +50,9 @@
     align-items: center;
     gap: 8px;
     font-family: Arial, sans-serif;
+}
+.buy {
+    font-weight: 600;
 }
 
 /* hide default radio */
@@ -111,7 +115,7 @@
 .title24 {
     font-size: var(--title24);
     color: var(--title-color);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .bg-header {
@@ -133,6 +137,7 @@
 .dash-content h5 {
     font-size: 16px;
     color: #000;
+    font-weight: 500;
 }
 
 .tabs-panel #pills-tab {
@@ -252,6 +257,7 @@ table.dataTable {
 
     .title24 {
         font-size: 17px;
+        font-weight: 600;
     }
 
     .dash-content h5 {

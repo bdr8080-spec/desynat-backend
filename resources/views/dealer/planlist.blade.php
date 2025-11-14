@@ -82,7 +82,7 @@
                         @endphp
 
                         <div class="col-lg-3 col-md-4 d-flex justify-items-stretch">
-                            <div class="plan-card plan-shadow w-100">
+                            <div class="plan-card plan-shadow w-100 position-relative h-100">
                                 <div class="plan-header  text-center " style="background-color: {{ $color }}">
 
                                     {{ $item->plan_name_english }}
@@ -133,7 +133,7 @@
                                         @endif
 
                                     </ul>
-                                    <div class="py-3">
+                                    <div class="py-3 btn-purchase">
                                         <a href="{{ route('seller.single_plans', $item->id) }}"
                                             class="btn btn-success w-100">Purchase</a>
                                     </div>
@@ -141,6 +141,8 @@
                             </div>
                         </div>
                       
+                      
+
                     @endforeach
 
 
