@@ -111,6 +111,8 @@
                                                 data-arabic-name="{{ $plan->plan_name_arabic }}"
                                                 data-duration="{{ $plan->duration }}"
                                                 data-duration-type="{{ $plan->duration_type }}"
+                                                data-new-duration="{{ $plan->new_duration }}"
+                                                data-new-duration-type="{{ $plan->new_duration_type }}"
                                                 data-no-of-videos="{{ $plan->no_of_videos }}"
                                                 data-no-of-products="{{ $plan->no_of_products }}"
                                                 data-no-of-highlights="{{ $plan->no_of_highlights }}"
@@ -361,6 +363,26 @@
                                 </div>
                             </div>
 
+                            <div class="col-lg-12">
+                                <div class="form-group mb-3">
+                                    <label>New Duration</label>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <input type="text" name="new_duration" value="" placeholder="Enter new duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
+                                            <span class="text-danger error-text new_duration_err"></span>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <select name="new_duration_type" class="form-select">
+                                                <option value="">Select New Duration</option>
+                                                <option value="1" >Months</option>
+                                                <option value="2" >Years</option>
+                                            </select>
+                                            <span class="text-danger error-text duration_type_err"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Numeric Fields -->
                             <div class="col-lg-6">
                                  <div class="form-group mb-3">
@@ -596,7 +618,8 @@ $(document).ready(function() {
         let price = $('input[name="price"]').val().trim();
         let commission = $('input[name="commission"]:checked').val();
         let commission_percentage = $('input[name="commission_percentage"]').val().trim();
-        let country_id = $('input[name="country_id"]').val().trim(); 
+        let country_id = $('input[name="country_id"]').val().trim();
+ 
 
         let valid = true;
 
@@ -687,12 +710,16 @@ $(document).ready(function() {
         var stories = button.data('stories');
         var commission = button.data('commission');
         var commission_percentage = button.data('commission-percentage');
+        var new_duration = button.data('new-duration');
+        var new_duration_type = button.data('new-duration-type');
 
         $('#editModal').find('input[name="plan_id"]').val(plan_id);
         $('#editModal').find('input[name="plan_name_english"]').val(english_name);
         $('#editModal').find('input[name="plan_name_arabic"]').val(arabic_name);
         $('#editModal').find('input[name="duration"]').val(duration);
         $('#editModal').find('select[name="duration_type"]').val(duration_type);
+        $('#editModal').find('input[name="new_duration"]').val(new_duration);
+        $('#editModal').find('select[name="new_duration_type"]').val(new_duration_type);
         $('#editModal').find('input[name="no_of_videos"]').val(no_of_videos);
         $('#editModal').find('input[name="no_of_products"]').val(no_of_products);
         $('#editModal').find('input[name="no_of_highlights"]').val(no_of_highlights);
@@ -790,6 +817,10 @@ $(document).ready(function() {
 
         if (formData.duration_type === '1' && parseInt(formData.duration) > 12) {
             modal.find('.duration_err').text('Duration cannot be more than 12 months');
+            valid = false;
+        }
+        if (formData.new_duration_type === '1' && parseInt(formData.new_duration) > 12) {
+            modal.find('.new_duration_err').text('Duration cannot be more than 12 months');
             valid = false;
         }
 
