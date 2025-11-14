@@ -3,6 +3,27 @@
     height: 20px;
 }
 
+.cancel-outline{
+    border: 1px solid #6E4527;
+    color: #6E4527;
+    line-height: 35px;
+}
+.cancel-outline:hover {
+    border: 1px solid #6E4527;
+    color: #916b47;
+    background: linear-gradient(180.99deg, #dfbf8fa8 -53.71%, #cba97c61 154.28%);
+}
+.add-fillbtn{
+    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+    line-height: 35px;
+    color: #fff;
+}
+.add-fillbtn:hover {
+    color: #ffffffcf;
+}
+.alink:hover {
+    color: #9f7a54;
+}
 .label-flex {
     display: flex;
     justify-content: space-between;
@@ -12,14 +33,23 @@
 }
 
 .label-flex label {
-    font-size: 15px;
+    font-size: 14px;
     color: #000;
     margin-bottom: 3px;
+    font-weight: 500;
 }
 
 .sub-form .form-control {
     border-radius: 10px;
     line-height: 1.75;
+}
+.search-icon {
+    position: absolute;
+    bottom: 14px;
+    padding: 0px 10px;
+}
+.search-field .form-control {
+    padding: 10px 0px 10px 35px;
 }
 
 #map {
@@ -143,12 +173,14 @@
 .tabs-panel #pills-tab {
     border: 1px solid #ac875e;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .tabs-panel .nav-link {
     line-height: 38px;
     border-right: 1px solid #b9946b;
     color: #000;
+    border-radius: 0px;
 }
 
 .tabs-panel .nav-pills .nav-link.active,
