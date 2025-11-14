@@ -59,7 +59,7 @@ use App\Models\UserCurrentLocation;
                             </div>
 
                             <div class="dropdown-center userDropdown">
-                                <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="    padding: 5px 10px !important;">
+                                <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}" alt="" height="50px" width="80px" /> 
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end profileDropdown">

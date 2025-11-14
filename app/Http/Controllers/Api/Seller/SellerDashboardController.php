@@ -37,9 +37,6 @@ class SellerDashboardController extends Controller
 
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$user_details->id)->first();
         
-
-
-
         return ApiResponse::generateResponse('success','Seller Dashboard fetch Successfully',$seller_details, 200);
 
 
