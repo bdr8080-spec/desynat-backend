@@ -4,7 +4,7 @@ body {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: "Poppins", sans-serif;
     /* background-color: rgba(227, 194, 149, 0.75) !important; */
 }
 
@@ -1675,8 +1675,8 @@ button[type="submit"] {
 }
 
 .header-logo {
-    width: 214px;
-    height: 42px;
+       width: 212px;
+    height: 28px;
     /* border-radius: 50%; */
     object-fit: contain;
 }
@@ -1734,6 +1734,7 @@ button[type="submit"] {
     width: 60px;
     margin-bottom: 10px;
     object-fit: contain;
+        position: relative;
 }
 
 .preview-image {
@@ -1900,4 +1901,23 @@ input[type="text"] {
 }
 a.btn.btn-dark.customBtn.button {
     width: 195px;
+}
+.iti {
+  width: 100%;
+}
+
+.iti__selected-flag {
+  padding: 8px 10px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.iti__country-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+#phone {
+  padding-left: 90px !important;
+  height: 45px;
 }
