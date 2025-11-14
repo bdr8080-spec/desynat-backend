@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <a href="{{ route('seller.Add_product') }}" class="title24">
+        <a href="{{ route('seller.products') }}" class="title24 alink">
             <i class="bi bi-chevron-left"></i> Add New Product
         </a>
     </div>
@@ -513,12 +513,17 @@
         <div class="upload-image" style="height:170px;">
             <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                <div>Upload Size Chart</div>
+                <div class="py-2">Upload Size Chart</div>
                 <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;">
             </label>
         </div>
 
         <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer"></div>
+    </div>
+
+    <div class="dashboard-button d-flex mt-5 gap-5">
+        <button type="button" class="btn cancel-outline w-100">Cancel</button>
+        <button type="button" class="btn add-fillbtn w-100">Add Product</button>
     </div>
 
 

@@ -146,11 +146,11 @@
                                         </div>
                                         <div class="login-btn">
                                             <input type="submit" class="btn btn-success w-100" name="submit"
-                                                value="login">
+                                                value="Login">
                                         </div>
                                 </form>
 
-                                <div class="sign-new mt-2 text-center">
+                                <div class="sign-new mt-4 text-center">
                                     <div>Don’t have an account? <a href="{{ route('seller.register') }}"
                                             class="link-color"> Sign up</a></div>
                                 </div>

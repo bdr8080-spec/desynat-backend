@@ -132,17 +132,26 @@
         <div class="col-lg-6 col-xxl-6">
             <div class="bg-header mt-3 visitor-pnl">
                 <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radio" id="r1" checked>
-                        <label class="form-check-label" for="r1">Today</label>
+                    <div class="check_radio">
+                        <label class="radio-group">
+                            <input type="radio" name="today" checked>
+                            <span class="custom-radio"></span>
+                            <span class="radio-label">Today</span>
+                        </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radio" id="r2">
-                        <label class="form-check-label" for="r2">This week</label>
+                    <div class="check_radio">
+                        <label class="radio-group">
+                            <input type="radio" name="today">
+                            <span class="custom-radio"></span>
+                            <span class="radio-label">This Week</span>
+                        </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radio" id="r3">
-                        <label class="form-check-label" for="r3">This Month</label>
+                    <div class="check_radio">
+                        <label class="radio-group">
+                            <input type="radio" name="today" >
+                            <span class="custom-radio"></span>
+                            <span class="radio-label">This Month</span>
+                        </label>
                     </div>
                     <div class="show-date d-flex gap-2  flex-wrap">
                         <div class="date-form-pnl">
@@ -153,6 +162,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
             <div class="total-revenu border20 shadow20 p20 mt-5">
                 <div class="total-revenu-box pnl-flex">
@@ -170,15 +180,20 @@
                 <div class="title24">Visitor analytics</div>
                 <div class="bg-header-white mt-3">
                     <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radio" id="r1" checked>
-                            <label class="form-check-label" for="r1">Total Order Conversion</label>
+                        <div class="check_radio">
+                            <label class="radio-group">
+                                <input type="radio" name="radio" checked>
+                                <span class="custom-radio"></span>
+                                <span class="radio-label">Total Order Conversion</span>
+                            </label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radio" id="r2">
-                            <label class="form-check-label" for="r2">Total Customer visits</label>
+                        <div class="check_radio">
+                            <label class="radio-group">
+                                <input type="radio" name="radio">
+                                <span class="custom-radio"></span>
+                                <span class="radio-label">Total Customer visits</span>
+                            </label>
                         </div>
-
                         <div class="show-date d-flex gap-2">
                             <div class="date-form-pnl">
                                 <input type="date" class="form-control">

@@ -39,7 +39,7 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
 
-        <div class="">
+        <div class="d-flex align-items-center">
             <a href="{{ route('seller.dashboard') }}" class="logo">
                 <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid">
             </a>

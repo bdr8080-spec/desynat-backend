@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="pkg-list">
                                     <h6>Price</h6>
-                                    <h6 class="font-600">KD {{ $plans->price }}</h6>
+                                    <h6 class="font-600">{{ $plans->price }}  KD  </h6>
                                 </div>
                                 <div class="pkg-list">
                                     <h6>Duration</h6>
@@ -102,7 +102,7 @@
                                     <div class="cmn-header">
                                         <h1><a href="#"><i class="bi bi-chevron-left"></i></a> Payment method</h1>
                                     </div>
-                                    <div class="payment">SELECT PAYMENT METHOD</div>
+                                    <div class="payment py-3">SELECT PAYMENT METHOD</div>
 
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="payment_method"
@@ -119,7 +119,7 @@
 
                                     <div class="total-pnl mt-4">
                                         <div class="tamount">Total Amount</div>
-                                        <div class="price-kd">KD {{ $plans->price }}</div>
+                                        <div class="price-kd"> {{ $plans->price }} KD</div>
                                     </div>
 
 
