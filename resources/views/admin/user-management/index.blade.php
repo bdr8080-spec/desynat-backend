@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </form>
-            <div class="table-responsive w-100">
+            <div class="table-responsive w-100 mt-5">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
