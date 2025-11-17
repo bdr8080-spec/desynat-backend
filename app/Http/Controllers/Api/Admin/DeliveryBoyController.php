@@ -133,6 +133,7 @@ class DeliveryBoyController extends Controller
             'country_code' => 'required|string|max:5',
             'mobile' => 'required|string|max:15|unique:delivery_boys,mobile',
             'password' => 'required|string|min:6',
+            'confirm_password' => 'required|string|same:password',
 
             'address_line1' => 'required|string|max:255',
             'address_line2' => 'nullable|string|max:255',
@@ -192,6 +193,7 @@ class DeliveryBoyController extends Controller
             'country_code' => 'required|string|max:5',
             'mobile' => 'required|string|max:15|unique:delivery_boys,mobile,' . $request->delivery_boy_id,
             'password' => 'required|string|min:6',
+            'confirm_password' => 'required|string|same:password',
 
             'address_line1' => 'required|string|max:255',
             'address_line2' => 'nullable|string|max:255',
