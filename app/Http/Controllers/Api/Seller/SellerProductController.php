@@ -192,7 +192,10 @@ public function all_product(Request $request){
 $request_data=(object) [
 'seller_id'=>$seller_id,
 'search' =>$request->search,
-'type' =>$request->type
+'type' =>$request->type,
+'cargory_filter' =>$request->cargory_filter,
+'brand_filter' =>$request->brand_filter,
+
 ];
 
 
@@ -206,6 +209,34 @@ $request_data=(object) [
   
   }
 
+
+  
+
+
+public function single_product_details(Request $request){
+
+
+$validate = Validator::make($request->all(), [               
+    'product_id'=>'required|exists:products,id',
+]);
+
+if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+}
+
+$request_data=(object) [
+    'product_id'=>$request->product_id,    
+];
+    
+$data=  $this->SellerProductService->single_product_details_fetch($request_data);
+
+  if(isset($data['status']) && $data['status']=='error' ){
+      return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+  }
+
+  return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+  }
 
   
 
@@ -237,6 +268,34 @@ $request_data=(object) [
   }
 
   return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+  }
+
+
+
+public function product_delete(Request $request){
+
+    $validate = Validator::make($request->all(), [               
+        'product_id'=>'required|exists:products,id',
+    ]);
+
+    if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $request_data=(object) [
+    'product_id'=>$request->product_id,
+
+    ];
+
+  $data=  $this->SellerProductService->product_delete_code($request_data);
+
+  if(isset($data['status']) && $data['status']=='error' ){
+      return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+  }
+
+  return ApiResponse::generateResponse('success', $data['message'],(object)[], 200);
   
   }
 

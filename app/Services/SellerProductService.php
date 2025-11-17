@@ -87,7 +87,7 @@ $variation_array=[
     'product_id'=> $product_id,
 
     // product vartion start
-'variant_image' => $request->variant_image[$key],
+'variant_image' => json_encode($request->variant_image[$key]),
 'color_id' => $request->color_id[$key],
 'size_id' => $request->size_id[$key],
 
@@ -121,8 +121,16 @@ if($request->category_id==2){
 //     // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
 // }
 
-        return ['status'=>'success','message'=>"Product Add successfully",'data'=>$request];
-    }
+
+$request_data=(object) [
+    'product_id'=>$product_id,    
+];
+
+$add_product_data=$this->single_product_details_fetch($request_data);
+
+return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
+
+}
 
 
      // AllProduct 
@@ -160,10 +168,27 @@ public function AllProduct($request)
             $productQuery->where(function($q) use ($request) {
                 $q->where('product_name_en', 'like', '%' . $request->search . '%')
                     ->orWhere('product_name_ar', 'like', '%' . $request->search . '%');
-            });
+                });
 
         }
     } 
+
+    if ($request->type == '0') {
+
+        if ($request->cargory_filter) {
+            $productQuery->where(function($q) use ($request) {
+                $q->whereIn('category_id', $request->cargory_filter);
+                });
+        }
+
+        if ($request->brand_filter) {
+            $productQuery->where(function($q) use ($request) {
+                $q->whereIn('brand_id', $request->brand_filter);
+                });
+        }
+
+    }
+
     $productQuery=$this->applyStockStatus($productQuery->get());
 
     // active Product 
@@ -180,6 +205,24 @@ public function AllProduct($request)
 
         }
     } 
+
+    if ($request->type == '1') {
+
+        if ($request->cargory_filter) {
+            $active_productQuery->where(function($q) use ($request) {
+                $q->whereIn('category_id', $request->cargory_filter);
+                });
+        }
+
+        if ($request->brand_filter) {
+            $active_productQuery->where(function($q) use ($request) {
+                $q->whereIn('brand_id', $request->brand_filter);
+                });
+        }
+
+    }
+
+
 $active_productQuery=$this->applyStockStatus($active_productQuery->where('product_active_status', 1)->get());
 
 // inactive product
@@ -196,12 +239,28 @@ $inactive_productQuery = Product::with(['product_specifications','product_varian
 
     }
 } 
+
+if ($request->type == '2') {
+    
+    if ($request->cargory_filter) {
+        $inactive_productQuery->where(function($q) use ($request) {
+            $q->whereIn('category_id', $request->cargory_filter);
+            });
+    }
+    
+    if ($request->brand_filter) {
+        $inactive_productQuery->where(function($q) use ($request) {
+            $q->whereIn('brand_id', $request->brand_filter);
+            });
+    }
+}
+
 $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('product_active_status', 0)->get());
 
-    if ($productQuery->isEmpty()) {
-        return ['status'=>'success','message'=>'No Product found','data'=>[]];
-    }
-
+    // if ($productQuery->isEmpty()) {
+    //     return ['status'=>'success','message'=>'No Product found','data'=>[]];
+    // }
+    
     return [
         'status' => 'success',
         'message' => 'All Product Data Fetched Successfully',
@@ -218,12 +277,29 @@ $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('pr
     ];
 }
 
+
+
+
+
+
+public function single_product_details_fetch($request){
+        
+    $product_data=  product::with('product_specifications','product_variants.color')->where('id',$request->product_id)->first();
+    
+    if (!$product_data) {
+        return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];
+    }
+
+          
+    return ['status'=>'success','message'=>'single product detaile fetch successfully','data'=>$product_data];
+        }
+
+
 // product Status Active and Inactive
 
     public function product_status_active_inactive($request){
-        
-        $product_data=  product::with('product_specifications','product_variants')->where('id',$request->product_id)->first();
 
+        $product_data=  product::with('product_specifications','product_variants')->where('id',$request->product_id)->first();
         
         if (!$product_data) {
             return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];
@@ -240,6 +316,25 @@ $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('pr
         $product_data->update(['product_active_status'=>$value]);
                 
         return ['status'=>'success','message'=>$msg,'data'=>$product_data];
+            }
+
+
+            // product delete
+
+
+
+    public function product_delete_code($request){
+        
+        $product_data=  product::with('product_specifications','product_variants')->where('id',$request->product_id)->first();
+
+        
+        if (!$product_data) {
+            return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];
+        }
+
+        $product_data->delete();
+                
+        return ['status'=>'success','message'=>'Product delete Successfully','data'=>$product_data];
             }
 
 

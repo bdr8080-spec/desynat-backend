@@ -8,8 +8,12 @@ class ProductVariant extends Model
 {
     protected $guarded=[];
 
-    public function color(){
+    protected $casts=[
+        'variant_image'=>'json'
+    ];
 
+    public function color(){
+        
         return $this->hasOne(color::class,'id','color_id');
 
     }
