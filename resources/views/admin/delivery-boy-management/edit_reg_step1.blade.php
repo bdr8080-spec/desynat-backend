@@ -24,27 +24,30 @@
 
                             <label for="fileUpload" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="uploadIcon" />
-                                <img id="previewImage" class="preview-image" />
                                 <div class="upload-text">Upload profile image</div>
                                 <input type="file" id="fileUpload" hidden accept="image/*" />
                             </label>
+                        </div>
+                        <div  class="new-preview-img">
+                                <img id="previewImage" class="preview-image" />
+
                         </div>
                         <!-- Left Column -->
                         <div class="col-lg-6">
                             <!-- First Name -->
                             <div class="mt-3">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">First Name</label>
+                                    <label class="mb-0">Full Name</label>
                                     <span class="text-muted" style="font-size: 12px;">In English</span>
                                 </div>
 
-                                <input type="text" placeholder="Anwar" class="form-control mt-1" />
+                                <input type="text"  placeholder="Enter Full Name" class="form-control mt-1" />
                             </div>
 
                             <!-- Email -->
                             <div class="mt-3">
                                 <label>Email-id</label>
-                                <input type="email" placeholder="xyz@gmail.com" class="form-control" />
+                                <input type="email" placeholder="Enter Email-Id"class="form-control" />
                             </div>
                             <div class="mt-3">
 
@@ -54,7 +57,7 @@
                                 </div>
 
                                 <div class="position-relative mt-1">
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control" placeholder="Enter Address Line 01" />
 
                                     <i class="bi bi-crosshair"   data-bs-toggle="modal"
                                     data-bs-target="#sentModal5"
@@ -68,7 +71,7 @@
                                     <label class="mb-0">City</label>
                                 </div>
 
-                                <input type="text" placeholder="" class="form-control mt-1" />
+                                <input type="text" placeholder="Enter City" class="form-control mt-1" />
                             </div>
 
                             <!-- Password -->
@@ -96,20 +99,25 @@
                             <!-- Last Name -->
                             <div class="mt-3">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">First Name</label>
+                                    <label class="mb-0">Full Name</label>
                                     <span class="text-muted" style="font-size: 12px;">In Arabic</span>
                                 </div>
 
-                                <input type="text" placeholder="Anwar" class="form-control mt-1" />
+                                <input type="text" placeholder="Enter Full Name" class="form-control mt-1" />
                             </div>
 
                             <!-- Mobile -->
-                            <div class="mt-3">
+                         <div class="mt-3">
                                 <label>Mobile Number</label>
+                                <div class="d-flex justify-content-between align-items-center">
 
-                                <input id="phone" type="tel" class="form-control" />
+                                    <input id="phone" type="tel" class="form-control"
+                                        style="padding-left: 82px;width: 560px;" />
+                                </div>
+                                <div class="position-relative mt-1">
 
-                                <input type="hidden" id="country_code" name="country_code">
+                                    <input type="hidden" id="country_code" name="country_code">
+                                </div>
                             </div>
 
 
@@ -121,7 +129,7 @@
                                 </div>
 
                                 <div class="position-relative mt-1">
-                                    <input type="text" class="form-control" />
+                                    <input type="text" class="form-control"  placeholder="Enter Address Line 02" />
 
                                     
                                 </div>
@@ -132,7 +140,7 @@
                                     <label class="mb-0">State</label>
                                 </div>
 
-                                <input type="text" placeholder="" class="form-control mt-1" />
+                                <input type="text"   placeholder="Enter State" class="form-control mt-1" />
                             </div>
                             <!-- Confirm Password -->
                             <div class="mt-3 position-relative">
@@ -176,6 +184,10 @@
     <div class="appointment-container d-flex flex-wrap justify-content-center">
       
 <div id="map"></div>
+  <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-4 ">
+                <button  class="btn btn-dark customBtn">Save</button>
+
+            </div>
     </div>
 
 </div>

@@ -41,23 +41,25 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-1 col-md-12 col-12">
-                        <div class="d-flex justify-content-end" style="text-align: end">
+                    <div class="col-lg-3 ">
+                        <div class="d-flex gap-3 justify-content-end" >
                             <a href="{{route('admin.userManagement')}}" class="btn btn-dark customBtn"
                                 style="margin-top: 70px">
                                 <span>Reset</span>
                             </a>
+                             <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                                <span>Export </span></a>
                         </div>
                     </div>
-                    <div class="col-md-2 col-lg-1 col-12 mt-5">
+                    <!-- <div class="col-md-2 col-lg-1 col-12 mt-5">
                         <div class="d-dlex justify-content-end" style="text-align: end">
                             <a class="btn btn-dark customBtn button">
                                 <span>Export </span></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </form>
-            <div class="table-responsive w-100 mt-5">
+            <div class="table-responsive  mt-5">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
