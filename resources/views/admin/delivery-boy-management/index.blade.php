@@ -7,7 +7,7 @@
             <h2 class="h2">DELIVERY BOY MANAGEMENT</h2>
         </div>
 
-
+<!-- 
         <div class="col-lg-3 col-md-4 col-12">
 
             <div class="d-flex justify-content-end" style="text-align: end">
@@ -15,7 +15,7 @@
                     <span>Export</span>
                 </a>
             </div>
-        </div>
+        </div> -->
 
     </div>
 
@@ -42,11 +42,14 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">
-                    <div class="d-flex justify-content-end" style="text-align: end">
+                    <div class="gap-3 " >
                         <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn"
-                            style="margin-top: 70px">
+                            style="margin-top: 60px">
                             <span>Reset</span>
                         </a>
+                         <a class="btn btn-dark customBtn" style="margin-top: 60px">
+                    <span>Export</span>
+                </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">

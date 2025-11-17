@@ -27,7 +27,7 @@
                                     <label class="mb-0">Vehicle Name</label>
                                 </div>
 
-                                <input type="text" placeholder="" class="form-control mt-1" />
+                                <input type="text" placeholder=" Enter Vehicle Name" class="form-control mt-1" />
                             </div>
 
                         </div>
@@ -40,7 +40,8 @@
                                     <label class="mb-0">Vehicle Registration Number</label>
                                 </div>
 
-                                <input type="text" placeholder="" class="form-control mt-1" />
+                                <input type="text" placeholder=" Enter Vehicle Registration Number"
+                                    class="form-control mt-1" />
                             </div>
 
                         </div>
@@ -49,7 +50,7 @@
                         <h5>Upload vehicle Image</h5>
 
                         <!-- FRONT -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-2 text-center">
                             <label for="vehicleFront" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewFront" class="preview-image" />
@@ -59,7 +60,7 @@
                         </div>
 
                         <!-- BACK -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-10 text-center">
                             <label for="vehicleBack" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewBack" class="preview-image" />
@@ -68,11 +69,11 @@
                             <div class="upload-subtitle">Back</div>
                         </div>
                     </div>
-                      <div class="row mt-4">
+                    <div class="row mt-4">
                         <h5>Upload vehicle Image</h5>
 
                         <!-- FRONT -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-2 text-center">
                             <label for="vehicleFront" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewFront" class="preview-image" />
@@ -82,7 +83,7 @@
                         </div>
 
                         <!-- BACK -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-10 text-center">
                             <label for="vehicleBack" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewBack" class="preview-image" />
@@ -91,11 +92,11 @@
                             <div class="upload-subtitle">Back</div>
                         </div>
                     </div>
-                       <div class="row mt-4">
+                    <div class="row mt-4">
                         <h5>Upload Identity Proof</h5>
 
                         <!-- FRONT -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-2 text-center">
                             <label for="vehicleFront" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewFront" class="preview-image" />
@@ -105,7 +106,7 @@
                         </div>
 
                         <!-- BACK -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-10 text-center">
                             <label for="vehicleBack" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewBack" class="preview-image" />
@@ -114,11 +115,11 @@
                             <div class="upload-subtitle">Back</div>
                         </div>
                     </div>
-                       <div class="row mt-4">
+                    <div class="row mt-4">
                         <h5>Upload driving license</h5>
 
                         <!-- FRONT -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-2 text-center">
                             <label for="vehicleFront" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewFront" class="preview-image" />
@@ -128,7 +129,7 @@
                         </div>
 
                         <!-- BACK -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-10 text-center">
                             <label for="vehicleBack" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewBack" class="preview-image" />
@@ -137,24 +138,25 @@
                             <div class="upload-subtitle">Back</div>
                         </div>
                     </div>
-                       <div class="row mt-4">
+                    <div class="row mt-4">
                         <h5>Upload vehicle insurance</h5>
 
                         <!-- FRONT -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-2 text-center">
                             <label for="vehicleFront" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewFront" class="preview-image" />
                                 <input type="file" id="vehicleFront" hidden accept="image/*" />
                             </label>
-                            
+
                         </div>
+                    </div>
 
                     <div class="row mt-4">
                         <h5>Upload pollution paper (optional)</h5>
 
                         <!-- FRONT -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-2 text-center">
                             <label for="vehicleFront" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewFront" class="preview-image" />
@@ -164,7 +166,7 @@
                         </div>
 
                         <!-- BACK -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-10 text-center">
                             <label for="vehicleBack" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewBack" class="preview-image" />
@@ -173,11 +175,11 @@
                             <div class="upload-subtitle">Back</div>
                         </div>
                     </div>
-                       <div class="row mt-4">
+                    <div class="row mt-4">
                         <h5>Upload registration certificate (optional)</h5>
 
                         <!-- FRONT -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-2 text-center">
                             <label for="vehicleFront" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewFront" class="preview-image" />
@@ -187,7 +189,7 @@
                         </div>
 
                         <!-- BACK -->
-                        <div class="col-lg-6 text-center">
+                        <div class="col-lg-10 text-center">
                             <label for="vehicleBack" class="upload-box">
                                 <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="upload-icon" />
                                 <img id="previewBack" class="preview-image" />
@@ -203,8 +205,8 @@
                 <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4 ">
                     <a class="btn btn-dark customBtn">Cancel</a>
                     <a class="btn btn-dark customBtn">Add</a>
-    
-    
+
+
                 </div>
             </div>
 
