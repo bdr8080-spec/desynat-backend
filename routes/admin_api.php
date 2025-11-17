@@ -101,6 +101,9 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_deliveryboy_details',[DeliveryBoyController::class,'get_deliveryboy_details']);
      Route::post('/block_unblock_deliveryboy',[DeliveryBoyController::class,'block_unblock_deliveryboy']);
      Route::post('/delete_deliveryboy',[DeliveryBoyController::class,'delete_deliveryboy']);
+     Route::post('/add_deliveryBoy',[DeliveryBoyController::class,'add_deliveryBoy']);
+     Route::post('/update_deliveryBoy',[DeliveryBoyController::class,'update_deliveryBoy']);
+     Route::get('/get_kuwait_zones',[DeliveryBoyController::class,'get_kuwait_zones']);
 
 
 

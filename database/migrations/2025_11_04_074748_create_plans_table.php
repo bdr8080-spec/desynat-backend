@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('plan_name_arabic');
             $table->integer('duration'); 
             $table->tinyInteger('duration_type')->comment('1 - monthly, 2 - yearly');
+            $table->integer('new_duration'); 
+            $table->tinyInteger('new_duration_type')->comment('1 - monthly, 2 - yearly');
             $table->integer('no_of_videos');
             $table->integer('no_of_products');
             $table->integer('no_of_highlights');

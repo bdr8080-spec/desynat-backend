@@ -17,10 +17,10 @@ class DeliveryBoyAuthService
 
         if($request->type=='0'){
 
-          $get_user_details=  DeliveryBoy::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->first();
+          $get_user_details=  DeliveryBoy::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('document_information',1)->first();
   
         }else{
-          $get_user_details=  DeliveryBoy::where('email',$request->email_mobile)->first();
+          $get_user_details=  DeliveryBoy::where('email',$request->email_mobile)->where('document_information',1)->first();
   
         }
 

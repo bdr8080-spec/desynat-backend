@@ -7,6 +7,9 @@ use App\Models\Zone;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 
+use Illuminate\Support\Facades\Hash;
+use DB;
+
 
 class DeliveryBoyManagementService
 {
@@ -183,6 +186,7 @@ class DeliveryBoyManagementService
                     'data' => (object)[]
                 ];
             }
+            DeliveryBoyDocument::where('delivery_boy_id', $details->id)->delete();
             $details->delete();
 
             return [
@@ -199,6 +203,196 @@ class DeliveryBoyManagementService
             ];
         }
     }
+
+    public function addDeliveryBoy(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $deliveryBoy = new DeliveryBoy();
+            $deliveryBoy->profile_pic = $request->profile_pic; 
+            $deliveryBoy->full_name_english = $request->full_name_english;
+            $deliveryBoy->full_name_arabic = $request->full_name_arabic;
+            $deliveryBoy->email = $request->email;
+            $deliveryBoy->country_code = $request->country_code;
+            $deliveryBoy->mobile = $request->mobile;
+            $deliveryBoy->password = Hash::make($request->password); 
+            $deliveryBoy->address_line1 = $request->address_line1;
+            $deliveryBoy->address_line2 = $request->address_line2;
+            $deliveryBoy->city = $request->city;
+            $deliveryBoy->state = $request->state;
+            $deliveryBoy->let = $request->let;
+            $deliveryBoy->long = $request->long;
+            $deliveryBoy->zone_id = $request->zone_id;
+            $deliveryBoy->vehicle_name = $request->vehicle_name;
+            $deliveryBoy->vehicle_reg_no = $request->vehicle_reg_no;
+            $deliveryBoy->save();
+
+            $documents = [
+                ['document' => 'vehicle_image_front', 'doc_type' => 1, 'is_front' => 1],
+                ['document' => 'vehicle_image_back', 'doc_type' => 1],
+                ['document' => 'identity_proof_front', 'doc_type' => 2, 'is_front' => 1],
+                ['document' => 'identity_proof_back', 'doc_type' => 2],
+                ['document' => 'driving_license_front', 'doc_type' => 3, 'is_front' => 1],
+                ['document' => 'driving_license_back', 'doc_type' => 3],
+                ['document' => 'vehicle_insurance', 'doc_type' => 4],
+                ['document' => 'pollution_paper', 'doc_type' => 5],
+                ['document' => 'registration_certificate_front', 'doc_type' => 6, 'is_front' => 1],
+                ['document' => 'registration_certificate_back', 'doc_type' => 6],
+            ];
+
+            $documentsInserted = 0;
+
+            foreach ($documents as $doc) {
+                $field = $doc['document'];
+
+                if (!empty($request->$field)) {
+
+                    DeliveryBoyDocument::create([
+                        'delivery_boy_id' => $deliveryBoy->id,
+                        'document_type' => $doc['doc_type'],
+                        'document_path' => $request->$field,
+                        'is_front' => $doc['is_front'] ?? 0,
+                    ]);
+
+                    $documentsInserted++;
+                }
+            }
+
+            if ($documentsInserted > 0) {
+                $deliveryBoy->document_information = 1;
+                $deliveryBoy->save();
+            }
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Delivery boy added successfully',
+                'data' => $deliveryBoy
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add delivery boy: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function updateDeliveryBoy(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $deliveryBoy = DeliveryBoy::find($request->delivery_boy_id);
+
+            if (!$deliveryBoy) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Delivery Boy not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            // Update all fields directly
+            $deliveryBoy->profile_pic = $request->profile_pic;
+            $deliveryBoy->full_name_english = $request->full_name_english;
+            $deliveryBoy->full_name_arabic = $request->full_name_arabic;
+            $deliveryBoy->email = $request->email;
+            $deliveryBoy->country_code = $request->country_code;
+            $deliveryBoy->mobile = $request->mobile;
+            $deliveryBoy->password = Hash::make($request->password);
+            $deliveryBoy->address_line1 = $request->address_line1;
+            $deliveryBoy->address_line2 = $request->address_line2;
+            $deliveryBoy->city = $request->city;
+            $deliveryBoy->state = $request->state;
+            $deliveryBoy->let = $request->let;
+            $deliveryBoy->long = $request->long;
+            $deliveryBoy->zone_id = $request->zone_id;
+            $deliveryBoy->vehicle_name = $request->vehicle_name;
+            $deliveryBoy->vehicle_reg_no = $request->vehicle_reg_no;
+            $deliveryBoy->save();
+
+            // Remove old documents
+            DeliveryBoyDocument::where('delivery_boy_id', $deliveryBoy->id)->delete();
+
+            // Insert fresh documents
+            $documents = [
+                ['field' => 'vehicle_image_front', 'doc_type' => 1, 'is_front' => 1],
+                ['field' => 'vehicle_image_back', 'doc_type' => 1],
+                ['field' => 'identity_proof_front', 'doc_type' => 2, 'is_front' => 1],
+                ['field' => 'identity_proof_back', 'doc_type' => 2],
+                ['field' => 'driving_license_front', 'doc_type' => 3, 'is_front' => 1],
+                ['field' => 'driving_license_back', 'doc_type' => 3],
+                ['field' => 'vehicle_insurance', 'doc_type' => 4],
+                ['field' => 'pollution_paper', 'doc_type' => 5],
+                ['field' => 'registration_certificate_front', 'doc_type' => 6, 'is_front' => 1],
+                ['field' => 'registration_certificate_back', 'doc_type' => 6]
+            ];
+
+            foreach ($documents as $doc) {
+                DeliveryBoyDocument::create([
+                    'delivery_boy_id' => $deliveryBoy->id,
+                    'document_type' => $doc['doc_type'],
+                    'document_path' => $request->{$doc['field']},
+                    'is_front' => $doc['is_front'] ?? 0
+                ]);
+            }
+
+            DB::commit();
+
+            return [
+                'status'  => 'success',
+                'message' => 'Delivery boy updated successfully',
+                'data'    => $deliveryBoy
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update delivery boy: ' . $e->getMessage(),
+                'data' => (object)[]
+            ];
+        }
+    }
+
+    public function getKuwaitZones()
+    {
+        try {
+
+            $query = Zone::where('country_id', 1)->orderBy('id','desc')->get();
+
+            if ($query->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No zone found.',
+                    'data' => (object) []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Zones fetched successfully',
+                'data' => $query
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch zones: ' . $e->getMessage(),
+                'data' => (object)[]
+            ];
+        }
+    }
+
+
+
 
     
 
