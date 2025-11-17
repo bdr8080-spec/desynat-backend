@@ -18,6 +18,8 @@ class SellerProductService
 public function AddProduct($request){
         
 
+try{
+
 // FILTER PRODUCT TABLE DATA SEPRATE
 
 $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
@@ -129,6 +131,12 @@ $request_data=(object) [
 $add_product_data=$this->single_product_details_fetch($request_data);
 
 return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
+
+} 
+catch (\Exception $e) {
+    return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+
+}
 
 }
 
