@@ -46,6 +46,8 @@ return new class extends Migration
             $table->enum('cash_on_delivery',['0','1'])->default('0')->comment('0 Not 1 yes');
 
             $table->string('upload_size_chart')->nullable();
+
+            $table->integer('product_active_status')->default(0)->comment('0 not active 1 Active');
             
             $table->timestamps();
         });

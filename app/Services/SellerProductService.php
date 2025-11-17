@@ -7,30 +7,240 @@ use App\Models\SubCategory;
 use Hash;
 
 
-use App\Models\product;
-use App\Models\ProductSpecification;
-use App\Models\ProductVariant;
+use App\Models\seller;
+use App\Models\color;
 
-
+use App\Models\{ product,ProductSpecification,ProductVariant};
 
 class SellerProductService
 {
 
-    // get categories
-    public function getCategories($request){
+public function AddProduct($request){
         
-        $category = Category::orderBy('id', 'asc')->get();
 
+// FILTER PRODUCT TABLE DATA SEPRATE
 
-        if ($category->isEmpty()) {
-             return ['status'=>'success','message'=>"No categories found",'data'=>[]];
-            // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
-        }
+$seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
 
-        return ['status'=>'success','message'=>"Category list fetched successfully",'data'=>$category];
-        // return ApiResponse::generateResponse('success', 'Sub category list fetched successfully', $subCategory, 201);
+    if($seller_details->admin_verify!=='2'){
+        return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
     }
 
+
+$product=[
+'seller_id'=>$request->seller_id,
+'store_id'=>$seller_details->store_info->id,
+'category_id' => $request->category_id,
+'subcategory_id' => $request->subcategory_id,
+'brand_id' => $request->brand_id,
+'other_en' => $request->other_en,
+'other_ar' => $request->other_ar,
+
+'product_name_en' => $request->product_name_en,
+'product_name_ar' => $request->product_name_ar,
+     
+'description_en' => $request->description_en,
+'description_ar' => $request->description_ar,
+        
+'min_card_quantity'=> $request->min_card_quantity,
+'max_card_quantity'=> $request->max_card_quantity,
+'product_return'=> $request->product_return, // 0 Not return 1 return Availble 
+'return_days'=> $request->return_days,
+'product_exchangable'=> $request->product_exchangable,  // 0 not 1 yes
+'exchangable_days'=> $request->exchangable_days,
+'review_rating'=> $request->review_rating, // 0 not 1 yes
+'affiliated_product'=> $request->affiliated_product, // // 0 not 1 yes
+'customized_product'=> $request->customized_product, // // 0 not 1 yes
+'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
+'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
+'upload_size_chart'=> $request->upload_size_chart
+];
+
+
+$product_data=  product::create($product);
+
+$product_id= $product_data->id;
+
+// specification 
+
+foreach($request->product_spe_en as $key=>$val){
+
+$specification_array=[
+    // specification
+'product_id'=> $product_id,
+'name_en'=> $request->product_spe_en[$key],
+'feature_en'=> $request->product_spe_feature_en[$key],
+'name_ar'=> $request->product_spe_ar[$key],
+'feature_ar'=> $request->product_spe_feature_ar[$key],
+];
+
+$product_data=  ProductSpecification::create($specification_array);
+
+}
+
+// variation code 
+
+foreach($request->color_id as $key=>$val){
+
+
+$variation_array=[
+    'product_id'=> $product_id,
+
+    // product vartion start
+'variant_image' => $request->variant_image[$key],
+'color_id' => $request->color_id[$key],
+'size_id' => $request->size_id[$key],
+
+'total_stock' => $request->total_stock[$key],
+'sku' => $request->sku[$key],
+'sku_threshold_value' => $request->sku_threshold_value[$key],
+'actual_price' => $request->actual_price[$key],
+'discount_type' => $request->discount_type[$key],
+'discount_value' => $request->discount_value[$key],
+'final_price' => $request->final_price[$key],
+
+// product vartion end  
+];
+
+if($request->category_id==2){
+
+    $variation_array['bust']= $request->bust[$key]??null; // only provide when category is women
+    $variation_array['waist']= $request->waist[$key]??null; // only provide when category is women
+    $variation_array['hip']= $request->hip[$key]??null;  // only provide when category is women
+    $variation_array['shoulder']= $request->shoulder[$key]??null; // only provide when category is women
+    $variation_array['sleeve_length']= $request->sleeve_length[$key]??null; // only provide when category is women
+    $variation_array['length']= $request->length[$key]??null; // only provide when category is women      
+    }
+
+    $product_data=  ProductVariant::create($variation_array);
+}
+
+
+// if ($product->isEmpty()) {
+//         return ['status'=>'success','message'=>"No Product found",'data'=>[]];
+//     // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
+// }
+
+        return ['status'=>'success','message'=>"Product Add successfully",'data'=>$request];
+    }
+
+
+     // AllProduct 
+   
+     // Stock function
+private function applyStockStatus($products)
+{
+    foreach ($products as $product) {
+        $product->stock = 'Out of Stock';
+
+        foreach ($product->product_variants as $variant) {
+            if ($variant->total_stock > 1) {
+                $product->stock = 'In Stock';
+                break;
+            }
+        }
+    }
+
+    return $products;
+}
+
+public function AllProduct($request)
+{
+    $seller = Seller::with('store_info','subcription_plan')->find($request->seller_id);
+
+    if (!$seller) {
+        return ['status'=>'error','message'=>'Seller not found','data'=>[]];
+    }
+
+    $productQuery = Product::with(['product_specifications','product_variants.color'])
+                           ->where('seller_id', $seller->id);
+        if ($request->search) {
+        if ($request->type == '0') {
+            // Search only English name
+            $productQuery->where(function($q) use ($request) {
+                $q->where('product_name_en', 'like', '%' . $request->search . '%')
+                    ->orWhere('product_name_ar', 'like', '%' . $request->search . '%');
+            });
+
+        }
+    } 
+    $productQuery=$this->applyStockStatus($productQuery->get());
+
+    // active Product 
+
+    $active_productQuery = Product::with(['product_specifications','product_variants.color'])
+    ->where('seller_id', $seller->id);
+        if ($request->search) {
+        if ($request->type == '1') {
+        // Search only English name
+        $active_productQuery->where(function($q) use ($request) {
+        $q->where('product_name_en', 'like', '%' . $request->search . '%')
+        ->orWhere('product_name_ar', 'like', '%' . $request->search . '%');
+        });
+
+        }
+    } 
+$active_productQuery=$this->applyStockStatus($active_productQuery->where('product_active_status', 1)->get());
+
+// inactive product
+
+$inactive_productQuery = Product::with(['product_specifications','product_variants.color'])
+->where('seller_id', $seller->id);
+    if ($request->search) {
+    if ($request->type == '2') {
+    // Search only English name
+    $inactive_productQuery->where(function($q) use ($request) {
+    $q->where('product_name_en', 'like', '%' . $request->search . '%')
+    ->orWhere('product_name_ar', 'like', '%' . $request->search . '%');
+    });
+
+    }
+} 
+$inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('product_active_status', 0)->get());
+
+    if ($productQuery->isEmpty()) {
+        return ['status'=>'success','message'=>'No Product found','data'=>[]];
+    }
+
+    return [
+        'status' => 'success',
+        'message' => 'All Product Data Fetched Successfully',
+        'data' => [
+          
+            'all_product_count' => $productQuery->count(),
+            'active_product_count'   => $active_productQuery->count(),
+            'inactive_product_count' => $inactive_productQuery->count(),
+
+            'all_product_data' => $productQuery,
+            'active_product'   => $active_productQuery,
+            'inactive_product' => $inactive_productQuery
+        ]
+    ];
+}
+
+// product Status Active and Inactive
+
+    public function product_status_active_inactive($request){
+        
+        $product_data=  product::with('product_specifications','product_variants')->where('id',$request->product_id)->first();
+
+        
+        if (!$product_data) {
+            return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];
+        }
+
+        if($product_data->product_active_status==0){
+            $msg="Product Active Successfully";
+            $value=1;
+        }else{
+            $msg="Product Deactive Successfully";
+            $value=0;
+        }
+
+        $product_data->update(['product_active_status'=>$value]);
+                
+        return ['status'=>'success','message'=>$msg,'data'=>$product_data];
+            }
 
 
 

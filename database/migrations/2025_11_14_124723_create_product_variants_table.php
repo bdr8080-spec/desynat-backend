@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
+            $table->integer('product_id');
             $table->longText('variant_image')->nullable();
             $table->string('color_id');
             $table->string('size_id');
