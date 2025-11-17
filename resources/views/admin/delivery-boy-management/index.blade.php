@@ -634,7 +634,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
-            modalTitle.innerText = 'Pollution Paper';
+            modalTitle.innerText = 'Registration Certificate';
 
             documentContainer.innerHTML = '';
 
