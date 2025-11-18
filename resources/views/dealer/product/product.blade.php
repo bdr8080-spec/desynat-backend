@@ -11,17 +11,17 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-allproduct" type="button" role="tab" aria-controls="pills-allproduct"
-                    aria-selected="true">All (123)</button>
+                    aria-selected="true">All ({{ $data['all_product_count'] }})</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-active-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-active" type="button" role="tab" aria-controls="pills-active"
-                    aria-selected="false">Active (100)</button>
+                    aria-selected="false">Active ({{ $data['active_product_count'] }})</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-inactive-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-inactive" type="button" role="tab" aria-controls="pills-inactive"
-                    aria-selected="false">Inactive (150)</button>
+                    aria-selected="false">Inactive ({{ $data['inactive_product_count'] }})</button>
             </li>
 
         </ul>
@@ -61,6 +61,7 @@
                         </div>
                     </div>
 
+                    {{-- All Product show --}}
                     <div class="table-responsive">
                         <table id="example" class="table datatable table-bordered">
                             <thead>
@@ -78,31 +79,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>01</td>
-                                    <td>
-                                        <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="image"
-                                            class="pro-image">
-                                    </td>
-                                    <td>2123562</td>
-                                    <td>Mens Cotton Shirt</td>
-                                    <td>Lives</td>
-                                    <td>Men</td>
-                                    <td>10/11/25</td>
-                                    <td>Instock</td>
-                                    <td>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="switchCheckDefault">
-                                                <label class="form-check-label" for="switchCheckDefault"></label>
+
+                                @foreach ($data['all_product_data'] as $item)
+                                    <tr>
+                                        <td>01</td>
+                                        <td>
+                                            <img src="{{ $item->product_variants['0']->variant_image[0] }}"
+                                                alt="image" class="pro-image">
+                                        </td>
+                                        <td>{{ $item->product_variants['0']->variant_image }}</td>
+                                        <td>Mens Cotton Shirt</td>
+                                        <td>Lives</td>
+                                        <td>Men</td>
+                                        <td>10/11/25</td>
+                                        <td>Instock</td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                        id="switchCheckDefault">
+                                                    <label class="form-check-label" for="switchCheckDefault"></label>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
