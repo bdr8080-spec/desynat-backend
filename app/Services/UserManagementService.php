@@ -506,7 +506,6 @@ public function product_view_cart_details($request)
                 $val->check_stock='Stock_Availble';
             }
 
-
             $total_amount+=$val->product_variants->final_price * $val->quantity ;
             $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
             $total_mrp=$total_amount+$discount_on_mrp;
