@@ -167,6 +167,7 @@
         
     </div>
 
+<!----- variant panel ------>
     <div class="variant-panel">
         <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;">
@@ -329,10 +330,7 @@
                         <div class="label-flex">
                             <label>Percentage</label>
                         </div>
-                        <select class="form-select form-control" aria-label="Default select example">
-                            <option selected>Eg.10%</option>
-                            <option value="1">One</option>
-                        </select>
+                        <input type="text" class="form-control" placeholder="Eg.10%">
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -346,6 +344,7 @@
             </div>
         </div>
     </div>
+<!-----End variant panel ------>
 
     <div class="row py-3 mt-4">
         <div class="col-lg-12 col-md-12">
@@ -375,46 +374,74 @@
     </div>
 
     <div class="pt-3">
-        <div class="title24">Is this product returnable?</div>
         <div class="row">
-            <div class="col-lg-4">
-                <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                    <div class="check_radio">
-                        <label class="radio-group">
-                            <input type="radio" name="percentage1" checked>
-                            <span class="custom-radio"></span>
-                            <span class="radio-label">Percentage</span>
-                        </label>
+            <div class="col-lg-6 col-md-6">
+                <div class="title24">Is this product returnable?</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio1" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio1">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="check_radio">
-                        <label class="radio-group">
-                            <input type="radio" name="percentage1">
-                            <span class="custom-radio"></span>
-                            <span class="radio-label">Fixed Price</span>
-                        </label>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>If Yes,Total days for returning</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.KD 299.00">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="title24">Is this product Exchangable ?</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio11" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Yes</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="radio11">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">No</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>If Yes,Total days for returning</label>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Is this product exchangeable?</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.15 days">
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Eg.KD 299.00">
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Is this product exchangeable?</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Eg.15 days">
-                </div>
-            </div>
-            
         </div>
     </div>
 
@@ -653,23 +680,219 @@ $('#edit_imageUpload').on('change', e => {
 </script>
 
 <script>
-    // Add Variant
+   // ADD NEW Variant
+    $(".addVariantBtn").click(function () {
+       $(".variant-panel").append(`
+        <div class="variant-panel-bg">
+            <div class="product-pnls mt-4">
+                <div class="upload-image" style="height:170px;">
+                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
+                        <div class="mt-3">Upload Profile Photo</div>
+                        <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;">
+                    </label>
+                </div>
+
+                <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer"></div>
+            </div>
+
+            <div class="wapper-header mt-4">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Colour</label>
+                            </div>
+
+                            <select class="form-select form-control" aria-label="Default select example">
+                                <option selected>Colour</option>
+                                <option value="1">Red</option>
+                                <option value="2">Black</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Size</label>
+                            </div>
+
+                            <select class="form-select form-control" aria-label="Default select example">
+                                <option selected>Colour</option>
+                                <option value="1">Red</option>
+                                <option value="2">Black</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Bust</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Waist</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>HIP</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Shoulder</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Sleev Length</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Length</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Total Stocks</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.13208">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>SKU</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="20019">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>SKU Threshold value</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="20019">
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Price</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="KD299">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Actual Price</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.KD 299.00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3">
+                <div class="title24">Discounted Price</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="percentage" checked>
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Percentage</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="percentage">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Fixed Price</span>
+                                </label>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Percentage</label>
+                            </div>
+                           <input type="text" class="form-control" placeholder="Eg.10%">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Final Price</label>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Eg.KD 299.00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="remove-btn removerow"><i class="bi bi-x"></i> Remove </div>
+            </div>
+
+        </div>
+
+       `)
+       
+    });
+
+    // REMOVE ROW
+    $(document).on("click", ".removerow", function () {
+        $(this).closest(".variant-panel-bg").remove();
+    });
+
+    
+</script>
+
+
+
+<!-- <script>
     $(document).on("click", ".addVariantBtn", function () {
         let c = $(".variant-panel:first").clone(true);
 
-        c.find("input,select").val("");
+        c.find("input").val("");
         c.find(".preview").empty();
-        c.append(`<button class="removeVariant btn btn-danger btn-sm mt-2">Remove</button>`);
+        c.append(`<div class=""><button class="removeVariant btn btn-danger btn-sm mt-2">Remove</button></div>`);
 
         $(".variant-panel:last").after(c);
     });
 
-    // Remove Variant
     $(document).on("click", ".removeVariant", function () {
         $(this).closest(".variant-panel").remove();
     });
 
-    // Image Preview
     $(document).on("change", ".imgUpload", function (e) {
         let box = $(this).closest(".variant-panel").find(".preview");
         box.html("");
@@ -680,4 +903,4 @@ $('#edit_imageUpload').on('change', e => {
             r.readAsDataURL(f);
         });
     });
-</script>
+</script> -->
