@@ -273,6 +273,13 @@ table.dataTable {
     padding: 10px;
     margin: 12px 0px;
 }
+.variant-panel-bg{
+    background: #caa97c0d;
+    padding: 15px;
+    margin: 12px 0px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
 
 /*--------------------------------------------------------------
 # Add product multiple images
