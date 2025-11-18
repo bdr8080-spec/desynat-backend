@@ -84,5 +84,22 @@ class UserStoreController extends Controller
 
     }
 
+
+    public function store_filter(Request $request){
+
+     $data=$this->UserManagementService->get_store_filter();
+
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+    
+
     
 }

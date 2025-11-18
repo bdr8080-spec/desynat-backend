@@ -20,7 +20,6 @@ class product extends Model
         return $this->hasOne(SubCategory::class,'id','subcategory_id');
     }
 
-
     public function product_specifications(){
         return $this->hasMany(ProductSpecification::class,'product_id','id');
     }

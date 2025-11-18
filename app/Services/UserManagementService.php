@@ -7,7 +7,7 @@ use App\Models\all_countrie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 
-use App\Models\{ product,ProductSpecification,ProductVariant};
+use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter};
 
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
 
@@ -239,10 +239,53 @@ class UserManagementService
             if (!empty($data->search)) {
                 $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
             }
-    
+
+            // Apply Filter
+
+            switch ($data->sort_filter) {
+
+                case 1: // Recommended
+                    // $products = $products->orderBy('recommended_score', 'desc');
+                    break;
+            
+                case 2: // Price: Low to High
+                    $products = $products->whereHas('product_variants',function($query){
+                        $query->orderBy('actual_price', 'asc');
+                        
+                    });
+                    break;
+            
+                case 3: // Price: High to Low
+                    $products = $products->whereHas('product_variants',function($query){
+                        $query->orderBy('actual_price', 'desc');
+                        
+                    });
+                    break;
+            
+                case 4: // Newest First
+                    $products = $products->orderBy('created_at', 'desc');
+                    break;
+            
+                case 5: // Customer Rating
+                    // $products = $products->orderBy('rating', 'desc');
+                    break;
+            
+                case 6: // Best selling
+                    // $products = $products->orderBy('total_sales', 'desc');
+                    break;
+            
+                case 7: // Fastest delivery
+                    // $products = $products->orderBy('delivery_time', 'asc');
+                    break;
+            
+                default:
+                    // No filter
+                    break;
+            }
+            
             // Step 4: Pagination (convert stdClass to array)
-            $products = $products->paginate(10)->appends((array) $data);
-    
+            $products = $products->paginate()->appends((array) $data);
+
             // Step 5: Response
             $response = [
                 'store'       => $store_information,
@@ -253,6 +296,42 @@ class UserManagementService
                 'status'  => 'success',
                 'message' => "single Store Information fetch Successfully",
                 'data'    => $response
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
+    
+
+
+    public function get_store_filter()
+    {
+        try {
+    
+            // Step 1: Find store
+            $store_information = sortFilter::where('status','1')->get();
+    
+            // If store not found
+            if (!$store_information) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Store Found',
+                    'data'   => []
+                ];
+            }
+    
+            return [
+                'status'  => 'success',
+                'message' => "Store filter Information fetch Successfully",
+                'data'    => $store_information
             ];
     
         } catch (\Exception $e) {

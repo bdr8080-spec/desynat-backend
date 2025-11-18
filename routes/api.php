@@ -62,14 +62,14 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
   Route::post('/single-store-details', [UserStoreController::class,'single_store_details']);
   
-
+ 
 });
 
 
+Route::get('/store_filter', [UserStoreController::class,'store_filter']);
+
 Route::get('user/category',[ProfileController::class, 'getCategories']);
 Route::get('user/sub-category',[ProfileController::class, 'getSubCategories']);
-
-
 
 // common APi
 // 
