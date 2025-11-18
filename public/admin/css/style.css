@@ -1733,12 +1733,18 @@ button[type="submit"] {
     background-color: #faf7f3;
 }
 
-.upload-box img {
-    width: 60px;
-    margin-bottom: 10px;
-    object-fit: contain;
-        position: relative;
+.upload-box {
+    width: 220px;
+    height: 160px;
+    border: 2px dotted #c8ad8d;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* IMPORTANT */
+    position: relative;
 }
+
 
 /* .preview-image {
     width: 100%;
@@ -1933,4 +1939,9 @@ a.btn.btn-dark.customBtn.button {
 #phone {
   padding-left: 90px !important;
   height: 45px;
+}
+
+
+.iti__flag-container input::placeholder{
+    display: none !important;
 }

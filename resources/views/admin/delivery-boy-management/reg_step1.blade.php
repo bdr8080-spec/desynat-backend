@@ -1,5 +1,41 @@
 @extends('admin.layout.app')
 @section('content')
+<style>
+.upload-box {
+    width: 220px;
+    height: 160px;
+    border: 2px dotted #c8ad8d;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.upload-icon {
+    width: 60px;
+    opacity: 0.5;
+}
+
+.upload-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+</style>
 
 <div class="inner-content management">
     <div class="d-flex flex-column align-items-start back-btn-box">
@@ -19,20 +55,20 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="upload-title text-center">
-                                Upload profile image
+                                Upload Profile Image
                             </div>
 
-                            <div class="upload-new">
-                                <label for="fileUpload" class="upload-box">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="uploadIcon" />
-                                    <div class="upload-text">Upload profile image</div>
-                                    <input type="file" id="fileUpload" hidden accept="image/*" />
+                            <div class="upload-new text-center">
+                                <label for="profileUpload" class="upload-box">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                        id="profileUploadIcon" class="upload-icon" />
+                                    <div class="upload-text">Upload Profile Image</div>
+                                    <input type="file" id="profileUpload" hidden accept="image/*" />
+                                    <img id="profilePreview" class="preview-image" />
                                 </label>
                             </div>
-                            <div class="new-preview-img">
-                                <img id="previewImage" class="preview-image" />
-                            </div>
                         </div>
+
                         <!-- Left Column -->
                         <div class="col-lg-6">
                             <!-- First Name -->
@@ -107,18 +143,12 @@
                             </div>
 
                             <!-- Mobile -->
-                            <div class="mt-3">
+                            <div class="mt-3 position-relative mobile-field">
                                 <label>Mobile Number</label>
-                                <div class="d-flex justify-content-between align-items-center">
-
-                                    <input id="phone" type="tel" class="form-control"
-                                        style="padding-left: 82px;width: 560px;" />
-                                </div>
-                                <div class="position-relative mt-1">
-
-                                    <input type="hidden" id="country_code" name="country_code">
-                                </div>
+                                <input id="phone" type="tel" class="form-control"  placeholder=''/>
+                                <input type="hidden" id="country_code" />
                             </div>
+
 
 
                             <div class="mt-3">
@@ -211,16 +241,25 @@
                 </script>
 
                 <script>
-                function previewImg(event, previewId) {
-                    const preview = document.getElementById(previewId);
-
-                    preview.src = URL.createObjectURL(event.target.files[0]);
-                    preview.style.display = "block";
-
-                    // Hide placeholder icon
-                    preview.previousElementSibling.style.display = "none";
+                function preview(inputId, previewId, iconId) {
+                    document.getElementById(inputId).addEventListener("change", function() {
+                        const file = this.files[0];
+                        if (file) {
+                            document.getElementById(iconId).style.display = "none";
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById(previewId).src = e.target.result;
+                                document.getElementById(previewId).style.display = "block";
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
                 }
+
+                // PROFILE IMAGE PREVIEW CALL
+                preview("profileUpload", "profilePreview", "profileUploadIcon");
                 </script>
+
                 <script>
                 // Toggle password visibility
                 document.querySelectorAll(".toggle-password").forEach((toggle) => {
@@ -240,18 +279,19 @@
                 const input = document.querySelector("#phone");
 
                 const iti = window.intlTelInput(input, {
-                    initialCountry: "us", // default country
-                    separateDialCode: true, // shows +1 separately
-                    preferredCountries: ["in", "us", "gb", "ae"], // top countries
+                    initialCountry: "us",
+                    separateDialCode: true,
+                    preferredCountries: ["in", "us", "gb", "ae"],
                     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+                     autoPlaceholder: "off"
                 });
 
-                // Hidden input me code store karega
                 input.addEventListener("countrychange", function() {
                     document.querySelector("#country_code").value = iti.getSelectedCountryData().dialCode;
                 });
                 </script>
 
+                <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 
                 <script>
                 let map, marker;
