@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\User\AuthController;
 
 use App\Http\Controllers\Api\User\UserDashboardController;
 use App\Http\Controllers\Api\User\ProfileController;
+use App\Http\Controllers\Api\User\UserStoreController;
 
 
 use App\Http\Controllers\CommonController;
@@ -54,6 +55,13 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
 
   Route::get('/logout', [UserDashboardController::class,'logout']);
+
+
+  // M3 Api User
+
+  Route::post('/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
+  Route::post('/single-store-details', [UserStoreController::class,'single_store_details']);
+  
 
 });
 

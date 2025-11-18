@@ -7,6 +7,12 @@ use App\Models\all_countrie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 
+use App\Models\{ product,ProductSpecification,ProductVariant};
+
+use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
+
+
+
 
 class UserManagementService
 {
@@ -168,17 +174,97 @@ class UserManagementService
     
 
 
+    public function getStoreWithCatgory($request)
+    {
+        try {
+
+            $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+            ->where('category_id', $request->category_id)->pluck('store_id');
+
+            if($productQuery->isEmpty()){
+                return [
+                    'status' => 'success',
+                    'message' => 'No Store Found',
+                    'data' => []
+                ];
+            }
 
 
+         $all_store_information=sellerStoreInformation::with('seller_information')->whereIn('id',$productQuery)->
+        //  where('Store_Availability','1')->
+         get();
 
+            return [
+                'status' => 'success',
+                'message' => "All Store Information fetch Successfully",
+                'data' => $all_store_information
+            ];
 
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update or create wallet: ' . $e->getMessage(),
+                'data' => (object)[]
+            ];
+        }
+    }
 
+    public function singleStoreWiseAllproduct($data)
+    {
+        try {
+    
+            // Step 1: Find store
+            $store_information = sellerStoreInformation::find($data->store_id);
+    
+            // If store not found
+            if (!$store_information) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Store Found',
+                    'data'   => []
+                ];
+            }
+    
+            // Step 2: Product query
+            $products = $store_information->All_product()
+                ->with([
+                    'brand',
+                    'category',
+                    'subcategory',
+                    'product_specifications',
+                    'product_variants'
+                ]);
+    
+            // Step 3: Search
+            if (!empty($data->search)) {
+                $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
+            }
+    
+            // Step 4: Pagination (convert stdClass to array)
+            $products = $products->paginate(10)->appends((array) $data);
+    
+            // Step 5: Response
+            $response = [
+                'store'       => $store_information,
+                'All_Product' => $products,
+            ];
+    
+            return [
+                'status'  => 'success',
+                'message' => "single Store Information fetch Successfully",
+                'data'    => $response
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
 
-
-
-
-
-
-
+    
 }
     

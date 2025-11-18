@@ -43,7 +43,7 @@ class SellerProductController extends Controller
     
     
       $all_records= $this->SellerProductService->AllProduct($request_data);
-    
+      
       $data=$all_records['data'];
 
     return view('dealer.product.product',compact('category','brand','data'));
