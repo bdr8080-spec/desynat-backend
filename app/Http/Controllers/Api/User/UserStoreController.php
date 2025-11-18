@@ -99,7 +99,82 @@ class UserStoreController extends Controller
 
     }
 
+
+
     
+
+    
+    public function product_add_to_wishlist(Request $request){
+
+        
+
+        $validate = Validator::make($request->all(), [
+            'product_id' => 'required|exists:products,id',
+         ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+      $user_id=$request->user()->id;
+
+       $request_data=(object)[
+        'user_id'=>$user_id,
+        'product_id'=>$request->product_id
+       ];
+
+        $data=$this->UserManagementService->product_add_to_wishlist($request_data);
+   
+   
+       if(isset($data['status']) && $data['status']=='error' ){
+           return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+   
+       }
+   
+       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+   
+       }
+
+
+
+
+    
+    public function product_add_to_cart(Request $request){
+
+        $validate = Validator::make($request->all(), [
+            'product_id' => 'required|integer| exists:products,id',
+            'quantity'=>'required|integer',
+            'variants_id' => 'required|exists:product_variants,id|integer',
+         ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+      $user_id=$request->user()->id;
+
+       $request_data=(object)[
+        'user_id'=>$user_id,
+        'product_id'=>intval($request->product_id),
+        'quantity'=>intval($request->quantity),
+        'variants_id'=>intval($request->variants_id),
+       ];
+
+
+        $data=$this->UserManagementService->product_add_to_cart($request_data);
+   
+   
+       if(isset($data['status']) && $data['status']=='error' ){
+           return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+   
+       }
+   
+       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+   
+       }
+
+
+       
 
     
 }

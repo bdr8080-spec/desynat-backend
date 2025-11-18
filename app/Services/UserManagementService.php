@@ -7,9 +7,12 @@ use App\Models\all_countrie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 
-use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter};
+use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart};
 
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
+
+
+
 
 
 
@@ -343,6 +346,130 @@ class UserManagementService
             ];
         }
     }
+
+    
+
+    
+
+
+    public function product_add_to_wishlist($request)
+    {
+        try {
+
+            // dd($request);
+            $data=[
+                'user_id'=>$request->user_id,
+                'product_id'=>$request->product_id
+               ];
+
+
+            $wishlist = wishlist::where($data)->first();
+
+            if($wishlist){
+                $wishlist->delete();
+                $msg="Product remove from Wishlist";
+            }else{
+                wishlist::create($data);
+                $msg="Product Add From Wishlist";
+            }
+
+          
+            return [
+                'status'  => 'success',
+                'message' => $msg,
+                'data'    => (object)[]
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
+public function product_add_to_cart($request)
+    {
+        try {
+
+
+            $match=[
+                'user_id'=>$request->user_id,
+                'product_id'=>$request->product_id,
+                'variants_id'=>$request->variants_id,
+               ];
+
+            $data=[
+                'user_id'=>$request->user_id,
+                'product_id'=>$request->product_id,
+                'quantity'=>$request->quantity,
+                'variants_id'=>$request->variants_id,
+               ];
+
+            $variation_stock_check= ProductVariant::where('id',$request->variants_id)->first();
+
+            if(intVal($variation_stock_check->total_stock) < $request->quantity){
+                return [
+                    'status'  => 'error',
+                    'message' => 'product Stock limit Is Low',
+                    'data'    => (object)[]
+                ];
+            }
+
+            $product_amount=$variation_stock_check->final_price;
+
+
+            $add_to_cart = Addtocart::where($match)->first();
+
+            if($add_to_cart){
+
+                $update_quantity=$add_to_cart->quantity + $request->quantity;
+
+                $update_amount=$product_amount*$update_quantity;
+
+                // check quantity Again on Update product Time
+
+                if(intVal($variation_stock_check->total_stock) < $update_quantity){
+                    return [
+                        'status'  => 'error',
+                        'message' => 'product Stock limit Is Low',
+                        'data'    => (object)[]
+                    ];
+                }
+                
+                $add_to_cart->update(['quantity'=>$update_quantity,'amount'=>$update_amount]);
+
+                $msg="Product Add to Cart Update Successfully";
+            
+            }else{
+
+              $data['amount']=$product_amount*$request->quantity;
+
+
+              $add_to_cart= Addtocart::create($data);
+                $msg="Product Add in Cart Successfully";
+            }
+
+          
+            return [
+                'status'  => 'success',
+                'message' => $msg,
+                'data'    => $add_to_cart
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
 
     
 }

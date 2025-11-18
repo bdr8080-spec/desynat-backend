@@ -62,7 +62,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
   Route::post('/single-store-details', [UserStoreController::class,'single_store_details']);
   
- 
+  Route::post('/product-add-to-wishlist', [UserStoreController::class,'product_add_to_wishlist']);
+
+  Route::post('/product-add-to-cart', [UserStoreController::class,'product_add_to_cart']);
+
 });
 
 
