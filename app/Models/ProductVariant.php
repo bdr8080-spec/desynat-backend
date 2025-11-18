@@ -9,7 +9,7 @@ class ProductVariant extends Model
     protected $guarded=[];
 
     protected $casts=[
-        'variant_image'=>'json'
+        'variant_image'=>'array'
     ];
 
     public function color(){

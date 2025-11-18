@@ -80,24 +80,44 @@
                             </thead>
                             <tbody>
 
-                                @foreach ($data['all_product_data'] as $item)
+                                @foreach ($data['all_product_data'] as $key => $item)
                                     <tr>
-                                        <td>01</td>
+                                        <td>{{ $key + 1 }}</td>
                                         <td>
-                                            <img src="{{ $item->product_variants['0']->variant_image[0] }}"
-                                                alt="image" class="pro-image">
+                                            @foreach ($item->product_variants['0']->variant_image as $key1 => $img)
+                                                @if ($key1 >= 1)
+                                                    @php
+                                                        break;
+                                                    @endphp
+                                                @endif
+                                                <img src="{{ $img }}" class="img-fluid" alt="image"
+                                                    class="pro-image" style="width:150px; height:auto;">
+                                            @endforeach
+
                                         </td>
-                                        <td>{{ $item->product_variants['0']->variant_image }}</td>
-                                        <td>Mens Cotton Shirt</td>
-                                        <td>Lives</td>
-                                        <td>Men</td>
-                                        <td>10/11/25</td>
-                                        <td>Instock</td>
+                                        <td>
+
+                                            {{ $item->product_variants['0']->sku }}
+
+                                        </td>
+                                        <td> {{ $item->product_name_en }}</td>
+                                        <td>{{ $item->brand->name_english }}</td>
+                                        <td>{{ $item->category->name }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>
+                                            @if ($item->product_variants['0']->total_stock > 1)
+                                                In Stock
+                                            @else
+                                                Out of Stock
+                                            @endif
+
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="switchCheckDefault">
+                                                        id="switchCheckDefault"
+                                                        @if ($item->product_active_status == 1) checked @endif>
                                                     <label class="form-check-label" for="switchCheckDefault"></label>
                                                 </div>
                                             </div>
@@ -144,6 +164,7 @@
                         </div>
                     </div>
 
+                    {{-- // Active product List  --}}
                     <div class="table-responsive">
                         <table class="table datatable table-bordered">
                             <thead>
@@ -161,31 +182,53 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>01</td>
-                                    <td>
-                                        <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="image"
-                                            class="pro-image">
-                                    </td>
-                                    <td>2123562</td>
-                                    <td>Mens Cotton Shirt</td>
-                                    <td>Lives</td>
-                                    <td>Men</td>
-                                    <td>10/11/25</td>
-                                    <td>Instock</td>
-                                    <td>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="switchCheckDefault">
-                                                <label class="form-check-label" for="switchCheckDefault"></label>
+                                @foreach ($data['active_product'] as $key => $item)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>
+                                            @foreach ($item->product_variants['0']->variant_image as $key1 => $img)
+                                                @if ($key1 >= 1)
+                                                    @php
+                                                        break;
+                                                    @endphp
+                                                @endif
+                                                <img src="{{ $img }}" class="img-fluid" alt="image"
+                                                    class="pro-image" style="width:150px; height:auto;">
+                                            @endforeach
+
+                                        </td>
+                                        <td>
+
+                                            {{ $item->product_variants['0']->sku }}
+
+                                        </td>
+                                        <td> {{ $item->product_name_en }}</td>
+                                        <td>{{ $item->brand->name_english }}</td>
+                                        <td>{{ $item->category->name }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>
+                                            @if ($item->product_variants['0']->total_stock > 1)
+                                                In Stock
+                                            @else
+                                                Out of Stock
+                                            @endif
+
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                        id="switchCheckDefault"
+                                                        @if ($item->product_active_status == 1) checked @endif>
+                                                    <label class="form-check-label" for="switchCheckDefault"></label>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -240,31 +283,53 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>01</td>
-                                    <td>
-                                        <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="image"
-                                            class="pro-image">
-                                    </td>
-                                    <td>2123562</td>
-                                    <td>Mens Cotton Shirt</td>
-                                    <td>Lives</td>
-                                    <td>Men</td>
-                                    <td>10/11/25</td>
-                                    <td>Instock</td>
-                                    <td>
-                                        <div class="d-flex justify-content-center">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" role="switch"
-                                                    id="switchCheckDefault">
-                                                <label class="form-check-label" for="switchCheckDefault"></label>
+                                @foreach ($data['inactive_product'] as $key => $item)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>
+                                            @foreach ($item->product_variants['0']->variant_image as $key1 => $img)
+                                                @if ($key1 >= 1)
+                                                    @php
+                                                        break;
+                                                    @endphp
+                                                @endif
+                                                <img src="{{ $img }}" class="img-fluid" alt="image"
+                                                    class="pro-image" style="width:150px; height:auto;">
+                                            @endforeach
+
+                                        </td>
+                                        <td>
+
+                                            {{ $item->product_variants['0']->sku }}
+
+                                        </td>
+                                        <td> {{ $item->product_name_en }}</td>
+                                        <td>{{ $item->brand->name_english }}</td>
+                                        <td>{{ $item->category->name }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>
+                                            @if ($item->product_variants['0']->total_stock > 1)
+                                                In Stock
+                                            @else
+                                                Out of Stock
+                                            @endif
+
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                        id="switchCheckDefault"
+                                                        @if ($item->product_active_status == 1) checked @endif>
+                                                    <label class="form-check-label" for="switchCheckDefault"></label>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
                             </tbody>
                         </table>

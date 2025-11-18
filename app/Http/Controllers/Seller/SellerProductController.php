@@ -46,9 +46,7 @@ class SellerProductController extends Controller
     
       $data=$all_records['data'];
 
-      dump($data);
-
-        return view('dealer.product.product',compact('category','brand','data'));
+    return view('dealer.product.product',compact('category','brand','data'));
 
     }
 
