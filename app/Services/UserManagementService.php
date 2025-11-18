@@ -470,6 +470,108 @@ public function product_add_to_cart($request)
         }
     }
 
+    
+
+
+
+public function product_view_cart_details($request)
+{
+    try {
+
+
+        $total_mrp=0;
+        $discount_on_mrp=0;
+        $discount_coupon=0;
+        $shipping_fees=0;
+        $tax=0;
+        $total_amount=0;
+
+        $add_to_cart= Addtocart::with('product.seller_details','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
+
+
+        if($add_to_cart->isEmpty()){
+            return [
+                'status'  => 'success',
+                'message' => 'Add To Cart Is Empty',
+                'data'    => []
+            ];
+        }
+
+        foreach($add_to_cart as $key=>$val){
+
+            $total_amount+=$val->product_variants->final_price * $val->quantity ;
+            $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
+            $total_mrp=$total_amount+$discount_on_mrp;
+        }
+
+
+        $response['total_mrp']=$total_mrp;
+        $response['discount_on_mrp']=$discount_on_mrp;
+        $response['discount_coupon']=$discount_coupon;
+        $response['shipping_fees']=$shipping_fees;
+        $response['tax']=$tax;
+        $response['total_amount']=$total_amount;
+        
+        $response['cart_data']=$add_to_cart;
+        
+        return [
+            'status'  => 'success',
+            'message' => 'All Cart Data fetch Successfully',
+            'data'    => $response
+        ];
+
+
+        $product_amount=$variation_stock_check->final_price;
+
+
+        $add_to_cart = Addtocart::where($match)->first();
+
+        if($add_to_cart){
+
+            $update_quantity=$add_to_cart->quantity + $request->quantity;
+
+            $update_amount=$product_amount*$update_quantity;
+
+            // check quantity Again on Update product Time
+
+            if(intVal($variation_stock_check->total_stock) < $update_quantity){
+                return [
+                    'status'  => 'error',
+                    'message' => 'product Stock limit Is Low',
+                    'data'    => (object)[]
+                ];
+            }
+            
+            $add_to_cart->update(['quantity'=>$update_quantity,'amount'=>$update_amount]);
+
+            $msg="Product Add to Cart Update Successfully";
+        
+        }else{
+
+          $data['amount']=$product_amount*$request->quantity;
+
+
+          $add_to_cart= Addtocart::create($data);
+            $msg="Product Add in Cart Successfully";
+        }
+
+      
+        return [
+            'status'  => 'success',
+            'message' => $msg,
+            'data'    => $add_to_cart
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status'  => 'error',
+            'message' => 'Failed: ' . $e->getMessage(),
+            'data'    => (object)[]
+        ];
+    }
+}
+
 
     
 }

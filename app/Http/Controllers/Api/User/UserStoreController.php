@@ -160,9 +160,32 @@ class UserStoreController extends Controller
         'variants_id'=>intval($request->variants_id),
        ];
 
-
         $data=$this->UserManagementService->product_add_to_cart($request_data);
    
+       if(isset($data['status']) && $data['status']=='error' ){
+           return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+   
+       }
+   
+       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+   
+       }
+
+
+       
+
+
+    
+    public function view_cart_details(Request $request){
+
+
+      $user_id=$request->user()->id;
+
+       $request_data=(object)[
+        'user_id'=>$user_id,
+       ];
+
+        $data=$this->UserManagementService->product_view_cart_details($request_data);
    
        if(isset($data['status']) && $data['status']=='error' ){
            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);

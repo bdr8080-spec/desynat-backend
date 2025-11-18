@@ -18,6 +18,15 @@ class ProductVariant extends Model
 
     }
 
+    public function size(){
+        
+        return $this->hasOne(size::class,'id','size_id');
+
+    }
+
+
+
+
 
 
 }

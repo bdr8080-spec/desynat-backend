@@ -66,6 +66,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/product-add-to-cart', [UserStoreController::class,'product_add_to_cart']);
 
+  Route::get('/view_cart_details', [UserStoreController::class,'view_cart_details']);
+
+
 });
 
 
