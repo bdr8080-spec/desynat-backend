@@ -1,5 +1,42 @@
 @extends('admin.layout.app')
 @section('content')
+<style>
+.upload-box {
+    width: 220px;
+    height: 160px;
+    border: 2px dotted #c8ad8d;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.upload-icon {
+    width: 60px;
+    opacity: 0.5;
+}
+
+.upload-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+</style>
+
 
 <div class="inner-content management">
     <div class="d-flex flex-column align-items-start back-btn-box">
@@ -17,20 +54,20 @@
             <div class="card p-3 mt-4">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12">
+                          <div class="col-lg-12">
                             <div class="upload-title text-center">
-                                Upload profile image
+                                Upload Profile Image
                             </div>
 
-                            <label for="fileUpload" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="uploadIcon" />
-                                <div class="upload-text">Upload profile image</div>
-                                <input type="file" id="fileUpload" hidden accept="image/*" />
-                            </label>
-                        </div>
-                        <div  class="new-preview-img">
-                                <img id="previewImage" class="preview-image" />
-
+                            <div class="upload-new text-center">
+                                <label for="profileUpload" class="upload-box">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                        id="profileUploadIcon" class="upload-icon" />
+                                    <div class="upload-text">Upload Profile Image</div>
+                                    <input type="file" id="profileUpload" hidden accept="image/*" />
+                                    <img id="profilePreview" class="preview-image" />
+                                </label>
+                            </div>
                         </div>
                         <!-- Left Column -->
                         <div class="col-lg-6">
@@ -107,17 +144,10 @@
                             </div>
 
                             <!-- Mobile -->
-                         <div class="mt-3">
+                   <div class="mt-3 position-relative mobile-field">
                                 <label>Mobile Number</label>
-                                <div class="d-flex justify-content-between align-items-center">
-
-                                    <input id="phone" type="tel" class="form-control"
-                                        style="padding-left: 82px;width: 560px;" />
-                                </div>
-                                <div class="position-relative mt-1">
-
-                                    <input type="hidden" id="country_code" name="country_code">
-                                </div>
+                                <input id="phone" type="tel" class="form-control"  placeholder=''/>
+                                <input type="hidden" id="country_code" />
                             </div>
 
 
@@ -191,113 +221,126 @@
     </div>
 
 </div>
+   <script>
+                const fileInput = document.getElementById("fileUpload");
+                const previewImage = document.getElementById("previewImage");
+                const uploadIcon = document.getElementById("uploadIcon");
 
-<script>
-const fileInput = document.getElementById("fileUpload");
-const previewImage = document.getElementById("previewImage");
-const uploadIcon = document.getElementById("uploadIcon");
+                fileInput.addEventListener("change", function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewImage.src = e.target.result;
+                            previewImage.style.display = "block";
+                            uploadIcon.style.display = "none";
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                </script>
 
-fileInput.addEventListener("change", function() {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            previewImage.src = e.target.result;
-            previewImage.style.display = "block";
-            uploadIcon.style.display = "none";
-        };
-        reader.readAsDataURL(file);
-    }
-});
-</script>
-<script>
-function previewImg(event, previewId) {
-    const preview = document.getElementById(previewId);
+                <script>
+                function preview(inputId, previewId, iconId) {
+                    document.getElementById(inputId).addEventListener("change", function() {
+                        const file = this.files[0];
+                        if (file) {
+                            document.getElementById(iconId).style.display = "none";
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById(previewId).src = e.target.result;
+                                document.getElementById(previewId).style.display = "block";
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
 
-    preview.src = URL.createObjectURL(event.target.files[0]);
-    preview.style.display = "block";
+                // PROFILE IMAGE PREVIEW CALL
+                preview("profileUpload", "profilePreview", "profileUploadIcon");
+                </script>
 
-    // Hide placeholder icon
-    preview.previousElementSibling.style.display = "none";
-}
-</script>
-<script>
-// Toggle password visibility
-document.querySelectorAll(".toggle-password").forEach((toggle) => {
-    toggle.addEventListener("click", function() {
-        const input = document.querySelector(this.getAttribute("toggle"));
-        const type =
-            input.getAttribute("type") === "password" ? "text" : "password";
-        input.setAttribute("type", type);
+                <script>
+                // Toggle password visibility
+                document.querySelectorAll(".toggle-password").forEach((toggle) => {
+                    toggle.addEventListener("click", function() {
+                        const input = document.querySelector(this.getAttribute("toggle"));
+                        const type =
+                            input.getAttribute("type") === "password" ? "text" : "password";
+                        input.setAttribute("type", type);
 
-        // Toggle icon between eye (fa-eye) and eye-slash (fa-eye-slash)
-        this.classList.toggle("fa-eye");
-        this.classList.toggle("fa-eye-slash");
-    });
-});
-</script>
-<script>
-const input = document.querySelector("#phone");
+                        // Toggle icon between eye (fa-eye) and eye-slash (fa-eye-slash)
+                        this.classList.toggle("fa-eye");
+                        this.classList.toggle("fa-eye-slash");
+                    });
+                });
+                </script>
+                <script>
+                const input = document.querySelector("#phone");
 
-const iti = window.intlTelInput(input, {
-    initialCountry: "us", // default country
-    separateDialCode: true, // shows +1 separately
-    preferredCountries: ["in", "us", "gb", "ae"], // top countries
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-});
+                const iti = window.intlTelInput(input, {
+                    initialCountry: "us",
+                    separateDialCode: true,
+                    preferredCountries: ["in", "us", "gb", "ae"],
+                    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+                     autoPlaceholder: "off"
+                });
 
-// Hidden input me code store karega
-input.addEventListener("countrychange", function() {
-    document.querySelector("#country_code").value = iti.getSelectedCountryData().dialCode;
-});
-</script>
- <script
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"
-  ></script>
+                input.addEventListener("countrychange", function() {
+                    document.querySelector("#country_code").value = iti.getSelectedCountryData().dialCode;
+                });
+                </script>
 
-  <script>
-    let map, marker;
+                <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 
-    function initMap() {
-      const defaultLocation = { lat: 28.6139, lng: 77.209 }; // Delhi
+                <script>
+                let map, marker;
 
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: defaultLocation,
-        zoom: 11,
-      });
+                function initMap() {
+                    const defaultLocation = {
+                        lat: 28.6139,
+                        lng: 77.209
+                    }; // Delhi
 
-      marker = new google.maps.Marker({
-        position: defaultLocation,
-        map,
-        draggable: true,
-      });
+                    map = new google.maps.Map(document.getElementById("map"), {
+                        center: defaultLocation,
+                        zoom: 11,
+                    });
 
-      const input = document.createElement("input");
-      input.id = "pac-input";
-      input.type = "text";
-      input.placeholder = "Search Box...";
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+                    marker = new google.maps.Marker({
+                        position: defaultLocation,
+                        map,
+                        draggable: true,
+                    });
 
-      const searchBox = new google.maps.places.SearchBox(input);
+                    const input = document.createElement("input");
+                    input.id = "pac-input";
+                    input.type = "text";
+                    input.placeholder = "Search Box...";
+                    map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
-      map.addListener("bounds_changed", () => {
-        searchBox.setBounds(map.getBounds());
-      });
+                    const searchBox = new google.maps.places.SearchBox(input);
 
-      searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        if (places.length === 0) return;
+                    map.addListener("bounds_changed", () => {
+                        searchBox.setBounds(map.getBounds());
+                    });
 
-        const place = places[0];
-        if (!place.geometry || !place.geometry.location) return;
+                    searchBox.addListener("places_changed", () => {
+                        const places = searchBox.getPlaces();
+                        if (places.length === 0) return;
 
-        map.setCenter(place.geometry.location);
-        map.setZoom(13);
-        marker.setPosition(place.geometry.location);
-      });
-    }
+                        const place = places[0];
+                        if (!place.geometry || !place.geometry.location) return;
 
-    window.onload = initMap;
-  </script>
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(13);
+                        marker.setPosition(place.geometry.location);
+                    });
+                }
+
+                window.onload = initMap;
+                </script>
+
+
 
 @endsection
