@@ -499,6 +499,14 @@ public function product_view_cart_details($request)
 
         foreach($add_to_cart as $key=>$val){
 
+            // check Every product Stock
+            if($val->product_variants->total_stock < $val->quantity ){
+                $val->check_stock='No_Stock';
+            }else{
+                $val->check_stock='Stock_Availble';
+            }
+
+
             $total_amount+=$val->product_variants->final_price * $val->quantity ;
             $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
             $total_mrp=$total_amount+$discount_on_mrp;
