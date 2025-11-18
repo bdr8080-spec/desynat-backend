@@ -9,6 +9,9 @@ use Hash;
 
 use App\Models\seller;
 use App\Models\color;
+use App\Models\Brand;
+
+
 
 use App\Models\{ product,ProductSpecification,ProductVariant};
 
@@ -168,7 +171,7 @@ public function AllProduct($request)
         return ['status'=>'error','message'=>'Seller not found','data'=>[]];
     }
 
-    $productQuery = Product::with(['product_specifications','product_variants.color'])
+    $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
                            ->where('seller_id', $seller->id);
         if ($request->search) {
         if ($request->type == '0') {
@@ -201,8 +204,9 @@ public function AllProduct($request)
 
     // active Product 
 
-    $active_productQuery = Product::with(['product_specifications','product_variants.color'])
+    $active_productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
     ->where('seller_id', $seller->id);
+
         if ($request->search) {
         if ($request->type == '1') {
         // Search only English name
@@ -235,8 +239,10 @@ $active_productQuery=$this->applyStockStatus($active_productQuery->where('produc
 
 // inactive product
 
-$inactive_productQuery = Product::with(['product_specifications','product_variants.color'])
+$inactive_productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
 ->where('seller_id', $seller->id);
+
+
     if ($request->search) {
     if ($request->type == '2') {
     // Search only English name

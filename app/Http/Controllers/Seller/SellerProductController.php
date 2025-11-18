@@ -5,12 +5,23 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Category;
+use App\Models\SubCategory;
+
+use App\Models\Brand;
+
+
+
 class SellerProductController extends Controller
 {
 
     public function products(){
 
-        return view('dealer.product.product');
+        $category = Category::orderBy('id', 'asc')->get();
+        $brand = Brand::all();
+ 
+
+        return view('dealer.product.product',compact('category','brand'));
 
     }
 
