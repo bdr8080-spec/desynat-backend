@@ -126,12 +126,12 @@ class AddressController extends Controller
   
     }
 
-     public function deleteAddress(Request $request){
+     public function deleteAddress(Request $request , $id){
 
-        $validate = Validator::make($request->all(), [
+        $validate = Validator::make(['id'=>$id], [
                  'id' => 'required',
         ]);
-        
+                
        if($validate->fails()){
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
