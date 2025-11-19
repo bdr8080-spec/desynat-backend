@@ -68,6 +68,8 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::get('/view_cart_details', [UserStoreController::class,'view_cart_details']);
 
+  Route::post('/addtocart-increment-decrement', [UserStoreController::class,'addtocart_increment_decrement']);
+
 
 });
 

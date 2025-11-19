@@ -580,6 +580,144 @@ public function product_view_cart_details($request)
 }
 
 
+
+
+
+
+public function addtoCart_Increment_decrement($request)
+    {
+        try {
+
+            $match=[
+                'user_id'=>$request->user_id,
+                'cart_id'=>$request->cart_id,
+               ];
+
+               $cart_details=Addtocart::with('product_variants')->where('id',$request->cart_id)->first();
+
+               if($cart_details){
+
+                $current_quntity=$cart_details->quantity;
+
+                if($request->type=='increment'){
+
+                $update_quantity=$current_quntity+1;
+
+                if(intVal($cart_details->product_variants->total_stock) < $update_quantity){
+                    return [
+                        'status'  => 'error',
+                        'message' => "product Stock limit Is Low You Can't Increment quantity ",
+                        'data'    => (object)[]
+                    ];
+                }
+
+                $cart_details->update(['quantity'=>$update_quantity]);
+                $msg="Product Increment successfully";
+
+                }else{
+                // decrement Code
+                $update_quantity=$current_quntity-1;
+                
+                if($update_quantity<=0){
+                  $cart_details->delete();
+                  $msg="Product Remove from The cart successfully";
+                }else{
+      
+                $cart_details->update(['quantity'=>$update_quantity]);
+                $msg="Product decrement successfully";
+                
+                   }
+                }
+
+                return [
+                    'status'  => 'success',
+                    'message' => $msg,
+                    'data'    => $cart_details
+                ];
+
+
+               }else{
+
+                return [
+                    'status'  => 'error',
+                    'message' => 'Add To Cart Id wrong',
+                    'data'    => (object)[]
+                ];
+               }
+
+
+
+
+
+
+
+
+
+
+            $variation_stock_check= ProductVariant::where('id',$request->variants_id)->first();
+
+            if(intVal($variation_stock_check->total_stock) < $request->quantity){
+                return [
+                    'status'  => 'error',
+                    'message' => 'product Stock limit Is Low',
+                    'data'    => (object)[]
+                ];
+            }
+
+            $product_amount=$variation_stock_check->final_price;
+
+
+            $add_to_cart = Addtocart::where($match)->first();
+
+            if($add_to_cart){
+
+                $update_quantity=$add_to_cart->quantity + $request->quantity;
+
+                $update_amount=$product_amount*$update_quantity;
+
+                // check quantity Again on Update product Time
+
+                if(intVal($variation_stock_check->total_stock) < $update_quantity){
+                    return [
+                        'status'  => 'error',
+                        'message' => 'product Stock limit Is Low',
+                        'data'    => (object)[]
+                    ];
+                }
+                
+                $add_to_cart->update(['quantity'=>$update_quantity,'amount'=>$update_amount]);
+
+                $msg="Product Add to Cart Update Successfully";
+            
+            }else{
+
+              $data['amount']=$product_amount*$request->quantity;
+
+
+              $add_to_cart= Addtocart::create($data);
+                $msg="Product Add in Cart Successfully";
+            }
+
+          
+            return [
+                'status'  => 'success',
+                'message' => $msg,
+                'data'    => $add_to_cart
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+    
+
+
     
 }
     

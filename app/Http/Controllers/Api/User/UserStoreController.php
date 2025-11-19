@@ -198,6 +198,39 @@ class UserStoreController extends Controller
 
 
        
+    
+    public function addtocart_increment_decrement(Request $request){
+
+        $validate = Validator::make($request->all(), [
+            'cart_id' => 'required|integer| exists:addtocarts,id',
+            'type' => 'required|in:increment,decrement',
+         ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+        $user_id=$request->user()->id;
+  
+         $request_data=(object)[
+          'user_id'=>$user_id,
+          'cart_id'=>$request->cart_id,
+          'type'=>$request->type,
+         ];
+
+          $data=$this->UserManagementService->addtoCart_Increment_decrement($request_data);
+
+          
+         if(isset($data['status']) && $data['status']=='error' ){
+             return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+     
+         }
+     
+         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+     
+         }
+
+       
 
     
 }
