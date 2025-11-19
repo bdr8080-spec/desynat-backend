@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\User\AuthController;
 
 use App\Http\Controllers\Api\User\UserDashboardController;
 use App\Http\Controllers\Api\User\ProfileController;
+use App\Http\Controllers\Api\User\AddressController;
 
 
 use App\Http\Controllers\CommonController;
@@ -53,6 +54,13 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
 
   Route::get('/logout', [UserDashboardController::class,'logout']);
+
+  Route::post('/save-address',[AddressController::class, 'saveAddress']);
+  Route::put('/update-address',[AddressController::class, 'updateAddress']);
+  Route::get('/view-address', [AddressController::class, 'viewAddress']);
+  Route::delete('/delete-address', [AddressController::class, 'deleteAddress']);
+
+
 
 });
 
