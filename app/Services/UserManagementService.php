@@ -598,7 +598,6 @@ public function addtoCart_Increment_decrement($request)
                if($cart_details){
 
                 $current_quntity=$cart_details->quantity;
-
                 if($request->type=='increment'){
 
                 $update_quantity=$current_quntity+1;
