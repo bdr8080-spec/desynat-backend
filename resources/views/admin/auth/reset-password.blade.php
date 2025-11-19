@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ichrono</title>
+    <title>Desynat</title>
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
 
@@ -135,7 +135,7 @@
     </nav>
 
     <div class="auth-wrapper ">
- <div class="wrapper-inner">
+
         <!-- LEFT SIDE -->
         <div class="auth-left">
             <div class="brand-header">
@@ -194,7 +194,7 @@
                 </div>
             </div>
         </div>
-  </div>
+ 
     </div>
 
     </div>

@@ -15,12 +15,15 @@ class Plan extends Model
         'plan_name_arabic',
         'duration',
         'duration_type',
+        'new_duration',
+        'new_duration_type',
         'no_of_videos',
         'no_of_products',
         'no_of_highlights',
         'no_of_employee',
         'stories',
         'price',
+        'discounted_price',
         'commission',
         'commission_percentage',
         'status',
@@ -28,6 +31,7 @@ class Plan extends Model
 
     protected $casts = [
         'price' => 'float',
+        'discounted_price' => 'float',
         'commission_percentage' => 'float',
     ];
 

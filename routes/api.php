@@ -8,12 +8,11 @@ use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\UserDashboardController;
 use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\AddressController;
-
-
+use App\Http\Controllers\Api\User\UserStoreController;
 use App\Http\Controllers\CommonController;
-
-
 use Illuminate\Support\Facades\Artisan;
+
+
 Route::get('optimize',function(){
     Artisan::call('optimize');
     Artisan::call('config:clear');
@@ -26,6 +25,7 @@ Route::get('optimize',function(){
 
 require __DIR__.'/admin_api.php';
 require __DIR__.'/seller_api.php';
+require __DIR__.'/deliveryboy_api.php';
 
 
 // User APi M1
@@ -61,17 +61,29 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::delete('/delete-address', [AddressController::class, 'deleteAddress']);
 
 
+  // M3 Api User
+
+  Route::post('/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
+  Route::post('/single-store-details', [UserStoreController::class,'single_store_details']);
+  
+  Route::post('/product-add-to-wishlist', [UserStoreController::class,'product_add_to_wishlist']);
+
+  Route::post('/product-add-to-cart', [UserStoreController::class,'product_add_to_cart']);
+
+  Route::get('/view_cart_details', [UserStoreController::class,'view_cart_details']);
+
+  Route::post('/addtocart-increment-decrement', [UserStoreController::class,'addtocart_increment_decrement']);
+
 
 });
 
 
+Route::get('/store_filter', [UserStoreController::class,'store_filter']);
+
 Route::get('user/category',[ProfileController::class, 'getCategories']);
 Route::get('user/sub-category',[ProfileController::class, 'getSubCategories']);
 
-
-
 // common APi
-// 
 
 Route::post('upload', [CommonController::class, 'upload']);
 Route::get('country', [CommonController::class, 'country']);

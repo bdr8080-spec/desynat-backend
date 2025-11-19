@@ -45,6 +45,7 @@ class PlanService
 
     public function updatePlan(Request $request)
     {
+       // dd($request->all());
         try {
             $plan = Plan::find($request->plan_id);
 
@@ -62,12 +63,15 @@ class PlanService
                 'plan_name_arabic' => $request->plan_name_arabic,
                 'duration' => $request->duration,
                 'duration_type' => $request->duration_type,
+                'new_duration' => $request->new_duration,
+                'new_duration_type' => $request->new_duration_type,
                 'no_of_videos' => $request->no_of_videos,
                 'no_of_products' => $request->no_of_products,
                 'no_of_highlights' => $request->no_of_highlights,
                 'no_of_employee' => $request->no_of_employee,
                 'stories' => $request->stories,
                 'price' => $request->price,
+                'discounted_price' => $request->discounted_price,
                 'commission' => $request->commission,
                 'commission_percentage' => $request->commission_percentage ?? null,
             ]);
@@ -86,6 +90,7 @@ class PlanService
             ];
         }
     }
+    
 
     public function getPlans(Request $request)
     {

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plan;
 use App\Models\seller;
+use App\Models\color;
+
 
 use App\Models\SellerSubcriptionPlanBuy;
 
@@ -35,9 +37,6 @@ class SellerDashboardController extends Controller
 
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details','subcription_plan')->where('id',$user_details->id)->first();
         
-
-
-
         return ApiResponse::generateResponse('success','Seller Dashboard fetch Successfully',$seller_details, 200);
 
 
@@ -199,7 +198,24 @@ class SellerDashboardController extends Controller
     }
 
 
-    
+    public function upload_color(){
+
+      $colors = include app_path('Helpers/color.php');
+
+        foreach($colors as $key=>$value){
+            $data=[
+                'name'=>$key,
+                'hex_code'=>$value
+            ];
+
+            color::updateOrCreate($data);
+        }
+
+          $color=  color::all();
+
+        return ApiResponse::generateResponse('success',"All Color fetch Successfully",$color, 200);
+
+    }
 
     
 

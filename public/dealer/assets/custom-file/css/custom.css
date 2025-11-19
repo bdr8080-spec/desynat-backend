@@ -3,6 +3,27 @@
     height: 20px;
 }
 
+.cancel-outline{
+    border: 1px solid #6E4527;
+    color: #6E4527;
+    line-height: 35px;
+}
+.cancel-outline:hover {
+    border: 1px solid #6E4527;
+    color: #916b47;
+    background: linear-gradient(180.99deg, #dfbf8fa8 -53.71%, #cba97c61 154.28%);
+}
+.add-fillbtn{
+    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+    line-height: 35px;
+    color: #fff;
+}
+.add-fillbtn:hover {
+    color: #ffffffcf;
+}
+.alink:hover {
+    color: #9f7a54;
+}
 .label-flex {
     display: flex;
     justify-content: space-between;
@@ -12,14 +33,23 @@
 }
 
 .label-flex label {
-    font-size: 15px;
+    font-size: 14px;
     color: #000;
     margin-bottom: 3px;
+    font-weight: 500;
 }
 
 .sub-form .form-control {
     border-radius: 10px;
     line-height: 1.75;
+}
+.search-icon {
+    position: absolute;
+    bottom: 14px;
+    padding: 0px 10px;
+}
+.search-field .form-control {
+    padding: 10px 0px 10px 35px;
 }
 
 #map {
@@ -40,8 +70,9 @@
 }
 
 .visitor-pnl .form-check-label {
-    font-size: 12px;
+    font-size: 15px;
     color: #000;
+    font-weight: 500;
 }
 
 .radio-group {
@@ -49,6 +80,9 @@
     align-items: center;
     gap: 8px;
     font-family: Arial, sans-serif;
+}
+.buy {
+    font-weight: 600;
 }
 
 /* hide default radio */
@@ -111,7 +145,7 @@
 .title24 {
     font-size: var(--title24);
     color: var(--title-color);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .bg-header {
@@ -133,17 +167,20 @@
 .dash-content h5 {
     font-size: 16px;
     color: #000;
+    font-weight: 500;
 }
 
 .tabs-panel #pills-tab {
     border: 1px solid #ac875e;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .tabs-panel .nav-link {
     line-height: 38px;
     border-right: 1px solid #b9946b;
     color: #000;
+    border-radius: 0px;
 }
 
 .tabs-panel .nav-pills .nav-link.active,
@@ -221,20 +258,41 @@ table.dataTable {
     color: #333;
     font-size: 18px;
 }
+.append-flex {
+    position: relative;
+}
+.remove-btn {
+    color: #F44336;
+    cursor: pointer;
+    font-size: 15px;
+    width: fit-content;
+    margin-top: 10px;
+}
+.specifications-row {
+    background: #caa97c21;
+    padding: 10px;
+    margin: 12px 0px;
+}
+.variant-panel-bg{
+    background: #caa97c0d;
+    padding: 15px;
+    margin: 12px 0px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
 
 /*--------------------------------------------------------------
 # Add product multiple images
 --------------------------------------------------------------*/
 .product-pnls {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    display: flex;
 }
 
 .multiple-img {
     height: 160px;
-    width: 100%;
+    width: 140px;
     overflow: hidden;
-    margin-left: 20px;
+    margin-left: 13px;
 }
 
 .multiple-img img {
@@ -252,6 +310,7 @@ table.dataTable {
 
     .title24 {
         font-size: 17px;
+        font-weight: 600;
     }
 
     .dash-content h5 {

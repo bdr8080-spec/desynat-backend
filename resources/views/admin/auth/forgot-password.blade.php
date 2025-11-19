@@ -1,148 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desynat</title>
-      <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
+    <link href="{{asset('admin/css/style.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
-   
+
     <link href="{{asset('admin/css/bootstrap.css')}}" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    
+
 </head>
+
 <body style="background-color: rgba(227, 194, 149, 0.75) !important;">
-     <style>
-       /* .auth-wrapper {
+    <style>
+    .auth-wrapper {
         display: flex;
         height: 100vh;
         width: 100%;
-            max-width: 900px;
-    margin: 10% auto;
-      } */
+    }
 
-      .auth-left {
+    .auth-left {
         flex: 1;
-        background: url("image/background-image.svg") no-repeat center
-          center/cover;
+        background: url("image/background-image.svg") no-repeat center center/cover;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-      }
+    }
 
-      .brand-header {
+    .brand-header {
         position: absolute;
         top: 30px;
         left: 30px;
         display: flex;
         align-items: center;
         gap: 10px;
-      }
+    }
 
-      .brand-logo {
+    .brand-logo {
         width: 45px;
         height: 45px;
-      }
+    }
 
-      .brand-name {
+    .brand-name {
         font-size: 38px;
         font-weight: 600;
         font-family: "Georgia", serif;
         color: #000;
-      }
+    }
 
-      .auth-right {
+    .auth-right {
         flex: 1;
         background: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 17px;
-    border: 1px solid #ddd;
-    border-radius: 0px 20px 20px 0px;
-      }
+    }
 
-
-      .auth-form-wrapper {
+    .auth-form-wrapper {
         width: 350px;
-      }
-      .loginBackgroundeffect {
-        max-width: 576px;
-      }
-         .custom-topbar {
- background: linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%) !important;
-  height: 74px;
-  border-radius: 6px;
-  padding: 0 25px;
-  display: flex;
-  align-items: center;
-}
+    }
 
-.header-logo {
-    width: 110px;
-    height: 66px;
-  border-radius: 50%;
-  object-fit: contain;
-}
+    .loginBackgroundeffect {
+        max-width: 470px;
+    }
 
-.brand-name {
-  font-size: 22px;
-  font-weight: 600;
-  font-family: 'Georgia', serif;
-  margin-left: 12px;
-  color: #000;
-}
+    .header-logo {
+        width: 110px;
+        height: 66px;
+        border-radius: 50%;
+        object-fit: contain;
+    }
 
-.header-divider {
-  flex: 1;
-  /* border-bottom: 1.5px dotted rgba(0, 0, 0, 0.5); */
-  margin: 0 25px;
-}
+    .brand-name {
+        font-size: 22px;
+        font-weight: 600;
+        font-family: 'Georgia', serif;
+        margin-left: 12px;
+        color: #000;
+    }
 
-.lang-btn {
-  background: transparent;
-  border: 1px solid rgba(0,0,0,0.7);
-  padding: 6px 14px;
-  border-radius: 50px;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+    .header-divider {
+        flex: 1;
+        /* border-bottom: 1.5px dotted rgba(0, 0, 0, 0.5); */
+        margin: 0 25px;
+    }
+
+    .lang-btn {
+        background: transparent;
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
     </style>
- <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
+    <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
 
-        
-            <div class="left-section d-flex align-items-center">
-              <img src="image/favicon.svg" class="header-logo" />
-             <img src="image/Desynat Logo_Final 1.svg" class="header-logo" />
 
-            </div>
+        <div class="left-section d-flex align-items-center">
+            <img src="image/favicon.svg" class="header-logo" />
+            <img src="image/Desynat Logo_Final 1.svg" class="header-logo" />
 
-            <div class="header-divider"></div>
+        </div>
 
-            <div class="right-section">
-              <button class="lang-btn">
+        <div class="header-divider"></div>
+
+        <div class="right-section">
+            <button class="lang-btn">
                 <i class="fas fa-globe"></i> EN
                 <i class="fas fa-chevron-down"></i>
-              </button>
+            </button>
+        </div>
+    </nav>
+
+    <div class="auth-wrapper">
+      
+            <!-- LEFT SIDE -->
+            <div class="auth-left">
+                <div class="brand-header">
+
+                </div>
             </div>
-          </nav>
 
-<div class="auth-wrapper">
-   <div class="wrapper-inner">
-  <!-- LEFT SIDE -->
-  <div class="auth-left">
-    <div class="brand-header">
-   
-    </div>
-  </div>
-
-  <!-- RIGHT SIDE -->
-  <!-- <div class="auth-right">
+            <!-- RIGHT SIDE -->
+            <!-- <div class="auth-right">
     <div class="login-container-div">
       <div class="login">
         <div class="loginBackgroundeffect text">
@@ -189,99 +177,98 @@
       </div>
     </div> 
   </div>  -->
-  <div class="auth-right">
-  <div class="login-container-div">
-    <div class="login">
-      <div class="loginBackgroundeffect text">
-        <div class="row">
+            <div class="auth-right">
+                <div class="login-container-div">
+                    <div class="login">
+                        <div class="loginBackgroundeffect text">
+                            <div class="row">
 
-          <!-- HEADER BACK NAV -->
-          <div class="col-lg-12">
-            <div class="d-flex align-items-center gap-3 mt-2">
-              <div class="arrow">
-                <a class="table-button" type="button" href="{{ route('adminLogin') }}">
-                  <i class="fas fa-angle-left"></i>
-                </a>
-              </div>
-              <h6 class="m-0">Forgot Password</h6>
+                                <!-- HEADER BACK NAV -->
+                                <div class="col-lg-12">
+                                    <div class="d-flex align-items-center gap-3 mt-2">
+                                        <div class="arrow">
+                                            <a class="table-button" type="button" href="{{ route('adminLogin') }}">
+                                                <i class="fas fa-angle-left"></i>
+                                            </a>
+                                        </div>
+                                        <h6 class="m-0">Forgot Password</h6>
+                                    </div>
+                                </div>
+
+                                <!-- EMAIL INPUT -->
+                                <div class="col-lg-12 mt-3">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Enter Email Id</label>
+                                        <input type="email" class="form-control" id="email"
+                                            placeholder="Enter Register Email id " required>
+                                        <small id="emailError" style="color: red;"></small>
+                                    </div>
+                                </div>
+
+                                <!-- SUBMIT BUTTON -->
+                                <div class="col-lg-12">
+                                    <div class="button d-flex align-items-center justify-content-center">
+                                        <button id="forgotBtn" class="btn custom-btn"
+                                            style="max-width: 100% !important;">
+                                            Next
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+     
 
-          <!-- EMAIL INPUT -->
-          <div class="col-lg-12 mt-3">
-            <div class="form-group">
-              <label for="email" class="form-label">Enter Email Id</label>
-              <input type="email"
-                     class="form-control"
-                     id="email"
-                     placeholder="Enter Register Email id "
-                     required>
-              <small id="emailError" style="color: red;"></small>
-            </div>
-          </div>
-
-          <!-- SUBMIT BUTTON -->
-          <div class="col-lg-12">
-            <div class="button d-flex align-items-center justify-content-center">
-              <button id="forgotBtn" class="btn custom-btn" style="max-width: 100% !important;">
-                Next
-              </button>
-            </div>
-          </div>
-
-        </div> 
-      </div>
     </div>
-  </div>
-</div> 
-</div> 
 
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="{{asset('admin/js/bootstrap.bundle.min.js')}}"></script>
 
-<script>
-$(document).ready(function() {
-    $('#email').on('input', function() {
-        $('#emailError').text('');
-    });
+    <script>
+    $(document).ready(function() {
+        $('#email').on('input', function() {
+            $('#emailError').text('');
+        });
 
-    // AJAX forgot password
-    $('#forgotBtn').click(function(e) {
-        e.preventDefault();
-        $('#emailError').text('');
+        // AJAX forgot password
+        $('#forgotBtn').click(function(e) {
+            e.preventDefault();
+            $('#emailError').text('');
 
-        var email = $('#email').val();
+            var email = $('#email').val();
 
-        $.ajax({
-            url: '{{ route("forgotPassword") }}',
-            type: 'POST',
-            data: {
-                email: email,
-                _token: '{{ csrf_token() }}'
-            },
-            success: function(response) {
-                if (response.success) {
+            $.ajax({
+                url: '{{ route("forgotPassword") }}',
+                type: 'POST',
+                data: {
+                    email: email,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
                         toastr.success(response.message);
                         setTimeout(function() {
                             window.location.href = "{{ route('optVerify') }}";
-                        }, 2000); 
+                        }, 2000);
                     }
-            },
-            error: function(xhr) {
-                if(xhr.status === 422) {
-                    var errors = xhr.responseJSON.errors;
-                    if(errors.email) {
-                        $('#emailError').text(errors.email[0]);
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        var errors = xhr.responseJSON.errors;
+                        if (errors.email) {
+                            $('#emailError').text(errors.email[0]);
+                        }
                     }
                 }
-            }
+            });
         });
     });
-});
-</script>
+    </script>
 
 </body>
+
 </html>

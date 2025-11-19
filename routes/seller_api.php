@@ -6,6 +6,11 @@ use App\Http\Controllers\Api\Seller\AuthController;
 
 use App\Http\Controllers\Api\Seller\SellerDashboardController;
 
+use App\Http\Controllers\Api\Seller\SellerProductController;
+
+
+use App\Http\Controllers\CommonController;
+
 
 // M1 Milestone 
 Route::group(['prefix' => 'seller'], function () {
@@ -46,8 +51,26 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
   // M3 Api 
 
-  Route::get('/store_on_off', [SellerDashboardController::class,'store_on_off']);
+    Route::get('/store_on_off', [SellerDashboardController::class,'store_on_off']);
 
+    Route::get('category',[CommonController::class, 'getCategories']);
+    Route::get('sub-category',[CommonController::class, 'getSubCategories']);
+    Route::get('all-brand',[CommonController::class, 'get_brand']);
+
+    Route::get('all-color',[CommonController::class, 'get_color']);
+    Route::get('all-size',[CommonController::class, 'get_size']);
+
+
+    
+    Route::post('add-product',[SellerProductController::class, 'add_product']);
+        
+    Route::post('all-product',[SellerProductController::class, 'all_product']);
+
+    Route::post('single-product-details',[SellerProductController::class, 'single_product_details']);
+
+    Route::put('product-status-active-inactive',[SellerProductController::class, 'product_status_active_inactive']);
+
+    Route::delete('product-delete',[SellerProductController::class, 'product_delete']);
 
 });
 
@@ -57,3 +80,8 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
 
 });
+
+
+Route::get('/upload_color', [SellerDashboardController::class,'upload_color']);
+
+Route::get('/all_color', [SellerDashboardController::class,'upload_color']);

@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 
-use validator;
+use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\country;
 use App\Models\all_countrie;
+use App\Models\Category;
+use App\Models\SubCategory;
+
+use App\Models\Brand;
+use App\Models\color;
+use App\Models\size;
+
+
+
 
 
 class CommonController extends Controller
@@ -82,7 +91,87 @@ class CommonController extends Controller
        
        }
 
-    
 
 
+    // fetch category
+    public function getCategories(Request $request)
+    {
+
+        $category = Category::orderBy('id', 'asc')->get();
+
+
+        if ($category->isEmpty()) {
+            return ApiResponse::generateResponse('success',"No categories found",[],200);
+
+        }
+
+        return ApiResponse::generateResponse('success',"Category list fetched successfully",$category,200);
+          
+    }
+
+    // fetch sub category
+    public function getSubCategories(Request $request)
+    {
+        $rules = [
+            'category_id' => 'required|integer|exists:categories,id'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
+        }
+
+        $subCategory = SubCategory::where('category_id', $request->category_id)->get();
+
+        if ($subCategory->isEmpty()) {
+            return ApiResponse::generateResponse('success', 'No sub categories found', [], 200);
+        }
+
+        return ApiResponse::generateResponse('success', 'Sub category list fetched successfully', $subCategory, 200);
+     
+    }
+
+
+     // fetch get_brand
+     public function get_brand(Request $request)
+     {
+
+         $sub_brand = Brand::all();
+ 
+         if ($sub_brand->isEmpty()) {
+             return ApiResponse::generateResponse('success', 'No Brand found', [], 200);
+         }
+         
+        return ApiResponse::generateResponse('success', 'Brand list fetched successfully', $sub_brand, 200);
+     }
+
+     
+     // fetch get_color
+     public function get_color(Request $request)
+     {
+
+         $data = color::all();
+ 
+         if ($data->isEmpty()) {
+             return ApiResponse::generateResponse('success', 'No Color found', [], 200);
+         }
+         
+        return ApiResponse::generateResponse('success', 'color list fetched successfully', $data, 200);
+      
+     }
+
+
+     // fetch get_size
+     public function get_size(Request $request)
+     {
+        $data = color::all();
+        if ($data->isEmpty()) {
+            return ApiResponse::generateResponse('success', 'No size found', [], 200);
+        }
+        return ApiResponse::generateResponse('success', 'Size list fetched successfully', $data, 200);
+     }
+ 
+
+     
 }
