@@ -8,12 +8,22 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
 
-use App\Models\Brand;
+use App\Models\{ Brand,color,size};
 
 
 use App\Services\SellerProductService;
 
 use Auth;
+
+use Validator;
+
+use App\Rules\MatchArrayProductSpecification;
+use App\Rules\MatchArrayProductVariation;
+
+use App\Helpers\ApiResponse;
+
+
+
 
 class SellerProductController extends Controller
 {
@@ -84,7 +94,7 @@ public function Add_product(){
     $color = color::all();
     $size = size::all();
 
-    return view('dealer.product.Add_product',compact('category','brand'));
+    return view('dealer.product.Add_product',compact('category','brand','color','size'));
 }
 
 
@@ -92,6 +102,8 @@ public function Add_product_code(Request $request){
 
     $seller_details=Auth::guard('seller')->user();
     $seller_id=$seller_details->id;
+
+    dd($request->all());
 
       $validate = Validator::make($request->all(), [
           'category_id' => 'required|exists:categories,id',
@@ -139,9 +151,7 @@ public function Add_product_code(Request $request){
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
           'upload_size_chart'=>'required'
 
-           
       ]);
-
 
       if($validate->fails()){
           return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
