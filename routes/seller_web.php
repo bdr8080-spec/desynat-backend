@@ -8,7 +8,6 @@ use App\Http\Controllers\Seller\SellerProductController;
 
 
 
-
 Route::group(['prefix' => 'seller'], function () {
 
 
@@ -54,9 +53,7 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/web_store_on_off',[WebSellerDashboard::class,'web_store_on_off'])->name('seller.web_store_on_off');
 
-
-
-
+    Route::get('product-status-active-inactive',[SellerProductController::class, 'product_status_active_inactive']);
 
 
 

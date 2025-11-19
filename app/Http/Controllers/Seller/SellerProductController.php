@@ -32,23 +32,55 @@ class SellerProductController extends Controller
         $category = Category::orderBy('id', 'asc')->get();
         $brand = Brand::all();
 
-    $request_data=(object) [
-    'seller_id'=>$seller_id,
-    'search' =>$request->search,
-    'type' =>$request->type,
-    'cargory_filter' =>$request->cargory_filter,
-    'brand_filter' =>$request->brand_filter,
-    
-    ];
-    
+        if(isset($request->cargory_filter)){
+            $cargory_filter= [$request->cargory_filter];
+        }else{
+            $cargory_filter='';
+        }
+
+        if(isset($request->brand_filter)){
+            $brand_filter= [$request->brand_filter];
+        }else{
+            $brand_filter='';
+        }
+        
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'search' =>$request->search,
+        'type' =>$request->type, //  0 all product 1 active product 2 inactive product 
+        'cargory_filter' =>$cargory_filter,
+        'brand_filter' =>$brand_filter,    
+        ];
     
       $all_records= $this->SellerProductService->AllProduct($request_data);
+
       
       $data=$all_records['data'];
 
     return view('dealer.product.product',compact('category','brand','data'));
 
     }
+
+
+public function product_status_active_inactive(Request $request){
+
+    $request_data=(object) [
+    'product_id'=>$request->id,
+    
+    ];
+
+  $data=  $this->SellerProductService->product_status_active_inactive($request_data);
+
+  return $data;
+
+}
+
+
+
+
+
+
+
 
     public function Inventory_Management(){
 
