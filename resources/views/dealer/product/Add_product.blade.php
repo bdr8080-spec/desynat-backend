@@ -8,35 +8,25 @@
     </div>
 
     <div class="pt-3">
-     <div class="title24">Select Category</div>
+        <div class="title24">Select Category</div>
         <div class="row">
             <div class="col-lg-4">
                 <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                    <div class="check_radio">
-                        <label class="radio-group">
-                            <input type="radio" name="categoryName" checked>
-                            <span class="custom-radio"></span>
-                            <span class="radio-label">Women</span>
-                        </label>
-                    </div>
-                    <div class="check_radio">
-                        <label class="radio-group">
-                            <input type="radio" name="categoryName">
-                            <span class="custom-radio"></span>
-                            <span class="radio-label">Men</span>
-                        </label>
-                    </div>
-                    <div class="check_radio">
-                        <label class="radio-group">
-                            <input type="radio" name="categoryName">
-                            <span class="custom-radio"></span>
-                            <span class="radio-label">Children</span>
-                        </label>
-                    </div>
+
+                    @foreach ($category as $item)
+                        <div class="check_radio">
+                            <label class="radio-group">
+                                <input type="radio" name="categoryName">
+                                <span class="custom-radio"></span>
+                                <span class="radio-label">{{ $item->name }}</span>
+                            </label>
+                        </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <div class="row">
@@ -163,11 +153,11 @@
                     </div>
                 </div>
             </div>
-        </div>    
-        
+        </div>
+
     </div>
 
-<!----- variant panel ------>
+    <!----- variant panel ------>
     <div class="variant-panel">
         <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;">
@@ -304,7 +294,8 @@
             <div class="title24">Discounted Price</div>
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                    <div
+                        class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                         <div class="check_radio">
                             <label class="radio-group">
                                 <input type="radio" name="percentage" checked>
@@ -319,7 +310,7 @@
                                 <span class="radio-label">Fixed Price</span>
                             </label>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -344,7 +335,7 @@
             </div>
         </div>
     </div>
-<!-----End variant panel ------>
+    <!-----End variant panel ------>
 
     <div class="row py-3 mt-4">
         <div class="col-lg-12 col-md-12">
@@ -379,7 +370,8 @@
                 <div class="title24">Is this product returnable?</div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                        <div
+                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="radio1" checked>
@@ -412,7 +404,8 @@
                 <div class="title24">Is this product Exchangable ?</div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                        <div
+                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="radio11" checked>
@@ -451,7 +444,8 @@
                 <div class="title24">Review & ratings allowed?</div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                        <div
+                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="radio" checked>
@@ -474,7 +468,8 @@
                 <div class="title24">Affiliated Product?</div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                        <div
+                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="radio" checked>
@@ -497,7 +492,8 @@
                 <div class="title24">Customized products?</div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                        <div
+                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="radio" checked>
@@ -520,7 +516,8 @@
                 <div class="title24">Ready to ship?</div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                        <div
+                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="radio" checked>
@@ -543,7 +540,8 @@
                 <div class="title24">Cash on delivery allowed?</div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                        <div
+                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="radio" checked>
@@ -593,29 +591,27 @@
 @include('dealer.layout.footer');
 
 <script>
-$('#edit_imageUpload').on('change', e => {
-  let files = e.target.files;
-  $('#previewContainer').empty(); // clear old previews
-  [...files].forEach(f => {
-    let url = URL.createObjectURL(f);
-    let imgBox = $(`
+    $('#edit_imageUpload').on('change', e => {
+        let files = e.target.files;
+        $('#previewContainer').empty(); // clear old previews
+        [...files].forEach(f => {
+            let url = URL.createObjectURL(f);
+            let imgBox = $(`
       <div class="multiple-img position-relative">
         <img src="${url}" class="w-100 rounded">
         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
       </div>
     `);
-    imgBox.find('.remove-ic').click(() => imgBox.remove());
-    $('#previewContainer').append(imgBox);
-  });
-});
-
+            imgBox.find('.remove-ic').click(() => imgBox.remove());
+            $('#previewContainer').append(imgBox);
+        });
+    });
 </script>
 
 <script>
-
-   // ADD NEW ROW
-    $("#addmore").click(function () {
-       $(".append-panel").append(`
+    // ADD NEW ROW
+    $("#addmore").click(function() {
+        $(".append-panel").append(`
        <div class="specifications-row">
         <div class="row">
             <div class="col-lg-6 col-md-6">
@@ -668,21 +664,19 @@ $('#edit_imageUpload').on('change', e => {
         </div>
         </div>
        `)
-       
+
     });
 
     // REMOVE ROW
-    $(document).on("click", ".remove-btn", function () {
+    $(document).on("click", ".remove-btn", function() {
         $(this).closest(".specifications-row").remove();
     });
-
-    
 </script>
 
 <script>
-   // ADD NEW Variant
-    $(".addVariantBtn").click(function () {
-       $(".variant-panel").append(`
+    // ADD NEW Variant
+    $(".addVariantBtn").click(function() {
+        $(".variant-panel").append(`
         <div class="variant-panel-bg">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
@@ -865,35 +859,34 @@ $('#edit_imageUpload').on('change', e => {
         </div>
 
        `)
-       
+
     });
 
     // REMOVE ROW
-    $(document).on("click", ".removerow", function () {
+    $(document).on("click", ".removerow", function() {
         $(this).closest(".variant-panel-bg").remove();
     });
-
-    
 </script>
 
 
 
 <!-- <script>
-    $(document).on("click", ".addVariantBtn", function () {
+    $(document).on("click", ".addVariantBtn", function() {
         let c = $(".variant-panel:first").clone(true);
 
         c.find("input").val("");
         c.find(".preview").empty();
-        c.append(`<div class=""><button class="removeVariant btn btn-danger btn-sm mt-2">Remove</button></div>`);
+        c.append(
+            `<div class=""><button class="removeVariant btn btn-danger btn-sm mt-2">Remove</button></div>`);
 
         $(".variant-panel:last").after(c);
     });
 
-    $(document).on("click", ".removeVariant", function () {
+    $(document).on("click", ".removeVariant", function() {
         $(this).closest(".variant-panel").remove();
     });
 
-    $(document).on("change", ".imgUpload", function (e) {
+    $(document).on("change", ".imgUpload", function(e) {
         let box = $(this).closest(".variant-panel").find(".preview");
         box.html("");
 

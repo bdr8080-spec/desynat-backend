@@ -45,15 +45,18 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/Inventory-Management',[SellerProductController::class,'Inventory_Management'])->name('seller.Inventory_Management');
     route::Match(['get','post'],'/Affilate-Commission',[SellerProductController::class,'Affilate_Commission'])->name('seller.Affilate_Commission');
 
-    route::Match(['get','post'],'/Add-product',[SellerProductController::class,'Add_product'])->name('seller.Add_product');
+    route::get('/Add-product',[SellerProductController::class,'Add_product'])->name('seller.Add_product');
+    Route::post('add-product',[SellerProductController::class, 'Add_product_code'])->name('seller.Add_product_code');
+
     route::Match(['get','post'],'/view-product',[SellerProductController::class,'view_product'])->name('seller.view_product');
 
     // M3 Milestone Work
-
-
+    
     route::Match(['get','post'],'/web_store_on_off',[WebSellerDashboard::class,'web_store_on_off'])->name('seller.web_store_on_off');
 
     Route::get('product-status-active-inactive',[SellerProductController::class, 'product_status_active_inactive']);
+
+    
 
 
 
