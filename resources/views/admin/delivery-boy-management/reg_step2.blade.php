@@ -35,7 +35,7 @@
 
         <div class="d-flex align-items-center gap-3 mt-2">
             <div class="arrow">
-                <a class="table-button " type="button">
+                <a href="{{ route('admin.deliveryboy_reg_step1', ['type' => 'session']) }}" class="table-button " type="button">
                     <i class="fas fa-angle-left"></i>
                 </a>
             </div>
