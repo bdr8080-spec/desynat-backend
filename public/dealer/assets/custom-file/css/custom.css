@@ -262,28 +262,37 @@ table.dataTable {
     position: relative;
 }
 .remove-btn {
-    position: absolute;
-    right: 10px;
-    bottom: 8px;
     color: #F44336;
     cursor: pointer;
-    font-size: 21px;
+    font-size: 15px;
+    width: fit-content;
+    margin-top: 10px;
 }
-
+.specifications-row {
+    background: #caa97c21;
+    padding: 10px;
+    margin: 12px 0px;
+}
+.variant-panel-bg{
+    background: #caa97c0d;
+    padding: 15px;
+    margin: 12px 0px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
 
 /*--------------------------------------------------------------
 # Add product multiple images
 --------------------------------------------------------------*/
 .product-pnls {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    display: flex;
 }
 
 .multiple-img {
     height: 160px;
-    width: 100%;
+    width: 140px;
     overflow: hidden;
-    margin-left: 20px;
+    margin-left: 13px;
 }
 
 .multiple-img img {

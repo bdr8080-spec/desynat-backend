@@ -23,6 +23,10 @@ return new class extends Migration
 
             $table->string('document_path');
 
+            $table->tinyInteger('is_front')
+                ->default(0)
+                ->comment('0-no 1-yes');
+
             $table->tinyInteger('status')
                 ->default(1)
                 ->comment('0-inactive 1-active');

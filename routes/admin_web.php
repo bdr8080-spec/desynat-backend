@@ -79,6 +79,8 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/deliveryboy_reg_step2', [DeliveryBoyController::class, 'deliveryboy_reg_step2'])->name('admin.deliveryboy_reg_step2');
         Route::get('/edit_deliveryboy_step1', [DeliveryBoyController::class, 'edit_deliveryboy_step1'])->name('admin.edit_deliveryboy_step1');
         Route::get('/edit_deliveryboy_step2', [DeliveryBoyController::class, 'edit_deliveryboy_step2'])->name('admin.edit_deliveryboy_step2');
+        Route::post('/change_deliveryboy_status/{id}', [DeliveryBoyController::class, 'change_deliveryboy_status'])->name('admin.change_deliveryboy_status');
+        Route::post('/deleteDeliveryBoy/{id}', [DeliveryBoyController::class, 'deleteDeliveryBoy'])->name('admin.deleteDeliveryBoy');
 
         //reason management
         Route::get('/reason-management', [ReasonController::class, 'reasonManagement'])->name('admin.reasonManagement');
@@ -86,6 +88,7 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/deleteReason/{id}', [ReasonController::class, 'deleteReason'])->name('admin.deleteReason');
         Route::post('/add_reason', [ReasonController::class, 'add_reason'])->name('admin.add_reason');
         Route::post('/update_reason', [ReasonController::class, 'update_reason'])->name('admin.update_reason');
+        
 
     });
 

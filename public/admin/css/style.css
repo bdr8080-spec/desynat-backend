@@ -1724,29 +1724,48 @@ button[type="submit"] {
     cursor: pointer;
     transition: 0.3s;
     margin: auto;
+    position: relative;        /* ADD THIS */
+    overflow: hidden;          /* IMPORTANT FOR CLEAN PREVIEW */
 }
+
 
 .upload-box:hover {
     background-color: #faf7f3;
 }
 
-.upload-box img {
-    width: 60px;
-    margin-bottom: 10px;
-    object-fit: contain;
-        position: relative;
+.upload-box {
+    width: 220px;
+    height: 160px;
+    border: 2px dotted #c8ad8d;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* IMPORTANT */
+    position: relative;
 }
 
-.preview-image {
-     width: 100%;
+
+/* .preview-image {
+    width: 100%;
     height: 100%;
-    object-fit: cover;   /* FULL COVER */
+    object-fit: cover;      
     display: none;
-    margin-bottom: 0;
     border-radius: 10px;
     position: absolute;
     top: 0;
     left: 0;
+} */
+
+.preview-image {
+    width: 15%;
+    height: 15%;
+    object-fit: cover;
+    display: none;
+    border-radius: 10px;
+    position: absolute;
+    top: 10%;
+    left: 42.5%;
 }
 
 
@@ -1920,4 +1939,9 @@ a.btn.btn-dark.customBtn.button {
 #phone {
   padding-left: 90px !important;
   height: 45px;
+}
+
+
+.iti__flag-container input::placeholder{
+    display: none !important;
 }

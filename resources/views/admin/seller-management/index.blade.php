@@ -76,18 +76,14 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-12 col-12">
-                                    <div class="d-flex justify-content-end" style="text-align: end">
+                                <div class="col-lg-3 ">
+                                    <div class="d-flex gap-3 justify-content-end" >
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn"
-                                            style="margin-top: 70px">
+                                            style="margin-top: 60px">
                                             <span>Reset</span>
                                         </a>
-                                    </div>
-                                </div>
-                                <!-- Export Button -->
-                                <div class="col-lg-1 col-md-12 col-12">
-                                    <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                
+                                        <a class="btn btn-dark customBtn " style="margin-top: 60px">
                                             <span>Export</span>
                                         </a>
                                     </div>
@@ -258,22 +254,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-12 col-12">
-                                    <div class="d-flex justify-content-end" style="text-align: end">
+                                <div class="col-lg-3 col-md-12 col-12">
+                                    <div class="d-flex gap-3 justify-content-end" >
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn "
                                             style="margin-top: 70px">
                                             <span>Reset</span>
                                         </a>
-                                    </div>
-                                </div>
-                                <!-- Export Button -->
-                                <div class="col-lg-1 col-md-12 col-12">
-                                    <div class="d-flex justify-content-end" style="text-align: end">
                                         <a class="btn btn-dark customBtn " style="margin-top: 70px">
                                             <span>Export</span>
                                         </a>
                                     </div>
                                 </div>
+                              
                             </div>
                         </form>
 
@@ -469,22 +461,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-1 col-md-12 col-12">
-                                    <div class="d-flex justify-content-end" style="text-align: end">
+                                <div class="col-lg-3 col-md-12 col-12">
+                                    <div class="d-flex gap-3 justify-content-end" style="text-align: end">
                                         <a href="{{route('sellerManagement')}}" class="btn btn-dark customBtn"
                                             style="margin-top: 70px">
                                             <span>Reset</span>
                                         </a>
-                                    </div>
-                                </div>
-                                <!-- Export Button -->
-                                <div class="col-lg-1 col-md-12 col-12">
-                                    <div class="d-flex justify-content-end" style="text-align: end">
-                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                          <a class="btn btn-dark customBtn " style="margin-top: 70px">
                                             <span>Export</span>
                                         </a>
                                     </div>
                                 </div>
+                             
                             </div>
                         </form>
 

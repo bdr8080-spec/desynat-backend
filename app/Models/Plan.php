@@ -15,6 +15,8 @@ class Plan extends Model
         'plan_name_arabic',
         'duration',
         'duration_type',
+        'new_duration',
+        'new_duration_type',
         'no_of_videos',
         'no_of_products',
         'no_of_highlights',

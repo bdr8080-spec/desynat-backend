@@ -14,4 +14,22 @@ class sellerStoreInformation extends Model
         return $this->belongsTo(country::class, 'country', 'id');
     }
 
+    
+
+    public function seller_information()
+    {
+        return $this->hasone(seller::class, 'id', 'seller_id');
+    }
+
+
+    public function All_product()
+    {
+        return $this->hasMany(product::class, 'store_id', 'id');
+    }
+
+
+    
+
+
+
 }

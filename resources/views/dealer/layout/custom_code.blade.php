@@ -60,12 +60,30 @@
     $(document).ready(function() {
         // When user types in any input or textarea
         $(document).on('input', '.form-control, .form-check-input', function() {
+
             // Check if input has a value (not empty)
             if ($(this).val().trim() !== '') {
                 // Remove the nearby error message
-                $(this).closest('.form-group').find('.text-danger').fadeOut(200, function() {
-                    $(this).remove();
-                });
+                // $(this).closest('.form-group').find('.text-danger').fadeOut(200, function() {
+                //     $(this).remove();
+                // });
+
+                // // add to product remove Error message
+                // $(this).closest('.sub-form').find('.text-danger').fadeOut(200, function() {
+                //     $(this).remove();
+                // });
+
+                // $(this)
+                //     .closest('.form-group')
+                //     .find('.text-danger')
+                //     .text('');
+
+                // For dynamic product fields
+                $(this)
+                    .closest('.sub-form')
+                    .find('.text-danger')
+                    .text('');
+
             }
         });
     });
