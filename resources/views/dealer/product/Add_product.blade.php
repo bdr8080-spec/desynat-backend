@@ -17,11 +17,12 @@
                 <div class="col-lg-4">
                     <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
 
-                        @foreach ($category as $item)
+                        @foreach ($category as $key => $item)
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="category_id" value="{{ $item->id }}"
-                                        onclick="catgoryFunction({{ $item->id }})">
+                                        onclick="catgoryFunction({{ $item->id }})"
+                                        @if ($key == 0) checked @endif>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">{{ $item->name }}</span>
                                 </label>
@@ -133,8 +134,13 @@
                                 <span>In English</span>
                             </div>
                             <input type="text" class="form-control" placeholder="Enter product name"
-                                name="product_spe_en[]">
+                                value="" name="product_spe_en[]">
+
+                            <p id="error-product_spe_en_0" class="text-danger"></p>
+
                         </div>
+
+
                     </div>
 
                     <div class="col-lg-6 col-md-6">
@@ -145,8 +151,11 @@
                                     <span>In Arabic</span>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter product name"
-                                    name="product_spe_ar[]">
+                                    name="product_spe_ar[]" value="">
+                                <p class="text-danger" id="error-product_spe_ar_0"></p>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -159,8 +168,11 @@
                                 <span>In English</span>
                             </div>
                             <input type="text" class="form-control" placeholder="Enter product feature"
-                                name="product_spe_feature_en[]">
+                                name="product_spe_feature_en[]" value="">
+                            <p class="text-danger" id="error-product_spe_feature_en_0"></p>
+
                         </div>
+
                     </div>
 
                     <div class="col-lg-6 col-md-6">
@@ -171,8 +183,11 @@
                                     <span>In Arabic</span>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter product feature"
-                                    name="product_spe_feature_ar[]">
+                                    name="product_spe_feature_ar[]" value="">
+                                <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
+
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -188,11 +203,14 @@
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                         <div class="mt-3">Upload Product Photo</div>
                         <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
-                            name="variant_image[][]">
+                            name="variant_image[0][]" rel="0">
                     </label>
+
+                    <p class="text-danger" id="error-variant_image_0"></p>
+
                 </div>
 
-                <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer"></div>
+                <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer0"></div>
             </div>
 
             <div class="wapper-header mt-4">
@@ -205,12 +223,14 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="color_id[]">
-                                <option selected>Select Colour</option>
                                 @foreach ($color as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
+                            <p class="text-danger" id="error-color_id_0"></p>
+
                         </div>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="sub-form">
@@ -220,12 +240,14 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="size_id[]">
-                                <option selected>Select Size</option>
                                 @foreach ($size as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
+                            <p class="text-danger" id="error-size_id_0"></p>
+
                         </div>
+
                     </div>
 
                     <div class="col-lg-3 remove_Not_in_women_Category">
@@ -233,90 +255,121 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="bust[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="bust[]">
+                            <p class="text-danger" id="error-bust_0"></p>
+
                         </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="waist[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="waist[]">
+
+                            <p class="text-danger" id="error-waist_0"></p>
                         </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="hip[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="hip[]">
+                            <p class="text-danger" id="error-hip_0"></p>
+
                         </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="shoulder[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="shoulder[]">
+                            <p class="text-danger" id="error-shoulder_0"></p>
+
                         </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="sleeve_length[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="sleeve_length[]">
+                            <p class="text-danger" id="error-sleeve_length_0"></p>
+
                         </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="length[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="length[]">
+
+                            <p class="text-danger" id="error-length_0"></p>
                         </div>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Total Stocks</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.13208" name="total_stock[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208"
+                                name="total_stock[]">
+
+                            <p class="text-danger" id="error-total_stock_0"></p>
                         </div>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019" name="sku[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="20019"
+                                name="sku[]">
+
+                            <p class="text-danger" id="error-sku_0"></p>
                         </div>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019"
+                            <input type="number" class="form-control notapplyspace" placeholder="20019"
                                 name="sku_threshold_value[]">
+                            <p class="text-danger" id="error-sku_threshold_value_0"></p>
+
                         </div>
+
                     </div>
-                    {{-- <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Price</label>
-                            </div>
-                            <input type="text" class="form-control" placeholder="KD299" name="actual_price">
-                        </div>
-                    </div> --}}
+
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
                                 name="actual_price[]">
+                            <p class="text-danger" id="error-actual_price_0"></p>
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -329,14 +382,14 @@
                             class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[]" checked value="1">
+                                    <input type="radio" name="discount_type[0]" checked value="1">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[]" value="2">
+                                    <input type="radio" name="discount_type[0]" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -352,16 +405,21 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.10%" name="discount_value[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
+                                name="discount_value[]">
+                            <p class="text-danger" id="error-discount_value_0"></p>
+
                         </div>
+
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
                                 name="final_price[]">
+                            <p class="text-danger" id="error-final_price_0"></p>
                         </div>
                     </div>
                 </div>
@@ -382,21 +440,26 @@
                         <div class="label-flex">
                             <label>Set Min.cart quantity</label>
                         </div>
-                        <input type="text" class="form-control" placeholder="Eg.20" name="min_card_quantity">
+                        <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
+                            name="min_card_quantity">
+                        <p class="text-danger" id="error-min_card_quantity"></p>
+
                     </div>
-                    <p class="text-danger" id="error-min_card_quantity"></p>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="sub-form">
                         <div class="label-flex">
                             <label>Set Max.cart quantity</label>
                         </div>
-                        <input type="text" class="form-control" placeholder="Eg.20" name="max_card_quantity">
+                        <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
+                            name="max_card_quantity">
+                        <p class="text-danger" id="error-max_card_quantity"></p>
+
                     </div>
-                    <p class="text-danger" id="error-max_card_quantity"></p>
                 </div>
             </div>
         </div>
+
 
         <div class="pt-3">
             <div class="row">
@@ -408,14 +471,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" checked value='0'>
+                                        <input type="radio" name="product_return" checked value='1'>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" value='1'>
+                                        <input type="radio" name="product_return" value='0'>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -431,6 +494,8 @@
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.KD 299.00"
                                     name="return_days">
+                                <p class="text-danger" id="error-return_days"></p>
+
                             </div>
                         </div>
                     </div>
@@ -443,14 +508,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_exchangable" checked name="0">
+                                        <input type="radio" name="product_exchangable" checked value="1">
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_exchangable" name="1">
+                                        <input type="radio" name="product_exchangable" value="0">
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -467,6 +532,8 @@
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.15 days"
                                     name="exchangable_days">
+                                <p class="text-danger" id="error-exchangable_days"></p>
+
                             </div>
                         </div>
                     </div>
@@ -608,6 +675,8 @@
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
                 </label>
+                <p class="text-danger" id="error-upload_size_chart"></p>
+
             </div>
 
             <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div>
@@ -629,9 +698,31 @@
 @include('dealer.layout.footer');
 
 <script>
-    $('#edit_imageUpload').on('change', e => {
+    // When The Page Load Then auto select Category
+    $(document).ready(function() {
+        var checked_category = $("input[name='category_id']:checked").val();
+        if (checked_category) {
+            catgoryFunction(checked_category);
+        }
+    });
+
+
+    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+
+
+
+
+
+    });
+
+
+
+
+    // When User select Image vartion Then Show dynamic Image Preview
+    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+        let rel = $(this).attr('rel');
         let files = e.target.files;
-        $('#previewContainer').empty(); // clear old previews
+        // $('#previewContainer').empty(); // clear old previews
         [...files].forEach(f => {
             let url = URL.createObjectURL(f);
             let imgBox = $(`
@@ -641,12 +732,12 @@
       </div>
     `);
             imgBox.find('.remove-ic').click(() => imgBox.remove());
-            $('#previewContainer').append(imgBox);
+            $('#previewContainer' + rel).append(imgBox);
         });
     });
 
 
-    // Upload Chart Image
+    // Upload Chart Image in footer side
     $('#edit_uploadChart').on('change', e => {
         let files = e.target.files;
         $('#edit_uploadChart_preview').empty(); // clear old previews
@@ -665,9 +756,14 @@
 </script>
 
 <script>
-    // ADD NEW ROW
+    // ADD NEW ROW In specification
+
+    var specification_count = 1;
+
     $("#addmore").click(function() {
+
         $(".append-panel").append(`
+
        <div class="specifications-row">
         <div class="row">
             <div class="col-lg-6 col-md-6">
@@ -676,8 +772,11 @@
                         <label>Name</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_en[]">
-                </div>
+                    <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_en[]" value="">
+                <p class="text-danger" id="error-product_spe_en_${specification_count}"></p>
+
+             </div>
+               
             </div>
 
             <div class="col-lg-6 col-md-6">
@@ -687,8 +786,11 @@
                             <label>Name</label>
                             <span>In Arabic</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_ar[]">
-                    </div>
+                        <input type="text" class="form-control" placeholder="Enter product name" name="product_spe_ar[]" value="">
+                    <p class="text-danger" id="error-product_spe_ar_${specification_count}"></p>
+
+                        </div>
+                  
                 </div>
             </div>
         </div>
@@ -699,10 +801,11 @@
                         <label>Feature Name</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]">
-                </div>
-            </div>
-
+                    <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]" value="">
+                <p class="text-danger" id="error-product_spe_feature_en_${specification_count}"></p>
+           
+                    </div>
+             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="append-flex">
                     <div class="sub-form">
@@ -710,8 +813,11 @@
                             <label>Feature</label>
                             <span>In Arabic</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_ar[]">
-                    </div>
+                        <input type="text" class="form-control" placeholder="Enter product feature" name="product_spe_feature_ar[]" value="">
+                    <p class="text-danger" id="error-product_spe_feature_ar_${specification_count}"></p>
+
+                        </div>
+                 
                 </div>
             </div>
         </div>
@@ -720,6 +826,7 @@
         </div>
         </div>
        `)
+        specification_count++;
 
     });
 
@@ -730,6 +837,10 @@
 </script>
 
 <script>
+    // ADD NEW ROWs In product Variation Section
+
+    var product_Variation_count = 1;
+
     // ADD NEW Variant
     $(".addVariantBtn").click(function() {
         $(".variant-panel").append(`
@@ -739,11 +850,14 @@
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                         <div class="mt-3">Upload Profile Photo</div>
-                        <input type="file" accept="image/*" multiple id="variant_image[][]" style="opacity:0;">
+                        <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
+
+                    <p class="text-danger" id="error-variant_image_${product_Variation_count}"></p>
+
                 </div>
 
-                <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer"></div>
+                <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer${product_Variation_count}"></div>
             </div>
 
             <div class="wapper-header mt-4">
@@ -755,14 +869,15 @@
                             <label>Colour</label>
                         </div>
 
-                        <select class="form-select form-control" aria-label="Default select example">
-                            <option selected>Select Colour</option>
+                        <select class="form-select form-control" aria-label="Default select example" name="color_id[]">
                             @foreach ($color as $item)
-                                <option {{ $item->id }}>{{ $item->name }}</option>
+                                <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
                         </select>
+  <p class="text-danger" id="error-color_id_${product_Variation_count}"></p>
 
                     </div>
+                    
                 </div>
                 <div class="col-lg-3">
                     <div class="sub-form">
@@ -770,13 +885,15 @@
                             <label>Size</label>
                         </div>
 
-                        <select class="form-select form-control" aria-label="Default select example">
-                            <option selected>Select Size</option>
+                        <select class="form-select form-control" aria-label="Default select example" name="size_id[]">
                             @foreach ($size as $item)
-                                <option {{ $item->id }}>{{ $item->name }}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                      <p class="text-danger" id="error-size_id_${product_Variation_count}"></p>
+
+                        </div>
+                   
                 </div>
 
 
@@ -785,88 +902,112 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D">
-                        </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D" name="bust[]">
+                          <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
+
+                            </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D">
-                        </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D" name="waist[]">
+                          <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
+
+                   </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D">
-                        </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D" name="hip[]">
+                          <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
+
+                            </div>
+                        
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D">
-                        </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D" name="shoulder[]">
+                          <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
+
+                            </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D">
-                        </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D" name="sleeve_length[]">
+                          <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
+
+                            </div>
+
                     </div>
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D">
-                        </div>
+                            <input type="text" class="form-control" placeholder="Eg.32D" name="length[]" >
+                          <p class="text-danger" id="error-length_${product_Variation_count}"></p>
+
+                            </div>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Total Stocks</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.13208">
-                        </div>
+                            <input type="number" class="form-control" placeholder="Eg.13208" name="total_stock[]" >
+                          <p class="text-danger" id="error-total_stock_${product_Variation_count}"></p>
+
+                            </div>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019">
-                        </div>
+                            <input type="text" class="form-control" placeholder="20019" name="sku[]">
+                          <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
+
+                            </div>
+
                     </div>
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019">
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Price</label>
+                            <input type="number" class="form-control" placeholder="20019" name="sku_threshold_value[]">
+                          <p class="text-danger" id="error-sku_threshold_value_${product_Variation_count}"></p>
+
                             </div>
-                            <input type="text" class="form-control" placeholder="KD299">
-                        </div>
+
                     </div>
-                    <div class="col-lg-6">
+                  
+                    <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00">
-                        </div>
+                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
+                          <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
+
+                            </div>
+
+                        
                     </div>
                 </div>
             </div>
@@ -878,14 +1019,14 @@
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="percentage" checked>
+                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="1" checked>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="percentage">
+                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -901,16 +1042,22 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                           <input type="text" class="form-control" placeholder="Eg.10%">
-                        </div>
+                           <input type="number" class="form-control" placeholder="Eg.10%" name="discount_value[]">
+                          <p class="text-danger" id="error-discount_value_${product_Variation_count}"></p>
+
+                           </div>
+
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00">
-                        </div>
+                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
+                          <p class="text-danger" id="error-final_price_${product_Variation_count}"></p>
+
+                         </div>
+
                     </div>
                 </div>
             </div>
@@ -921,10 +1068,12 @@
         </div>
 
        `)
-        var checked_category = $("input[name='categoryName']:checked").val();
+        var checked_category = $("input[name='category_id']:checked").val();
         if (checked_category) {
             remove_Not_in_women_Category(checked_category);
         }
+
+        product_Variation_count++; // Update Product Quantity
 
     });
 
@@ -933,10 +1082,9 @@
         $(this).closest(".variant-panel-bg").remove();
     });
 
-    // Product Variation Show according to product
-
+    // When User select Again Category Then remove Error Message 
     function remove_Not_in_women_Category(val) {
-
+        $('.text-danger').empty();
         if (val != '2') {
             $('.remove_Not_in_women_Category').hide();
         } else {
@@ -945,8 +1093,7 @@
 
     }
 
-
-    // sub category show data
+    //Category Wise Show sub-category data
     function catgoryFunction(val) {
 
         remove_Not_in_women_Category(val); // remove extra field in Product
@@ -991,16 +1138,16 @@
             },
             error: function() {
                 alert("Fail")
+            },
+            complete: function() {
+                // Hide loader (after success or error)
+                $('#loader').hide();
             }
+
         })
-
-
     }
 
-    // From submit code Apply
-
-
-
+    // When user Submit From submit code Apply
 
     $(document).on('submit', 'form#addproduct', function(event) {
         event.preventDefault();
@@ -1027,6 +1174,10 @@
             cache: false,
             contentType: false,
             processData: false,
+            beforeSend: function() {
+                // Show loader
+                $('#loader').show();
+            },
             success: function(response) {
                 console.log(response);
 
@@ -1036,35 +1187,84 @@
                     $('.submit').html('Upload');
                 }, 2000);
 
-                if (response.success === true) {
-                    toastr.success("<?php echo __('admin_messages.product_added_successfully'); ?>");
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+
                     $('.submit').attr('disabled', true);
                     window.setTimeout(function() {
-                        window.location = "{{ url('/') }}" +
-                            "/admin/inventory-mangement";
+                        window.location = "{{ route('seller.products') }}";
                     }, 2000);
                 }
-
-                if (response.success === false) {
-                    console.log(response.errors); // Debugging line
-                    $("p.error_container").html("");
-
-                    $.each(response.errors, function(field, messages) {
-                        if (field === "file" || field.startsWith("file.")) {
-                            $("#file-error").html(messages[0]);
-                        } else {
-                            // Handle indexed fields (e.g., productdetails_name_en.0)
-                            let fieldName = field.replace(/\.\d+$/, ''); // Remove the index
-                            $('#error-' + fieldName).html(messages[0]);
-                        }
-                    });
-                }
             },
-            error: function(xhr, textStatus, errorThrown) {
-                console.error("AJAX Error:", textStatus, errorThrown); // Debugging line
+            error: function(xhr) {
+                $('.text-danger').empty(); // Clear previous errors
+
+                let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+                $.each(errors, function(field, messages) {
+
+                    // 1️⃣ Handle array fields with index → product_spe_en.0
+                    if (field.includes(".")) {
+
+                        let parts = field.split(".");
+                        let fieldName = parts[0];
+                        let index = parts[1];
+
+                        // Example → #error-product_spe_en_0
+                        $("#error-" + fieldName + "_" + index).html(messages[0]);
+
+                    } else {
+
+                        // 2️⃣ File special case
+                        if (field === "file") {
+                            $("#file-error").html(messages[0]);
+                        }
+
+                        // 3️⃣ Handle whole array errors (custom rule)
+                        $("#error-" + field).html(messages[0]);
+                    }
+                });
+            },
+            complete: function() {
+                // Hide loader (after success or error)
+                $('#loader').hide();
             }
+
+
+
+
         });
 
         return false;
     });
+
+
+
+    $(document).on('change', 'input[name="product_return"]', function() {
+        let value = $(this).val();
+
+        if (value == "1") {
+            // YES → show return days
+            $('input[name="return_days"]').closest('.row').show();
+        } else {
+            // NO → hide return days & clear value
+            $('input[name="return_days"]').val('').closest('.row').hide();
+        }
+    });
+
+
+    $(document).on('change', 'input[name="product_exchangable"]', function() {
+        let value = $(this).val();
+
+        if (value == "1") {
+            // YES → show return days
+            $('input[name="exchangable_days"]').closest('.row').show();
+        } else {
+            // NO → hide return days & clear value
+            $('input[name="exchangable_days"]').val('').closest('.row').hide();
+        }
+    });
 </script>
+
+
+@include('dealer.layout.custom_code');

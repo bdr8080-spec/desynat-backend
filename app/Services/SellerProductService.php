@@ -11,6 +11,8 @@ use App\Models\seller;
 use App\Models\color;
 use App\Models\Brand;
 
+use Illuminate\Support\Facades\DB;
+
 
 
 use App\Models\{ product,ProductSpecification,ProductVariant};
@@ -22,6 +24,9 @@ public function AddProduct($request){
         
 
 try{
+
+
+DB::beginTransaction();
 
 // FILTER PRODUCT TABLE DATA SEPRATE
 
@@ -85,8 +90,8 @@ $product_data=  ProductSpecification::create($specification_array);
 
 // variation code 
 
-foreach($request->color_id as $key=>$val){
 
+foreach($request->color_id as $key=>$val){
 
 $variation_array=[
     'product_id'=> $product_id,
@@ -117,6 +122,7 @@ if($request->category_id==2){
     $variation_array['length']= $request->length[$key]??null; // only provide when category is women      
     }
 
+
     $product_data=  ProductVariant::create($variation_array);
 }
 
@@ -131,7 +137,10 @@ $request_data=(object) [
     'product_id'=>$product_id,    
 ];
 
+
 $add_product_data=$this->single_product_details_fetch($request_data);
+
+DB::commit();
 
 return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
 

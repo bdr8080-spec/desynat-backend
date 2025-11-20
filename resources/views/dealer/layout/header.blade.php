@@ -31,11 +31,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-
-
 </head>
 
 <body>
+
+    <div id="loader"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+     background:rgba(255,255,255,0.7); z-index:9999; text-align:center; padding-top:200px;">
+        <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"></iframe>
+    </div>
+
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
 

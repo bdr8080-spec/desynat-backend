@@ -68,6 +68,13 @@ ul li a{
     overflow-y: auto; /* scrolls only when needed */
     overflow-x: hidden;
 }
+.customsmallContainer{
+    max-width: 1250px;
+    width: 100%;
+    margin: 0 auto;
+    overflow-y: auto; /* scrolls only when needed */
+    overflow-x: hidden;
+}
 
 section{
     padding: var(--section);
@@ -1056,6 +1063,356 @@ h3.mid-headng{
     width: 60px;
     background: transparent;
         border: none;
+}
+
+/* category-details page css */
+
+.categoryDetail .category_filter{
+    padding: 6% 4%;
+    background: #DFBF8F1A;
+}
+
+.form-check-input {
+  appearance: none; /* Remove default browser style */
+  -webkit-appearance: none;
+  width: 1.2em;
+  height: 1.2em;
+  border: 1px solid #C7C7C7;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* When checked */
+.form-check-input:checked {
+  background: var(--gradient-color) !important;
+  border-color: var(--secondry2-color) !important;
+  margin-top: 0px;
+}
+
+/* Optional: add custom checkmark */
+.form-check-input:checked::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.8em;
+  color: white;
+}
+.category_filter .form-check label{
+    font-size: var(--heading5-font) !important;
+    line-height: var(--heading5-font) !important;
+    font-weight: 400 !important;
+}
+.category_filter .delivery .form-check label{
+    font-weight: 500 !important;
+}
+
+.categoryDetail_content .seArch{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+.categoryDetail_content .seArch input.form-control{
+    padding: 10px 15px 10px 40px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #C0BBBB;
+    border-right: none;
+    height: 56px;
+}
+.categoryDetail_content .seArch button{
+    width: auto;
+    border-radius: 0px 4px 4px 0px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+}
+.category-store{
+    border: 1px solid #0000001A;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.category-store .category-store-content .user{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+    border: .5px solid ;
+}
+.category-store .category-store-content .user img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.category-store .category-store-content .user-infoCat_detail p{
+    font-weight: 500 !important;
+    margin-bottom: 0;
+}
+.category-store-content{
+    padding: 15px;
+}
+.category-store-content .rate-content{
+    margin-top: 5%;
+}
+.category-store-content .rate span{
+    color: #FFA41B;
+    font-size: 19px;
+}
+.rate-content p{
+    font-size: 14px !important;
+    line-height: 20px !important;
+    font-weight: 300 !important;
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+.categoryDetail{
+    margin-top: 30px;
+}
+.storeClient_profile{
+    border: .5px solid #D9D9D9;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: -50px;
+}
+.img-contenar{
+    
+}
+.storeClient_profile_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+}
+.storeClient_profile_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.storeClient_profile_content h3{
+    font-weight: 500 !important;
+}
+.storeClient_profile_content span.status_on_off{
+    font-size: var(--p-font-size);
+    line-height: var(--p-font-height);
+    font-weight: 400 !important;
+    background: #D53B361F;
+    color: #D53B36;
+    padding: 0 5px;
+    border-radius: 4px;
+}
+.storeClient_profile_content .product-content .rating span{
+    font-size: 18px;
+    color: #FFA41B;
+}
+.storeClient_profile_content .product-content .rating span.totalstart{
+    font-size: 14px;
+    color: #000000;
+}
+.profile_main p{
+    font-size: var(--nav-font-size) !important;
+    line-height: var(--nav-font-height) !important;
+    font-weight: var(--nav-font-weight) !important;
+    margin-bottom: 0;
+}
+.qr-section {
+    position: relative;
+    display: inline-block;
+    padding: 15px;
+    text-align: center;
+}
+
+#qrCodeBox {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.copy-link-box {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+}
+
+.copy-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+}
+
+.copy-link-box:hover .copy-icon {
+    opacity: 1;
+}
+.reels{
+    border: .5px solid #D9D9D9;
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+}
+.reels .suggestStore_contenar .storeCarousel p{
+    margin-bottom: 0;
+}
+
+#copiedMsg {
+    display: none;
+    font-size: 13px;
+    margin-top: 4px;
+    color: green;
+}
+
+.reels .suggestStore_content .suggestedStore_img{
+    width: 80px;
+    height: 80px;
+}
+.product_reels .customNavTabs{
+     border: 1px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+}
+.product_reels .customNavTabs .nav-item{
+    width: calc(100% / 2);
+    border: none;
+}
+.product_reels .customNavTabs .nav-item .nav-link{
+    width: 100%;
+     border: 1px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box,
+                linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
+    color: var(--third-color);
+    font-size: var(--heading3-font);
+    line-height: var(--heading3-font-height);
+    font-weight: 500;
+}
+.product_reels .customNavTabs .nav-item .nav-link.active{
+    background: var(--gradient-color);
+    color: #fff;
+}
+.reels_content .product-img img{
+    height: 350px !important;
+}
+
+.status-viewer {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+/* Progress bars row */
+.progress-container {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--gradient-color6);
+    transition: width linear;
+}
+
+/* Close button */
+.status-close {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Image */
+.status-img {
+    max-height: 90%;
+    max-width: 90%;
+    object-fit: contain;
+}
+
+/* Tap left/right */
+.status-left span,
+.status-right span{
+        position: absolute;
+    top: 50%;
+    transform: translate(50%, 00%);
+    height: 100%;
+    width: 10%;
+    cursor: pointer;
+    color: #fff;
+}
+
+.status-left span { left: 0; }
+.status-right span{ right: 0;
+    left: auto; }
+
+/* category-details page css end */
+.customProduct_Carousel{
+    border-radius: 12px;
+    overflow: hidden;
+}
+.customProduct_Carousel .carousel-indicators{
+    justify-content: start;
+    margin-left: 4%;
+}
+.carousel-indicators button{
+    height: 80px !important;
+    width: 80px !important;
+    background-color: transparent !important;
+    opacity: 1 !important;
+    border: 1px solid #fff !important;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.carousel-indicators button.active{
+    border: 1px solid var(--secondry2-color) !important;
+}
+.product_slide_img{
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    display: flex;
+}
+.product_slide_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.customProduct_Carousel .carousel-inner .carousel-item{
+    position: relative;
+}
+.customProduct_Carousel .carousel-inner .carousel-item .share-btn{
+    right: 55px;
+    left: auto;
 }
 
 
