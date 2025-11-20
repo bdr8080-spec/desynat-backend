@@ -1,6 +1,9 @@
 @extends('admin.layout.app')
 @section('content')
 <style>
+    .pac-container {
+            z-index: 9999;
+        }
 .upload-box {
     width: 220px;
     height: 160px;
@@ -61,7 +64,7 @@
 
         <div class="d-flex align-items-center gap-3 mt-2">
             <div class="arrow">
-                <a class="table-button " type="button">
+                <a href="{{route('admin.deliveryBoyManagement')}}" class="table-button " type="button">
                     <i class="fas fa-angle-left"></i>
                 </a>
             </div>
@@ -71,150 +74,326 @@
         <div class="content">
             <div class="card p-3 mt-4">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="upload-title text-center">
-                                Upload Profile Image
+                    <!-- Start Form -->
+                    <form id="deliveryBoyForm" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="upload-title text-center">
+                                    Upload Profile Image
+                                </div>
+
+                                <div class="upload-new text-center">
+                                    <label for="profileUpload" class="upload-box">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                            id="profileUploadIcon" class="upload-icon" />
+                                        <div class="upload-text">Upload Profile Image</div>
+                                        <input type="file" id="profileUpload" name="profile_pic" hidden accept="image/*" />
+                                        <img id="profilePreview" class="preview-image" />
+                                    </label>
+                                    <span class="text-danger" id="profile_image_error"></span>
+                                </div>
                             </div>
 
-                            <div class="upload-new text-center">
-                                <label for="profileUpload" class="upload-box">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-                                        id="profileUploadIcon" class="upload-icon" />
-                                    <div class="upload-text">Upload Profile Image</div>
-                                    <input type="file" id="profileUpload" hidden accept="image/*" />
-                                    <img id="profilePreview" class="preview-image" />
-                                </label>
+                            <div class="col-lg-6">
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Full Name</label>
+                                        <span class="text-muted" style="font-size: 12px;">In English</span>
+                                    </div>
+                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1" name="full_name_english" />
+                                    <span class="text-danger" id="full_name_en_error"></span>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label>Email-id</label>
+                                    <input type="email" placeholder="Enter Email-Id" class="form-control" name="email" />
+                                    <span class="text-danger" id="email_error"></span>
+                                </div>
+
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Address line 01</label>
+                                    </div>
+
+                                    <div class="position-relative mt-1">
+                                        <input type="text" class="form-control" name="address_line1" placeholder="Enter Address Line 01" />
+                                        <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
+                                            style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;">
+                                        </i>
+                                    </div>
+                                    <span class="text-danger" id="address_line1_error"></span>
+                                </div>
+
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">City</label>
+                                    </div>
+                                    <input type="text" name="city" placeholder="Enter City" class="form-control mt-1" />
+                                    <span class="text-danger" id="city_error"></span>
+                                </div>
+
+                                <div class="mt-3 position-relative">
+                                    <label>Password</label>
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="Enter password" />
+                                    <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
+                                        style="right: 15px;  cursor: pointer;"></i>
+                                    <span class="text-danger" id="password_error"></span>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label>Select Zone</label>
+                                    <select class="form-select" name="zone_id">
+                                        <option value="">Select Zone</option>
+                                        @foreach($zones as $zone)
+                                            <option value="{{ $zone->id }}">{{ $zone->name_english }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger" id="zone_error"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Full Name</label>
+                                        <span class="text-muted" style="font-size: 12px;">In Arabic</span>
+                                    </div>
+                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1" name="full_name_arabic" />
+                                    <span class="text-danger" id="full_name_ar_error"></span>
+                                </div>
+
+                                <div class="mt-3 position-relative mobile-field">
+                                    <input type="hidden" id="country_code" name="country_code">
+                                    <input type="hidden" id="let" name="let">
+                                    <input type="hidden" id="long" name="long">
+                                    <label>Mobile Number</label>
+                                    <input id="phone" type="tel" class="form-control" name="mobile" placeholder='' />
+                                    <span class="text-danger" id="mobile_error"></span>
+                                </div>
+
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Address line 02</label>
+                                    </div>
+                                    <div class="position-relative mt-1">
+                                        <input type="text" class="form-control" name="address_line2" placeholder="Enter Address Line 02" />
+                                    </div>
+                                    <span class="text-danger" id="address_line2_error"></span>
+                                </div>
+
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">State</label>
+                                    </div>
+                                    <input type="text" name="state" placeholder="Enter State" class="form-control mt-1" />
+                                    <span class="text-danger" id="state_error"></span>
+                                </div>
+
+                                <div class="mt-3 position-relative">
+                                    <label>Confirm Password</label>
+                                    <input type="password" id="confirmPassword" class="form-control" name="confirm_password"
+                                        placeholder="Enter Confirm password" />
+                                    <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
+                                        style="right: 15px;  cursor: pointer;"></i>
+                                    <span class="text-danger" id="confirm_password_error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-4">
+                            <button type="submit" class="btn btn-dark customBtn">Next</button>
+                        </div>
+                    </form>
+                    <!-- <form id="deliveryBoyForm" action="{{ route('admin.store_reg1') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                           
+                            <div class="col-lg-12">
+                                <div class="upload-title text-center">
+                                    Upload Profile Image
+                                </div>
+
+                                <div class="upload-new text-center">
+                                    <label for="profileUpload" class="upload-box">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="profileUploadIcon" class="upload-icon" />
+                                        <div class="upload-text">Upload Profile Image</div>
+                                        
+                                        <input type="file" id="profileUpload" name="profile_pic" value="{{ old('profile_pic') }}" hidden accept="image/*" />
+                                        
+                                        <img id="profilePreview" class="preview-image" 
+                                            @if(old('profile_pic') || isset($formData['profile_pic'])) 
+                                                src="{{ old('profile_pic') ? asset(old('profile_pic')) : asset('storage/' . $formData['profile_pic']) }}" 
+                                                style="display: block;" 
+                                            @else 
+                                                style="display: none;" 
+                                            @endif />
+                                    </label>
+                                    @error('profile_pic')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+
+                            </div>
+
+                            
+                            <div class="col-lg-6">
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Full Name</label>
+                                        <span class="text-muted" style="font-size: 12px;">In English</span>
+                                    </div>
+                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1" name="full_name_english" 
+                                        value="{{ old('full_name_english') }}" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
+                                    @error('full_name_english')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                               
+                                <div class="mt-3">
+                                    <label>Email-id</label>
+                                    <input type="email" placeholder="Enter Email-Id" class="form-control" name="email" 
+                                        value="{{ old('email') }}" />
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Address line 01</label>
+                                    </div>
+                                    <div class="position-relative mt-1">
+                                        <input type="text" class="form-control" value="{{ old('caddress_line1') }}" name="address_line1" placeholder="Enter Address Line 01" />
+                                        <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
+                                            style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;">
+                                        </i>
+                                    </div>
+                                    @error('address_line1')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                               
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">City</label>
+                                    </div>
+                                    <input type="text" name="city" placeholder="Enter City" class="form-control mt-1" 
+                                        value="{{ old('city') }}" />
+                                    @error('city')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                               
+                                <div class="mt-3 position-relative">
+                                    <label>Password</label>
+                                    <input type="password" id="password" value="{{ old('password') }}"  class="form-control" name="password" placeholder="Enter password" value="{{ old('password') }}"/>
+                                    <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
+                                        style="right: 15px;  cursor: pointer;"></i>
+                                    @error('password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                
+                                <div class="mt-3">
+                                    <label>Select Zone</label>
+                                    <select class="form-select" name="zone_id">
+                                        <option value="">Select Zone</option>
+                                        @foreach($zones as $zone)
+                                            <option value="{{ $zone->id }}" {{ old('zone_id') == $zone->id ? 'selected' : '' }}>
+                                                {{ $zone->name_english }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('zone_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                           
+                            <div class="col-lg-6">
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Full Name</label>
+                                        <span class="text-muted" style="font-size: 12px;">In Arabic</span>
+                                    </div>
+                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1" name="full_name_arabic" 
+                                        value="{{ old('full_name_arabic') }}" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                    @error('full_name_arabic')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                               
+                                <div class="mt-3 position-relative mobile-field">
+                                    <label>Mobile Number</label>
+                                    <input type="hidden" id="country_code" name="country_code" value="{{ old('country_code') }}">
+                                    <input type="hidden" id="let" name="let" value="{{ old('let') }}">
+                                    <input type="hidden" id="long" name="long" value="{{ old('long') }}">
+                                    <input id="phone" type="tel" class="form-control" name="mobile" placeholder="" 
+                                        value="{{ old('mobile') }}" />
+                                    @error('mobile')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                               
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">Address line 02</label>
+                                    </div>
+                                    <input type="text" class="form-control" name="address_line2" placeholder="Enter Address Line 02" 
+                                        value="{{ old('address_line2') }}" />
+                                    @error('address_line2')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                               
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <label class="mb-0">State</label>
+                                    </div>
+                                    <input type="text" name="state" placeholder="Enter State" class="form-control mt-1" 
+                                        value="{{ old('state') }}" />
+                                    @error('state')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                
+                                <div class="mt-3 position-relative">
+                                    <label>Confirm Password</label>
+                                    <input type="password" id="confirmPassword" value="{{ old('confirm_password') }}" class="form-control" name="confirm_password"
+                                        placeholder="Enter Confirm password" />
+                                    <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
+                                        style="right: 15px;  cursor: pointer;"></i>
+                                    @error('confirm_password')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Left Column -->
-                        <div class="col-lg-6">
-                            <!-- First Name -->
-                            <div class="mt-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">Full Name</label>
-                                    <span class="text-muted" style="font-size: 12px;">In English</span>
-                                </div>
-
-                                <input type="text" placeholder="Enter Full Name" class="form-control mt-1" />
-                            </div>
-
-                            <!-- Email -->
-                            <div class="mt-3">
-                                <label>Email-id</label>
-                                <input type="email" placeholder="Enter Email-Id" class="form-control" />
-                            </div>
-                            <div class="mt-3">
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">Address line 01</label>
-
-                                </div>
-
-                                <div class="position-relative mt-1">
-                                    <input type="text" class="form-control" placeholder="Enter Address Line 01" />
-
-                                    <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
-                                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;">
-                                    </i>
-                                </div>
-
-                            </div>
-                            <div class="mt-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">City</label>
-                                </div>
-
-                                <input type="text" placeholder="Enter City" class="form-control mt-1" />
-                            </div>
-
-                            <!-- Password -->
-                            <div class="mt-3 position-relative">
-                                <label>Password</label>
-                                <input type="password" id="password" class="form-control"
-                                    placeholder="Enter password" />
-                                <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
-                                    style="right: 15px;  cursor: pointer;"></i>
-                            </div>
-
-                            <!-- Select Role -->
-                            <div class="mt-3">
-                                <label>Select ZOne</label>
-                                <select class="form-select">
-                                    <option>select</option>
-                                    <option value="1">Zone 1</option>
-                                    <option value="2">Zone 2</option>
-                                </select>
-                            </div>
+                       
+                        <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-4">
+                            <button type="submit" class="btn btn-dark customBtn">Next</button>
                         </div>
-
-                        <!-- Right Column -->
-                        <div class="col-lg-6">
-                            <!-- Last Name -->
-                            <div class="mt-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">Full Name</label>
-                                    <span class="text-muted" style="font-size: 12px;">In Arabic</span>
-                                </div>
-
-                                <input type="text" placeholder="Enter Full Name" class="form-control mt-1" />
-                            </div>
-
-                            <!-- Mobile -->
-                            <div class="mt-3 position-relative mobile-field">
-                                <label>Mobile Number</label>
-                                <input id="phone" type="tel" class="form-control" placeholder='' />
-                                <input type="hidden" id="country_code" />
-                            </div>
-
-
-
-                            <div class="mt-3">
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">Address line 02</label>
-
-                                </div>
-
-                                <div class="position-relative mt-1">
-                                    <input type="text" class="form-control" placeholder="Enter Address Line 02" />
-
-
-                                </div>
-
-                            </div>
-                            <div class="mt-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <label class="mb-0">State</label>
-                                </div>
-
-                                <input type="text" placeholder="Enter State" class="form-control mt-1" />
-                            </div>
-                            <!-- Confirm Password -->
-                            <div class="mt-3 position-relative">
-                                <label>Confirm Password</label>
-                                <input type="password" id="confirmPassword" class="form-control"
-                                    placeholder="Enter Confirm password" />
-                                <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
-                                    style="right: 15px;  cursor: pointer;"></i>
-                            </div>
-                        </div>
-                    </div>
+                    </form> -->
 
                 </div>
             </div>
-
-            <!-- Submit Button -->
-            <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-4 ">
-                <a href="{{route('admin.deliveryboy_reg_step2')}}" class="btn btn-dark customBtn">Next</a>
-
-            </div>
         </div>
+
     </div>
 </div>
 
-<!-- adreess model -->
 <div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -224,79 +403,37 @@
             </div>
 
             <div class="modal-body">
-
                 <div class="text-center mb-4">
-
                     <div class="appointment-container d-flex flex-column align-items-center">
-
                         <input id="searchBox" type="text" placeholder="Search your address"
-                            class="form-control position-absolute"
-                            style="top: -14px;left: 27px;width: 416px;z-index:9999;padding: 9px 18px;border-radius:4px;">
+                            class="form-control"
+                            style="padding: 9px 18px;border-radius:4px;width: 80%;">
 
                         <div class="w-100 mb-3 d-flex justify-content-center">
-                            <div id="map" style="width: 100%; height: 300px; border-radius: 10px; overflow: hidden;">
-                                <div id="useCurrentLocation" class="use-lc">
-                                    <i class="bi bi-crosshair"></i> Use Current Location
-                                </div>
-                            </div>
+                            <div id="map" style="width: 100%; height: 300px; border-radius: 10px; overflow: hidden;"></div>
                         </div>
-                        
+
                         <div class="find-location d-flex gap-3 py-4">
+                            <div id="useCurrentLocation" class="use-lc">
+                                <i class="bi bi-crosshair"></i> Use Current Location
+                            </div>
                             <div><i class="bi bi-geo-alt-fill"></i></div>
                             <p class="mb-0" id="selectedAddress">20 Cooper Square, New Delhi, ND 110020</p>
                         </div>
 
-
                         <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-3">
-                            <button class="btn btn-dark customBtn w-100">Save</button>
+                            <span id="locationError" style="color: red; display: none; margin-bottom: 10px;"></span>
+                            <button class="btn btn-dark customBtn w-100 setup-done button">Save</button>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-const fileInput = document.getElementById("fileUpload");
-const previewImage = document.getElementById("previewImage");
-const uploadIcon = document.getElementById("uploadIcon");
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-fileInput.addEventListener("change", function() {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            previewImage.src = e.target.result;
-            previewImage.style.display = "block";
-            uploadIcon.style.display = "none";
-        };
-        reader.readAsDataURL(file);
-    }
-});
-</script>
-
-<script>
-function preview(inputId, previewId, iconId) {
-    document.getElementById(inputId).addEventListener("change", function() {
-        const file = this.files[0];
-        if (file) {
-            document.getElementById(iconId).style.display = "none";
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById(previewId).src = e.target.result;
-                document.getElementById(previewId).style.display = "block";
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-}
-
-// PROFILE IMAGE PREVIEW CALL
-preview("profileUpload", "profilePreview", "profileUploadIcon");
-</script>
 
 <script>
 // Toggle password visibility
@@ -313,76 +450,504 @@ document.querySelectorAll(".toggle-password").forEach((toggle) => {
     });
 });
 </script>
+
+
+<!-- country code -->
 <script>
-const input = document.querySelector("#phone");
+    const input = document.querySelector("#phone");
+    const iti = window.intlTelInput(input, {
+        initialCountry: "kw",  // Set Kuwait as initial country
+        separateDialCode: true,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        autoPlaceholder: "off"
+    });
 
-const iti = window.intlTelInput(input, {
-    initialCountry: "us",
-    separateDialCode: true,
-    preferredCountries: ["in", "us", "gb", "ae"],
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    autoPlaceholder: "off"
-});
+    document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
 
-input.addEventListener("countrychange", function() {
-    document.querySelector("#country_code").value = iti.getSelectedCountryData().dialCode;
-});
+    input.addEventListener("countrychange", function() {
+        document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
+    });
 </script>
 
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&loading=async">
-    </script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&loading=async">
+</script>
 
-<!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script> -->
 
 <script>
-let map, marker;
+let map, userMarker, geocoder, selectedLatLng = null;
 
 function initMap() {
-    const defaultLocation = {
-        lat: 28.6139,
-        lng: 77.209
-    }; // Delhi
+    const defaultLocation = { lat: 29.3759, lng: 47.9774 }; // Kuwait City
 
+    // Initialize Map
     map = new google.maps.Map(document.getElementById("map"), {
         center: defaultLocation,
-        zoom: 11,
+        zoom: 12,
     });
 
-    marker = new google.maps.Marker({
+    geocoder = new google.maps.Geocoder();
+
+    // Marker setup
+    userMarker = new google.maps.Marker({
+        map: map,
         position: defaultLocation,
-        map,
         draggable: true,
+        title: "Drag to adjust location"
     });
 
-    // const input = document.createElement("input");
-    // input.id = "pac-input";
-    // input.type = "text";
-    // input.placeholder = "Search Box...";
-    // map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+    // Autocomplete setup
+    const searchInput = document.getElementById("searchBox");
+    const autocomplete = new google.maps.places.Autocomplete(searchInput);
+    autocomplete.bindTo("bounds", map);
+    autocomplete.setFields(['geometry', 'formatted_address', 'address_components']); // ✅ include address_components
 
-    // const searchBox = new google.maps.places.SearchBox(input);
+    autocomplete.addListener("place_changed", function() {
+        const place = autocomplete.getPlace();
+        if (!place.geometry || !place.geometry.location) {
+            showLocationError("Place has no geometry.");
+            return;
+        }
+        clearLocationError();
+        selectedLatLng = place.geometry.location;
+        map.setCenter(selectedLatLng);
+        map.setZoom(15);
+        userMarker.setPosition(selectedLatLng);
+        updateFullAddressUI(selectedLatLng);
+    });
 
-    // map.addListener("bounds_changed", () => {
-    //     searchBox.setBounds(map.getBounds());
-    // });
+    // Marker dragged manually
+    userMarker.addListener("dragend", function() {
+        selectedLatLng = userMarker.getPosition();
+        updateFullAddressUI(selectedLatLng);
+    });
 
-    searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-        if (places.length === 0) return;
-
-        const place = places[0];
-        if (!place.geometry || !place.geometry.location) return;
-
-        map.setCenter(place.geometry.location);
-        map.setZoom(13);
-        marker.setPosition(place.geometry.location);
+    // Use Current Location
+    document.querySelector(".use-lc").addEventListener("click", function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                clearLocationError();
+                selectedLatLng = new google.maps.LatLng(
+                    position.coords.latitude,
+                    position.coords.longitude
+                );
+                map.setCenter(selectedLatLng);
+                map.setZoom(15);
+                userMarker.setPosition(selectedLatLng);
+                updateFullAddressUI(selectedLatLng);
+            }, function(error) {
+                showLocationError("Error getting location: " + error.message);
+            });
+        } else {
+            showLocationError("Geolocation not supported.");
+        }
     });
 }
 
-window.onload = initMap;
+// Update input fields from latlng
+function updateFullAddressUI(latlng) {
+    geocoder.geocode({ location: latlng }, function(results, status) {
+        if (status === "OK" && results[0]) {
+            const components = results[0].address_components;
+            const formatted = results[0].formatted_address;
+
+            let city = "", state = "", zip = "", country = "";
+
+            components.forEach(comp => {
+                if (comp.types.includes("locality")) city = comp.long_name;
+                if (!city && comp.types.includes("administrative_area_level_2")) city = comp.long_name;
+                if (comp.types.includes("administrative_area_level_1")) state = comp.long_name;
+                if (comp.types.includes("postal_code")) zip = comp.long_name;
+                if (comp.types.includes("country")) country = comp.long_name;
+            });
+
+            const countryAliases = [country.toLowerCase()];
+            const parts = formatted.split(',').map(p => p.trim());
+            const filteredParts = parts.filter(part => {
+                const lower = part.toLowerCase();
+                return lower !== city.toLowerCase() &&
+                       lower !== state.toLowerCase() &&
+                       !countryAliases.includes(lower) &&
+                       !part.includes(zip);
+            });
+
+            let streetLine1 = '';
+            let streetLine2 = '';
+
+            if (filteredParts.length > 0) {
+                const first = filteredParts[0];
+                const match = first.match(/^([\d\/\-]+)\s+(.*)/);
+                if (match) {
+                    streetLine1 = match[1];
+                    streetLine2 = match[2].trim();
+                    const extraParts = filteredParts.slice(1).join(', ');
+                    if (extraParts) streetLine2 += ', ' + extraParts;
+                } else {
+                    streetLine1 = first;
+                    streetLine2 = filteredParts.slice(1).join(', ');
+                }
+            }
+
+            // Set input values
+            document.querySelector('[name="address_line1"]').value = streetLine1;
+            document.querySelector('[name="address_line2"]').value = streetLine2;
+            document.querySelector('[name="city"]').value = city;
+            document.querySelector('[name="state"]').value = state;
+            document.getElementById('let').value = latlng.lat();
+            document.getElementById('long').value = latlng.lng();
+            document.getElementById("selectedAddress").innerText = formatted;
+
+            // ✅ Clear errors for these fields
+            clearAddressFieldErrors();
+        } else {
+            showLocationError("Address not found");
+        }
+    });
+}
+
+// Clears errors for address-related fields
+function clearAddressFieldErrors() {
+    const addressFields = [
+        'address_line1_error',
+        'address_line2_error',
+        'city_error',
+        'state_error',
+        'let_error',
+        'long_error'
+    ];
+    addressFields.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.innerText = '';
+    });
+}
+
+
+// Show / hide error span
+function showLocationError(msg) {
+    const errorSpan = document.getElementById('locationError');
+    if (errorSpan) {
+        errorSpan.innerText = msg;
+        errorSpan.style.display = 'block';
+    }
+}
+
+function clearLocationError() {
+    const errorSpan = document.getElementById('locationError');
+    if (errorSpan) {
+        errorSpan.innerText = '';
+        errorSpan.style.display = 'none';
+    }
+}
+
+// Save button: modal close only
+document.querySelector(".setup-done.button").addEventListener("click", function() {
+    if (!selectedLatLng) {
+        showLocationError("Please select a location first.");
+        return;
+    }
+    clearLocationError();
+
+    // Values already set by updateFullAddressUI
+    const modalEl = document.getElementById('sentModal5');
+    if (modalEl) {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.hide();
+    }
+});
 </script>
+
+<!-- reg1 validation -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // IMAGE PREVIEW & VALIDATION
+    const profileUpload = document.getElementById('profileUpload');
+    const profilePreview = document.getElementById('profilePreview');
+    const profileImageError = document.getElementById('profile_image_error');
+
+    profileUpload.addEventListener('change', function() {
+        const file = this.files[0];
+
+        // Reset previous state
+        profileImageError.innerText = '';
+        profileImageError.style.display = 'none';
+        profilePreview.src = '';
+        profilePreview.style.display = 'none';
+        document.getElementById('profileUploadIcon').style.display = 'block';
+
+        if (!file) return;
+
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+            profileImageError.innerText = "Only JPG, JPEG, or PNG images are allowed.";
+            profileImageError.style.display = 'block';
+            this.value = '';
+            return;
+        }
+
+        // Validate file size (max 4MB)
+        const maxSize = 4 * 1024 * 1024; // 4MB
+        if (file.size > maxSize) {
+            profileImageError.innerText = "Image size must be less than 4MB.";
+            profileImageError.style.display = 'block';
+            this.value = '';
+            return;
+        }
+
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            profilePreview.src = e.target.result;
+            profilePreview.style.display = 'block';
+            document.getElementById('profileUploadIcon').style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // FORM SUBMISSION
+    const form = document.getElementById('deliveryBoyForm');
+    let mobileValid = false;
+    let emailValid = false;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent form from submitting traditionally
+
+        // Clear all previous errors
+        const errorSpans = form.querySelectorAll('.text-danger, .text-success');
+        errorSpans.forEach(span => {
+            span.innerText = '';
+            span.style.display = 'none';
+        });
+
+        // Collect form data
+        const formData = new FormData(form);
+
+        // Validation flags
+        let hasError = false;
+
+        const fields = [
+            {name: 'profile_pic', errorId: 'profile_image_error', message: 'Please upload profile image'},
+            {name: 'full_name_english', errorId: 'full_name_en_error', message: 'Please enter full name (English)'},
+            {name: 'full_name_arabic', errorId: 'full_name_ar_error', message: 'Please enter full name (Arabic)'},
+            {name: 'email', errorId: 'email_error', message: 'Please enter email'},
+            {name: 'mobile', errorId: 'mobile_error', message: 'Please enter mobile number'},
+            {name: 'address_line1', errorId: 'address_line1_error', message: 'Please enter address line 1'},
+            {name: 'address_line2', errorId: 'address_line2_error', message: 'Please enter address line 2'},
+            {name: 'city', errorId: 'city_error', message: 'Please enter city'},
+            {name: 'state', errorId: 'state_error', message: 'Please enter state'},
+            {name: 'password', errorId: 'password_error', message: 'Please enter password'},
+            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please enter confirm password'},
+            {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
+        ];
+
+        // Check required fields
+        fields.forEach(field => {
+            const input = form.querySelector(`[name="${field.name}"]`);
+            if (input) {
+                if (!input.value || (field.name === 'profile_pic' && input.files.length === 0)) {
+                    const errorSpan = document.getElementById(field.errorId);
+                    errorSpan.innerText = field.message;
+                    errorSpan.style.display = 'block';
+                    hasError = true;
+                }
+            }
+        });
+
+        // Password validation
+        const password = form.querySelector('[name="password"]').value;
+        const confirmPassword = form.querySelector('[name="confirm_password"]').value;
+        const passwordError = document.getElementById('password_error');
+        const confirmPasswordError = document.getElementById('confirm_password_error');
+
+        if(password) {
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+            if(!passwordPattern.test(password)){
+                passwordError.innerText = "Password must be at least 8 characters and include uppercase, lowercase, number, and special character.";
+                passwordError.style.display = 'block';
+                hasError = true;
+            }
+        }
+
+        if(confirmPassword) {
+            if(confirmPassword !== password) {
+                confirmPasswordError.innerText = "Confirm password does not match password.";
+                confirmPasswordError.style.display = 'block';
+                hasError = true;
+            }
+        }
+
+        if(hasError) return;
+
+        // AJAX submission
+        fetch('/admin/store_reg1', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token for protection
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                // Reset the form and profile image preview
+                form.reset();
+                profilePreview.src = '';
+                profilePreview.style.display = 'none';
+                document.getElementById('profileUploadIcon').style.display = 'block';
+                // Redirect to the next registration step
+                window.location.href = "{{ route('admin.deliveryboy_reg_step2') }}";
+            } else if(data.errors) {
+                // Display validation errors returned from the server
+                for(const key in data.errors) {
+                    if(document.getElementById(key + '_error')) {
+                        const errorSpan = document.getElementById(key + '_error');
+                        errorSpan.innerText = data.errors[key][0];
+                        errorSpan.style.display = 'block';
+                    }
+                }
+            }
+        })
+        .catch(err => {
+    console.error('Error during submission:', err);
+    alert('Something went wrong! Please check the console for details.');
+});
+    });
+
+    // REMOVE ERROR ON INPUT/CHANGE
+    const allInputs = form.querySelectorAll('input, select');
+    allInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            const errorSpan = this.closest('div')?.querySelector('.text-danger, .text-success');
+            if(errorSpan){
+                errorSpan.innerText = '';
+                errorSpan.style.display = 'none';
+            }
+        });
+        input.addEventListener('change', function() {
+            const errorSpan = this.closest('div')?.querySelector('.text-danger, .text-success');
+            if(errorSpan){
+                errorSpan.innerText = '';
+                errorSpan.style.display = 'none';
+            }
+        });
+    });
+
+    // REAL-TIME MOBILE & EMAIL CHECK
+    const mobileInput = form.querySelector('[name="mobile"]');
+    const emailInput = form.querySelector('[name="email"]');
+
+    function checkAvailability(url, value, callback) {
+        fetch(url + '?value=' + encodeURIComponent(value))
+        .then(res => res.json())
+        .then(data => callback(data))
+        .catch(err => console.error(err));
+    }
+
+    mobileInput.addEventListener('input', function() {
+        const mobileError = document.getElementById('mobile_error');
+        const value = this.value.trim();
+
+        // Mobile number length validation
+        if(value.length === 0) {
+            mobileError.innerText = "Please enter mobile number";
+            mobileError.classList.remove('text-success');
+            mobileError.classList.add('text-danger');
+            mobileError.style.display = 'block';
+            return;
+        }
+
+        if(value.length < 8) {
+            mobileError.innerText = "Please enter at least 8 digits.";
+            mobileError.classList.remove('text-success');
+            mobileError.classList.add('text-danger');
+            mobileError.style.display = 'block';
+            return;
+        }
+
+        if(value.length > 15) {
+            mobileError.innerText = "Mobile number should not be greater than 15 digits.";
+            mobileError.classList.remove('text-success');
+            mobileError.classList.add('text-danger');
+            mobileError.style.display = 'block';
+            return;
+        }
+
+        checkAvailability('/admin/check-mobile', value, function(data) {
+            if(data.exists) {
+                mobileError.innerText = "This number is already registered.";
+                mobileError.classList.remove('text-success');
+                mobileError.classList.add('text-danger');
+                mobileError.style.display = 'block';
+                mobileValid = false;
+            } else {
+                mobileError.innerText = "Mobile is available.";
+                mobileError.classList.remove('text-danger');
+                mobileError.classList.add('text-success');
+                mobileError.style.display = 'block';
+                mobileValid = true;
+            }
+        });
+    });
+
+    emailInput.addEventListener('input', function() {
+        const emailError = document.getElementById('email_error');
+        const value = this.value.trim();
+
+        // Email validation
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if(value.length === 0) {
+            emailError.innerText = "Please enter email address";
+            emailError.classList.remove('text-success');
+            emailError.classList.add('text-danger');
+            emailError.style.display = 'block';
+            return;
+        }
+
+        if(!emailPattern.test(value)) {
+            emailError.innerText = "Please enter a valid email address.";
+            emailError.classList.remove('text-success');
+            emailError.classList.add('text-danger');
+            emailError.style.display = 'block';
+            return;
+        }
+
+        checkAvailability('/admin/check-email', value, function(data) {
+            if(data.exists) {
+                emailError.innerText = "This email is already registered.";
+                emailError.classList.remove('text-success');
+                emailError.classList.add('text-danger');
+                emailError.style.display = 'block';
+                emailValid = false;
+            } else {
+                emailError.innerText = "Email is available.";
+                emailError.classList.remove('text-danger');
+                emailError.classList.add('text-success');
+                emailError.style.display = 'block';
+                emailValid = true;
+            }
+        });
+    });
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

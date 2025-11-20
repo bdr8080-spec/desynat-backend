@@ -67,6 +67,7 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/deletePlan/{id}', [PlanController::class, 'deletePlan'])->name('admin.deletePlan');
         Route::post('/add_plan', [PlanController::class, 'add_plan'])->name('admin.add_plan');
         Route::post('/update_plan', [PlanController::class, 'update_plan'])->name('admin.update_plan');
+        
 
         //user management
         Route::get('/user-management', [UserController::class, 'userManagement'])->name('admin.userManagement');
@@ -81,6 +82,9 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/edit_deliveryboy_step2', [DeliveryBoyController::class, 'edit_deliveryboy_step2'])->name('admin.edit_deliveryboy_step2');
         Route::post('/change_deliveryboy_status/{id}', [DeliveryBoyController::class, 'change_deliveryboy_status'])->name('admin.change_deliveryboy_status');
         Route::post('/deleteDeliveryBoy/{id}', [DeliveryBoyController::class, 'deleteDeliveryBoy'])->name('admin.deleteDeliveryBoy');
+        Route::post('/store_reg1', [DeliveryBoyController::class, 'store_reg1'])->name('admin.store_reg1');
+        Route::get('/check-mobile', [DeliveryBoyController::class, 'checkMobile']);
+        Route::get('/check-email', [DeliveryBoyController::class, 'checkEmail']);
 
         //reason management
         Route::get('/reason-management', [ReasonController::class, 'reasonManagement'])->name('admin.reasonManagement');
