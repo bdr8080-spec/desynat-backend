@@ -22,6 +22,8 @@ use App\Rules\MatchArrayProductVariation;
 
 use App\Helpers\ApiResponse;
 
+use Illuminate\Validation\Rule;
+
 
 
 
@@ -103,7 +105,6 @@ public function Add_product_code(Request $request){
     $seller_details=Auth::guard('seller')->user();
     $seller_id=$seller_details->id;
 
-    dd($request->all());
 
       $validate = Validator::make($request->all(), [
           'category_id' => 'required|exists:categories,id',
@@ -119,22 +120,42 @@ public function Add_product_code(Request $request){
           'description_ar' => 'required',
 
           // specification
-          'product_spe_en'=>['required', 'array', new MatchArrayProductSpecification],
-          'product_spe_feature_en'=>['required', 'array', new MatchArrayProductSpecification],
-          'product_spe_ar'=>['required', 'array', new MatchArrayProductSpecification],
-          'product_spe_feature_ar'=>['required', 'array', new MatchArrayProductSpecification],
+            'product_spe_en'           => ['required', 'array', new MatchArrayProductSpecification],
+            'product_spe_en.*'         => ['required'], // ← catch null & empty value
+
+            'product_spe_feature_en'   => ['required', 'array',new MatchArrayProductSpecification],
+            'product_spe_feature_en.*' => ['required'],
+
+            'product_spe_ar'           => ['required', 'array',new MatchArrayProductSpecification],
+            'product_spe_ar.*'         => ['required'],
+
+            'product_spe_feature_ar'   => ['required', 'array',new MatchArrayProductSpecification],
+            'product_spe_feature_ar.*' => ['required'],
+
 
           // product vartion start
-          'variant_image' => ['required', 'array', new MatchArrayProductVariation],
-          'color_id' => ['required', 'array', 'exists:colors,id', new MatchArrayProductVariation],
-          'size_id' => ['required', 'array', 'exists:sizes,id', new MatchArrayProductVariation],
-          'total_stock' => ['required', 'array', new MatchArrayProductVariation],
-          'sku' => ['required', 'array', new MatchArrayProductVariation],
-          'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
-          'actual_price' => ['required', 'array', new MatchArrayProductVariation],
-          'discount_type' => ['required', 'array', new MatchArrayProductVariation],
-          'discount_value' => ['required', 'array', new MatchArrayProductVariation],
-          'final_price' => ['required', 'array', new MatchArrayProductVariation],
+          'variant_image' => ['required', 'array'],
+          'color_id' => ['required', 'array', 'exists:colors,id'],
+          'size_id' => ['required', 'array', 'exists:sizes,id'],
+          'total_stock' => ['required', 'array'],
+          'sku' => ['required', 'array'],
+          'sku_threshold_value' => ['required', 'array'],
+          'actual_price' => ['required', 'array'],
+          'discount_type' => ['required', 'array'],
+          'discount_value' => ['required', 'array'],
+          'final_price' => ['required', 'array'],
+
+          'variant_image.*' => ['required'],
+          'color_id.*' => ['required'],
+          'size_id.*' => ['required'],
+          'total_stock.*' => ['required'],
+          'sku.*' => ['required'],
+          'sku_threshold_value.*' => ['required'],
+          'actual_price.*' => ['required'],
+          'discount_type.*' => ['required'],
+          'discount_value.*' => ['required'],
+          'final_price.*' => ['required'],
+
 
           // product vartion end
           
@@ -149,14 +170,34 @@ public function Add_product_code(Request $request){
           'customized_product'=>'required|in:0,1', // // 0 not 1 yes
           'ready_to_ship'=>'required|in:0,1', // // 0 not 1 yes
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
-          'upload_size_chart'=>'required'
+          'upload_size_chart'=>'required',
 
+
+        //   if The category is women
+         // MAIN ARRAY FIELDS (required only if category_id = 2)
+    'bust'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+    'waist'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+    'hip'            => [Rule::requiredIf($request->category_id == 2), 'array'],
+    'shoulder'       => [Rule::requiredIf($request->category_id == 2), 'array'],
+    'sleeve_length'  => [Rule::requiredIf($request->category_id == 2), 'array'],
+    'length'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+
+    // INNER ARRAY VALUES (apply required only if category_id = 2)
+    'bust.*'           => [Rule::requiredIf($request->category_id == 2)],
+    'waist.*'          => [Rule::requiredIf($request->category_id == 2)],
+    'hip.*'            => [Rule::requiredIf($request->category_id == 2)],
+    'shoulder.*'       => [Rule::requiredIf($request->category_id == 2)],
+    'sleeve_length.*'  => [Rule::requiredIf($request->category_id == 2)],
+    'length.*'         => [Rule::requiredIf($request->category_id == 2)], 
+       
       ]);
 
+      
       if($validate->fails()){
-          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
          }
 
+         
      if($request->category_id=='2'){   // if the category is women Then These field is manditary
 
       $validate = Validator::make($request->all(), [               
@@ -166,13 +207,41 @@ public function Add_product_code(Request $request){
           'shoulder'=>'required|array',
           'sleeve_length'=>'required|array',
           'length'=>'required|array',
-      ]);
+
+          'bust.*'=>'required',
+          'waist.*'=>'required',
+          'hip.*'=>'required',
+          'shoulder.*'=>'required',
+          'sleeve_length.*'=>'required',
+          'length.*'=>'required',  
+
+        ]);
       
       if($validate->fails()){
-          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
       }
 
      }
+
+
+     // Product Vartion Image
+
+     $dir="Product/";
+     $variation_image=[];
+
+     foreach($request->variant_image as $key=>$Image1){
+
+        foreach($Image1 as $key1=>$Image2){
+            $variation_image[$key][$key1]=image_upload($Image2,$dir);  // chart Image
+        }
+     }
+
+    //  Product Size Chart Upload 
+     if($request->upload_size_chart){ 
+     $upload_size_chart=image_upload($request->upload_size_chart,$dir);  // chart Image
+     
+    }
+
 
 
 
@@ -197,7 +266,7 @@ $request_data=(object) [
 'product_spe_feature_ar'=> $request->product_spe_feature_ar,
 
       // product vartion start
-'variant_image' => $request->variant_image,
+'variant_image' => $variation_image,
 'color_id' => $request->color_id,
 'size_id' => $request->size_id,
       
@@ -230,10 +299,9 @@ $request_data=(object) [
 'customized_product'=> $request->customized_product, // // 0 not 1 yes
 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
-'upload_size_chart'=> $request->upload_size_chart
+'upload_size_chart'=> $upload_size_chart
 
      ];
-
 
   $data=  $this->SellerProductService->AddProduct($request_data);
 
