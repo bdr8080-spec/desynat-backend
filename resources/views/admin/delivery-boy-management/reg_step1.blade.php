@@ -35,6 +35,25 @@
     left: 0;
     display: none;
 }
+.use-lc {
+    background: #fff;
+    box-shadow: 0px 2px 8px 0px #0000001f;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 50px;
+    color: #a8824f;
+    font-weight: 500;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 13px;
+    font-size: 14px;
+}
 </style>
 
 <div class="inner-content management">
@@ -145,7 +164,7 @@
                             <!-- Mobile -->
                             <div class="mt-3 position-relative mobile-field">
                                 <label>Mobile Number</label>
-                                <input id="phone" type="tel" class="form-control"  placeholder=''/>
+                                <input id="phone" type="tel" class="form-control" placeholder='' />
                                 <input type="hidden" id="country_code" />
                             </div>
 
@@ -208,139 +227,163 @@
 
                 <div class="text-center mb-4">
 
+                    <div class="appointment-container d-flex flex-column align-items-center">
 
+                        <input id="searchBox" type="text" placeholder="Search your address"
+                            class="form-control position-absolute"
+                            style="top: -14px;left: 27px;width: 416px;z-index:9999;padding: 9px 18px;border-radius:4px;">
 
-                    <div class="appointment-container d-flex flex-wrap justify-content-center">
-
-                        <div id="map"></div>
-                        <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-4 ">
-                            <button class="btn btn-dark customBtn">Save</button>
-
+                        <div class="w-100 mb-3 d-flex justify-content-center">
+                            <div id="map" style="width: 100%; height: 300px; border-radius: 10px; overflow: hidden;">
+                                <div id="useCurrentLocation" class="use-lc">
+                                    <i class="bi bi-crosshair"></i> Use Current Location
+                                </div>
+                            </div>
                         </div>
+                        
+                        <div class="find-location d-flex gap-3 py-4">
+                            <div><i class="bi bi-geo-alt-fill"></i></div>
+                            <p class="mb-0" id="selectedAddress">20 Cooper Square, New Delhi, ND 110020</p>
+                        </div>
+
+
+                        <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-3">
+                            <button class="btn btn-dark customBtn w-100">Save</button>
+                        </div>
+
                     </div>
 
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <script>
-                const fileInput = document.getElementById("fileUpload");
-                const previewImage = document.getElementById("previewImage");
-                const uploadIcon = document.getElementById("uploadIcon");
+<script>
+const fileInput = document.getElementById("fileUpload");
+const previewImage = document.getElementById("previewImage");
+const uploadIcon = document.getElementById("uploadIcon");
 
-                fileInput.addEventListener("change", function() {
-                    const file = this.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            previewImage.src = e.target.result;
-                            previewImage.style.display = "block";
-                            uploadIcon.style.display = "none";
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-                </script>
+fileInput.addEventListener("change", function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+            uploadIcon.style.display = "none";
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>
 
-                <script>
-                function preview(inputId, previewId, iconId) {
-                    document.getElementById(inputId).addEventListener("change", function() {
-                        const file = this.files[0];
-                        if (file) {
-                            document.getElementById(iconId).style.display = "none";
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                document.getElementById(previewId).src = e.target.result;
-                                document.getElementById(previewId).style.display = "block";
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
-                }
+<script>
+function preview(inputId, previewId, iconId) {
+    document.getElementById(inputId).addEventListener("change", function() {
+        const file = this.files[0];
+        if (file) {
+            document.getElementById(iconId).style.display = "none";
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById(previewId).src = e.target.result;
+                document.getElementById(previewId).style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
 
-                // PROFILE IMAGE PREVIEW CALL
-                preview("profileUpload", "profilePreview", "profileUploadIcon");
-                </script>
+// PROFILE IMAGE PREVIEW CALL
+preview("profileUpload", "profilePreview", "profileUploadIcon");
+</script>
 
-                <script>
-                // Toggle password visibility
-                document.querySelectorAll(".toggle-password").forEach((toggle) => {
-                    toggle.addEventListener("click", function() {
-                        const input = document.querySelector(this.getAttribute("toggle"));
-                        const type =
-                            input.getAttribute("type") === "password" ? "text" : "password";
-                        input.setAttribute("type", type);
+<script>
+// Toggle password visibility
+document.querySelectorAll(".toggle-password").forEach((toggle) => {
+    toggle.addEventListener("click", function() {
+        const input = document.querySelector(this.getAttribute("toggle"));
+        const type =
+            input.getAttribute("type") === "password" ? "text" : "password";
+        input.setAttribute("type", type);
 
-                        // Toggle icon between eye (fa-eye) and eye-slash (fa-eye-slash)
-                        this.classList.toggle("fa-eye");
-                        this.classList.toggle("fa-eye-slash");
-                    });
-                });
-                </script>
-                <script>
-                const input = document.querySelector("#phone");
+        // Toggle icon between eye (fa-eye) and eye-slash (fa-eye-slash)
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
+});
+</script>
+<script>
+const input = document.querySelector("#phone");
 
-                const iti = window.intlTelInput(input, {
-                    initialCountry: "us",
-                    separateDialCode: true,
-                    preferredCountries: ["in", "us", "gb", "ae"],
-                    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-                     autoPlaceholder: "off"
-                });
+const iti = window.intlTelInput(input, {
+    initialCountry: "us",
+    separateDialCode: true,
+    preferredCountries: ["in", "us", "gb", "ae"],
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    autoPlaceholder: "off"
+});
 
-                input.addEventListener("countrychange", function() {
-                    document.querySelector("#country_code").value = iti.getSelectedCountryData().dialCode;
-                });
-                </script>
+input.addEventListener("countrychange", function() {
+    document.querySelector("#country_code").value = iti.getSelectedCountryData().dialCode;
+});
+</script>
 
-                <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places&loading=async">
+    </script>
 
-                <script>
-                let map, marker;
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script> -->
 
-                function initMap() {
-                    const defaultLocation = {
-                        lat: 28.6139,
-                        lng: 77.209
-                    }; // Delhi
+<script>
+let map, marker;
 
-                    map = new google.maps.Map(document.getElementById("map"), {
-                        center: defaultLocation,
-                        zoom: 11,
-                    });
+function initMap() {
+    const defaultLocation = {
+        lat: 28.6139,
+        lng: 77.209
+    }; // Delhi
 
-                    marker = new google.maps.Marker({
-                        position: defaultLocation,
-                        map,
-                        draggable: true,
-                    });
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: defaultLocation,
+        zoom: 11,
+    });
 
-                    const input = document.createElement("input");
-                    input.id = "pac-input";
-                    input.type = "text";
-                    input.placeholder = "Search Box...";
-                    map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+    marker = new google.maps.Marker({
+        position: defaultLocation,
+        map,
+        draggable: true,
+    });
 
-                    const searchBox = new google.maps.places.SearchBox(input);
+    // const input = document.createElement("input");
+    // input.id = "pac-input";
+    // input.type = "text";
+    // input.placeholder = "Search Box...";
+    // map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
-                    map.addListener("bounds_changed", () => {
-                        searchBox.setBounds(map.getBounds());
-                    });
+    // const searchBox = new google.maps.places.SearchBox(input);
 
-                    searchBox.addListener("places_changed", () => {
-                        const places = searchBox.getPlaces();
-                        if (places.length === 0) return;
+    // map.addListener("bounds_changed", () => {
+    //     searchBox.setBounds(map.getBounds());
+    // });
 
-                        const place = places[0];
-                        if (!place.geometry || !place.geometry.location) return;
+    searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+        if (places.length === 0) return;
 
-                        map.setCenter(place.geometry.location);
-                        map.setZoom(13);
-                        marker.setPosition(place.geometry.location);
-                    });
-                }
+        const place = places[0];
+        if (!place.geometry || !place.geometry.location) return;
 
-                window.onload = initMap;
-                </script>
+        map.setCenter(place.geometry.location);
+        map.setZoom(13);
+        marker.setPosition(place.geometry.location);
+    });
+}
+
+window.onload = initMap;
+</script>
 
 
 
-                @endsection
+@endsection

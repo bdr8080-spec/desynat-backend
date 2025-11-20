@@ -25,7 +25,9 @@ class DeliveryBoyController extends Controller
     }
 
     public function deliveryboy_reg_step1(Request $request){
-        return view('admin.delivery-boy-management.reg_step1');
+        $zones = $this->DeliveryBoyManagementService->getKuwaitZones($request)['data'];
+        //dd($zones);
+        return view('admin.delivery-boy-management.reg_step1',compact('zones'));
     }
 
     public function deliveryboy_reg_step2(Request $request){
