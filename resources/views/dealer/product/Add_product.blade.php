@@ -351,7 +351,7 @@
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="20019"
+                            <input type="number" class="form-control notapplyspace" placeholder="20019"
                                 name="sku_threshold_value[]">
                             <p class="text-danger" id="error-sku_threshold_value_0"></p>
 
@@ -364,7 +364,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
                                 name="actual_price[]">
                             <p class="text-danger" id="error-actual_price_0"></p>
 
@@ -417,7 +417,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
                                 name="final_price[]">
                             <p class="text-danger" id="error-final_price_0"></p>
                         </div>
@@ -440,7 +440,7 @@
                         <div class="label-flex">
                             <label>Set Min.cart quantity</label>
                         </div>
-                        <input type="text" class="form-control notapplyspace" placeholder="Eg.20"
+                        <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
                             name="min_card_quantity">
                         <p class="text-danger" id="error-min_card_quantity"></p>
 
@@ -451,7 +451,7 @@
                         <div class="label-flex">
                             <label>Set Max.cart quantity</label>
                         </div>
-                        <input type="text" class="form-control notapplyspace" placeholder="Eg.20"
+                        <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
                             name="max_card_quantity">
                         <p class="text-danger" id="error-max_card_quantity"></p>
 
@@ -990,7 +990,7 @@
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019" name="sku_threshold_value[]">
+                            <input type="number" class="form-control" placeholder="20019" name="sku_threshold_value[]">
                           <p class="text-danger" id="error-sku_threshold_value_${product_Variation_count}"></p>
 
                             </div>
@@ -1002,7 +1002,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
+                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
 
                             </div>
@@ -1042,7 +1042,7 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                           <input type="text" class="form-control" placeholder="Eg.10%" name="discount_value[]">
+                           <input type="number" class="form-control" placeholder="Eg.10%" name="discount_value[]">
                           <p class="text-danger" id="error-discount_value_${product_Variation_count}"></p>
 
                            </div>
@@ -1053,7 +1053,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
+                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}"></p>
 
                          </div>
