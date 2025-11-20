@@ -134,8 +134,8 @@ public function Add_product_code(Request $request){
 
           // product vartion start
           'variant_image' => ['required', 'array'],
-          'color_id' => ['required', 'array', 'exists:colors,id'],
-          'size_id' => ['required', 'array', 'exists:sizes,id'],
+          'color_id' => ['required', 'array'],
+          'size_id' => ['required', 'array', ],
           'total_stock' => ['required', 'array'],
           'sku' => ['required', 'array'],
           'sku_threshold_value' => ['required', 'array'],
@@ -145,8 +145,8 @@ public function Add_product_code(Request $request){
           'final_price' => ['required', 'array'],
 
           'variant_image.*' => ['required'],
-          'color_id.*' => ['required'],
-          'size_id.*' => ['required'],
+          'color_id.*' => ['required','distinct','exists:colors,id'],
+          'size_id.*' => ['required','exists:sizes,id','distinct'],
           'total_stock.*' => ['required'],
           'sku.*' => ['required'],
           'sku_threshold_value.*' => ['required'],
