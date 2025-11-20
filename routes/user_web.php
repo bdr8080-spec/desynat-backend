@@ -40,9 +40,12 @@ use App\Http\Controllers\User\ProfileController;
    });
 
 
-//  Route::match(['get', 'post'], '/route1', function () {
-//      return view('user.profile.index');
-// });
+ Route::match(['get', 'post'], '/route1', function () {
+     return view('user.category.index');
+});
+Route::match(['get', 'post'], '/route2', function () {
+     return view('user.category.store');
+});
 //  Route::match(['get', 'post'], '/route2', function () {
 //      return view('user.profile.changePassword');
 // });
