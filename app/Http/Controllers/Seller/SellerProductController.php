@@ -104,8 +104,7 @@ public function Add_product_code(Request $request){
 
     $seller_details=Auth::guard('seller')->user();
     $seller_id=$seller_details->id;
-
-
+    
       $validate = Validator::make($request->all(), [
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
@@ -162,9 +161,9 @@ public function Add_product_code(Request $request){
           'min_card_quantity'=>'required',
           'max_card_quantity'=>'required',
           'product_return'=>'required|in:0,1', // 0 Not return 1 return Availble 
-          'return_days'=>'nullable|integer',
+          'return_days'=> 'required_if:product_return,1|nullable|integer',
           'product_exchangable'=>'required|in:0,1',  // 0 not 1 yes
-          'exchangable_days'=>'nullable|integer',
+          'exchangable_days'=>'required_if:product_exchangable,1|nullable|integer',
           'review_rating'=>'required|in:0,1', // 0 not 1 yes
           'affiliated_product'=>'required|in:0,1', // // 0 not 1 yes
           'customized_product'=>'required|in:0,1', // // 0 not 1 yes

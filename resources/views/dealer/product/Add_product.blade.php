@@ -17,11 +17,12 @@
                 <div class="col-lg-4">
                     <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
 
-                        @foreach ($category as $item)
+                        @foreach ($category as $key => $item)
                             <div class="check_radio">
                                 <label class="radio-group">
                                     <input type="radio" name="category_id" value="{{ $item->id }}"
-                                        onclick="catgoryFunction({{ $item->id }})">
+                                        onclick="catgoryFunction({{ $item->id }})"
+                                        @if ($key == 0) checked @endif>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">{{ $item->name }}</span>
                                 </label>
@@ -254,7 +255,8 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="bust[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="bust[]">
                             <p class="text-danger" id="error-bust_0"></p>
 
                         </div>
@@ -265,7 +267,8 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="waist[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="waist[]">
 
                             <p class="text-danger" id="error-waist_0"></p>
                         </div>
@@ -276,7 +279,8 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="hip[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="hip[]">
                             <p class="text-danger" id="error-hip_0"></p>
 
                         </div>
@@ -287,7 +291,8 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="shoulder[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="shoulder[]">
                             <p class="text-danger" id="error-shoulder_0"></p>
 
                         </div>
@@ -298,7 +303,8 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="sleeve_length[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="sleeve_length[]">
                             <p class="text-danger" id="error-sleeve_length_0"></p>
 
                         </div>
@@ -309,7 +315,8 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="length[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                                name="length[]">
 
                             <p class="text-danger" id="error-length_0"></p>
                         </div>
@@ -320,7 +327,8 @@
                             <div class="label-flex">
                                 <label>Total Stocks</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.13208" name="total_stock[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208"
+                                name="total_stock[]">
 
                             <p class="text-danger" id="error-total_stock_0"></p>
                         </div>
@@ -331,7 +339,8 @@
                             <div class="label-flex">
                                 <label>SKU</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019" name="sku[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="20019"
+                                name="sku[]">
 
                             <p class="text-danger" id="error-sku_0"></p>
                         </div>
@@ -342,7 +351,7 @@
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019"
+                            <input type="text" class="form-control notapplyspace" placeholder="20019"
                                 name="sku_threshold_value[]">
                             <p class="text-danger" id="error-sku_threshold_value_0"></p>
 
@@ -355,7 +364,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00"
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
                                 name="actual_price[]">
                             <p class="text-danger" id="error-actual_price_0"></p>
 
@@ -396,7 +405,8 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.10%" name="discount_value[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
+                                name="discount_value[]">
                             <p class="text-danger" id="error-discount_value_0"></p>
 
                         </div>
@@ -407,7 +417,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.KD 299.00"
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
                                 name="final_price[]">
                             <p class="text-danger" id="error-final_price_0"></p>
                         </div>
@@ -430,7 +440,8 @@
                         <div class="label-flex">
                             <label>Set Min.cart quantity</label>
                         </div>
-                        <input type="text" class="form-control" placeholder="Eg.20" name="min_card_quantity">
+                        <input type="text" class="form-control notapplyspace" placeholder="Eg.20"
+                            name="min_card_quantity">
                         <p class="text-danger" id="error-min_card_quantity"></p>
 
                     </div>
@@ -440,7 +451,8 @@
                         <div class="label-flex">
                             <label>Set Max.cart quantity</label>
                         </div>
-                        <input type="text" class="form-control" placeholder="Eg.20" name="max_card_quantity">
+                        <input type="text" class="form-control notapplyspace" placeholder="Eg.20"
+                            name="max_card_quantity">
                         <p class="text-danger" id="error-max_card_quantity"></p>
 
                     </div>
@@ -459,14 +471,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" checked value='0'>
+                                        <input type="radio" name="product_return" checked value='1'>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" value='1'>
+                                        <input type="radio" name="product_return" value='0'>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -482,6 +494,8 @@
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.KD 299.00"
                                     name="return_days">
+                                <p class="text-danger" id="error-return_days"></p>
+
                             </div>
                         </div>
                     </div>
@@ -518,6 +532,8 @@
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.15 days"
                                     name="exchangable_days">
+                                <p class="text-danger" id="error-exchangable_days"></p>
+
                             </div>
                         </div>
                     </div>
@@ -682,9 +698,28 @@
 @include('dealer.layout.footer');
 
 <script>
+    // When The Page Load Then auto select Category
+    $(document).ready(function() {
+        var checked_category = $("input[name='category_id']:checked").val();
+        if (checked_category) {
+            catgoryFunction(checked_category);
+        }
+    });
+
+
     $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
 
 
+
+
+
+    });
+
+
+
+
+    // When User select Image vartion Then Show dynamic Image Preview
+    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
         let rel = $(this).attr('rel');
         let files = e.target.files;
         // $('#previewContainer').empty(); // clear old previews
@@ -702,7 +737,7 @@
     });
 
 
-    // Upload Chart Image
+    // Upload Chart Image in footer side
     $('#edit_uploadChart').on('change', e => {
         let files = e.target.files;
         $('#edit_uploadChart_preview').empty(); // clear old previews
@@ -721,7 +756,7 @@
 </script>
 
 <script>
-    // ADD NEW ROW
+    // ADD NEW ROW In specification
 
     var specification_count = 1;
 
@@ -802,6 +837,8 @@
 </script>
 
 <script>
+    // ADD NEW ROWs In product Variation Section
+
     var product_Variation_count = 1;
 
     // ADD NEW Variant
@@ -1031,7 +1068,7 @@
         </div>
 
        `)
-        var checked_category = $("input[name='categoryName']:checked").val();
+        var checked_category = $("input[name='category_id']:checked").val();
         if (checked_category) {
             remove_Not_in_women_Category(checked_category);
         }
@@ -1045,12 +1082,9 @@
         $(this).closest(".variant-panel-bg").remove();
     });
 
-    // Product Variation Show according to product
-
+    // When User select Again Category Then remove Error Message 
     function remove_Not_in_women_Category(val) {
-
         $('.text-danger').empty();
-
         if (val != '2') {
             $('.remove_Not_in_women_Category').hide();
         } else {
@@ -1059,8 +1093,7 @@
 
     }
 
-
-    // sub category show data
+    //Category Wise Show sub-category data
     function catgoryFunction(val) {
 
         remove_Not_in_women_Category(val); // remove extra field in Product
@@ -1112,14 +1145,9 @@
             }
 
         })
-
-
     }
 
-    // From submit code Apply
-
-
-
+    // When user Submit From submit code Apply
 
     $(document).on('submit', 'form#addproduct', function(event) {
         event.preventDefault();
@@ -1208,6 +1236,33 @@
         });
 
         return false;
+    });
+
+
+
+    $(document).on('change', 'input[name="product_return"]', function() {
+        let value = $(this).val();
+
+        if (value == "1") {
+            // YES → show return days
+            $('input[name="return_days"]').closest('.row').show();
+        } else {
+            // NO → hide return days & clear value
+            $('input[name="return_days"]').val('').closest('.row').hide();
+        }
+    });
+
+
+    $(document).on('change', 'input[name="product_exchangable"]', function() {
+        let value = $(this).val();
+
+        if (value == "1") {
+            // YES → show return days
+            $('input[name="exchangable_days"]').closest('.row').show();
+        } else {
+            // NO → hide return days & clear value
+            $('input[name="exchangable_days"]').val('').closest('.row').hide();
+        }
     });
 </script>
 
