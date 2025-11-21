@@ -45,9 +45,6 @@ class UserStoreController extends Controller
 
 
        $store_details=$store_details['data'];
-
-
-       dump($store_details);
        
         return view('user.category.index',compact('store_details'));
     }
