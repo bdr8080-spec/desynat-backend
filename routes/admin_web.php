@@ -78,13 +78,18 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/delivery-boy-management', [DeliveryBoyController::class, 'deliveryBoyManagement'])->name('admin.deliveryBoyManagement');
         Route::get('/deliveryboy_reg_step1', [DeliveryBoyController::class, 'deliveryboy_reg_step1'])->name('admin.deliveryboy_reg_step1');
         Route::get('/deliveryboy_reg_step2', [DeliveryBoyController::class, 'deliveryboy_reg_step2'])->name('admin.deliveryboy_reg_step2');
-        Route::get('/edit_deliveryboy_step1', [DeliveryBoyController::class, 'edit_deliveryboy_step1'])->name('admin.edit_deliveryboy_step1');
+        Route::get('/edit_deliveryboy_step1/{id}', [DeliveryBoyController::class, 'edit_deliveryboy_step1'])->name('admin.edit_deliveryboy_step1');
         Route::get('/edit_deliveryboy_step2', [DeliveryBoyController::class, 'edit_deliveryboy_step2'])->name('admin.edit_deliveryboy_step2');
         Route::post('/change_deliveryboy_status/{id}', [DeliveryBoyController::class, 'change_deliveryboy_status'])->name('admin.change_deliveryboy_status');
         Route::post('/deleteDeliveryBoy/{id}', [DeliveryBoyController::class, 'deleteDeliveryBoy'])->name('admin.deleteDeliveryBoy');
-        Route::post('/store_reg1', [DeliveryBoyController::class, 'store_reg1'])->name('admin.store_reg1');
+        Route::post('/store_reg1', [DeliveryBoyController::class, 'store_reg1'])->name('admin.store_reg1');Route::post('/store_reg1', [DeliveryBoyController::class, 'store_reg1'])->name('admin.store_reg1');
         Route::get('/check-mobile', [DeliveryBoyController::class, 'checkMobile']);
         Route::get('/check-email', [DeliveryBoyController::class, 'checkEmail']);
+        Route::post('/store_reg2', [DeliveryBoyController::class, 'store_reg2'])->name('admin.store_reg2');
+        Route::get('/check-mobile-edit', [DeliveryBoyController::class, 'checkMobileEdit']);
+        Route::get('/check-email-edit', [DeliveryBoyController::class, 'checkEmailEdit']);
+        Route::post('/store_reg1_edit', [DeliveryBoyController::class, 'store_reg1_edit'])->name('admin.store_reg1_edit');
+        Route::post('/store_reg2_edit', [DeliveryBoyController::class, 'store_reg2_edit'])->name('admin.store_reg2_edit');
 
         //reason management
         Route::get('/reason-management', [ReasonController::class, 'reasonManagement'])->name('admin.reasonManagement');

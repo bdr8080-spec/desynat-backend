@@ -46,7 +46,11 @@ class UserManagementService
 
             if (!empty($request->search)) {
                 $search = $request->search;
-                $query->where('full_name', 'like', "%{$search}%");
+                $query->where(function($query) use ($search) {
+                    $query->where('full_name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('mobile', 'like', "%{$search}%");
+                });
             }
 
             $user_details = $query->orderBy('id', 'desc')->paginate($limit);
@@ -322,6 +326,53 @@ class UserManagementService
     }
 
 
+    public function singleproductView($request)
+    {
+        try {
+    
+            // Step 1: Find store
+            
+            $product_details = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+            ->where('id', $request->product_id)->first();
+
+    
+            // If store not found
+            if (!$product_details) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Product Found',
+                    'data'   => []
+                ];
+            }
+
+            $wishlistIds = wishlist::where('user_id', $request->user_id)
+            ->pluck('product_id')
+            ->toArray();
+
+
+            if($product_details){
+                $product_details->wishlist = in_array($product_details->id, $wishlistIds) ? 1 : 0;
+
+            }
+
+           
+            return [
+                'status'  => 'success',
+                'message' => "Product Information fetch Successfully",
+                'data'    => $product_details
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
     
 
 
@@ -378,16 +429,17 @@ class UserManagementService
             if($wishlist){
                 $wishlist->delete();
                 $msg="Product remove from Wishlist";
+                $update_status=0;
             }else{
-                wishlist::create($data);
+               $wishlist= wishlist::create($data);
                 $msg="Product Add From Wishlist";
+                $update_status=1;
             }
-
           
             return [
                 'status'  => 'success',
                 'message' => $msg,
-                'data'    => (object)[]
+                'data'    => $update_status
             ];
     
         } catch (\Exception $e) {

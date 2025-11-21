@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('country_code');
             $table->string('mobile');
             $table->string('password');
+            $table->string('unhashed_password');
             $table->string('address_line1');
             $table->string('address_line2')->nullable();
             $table->string('city');

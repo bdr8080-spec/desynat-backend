@@ -66,7 +66,20 @@ class ReasonService
 
             $reason->status = $reason->status == 1 ? 0 : 1;
             $reason->save();
-            $message = $reason->status == 1 ? 'Reason unblock successfully' : 'Reason block successfully';
+
+            switch ($reason->type) {
+                case 1:
+                    $message = $reason->status == 1 ? 'Exchange Reason Unblocked Successfully' : 'Exchange Reason Blocked Successfully';
+                    break;
+                case 2:
+                    $message = $reason->status == 1 ? 'Return Reason Unblocked Successfully' : 'Return Reason Blocked Successfully';
+                    break;
+                case 3:
+                    $message = $reason->status == 1 ? 'Cancel Reason Unblocked Successfully' : 'Cancel Reason Blocked Successfully';
+                    break;
+                default:
+                    $message = $reason->status == 1 ? 'Reason Unblocked Successfully' : 'Reason Blocked Successfully';
+            }
 
             return [
                 'status' => 'success',
@@ -81,6 +94,7 @@ class ReasonService
             ];
         }
     }
+
 
 
     public function createReason(Request $request)
@@ -123,12 +137,26 @@ class ReasonService
         try {
             $reason->update([
                 'reason_english' => $request->reason_english,
-                'reason_arabic' => $request->reason_arabic, 
+                'reason_arabic' => $request->reason_arabic,
             ]);
+
+            switch ($reason->type) {
+                case 1:
+                    $message = 'Exchange Reason Updated Successfully';
+                    break;
+                case 2:
+                    $message = 'Return Reason Updated Successfully';
+                    break;
+                case 3:
+                    $message = 'Cancel Reason Updated Successfully';
+                    break;
+                default:
+                    $message = 'Reason Updated Successfully';
+            }
 
             return [
                 'status' => 'success',
-                'message' => 'Reason updated successfully',
+                'message' => $message,
                 'data' => $reason
             ];
 
@@ -140,6 +168,7 @@ class ReasonService
             ];
         }
     }
+
 
     public function deleteReason($reasonId)
     {
@@ -153,11 +182,27 @@ class ReasonService
                     'data' => (object)[]
                 ];
             }
+
+            switch ($reason->type) {
+                case 1:
+                    $message = 'Exchange Reason Deleted Successfully';
+                    break;
+                case 2:
+                    $message = 'Return Reason Deleted Successfully';
+                    break;
+                case 3:
+                    $message = 'Cancel Reason Deleted Successfully';
+                    break;
+                default:
+                    $message = 'Reason Deleted Successfully';
+            }
+
+            // Delete the reason
             $reason->delete();
 
             return [
                 'status' => 'success',
-                'message' => 'Reason deleted successfully',
+                'message' => $message,
                 'data' => []
             ];
 
@@ -169,6 +214,7 @@ class ReasonService
             ];
         }
     }
+
 
 
 

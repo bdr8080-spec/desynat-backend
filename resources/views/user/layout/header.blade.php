@@ -449,38 +449,38 @@ use App\Models\UserCurrentLocation;
 
 
     <!-- Modal -->
- <div class="modal fade location" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- ✅ Hidden fields for lat/lng -->
-            <input type="hidden" id="lat" name="lat" value="{{@$userLocation->latitude}}">
-            <input type="hidden" id="lng" name="lng" value="{{@$userLocation->longitude}}">
-
-            <div class="modal-body">
-                <div class="form-group position-relative search w-100 mb-3">
-                    <input type="text" class="form-control" placeholder="Search address" />
-                    <i class="fa-solid fa-magnifying-glass"></i>
+    <div class="modal fade location" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Change Location</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <div>
-                    <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
-                </div>
+                <!-- ✅ Hidden fields for lat/lng -->
+                <input type="hidden" id="lat" name="lat" value="{{@$userLocation->latitude}}">
+                <input type="hidden" id="lng" name="lng" value="{{@$userLocation->longitude}}">
 
-                <div class="mt-3">
-                    <h5>Location</h5>
-                    <p id="locationUpdate"></p>
-                </div>
+                <div class="modal-body">
+                    <div class="form-group position-relative search w-100 mb-3">
+                        <input type="text" class="form-control" placeholder="Search address" />
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
 
-                <button class="customBtn saveCurrentAddress mt-3">Change Location</button>
+                    <div>
+                        <img src="https://staticmapmaker.com/img/google-placeholder.png" class="img-fluid" />
+                    </div>
+
+                    <div class="mt-3">
+                        <h5>Location</h5>
+                        <p id="locationUpdate"></p>
+                    </div>
+
+                    <button class="customBtn saveCurrentAddress mt-3">Change Location</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
