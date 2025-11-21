@@ -56,8 +56,13 @@ class SellerProductController extends Controller
 
             // product vartion start
             'variant_image' => ['required', 'array', new MatchArrayProductVariation],
-            'color_id' => ['required', 'array', 'exists:colors,id', new MatchArrayProductVariation],
-            'size_id' => ['required', 'array', 'exists:sizes,id', new MatchArrayProductVariation],
+            'color_id' => ['required', 'array', new MatchArrayProductVariation],
+            'size_id' => ['required', 'array', new MatchArrayProductVariation],
+            
+            'color_id.*' => ['required','distinct','exists:colors,id'],
+            'size_id.*' => ['required','exists:sizes,id','distinct'],
+            
+            
             'total_stock' => ['required', 'array', new MatchArrayProductVariation],
             'sku' => ['required', 'array', new MatchArrayProductVariation],
             'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
@@ -108,7 +113,8 @@ class SellerProductController extends Controller
 
        }
 
-
+    dd($request->all());
+    
 
  $request_data=(object) [
 'seller_id'=>$seller_id,

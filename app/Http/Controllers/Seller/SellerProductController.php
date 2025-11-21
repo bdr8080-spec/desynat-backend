@@ -462,6 +462,14 @@ public function view_product(){
 
 
 
+public function edit_product(){
+
+    return view('dealer.product.edit_product');
+
+}
+
+
+
 
 
     public function Inventory_Management(){
