@@ -222,7 +222,7 @@
                                                     </a>
 
 
-                                                    <span class="wishlist-btn"><i
+                                                    <span class="wishlist-btn"><i id="wishlistProduct{{ $item->id }}"
                                                             class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
                                                             onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
                                                 </div>

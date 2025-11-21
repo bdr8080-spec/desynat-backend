@@ -429,16 +429,17 @@ class UserManagementService
             if($wishlist){
                 $wishlist->delete();
                 $msg="Product remove from Wishlist";
+                $update_status=0;
             }else{
-                wishlist::create($data);
+               $wishlist= wishlist::create($data);
                 $msg="Product Add From Wishlist";
+                $update_status=1;
             }
-
           
             return [
                 'status'  => 'success',
                 'message' => $msg,
-                'data'    => (object)[]
+                'data'    => $update_status
             ];
     
         } catch (\Exception $e) {

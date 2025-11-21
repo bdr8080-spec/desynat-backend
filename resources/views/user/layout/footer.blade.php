@@ -570,7 +570,7 @@
              var id = val;
 
              $.ajax({
-                 url: "{{ url('user/AddOrRemove_wishlist') }}",
+                 url: "{{ url('user/addOremovewishlist') }}",
                  type: "get",
                  dataType: 'json',
                  data: {
@@ -585,10 +585,8 @@
                      if (data.status == 'success') {
 
                          // Show Toastr Notification
-                         if (data.data == '1') {
+                         if (data.data == 1) {
                              toastr.success(data.message);
-
-
 
                          } else {
                              toastr.error(data.message);
