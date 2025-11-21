@@ -51,7 +51,7 @@
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label class="mb-0">Vehicle Name</label>
-                                <input type="text" placeholder="Enter Vehicle Name" class="form-control mt-1" id="vehicle_name">
+                                <input type="text" placeholder="Enter Vehicle Name" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" class="form-control mt-1" id="vehicle_name">
                                 <div id="vehicle_name_error" class="text-danger small"></div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label class="mb-0">Vehicle Registration Number</label>
-                                <input type="text" placeholder="Enter Vehicle Registration Number" class="form-control mt-1" id="vehicle_reg">
+                                <input type="text" placeholder="Enter Vehicle Registration Number" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" class="form-control mt-1" id="vehicle_reg">
                                 <div id="vehicle_reg_error" class="text-danger small"></div>
                             </div>
                         </div>
