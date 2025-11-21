@@ -75,7 +75,8 @@
                                     <th class="no-sort">Added on</th>
                                     <th class="no-sort">Availability</th>
                                     <th class="no-sort">Status</th>
-                                    <th class="no-sort">View more details</th>
+                                    <th class="no-sort">
+                                        <a href="{{ route('seller.view_product') }}">View more details</a> </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,7 +124,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                            <a href="{{ route('seller.view_product') }}" class="eyebtn"><i class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
