@@ -65,8 +65,10 @@ class UserStoreController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
-
+       $user_id=$request->user()->id;
+      
        $request_data=(object)[
+        'user_id'=>$user_id,
         'store_id'=>$request->store_id,
         'search' =>$request->search,
         'sort_filter'=> $request->sort_filter

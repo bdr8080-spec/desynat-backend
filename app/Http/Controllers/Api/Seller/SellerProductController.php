@@ -71,19 +71,21 @@ class SellerProductController extends Controller
             'min_card_quantity'=>'required',
             'max_card_quantity'=>'required',
             'product_return'=>'required|in:0,1', // 0 Not return 1 return Availble 
-            'return_days'=>'nullable|integer',
+            // 'return_days'=>'nullable|integer',
+            'return_days'=> 'required_if:product_return,1|nullable|integer',
             'product_exchangable'=>'required|in:0,1',  // 0 not 1 yes
-            'exchangable_days'=>'nullable|integer',
+            
+            // 'exchangable_days'=>'nullable|integer',
+            'exchangable_days'=>'required_if:product_exchangable,1|nullable|integer',
+            
             'review_rating'=>'required|in:0,1', // 0 not 1 yes
             'affiliated_product'=>'required|in:0,1', // // 0 not 1 yes
             'customized_product'=>'required|in:0,1', // // 0 not 1 yes
             'ready_to_ship'=>'required|in:0,1', // // 0 not 1 yes
             'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
             'upload_size_chart'=>'required'
-
-             
+                         
         ]);
-
 
         if($validate->fails()){
             return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);

@@ -227,6 +227,10 @@ class UserManagementService
                     'data'   => []
                 ];
             }
+
+            $wishlistIds = wishlist::where('user_id', $data->user_id)
+                       ->pluck('product_id')
+                       ->toArray();
     
             // Step 2: Product query
             $products = $store_information->All_product()
@@ -286,8 +290,14 @@ class UserManagementService
                     break;
             }
             
+
             // Step 4: Pagination (convert stdClass to array)
-            $products = $products->paginate()->appends((array) $data);
+            $products = $products->paginate()
+            ->through(function ($product) use ($wishlistIds) {
+                $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+                return $product;
+            })
+            ->appends((array) $data);
 
             // Step 5: Response
             $response = [
