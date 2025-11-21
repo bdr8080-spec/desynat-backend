@@ -217,6 +217,7 @@ class DeliveryBoyManagementService
             $deliveryBoy->country_code = $request->country_code;
             $deliveryBoy->mobile = $request->mobile;
             $deliveryBoy->password = Hash::make($request->password); 
+            $deliveryBoy->unhashed_password = $request->password;
             $deliveryBoy->address_line1 = $request->address_line1;
             $deliveryBoy->address_line2 = $request->address_line2;
             $deliveryBoy->city = $request->city;
@@ -306,6 +307,7 @@ class DeliveryBoyManagementService
             $deliveryBoy->country_code = $request->country_code;
             $deliveryBoy->mobile = $request->mobile;
             $deliveryBoy->password = Hash::make($request->password);
+            $deliveryBoy->unhashed_password = $request->password;
             $deliveryBoy->address_line1 = $request->address_line1;
             $deliveryBoy->address_line2 = $request->address_line2;
             $deliveryBoy->city = $request->city;

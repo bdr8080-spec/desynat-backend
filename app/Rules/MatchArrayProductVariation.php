@@ -18,6 +18,29 @@ class MatchArrayProductVariation implements ValidationRule
 
         $data = request();
 
+        // check Required field
+        // $requiredFields = [
+        //     'variant_image',
+        //     'color_id',
+        //     'size_id',
+        //     'total_stock',
+        //     'sku',
+        //     'sku_threshold_value',
+        //     'actual_price',
+        //     'discount_type',
+        //     'discount_value',
+        //     'final_price'
+        // ];
+    
+        // foreach ($requiredFields as $field) {
+        //     if (!$data->has($field) || empty($data->$field)) {
+        //          $fail(strtoupper(str_replace('_', ' ', $field)) . ' field is required.');
+        //     }
+        // }
+
+
+
+
         $count1 = count($data->variant_image ?? []);
         $count2 = count($data->color_id ?? []);
         $count3 = count($data->size_id ?? []);

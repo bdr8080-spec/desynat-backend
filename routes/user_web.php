@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\UserStoreController;
 
 
 
@@ -36,13 +37,24 @@ use App\Http\Controllers\User\ProfileController;
    Route::get('/update-resend-otp', [ProfileController::class, 'updateResendOtp'])->name('updateResendOtp');
 
    Route::post('/save-current-location', [ProfileController::class, 'saveCurrentLocation'])->name('userSaveCurrentLocation');
+   
+   Route::match(['get','post'],'/store-details/{id}', [UserStoreController::class, 'store_details'])->name('user.store_details');
+
+   Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
+   
+
+
+
 
    });
 
 
-//  Route::match(['get', 'post'], '/route1', function () {
-//      return view('user.profile.index');
-// });
+ Route::match(['get', 'post'], '/route1', function () {
+     return view('user.category.index');
+});
+Route::match(['get', 'post'], '/route2', function () {
+     return view('user.category.store');
+});
 //  Route::match(['get', 'post'], '/route2', function () {
 //      return view('user.profile.changePassword');
 // });

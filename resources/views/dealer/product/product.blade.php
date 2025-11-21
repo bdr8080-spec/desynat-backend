@@ -27,6 +27,9 @@
         </ul>
     </div>
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <div class="tab-body-wapper">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-allproduct" role="tabpanel"
@@ -40,25 +43,39 @@
                                 <input type="search" class="form-control" placeholder="Search">
                             </div>
                         </div>
-                        <div class="search-filter">
-                            <div class="from-group">
-                                <select class="form-select form-control width-50" aria-label="Default select example">
-                                    <option selected>Filter by Category</option>
-                                    @foreach ($category as $item)
-                                        <option {{ $item->id }}>{{ $item->name }}</option>
-                                    @endforeach
 
-                                </select>
+                        <form method="GET" action="">
+
+                            <input type="hidden" name="type" value="0">
+
+                            <div class="search-filter">
+                                <div class="from-group">
+                                    <select class="form-select form-control width-50"
+                                        aria-label="Default select example" name="cargory_filter"
+                                        onchange="this.form.submit()">
+                                        <option value="">Filter by Category</option>
+                                        @foreach ($category as $item)
+                                            <option value="{{ $item->id }}"
+                                                @if (request()->type == 0 && request()->cargory_filter == $item->id) selected @endif>{{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="from-group">
+                                    <select class="form-select form-control width-50"
+                                        aria-label="Default select example" name="brand_filter"
+                                        onchange="this.form.submit()">
+                                        <option value="">Filter by brand</option>
+                                        @foreach ($brand as $item)
+                                            <option value="{{ $item->id }}"
+                                                @if (request()->type == 0 && request()->brand_filter == $item->id) selected @endif>
+                                                {{ $item->name_english }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="from-group">
-                                <select class="form-select form-control width-50" aria-label="Default select example">
-                                    <option selected>Filter by brand</option>
-                                    @foreach ($brand as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name_english }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+
+                        </form>
                     </div>
 
                     {{-- All Product show --}}
@@ -117,7 +134,7 @@
                                             <div class="d-flex justify-content-center">
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="switchCheckDefault"
+                                                        id="switchCheckDefault" rel="{{ $item->id }}"
                                                         @if ($item->product_active_status == 1) checked @endif>
                                                     <label class="form-check-label" for="switchCheckDefault"></label>
                                                 </div>
@@ -144,25 +161,39 @@
                                 <input type="search" class="form-control" placeholder="Search">
                             </div>
                         </div>
-                        <div class="search-filter">
-                            <div class="from-group">
-                                <select class="form-select form-control width-50" aria-label="Default select example">
-                                    <option selected>Filter by Category</option>
-                                    @foreach ($category as $item)
-                                        <option {{ $item->id }}>{{ $item->name }}</option>
-                                    @endforeach
+                        <form method="GET" action="">
 
-                                </select>
+                            <input type="hidden" name="type" value="1">
+
+                            <div class="search-filter">
+                                <div class="from-group">
+                                    <select class="form-select form-control width-50"
+                                        aria-label="Default select example" name="cargory_filter"
+                                        onchange="this.form.submit()">
+                                        <option value="">Filter by Category</option>
+                                        @foreach ($category as $item)
+                                            <option value="{{ $item->id }}"
+                                                @if (request()->type == 1 && request()->cargory_filter == $item->id) selected @endif>
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="from-group">
+                                    <select class="form-select form-control width-50"
+                                        aria-label="Default select example" name="brand_filter"
+                                        onchange="this.form.submit()">
+                                        <option value="">Filter by brand</option>
+                                        @foreach ($brand as $item)
+                                            <option value="{{ $item->id }}"
+                                                @if (request()->type == 1 && request()->brand_filter == $item->id) selected @endif>
+                                                {{ $item->name_english }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="from-group">
-                                <select class="form-select form-control width-50" aria-label="Default select example">
-                                    <option selected>Filter by brand</option>
-                                    @foreach ($brand as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name_english }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+
+                        </form>
                     </div>
 
                     {{-- // Active product List  --}}
@@ -219,7 +250,7 @@
                                             <div class="d-flex justify-content-center">
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" role="switch"
-                                                        id="switchCheckDefault"
+                                                        id="switchCheckDefault" rel="{{ $item->id }}"
                                                         @if ($item->product_active_status == 1) checked @endif>
                                                     <label class="form-check-label" for="switchCheckDefault"></label>
                                                 </div>
@@ -247,24 +278,39 @@
                                 <input type="search" class="form-control" placeholder="Search">
                             </div>
                         </div>
-                        <div class="search-filter">
-                            <div class="from-group">
-                                <select class="form-select form-control width-50" aria-label="Default select example">
-                                    <option selected>Filter by Category</option>
-                                    @foreach ($category as $item)
-                                        <option {{ $item->id }}>{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
+
+                        <form method="GET" action="">
+
+                            <input type="hidden" name="type" value="2">
+
+                            <div class="search-filter">
+                                <div class="from-group">
+                                    <select class="form-select form-control width-50"
+                                        aria-label="Default select example" name="cargory_filter"
+                                        onchange="this.form.submit()">
+                                        <option value="">Filter by Category</option>
+                                        @foreach ($category as $item)
+                                            <option value="{{ $item->id }}"
+                                                @if (request()->type == 2 && request()->cargory_filter == $item->id) selected @endif>{{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="from-group">
+                                    <select class="form-select form-control width-50"
+                                        aria-label="Default select example" name="brand_filter"
+                                        onchange="this.form.submit()">
+                                        <option value="">Filter by brand</option>
+                                        @foreach ($brand as $item)
+                                            <option value="{{ $item->id }}"
+                                                @if (request()->type == 2 && request()->brand_filter == $item->id) selected @endif>
+                                                {{ $item->name_english }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="from-group">
-                                <select class="form-select form-control width-50" aria-label="Default select example">
-                                    <option selected>Filter by brand</option>
-                                    @foreach ($brand as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name_english }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+
+                        </form>
                     </div>
 
                     <div class="table-responsive">
@@ -321,7 +367,8 @@
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" role="switch"
                                                         id="switchCheckDefault"
-                                                        @if ($item->product_active_status == 1) checked @endif>
+                                                        @if ($item->product_active_status == 1) checked @endif
+                                                        rel="{{ $item->id }}">
                                                     <label class="form-check-label" for="switchCheckDefault"></label>
                                                 </div>
                                             </div>
@@ -349,6 +396,69 @@
     </div>
 
 
+    <script>
+        $('body').on('click', '#switchCheckDefault', function() {
+            //alert('Hello');
+            var id = $(this).attr('rel');
+            //alert(id)
+            $.ajax({
+                url: "{{ url('seller/product-status-active-inactive') }}",
+                type: "get",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#loader').show()
+                },
+                success: function(data) {
+                    console.log(data.data)
+                    if (data.data.product_active_status == 1) {
+                        toastr.success(data.message);
 
+                    } else if (data.data.product_active_status === 0) {
+                        toastr.error(data.message);
+
+                    } else {
+                        toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+                    }
+
+                    setInterval(() => {
+                        window.location.reload();
+                    }, 1000);
+
+
+                },
+                error: function() {
+                    alert("Fail")
+                }
+            })
+        })
+    </script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // 1️⃣ Restore last active tab
+            let activeTab = localStorage.getItem("active_product_tab");
+            if (activeTab) {
+                let tabEl = document.querySelector(`[data-bs-target="${activeTab}"]`);
+                if (tabEl) {
+                    new bootstrap.Tab(tabEl).show();
+                }
+            }
+
+            // 2️⃣ Save clicked tab
+            document.querySelectorAll('[data-bs-toggle="pill"]').forEach(tabBtn => {
+                tabBtn.addEventListener("shown.bs.tab", function(e) {
+                    localStorage.setItem("active_product_tab", e.target.getAttribute(
+                        "data-bs-target"));
+                });
+            });
+
+        });
+    </script>
 
     @include('dealer.layout.footer');

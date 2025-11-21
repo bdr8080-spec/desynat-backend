@@ -165,7 +165,7 @@ class CommonController extends Controller
      // fetch get_size
      public function get_size(Request $request)
      {
-        $data = color::all();
+        $data = size::all();
         if ($data->isEmpty()) {
             return ApiResponse::generateResponse('success', 'No size found', [], 200);
         }

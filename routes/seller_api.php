@@ -53,14 +53,6 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     Route::get('/store_on_off', [SellerDashboardController::class,'store_on_off']);
 
-    Route::get('category',[CommonController::class, 'getCategories']);
-    Route::get('sub-category',[CommonController::class, 'getSubCategories']);
-    Route::get('all-brand',[CommonController::class, 'get_brand']);
-
-    Route::get('all-color',[CommonController::class, 'get_color']);
-    Route::get('all-size',[CommonController::class, 'get_size']);
-
-
     
     Route::post('add-product',[SellerProductController::class, 'add_product']);
         
@@ -73,6 +65,14 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::delete('product-delete',[SellerProductController::class, 'product_delete']);
 
 });
+
+
+Route::get('category',[CommonController::class, 'getCategories']);
+Route::get('sub-category',[CommonController::class, 'getSubCategories']);
+Route::get('all-brand',[CommonController::class, 'get_brand']);
+
+Route::get('all-color',[CommonController::class, 'get_color']);
+Route::get('all-size',[CommonController::class, 'get_size']);
 
 
 
