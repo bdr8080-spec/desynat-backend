@@ -82,6 +82,8 @@
                     </div>
                     <select class="form-select form-control" aria-label="Default select example" name="brand_id">
 
+                        <option value="">Select Brand</option>
+
                         @foreach ($brand as $item)
                             <option value="{{ $item->id }}">{{ $item->name_english }}</option>
                         @endforeach
@@ -1115,7 +1117,7 @@
 
                     var subcatgory_record = data.data;
 
-                    var htmlcontent = '';
+                    var htmlcontent = ' <option value="">Select SubCategory</option>';
 
                     subcatgory_record.forEach(function(item, val) {
                         htmlcontent +=
