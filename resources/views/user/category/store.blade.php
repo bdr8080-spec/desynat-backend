@@ -26,62 +26,83 @@
                         <h3>Filter</h3>
                         <span>Clear</span>
                     </div>
-                    <div class="form-group mt-4">
-                        <h5>Ratings</h5>
-                        <div class="form-check my-4">
-                            <input class="form-check-input mb-1" type="checkbox" value="" id="checkDefault">
-                            <label class="form-check-label" for="checkDefault">
-                                Upto 2 Star
-                            </label>
-                        </div>
-                        <div class="form-check my-4">
-                            <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                            <label class="form-check-label" for="checkChecked">
-                                Upto 3 Star
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <h5>Availability</h5>
-                        <div class="form-check my-4">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                            <label class="form-check-label" for="radioDefault1">
-                                Open
-                            </label>
-                        </div>
-                        <div class="form-check my-4">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Busy
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group delivery">
-                        <div class="form-check my-4">
-                            <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-                            <label class="form-check-label" for="checkDefault">
-                                Sortest Delivery time
-                            </label>
-                        </div>
-                        <div class="form-check my-4">
-                            <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                            <label class="form-check-label" for="checkChecked">
-                                Highest Sale
-                            </label>
-                        </div>
-                    </div>
-                    <button class="customBtn customBtn5 mt-5">Apply</button>
+                        <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
+                            <div class="form-group mt-4">
+                                <h5>Ratings</h5>
+
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mb-1" type="checkbox" 
+                                        value="2" id="rating2" name="rating[]"  {{ is_array(request()->rating) && in_array('2', request()->rating) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="rating2">
+                                        Upto 2 Star
+                                    </label>
+                                </div>
+
+                                <div class="form-check my-4">
+                                    <input class="form-check-input" type="checkbox" 
+                                        value="3" id="rating3" name="rating[]"  {{ is_array(request()->rating) && in_array('3', request()->rating) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="rating3">
+                                        Upto 3 Star
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <h5>Availability</h5>
+
+                                <div class="form-check my-4">
+                                    <input class="form-check-input" type="radio" 
+                                        name="availability" value="1" id="availability_open" {{request()->availability == '1' ? 'checked' : ''}}>
+                                    <label class="form-check-label" for="availability_open">
+                                        Open
+                                    </label>
+                                </div>
+
+                                <div class="form-check my-4">
+                                    <input class="form-check-input" type="radio" 
+                                        name="availability" value="0" id="availability_busy" {{request()->availability == '0' ? 'checked' : ''}}>
+                                    <label class="form-check-label" for="availability_busy">
+                                        Busy
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group delivery">
+                                <h5>Sort & Preference</h5>
+
+                                <div class="form-check my-4">
+                                    <input class="form-check-input" name="sort[]" type="checkbox" 
+                                        value="0" id="delivery_short" {{ is_array(request()->sort) && in_array('0', request()->sort) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="delivery_short">
+                                        Shortest Delivery Time
+                                    </label>
+                                </div>
+
+                                <div class="form-check my-4">
+                                    <input class="form-check-input" name="sort[]" type="checkbox" 
+                                        value="1" id="high_sale" {{ is_array(request()->sort) && in_array('1', request()->sort) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="high_sale">
+                                        Highest Sale
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button class="customBtn customBtn5 mt-5">Apply</button>
+                        </form>
                 </div>
             </div>
             <div class="col-lg-8">
                 <div class="categoryDetail_content">
-                    <div class="seArch">
-                        <div class="form-group position-relative search">
-                            <input type="text" class="form-control" placeholder="Search" />
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                    <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
+                        <div class="seArch">
+                            <div class="form-group position-relative search">
+                                <input type="text" class="form-control" placeholder="Search" name="search" />
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                            <button class="customBtn customBtn5">Search</button>
                         </div>
-                        <button class="customBtn customBtn5">Search</button>
-                    </div>
+                    </form>
+
                     <div class="row">
 
                         @forelse ($store_data as $item)

@@ -21,14 +21,20 @@ class UserStoreController extends Controller
 
 
     public function category_wise_store(Request $request,$id){
-        
+    
+
         $user_id=  $request->user()->id;
     
        $request_data=(object)[
         'category_id'=>$id,
-        'search'=>$request->search
+        'search'=>$request->search,
+        'rating'=>$request->rating,
+        'availability'=>$request->availability,
+        'shortest_delivery'=>$request->shortest_delivery,
+        'highest_sale'=>$request->highest_sale
        ];
        
+
        $store_data=$this->UserManagementService->getStoreWithCatgory($request_data);
 
        $store_data=$store_data['data'];
