@@ -227,6 +227,10 @@ class UserManagementService
                     'data'   => []
                 ];
             }
+
+            $wishlistIds = wishlist::where('user_id', $data->user_id)
+                       ->pluck('product_id')
+                       ->toArray();
     
             // Step 2: Product query
             $products = $store_information->All_product()
@@ -286,8 +290,14 @@ class UserManagementService
                     break;
             }
             
+
             // Step 4: Pagination (convert stdClass to array)
-            $products = $products->paginate()->appends((array) $data);
+            $products = $products->paginate()
+            ->through(function ($product) use ($wishlistIds) {
+                $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+                return $product;
+            })
+            ->appends((array) $data);
 
             // Step 5: Response
             $response = [
@@ -299,6 +309,53 @@ class UserManagementService
                 'status'  => 'success',
                 'message' => "single Store Information fetch Successfully",
                 'data'    => $response
+            ];
+    
+        } catch (\Exception $e) {
+    
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
+    public function singleproductView($request)
+    {
+        try {
+    
+            // Step 1: Find store
+            
+            $product_details = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+            ->where('id', $request->product_id)->first();
+
+    
+            // If store not found
+            if (!$product_details) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Product Found',
+                    'data'   => []
+                ];
+            }
+
+            $wishlistIds = wishlist::where('user_id', $request->user_id)
+            ->pluck('product_id')
+            ->toArray();
+
+
+            if($product_details){
+                $product_details->wishlist = in_array($product_details->id, $wishlistIds) ? 1 : 0;
+
+            }
+
+           
+            return [
+                'status'  => 'success',
+                'message' => "Product Information fetch Successfully",
+                'data'    => $product_details
             ];
     
         } catch (\Exception $e) {

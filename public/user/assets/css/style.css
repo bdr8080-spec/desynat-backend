@@ -1180,9 +1180,8 @@ h3.mid-headng{
     border-radius: 12px;
     padding: 20px;
     margin-top: -50px;
-}
-.img-contenar{
-    
+    z-index: 1;
+    position: relative;
 }
 .storeClient_profile_img{
     width: 100px;
