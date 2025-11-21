@@ -39,7 +39,13 @@ use App\Http\Controllers\User\UserStoreController;
    Route::post('/save-current-location', [ProfileController::class, 'saveCurrentLocation'])->name('userSaveCurrentLocation');
    
    Route::match(['get','post'],'/store-details/{id}', [UserStoreController::class, 'store_details'])->name('user.store_details');
+
+   Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
    
+
+
+
+
    });
 
 
