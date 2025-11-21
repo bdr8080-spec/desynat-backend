@@ -50,6 +50,8 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/view-product',[SellerProductController::class,'view_product'])->name('seller.view_product');
 
+    route::Match(['get','post'],'/edit-product',[SellerProductController::class,'edit_product'])->name('seller.edit-product');
+
     // M3 Milestone Work
     
     route::Match(['get','post'],'/web_store_on_off',[WebSellerDashboard::class,'web_store_on_off'])->name('seller.web_store_on_off');
