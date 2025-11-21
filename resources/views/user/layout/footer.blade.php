@@ -84,6 +84,29 @@
          </div>
      </footer>
 
+     <!-- WhatsApp Status Viewer -->
+    <div class="status-viewer" id="statusViewer">
+        
+        <!-- Multiple Progress Bars -->
+        <div id="progressContainer" class="progress-container"></div>
+
+        <span class="status-close" onclick="closeStatus()">&times;</span>
+
+        <img id="statusImage" class="status-img" />
+
+        <!-- Tap Zones -->
+        <div class="status-left" onclick="showPrev()">
+            <span>
+                <i class="fa-solid fa-chevron-left"></i>
+            </span>
+        </div>
+        <div class="status-right" onclick="showNext()">
+            <span>
+                <i class="fa-solid fa-chevron-right"></i>
+            </span>
+        </div>
+    </div>
+
 
      <script src="{{ asset('user/assets/js/custom.js') }}"></script>
      <script src="{{ asset('user/assets/js/bootstrap.bundle.min.js') }}"></script>

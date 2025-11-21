@@ -1414,6 +1414,129 @@ h3.mid-headng{
     left: auto;
 }
 
+.slider-wrap{
+    position:relative;
+    padding:22px 0 0px 0;
+  }
+
+  /* Price track area */
+  .track {
+    position:relative;
+    height:28px;
+    display:flex;
+    align-items:center;
+  }
+
+  /* Visual track line (background) */
+  .track-line{
+    position:absolute;
+    left:28px;
+    right:28px;
+    height:8px;
+    border-radius:6px;
+    background: linear-gradient(90deg, var(--track-start), var(--track-end));
+    opacity:0.95;
+  }
+
+  /* left decorative circle */
+  .left-dot{
+        /* position: absolute; */
+    width:47.4px;
+    height:42px;
+    border-radius:50%;
+    background: var(--gradient-color6);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.06) inset;
+    z-index:10;
+    /* transform:translateX(-8px); */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  /* the visible big thumb */
+  input[type="range"]{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    margin:0; /* to avoid overlapping edge dots */
+    background:transparent;
+    position:relative;
+    z-index:3;
+    height:8px;
+    outline:none;
+    /* place it over the track */
+  }
+
+  /* Track (invisible because we draw a custom track) */
+  input[type="range"]::-webkit-slider-runnable-track{
+    background:transparent;
+    height:8px;
+  }
+  input[type="range"]::-moz-range-track{
+    background:transparent;
+    height:8px;
+  }
+
+  /* Thumb */
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background: var(--gradient-color6);
+    border:0;
+    box-shadow: 0 6px 10px rgba(0,0,0,0.12);
+    margin-top:-20px; /* align vertically with track */
+    cursor:grab;
+    transition: transform .12s ease;
+  }
+  input[type="range"]:active::-webkit-slider-thumb{ cursor:grabbing; transform:scale(1.02); }
+
+  /* Firefox thumb */
+  input[type="range"]::-moz-range-thumb{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:0;
+    background: radial-gradient(circle at 35% 30%, #f0d7bf 0 12%, var(--thumb) 30%, #6b3e1a 100%);
+    /* box-shadow: 0 6px 10px rgba(0,0,0,0.12); */
+    cursor:grab;
+  }
+
+  /* tick marks & labels */
+  .ticks{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:0;
+    margin-top:28px;
+    align-items:center;
+    justify-content: space-between;
+  }
+  .ticks .tick{
+    text-align:center;
+    font-size:20px;
+    font-weight:600;
+  }
+
+  .value-bubble{
+    position:absolute;
+    z-index:4;
+    left:50%;
+    transform:translate(-50%,-120%);
+    top:0;
+    font-weight:700;
+    background:transparent;
+    pointer-events:none;
+    font-size:18px;
+  }
+
+  /* make it responsive */
+  @media (max-width:620px){
+    .container{ padding:20px 20px;}
+    .ticks .tick{ font-size:16px; }
+  }
+
 
 /* index end */
 
