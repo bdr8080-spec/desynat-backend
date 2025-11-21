@@ -75,134 +75,6 @@
             <div class="card p-3 mt-4">
                 <div class="card-body">
                     <!-- Start Form -->
-                    <!-- <form id="deliveryBoyForm" enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="upload-title text-center">
-                                    Upload Profile Image
-                                </div>
-
-                                <div class="upload-new text-center">
-                                    <label for="profileUpload" class="upload-box">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-                                            id="profileUploadIcon" class="upload-icon" />
-                                        <div class="upload-text">Upload Profile Image</div>
-                                        <input type="file" id="profileUpload" name="profile_pic" hidden accept="image/*" />
-                                        <img id="profilePreview" class="preview-image" />
-                                    </label>
-                                    <span class="text-danger" id="profile_image_error"></span>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="mt-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Full Name</label>
-                                        <span class="text-muted" style="font-size: 12px;">In English</span>
-                                    </div>
-                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1" name="full_name_english" />
-                                    <span class="text-danger" id="full_name_en_error"></span>
-                                </div>
-
-                                <div class="mt-3">
-                                    <label>Email-id</label>
-                                    <input type="email" placeholder="Enter Email-Id" class="form-control" name="email" />
-                                    <span class="text-danger" id="email_error"></span>
-                                </div>
-
-                                <div class="mt-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 01</label>
-                                    </div>
-
-                                    <div class="position-relative mt-1">
-                                        <input type="text" class="form-control" name="address_line1" placeholder="Enter Address Line 01" />
-                                        <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
-                                            style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;">
-                                        </i>
-                                    </div>
-                                    <span class="text-danger" id="address_line1_error"></span>
-                                </div>
-
-                                <div class="mt-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">City</label>
-                                    </div>
-                                    <input type="text" name="city" placeholder="Enter City" class="form-control mt-1" />
-                                    <span class="text-danger" id="city_error"></span>
-                                </div>
-
-                                <div class="mt-3 position-relative">
-                                    <label>Password</label>
-                                    <input type="password" id="password" class="form-control" name="password" placeholder="Enter password" />
-                                    <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
-                                        style="right: 15px;  cursor: pointer;"></i>
-                                    <span class="text-danger" id="password_error"></span>
-                                </div>
-
-                                <div class="mt-3">
-                                    <label>Select Zone</label>
-                                    <select class="form-select" name="zone_id">
-                                        <option value="">Select Zone</option>
-                                        @foreach($zones as $zone)
-                                            <option value="{{ $zone->id }}">{{ $zone->name_english }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger" id="zone_error"></span>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="mt-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Full Name</label>
-                                        <span class="text-muted" style="font-size: 12px;">In Arabic</span>
-                                    </div>
-                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1" name="full_name_arabic" />
-                                    <span class="text-danger" id="full_name_ar_error"></span>
-                                </div>
-
-                                <div class="mt-3 position-relative mobile-field">
-                                    <input type="hidden" id="country_code" name="country_code">
-                                    <input type="hidden" id="let" name="let">
-                                    <input type="hidden" id="long" name="long">
-                                    <label>Mobile Number</label>
-                                    <input id="phone" type="tel" class="form-control" name="mobile" placeholder='' />
-                                    <span class="text-danger" id="mobile_error"></span>
-                                </div>
-
-                                <div class="mt-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 02</label>
-                                    </div>
-                                    <div class="position-relative mt-1">
-                                        <input type="text" class="form-control" name="address_line2" placeholder="Enter Address Line 02" />
-                                    </div>
-                                    <span class="text-danger" id="address_line2_error"></span>
-                                </div>
-
-                                <div class="mt-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">State</label>
-                                    </div>
-                                    <input type="text" name="state" placeholder="Enter State" class="form-control mt-1" />
-                                    <span class="text-danger" id="state_error"></span>
-                                </div>
-
-                                <div class="mt-3 position-relative">
-                                    <label>Confirm Password</label>
-                                    <input type="password" id="confirmPassword" class="form-control" name="confirm_password"
-                                        placeholder="Enter Confirm password" />
-                                    <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
-                                        style="right: 15px;  cursor: pointer;"></i>
-                                    <span class="text-danger" id="confirm_password_error"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-4">
-                            <button type="submit" class="btn btn-dark customBtn">Next</button>
-                        </div>
-                    </form> -->
                     <form id="deliveryBoyForm" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-lg-12">
@@ -621,271 +493,9 @@ document.querySelector(".setup-done.button").addEventListener("click", function(
 
 <!-- reg1 validation -->
 
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-
-    // ===========================
-    // IMAGE PREVIEW + VALIDATION
-    // ===========================
-    const profileUpload = document.getElementById('profileUpload');
-    const profilePreview = document.getElementById('profilePreview');
-    const profileImageError = document.getElementById('profile_image_error');
-
-    profileUpload.addEventListener('change', function() {
-        const file = this.files[0];
-
-        // Reset previous state
-        profileImageError.innerText = '';
-        profileImageError.style.display = 'none';
-        profilePreview.src = '';
-        profilePreview.style.display = 'none';
-        document.getElementById('profileUploadIcon').style.display = 'block';
-
-        if (!file) return;
-
-        // Validate file type
-        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-        if (!allowedTypes.includes(file.type)) {
-            profileImageError.innerText = "Only JPG, JPEG, or PNG images are allowed.";
-            profileImageError.style.display = 'block';
-            this.value = '';
-            return;
-        }
-
-        // Validate file size (max 4MB)
-        const maxSize = 4 * 1024 * 1024;
-        if (file.size > maxSize) {
-            profileImageError.innerText = "Image size must be less than 4MB.";
-            profileImageError.style.display = 'block';
-            this.value = '';
-            return;
-        }
-
-        // Show preview
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            profilePreview.src = e.target.result;
-            profilePreview.style.display = 'block';
-            document.getElementById('profileUploadIcon').style.display = 'none';
-        };
-        reader.readAsDataURL(file);
-    });
-
-    // ===========================
-    // FORM SUBMISSION
-    // ===========================
-    const form = document.getElementById('deliveryBoyForm');
-
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Clear previous errors
-        const errorSpans = form.querySelectorAll('.text-danger, .text-success');
-        errorSpans.forEach(span => {
-            span.innerText = '';
-            span.style.display = 'none';
-        });
-
-        let hasError = false;
-
-        // Required fields
-        const fields = [
-            {name: 'profile_pic', errorId: 'profile_image_error', message: 'Please upload profile image'},
-            {name: 'full_name_english', errorId: 'full_name_en_error', message: 'Please enter full name (English)'},
-            {name: 'full_name_arabic', errorId: 'full_name_ar_error', message: 'Please enter full name (Arabic)'},
-            {name: 'email', errorId: 'email_error', message: 'Please enter email'},
-            {name: 'mobile', errorId: 'mobile_error', message: 'Please enter mobile number'},
-            {name: 'address_line1', errorId: 'address_line1_error', message: 'Please enter address line 1'},
-            {name: 'address_line2', errorId: 'address_line2_error', message: 'Please enter address line 2'},
-            {name: 'city', errorId: 'city_error', message: 'Please enter city'},
-            {name: 'state', errorId: 'state_error', message: 'Please enter state'},
-            {name: 'password', errorId: 'password_error', message: 'Please enter password'},
-            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please confirm password'},
-            {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
-        ];
-
-        fields.forEach(field => {
-            const input = form.querySelector(`[name="${field.name}"]`);
-
-            if (field.name === 'profile_pic') {
-                if (input.files.length === 0) {
-                    const errorSpan = document.getElementById(field.errorId);
-                    errorSpan.innerText = field.message;
-                    errorSpan.style.display = 'block';
-                    hasError = true;
-                }
-            } else if (!input.value.trim()) {
-                const errorSpan = document.getElementById(field.errorId);
-                errorSpan.innerText = field.message;
-                errorSpan.style.display = 'block';
-                hasError = true;
-            }
-        });
-
-        // Password validation
-        const password = form.querySelector('[name="password"]').value;
-        const confirmPassword = form.querySelector('[name="confirm_password"]').value;
-
-        if (password) {
-            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-            if (!passwordPattern.test(password)) {
-                const ps = document.getElementById('password_error');
-                ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
-                ps.style.display = 'block';
-                hasError = true;
-            }
-        }
-
-        if (confirmPassword && confirmPassword !== password) {
-            const cps = document.getElementById('confirm_password_error');
-            cps.innerText = "Confirm password does not match.";
-            cps.style.display = 'block';
-            hasError = true;
-        }
-
-        if (hasError) return;
-
-        const formData = new FormData(form);
-
-        // Correct AJAX call
-        fetch('/admin/store_reg1', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                "X-CSRF-TOKEN": '{{ csrf_token() }}'
-            }
-        })
-        .then(res => res.json())
-        .then(response => {
-
-            // SUCCESS CASE
-            if (response.success === true) {
-                form.reset();
-                profilePreview.src = '';
-                profilePreview.style.display = 'none';
-                document.getElementById('profileUploadIcon').style.display = 'block';
-
-                window.location.href = "{{ route('admin.deliveryboy_reg_step2') }}";
-            }
-
-            // ERROR CASE
-            if (response.errors) {
-                for (const key in response.errors) {
-                    const errorSpan = document.getElementById(key + '_error');
-                    if (errorSpan) {
-                        errorSpan.innerText = response.errors[key][0];
-                        errorSpan.style.display = 'block';
-                    }
-                }
-            }
-        })
-        .catch(err => {
-            console.error('Error:', err);
-            alert('Something went wrong.');
-        });
-    });
-
-    // ===========================
-    // REMOVE ERROR ON INPUT
-    // ===========================
-    const allInputs = form.querySelectorAll('input, select');
-    allInputs.forEach(input => {
-        input.addEventListener('input', function() {
-            const err = document.getElementById(this.name + '_error');
-            if (err) {
-                err.innerText = '';
-                err.style.display = 'none';
-            }
-        });
-        input.addEventListener('change', function() {
-            const err = document.getElementById(this.name + '_error');
-            if (err) {
-                err.innerText = '';
-                err.style.display = 'none';
-            }
-        });
-    });
-
-    // ===========================
-    // REAL-TIME MOBILE + EMAIL
-    // ===========================
-    function checkAvailability(url, value, callback) {
-        fetch(url + '?value=' + encodeURIComponent(value))
-        .then(res => res.json())
-        .then(callback)
-        .catch(err => console.error(err));
-    }
-
-    // MOBILE
-    const mobileInput = document.querySelector('[name="mobile"]');
-    mobileInput.addEventListener('input', function() {
-        const mobileError = document.getElementById('mobile_error');
-        const value = this.value.trim();
-
-        if (value.length < 8) {
-            mobileError.innerText = "Minimum 8 digits required.";
-            mobileError.classList.add('text-danger');
-            mobileError.style.display = 'block';
-            return;
-        }
-
-        if (value.length > 15) {
-            mobileError.innerText = "Maximum 15 digits.";
-            mobileError.classList.add('text-danger');
-            mobileError.style.display = 'block';
-            return;
-        }
-
-        checkAvailability('/admin/check-mobile', value, function(data) {
-            if (data.exists) {
-                mobileError.innerText = "This number is already registered.";
-                mobileError.classList.add('text-danger');
-            } else {
-                mobileError.innerText = "Mobile number available.";
-                mobileError.classList.remove('text-danger');
-                mobileError.classList.add('text-success');
-            }
-            mobileError.style.display = 'block';
-        });
-    });
-
-    // EMAIL
-    const emailInput = document.querySelector('[name="email"]');
-    emailInput.addEventListener('input', function() {
-        const emailError = document.getElementById('email_error');
-        const value = this.value.trim();
-
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!pattern.test(value)) {
-            emailError.innerText = "Invalid email format.";
-            emailError.classList.add('text-danger');
-            emailError.style.display = 'block';
-            return;
-        }
-
-        checkAvailability('/admin/check-email', value, function(data) {
-            if (data.exists) {
-                emailError.innerText = "Email already registered.";
-                emailError.classList.add('text-danger');
-            } else {
-                emailError.innerText = "Email available.";
-                emailError.classList.remove('text-danger');
-                emailError.classList.add('text-success');
-            }
-            emailError.style.display = 'block';
-        });
-    });
-
-});
-</script> -->
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    // ===========================
-    // IMAGE PREVIEW + VALIDATION
-    // ===========================
     const profileUpload = document.getElementById('profileUpload');
     const profilePreview = document.getElementById('profilePreview');
     const profileImageError = document.getElementById('profile_image_error');
@@ -928,9 +538,6 @@ document.addEventListener("DOMContentLoaded", function() {
         reader.readAsDataURL(file);
     });
 
-    // ===========================
-    // FORM SUBMISSION
-    // ===========================
     const form = document.getElementById('deliveryBoyForm');
 
     form.addEventListener('submit', function(e) {
@@ -970,12 +577,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (input.files.length === 0 && (!profilePreview.src || profilePreview.src.trim() === '')) {
                     const errorSpan = document.getElementById(field.errorId);
                     errorSpan.innerText = field.message;
+                    errorSpan.classList.add('text-danger');
                     errorSpan.style.display = 'block';
                     hasError = true;
                 }
             } else if (!input.value.trim()) {
                 const errorSpan = document.getElementById(field.errorId);
                 errorSpan.innerText = field.message;
+                errorSpan.classList.add('text-danger');
                 errorSpan.style.display = 'block';
                 hasError = true;
             }
@@ -1044,9 +653,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // ===========================
-    // REMOVE ERROR ON INPUT
-    // ===========================
     const allInputs = form.querySelectorAll('input, select');
     allInputs.forEach(input => {
         input.addEventListener('input', function() {
@@ -1067,9 +673,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // ===========================
-    // REAL-TIME MOBILE + EMAIL
-    // ===========================
     function checkAvailability(url, value, callback) {
         fetch(url + '?value=' + encodeURIComponent(value))
         .then(res => res.json())
