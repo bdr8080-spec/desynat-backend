@@ -104,7 +104,7 @@
                                         <label class="mb-0">Full Name</label>
                                         <span class="text-muted" style="font-size: 12px;">In English</span>
                                     </div>
-                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1"
+                                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" placeholder="Enter Full Name" class="form-control mt-1"
                                         name="full_name_english" value="{{ $step1Data['full_name_english'] ?? '' }}" />
                                     <span class="text-danger" id="full_name_en_error"></span>
                                 </div>
@@ -135,7 +135,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <label class="mb-0">City</label>
                                     </div>
-                                    <input type="text" name="city" placeholder="Enter City" class="form-control mt-1"
+                                    <input type="text" name="city" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="Enter City" class="form-control mt-1"
                                         value="{{ $step1Data['city'] ?? '' }}" />
                                     <span class="text-danger" id="city_error"></span>
                                 </div>
@@ -169,7 +169,7 @@
                                         <label class="mb-0">Full Name</label>
                                         <span class="text-muted" style="font-size: 12px;">In Arabic</span>
                                     </div>
-                                    <input type="text" placeholder="Enter Full Name" class="form-control mt-1"
+                                    <input type="text" placeholder="Enter Full Name" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control mt-1"
                                         name="full_name_arabic" value="{{ $step1Data['full_name_arabic'] ?? '' }}" />
                                     <span class="text-danger" id="full_name_ar_error"></span>
                                 </div>
@@ -179,7 +179,7 @@
                                     <input type="hidden" id="let" name="let" value="{{ $step1Data['let'] ?? '' }}">
                                     <input type="hidden" id="long" name="long" value="{{ $step1Data['long'] ?? '' }}">
                                     <label>Mobile Number</label>
-                                    <input id="phone" type="tel" class="form-control" name="mobile"
+                                    <input id="phone" type="tel" class="form-control" name="mobile" oninput="this.value = this.value.replace(/[^0-9]/g,'').replace(/^\s+/,'')"
                                         value="{{ $step1Data['mobile'] ?? '' }}" placeholder='' />
                                     <span class="text-danger" id="mobile_error"></span>
                                 </div>
@@ -200,7 +200,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <label class="mb-0">State</label>
                                     </div>
-                                    <input type="text" name="state" placeholder="Enter State" class="form-control mt-1"
+                                    <input type="text" name="state" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="Enter State" class="form-control mt-1"
                                         value="{{ $step1Data['state'] ?? '' }}" />
                                     <span class="text-danger" id="state_error"></span>
                                 </div>
