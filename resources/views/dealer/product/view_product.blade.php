@@ -120,7 +120,12 @@
 
         </div>
         <div class="col-lg-6 col-xxl-6">
+            <div style="float-right justify-content-end" class=" float-end justify-content-end">
+                <a href="{{ route('seller.Add_product') }}" >
+                <img src="{{asset('dealer/assets/img/edit2.png')}}" class="" ></a>
+                <img src="{{asset('dealer/assets/img/delete2.png')}}" class="">
 
+            </div>
             <h4 class="fw-semibold">Levies</h4>
             <p class="text-muted mb-1">Silk Blend Heavy Sequence Work Co-Ord (Set of 3)</p>
             <p class="text-muted">Abayas (women)</p>
@@ -209,6 +214,7 @@
     </div>
     <div class="row">
         <div class="col-lg-6 col-xxl-6">
+
             <div class="container my-4">
                 <div class="desc-box p-4 rounded-4">
                     <h5 class="fw-semibold">Description</h5>
