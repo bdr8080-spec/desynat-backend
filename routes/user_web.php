@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\UserStoreController;
 
 
 
@@ -36,7 +37,9 @@ use App\Http\Controllers\User\ProfileController;
    Route::get('/update-resend-otp', [ProfileController::class, 'updateResendOtp'])->name('updateResendOtp');
 
    Route::post('/save-current-location', [ProfileController::class, 'saveCurrentLocation'])->name('userSaveCurrentLocation');
-
+   
+   Route::match(['get','post'],'/store-details/{id}', [UserStoreController::class, 'store_details'])->name('user.store_details');
+   
    });
 
 

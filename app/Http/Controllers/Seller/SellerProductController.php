@@ -449,11 +449,6 @@ $request_data=(object) [
   }
 
 
-
-
-
-
-
 public function view_product(){
 
     return view('dealer.product.view_product');
