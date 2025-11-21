@@ -19,6 +19,25 @@ class UserStoreController extends Controller
            
     }
 
+
+    public function category_wise_store(Request $request,$id){
+        
+        $user_id=  $request->user()->id;
+    
+       $request_data=(object)[
+        'category_id'=>$id,
+        'search'=>$request->search
+       ];
+       
+       $store_data=$this->UserManagementService->getStoreWithCatgory($request_data);
+
+       $store_data=$store_data['data'];
+       
+       return view('user.category.store',compact('store_data'));
+
+    }
+
+
     public function store_details(Request $request ,$id){
 
         $validate = Validator::make(['id'=>$id], [
