@@ -170,7 +170,7 @@
                             <td>0</td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
-                                    <a class="table-button" href="{{route('admin.edit_deliveryboy_step1')}}"><i  class="bi bi-pencil-square"></i></a>
+                                    <a class="table-button" href="{{ route('admin.edit_deliveryboy_step1', ['id' => $deliveryBoy['id']]) }}"><i  class="bi bi-pencil-square"></i></a>
 
                                     <a href="javascript:void(0);" class="table-button text-danger deleteDeliveryBoy"
                                         data-id="{{ $deliveryBoy['id']  }}">

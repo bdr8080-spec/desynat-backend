@@ -46,7 +46,11 @@ class UserManagementService
 
             if (!empty($request->search)) {
                 $search = $request->search;
-                $query->where('full_name', 'like', "%{$search}%");
+                $query->where(function($query) use ($search) {
+                    $query->where('full_name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('mobile', 'like', "%{$search}%");
+                });
             }
 
             $user_details = $query->orderBy('id', 'desc')->paginate($limit);
