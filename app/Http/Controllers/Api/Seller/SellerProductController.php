@@ -220,7 +220,7 @@ $request_data=(object) [
   
 
 
-public function single_product_details(Request $request){
+public function seller_single_product_details(Request $request){
 
 
 $validate = Validator::make($request->all(), [               

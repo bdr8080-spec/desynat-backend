@@ -307,10 +307,38 @@ $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('pr
 
 public function single_product_details_fetch($request){
         
-    $product_data=  product::with('product_specifications','product_variants.color')->where('id',$request->product_id)->first();
+    $product_data=  product::with('brand','category','product_specifications','product_variants.color','product_variants.size')->where('id',$request->product_id)->first();
     
     if (!$product_data) {
         return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];
+    }
+
+    $new_color=[];
+
+    foreach($product_data->product_variants as $key1=>$val){
+
+
+      $new_data= [
+        'color'=>$val->color->hex_code,
+        'size'=>$val->size->name,
+        'actual_price'=>$val->actual_price,
+        'discount_type'=>$val->discount_type,
+        'discount_value'=>$val->discount_value,
+        'final_price'=>$val->final_price,
+      ];
+
+      if (!isset($new_color[$val->color_id])) {
+        $new_color[$val->color_id] = [];
+    }
+
+    $new_color[$val->color_id][] = $new_data;  
+ 
+    }
+
+    if($product_data){
+
+    $product_data->ColorPriceCombination=$new_color;
+
     }
 
           

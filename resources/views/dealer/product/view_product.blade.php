@@ -1,80 +1,80 @@
 @include('dealer.layout.header')
 
 <style>
-.main-img {
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-}
+    .main-img {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+    }
 
-.thumb-img {
-    width: 65px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: 0.3s;
-}
+    .thumb-img {
+        width: 65px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: 0.3s;
+    }
 
-.thumb-img:hover {
-    border-color: #7c7c7c;
-}
-
-
-
-.color-box {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 2px solid transparent;
-}
-
-.size-btn {
-    padding: 6px 16px;
-    border: 1px solid #ddd;
-    background: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.size-btn:hover {
-    border-color: #000;
-}
-
-.size-btn.disabled {
-    opacity: 0.4;
-    pointer-events: none;
-}
-
-.text-brown {
-    color: #8a4f2d;
-}
+    .thumb-img:hover {
+        border-color: #7c7c7c;
+    }
 
 
 
-.desc-box {
+    .color-box {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
 
-    border: 1px solid #e5e5e5;
+    .size-btn {
+        padding: 6px 16px;
+        border: 1px solid #ddd;
+        background: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+    }
 
-    background: #fff;
+    .size-btn:hover {
+        border-color: #000;
+    }
 
-}
+    .size-btn.disabled {
+        opacity: 0.4;
+        pointer-events: none;
+    }
 
-.spec-list li {
+    .text-brown {
+        color: #8a4f2d;
+    }
 
-    margin-bottom: 10px;
 
-    font-size: 15px;
 
-}
+    .desc-box {
+
+        border: 1px solid #e5e5e5;
+
+        background: #fff;
+
+    }
+
+    .spec-list li {
+
+        margin-bottom: 10px;
+
+        font-size: 15px;
+
+    }
 </style>
 
 <section class="section dashboard container">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between">
-        <div class="title24"><i class="bi bi-chevron-left"></i> Product code- 2103
+        <div class="title24"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
         </div>
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
@@ -100,71 +100,87 @@
 
             <!-- Main Image -->
             <div class="main-img-container mb-3">
-                <img id="mainImage" src="{{asset('dealer/assets/img/image33.png')}}" class="img-fluid"
+                <img id="mainImage" src="{{ asset('dealer/assets/img/image33.png') }}" class="img-fluid"
                     class="img-fluid rounded main-img" alt="">
-                <!-- <img src="{{asset('user/assets/images/categorie1.png')}}" class="img-fluid" /> -->
+                <!-- <img src="{{ asset('user/assets/images/categorie1.png') }}" class="img-fluid" /> -->
             </div>
 
             <div class="d-flex justify-content-center gap-2 mt-3">
 
-                <img src="{{asset('dealer/assets/img/image33.png')}}" class="thumb-img" onclick="changeImage(this.src)">
+                <img src="{{ asset('dealer/assets/img/image33.png') }}" class="thumb-img"
+                    onclick="changeImage(this.src)">
 
                 <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="thumb-img"
                     onclick="changeImage(this.src)">
 
-                <img src="{{asset('dealer/assets/img/image33.png')}}" class="thumb-img" onclick="changeImage(this.src)">
+                <img src="{{ asset('dealer/assets/img/image33.png') }}" class="thumb-img"
+                    onclick="changeImage(this.src)">
 
-                <img src="{{asset('dealer/assets/img/image33.png')}}" class="thumb-img" onclick="changeImage(this.src)">
+                <img src="{{ asset('dealer/assets/img/image33.png') }}" class="thumb-img"
+                    onclick="changeImage(this.src)">
 
             </div>
 
         </div>
         <div class="col-lg-6 col-xxl-6">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
-                <a href="{{ route('seller.Add_product') }}" >
-                <img src="{{asset('dealer/assets/img/edit2.png')}}" class="" ></a>
-                <img src="{{asset('dealer/assets/img/delete2.png')}}" class="">
+                <a href="{{ route('seller.Add_product') }}">
+                    <img src="{{ asset('dealer/assets/img/edit2.png') }}" class=""></a>
+                <img src="{{ asset('dealer/assets/img/delete2.png') }}" class="">
 
             </div>
-            <h4 class="fw-semibold">Levies</h4>
-            <p class="text-muted mb-1">Silk Blend Heavy Sequence Work Co-Ord (Set of 3)</p>
-            <p class="text-muted">Abayas (women)</p>
+            <h4 class="fw-semibold">{{ $product->brand->name_english }}</h4>
+            <p class="text-muted mb-1">{{ $product->product_name_en }}</p>
+            <p class="text-muted">{{ $product->category->name }}</p>
 
             <div class="d-flex align-items-center mb-2">
                 <span class="text-warning fs-5">★★★★☆</span>
-                <span class="ms-2 text-muted">(123K)</span>
+                <span class="ms-2 text-muted">(1K)</span>
             </div>
 
-            <div class="d-flex align-items-center mb-1">
+            {{-- <div class="d-flex align-items-center mb-1">
                 <h4 class="fw-bold text-dark me-2">239 KD</h4>
                 <del class="text-muted me-2">239 KD</del>
                 <span class="text-danger fw-semibold">20% off</span>
-            </div>
+            </div> --}}
             <p class="text-success small">inclusive of all taxes</p>
 
             <hr>
 
             <h6 class="fw-semibold mb-2">More Color</h6>
             <div class="d-flex gap-2 mb-4">
-
-                <div class="color-box border border-2 border-warning" style="background:#efe3c4"></div>
-                <div class="color-box" style="background:#8ea6ff"></div>
-                <div class="color-box" style="background:#c79aff"></div>
-                <div class="color-box" style="background:#ff6f99"></div>
-
+                <div class="color-box border border-2 border-warning" style="background:#efe3c4" data-target="color1">
+                </div>
+                <div class="color-box" style="background:#8ea6ff" data-target="color2"></div>
+                <div class="color-box" style="background:#c79aff" data-target="color3"></div>
+                <div class="color-box" style="background:#ff6f99" data-target="color4"></div>
             </div>
+
 
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h6 class="fw-semibold">Available Size</h6>
                 <a href="#" class="text-brown fw-semibold text-decoration-none">Size Guide</a>
             </div>
 
-            <div class="d-flex gap-2 mb-4">
-                <button class="size-btn">S</button>
-                <button class="size-btn disabled">M</button>
-                <button class="size-btn">L</button>
-                <button class="size-btn">XL</button>
-            </div>
+
+            @foreach ($product['ColorPriceCombination'] as $item)
+                <div id="color1" class="color-section">
+                    <div class="d-flex align-items-center mb-1">
+                        <h4 class="fw-bold text-dark me-2">239 KD</h4>
+                        <del class="text-muted me-2">239 KD</del>
+                        <span class="text-danger fw-semibold">20% off</span>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-4">
+                        <button class="size-btn">S</button>
+                        <button class="size-btn disabled">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+                    </div>
+                </div>
+            @endforeach
+
+
 
             <div class="p-4 rounded-4 shadow-sm" style="background:#fff;">
                 <div class="row mb-2">
@@ -333,7 +349,37 @@
     @include('dealer.layout.footer');
 
     <script>
-    function changeImage(src) {
-        document.getElementById("mainImage").src = src;
-    }
+        function changeImage(src) {
+            document.getElementById("mainImage").src = src;
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            document.querySelectorAll('.color-box').forEach(box => {
+
+                box.addEventListener('click', function() {
+
+                    // hide all price + size sections
+                    document.querySelectorAll('.color-section').forEach(sec => {
+                        sec.classList.add('d-none');
+                    });
+
+                    // get selected color target
+                    let target = this.getAttribute('data-target');
+
+                    // show selected color section
+                    document.getElementById(target).classList.remove('d-none');
+
+                    // remove border highlight from all colors
+                    document.querySelectorAll('.color-box').forEach(cb => {
+                        cb.classList.remove('border', 'border-2', 'border-warning');
+                    });
+
+                    // add highlight to clicked color
+                    this.classList.add('border', 'border-2', 'border-warning');
+                });
+            });
+
+        });
     </script>
