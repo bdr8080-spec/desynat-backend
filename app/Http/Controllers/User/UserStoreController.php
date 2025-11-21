@@ -48,9 +48,6 @@ class UserStoreController extends Controller
        
         return view('user.category.index',compact('store_details'));
     }
-
-
-
     
 
 
