@@ -200,8 +200,15 @@ class UserManagementService
          $all_store_information=sellerStoreInformation::with('seller_information')->whereIn('id',$productQuery);
         //  where('Store_Availability','1')->
 
-        if($request->search){
+        if(isset($request->search)){
             $all_store_information->where('store_name', 'Like', '%'.$request->search.'%');
+        }
+
+        if(isset($request->rating)){
+            // $all_store_information->where('store_name', 'Like', '%'.$request->search.'%');
+        }
+        if(isset($request->availbility)){
+            $all_store_information->where('Store_Availability',$request->availbility);
         }
 
         $all_store_information=$all_store_information->get();

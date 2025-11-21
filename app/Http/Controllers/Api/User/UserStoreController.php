@@ -35,7 +35,9 @@ class UserStoreController extends Controller
 
        $request_data=(object)[
         'category_id'=>$request->category_id,
-        "search"=>$request->search
+        "search"=>$request->search,
+        "rating"=>$request->rating,
+        "availbility"=>$request->availbility,
        ];
 
 
