@@ -3,12 +3,12 @@
 @section('content')
 
 <div class="customContainer">
+    <div class="">
         <div class="">
-            <div class="">
-                <img src="{{asset('user/assets/images/image-sg.svg')}}" class="img-fluid" />
-            </div>
+            <img src="{{asset('user/assets/images/image-sg.svg')}}" class="img-fluid" />
         </div>
     </div>
+</div>
 
     <div class="storeClient_profile customsmallContainer">
         <div class="row">
