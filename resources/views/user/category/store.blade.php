@@ -1,20 +1,19 @@
 @extends('user.layout.app')
 
 @section('content')
-
-<div class="customContainer">
+    <div class="customContainer">
         <div class="owl-carousel owl-theme customcatOwlcarousel">
             <div class="item">
-                <img src="{{asset('user/')}}/assets/images/category-img.svg" class="img-fluid" />
+                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
             </div>
             <div class="item">
-                <img src="{{asset('user/')}}/assets/images/category-img.svg" class="img-fluid" />
+                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
             </div>
             <div class="item">
-                <img src="{{asset('user/')}}/assets/images/category-img.svg" class="img-fluid" />
+                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
             </div>
             <div class="item">
-                <img src="{{asset('user/')}}/assets/images/category-img.svg" class="img-fluid" />
+                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
             </div>
         </div>
     </div>
@@ -84,220 +83,46 @@
                         <button class="customBtn customBtn5">Search</button>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <a href="">
-                                <div class="category-store">
-                                    <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                    <div class="category-store-content">
-                                        <div class="user-infoCat_detail d-flex align-items-center">
-                                            <div class="user">
-                                                <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
+
+                        @forelse ($store_data as $item)
+                            <div class="col-lg-4 col-md-4 col-6 my-3">
+                                <a href="">
+                                    <div class="category-store">
+                                        <img src="{{ $item->store_image }}" class="img-fluid" />
+                                        <div class="category-store-content">
+                                            <div class="user-infoCat_detail d-flex align-items-center">
+                                                <div class="user">
+                                                    <img src="{{ $item->seller_information->profile_pic }}"
+                                                        class="img-fluid" />
+                                                </div>
+                                                <p>{{ $item->seller_information->first_name }}
+                                                    {{ $item->seller_information->last_name }}</p>
                                             </div>
-                                            <p>Atif Aslam</p>
-                                        </div>
-                                        <div class="rate-content d-flex align-items-center">
-                                            <div class="rate">
-                                                <span><i class="bi bi-star-fill"></i></span>
-                                                <span><i class="bi bi-star-fill"></i></span>
-                                                <span><i class="bi bi-star-fill"></i></span>
-                                                <span><i class="bi bi-star-fill"></i></span>
-                                                <span><i class="bi bi-star-fill"></i></span>
+                                            <div class="rate-content d-flex align-items-center">
+                                                <div class="rate">
+                                                    <span><i class="bi bi-star-fill"></i></span>
+                                                    <span><i class="bi bi-star-fill"></i></span>
+                                                    <span><i class="bi bi-star-fill"></i></span>
+                                                    <span><i class="bi bi-star-fill"></i></span>
+                                                    <span><i class="bi bi-star-fill"></i></span>
+                                                </div>
+                                                <p>(1K)</p>
                                             </div>
-                                            <p>(123K)</p>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-6 my-3">
-                            <div class="category-store">
-                                <img src="{{asset('user/')}}/assets/images/category/category1.svg" class="img-fluid" />
-                                <div class="category-store-content">
-                                    <div class="user-infoCat_detail d-flex align-items-center">
-                                        <div class="user">
-                                            <img src="{{asset('user/')}}/assets/images/user.png" class="img-fluid" />
-                                        </div>
-                                        <p>Atif Aslam</p>
-                                    </div>
-                                    <div class="rate-content d-flex align-items-center">
-                                        <div class="rate">
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                            <span><i class="bi bi-star-fill"></i></span>
-                                        </div>
-                                        <p>(123K)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        @empty
+
+                            <h2>
+                                <center> No Store Found </center>
+                            </h2>
+                        @endforelse
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
-

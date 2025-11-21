@@ -197,9 +197,14 @@ class UserManagementService
             }
 
 
-         $all_store_information=sellerStoreInformation::with('seller_information')->whereIn('id',$productQuery)->
+         $all_store_information=sellerStoreInformation::with('seller_information')->whereIn('id',$productQuery);
         //  where('Store_Availability','1')->
-         get();
+
+        if($request->search){
+            $all_store_information->where('store_name', 'Like', '%'.$request->search.'%');
+        }
+
+        $all_store_information=$all_store_information->get();
 
             return [
                 'status' => 'success',
