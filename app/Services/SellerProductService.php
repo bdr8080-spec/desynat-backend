@@ -325,13 +325,25 @@ public function single_product_details_fetch($request){
         'discount_type'=>$val->discount_type,
         'discount_value'=>$val->discount_value,
         'final_price'=>$val->final_price,
+
+        'variant_image'=>$val->variant_image,
+        'bust'=>$val->bust,
+        'waist'=>$val->waist,
+        'hip'=>$val->hip,
+        'shoulder'=>$val->shoulder,
+        'sleeve_length'=>$val->sleeve_length,
+        'length'=>$val->length,
+        'total_stock'=>$val->total_stock,
+        'sku'=>$val->sku,
+        'sku_threshold_value'=>$val->sku_threshold_value,
+
       ];
 
-      if (!isset($new_color[$val->color_id])) {
-        $new_color[$val->color_id] = [];
+      if (!isset($new_color[$val->color->hex_code])) {
+        $new_color[$val->color->hex_code] = [];
     }
 
-    $new_color[$val->color_id][] = $new_data;  
+    $new_color[$val->color->hex_code][] = $new_data;  
  
     }
 
