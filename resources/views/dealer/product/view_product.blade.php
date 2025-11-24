@@ -142,7 +142,7 @@
         </div>
         <div class="col-lg-6 col-xxl-6">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
-                <a href="{{ route('seller.Add_product') }}">
+                <a href="{{ route('seller.edit-product',$product->id) }}">
                     <img src="{{ asset('dealer/assets/img/edit2.png') }}" class=""></a>
                 <img src="{{ asset('dealer/assets/img/delete2.png') }}" class="">
 
@@ -162,49 +162,59 @@
             <hr>
 
             <h6 class="fw-semibold mb-2">More Color</h6>
-            <div class="d-flex gap-2 mb-4">
-              @php $count=1;  
-              
-              $countSize=1;
-
-              @endphp
-             @foreach ($product['ColorPriceCombination'] as $key=> $item)
-                <div class="color-box border border-2 border-warning" style="background:{{$key}}" data-target="color{{$count}}"  data-color="color{{$count}}">
-             </div>
-                @php  $count++  @endphp
-           @endforeach
-            </div>
-
-
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="fw-semibold">Available Size</h6>
-                <a href="#" class="text-brown fw-semibold text-decoration-none">Size Guide</a>
-            </div>
-
-            @foreach ($product['ColorPriceCombination'] as $key=> $item)
-
-                <div id="color{{$countSize}}" class="color-section" @if($countSize!==1) style="display:none;" @endif>
-
-                     @foreach ($item as $key1=> $item1)
            
-                    <div class="d-flex align-items-center mb-1">
-                        <h4 class="fw-bold text-dark me-2">{{$item1['final_price']}} KD</h4>
-                        <del class="text-muted me-2">{{$item1['actual_price']}} KD</del>
-                        <span class="text-danger fw-semibold">{{$item1['discount_value']}}
-                             {{ ($item1['discount_type']=='1')? '%':'off' }}</span>
-                    </div>
 
-                    @endforeach
+<div class="d-flex gap-2 mb-4">
+    @php $count=1;
+    $countSize=1;
+    @endphp
 
-                     @foreach ($item as $key1=> $item1)
+    @foreach ($product['ColorPriceCombination'] as $key => $item)
+    <div class="color-box"
+         style="background:{{ $key }}"
+         data-color="color{{ $count }}">
+    </div>
+        @php $count++; @endphp
+        @endforeach
+</div>
 
-                    <div class="d-flex gap-2 mb-4">            
-                      <button class="size-btn" data-image="https://cdn-icons-png.flaticon.com/512/149/149071.png" data-price="{{$item1['actual_price']}}">{{$item1['size']}}</button>
-                    </div>
-                         
-            @if($product->category_id==2)
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="fw-semibold">Available Size</h6>
+        <a href="#" class="text-brown fw-semibold text-decoration-none">Size Guide</a>
+    </div>
 
-            <div class="p-4 rounded-4 shadow-sm" style="background:#fff;">
+    @php $countSize = 1; @endphp
+@foreach ($product['ColorPriceCombination'] as $key => $item)
+
+<div id="color{{ $countSize }}" class="color-section" 
+     @if($countSize != 1) style="display:none;" @endif>
+
+    {{-- PRICE BLOCK --}}
+    <div class="d-flex align-items-center mb-1">
+        <h4 class="fw-bold text-dark me-2">{{ $item[0]['final_price'] }} KD</h4>
+        <del class="text-muted me-2">{{ $item[0]['actual_price'] }} KD</del>
+        <span class="text-danger fw-semibold">
+            {{ $item[0]['discount_value'] }} {{ $item[0]['discount_type']=='1'? '%' : 'off' }}
+        </span>
+    </div>
+
+    {{-- SIZE BUTTONS --}}
+    <div class="d-flex gap-2 mb-4">
+        @foreach ($item as $key1 => $item1)
+        <button class="size-btn" data-size="size{{ $countSize }}-{{ $key1 }}">
+            {{ $item1['size'] }}
+        </button>
+        @endforeach
+    </div>
+
+    {{-- SIZE DETAILS --}}
+    @foreach ($item as $key1 => $item1)
+    <div id="size{{ $countSize }}-{{ $key1 }}" class="size-section" 
+         style="display:none;">
+
+           @if($product->category_id==2)
+
+            <div class="p-4 rounded-4 shadow-sm" style="background:#fff;" >
                 <div class="row mb-2">
                     <div class="col-6">Bust</div>
                     <div class="col-6 text-end">{{$item1['bust']}}  </div>
@@ -230,32 +240,34 @@
                     <div class="col-6 text-end">{{$item1['length']}} </div>
                 </div>
             </div>
-
             @endif
-
-            <div class="p-4 my-2 rounded-4 shadow-sm" style="background:#fff;">
-                <div class="row mb-2">
-                    <div class="col-6">Total Stocks</div>
-                    <div class="col-6 text-end">{{$item1['total_stock']}}</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">SKU</div>
-                    <div class="col-6 text-end">{{$item1['sku']}}</div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">SKU Threshold value</div>
-                    <div class="col-6 text-end">{{$item1['sku_threshold_value']}}</div>
-                </div>
-            </div>    
-                      
+            
+        <div class="p-4 rounded-4 shadow-sm bg-white">
+            <div class="row mb-2">
+                <div class="col-6">Total Stocks</div>
+                <div class="col-6 text-end">{{ $item1['total_stock'] }}</div>
             </div>
-                         @endforeach
-                    
-                 @php  $countSize++  @endphp
-            @endforeach
 
+            <div class="row mb-2">
+                <div class="col-6">SKU</div>
+                <div class="col-6 text-end">{{ $item1['sku'] }}</div>
+            </div>
 
+            <div class="row mb-2">
+                <div class="col-6">SKU Threshold</div>
+                <div class="col-6 text-end">{{ $item1['sku_threshold_value'] }}</div>
+            </div>
         </div>
+
+    </div>
+    @endforeach
+
+</div>
+
+@php $countSize++; @endphp
+@endforeach
+
+    </div>
 
     </div>
     <div class="row">
@@ -272,7 +284,6 @@
 
                     @foreach ($product->product_specifications as $item)
 
-                        
                         <li>{{$item->name_en}} - {{$item->feature_en}}</li>
                         
                         @endforeach
@@ -284,40 +295,40 @@
                 <div class="row mb-2">
                     <div class="col-6">Return allowed ?
                     </div>
-                    <div class="col-6 text-end">@if($product->return_days==1) es @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->return_days==1) Yes @else No @endif </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Exchange allowed ?
                     </div>
-                    <div class="col-6 text-end">@if($product->product_exchangable==1) es @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->product_exchangable==1) Yes @else No @endif </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Review & ratings allowed ?
                     </div>
-                <div class="col-6 text-end">@if($product->review_rating==1) es @else No @endif </div>
+                <div class="col-6 text-end">@if($product->review_rating==1) Yes @else No @endif </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Is it an Affiliated Product?
                     </div>
-                <div class="col-6 text-end">@if($product->affiliated_product==1) es @else No @endif </div>
+                <div class="col-6 text-end">@if($product->affiliated_product==1) Yes @else No @endif </div>
              
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Is this a Customized product?
                     </div>
-                <div class="col-6 text-end">@if($product->customized_product==1) es @else No @endif </div>
+                <div class="col-6 text-end">@if($product->customized_product==1) Yes @else No @endif </div>
              
                 </div>
                 <div class="row">
                     <div class="col-6">Ready to ship?
                     </div>
-                       <div class="col-6 text-end">@if($product->ready_to_ship==1) es @else No @endif </div>
+                       <div class="col-6 text-end">@if($product->ready_to_ship==1) Yes @else No @endif </div>
                 </div>
                 <div class="row">
                     <div class="col-6">Cash on delivery allowed?
 
                     </div>
-                       <div class="col-6 text-end">@if($product->cash_on_delivery==1) es @else No @endif </div>
+                       <div class="col-6 text-end">@if($product->cash_on_delivery==1) Yes @else No @endif </div>
              
                 </div>
             </div>
@@ -386,83 +397,54 @@
         }
     </script>
 
-    
-<script>
+    <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const colorBoxes = document.querySelectorAll(".color-box");
-    const colorSections = document.querySelectorAll(".color-section");
-
-    const mainImage = document.getElementById("mainImage");
-    const priceWrappers = document.querySelectorAll(".color-section h4"); // dynamic price
-
-    // 🚀 1) FIX DATA ATTRIBUTE
-    // Convert data-target → data-color automatically
-    colorBoxes.forEach(box => {
-        let id = box.dataset.target;
-        box.setAttribute("data-color", id);
-    });
-
-    // 🚀 2) DEFAULT LOAD → First color + its first size
-    const firstColorSection = document.querySelector(".color-section");
-    const firstSizeBtn = firstColorSection.querySelector(".size-btn");
-
-    if (firstSizeBtn) {
-        selectSize(firstSizeBtn);
-    }
-
-    // 🚀 3) COLOR CLICK HANDLER
-    colorBoxes.forEach(box => {
+    // ----------------------------
+    // COLOR TAB SWITCHING
+    // ----------------------------
+    document.querySelectorAll(".color-box").forEach(box => {
         box.addEventListener("click", function () {
 
-            const colorId = this.dataset.color;
+            let colorId = this.dataset.color;
 
-            // Remove highlight from all
-            colorBoxes.forEach(b => b.style.borderColor = "transparent");
+            // Hide all color sections
+            document.querySelectorAll(".color-section").forEach(sec => sec.style.display = "none");
+
+            // Show selected one
+            document.getElementById(colorId).style.display = "block";
+
+            // Remove highlight from all colors
+            document.querySelectorAll(".color-box").forEach(b => b.style.borderColor = "transparent");
 
             // Highlight selected color
             this.style.borderColor = "gold";
-
-            // Hide all size sections
-            colorSections.forEach(sec => sec.style.display = "none");
-
-            // Show selected color section
-            document.getElementById(colorId).style.display = "block";
-
-            // Auto-select first size of this color
-            const firstSize = document.querySelector(`#${colorId} .size-btn`);
-            if (firstSize) selectSize(firstSize);
         });
     });
 
-    // 🚀 4) SIZE CLICK HANDLER
+    // ----------------------------
+    // SIZE TAB SWITCHING
+    // ----------------------------
     document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("size-btn")) {
-            selectSize(e.target);
-        }
+
+        if (!e.target.classList.contains("size-btn")) return;
+
+        let sizeId = e.target.dataset.size;
+        let parentColor = e.target.closest(".color-section");
+
+        // Hide all size sections inside same color
+        parentColor.querySelectorAll(".size-section").forEach(sec => sec.style.display = "none");
+
+        // Show selected size section
+        document.getElementById(sizeId).style.display = "block";
+
+        // Remove active class from sizes of this color
+        parentColor.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
+
+        // highlight selected size
+        e.target.classList.add("active");
     });
-
-    // 🚀 5) UPDATE IMAGE + PRICE
-    function selectSize(btn) {
-
-        // Remove active highlight from all size buttons
-        document.querySelectorAll(".size-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        // Update main image
-        if (btn.dataset.image) {
-            mainImage.src = btn.dataset.image;
-        }
-
-        // Update price inside this color section
-        const section = btn.closest(".color-section");
-        const priceText = btn.dataset.price;
-
-        if (priceText) {
-            let priceElement = section.querySelector("h4");
-            priceElement.innerHTML = priceText + " KD";
-        }
-    }
 
 });
 </script>
+
