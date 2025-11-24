@@ -44,19 +44,20 @@ use App\Http\Controllers\User\UserStoreController;
 
    Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
    
-   Route::get('product/detail-page', [UserStoreController::class, 'productDetails'])->name('user.product_details');
-
-
+   Route::get('product/detail-page/{id}', [UserStoreController::class, 'productDetails'])->name('user.product_details');
 
    });
 
 
-//  Route::match(['get', 'post'], '/route1', function () {
-//      return view('user.category.index');
-// });
-// Route::match(['get', 'post'], '/route2', function () {
-//      return view('user.category.store');
-// });
+ Route::match(['get', 'post'], '/route1', function () {
+     return view('user.category.index');
+});
+Route::match(['get', 'post'], '/route2', function () {
+     return view('user.category.store');
+});
+Route::match(['get', 'post'], '/product-store-details', function () {
+     return view('user.category.product-store-details');
+});
 //  Route::match(['get', 'post'], '/route2', function () {
 //      return view('user.profile.changePassword');
 // });

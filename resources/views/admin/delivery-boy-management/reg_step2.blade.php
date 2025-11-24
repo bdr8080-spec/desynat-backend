@@ -73,7 +73,7 @@
                         <!-- FRONT -->
                         <div class="col-lg-2 text-center">
                             <label for="vehicleImgFront" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="vehicleImgFrontIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="vehicleImgFrontIcon" class="upload-icon">
                                 <img id="vehicleImgFrontPreview" class="preview-image">
                                 <input type="file" id="vehicleImgFront" hidden accept="image/*">
                             </label>
@@ -84,7 +84,7 @@
                         <!-- BACK -->
                         <div class="col-lg-10 text-center">
                             <label for="vehicleImgBack" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="vehicleImgBackIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="vehicleImgBackIcon" class="upload-icon">
                                 <img id="vehicleImgBackPreview" class="preview-image">
                                 <input type="file" id="vehicleImgBack" hidden accept="image/*">
                             </label>
@@ -100,7 +100,7 @@
                         <!-- FRONT -->
                         <div class="col-lg-2 text-center">
                             <label for="idProofFront" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="idProofFrontIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="idProofFrontIcon" class="upload-icon">
                                 <img id="idProofFrontPreview" class="preview-image">
                                 <input type="file" id="idProofFront" hidden accept="image/*">
                             </label>
@@ -111,7 +111,7 @@
                         <!-- BACK -->
                         <div class="col-lg-10 text-center">
                             <label for="idProofBack" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="idProofBackIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="idProofBackIcon" class="upload-icon">
                                 <img id="idProofBackPreview" class="preview-image">
                                 <input type="file" id="idProofBack" hidden accept="image/*">
                             </label>
@@ -127,7 +127,7 @@
                         <!-- FRONT -->
                         <div class="col-lg-2 text-center">
                             <label for="dlFront" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="dlFrontIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="dlFrontIcon" class="upload-icon">
                                 <img id="dlFrontPreview" class="preview-image">
                                 <input type="file" id="dlFront" hidden accept="image/*">
                             </label>
@@ -138,7 +138,7 @@
                         <!-- BACK -->
                         <div class="col-lg-10 text-center">
                             <label for="dlBack" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="dlBackIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="dlBackIcon" class="upload-icon">
                                 <img id="dlBackPreview" class="preview-image">
                                 <input type="file" id="dlBack" hidden accept="image/*">
                             </label>
@@ -153,7 +153,7 @@
 
                         <div class="col-lg-2 text-center">
                             <label for="insuranceFront" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="insuranceFrontIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="insuranceFrontIcon" class="upload-icon">
                                 <img id="insuranceFrontPreview" class="preview-image">
                                 <input type="file" id="insuranceFront" hidden accept="image/*">
                             </label>
@@ -167,7 +167,7 @@
 
                         <div class="col-lg-2 text-center">
                             <label for="pollutionFront" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="pollutionFrontIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="pollutionFrontIcon" class="upload-icon">
                                 <img id="pollutionFrontPreview" class="preview-image">
                                 <input type="file" id="pollutionFront" hidden accept="image/*">
                             </label>
@@ -176,7 +176,7 @@
 
                         <div class="col-lg-10 text-center">
                             <label for="pollutionBack" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="pollutionBackIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="pollutionBackIcon" class="upload-icon">
                                 <img id="pollutionBackPreview" class="preview-image">
                                 <input type="file" id="pollutionBack" hidden accept="image/*">
                             </label>
@@ -190,7 +190,7 @@
 
                         <div class="col-lg-2 text-center">
                             <label for="rcFront" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="rcFrontIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="rcFrontIcon" class="upload-icon">
                                 <img id="rcFrontPreview" class="preview-image">
                                 <input type="file" id="rcFront" hidden accept="image/*">
                             </label>
@@ -199,7 +199,7 @@
 
                         <div class="col-lg-10 text-center">
                             <label for="rcBack" class="upload-box">
-                                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="rcBackIcon" class="upload-icon">
+                                <img src="/admin/image/imge-upload.svg" id="rcBackIcon" class="upload-icon">
                                 <img id="rcBackPreview" class="preview-image">
                                 <input type="file" id="rcBack" hidden accept="image/*">
                             </label>

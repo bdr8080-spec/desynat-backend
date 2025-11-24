@@ -44,10 +44,10 @@
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="gap-3 " >
                         <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn"
-                            style="margin-top: 60px">
+                            style="margin-top: 70px">
                             <span>Reset</span>
                         </a>
-                         <a class="btn btn-dark customBtn" style="margin-top: 60px">
+                         <a class="btn btn-dark customBtn" style="margin-top: 70px">
                     <span>Export</span>
                 </a>
                     </div>
@@ -93,7 +93,7 @@
                             <th scope="row">{{ $index + 1 }}</th>
                             <td>{{ \Carbon\Carbon::parse($deliveryBoy['created_at'])->format('d-m-Y') }}</td>
                             <td>
-                                <img src="{{ $deliveryBoy['profile_pic'] }}" alt="" width="40px" height="40px" class="square" />
+                                <img src="{{ $deliveryBoy['profile_pic'] }}" alt="" width="60px" height="60px" class="square" />
                             </td>
                             <td>{{ $deliveryBoy['full_name_english'] }}</td>
 

@@ -277,14 +277,14 @@
 
 <!-- edit modal -->
  <div class="modal fade" id="editReasonModal" tabindex="-1" aria-labelledby="editReasonModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <form id="editReasonForm">
+  <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editReasonModalLabel">Edit Reason</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+          <div class="modal-header management border-0">
+              <h5 class="modal-title" id="editReasonModalLabel">Edit Reason</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form id="editReasonForm">
           <input type="hidden" id="editReasonId" name="reason_id" value="">
 
           <div class="mb-3">
@@ -302,9 +302,9 @@
             <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-dark customBtn">Update</button>
            </div>
+        </form>
         </div>
       </div>
-    </form>
   </div>
 </div>
 

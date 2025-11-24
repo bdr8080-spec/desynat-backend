@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->string('store_image');
             $table->string('store_name');
+            $table->string('country_code');
             $table->string('country');
             $table->string('store_address');
             $table->string('address_line1')->nullable();
