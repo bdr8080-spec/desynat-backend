@@ -44,9 +44,7 @@ use App\Http\Controllers\User\UserStoreController;
 
    Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
    
-
-
-
+   Route::get('product/detail-page/{id}', [UserStoreController::class, 'productDetails'])->name('user.product_details');
 
    });
 

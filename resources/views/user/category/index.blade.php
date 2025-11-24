@@ -407,7 +407,7 @@
                                             <div class="product-card">
                                                 <div class="product-img">
 
-                                                    <a href="{{ url('/route2') }}">
+                                                    <a href="{{ route('user.product_details',[$item->id]) }}">
                                                         @foreach ($item->product_variants[0]->variant_image as $key => $val)
                                                             @if ($key != 0)
                                                                 @php break  @endphp
@@ -424,7 +424,7 @@
                                                 </div>
                                                 <div class="product-content">
 
-                                                    <a href="{{ url('/route2') }}">
+                                                    <a href="{{ route('user.product_details',[$item->id]) }}">
 
                                                         <h5>{{ $item->product_name_en }}</h5>
                                                         <div class="rating">

@@ -108,7 +108,56 @@ class UserStoreController extends Controller
 
 
 
+    public function productDetails(Request $request,string $id){
 
+        
+        $request_data=(object)[
+            'product_id'=>$id,
+            'user_id'=> $request->user()->id
+                   ];
+        $result = $this->UserManagementService->singleproductView($request_data);
+    
+        $data = $result['data'];
+
+        // dd($data);
+
+        $product_variants = [];
+
+ foreach ($data->product_variants as $item) {
+
+    $colorKey = $item->color->name;
+    $colorHex = $item->color->hex_code;
+
+    if (isset($product_variants[$colorHex])) {  // <-- FIXED HERE
+
+        if (is_array($item->variant_image)) {
+            $product_variants[$colorHex]['variant_image'] = array_merge(
+                $product_variants[$colorHex]['variant_image'],
+                $item->variant_image
+            );
+        }
+
+        if (!in_array($item->size->name, $product_variants[$colorHex]['sizes'])) {
+            $product_variants[$colorHex]['sizes'][] = $item->size->name;
+        }
+
+    } else {
+
+        $product_variants[$colorHex] = [
+            'color_hex'      => $colorHex,
+            'variant_image'  => is_array($item->variant_image) ? $item->variant_image : [],
+            'sizes'          => [$item->size->name],
+            'actual_price'   => $item->actual_price,
+            'final_price'    => $item->final_price,
+            'discount_value' => $item->discount_value,
+            'discount_type'  => $item->discount_type
+        ];
+    }
+}
+
+  
+        return view('user.category.product-store-details', compact('data','product_variants'));
+    }
 
 
 
