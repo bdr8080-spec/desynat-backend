@@ -57,6 +57,9 @@ use App\Http\Controllers\User\UserStoreController;
 Route::match(['get', 'post'], '/route2', function () {
      return view('user.category.store');
 });
+Route::match(['get', 'post'], '/product-store-details', function () {
+     return view('user.category.product-store-details');
+});
 //  Route::match(['get', 'post'], '/route2', function () {
 //      return view('user.profile.changePassword');
 // });

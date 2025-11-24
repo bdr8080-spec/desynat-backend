@@ -21,8 +21,6 @@
         border-color: #7c7c7c;
     }
 
-
-
     .color-box {
         width: 38px;
         height: 38px;
