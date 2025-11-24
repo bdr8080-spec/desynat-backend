@@ -171,7 +171,7 @@ public function edit_Product($request){
     try{
 
         DB::beginTransaction();
-        
+
         // FILTER PRODUCT TABLE DATA SEPRATE
 
        $seller_details= $this->Seller_Plan_check($request->seller_id);
@@ -183,7 +183,7 @@ public function edit_Product($request){
         //     }
 
         $match=[
-            'product_id'=>$request->product_id
+            'id'=>$request->product_id
         ];
 
         $product=[
@@ -232,7 +232,7 @@ public function edit_Product($request){
         'feature_ar'=> $request->product_spe_feature_ar[$key],
         ];
 
-        $product_data=  ProductSpecification::Updateorcreate($specification_array);
+        $product_data=  ProductSpecification::UpdateOrCreate($specification_array);
 
         }
 
@@ -241,7 +241,7 @@ public function edit_Product($request){
 
         foreach($request->color_id as $key=>$val){
 
-            $match=[
+        $match=[
         'product_id'=> $product_id,
         'color_id' => $request->color_id[$key],
         'size_id' => $request->size_id[$key],
@@ -276,7 +276,7 @@ public function edit_Product($request){
             $variation_array['length']= $request->length[$key]??null; // only provide when category is women      
             }
 
-            $product_data=  ProductVariant::Updateorcreate($match,$variation_array);
+            $product_data=  ProductVariant::UpdateOrCreate($match,$variation_array);
         }
 
 
