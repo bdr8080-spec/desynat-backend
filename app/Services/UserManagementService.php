@@ -255,7 +255,8 @@ class UserManagementService
                     'category',
                     'subcategory',
                     'product_specifications',
-                    'product_variants'
+                    'product_variants.color',
+                    'product_variants.size'
                 ]);
     
             // Step 3: Search

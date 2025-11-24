@@ -156,11 +156,7 @@
                 <span class="ms-2 text-muted">(1K)</span>
             </div>
 
-            {{-- <div class="d-flex align-items-center mb-1">
-                <h4 class="fw-bold text-dark me-2">239 KD</h4>
-                <del class="text-muted me-2">239 KD</del>
-                <span class="text-danger fw-semibold">20% off</span>
-            </div> --}}
+            
             <p class="text-success small">inclusive of all taxes</p>
 
             <hr>
@@ -203,7 +199,7 @@
                      @foreach ($item as $key1=> $item1)
 
                     <div class="d-flex gap-2 mb-4">            
-                      <button class="size-btn" data-image="https://cdn-icons-png.flaticon.com/512/149/149071.png" data-price="239">{{$item1['size']}}</button>
+                      <button class="size-btn" data-image="https://cdn-icons-png.flaticon.com/512/149/149071.png" data-price="{{$item1['actual_price']}}">{{$item1['size']}}</button>
                     </div>
                          
             @if($product->category_id==2)
