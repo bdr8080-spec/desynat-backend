@@ -112,8 +112,6 @@ class SellerProductController extends Controller
         }
 
        }
-
-    dd($request->all());
     
 
  $request_data=(object) [

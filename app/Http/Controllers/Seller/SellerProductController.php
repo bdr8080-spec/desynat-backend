@@ -482,7 +482,7 @@ $request_data=(object) [
 
     $product=$product['data'];
 
-    dump($product);
+    // dump($product);
     
     return view('dealer.product.view_product',compact('product'));
     
@@ -490,9 +490,25 @@ $request_data=(object) [
 
 
 
-public function edit_product(){
+public function edit_product($id){
 
-    return view('dealer.product.edit_product');
+    
+    $category = Category::orderBy('id', 'asc')->get();
+    $brand = Brand::all();
+    $color = color::all();
+    $size = size::all();
+ 
+$request_data=(object) [
+    'product_id'=>$id,    
+];
+    
+    $product =  $this->SellerProductService->single_product_details_fetch($request_data);
+
+    $product_details=$product['data'];
+
+    // dump($product_details);
+
+    return view('dealer.product.edit_product',compact('category','brand','color','size','product_details'));
 
 }
 
