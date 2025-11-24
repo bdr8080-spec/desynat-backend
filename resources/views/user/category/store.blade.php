@@ -96,7 +96,7 @@
                     <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
                         <div class="seArch">
                             <div class="form-group position-relative search">
-                                <input type="text" class="form-control" placeholder="Search" name="search" />
+                                <input type="text" class="form-control" placeholder="Search" name="search" value="{{request()->search}}" />
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </div>
                             <button class="customBtn customBtn5">Search</button>
