@@ -362,6 +362,8 @@ h1 {
     vertical-align: middle !important;
     font-size: 16px;
     text-align: center !important;
+        word-break: break-all;
+
 }
 
 .table tr td.arabic {
@@ -1836,7 +1838,7 @@ button[type="submit"] {
 input[type="text"] {
     outline: none;
     /* width: 100%; */
-    padding: 9px 5px;
+    /* padding: 9px 5px; */
     border: 1px solid var(--secondry-color);
     border-radius: 5px;
     font-size: 15px;
