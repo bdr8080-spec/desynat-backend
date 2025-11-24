@@ -145,9 +145,10 @@
                         <div class="col-lg-4">
                             <div class="category_filter">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h3>Filter</h3>
+                                    <h3>Filters</h3>
                                     <span>Clear</span>
                                 </div>
+                            <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
                                 <div class="form-group mt-4">
                                     <h5>Ratings</h5>
                                     <div class="form-check my-4">
@@ -199,6 +200,7 @@
                                     </div>
                                 </div>
                                 <button class="customBtn customBtn5 mt-5">Apply</button>
+                            </form>
                             </div>
                         </div>
                         <div class="col-lg-8">
