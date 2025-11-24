@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 use App\Services\UserManagementService;
 use Validator;
+use App\Models\Brand;
+use App\Models\{Category,size};
 use Auth;
 
 class UserStoreController extends Controller
@@ -73,8 +75,14 @@ class UserStoreController extends Controller
 
 
        $store_details=$store_details['data'];
+
+      $brand =  Brand::orderBy('name_english','asc')->get();
+      $category =  Category::orderBy('id','desc')->get();
+      $size =  size::orderBy('name','desc')->get();
        
-        return view('user.category.index',compact('store_details'));
+   
+      
+        return view('user.category.index',compact('store_details','category','brand','size'));
     }
     
 
