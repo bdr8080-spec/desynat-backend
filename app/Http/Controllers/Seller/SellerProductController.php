@@ -550,8 +550,7 @@ public function edit_product_code(Request $request, $id){
     // Each variation must be an array
     'variant_image.*' => ['required', 'array'],
     // Each image inside each variation is required
-    'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-
+    'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
 
           'color_id' => ['required', 'array'],
           'size_id' => ['required', 'array', ],
@@ -819,10 +818,9 @@ public function edit_product_code(Request $request, $id){
      if($request->upload_size_chart){ 
      $upload_size_chart=image_upload($request->upload_size_chart,$dir);  // chart Image
      
+    }else{
+          $upload_size_chart=$request->old_upload_size_chart;  // old Image Upload
     }
-
-
-
 
 $request_data=(object) [
 'product_id'=>$request->product_id,
@@ -867,7 +865,7 @@ $request_data=(object) [
 'final_price' => $request->final_price,
 
 // product vartion end
-      
+
 'min_card_quantity'=> $request->min_card_quantity,
 'max_card_quantity'=> $request->max_card_quantity,
 'product_return'=> $request->product_return, // 0 Not return 1 return Availble 
@@ -883,9 +881,7 @@ $request_data=(object) [
 
      ];
 
-    dd($request_data);
-
-  $data=  $this->SellerProductService->AddProduct($request_data);
+  $data=  $this->SellerProductService->edit_Product($request_data);
 
   if(isset($data['status']) && $data['status']=='error' ){
       return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
