@@ -482,7 +482,7 @@ $request_data=(object) [
 
     $product=$product['data'];
 
-    // dump($product);
+    dump($product);
     
     return view('dealer.product.view_product',compact('product'));
     
