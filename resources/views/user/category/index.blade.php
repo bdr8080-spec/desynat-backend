@@ -1,204 +1,541 @@
 @extends('user.layout.app')
 
 @section('content')
-
-<div class="customContainer">
-    <div class="row">
-        <div class="col-lg-5">
-
-            {{-- PRODUCT IMAGES CAROUSEL --}}
-            <div id="carouselExampleCaptions" class="carousel slide customProduct_Carousel">
-
-                {{-- CAROUSEL INDICATORS --}}
-                <div class="carousel-indicators">
-                    @foreach($product['product_variants'] as $index => $variant)
-                        @foreach($variant['variant_image'] as $key => $img)
-                        <button type="button" data-bs-target="#carouselExampleCaptions"
-                            data-bs-slide-to="{{ $index }}"
-                            class="{{ $index == 0 ? 'active' : '' }}">
-                            <div class="product_slide_img">
-                                <img src="{{ $img }}" class="img-fluid">
-                            </div>
-                        </button>
-                        @endforeach
-                    @endforeach
-                </div>
-
-                {{-- CAROUSEL IMAGES --}}
-                <div class="carousel-inner">
-                    @foreach($product['product_variants'] as $index => $variant)
-                        @foreach($variant['variant_image'] as $img)
-                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <button class="share-btn"><i class="fa-solid fa-share"></i></button>
-                            <button class="wishlist-btn">
-                                <i class="{{ $product['wishlist'] ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart' }}"></i>
-                            </button>
-
-                            <img src="{{ $img }}" class="img-fluid">
-                        </div>
-                        @endforeach
-                    @endforeach
-                </div>
-
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </button>
+    <div class="customContainer">
+        <div class="">
+            <div class="">
+                <img src="{{ asset('user/assets/images/image-sg.svg') }}" class="img-fluid" />
             </div>
         </div>
-
-        {{-- PRODUCT DETAILS --}}
-        <div class="col-lg-7">
-            <div class="productList_content">
-
-                <h4 class="fw-semibold">{{ $product['brand']['name'] ?? 'Brand' }}</h4>
-                <p class="text-muted mb-1">{{ $product['product_name_en'] }}</p>
-
-                <span class="bought">100 + bought</span>
-
-                <div class="d-flex align-items-center mb-2">
-                    <span class="text-warning fs-5">★★★★☆</span>
-                    <span class="ms-2 text-muted">(123K)</span>
-                </div>
-
-                {{-- PRICE BASED ON FIRST VARIANT --}}
-                @php
-                    $variant = $product['product_variants'][0];
-                @endphp
-
-                <div class="d-flex align-items-center mb-1">
-                    <h4 class="fw-bold text-dark me-2">{{ $variant['final_price'] }} KD</h4>
-                    <del class="text-muted me-2">{{ $variant['actual_price'] }} KD</del>
-                    <span class="text-danger fw-semibold">{{ $variant['discount_value'] }}% off</span>
-                </div>
-                <p class="text-success small">inclusive of all taxes</p>
-
-                <hr>
-
-                {{-- COLOR OPTIONS --}}
-                <h6 class="fw-semibold mb-2">More Color</h6>
-                <div class="d-flex gap-2 mb-4 color-tabs">
-                    @foreach($product['product_variants'] as $variant)
-                        <div class="color-box"
-                            data-color="{{ $variant['color']['hex_code'] }}"
-                            style="background: {{ $variant['color']['hex_code'] }}">
-                        </div>
-                    @endforeach
-                </div>
-
-                <div id="previewBox" class="preview-box">Color Preview Box</div>
-
-                {{-- SIZE OPTIONS --}}
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="fw-semibold">Available Size</h6>
-                    <a href="#" class="text-brown fw-semibold">Size Guide</a>
-                </div>
-
-                <div class="d-flex gap-2 mb-4">
-                    @foreach($product['product_variants'] as $variant)
-                        <button class="size-btn">{{ $variant['size']['name'] }}</button>
-                    @endforeach
-                </div>
-
-                <button class="customBtn2">Custom Order</button>
-
-                <div class="d-flex align-items-center gap-3 mt-5">
-                    <button class="customBtn2 mt-0">Add to Bag</button>
-                    <button class="customBtn">Buy Now</button>
-                </div>
-
-                {{-- DESCRIPTION --}}
-                <div class="container my-4">
-                    <div class="desc-box p-4 rounded-4">
-                        <h5 class="fw-semibold">Description</h5>
-                        <p class="mt-3 text-muted">{{ $product['description_en'] }}</p>
-
-                        {{-- SPECIFICATION --}}
-                        <h5 class="fw-semibold mt-4">Specification</h5>
-                        <ul class="mt-3 spec-list">
-                            @foreach($product['product_specifications'] as $spec)
-                                <li>{{ $spec['type'] }} - {{ $spec['value'] }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-
-                {{-- PRODUCT META --}}
-                <div class="p-4 rounded-4 shadow-sm bg-white">
-                    <div class="row mb-2">
-                        <div class="col-6">Return allowed?</div>
-                        <div class="col-6 text-end">{{ $product['product_return'] == 1 ? 'Yes' : 'No' }}</div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-6">Exchange allowed?</div>
-                        <div class="col-6 text-end">{{ $product['product_exchangable'] == 1 ? 'Yes' : 'No' }}</div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-6">Review allowed?</div>
-                        <div class="col-6 text-end">{{ $product['review_rating'] == 1 ? 'Yes' : 'No' }}</div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-6">Affiliated Product?</div>
-                        <div class="col-6 text-end">{{ $product['affiliated_product'] == 1 ? 'Yes' : 'No' }}</div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-6">Customized product?</div>
-                        <div class="col-6 text-end">{{ $product['customized_product'] == 1 ? 'Yes' : 'No' }}</div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-6">Ready to ship?</div>
-                        <div class="col-6 text-end">{{ $product['ready_to_ship'] == 1 ? 'Yes' : 'No' }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">Cash on Delivery?</div>
-                        <div class="col-6 text-end">{{ $product['cash_on_delivery'] == 1 ? 'Yes' : 'No' }}</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {{-- RELATED PRODUCTS CAROUSEL --}}
-        <div class="col-lg-12">
-            <section class="bestSelling customContainer mt-3">
-                <div class="owl-carousel topRatedCarousel">
-
-                    @foreach($relatedProducts as $item)
-                    <div class="item">
-                        <div class="product-card">
-                            <div class="product-img">
-                                <img src="{{ $item->image }}" alt="Product">
-                                <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-                            </div>
-                            <div class="product-content">
-                                <h5>{{ $item->name }}</h5>
-                                <div class="rating">
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star"></i>
-                                    <i class="fa-solid fa-star-half-stroke"></i>
-                                    <span>(123K)</span>
-                                </div>
-                                <div class="price">
-                                    <strong>KD {{ $item->price }}</strong>
-                                    <span class="old-price">KD {{ $item->old_price }}</span>
-                                    <span class="discount">{{ $item->discount }}% off</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-
-                </div>
-            </section>
-        </div>
-
     </div>
 </div>
+
+    <div class="storeClient_profile customsmallContainer">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="profile_main">
+                    <div class="d-flex align-items-center">
+                        <div class="img-contenar">
+                            <div class="storeClient_profile_img">
+                                <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" />
+                            </div>
+                        </div>
+                        <div class="storeClient_profile_content">
+                            <div class="d-flex align-items-center">
+                                <h3>{{ $store_details['store']['store_name'] }}</h3>
+                                <span class="status_on_off">
+
+                                    @if ($store_details['store']['Store_Availability'] == 1)
+                                        Availble
+                                    @else
+                                        Busy
+                                    @endif
+
+                                </span>
+                            </div>
+                            <div class="product-content">
+                                <p>{{ $store_details['store']['store_name'] }}</p>
+                                <div class="rating">
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star"></i></span>
+                                    <span><i class="fa-solid fa-star-half-stroke"></i></span>
+                                    <span class="totalstart">(1K)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>{{ $store_details['store']['bio'] }}</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="qr_code d-flex ms-auto justify-content-end">
+                    <div class="qr-section">
+                        <div id="qrCodeBox"></div>
+
+                        <div class="copy-link-box" id="copyLinkBtn">
+                            <span>Copy Link</span>
+                            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" alt="Copy"
+                                class="copy-icon">
+                        </div>
+
+                        <p id="copiedMsg">Link Copied!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="customsmallContainer reels">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="suggestStore_contenar">
+                    <div class="owl-carousel storeCarousel">
+                        <div class="item" onclick="openGallery(0)">
+                            <div class="suggestStore_content">
+                                <div class="suggestedStore_img">
+                                    <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                                </div>
+                                <p>Kurtas</p>
+                            </div>
+                        </div>
+                        <div class="item" onclick="openGallery(1)">
+                            <div class="suggestStore_content">
+                                <div class="suggestedStore_img">
+                                    <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                                </div>
+                                <p>Polo</p>
+                            </div>
+                        </div>
+                        <div class="item" onclick="openGallery(2)">
+                            <div class="suggestStore_content">
+                                <div class="suggestedStore_img">
+                                    <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                                </div>
+                                <p>Shirts</p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="suggestStore_content">
+                                <div class="suggestedStore_img">
+                                    <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                                </div>
+                                <p>Casuals</p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="suggestStore_content">
+                                <div class="suggestedStore_img">
+                                    <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                                </div>
+                                <p>Formals</p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="suggestStore_content">
+                                <div class="suggestedStore_img">
+                                    <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                                </div>
+                                <p>Kurtas</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product_reels customContainer">
+        <ul class="nav nav-tabs customNavTabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="product-tab" data-bs-toggle="tab" data-bs-target="#product-tab-pane"
+                    type="button" role="tab" aria-controls="product-tab-pane" aria-selected="true">Product</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reels-tab" data-bs-toggle="tab" data-bs-target="#reels-tab-pane" type="button"
+                    role="tab" aria-controls="reels-tab-pane" aria-selected="false">Reels</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="product-tab-pane" role="tabpanel" aria-labelledby="product-tab"
+                tabindex="0">
+                <div class="categoryDetail customContainer">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="category_filter pb-3 mb-3 d-flex align-items-center justify-content-between">
+                                <h3>Sort By</h3>
+                                <span>
+                                    <img src="{{asset('user')}}/assets/images/sort.svg" class="img-fluid" />
+                                </span>
+                            </div>
+                            <div class="category_filter">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h3>Filters</h3>
+                                    <span>Clear</span>
+                                </div>
+                                <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+                                        <div class="form-group mt-4">
+                                            <h5>Category</h5>
+                                            @foreach ($category as $key => $item)
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input mb-1"
+                                                    type="checkbox"
+                                                    name="category[]"
+                                                    value="{{ $item->id }}"
+                                                    id="category_{{ $key }}"
+                                                    {{ is_array(request()->category) && in_array($item->id, request()->category) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="category_{{ $key }}">
+                                                    {{ $item->name }}
+                                                </label>
+                                            </div>
+                                            @endforeach
+                                        </div>
+
+                                        <div class="form-group mt-4">
+                                            <h5>Brand</h5>
+                                            <small>A-z</small>
+                                            @foreach ($brand as $key => $item)
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input mb-1"
+                                                    type="checkbox"
+                                                    name="brand_id[]"
+                                                    value="{{ $item->id }}"
+                                                    id="brand_{{ $key }}"
+                                                    {{ is_array(request()->brand_id) && in_array($item->id, request()->brand_id) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="brand_{{ $key }}">
+                                                    {{ $item->name_english }}
+                                                </label>
+                                            </div>
+                                            @endforeach
+                                        </div>
+
+                                        <div class="form-group mt-4">
+                                            <h5>Price</h5>
+                                            <div class="slider-wrap" id="priceArea">
+                                                <div class="track">
+                                                    <div class="left-dot"></div>
+                                                    <div class="track-line"></div>
+
+                                                    <div class="active-indicator" id="indicator"></div>
+
+                                                    <div class="value-bubble" id="valueBubble">249 KD</div>
+
+                                                    <input type="range"
+                                                        min="99"
+                                                        max="999"
+                                                        value="{{ request()->price ?? 249 }}"
+                                                        id="priceRange"
+                                                        name="price"
+                                                        style="width:100%;">
+                                                </div>
+
+                                                <div class="ticks">
+                                                    <div class="tick text-start">99 KD</div>
+                                                    <div class="tick">249 KD</div>
+                                                    <div class="tick text-end">999 KD</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Color --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Color</h5>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="color"
+                                                    value="1"
+                                                    id="color1"
+                                                    {{ request()->color == 1 ? 'checked' : '' }}>
+
+                                                <label class="form-check-label" for="color1">
+                                                    Color
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="color"
+                                                    value="2"
+                                                    id="color2"
+                                                    {{ request()->color == 2 ? 'checked' : '' }}>
+
+                                                <label class="form-check-label" for="color2">
+                                                    Color
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Discount Range --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Discount Range</h5>
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="discount"
+                                                    value="10"
+                                                    id="discount10"
+                                                    {{ request()->discount == 10 ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="discount10">
+                                                    10%
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="discount"
+                                                    value="20"
+                                                    id="discount20"
+                                                    {{ request()->discount == 20 ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="discount20">
+                                                    20%
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Sizes --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Sizes</h5>
+                                            @foreach ($size as $key => $item)
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    name="size[]"
+                                                    value="{{ $item->name }}"
+                                                    id="size_{{ $key }}"
+                                                    {{ is_array(request()->size) && in_array($item->name, request()->size) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="size_{{ $key }}">
+                                                    {{ $item->name }}
+                                                </label>
+                                            </div>
+                                            @endforeach
+                                        </div>
+
+                                        {{-- Ratings --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Ratings</h5>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="rating"
+                                                    value="2"
+                                                    id="rating2"
+                                                    {{ request()->rating == 2 ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="rating2">
+                                                    Upto 2 Star
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="rating"
+                                                    value="3"
+                                                    id="rating3"
+                                                    {{ request()->rating == 3 ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="rating3">
+                                                    Upto 3 Star
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Delivery Time --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Delivery Time</h5>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="delivery_time"
+                                                    value="1-2"
+                                                    id="del1"
+                                                    {{ request()->delivery_time == '1-2' ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="del1">
+                                                    Today - 2 days
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="delivery_time"
+                                                    value="3-5"
+                                                    id="del2"
+                                                    {{ request()->delivery_time == '3-5' ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="del2">
+                                                    3 - 5 days
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Delivery Options --}}
+                                        <div class="form-group delivery">
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    value="shortest"
+                                                    name="delivery_option[]"
+                                                    id="shortest"
+                                                    {{ is_array(request()->delivery_option) && in_array('shortest', request()->delivery_option) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="shortest">
+                                                    Shortest Delivery time
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    value="highest_sale"
+                                                    name="delivery_option[]"
+                                                    id="highest_sale"
+                                                    {{ is_array(request()->delivery_option) && in_array('highest_sale', request()->delivery_option) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="highest_sale">
+                                                    Highest Sale
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <button class="customBtn customBtn5 mt-5">Apply</button>
+
+                                    </form>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="categoryDetail_content">
+                                <div class="row">
+
+                                    @foreach ($store_details['All_Product'] as $item)
+                                        <div class="col-lg-4 col-md-4 col-12 my-3">
+
+                                            <div class="product-card">
+                                                <div class="product-img">
+
+                                                    <a href="{{ route('user.product_details',[$item->id]) }}">
+                                                        @foreach ($item->product_variants[0]->variant_image as $key => $val)
+                                                            @if ($key != 0)
+                                                                @php break  @endphp
+                                                            @endif
+                                                            <img src="{{ $val }}" alt="Product">
+                                                        @endforeach
+
+                                                    </a>
+
+
+                                                    <span class="wishlist-btn"><i id="wishlistProduct{{ $item->id }}"
+                                                            class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                                            onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                                                </div>
+                                                <div class="product-content">
+
+                                                    <a href="{{ route('user.product_details',[$item->id]) }}">
+
+                                                        <h5>{{ $item->product_name_en }}</h5>
+                                                        <div class="rating">
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                                            <span>(1K)</span>
+                                                        </div>
+                                                        <div class="price">
+                                                            <strong>{{ $item->product_variants[0]->actual_price }}
+                                                                KD</strong>
+                                                            <span
+                                                                class="old-price">{{ $item->product_variants[0]->final_price }}
+                                                                KD</span>
+                                                            <span class="discount">
+
+                                                                {{ $item->product_variants[0]->discount_value }}
+                                                                {{ $item->product_variants[0]->discount_type == '1' ? '%' : 'Off' }}
+
+                                                            </span>
+                                                        </div>
+                                                    </a>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    @endforeach
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="reels-tab-pane" role="tabpanel" aria-labelledby="reels-tab" tabindex="0">
+                <div class="categoryDetail_content reels_content">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script>
