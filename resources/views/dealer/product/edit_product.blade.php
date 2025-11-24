@@ -14,12 +14,11 @@
         </a>
     </div>
 
-    <form id="addproduct" action="{{ route('seller.Add_product_code') }}" method="post">
+    <form id="editproduct" action="{{ route('seller.edit_product_code',request()->id) }}" method="post">
         @csrf
 
-          <input type="text" class="form-control"  name="product_id" value="{{$product_details->id}}">
+          <input type="hidden" class="form-control"  name="product_id" value="{{$product_details->id}}">
         
-
         <div class="pt-3">
             <div class="title24">Select Category</div>
             <div class="row">
@@ -228,6 +227,18 @@
                     <p class="text-danger" id="error-variant_image_{{$product_Variation_count}}"></p>
 
                 </div>
+                
+                {{-- database image code --}}
+
+                    @if(!empty($item->variant_image))
+                        @foreach($item->variant_image as $chart)
+                    <div class="multiple-img position-relative">
+                    <img src="{{$chart}}" class="w-100 rounded">
+                    <span class="remove-ic remove-image" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+                </div>
+                        @endforeach
+                    @endif
+                            {{-- database image code end Here --}}
 
                 <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer{{$product_Variation_count}}"></div>
             </div>
@@ -705,7 +716,22 @@
 
             </div>
 
-            <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div>
+             <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview">
+        @if(!empty($product_details->upload_size_chart))
+                <div class="position-relative" style="width:100px;height:100px;">
+                    <img src="{{ $product_details->upload_size_chart }}" 
+                         style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
+                    <span class="remove-ic remove-image" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+
+                     <input type="hidden" accept="image/*" value="{{ $product_details->upload_size_chart }}"
+                        name="old_upload_size_chart">
+
+
+                </div>
+                        @endif
+    </div>
+
+            {{-- <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div> --}}
         </div>
 
         <div class="dashboard-button d-flex mt-5 gap-5">
@@ -900,7 +926,7 @@
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
                         </select>
-  <p class="text-danger" id="error-color_id_${product_Variation_count}"></p>
+      <p class="text-danger" id="error-color_id_${product_Variation_count}"></p>
 
                     </div>
                     
@@ -1178,7 +1204,7 @@
 
     // When user Submit From submit code Apply
 
-    $(document).on('submit', 'form#addproduct', function(event) {
+    $(document).on('submit', 'form#editproduct', function(event) {
         event.preventDefault();
         $('p.error_container').html("");
         $("#file-error").html("");
@@ -1293,6 +1319,17 @@
             $('input[name="exchangable_days"]').val('').closest('.row').hide();
         }
     });
+
+    // Remove Image from database get
+    document.addEventListener("click", function(e) {
+    if(e.target.classList.contains("remove-image")) {
+        let imgDiv = e.target.closest("div.position-relative");
+        imgDiv.remove();
+    }
+});
+
+
+
 </script>
 
 
