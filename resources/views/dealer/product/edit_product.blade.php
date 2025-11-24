@@ -17,6 +17,8 @@
     <form id="addproduct" action="{{ route('seller.Add_product_code') }}" method="post">
         @csrf
 
+          <input type="text" class="form-control"  name="product_id" value="{{$product_details->id}}">
+        
 
         <div class="pt-3">
             <div class="title24">Select Category</div>
@@ -60,7 +62,7 @@
                         <label>Other</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_en">
+                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_en" value="{{$product_details->other_en}}">
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
                 <div class="sub-form">
@@ -68,7 +70,7 @@
                         <label>Product Name</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_en">
+                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_en" value="{{$product_details->product_name_en}}">
                     <p class="text-danger" id="error-product_name_en"></p>
                 </div>
                 <div class="sub-form">
@@ -76,7 +78,7 @@
                         <label>Description</label>
                         <span>In English</span>
                     </div>
-                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_en"></textarea>
+                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_en"> {{$product_details->description_en}}</textarea>
 
                     <p class="text-danger" id="error-description_en"></p>
                 </div>
@@ -92,7 +94,7 @@
                         <option value="">Select Brand</option>
 
                         @foreach ($brand as $item)
-                            <option value="{{ $item->id }}"  @if ($product_details->brand_id  ==  $item->id) checked @endif>{{ $item->name_english }}</option>
+                            <option value="{{ $item->id }}"  @if ($product_details->brand_id  ==  $item->id) selected @endif>{{ $item->name_english }}</option>
                         @endforeach
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
@@ -102,7 +104,7 @@
                         <label>Other</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_ar" value="{{$product_details->other_en}}">
+                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_ar" value="{{$product_details->other_ar}}">
 
                     <p class="text-danger" id="error-other_ar"></p>
                 </div>
@@ -111,7 +113,7 @@
                         <label>Product Name</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_ar" value="{{$product_details->product_name_en}}">
+                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_ar" value="{{$product_details->product_name_ar}}">
 
                     <p class="text-danger" id="error-product_name_ar"></p>
                 </div>
@@ -148,11 +150,8 @@
                             <input type="text" class="form-control" placeholder="Enter product name"
                                 value="{{$item->name_en}}" name="product_spe_en[]">
 
-                            <p id="error-product_spe_en_0" class="text-danger"></p>
-
+                            <p id="error-product_spe_en_{{$specification_count}}" class="text-danger"></p>
                         </div>
-
-
                     </div>
 
                     <div class="col-lg-6 col-md-6">
@@ -164,7 +163,7 @@
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter product name"
                                     name="product_spe_ar[]"  value="{{$item->name_ar}}">
-                                <p class="text-danger" id="error-product_spe_ar_0"></p>
+                                <p class="text-danger" id="error-product_spe_ar_{{$specification_count}}"></p>
 
                             </div>
 
@@ -181,7 +180,7 @@
                             </div>
                             <input type="text" class="form-control" placeholder="Enter product feature"
                                 name="product_spe_feature_en[]"   value="{{$item->feature_en}}">
-                            <p class="text-danger" id="error-product_spe_feature_en_0"></p>
+                            <p class="text-danger" id="error-product_spe_feature_en_{{$specification_count}}"></p>
 
                         </div>
 
@@ -196,7 +195,7 @@
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter product feature"
                                     name="product_spe_feature_ar[]"   value="{{$item->feature_ar}}">
-                                <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
+                                <p class="text-danger" id="error-product_spe_feature_ar_{{$specification_count}}"></p>
 
                             </div>
 
@@ -210,17 +209,12 @@
        @endphp
 
         @endforeach
-
-
         </div>
 
       
         <!----- variant panel ------>
           @foreach ($product_details['product_variants'] as $item)
          
-            {{dd($item)}}
-
-
         <div class="variant-panel">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
@@ -248,8 +242,8 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="color_id[]">
-                                @foreach ($color as $item)
-                                    <option value="{{ $item->id }}" @if($item->color_id== $item->id ) selected  @endif >{{ $item->name }}</option>
+                                @foreach ($color as $item1)
+                                    <option value="{{ $item1->id }}" @if($item->color_id== $item1->id ) selected  @endif >{{ $item1->name }}</option>
                                 @endforeach
                             </select>
                             <p class="text-danger" id="error-color_id_{{$product_Variation_count}}"></p>
@@ -265,8 +259,8 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="size_id[]">
-                                @foreach ($size as $item)
-                                    <option value="{{ $item->id }}" @if($item->color_id== $item->id ) selected  @endif >{{ $item->name }}</option>
+                                @foreach ($size as $item1)
+                                    <option value="{{ $item1->id }}" @if($item->color_id== $item1->id ) selected  @endif >{{ $item1->name }}</option>
                                 @endforeach
                             </select>
                             <p class="text-danger" id="error-size_id_{{$product_Variation_count}}"></p>
@@ -278,7 +272,7 @@
                     <div class="col-lg-3 remove_Not_in_women_Category">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>Bust {{ dd($item)}}</label>
+                                <label>Bust </label>
                             </div>
                             <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
                                 name="bust[]" value="{{$item->bust}}">
@@ -414,7 +408,7 @@
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[{{$product_Variation_count}}]"  @if($item['discount_type']== 0) checked  @endif value="2">
+                                    <input type="radio" name="discount_type[{{$product_Variation_count}}]"  @if($item['discount_type']== 2) checked  @endif value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -472,7 +466,7 @@
                             <label>Set Min.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="min_card_quantity">
+                            name="min_card_quantity" value="{{$product_details->min_card_quantity}}">
                         <p class="text-danger" id="error-min_card_quantity"></p>
 
                     </div>
@@ -483,7 +477,7 @@
                             <label>Set Max.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="max_card_quantity">
+                            name="max_card_quantity" value="{{$product_details->max_card_quantity}}">
                         <p class="text-danger" id="error-max_card_quantity"></p>
 
                     </div>
@@ -502,14 +496,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" checked value='1'>
+                                        <input type="radio" name="product_return" checked value='1'  @if($product_details->product_return== 1) selcted  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" value='0'>
+                                        <input type="radio" name="product_return" value='0'  @if($product_details->product_return== 0) selcted  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -517,14 +511,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="@if($product_details->product_return== 0) display:none;  @endif">
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>If Yes,Total days for returning</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.KD 299.00"
-                                    name="return_days">
+                                    name="return_days" value="{{$product_details->return_days}}" >
                                 <p class="text-danger" id="error-return_days"></p>
 
                             </div>
@@ -539,14 +533,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_exchangable" checked value="1">
+                                        <input type="radio" name="product_exchangable" checked value="1"   @if($product_details->product_exchangable== 1) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_exchangable" value="0">
+                                        <input type="radio" name="product_exchangable" value="0"  @if($product_details->product_exchangable== 0) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -555,19 +549,20 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="@if($product_details->product_exchangable== 0) display:none;  @endif" >
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Is this product exchangeable?</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.15 days"
-                                    name="exchangable_days">
+                                    name="exchangable_days"  value="{{$product_details->exchangable_days}}" >
                                 <p class="text-danger" id="error-exchangable_days"></p>
 
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -582,14 +577,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="review_rating" value="1" checked>
+                                        <input type="radio" name="review_rating" value="1"    @if($product_details->review_rating== 1) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="review_rating" value="0">
+                                        <input type="radio" name="review_rating" value="0" @if($product_details->review_rating== 0) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -606,14 +601,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="affiliated_product" checked value="1">
+                                        <input type="radio" name="affiliated_product" checked value="1" @if($product_details->affiliated_product== 1) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="affiliated_product" value="0">
+                                        <input type="radio" name="affiliated_product" value="0"  @if($product_details->affiliated_product== 0) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -630,14 +625,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="customized_product" checked value="1">
+                                        <input type="radio" name="customized_product" value="1"  @if($product_details->customized_product== 1) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="customized_product" value="0">
+                                        <input type="radio" name="customized_product" value="0" @if($product_details->customized_product== 0) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -654,14 +649,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="ready_to_ship" checked value="1">
+                                        <input type="radio" name="ready_to_ship"  value="1" @if($product_details->ready_to_ship== 1) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="ready_to_ship" value="0">
+                                        <input type="radio" name="ready_to_ship" value="0" @if($product_details->ready_to_ship== 0) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -678,14 +673,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="cash_on_delivery" checked value="1">
+                                        <input type="radio" name="cash_on_delivery" value="1"  @if($product_details->cash_on_delivery== 1) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="cash_on_delivery" value="0">
+                                        <input type="radio" name="cash_on_delivery" value="0"   @if($product_details->cash_on_delivery== 0) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -716,7 +711,7 @@
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
                 onclick="location.href='{{ route('seller.products') }}'">Cancel</button>
-            <button type="submit" class="btn add-fillbtn w-100">Add Product</button>
+            <button type="submit" class="btn add-fillbtn w-100">Edit Product</button>
         </div>
     </form>
 
@@ -753,6 +748,7 @@
     $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
         let rel = $(this).attr('rel');
         let files = e.target.files;
+        alert(files);
         // $('#previewContainer').empty(); // clear old previews
         [...files].forEach(f => {
             let url = URL.createObjectURL(f);
@@ -790,6 +786,8 @@
     // ADD NEW ROW In specification
 
     $("#addmore").click(function() {
+
+        specification_count={{$specification_count}}
 
         $(".append-panel").append(`
 
@@ -866,6 +864,8 @@
 </script>
 
 <script>
+
+      var product_Variation_count = {{$product_Variation_count}};
 
     // ADD NEW Variant
     $(".addVariantBtn").click(function() {
