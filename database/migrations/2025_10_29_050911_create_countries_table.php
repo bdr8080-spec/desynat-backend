@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('currency_symbol');
             $table->string('dial_code');
             $table->string('flag');
+            $table->string('flag1');
             $table->string('exchange_rate_to_kwd');
             $table->timestamps();
         });
