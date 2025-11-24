@@ -152,153 +152,249 @@
                             </div>
                             <div class="category_filter">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h3>Filter</h3>
+                                    <h3>Filters</h3>
                                     <span>Clear</span>
                                 </div>
-                                <div class="form-group mt-4">
-                                    <h5>Category</h5>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input mb-1" type="checkbox" value="" id="checkDefault">
-                                        <label class="form-check-label" for="checkDefault">
-                                            Women
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                                        <label class="form-check-label" for="checkChecked">
-                                            Men
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                                        <label class="form-check-label" for="checkChecked">
-                                            Kids
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <h5>Brand</h5>
-                                    <small>A-z</small>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input mb-1" type="checkbox" value="" id="checkDefault">
-                                        <label class="form-check-label" for="checkDefault">
-                                            Brand
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                                        <label class="form-check-label" for="checkChecked">
-                                            Brand
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                                        <label class="form-check-label" for="checkChecked">
-                                            Brand
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <h5>Price</h5>
-
-                                    <div class="slider-wrap" id="priceArea">
-                                        <div class="track">
-                                            <div class="left-dot" aria-hidden="true"></div>
-                                            <div class="track-line" aria-hidden="true"></div>
-
-                                            <!-- indicator that moves to the active tick (small circle) -->
-                                            <div class="active-indicator" id="indicator"></div>
-
-                                            <!-- value bubble above the thumb -->
-                                            <div class="value-bubble" id="valueBubble">249 KD</div>
-
-                                            <!-- range input: 0,1,2 correspond to the three ticks -->
-                                           <input type="range" min="99" max="999" value="249" id="priceRange" style="width:100%;">
+                                <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+                                        <div class="form-group mt-4">
+                                            <h5>Category</h5>
+                                            @foreach ($category as $key => $item)
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input mb-1"
+                                                    type="checkbox"
+                                                    name="category[]"
+                                                    value="{{ $item->id }}"
+                                                    id="category_{{ $key }}"
+                                                    {{ is_array(request()->category) && in_array($item->id, request()->category) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="category_{{ $key }}">
+                                                    {{ $item->name }}
+                                                </label>
+                                            </div>
+                                            @endforeach
                                         </div>
 
-                                        <!-- labels under the track -->
-                                        <div class="ticks" aria-hidden="true">
-                                            <div class="tick text-start">99 KD</div>
-                                            <div class="tick">249 KD</div>
-                                            <div class="tick text-end">999 KD</div>
+                                        <div class="form-group mt-4">
+                                            <h5>Brand</h5>
+                                            <small>A-z</small>
+                                            @foreach ($brand as $key => $item)
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input mb-1"
+                                                    type="checkbox"
+                                                    name="brand_id[]"
+                                                    value="{{ $item->id }}"
+                                                    id="brand_{{ $key }}"
+                                                    {{ is_array(request()->brand_id) && in_array($item->id, request()->brand_id) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="brand_{{ $key }}">
+                                                    {{ $item->name_english }}
+                                                </label>
+                                            </div>
+                                            @endforeach
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <h5>Color</h5>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                                        <label class="form-check-label" for="radioDefault1">
-                                            Color
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                                        <label class="form-check-label" for="radioDefault2">
-                                            Color
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <h5>Discount Range</h5>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                                        <label class="form-check-label" for="radioDefault1">
-                                            10%
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                                        <label class="form-check-label" for="radioDefault2">
-                                            10%
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <h5>Sizes</h5>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                                        <label class="form-check-label" for="radioDefault1">
-                                            Sizes
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                                        <label class="form-check-label" for="radioDefault2">
-                                            Sizes
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <h5>Ratings</h5>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                                        <label class="form-check-label" for="radioDefault1">
-                                            Upto 2 Star
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                                        <label class="form-check-label" for="radioDefault2">
-                                            Upto 3 Star
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group mt-4">
-                                    <h5>Delivery Time</h5>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                                        <label class="form-check-label" for="radioDefault1">
-                                            Today- 2 days
-                                        </label>
-                                    </div>
-                                    <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                                        <label class="form-check-label" for="radioDefault2">
-                                            3- 5 days
-                                        </label>
-                                    </div>
-                                </div>
+
+                                        <div class="form-group mt-4">
+                                            <h5>Price</h5>
+                                            <div class="slider-wrap" id="priceArea">
+                                                <div class="track">
+                                                    <div class="left-dot"></div>
+                                                    <div class="track-line"></div>
+
+                                                    <div class="active-indicator" id="indicator"></div>
+
+                                                    <div class="value-bubble" id="valueBubble">249 KD</div>
+
+                                                    <input type="range"
+                                                        min="99"
+                                                        max="999"
+                                                        value="{{ request()->price ?? 249 }}"
+                                                        id="priceRange"
+                                                        name="price"
+                                                        style="width:100%;">
+                                                </div>
+
+                                                <div class="ticks">
+                                                    <div class="tick text-start">99 KD</div>
+                                                    <div class="tick">249 KD</div>
+                                                    <div class="tick text-end">999 KD</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {{-- Color --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Color</h5>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="color"
+                                                    value="1"
+                                                    id="color1"
+                                                    {{ request()->color == 1 ? 'checked' : '' }}>
+
+                                                <label class="form-check-label" for="color1">
+                                                    Color
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="color"
+                                                    value="2"
+                                                    id="color2"
+                                                    {{ request()->color == 2 ? 'checked' : '' }}>
+
+                                                <label class="form-check-label" for="color2">
+                                                    Color
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Discount Range --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Discount Range</h5>
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="discount"
+                                                    value="10"
+                                                    id="discount10"
+                                                    {{ request()->discount == 10 ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="discount10">
+                                                    10%
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="discount"
+                                                    value="20"
+                                                    id="discount20"
+                                                    {{ request()->discount == 20 ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="discount20">
+                                                    20%
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Sizes --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Sizes</h5>
+                                            @foreach ($size as $key => $item)
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    name="size[]"
+                                                    value="{{ $item->name }}"
+                                                    id="size_{{ $key }}"
+                                                    {{ is_array(request()->size) && in_array($item->name, request()->size) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="size_{{ $key }}">
+                                                    {{ $item->name }}
+                                                </label>
+                                            </div>
+                                            @endforeach
+                                        </div>
+
+                                        {{-- Ratings --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Ratings</h5>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="rating"
+                                                    value="2"
+                                                    id="rating2"
+                                                    {{ request()->rating == 2 ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="rating2">
+                                                    Upto 2 Star
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="rating"
+                                                    value="3"
+                                                    id="rating3"
+                                                    {{ request()->rating == 3 ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="rating3">
+                                                    Upto 3 Star
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Delivery Time --}}
+                                        <div class="form-group mt-4">
+                                            <h5>Delivery Time</h5>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="delivery_time"
+                                                    value="1-2"
+                                                    id="del1"
+                                                    {{ request()->delivery_time == '1-2' ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="del1">
+                                                    Today - 2 days
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="delivery_time"
+                                                    value="3-5"
+                                                    id="del2"
+                                                    {{ request()->delivery_time == '3-5' ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="del2">
+                                                    3 - 5 days
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        {{-- Delivery Options --}}
+                                        <div class="form-group delivery">
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    value="shortest"
+                                                    name="delivery_option[]"
+                                                    id="shortest"
+                                                    {{ is_array(request()->delivery_option) && in_array('shortest', request()->delivery_option) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="shortest">
+                                                    Shortest Delivery time
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check my-4">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    value="highest_sale"
+                                                    name="delivery_option[]"
+                                                    id="highest_sale"
+                                                    {{ is_array(request()->delivery_option) && in_array('highest_sale', request()->delivery_option) ? 'checked' : '' }}>
+                                                
+                                                <label class="form-check-label" for="highest_sale">
+                                                    Highest Sale
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <button class="customBtn customBtn5 mt-5">Apply</button>
+
+                                    </form>
+
+
                             </div>
                         </div>
                         <div class="col-lg-8">

@@ -241,7 +241,7 @@
                             <div class="col-lg-2 text-center">
                                 <label for="vehicleImgFront" class="upload-box">
                                     <!-- Front Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->vehicle_image) && $deliveryBoy->vehicle_image->firstWhere('is_front', 1) ? $deliveryBoy->vehicle_image->firstWhere('is_front', 1)->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->vehicle_image) && $deliveryBoy->vehicle_image->firstWhere('is_front', 1) ? $deliveryBoy->vehicle_image->firstWhere('is_front', 1)->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="vehicleImgFrontIcon" class="upload-icon">
                                     <img id="vehicleImgFrontPreview" class="preview-image">
                                     <input type="file" id="vehicleImgFront" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->vehicle_image) && $deliveryBoy->vehicle_image->firstWhere('is_front', 1) ? $deliveryBoy->vehicle_image->firstWhere('is_front', 1)->document_path : '' }}">
@@ -253,7 +253,7 @@
                             <div class="col-lg-10 text-center">
                                 <label for="vehicleImgBack" class="upload-box">
                                     <!-- Back Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->vehicle_image[1]) ? $deliveryBoy->vehicle_image[1]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->vehicle_image[1]) ? $deliveryBoy->vehicle_image[1]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="vehicleImgBackIcon" class="upload-icon">
                                     <img id="vehicleImgBackPreview" class="preview-image">
                                     <input type="file" id="vehicleImgBack" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->vehicle_image[1]) ? $deliveryBoy->vehicle_image[1]->document_path : '' }}">
@@ -269,7 +269,7 @@
                             <div class="col-lg-2 text-center">
                                 <label for="idProofFront" class="upload-box">
                                     <!-- Front Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->identity_proof[0]) ? $deliveryBoy->identity_proof[0]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->identity_proof[0]) ? $deliveryBoy->identity_proof[0]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="idProofFrontIcon" class="upload-icon">
                                     <img id="idProofFrontPreview" class="preview-image">
                                     <input type="file" id="idProofFront" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->identity_proof[0]) ? $deliveryBoy->identity_proof[0]->document_path : '' }}">
@@ -281,7 +281,7 @@
                             <div class="col-lg-10 text-center">
                                 <label for="idProofBack" class="upload-box">
                                     <!-- Back Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->identity_proof[1]) ? $deliveryBoy->identity_proof[1]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->identity_proof[1]) ? $deliveryBoy->identity_proof[1]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="idProofBackIcon" class="upload-icon">
                                     <img id="idProofBackPreview" class="preview-image">
                                     <input type="file" id="idProofBack" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->identity_proof[1]) ? $deliveryBoy->identity_proof[1]->document_path : '' }}">
@@ -297,7 +297,7 @@
                             <div class="col-lg-2 text-center">
                                 <label for="dlFront" class="upload-box">
                                     <!-- Front Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->driving_license[0]) ? $deliveryBoy->driving_license[0]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->driving_license[0]) ? $deliveryBoy->driving_license[0]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="dlFrontIcon" class="upload-icon">
                                     <img id="dlFrontPreview" class="preview-image">
                                     <input type="file" id="dlFront" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->driving_license[0]) ? $deliveryBoy->driving_license[0]->document_path : '' }}">
@@ -309,7 +309,7 @@
                             <div class="col-lg-10 text-center">
                                 <label for="dlBack" class="upload-box">
                                     <!-- Back Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->driving_license[1]) ? $deliveryBoy->driving_license[1]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->driving_license[1]) ? $deliveryBoy->driving_license[1]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="dlBackIcon" class="upload-icon">
                                     <img id="dlBackPreview" class="preview-image">
                                     <input type="file" id="dlBack" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->driving_license[1]) ? $deliveryBoy->driving_license[1]->document_path : '' }}">
@@ -325,7 +325,7 @@
                             <div class="col-lg-2 text-center">
                                 <label for="insuranceFront" class="upload-box">
                                     <!-- Front Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->vehicle_insurance[0]) ? $deliveryBoy->vehicle_insurance[0]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->vehicle_insurance[0]) ? $deliveryBoy->vehicle_insurance[0]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="insuranceFrontIcon" class="upload-icon">
                                     <img id="insuranceFrontPreview" class="preview-image">
                                     <input type="file" id="insuranceFront" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->vehicle_insurance[0]) ? $deliveryBoy->vehicle_insurance[0]->document_path : '' }}">
@@ -340,7 +340,7 @@
                             <div class="col-lg-2 text-center">
                                 <label for="pollutionFront" class="upload-box">
                                     <!-- Front Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->pollution_paper[0]) ? $deliveryBoy->pollution_paper[0]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->pollution_paper[0]) ? $deliveryBoy->pollution_paper[0]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="pollutionFrontIcon" class="upload-icon">
                                     <img id="pollutionFrontPreview" class="preview-image">
                                     <input type="file" id="pollutionFront" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->pollution_paper[0]) ? $deliveryBoy->pollution_paper[0]->document_path : '' }}">
@@ -351,7 +351,7 @@
                             <div class="col-lg-10 text-center">
                                 <label for="pollutionBack" class="upload-box">
                                     <!-- Back Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->pollution_paper[1]) ? $deliveryBoy->pollution_paper[1]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->pollution_paper[1]) ? $deliveryBoy->pollution_paper[1]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="pollutionBackIcon" class="upload-icon">
                                     <img id="pollutionBackPreview" class="preview-image">
                                     <input type="file" id="pollutionBack" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->pollution_paper[1]) ? $deliveryBoy->pollution_paper[1]->document_path : '' }}">
@@ -366,7 +366,7 @@
                             <div class="col-lg-2 text-center">
                                 <label for="rcFront" class="upload-box">
                                     <!-- Front Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->registration_certificate[0]) ? $deliveryBoy->registration_certificate[0]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->registration_certificate[0]) ? $deliveryBoy->registration_certificate[0]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="rcFrontIcon" class="upload-icon">
                                     <img id="rcFrontPreview" class="preview-image">
                                     <input type="file" id="rcFront" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->registration_certificate[0]) ? $deliveryBoy->registration_certificate[0]->document_path : '' }}">
@@ -377,7 +377,7 @@
                             <div class="col-lg-10 text-center">
                                 <label for="rcBack" class="upload-box">
                                     <!-- Back Image Preview -->
-                                    <img src="{{ isset($deliveryBoy->registration_certificate[1]) ? $deliveryBoy->registration_certificate[1]->document_path : 'https://cdn-icons-png.flaticon.com/512/847/847969.png' }}" 
+                                    <img src="{{ isset($deliveryBoy->registration_certificate[1]) ? $deliveryBoy->registration_certificate[1]->document_path : '/admin/image/imge-upload.svg' }}" 
                                         id="rcBackIcon" class="upload-icon">
                                     <img id="rcBackPreview" class="preview-image">
                                     <input type="file" id="rcBack" hidden accept="image/*" data-existing-image="{{ isset($deliveryBoy->registration_certificate[1]) ? $deliveryBoy->registration_certificate[1]->document_path : '' }}">

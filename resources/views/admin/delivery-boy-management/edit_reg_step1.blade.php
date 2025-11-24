@@ -152,9 +152,9 @@
                                 <div class="mt-3 position-relative">
                                     <label>Password</label>
                                     <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="Enter password" value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}" />
+                                        placeholder="Enter password" value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"style="font-size: 17px;" />
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
-                                    style="right: 15px; cursor: pointer;"></i>
+                                    style="right: 15px; cursor: pointer;top: 51px;"></i>
                                     <span class="text-danger" id="password_error"></span>
                                 </div>
 
@@ -229,9 +229,9 @@
                                     <label>Confirm Password</label>
                                     <input type="password" id="confirmPassword" class="form-control" name="confirm_password"
                                         placeholder="Enter Confirm password"
-                                        value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}" />
+                                        value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"  style="font-size: 17px;"/>
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
-                                    style="right: 15px; cursor: pointer;"></i>
+                                    style="right: 15px; cursor: pointer; top: 51px;"></i>
                                     <span class="text-danger" id="confirm_password_error"></span>
                                 </div>
                             </div>

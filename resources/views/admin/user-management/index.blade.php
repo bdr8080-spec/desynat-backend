@@ -47,7 +47,7 @@
                                 style="margin-top: 70px">
                                 <span>Reset</span>
                             </a>
-                             <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                             <a class="btn btn-dark customBtn " style="margin-top: 70px">
                                 <span>Export </span></a>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                             <th scope="col">Email</th>
                             <th scope="col">Total Number of Completed Order</th>
                             <th scope="col">Total Number of Cancelled Orders</th>
-                            <th scope="col">Wallet Amount</th>
+                            <th scope="col">Wallet Balance</th>
                             <th scope="col">Add Amount in Wallet</th>
                             <th scope="col">Block/Unblock</th>
                         </tr>
@@ -85,7 +85,7 @@
                             <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
                             <td>{{ $user['full_name'] }}</td>
                             <td>
-                                <img src="{{ $user['profile_image'] }}" alt="" width="40px" height="40px" class="square" />
+                                <img src="{{ $user['profile_image'] }}" alt="" width="60px" height="60px" class="square" />
                             </td>
                             <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
                             <td>{{ $user->country_info ? $user->country_info->name : 'N/A' }}</td>
@@ -144,7 +144,7 @@
             <div class="modal-body m-auto mb-2">
                 <input type="hidden" id="userIdForWallet">
                 <div class="form-group w-100">
-                    <label for="walletAmount" class="form-label">Add Amount</label>
+                    <label for="walletAmount" class="form-label">Enter Amount</label>
                     <input type="text" id="walletAmount" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1').replace(/^(\d+)(\.\d{0,2}).*$/,'$1$2');" class="form-control w-100" />
                     <small id="amountError" class="text-danger" style="display:none;">Please Enter Amount</small>
                 </div>
