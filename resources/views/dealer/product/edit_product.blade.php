@@ -774,7 +774,6 @@
     $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
         let rel = $(this).attr('rel');
         let files = e.target.files;
-        alert(files);
         // $('#previewContainer').empty(); // clear old previews
         [...files].forEach(f => {
             let url = URL.createObjectURL(f);
