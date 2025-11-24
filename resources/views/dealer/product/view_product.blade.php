@@ -181,6 +181,7 @@
             @endforeach
 
 
+            @if($product->category_id==2)
 
             <div class="p-4 rounded-4 shadow-sm" style="background:#fff;">
                 <div class="row mb-2">
@@ -208,6 +209,8 @@
                     <div class="col-6 text-end">32</div>
                 </div>
             </div>
+
+            @endif
 
             <div class="p-4 my-2 rounded-4 shadow-sm" style="background:#fff;">
                 <div class="row mb-2">

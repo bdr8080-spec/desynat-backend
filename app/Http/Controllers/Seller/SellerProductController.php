@@ -136,6 +136,9 @@ public function Add_product_code(Request $request){
           'variant_image' => ['required', 'array'],
           'color_id' => ['required', 'array'],
           'size_id' => ['required', 'array', ],
+          'color_id.*' => ['required','exists:colors,id'],
+          'size_id.*' => ['required','exists:sizes,id'],
+
           'total_stock' => ['required', 'array'],
           'sku' => ['required', 'array'],
           'sku_threshold_value' => ['required', 'array'],
@@ -145,9 +148,7 @@ public function Add_product_code(Request $request){
           'final_price' => ['required', 'array'],
 
           'variant_image.*' => ['required'],
-          'color_id.*' => ['required','distinct','exists:colors,id'],
-          'size_id.*' => ['required','exists:sizes,id','distinct'],
-          'total_stock.*' => ['required'],
+         'total_stock.*' => ['required'],
           'sku.*' => ['required'],
           'sku_threshold_value.*' => ['required'],
           'actual_price.*' => ['required'],
@@ -322,10 +323,32 @@ public function Add_product_code(Request $request){
             'length.required'             => 'Length field is required for women category.',
             'length.*.required'           => 'Each length value is required.',
         
-
-
-        
       ]);
+
+
+     $validate->after(function ($validate) use ($request) {
+
+    $colors = $request->color_id;
+    $sizes  = $request->size_id;
+
+    // Group sizes by color
+    $grouped = [];
+
+    foreach ($colors as $i => $color) {
+        $size = $sizes[$i] ?? null;
+        $grouped[$color][] = $size;
+    }
+
+    // Validate: for same color → sizes must be unique
+    foreach ($grouped as $color => $sizesForColor) {
+        if (count($sizesForColor) !== count(array_unique($sizesForColor))) {
+            $validate->errors()->add(
+                'size_id_'.$color,
+                "For color sizes must be different."
+            );
+        }
+    }
+});
 
       
       if($validate->fails()){
@@ -459,7 +482,7 @@ $request_data=(object) [
 
     $product=$product['data'];
 
-    dump($product);
+    // dump($product);
     
     return view('dealer.product.view_product',compact('product'));
     
