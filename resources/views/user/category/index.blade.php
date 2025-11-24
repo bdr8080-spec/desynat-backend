@@ -8,6 +8,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <div class="storeClient_profile customsmallContainer">
         <div class="row">
@@ -143,6 +144,12 @@
                 <div class="categoryDetail customContainer">
                     <div class="row">
                         <div class="col-lg-4">
+                            <div class="category_filter pb-3 mb-3 d-flex align-items-center justify-content-between">
+                                <h3>Sort By</h3>
+                                <span>
+                                    <img src="{{asset('user')}}/assets/images/sort.svg" class="img-fluid" />
+                                </span>
+                            </div>
                             <div class="category_filter">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h3>Filters</h3>
@@ -150,36 +157,146 @@
                                 </div>
                             <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
                                 <div class="form-group mt-4">
+                                    <h5>Category</h5>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input mb-1" type="checkbox" value="" id="checkDefault">
+                                        <label class="form-check-label" for="checkDefault">
+                                            Women
+                                        </label>
+                                    </div>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
+                                        <label class="form-check-label" for="checkChecked">
+                                            Men
+                                        </label>
+                                    </div>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
+                                        <label class="form-check-label" for="checkChecked">
+                                            Kids
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <h5>Brand</h5>
+                                    <small>A-z</small>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input mb-1" type="checkbox" value="" id="checkDefault">
+                                        <label class="form-check-label" for="checkDefault">
+                                            Brand
+                                        </label>
+                                    </div>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
+                                        <label class="form-check-label" for="checkChecked">
+                                            Brand
+                                        </label>
+                                    </div>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
+                                        <label class="form-check-label" for="checkChecked">
+                                            Brand
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <h5>Price</h5>
+
+                                    <div class="slider-wrap" id="priceArea">
+                                        <div class="track">
+                                            <div class="left-dot" aria-hidden="true"></div>
+                                            <div class="track-line" aria-hidden="true"></div>
+
+                                            <!-- indicator that moves to the active tick (small circle) -->
+                                            <div class="active-indicator" id="indicator"></div>
+
+                                            <!-- value bubble above the thumb -->
+                                            <div class="value-bubble" id="valueBubble">249 KD</div>
+
+                                            <!-- range input: 0,1,2 correspond to the three ticks -->
+                                           <input type="range" min="99" max="999" value="249" id="priceRange" style="width:100%;">
+                                        </div>
+
+                                        <!-- labels under the track -->
+                                        <div class="ticks" aria-hidden="true">
+                                            <div class="tick text-start">99 KD</div>
+                                            <div class="tick">249 KD</div>
+                                            <div class="tick text-end">999 KD</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <h5>Color</h5>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                                        <label class="form-check-label" for="radioDefault1">
+                                            Color
+                                        </label>
+                                    </div>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                                        <label class="form-check-label" for="radioDefault2">
+                                            Color
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <h5>Discount Range</h5>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                                        <label class="form-check-label" for="radioDefault1">
+                                            10%
+                                        </label>
+                                    </div>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                                        <label class="form-check-label" for="radioDefault2">
+                                            10%
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4">
+                                    <h5>Sizes</h5>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                                        <label class="form-check-label" for="radioDefault1">
+                                            Sizes
+                                        </label>
+                                    </div>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                                        <label class="form-check-label" for="radioDefault2">
+                                            Sizes
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4">
                                     <h5>Ratings</h5>
                                     <div class="form-check my-4">
-                                        <input class="form-check-input mb-1" type="checkbox" value=""
-                                            id="checkDefault">
-                                        <label class="form-check-label" for="checkDefault">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                                        <label class="form-check-label" for="radioDefault1">
                                             Upto 2 Star
                                         </label>
                                     </div>
                                     <div class="form-check my-4">
-                                        <input class="form-check-input" type="checkbox" value="" id="checkChecked"
-                                            checked>
-                                        <label class="form-check-label" for="checkChecked">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                                        <label class="form-check-label" for="radioDefault2">
                                             Upto 3 Star
                                         </label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <h5>Availability</h5>
+                                <div class="form-group mt-4">
+                                    <h5>Delivery Time</h5>
                                     <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault"
-                                            id="radioDefault1">
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
                                         <label class="form-check-label" for="radioDefault1">
-                                            Open
+                                            Today- 2 days
                                         </label>
                                     </div>
                                     <div class="form-check my-4">
-                                        <input class="form-check-input" type="radio" name="radioDefault"
-                                            id="radioDefault2" checked>
+                                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
                                         <label class="form-check-label" for="radioDefault2">
-                                            Busy
+                                            3- 5 days
                                         </label>
                                     </div>
                                 </div>
@@ -342,4 +459,138 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        var images = [
+            "{{asset('user')}}/assets/images/store1.jpg",
+            "{{asset('user')}}/assets/images/item-1.svg",
+            "{{asset('user')}}/assets/images/item-2.svg",
+            "{{asset('user')}}/assets/images/store1.jpg",
+            "{{asset('user')}}/assets/images/store1.jpg",
+            "{{asset('user')}}/assets/images/store1.jpg"
+        ];
+
+        var currentIndex = 0;
+        var timer = null;
+        var duration = 3000; // 3 sec like WhatsApp
+
+        function openGallery(index) {
+            currentIndex = index;
+            document.getElementById("statusViewer").style.display = "flex";
+
+            generateProgressBars();
+            showImage();
+        }
+
+        function generateProgressBars() {
+            const container = document.getElementById("progressContainer");
+            container.innerHTML = "";
+
+            images.forEach((img, i) => {
+                container.innerHTML += `
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="bar${i}"></div>
+                    </div>
+                `;
+            });
+        }
+
+        function showImage() {
+            document.getElementById("statusImage").src = images[currentIndex];
+            startProgress();
+        }
+
+        function startProgress() {
+            clearTimeout(timer);
+
+            // Reset all bars
+            document.querySelectorAll(".progress-fill").forEach(bar => {
+                bar.style.width = "0%";
+                bar.style.transition = "none";
+            });
+
+            // Small delay so restart animation properly
+            setTimeout(() => {
+                let bar = document.getElementById("bar" + currentIndex);
+                bar.style.transition = `${duration}ms linear`;
+                bar.style.width = "100%";
+            }, 10);
+
+            timer = setTimeout(() => {
+                showNext();
+            }, duration);
+        }
+
+        function showNext() {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                showImage();
+            } else {
+                closeStatus(); // Close after last image like WhatsApp
+            }
+        }
+
+        function showPrev() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showImage();
+            }
+        }
+
+        function closeStatus() {
+            clearTimeout(timer);
+            document.getElementById("statusViewer").style.display = "none";
+        }
+    </script>
+
+    <script>
+        (function () {
+            const range = document.getElementById('priceRange');
+            const indicator = document.getElementById('indicator');
+            const bubble = document.getElementById('valueBubble');
+            const trackLine = document.querySelector('.track-line');
+            const wrap = document.querySelector('.track');
+
+            function updateVisuals() {
+                let min = +range.min;
+                let max = +range.max;
+                let val = +range.value;
+
+                // Update bubble text
+                bubble.textContent = val + " KD";
+
+                // Slider position percentage
+                const percent = ((val - min) / (max - min)) * 100;
+
+                // Move indicator circle
+                const lineRect = trackLine.getBoundingClientRect();
+                const wrapperRect = wrap.getBoundingClientRect();
+
+                const pos = lineRect.left + (percent / 100) * lineRect.width + window.scrollX;
+                const leftRel = pos - wrapperRect.left - (indicator.offsetWidth / 2);
+
+                indicator.style.left = leftRel + "px";
+
+                // Move bubble above the thumb
+                const thumbX = pos - wrapperRect.left;
+                bubble.style.left = thumbX + "px";
+
+                // Dynamic fill color
+                range.style.background = `
+                    linear-gradient(to right, 
+                    #b68560 0%, 
+                    #b68560 ${percent}%, 
+                    #e9d2b7 ${percent}%, 
+                    #e9d2b7 100%)
+                `;
+            }
+
+            range.addEventListener("input", updateVisuals);
+            window.addEventListener("resize", updateVisuals);
+
+            updateVisuals(); // initialize
+        })();
+</script>   
+
 @endsection

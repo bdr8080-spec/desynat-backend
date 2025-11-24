@@ -48,7 +48,7 @@ Route::group(['prefix' => 'seller'], function () {
     route::get('/Add-product',[SellerProductController::class,'Add_product'])->name('seller.Add_product');
     Route::post('add-product',[SellerProductController::class, 'Add_product_code'])->name('seller.Add_product_code');
 
-    route::Match(['get','post'],'/view-product',[SellerProductController::class,'view_product'])->name('seller.view_product');
+    route::Match(['get','post'],'/view-product/{id}',[SellerProductController::class,'view_product'])->name('seller.view_product');
 
     route::Match(['get','post'],'/edit-product',[SellerProductController::class,'edit_product'])->name('seller.edit-product');
     // route::Match(['get','post'],'/view-profile',[SellerProductController::class,'view_profile'])->name('seller.view_profile');

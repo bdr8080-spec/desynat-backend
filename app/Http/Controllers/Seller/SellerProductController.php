@@ -449,10 +449,20 @@ $request_data=(object) [
   }
 
 
-public function view_product(){
+public function view_product(Request $request , $id){
 
-    return view('dealer.product.view_product');
+$request_data=(object) [
+    'product_id'=>$id,    
+];
+    
+    $product =  $this->SellerProductService->single_product_details_fetch($request_data);
 
+    $product=$product['data'];
+
+    dump($product);
+    
+    return view('dealer.product.view_product',compact('product'));
+    
 }
 
 
