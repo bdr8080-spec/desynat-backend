@@ -13,10 +13,10 @@
     position: relative;
 }
 
-.upload-icon {
+/* .upload-icon {
     width: 60px;
     opacity: 0.4;
-}
+} */
 
 .preview-image {
     width: 100%;
@@ -408,8 +408,6 @@
 
 
 <script>
-
-
 // document.addEventListener("DOMContentLoaded", () => {
 //     const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB
 //     const ALLOWED_EXT = ["jpg", "jpeg", "png", "gif", "pdf"];
@@ -453,7 +451,7 @@
 //     const typeErrorMsg = "Invalid file type. Allowed: JPG, JPEG, PNG, GIF, PDF.";
 //     const sizeErrorMsg = "File size should not exceed 4 MB.";
 
-//     // For each field that might be a file input
+//     // Handle image preview and validation
 //     fields.forEach(id => {
 //         let input = document.getElementById(id);
 
@@ -508,6 +506,7 @@
 //         });
 //     });
 
+//     // On submit button click
 //     document.getElementById("submitBtn").addEventListener("click", () => {
 
 //         clearErrors();
@@ -522,17 +521,15 @@
 //         });
 
 //         // Validate required images
-//         // requiredImages.forEach(id => {
-//         //     let input = document.getElementById(id);
-//         //     let errorBox = document.getElementById(id + "_error");
+//         requiredImages.forEach(id => {
+//             let input = document.getElementById(id);
+//             let errorBox = document.getElementById(id + "_error");
 
-//         //     if (input.files.length === 0) {
-//         //         if (!document.getElementById(id + "Preview").src) { // If no preview and no file uploaded
-//         //             errorBox.innerHTML = imageErrors[id];
-//         //             valid = false;
-//         //         }
-//         //     }
-//         // });
+//             if (input.files.length === 0 && !input.dataset.existingImage) {
+//                 errorBox.innerHTML = imageErrors[id];
+//                 valid = false;
+//             }
+//         });
 
 //         if (!valid) return;
 
@@ -541,17 +538,18 @@
 //             let el = document.getElementById(id);
 //             if (el.type === "file") {
 //                 if (el.files.length > 0) {
+//                     // Append new file if changed
 //                     formData.append(id, el.files[0]);
-//                 } else {
-//                     // If no change in the file input, append the existing image or set to null
-//                     let existingImage = el.dataset.existingImage || ''; // Check for existing image URL
-//                     formData.append(id, existingImage); // Use the existing image URL if no new file is selected
+//                 } else if (el.dataset.existingImage) {
+//                     // If no new file, append the existing image URL
+//                     formData.append(id, el.dataset.existingImage);
 //                 }
 //             } else {
 //                 formData.append(id, el.value);
 //             }
 //         });
 
+//         // Send data using fetch to the server
 //         fetch("{{ route('admin.store_reg2_edit') }}", {
 //             method: "POST",
 //             body: formData,
@@ -577,6 +575,7 @@
 
 //     });
 
+//     // Function to clear errors
 //     function clearErrors() {
 //         fields.forEach(id => {
 //             let err = document.getElementById(id + "_error");
@@ -589,7 +588,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB
     const ALLOWED_EXT = ["jpg", "jpeg", "png", "gif", "pdf"];
 
-    // All input IDs
     const fields = [
         "vehicle_name", "vehicle_reg",
         "vehicleImgFront", "vehicleImgBack",
@@ -600,7 +598,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "rcFront", "rcBack"
     ];
 
-    // Required lists
     const requiredText = ["vehicle_name", "vehicle_reg"];
     const requiredImages = [
         "vehicleImgFront", "vehicleImgBack",
@@ -609,7 +606,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "insuranceFront"
     ];
 
-    // Error messages
     const textErrors = {
         vehicle_name: "Please enter vehicle name.",
         vehicle_reg: "Please enter vehicle registration number."
@@ -625,147 +621,131 @@ document.addEventListener("DOMContentLoaded", () => {
         insuranceFront: "Please upload insurance image."
     };
 
-    const typeErrorMsg = "Invalid file type. Allowed: JPG, JPEG, PNG, GIF, PDF.";
-    const sizeErrorMsg = "File size should not exceed 4 MB.";
-
-    // Handle image preview and validation
+    // Preview & validation
     fields.forEach(id => {
-        let input = document.getElementById(id);
+        const input = document.getElementById(id);
+        if (!input) return;
 
-        if (input && input.type === "file") {
+        if (input.type === "file") {
             input.addEventListener("change", e => {
-                let file = e.target.files[0];
-                let errorBox = document.getElementById(id + "_error");
-                errorBox.innerHTML = "";
+                const file = e.target.files[0];
+                const errorBox = document.getElementById(id + "_error");
+                if (errorBox) errorBox.innerHTML = "";
 
-                if (file) {
-                    let ext = file.name.split(".").pop().toLowerCase();
+                if (!file) return;
 
-                    // Validate extension
-                    if (!ALLOWED_EXT.includes(ext)) {
-                        errorBox.innerHTML = typeErrorMsg;
-                        input.value = "";
-                        return;
-                    }
-
-                    // Validate size
-                    if (file.size > MAX_FILE_SIZE) {
-                        errorBox.innerHTML = sizeErrorMsg;
-                        input.value = "";
-                        return;
-                    }
-
-                    // Show preview only for images (not PDF)
-                    let preview = document.getElementById(id + "Preview");
-
-                    if (preview) {
-                        if (ext === "pdf") {
-                            preview.src = "";  
-                            preview.style.display = "none";
-                        } else {
-                            const reader = new FileReader();
-                            reader.onload = ev => {
-                                preview.src = ev.target.result;
-                                preview.style.display = "block";
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    }
+                const ext = file.name.split(".").pop().toLowerCase();
+                if (!ALLOWED_EXT.includes(ext)) {
+                    errorBox.innerHTML = "Invalid file type. Allowed: JPG, JPEG, PNG, GIF, PDF.";
+                    input.value = "";
+                    return;
                 }
+
+                if (file.size > MAX_FILE_SIZE) {
+                    errorBox.innerHTML = "File size should not exceed 4 MB.";
+                    input.value = "";
+                    return;
+                }
+
+                const preview = document.getElementById(id + "Preview");
+                if (preview && ext !== "pdf") {
+                    const reader = new FileReader();
+                    reader.onload = ev => {
+                        preview.src = ev.target.result;
+                        preview.style.display = "block";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        } else {
+            input.addEventListener("input", () => {
+                const err = document.getElementById(id + "_error");
+                if (err) err.innerHTML = "";
             });
         }
     });
 
-    // Clear text errors on typing
-    requiredText.forEach(id => {
-        document.getElementById(id).addEventListener("input", () => {
-            document.getElementById(id + "_error").innerHTML = "";
-        });
-    });
+    // Submit
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", e => {
+            e.preventDefault();
+            let valid = true;
+            clearErrors();
 
-    // On submit button click
-    document.getElementById("submitBtn").addEventListener("click", () => {
-
-        clearErrors();
-        let valid = true;
-
-        // Validate text fields
-        requiredText.forEach(id => {
-            if (!document.getElementById(id).value.trim()) {
-                document.getElementById(id + "_error").innerHTML = textErrors[id];
-                valid = false;
-            }
-        });
-
-        // Validate required images
-        requiredImages.forEach(id => {
-            let input = document.getElementById(id);
-            let errorBox = document.getElementById(id + "_error");
-
-            if (input.files.length === 0 && !input.dataset.existingImage) {
-                errorBox.innerHTML = imageErrors[id];
-                valid = false;
-            }
-        });
-
-        if (!valid) return;
-
-        let formData = new FormData();
-        fields.forEach(id => {
-            let el = document.getElementById(id);
-            if (el.type === "file") {
-                if (el.files.length > 0) {
-                    // Append new file if changed
-                    formData.append(id, el.files[0]);
-                } else if (el.dataset.existingImage) {
-                    // If no new file, append the existing image URL
-                    formData.append(id, el.dataset.existingImage);
+            requiredText.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.value.trim()) {
+                    document.getElementById(id + "_error").innerHTML = textErrors[id];
+                    valid = false;
                 }
-            } else {
-                formData.append(id, el.value);
-            }
+            });
+
+            requiredImages.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (el.files.length === 0 && !el.dataset.existingImage) {
+                    document.getElementById(id + "_error").innerHTML = imageErrors[id];
+                    valid = false;
+                }
+            });
+
+            if (!valid) return;
+
+            // FormData
+            const formData = new FormData();
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+
+                if (el.type === "file") {
+                    if (el.files.length > 0) {
+                        formData.append(id, el.files[0]);
+                    } else if (el.dataset.existingImage) {
+                        formData.append(id + "_url", el.dataset.existingImage);
+                    }
+                } else {
+                    formData.append(id, el.value);
+                }
+            });
+
+            fetch("{{ route('admin.store_reg2_edit') }}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRF-TOKEN": '{{ csrf_token() }}'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        window.location.href = "{{ route('admin.deliveryBoyManagement') }}";
+                    }, 2000);
+                } else {
+                    toastr.error(data.message || 'Something went wrong', 'Error');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                toastr.error('An unexpected error occurred.', 'Error');
+            });
         });
+    }
 
-        // Send data using fetch to the server
-        fetch("{{ route('admin.store_reg2_edit') }}", {
-            method: "POST",
-            body: formData,
-            headers: {
-                "X-CSRF-TOKEN": '{{ csrf_token() }}'
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                toastr.success(data.message); 
-                setTimeout(() => {
-                    window.location.href = "{{ route('admin.deliveryBoyManagement') }}";
-                }, 2000);
-            } else {
-                toastr.error(data.message || 'Something went wrong', 'Error');
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            toastr.error('An unexpected error occurred.', 'Error'); 
-        });
-
-    });
-
-    // Function to clear errors
     function clearErrors() {
         fields.forEach(id => {
-            let err = document.getElementById(id + "_error");
+            const err = document.getElementById(id + "_error");
             if (err) err.innerHTML = "";
         });
     }
 });
 
 
-
-
-
-
 </script>
+
+
+
 
 @endsection
