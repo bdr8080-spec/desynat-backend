@@ -372,7 +372,7 @@ public function edit_Product($request){
         }
 
         // variation code 
-
+          ProductVariant::where('product_id',$product_id)->delete();
 
         foreach($request->color_id as $key=>$val){
 
