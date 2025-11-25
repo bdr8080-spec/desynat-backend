@@ -138,7 +138,7 @@
            
         @foreach ($product_details['product_specifications'] as $item)
 
-              <div class="append-panel">
+              <div class="append-panel specifications-row">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
@@ -201,7 +201,16 @@
                         </div>
                     </div>
                 </div>
+
+        @if($specification_count >= 1)
+        <div class="d-flex justify-content-end">
+            <div class="remove-btn"><i class="bi bi-x"></i> Remove </div>
+        </div>
+        @endif
+
             </div>
+
+          
 
        @php
        $specification_count++;
@@ -214,7 +223,7 @@
         <!----- variant panel ------>
           @foreach ($product_details['product_variants'] as $item)
          
-        <div class="variant-panel">
+        <div class="variant-panel specifications-row">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
@@ -454,6 +463,12 @@
                     </div>
                 </div>
             </div>
+
+              @if($product_Variation_count >= 1)
+              <div class="d-flex justify-content-end">
+                <div class="remove-btn removerow"><i class="bi bi-x"></i> Remove </div>
+            </div> 
+            @endif
         </div>
         
        @php
