@@ -203,7 +203,7 @@
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Product Photo</div>
+                        <div class="mt-3">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[0][]" rel="0">
                     </label>
@@ -855,7 +855,7 @@
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Profile Photo</div>
+                        <div class="mt-3">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
