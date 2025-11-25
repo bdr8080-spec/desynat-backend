@@ -853,12 +853,43 @@ public function edit_product_code(Request $request, $id){
      $dir="Product/";
      $variation_image=[];
 
-     foreach($request->variant_image as $key=>$Image1){
+    //  foreach($request->variant_image as $key=>$Image1){
+    //     foreach($Image1 as $key1=>$Image2){
+    //         $variation_image[$key][$key1]=image_upload($Image2,$dir);  // chart Image
+    //     }
+    //  }
 
-        foreach($Image1 as $key1=>$Image2){
-            $variation_image[$key][$key1]=image_upload($Image2,$dir);  // chart Image
+    foreach ($request->color_id as $key => $val) {
+
+    $final_variation_images[$key] = []; // initialize empty
+
+    // ✔ If new images exist → upload them
+    if (!empty($request->variant_image[$key])) {
+
+        foreach ($request->variant_image[$key] as $index => $imageFile) {
+
+            $final_variation_images[$key][] = image_upload($imageFile, $dir);
         }
-     }
+
+    }
+    // ✔ Else use old images
+    elseif (!empty($request->old_variant_image[$key])) {
+
+        foreach ($request->old_variant_image[$key] as $oldImg) {
+
+            $final_variation_images[$key][] = $oldImg; // already saved paths
+        }
+    }
+    // ❌ Neither new nor old images -> skip or set empty
+    else {
+        $final_variation_images[$key] = [];  
+        // OR throw error if required
+        // continue;
+    }
+}
+
+
+
 
     //  Product Size Chart Upload 
      if($request->upload_size_chart){ 
@@ -890,7 +921,7 @@ $request_data=(object) [
 'product_spe_feature_ar'=> $request->product_spe_feature_ar,
 
       // product vartion start
-'variant_image' => $variation_image,
+'variant_image' => $final_variation_images,
 'color_id' => $request->color_id,
 'size_id' => $request->size_id,
       

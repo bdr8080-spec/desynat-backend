@@ -249,7 +249,7 @@
                     <img src="{{$chart}}" class="w-100 rounded">
                     <span class="remove-ic remove-image" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
                
-                     <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
+                     <input type="text" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="old_variant_image[{{$product_Variation_count}}][]" value="{{$chart}}" rel="{{$product_Variation_count}}">
                  
                 </div>
