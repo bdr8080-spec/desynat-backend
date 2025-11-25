@@ -64,7 +64,7 @@ class UserStoreController extends Controller
        
       
         $request_data=(object)[
-         'user_id'=>$user_id,
+         'user_id'=>$user_id ??null,
          'store_id'=>$request->id,
          'search' =>$request->search,
          'sort_filter'=> $request->sort_filter
