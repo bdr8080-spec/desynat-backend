@@ -8,35 +8,26 @@
     </div>
 
     <div class="saved-address-contenar">
-        <div class="saved_address_content">
+        @forelse ($address as $item)
+             <div class="saved_address_content">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span><i class="bi bi-building"></i> Office</span>
+                    <span><i class="bi bi-building"></i> {{$item->save_address_as == 0 ? 'Home' : 'Office'}}</span>
                 </div>
                 <div>
-                    <a><img src="assets/images/edit.svg" class="img-fluid" /></a>
-                    <a><img src="assets/images/delete.svg" class="img-fluid" /></a>
+                    <a href="{{route('user.update_address',[$item->id])}}"><img src="{{asset('user/assets/images/edit.svg')}}" class="img-fluid"/></a>
+                    <a href="{{route('user.delete_address',[$item->id])}}"><img src="{{asset('assets/images/delete.svg')}}" class="img-fluid" /></a>
                     <span class="setAsdefault custom-btn3">Set as Default</span>
                 </div>
             </div>
-            <h6>Alex</h6>
-            <p>HN- 547, Street no,5 Block d new town hale, Saudi Arabia Riyad- 10214</p>
+            <h6>{{$item->name}}</h6>
+            <p>{{$item->address}}</p>
         </div>
-        <div class="saved_address_content">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <span><i class="bi bi-house"></i> Home</span>
-                </div>
-                <div>
-                    <a><img src="assets/images/edit.svg" class="img-fluid" /></a>
-                    <a><img src="assets/images/delete.svg" class="img-fluid" /></a>
-                    <span class="setAsdefault custom-btn3">Set as Default</span>
-                </div>
-            </div>
-            <h6>Alex</h6>
-            <p>HN- 547, Street no,5 Block d new town hale, Saudi Arabia Riyad- 10214</p>
-        </div>
-        <a href="add-new-addres.html" class="custom-btn3 add_new_address" >+ Add New Address</a>
+        @empty
+            <h3>No Data Found</h3>
+        @endforelse
+       
+        <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address" >+ Add New Address</a>
     </div>
 </div>
 

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserStoreController;
+use App\Http\Controllers\User\AddressController;
 
 
 
@@ -45,6 +46,16 @@ use App\Http\Controllers\User\UserStoreController;
    Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
    
    Route::get('product/detail-page/{id}', [UserStoreController::class, 'productDetails'])->name('user.product_details');
+  
+   Route::get('view-address', [AddressController::class, 'viewAddress'])->name('user.view_address');
+  
+   Route::match(['get','post'],'save-address', [AddressController::class, 'saveAddress'])->name('user.save_address');
+ 
+
+   Route::get('edit-address/{id}', [AddressController::class, 'updateAddress'])->name('user.update_address');
+
+   Route::get('delete-address/{id}', [AddressController::class, 'deleteAddress'])->name('user.delete_address');
+
 
    });
 
