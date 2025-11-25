@@ -19,7 +19,7 @@
 
     </div>
 
-    <div class="userManagecontent mt-4">
+    <div class="userManagecontent mt-3">
         <div class="">
             <form method="GET" action="{{ route('admin.deliveryBoyManagement') }}" id="filterForm">
             <div class="row">
@@ -53,8 +53,10 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">
-                    <div class="d-flex justify-content-end  mt-5">
-                        <a class="btn btn-dark customBtn"  href="{{route('admin.deliveryboy_reg_step1')}}">
+                    <div class="d-flex justify-content-end  mt-5 mb-5">
+                        <a class="btn btn-dark customBtn"  href="{{route('admin.deliveryboy_reg_step1')}}" style="
+    margin-top: -4px;
+">
                             <span >Add Delivery Boy</span>
                         </a>
                     </div>
@@ -62,7 +64,7 @@
             </div>
            </form>
 
-            <div class="table-responsive w-100 mt-5">
+            <div class="table-responsive w-100 mt-3">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
