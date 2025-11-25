@@ -253,7 +253,7 @@
                                 <i class="bi bi-crosshair"></i> Use Current Location
                             </div>
                             <div><i class="bi bi-geo-alt-fill"></i></div>
-                            <p class="mb-0" id="selectedAddress">20 Cooper Square, New Delhi, ND 110020</p>
+                            <p class="mb-0" id="selectedAddress">9XHG+629, Kuwait City, Kuwait</p>
                         </div>
 
                         <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-3">
@@ -289,19 +289,33 @@ document.querySelectorAll(".toggle-password").forEach((toggle) => {
 
 <!-- country code -->
 <script>
+    // const input = document.querySelector("#phone");
+    // const iti = window.intlTelInput(input, {
+    //     initialCountry: "kw",  // Set Kuwait as initial country
+    //     separateDialCode: true,
+    //     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    //     autoPlaceholder: "off"
+    // });
+
+    // document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
+
+    // input.addEventListener("countrychange", function() {
+    //     document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
+    // });
     const input = document.querySelector("#phone");
+
     const iti = window.intlTelInput(input, {
-        initialCountry: "kw",  // Set Kuwait as initial country
+        initialCountry: "kw",
         separateDialCode: true,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        autoPlaceholder: "off"
+        allowDropdown: false,   // 🔒 DISABLE CHANGING COUNTRY
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        autoPlaceholder: "off",
     });
 
-    document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
+    // Always set Kuwait code
+    document.querySelector("#country_code").value = "+965";
 
-    input.addEventListener("countrychange", function() {
-        document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
-    });
 </script>
 
 <script async defer
@@ -310,185 +324,199 @@ document.querySelectorAll(".toggle-password").forEach((toggle) => {
 
 
 <script>
-let map, userMarker, geocoder, selectedLatLng = null;
+    let map, userMarker, geocoder, selectedLatLng = null;
 
-function initMap() {
-    const defaultLocation = { lat: 29.3759, lng: 47.9774 }; // Kuwait City
+    function initMap() {
+        const defaultLocation = { lat: 29.3759, lng: 47.9774 }; // Kuwait City
 
-    // Initialize Map
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: defaultLocation,
-        zoom: 12,
-    });
+        // Initialize Map
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: defaultLocation,
+            zoom: 12,
+        });
 
-    geocoder = new google.maps.Geocoder();
+        geocoder = new google.maps.Geocoder();
 
-    // Marker setup
-    userMarker = new google.maps.Marker({
-        map: map,
-        position: defaultLocation,
-        draggable: true,
-        title: "Drag to adjust location"
-    });
+        // Marker setup
+        userMarker = new google.maps.Marker({
+            map: map,
+            position: defaultLocation,
+            draggable: true,
+            title: "Drag to adjust location"
+        });
 
-    // Autocomplete setup
-    const searchInput = document.getElementById("searchBox");
-    const autocomplete = new google.maps.places.Autocomplete(searchInput);
-    autocomplete.bindTo("bounds", map);
-    autocomplete.setFields(['geometry', 'formatted_address', 'address_components']); // ✅ include address_components
+        // Autocomplete setup
+        const searchInput = document.getElementById("searchBox");
+        const autocomplete = new google.maps.places.Autocomplete(searchInput);
+        autocomplete.bindTo("bounds", map);
+        autocomplete.setFields(['geometry', 'formatted_address', 'address_components']); // ✅ include address_components
 
-    autocomplete.addListener("place_changed", function() {
-        const place = autocomplete.getPlace();
-        if (!place.geometry || !place.geometry.location) {
-            showLocationError("Place has no geometry.");
-            return;
-        }
-        clearLocationError();
-        selectedLatLng = place.geometry.location;
-        map.setCenter(selectedLatLng);
-        map.setZoom(15);
-        userMarker.setPosition(selectedLatLng);
-        updateFullAddressUI(selectedLatLng);
-    });
+        autocomplete.addListener("place_changed", function() {
+            const place = autocomplete.getPlace();
+            if (!place.geometry || !place.geometry.location) {
+                showLocationError("Place has no geometry.");
+                return;
+            }
+            clearLocationError();
+            selectedLatLng = place.geometry.location;
+            map.setCenter(selectedLatLng);
+            map.setZoom(15);
+            userMarker.setPosition(selectedLatLng);
+            updateFullAddressUI(selectedLatLng);
+        });
 
-    // Marker dragged manually
-    userMarker.addListener("dragend", function() {
-        selectedLatLng = userMarker.getPosition();
-        updateFullAddressUI(selectedLatLng);
-    });
+        // Marker dragged manually
+        userMarker.addListener("dragend", function() {
+            selectedLatLng = userMarker.getPosition();
+            updateFullAddressUI(selectedLatLng);
+        });
 
-    // Use Current Location
-    document.querySelector(".use-lc").addEventListener("click", function() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                clearLocationError();
-                selectedLatLng = new google.maps.LatLng(
-                    position.coords.latitude,
-                    position.coords.longitude
-                );
-                map.setCenter(selectedLatLng);
-                map.setZoom(15);
-                userMarker.setPosition(selectedLatLng);
-                updateFullAddressUI(selectedLatLng);
-            }, function(error) {
-                showLocationError("Error getting location: " + error.message);
+        // Use Current Location
+        document.querySelector(".use-lc").addEventListener("click", function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    clearLocationError();
+                    selectedLatLng = new google.maps.LatLng(
+                        position.coords.latitude,
+                        position.coords.longitude
+                    );
+                    map.setCenter(selectedLatLng);
+                    map.setZoom(15);
+                    userMarker.setPosition(selectedLatLng);
+                    updateFullAddressUI(selectedLatLng);
+                }, function(error) {
+                    showLocationError("Error getting location: " + error.message);
+                });
+            } else {
+                showLocationError("Geolocation not supported.");
+            }
+        });
+    }
+
+    function updateFullAddressUI(latlng) {
+        geocoder.geocode({ location: latlng }, function (results, status) {
+
+            if (status !== "OK" || !results.length) {
+                showLocationError("Address not found");
+                return;
+            }
+
+            let line1 = "", line2 = "", city = "", state = "", country = "", zip = "";
+
+            results.forEach(res => {
+                res.address_components.forEach(comp => {
+
+                    if (!line1 && (
+                        comp.types.includes("point_of_interest") ||
+                        comp.types.includes("establishment") ||
+                        comp.types.includes("premise")
+                    )) {
+                        line1 = comp.long_name;
+                    }
+
+                    if (!line2 && comp.types.includes("route")) {
+                        line2 = comp.long_name;
+                    }
+
+                    // INDIA cities
+                    if (!city && comp.types.includes("locality")) city = comp.long_name;
+
+                    if (!city && comp.types.includes("administrative_area_level_2"))
+                        city = comp.long_name;
+
+                    // STATE / GOVERNORATE
+                    if (!state && comp.types.includes("administrative_area_level_1"))
+                        state = comp.long_name;
+
+                    if (!zip && comp.types.includes("postal_code"))
+                        zip = comp.long_name;
+
+                    if (!country && comp.types.includes("country"))
+                        country = comp.long_name;
+                });
             });
-        } else {
-            showLocationError("Geolocation not supported.");
-        }
-    });
-}
 
-// Update input fields from latlng
-function updateFullAddressUI(latlng) {
-    geocoder.geocode({ location: latlng }, function(results, status) {
-        if (status === "OK" && results[0]) {
-            const components = results[0].address_components;
-            const formatted = results[0].formatted_address;
+            // ⭐ SPECIAL HANDLING: KUWAIT
+            if (country === "Kuwait") {
 
-            let city = "", state = "", zip = "", country = "";
+                // Kuwait airport city = Governorate name
+                if (state) {
+                    city = state.replace(" Governorate", "");
+                }
 
-            components.forEach(comp => {
-                if (comp.types.includes("locality")) city = comp.long_name;
-                if (!city && comp.types.includes("administrative_area_level_2")) city = comp.long_name;
-                if (comp.types.includes("administrative_area_level_1")) state = comp.long_name;
-                if (comp.types.includes("postal_code")) zip = comp.long_name;
-                if (comp.types.includes("country")) country = comp.long_name;
-            });
-
-            const countryAliases = [country.toLowerCase()];
-            const parts = formatted.split(',').map(p => p.trim());
-            const filteredParts = parts.filter(part => {
-                const lower = part.toLowerCase();
-                return lower !== city.toLowerCase() &&
-                       lower !== state.toLowerCase() &&
-                       !countryAliases.includes(lower) &&
-                       !part.includes(zip);
-            });
-
-            let streetLine1 = '';
-            let streetLine2 = '';
-
-            if (filteredParts.length > 0) {
-                const first = filteredParts[0];
-                const match = first.match(/^([\d\/\-]+)\s+(.*)/);
-                if (match) {
-                    streetLine1 = match[1];
-                    streetLine2 = match[2].trim();
-                    const extraParts = filteredParts.slice(1).join(', ');
-                    if (extraParts) streetLine2 += ', ' + extraParts;
-                } else {
-                    streetLine1 = first;
-                    streetLine2 = filteredParts.slice(1).join(', ');
+                // Guarantee no wrong subareas like "Al-Dajeej"
+                if (city && city.toLowerCase().includes("dajeej")) {
+                    city = "Farwaniya";
                 }
             }
 
-            // Set input values
-            document.querySelector('[name="address_line1"]').value = streetLine1;
-            document.querySelector('[name="address_line2"]').value = streetLine2;
+            // FALLBACK if line1 still empty
+            if (!line1) line1 = results[0].formatted_address.split(",")[0];
+
+            // APPLY TO UI
+            document.querySelector('[name="address_line1"]').value = line1;
+            document.querySelector('[name="address_line2"]').value = line2;
             document.querySelector('[name="city"]').value = city;
             document.querySelector('[name="state"]').value = state;
-            document.getElementById('let').value = latlng.lat();
-            document.getElementById('long').value = latlng.lng();
-            document.getElementById("selectedAddress").innerText = formatted;
 
-            // ✅ Clear errors for these fields
+            document.getElementById("let").value = latlng.lat();
+            document.getElementById("long").value = latlng.lng();
+
+            document.getElementById("selectedAddress").innerText = results[0].formatted_address;
+
             clearAddressFieldErrors();
-        } else {
-            showLocationError("Address not found");
+        });
+    }
+
+    // Clears errors for address-related fields
+    function clearAddressFieldErrors() {
+        const addressFields = [
+            'address_line1_error',
+            'address_line2_error',
+            'city_error',
+            'state_error',
+            'let_error',
+            'long_error'
+        ];
+        addressFields.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.innerText = '';
+        });
+    }
+
+
+    // Show / hide error span
+    function showLocationError(msg) {
+        const errorSpan = document.getElementById('locationError');
+        if (errorSpan) {
+            errorSpan.innerText = msg;
+            errorSpan.style.display = 'block';
+        }
+    }
+
+    function clearLocationError() {
+        const errorSpan = document.getElementById('locationError');
+        if (errorSpan) {
+            errorSpan.innerText = '';
+            errorSpan.style.display = 'none';
+        }
+    }
+
+    // Save button: modal close only
+    document.querySelector(".setup-done.button").addEventListener("click", function() {
+        if (!selectedLatLng) {
+            showLocationError("Please select a location first.");
+            return;
+        }
+        clearLocationError();
+
+        // Values already set by updateFullAddressUI
+        const modalEl = document.getElementById('sentModal5');
+        if (modalEl) {
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.hide();
         }
     });
-}
-
-// Clears errors for address-related fields
-function clearAddressFieldErrors() {
-    const addressFields = [
-        'address_line1_error',
-        'address_line2_error',
-        'city_error',
-        'state_error',
-        'let_error',
-        'long_error'
-    ];
-    addressFields.forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.innerText = '';
-    });
-}
-
-
-// Show / hide error span
-function showLocationError(msg) {
-    const errorSpan = document.getElementById('locationError');
-    if (errorSpan) {
-        errorSpan.innerText = msg;
-        errorSpan.style.display = 'block';
-    }
-}
-
-function clearLocationError() {
-    const errorSpan = document.getElementById('locationError');
-    if (errorSpan) {
-        errorSpan.innerText = '';
-        errorSpan.style.display = 'none';
-    }
-}
-
-// Save button: modal close only
-document.querySelector(".setup-done.button").addEventListener("click", function() {
-    if (!selectedLatLng) {
-        showLocationError("Please select a location first.");
-        return;
-    }
-    clearLocationError();
-
-    // Values already set by updateFullAddressUI
-    const modalEl = document.getElementById('sentModal5');
-    if (modalEl) {
-        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-        modal.hide();
-    }
-});
 </script>
 
 <!-- reg1 validation -->

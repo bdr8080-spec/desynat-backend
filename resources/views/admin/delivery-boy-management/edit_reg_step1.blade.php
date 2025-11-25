@@ -311,19 +311,32 @@ document.querySelectorAll(".toggle-password").forEach((toggle) => {
 
 <!-- country code -->
 <script>
+    // const input = document.querySelector("#phone");
+    // const iti = window.intlTelInput(input, {
+    //     initialCountry: "kw",  // Set Kuwait as initial country
+    //     separateDialCode: true,
+    //     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    //     autoPlaceholder: "off"
+    // });
+
+    // document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
+
+    // input.addEventListener("countrychange", function() {
+    //     document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
+    // });
     const input = document.querySelector("#phone");
+
     const iti = window.intlTelInput(input, {
-        initialCountry: "kw",  // Set Kuwait as initial country
+        initialCountry: "kw",
         separateDialCode: true,
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        autoPlaceholder: "off"
+        allowDropdown: false,   // 🔒 DISABLE CHANGING COUNTRY
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        autoPlaceholder: "off",
     });
 
-    document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
-
-    input.addEventListener("countrychange", function() {
-        document.querySelector("#country_code").value = "+" + iti.getSelectedCountryData().dialCode;
-    });
+    // Always set Kuwait code
+    document.querySelector("#country_code").value = "+965";
 </script>
 
 <script async defer
@@ -403,64 +416,79 @@ function initMap() {
 
 // Update input fields from latlng
 function updateFullAddressUI(latlng) {
-    geocoder.geocode({ location: latlng }, function(results, status) {
-        if (status === "OK" && results[0]) {
-            const components = results[0].address_components;
-            const formatted = results[0].formatted_address;
+        geocoder.geocode({ location: latlng }, function (results, status) {
 
-            let city = "", state = "", zip = "", country = "";
+            if (status !== "OK" || !results.length) {
+                showLocationError("Address not found");
+                return;
+            }
 
-            components.forEach(comp => {
-                if (comp.types.includes("locality")) city = comp.long_name;
-                if (!city && comp.types.includes("administrative_area_level_2")) city = comp.long_name;
-                if (comp.types.includes("administrative_area_level_1")) state = comp.long_name;
-                if (comp.types.includes("postal_code")) zip = comp.long_name;
-                if (comp.types.includes("country")) country = comp.long_name;
+            let line1 = "", line2 = "", city = "", state = "", country = "", zip = "";
+
+            results.forEach(res => {
+                res.address_components.forEach(comp => {
+
+                    if (!line1 && (
+                        comp.types.includes("point_of_interest") ||
+                        comp.types.includes("establishment") ||
+                        comp.types.includes("premise")
+                    )) {
+                        line1 = comp.long_name;
+                    }
+
+                    if (!line2 && comp.types.includes("route")) {
+                        line2 = comp.long_name;
+                    }
+
+                    // INDIA cities
+                    if (!city && comp.types.includes("locality")) city = comp.long_name;
+
+                    if (!city && comp.types.includes("administrative_area_level_2"))
+                        city = comp.long_name;
+
+                    // STATE / GOVERNORATE
+                    if (!state && comp.types.includes("administrative_area_level_1"))
+                        state = comp.long_name;
+
+                    if (!zip && comp.types.includes("postal_code"))
+                        zip = comp.long_name;
+
+                    if (!country && comp.types.includes("country"))
+                        country = comp.long_name;
+                });
             });
 
-            const countryAliases = [country.toLowerCase()];
-            const parts = formatted.split(',').map(p => p.trim());
-            const filteredParts = parts.filter(part => {
-                const lower = part.toLowerCase();
-                return lower !== city.toLowerCase() &&
-                       lower !== state.toLowerCase() &&
-                       !countryAliases.includes(lower) &&
-                       !part.includes(zip);
-            });
+            // ⭐ SPECIAL HANDLING: KUWAIT
+            if (country === "Kuwait") {
 
-            let streetLine1 = '';
-            let streetLine2 = '';
+                // Kuwait airport city = Governorate name
+                if (state) {
+                    city = state.replace(" Governorate", "");
+                }
 
-            if (filteredParts.length > 0) {
-                const first = filteredParts[0];
-                const match = first.match(/^([\d\/\-]+)\s+(.*)/);
-                if (match) {
-                    streetLine1 = match[1];
-                    streetLine2 = match[2].trim();
-                    const extraParts = filteredParts.slice(1).join(', ');
-                    if (extraParts) streetLine2 += ', ' + extraParts;
-                } else {
-                    streetLine1 = first;
-                    streetLine2 = filteredParts.slice(1).join(', ');
+                // Guarantee no wrong subareas like "Al-Dajeej"
+                if (city && city.toLowerCase().includes("dajeej")) {
+                    city = "Farwaniya";
                 }
             }
 
-            // Set input values
-            document.querySelector('[name="address_line1"]').value = streetLine1;
-            document.querySelector('[name="address_line2"]').value = streetLine2;
+            // FALLBACK if line1 still empty
+            if (!line1) line1 = results[0].formatted_address.split(",")[0];
+
+            // APPLY TO UI
+            document.querySelector('[name="address_line1"]').value = line1;
+            document.querySelector('[name="address_line2"]').value = line2;
             document.querySelector('[name="city"]').value = city;
             document.querySelector('[name="state"]').value = state;
-            document.getElementById('let').value = latlng.lat();
-            document.getElementById('long').value = latlng.lng();
-            document.getElementById("selectedAddress").innerText = formatted;
 
-            // ✅ Clear errors for these fields
+            document.getElementById("let").value = latlng.lat();
+            document.getElementById("long").value = latlng.lng();
+
+            document.getElementById("selectedAddress").innerText = results[0].formatted_address;
+
             clearAddressFieldErrors();
-        } else {
-            showLocationError("Address not found");
-        }
-    });
-}
+        });
+    }
 
 // Clears errors for address-related fields
 function clearAddressFieldErrors() {
