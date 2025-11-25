@@ -550,12 +550,19 @@ public function edit_product_code(Request $request, $id){
 
           // product vartion start
 
-            'variant_image' => ['required', 'array'],
+            'variant_image' => ['array'],
             // Each variation must be an array
-            'variant_image.*' => ['required', 'array'],
+            'variant_image.*' => ['array'],
             // Each image inside each variation is required
-            'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
+            // 'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
 
+             'variant_image.*.*' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+    
+
+            'old_variant_image' => ['array'],
+            'old_variant_image.*' => ['nullable'],
+
+           
           'color_id' => ['required', 'array'],
           'size_id' => ['required', 'array', ],
           'color_id.*' => ['required','exists:colors,id'],
@@ -752,9 +759,28 @@ public function edit_product_code(Request $request, $id){
 
      $validate->after(function ($validate) use ($request) {
 
+// new image and old image one must show 
+
+  foreach ($request->size_id as $key => $val) {
+
+        $newImages = $request->variant_image[$key] ?? [];
+        $oldImages = $request->old_variant_image[$key] ?? [];
+
+        // Check if both are empty
+        if ((empty($newImages) || count($newImages) == 0) &&
+            (empty($oldImages) || count($oldImages) == 0)) {
+
+            $validate->errors()->add(
+                "variant_image.$key",
+                "At least one image is required for variation #".($key + 1)
+            );
+        }
+    }
+
+
+// start Color and size are not dublicate 
     $colors = $request->color_id;
     $sizes  = $request->size_id;
-
     // Group sizes by color
     $grouped = [];
 
