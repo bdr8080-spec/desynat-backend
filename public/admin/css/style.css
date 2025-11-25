@@ -1234,6 +1234,7 @@ button.btn.btn-dark.customBtn {
     /* background: transparent linear-gradient(164deg, #013b5100 0%, #c7a15c 100%) 0% 0% no-repeat; */
     /* line-height: 2.1; */
     background: rgba(242, 242, 242, 1);
+        font-weight: 600;
 }
 
 ul {

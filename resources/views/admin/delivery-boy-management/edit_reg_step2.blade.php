@@ -437,7 +437,7 @@
                 <!-- Buttons Section -->
                 <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4">
                     <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn">Cancel</a>
-                    <a class="btn btn-dark customBtn" id="submitBtn">Submit</a>
+                    <a class="btn btn-dark customBtn" id="submitBtn">Update</a>
                 </div>
             </div>
         </div>
