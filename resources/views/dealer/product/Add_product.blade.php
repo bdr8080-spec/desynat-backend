@@ -203,7 +203,7 @@
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Product Photo</div>
+                        <div class="mt-3">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[0][]" rel="0">
                     </label>
@@ -216,7 +216,7 @@
             </div>
 
             <div class="wapper-header mt-4">
-                <div class="row">
+                <div class="row price-block">
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
@@ -369,7 +369,7 @@
                                 <label>Actual Price</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
-                                name="actual_price[]">
+                                name="actual_price[]" id="actual_price_0">
                             <p class="text-danger" id="error-actual_price_0"></p>
 
                         </div>
@@ -386,14 +386,14 @@
                             class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[0]" checked value="1">
+                                    <input type="radio" name="discount_type[0]"  id="discount_type_percentage_0" checked value="1" >
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[0]" value="2">
+                                    <input type="radio" name="discount_type[0]"  id="discount_type_fixed_0" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -404,13 +404,15 @@
                 </div>
 
                 <div class="row">
+
+
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
-                                name="discount_value[]">
+                                name="discount_value[]" id="discount_value_0">
                             <p class="text-danger" id="error-discount_value_0"></p>
 
                         </div>
@@ -422,7 +424,7 @@
                                 <label>Final Price</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
-                                name="final_price[]">
+                                name="final_price[]" id="final_price_0">
                             <p class="text-danger" id="error-final_price_0"></p>
                         </div>
                     </div>
@@ -853,7 +855,7 @@
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Profile Photo</div>
+                        <div class="mt-3">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
@@ -1006,7 +1008,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
+                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
 
                             </div>
@@ -1023,14 +1025,14 @@
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="1" checked>
+                                    <input type="radio" id="discount_type_percentage_${product_Variation_count}" name="discount_type[${product_Variation_count}]" value="1" checked>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="2">
+                                    <input type="radio" id="discount_type_fixed_${product_Variation_count}" name="discount_type[${product_Variation_count}]" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -1046,7 +1048,7 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                           <input type="number" class="form-control" placeholder="Eg.10%" name="discount_value[]">
+                           <input type="number" id="discount_value_${product_Variation_count}" class="form-control" placeholder="Eg.10%" name="discount_value[]">
                           <p class="text-danger" id="error-discount_value_${product_Variation_count}"></p>
 
                            </div>
@@ -1057,7 +1059,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
+                            <input type="number" id="final_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}"></p>
 
                          </div>
@@ -1268,6 +1270,44 @@
             $('input[name="exchangable_days"]').val('').closest('.row').hide();
         }
     });
+
+
+    // dynamic Price show after discount 
+
+    // Listen for input changes
+$(document).on("input change", "input[id^='actual_price_'], input[id^='discount_value_'], input[id^='discount_type_']", function () {
+
+    // Get ID of changed element
+    let id = $(this).attr('id');
+
+    // Extract dynamic index number (everything after last _ )
+    let index = id.split("_").pop();
+
+    // Get related fields using dynamic index
+    let actualPrice = parseFloat($("#actual_price_" + index).val());
+    let discountValue = parseFloat($("#discount_value_" + index).val());
+    let discountType = $(`input[name='discount_type[${index}]']:checked`).val();
+
+    if (!actualPrice || !discountValue) {
+        $("#final_price_" + index).val("");
+        return;
+    }
+
+    let finalPrice = 0;
+
+    if (discountType == "1") {
+        finalPrice = actualPrice - (actualPrice * (discountValue / 100));
+    } else {
+        finalPrice = actualPrice - discountValue;
+    }
+
+    if (finalPrice < 0) finalPrice = 0;
+
+    $("#final_price_" + index).val(finalPrice.toFixed(2));
+});
+
+
+
 </script>
 
 

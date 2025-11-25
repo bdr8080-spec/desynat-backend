@@ -566,12 +566,19 @@ public function edit_product_code(Request $request, $id){
 
           // product vartion start
 
-            'variant_image' => ['required', 'array'],
+            'variant_image' => ['array'],
             // Each variation must be an array
-            'variant_image.*' => ['required', 'array'],
+            'variant_image.*' => ['array'],
             // Each image inside each variation is required
-            'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
+            // 'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
 
+             'variant_image.*.*' => ['nullable','image','mimes:jpeg,png,jpg,gif','max:2048'],
+    
+
+            'old_variant_image' => ['array'],
+            'old_variant_image.*' => ['nullable'],
+
+           
           'color_id' => ['required', 'array'],
           'size_id' => ['required', 'array', ],
           'color_id.*' => ['required','exists:colors,id'],
@@ -768,9 +775,28 @@ public function edit_product_code(Request $request, $id){
 
      $validate->after(function ($validate) use ($request) {
 
+// new image and old image one must show 
+
+  foreach ($request->size_id as $key => $val) {
+
+        $newImages = $request->variant_image[$key] ?? [];
+        $oldImages = $request->old_variant_image[$key] ?? [];
+
+        // Check if both are empty
+        if ((empty($newImages) || count($newImages) == 0) &&
+            (empty($oldImages) || count($oldImages) == 0)) {
+
+            $validate->errors()->add(
+                "variant_image.$key",
+                "At least one image is required for variation #".($key + 1)
+            );
+        }
+    }
+
+
+// start Color and size are not dublicate 
     $colors = $request->color_id;
     $sizes  = $request->size_id;
-
     // Group sizes by color
     $grouped = [];
 
@@ -827,12 +853,43 @@ public function edit_product_code(Request $request, $id){
      $dir="Product/";
      $variation_image=[];
 
-     foreach($request->variant_image as $key=>$Image1){
+    //  foreach($request->variant_image as $key=>$Image1){
+    //     foreach($Image1 as $key1=>$Image2){
+    //         $variation_image[$key][$key1]=image_upload($Image2,$dir);  // chart Image
+    //     }
+    //  }
 
-        foreach($Image1 as $key1=>$Image2){
-            $variation_image[$key][$key1]=image_upload($Image2,$dir);  // chart Image
+    foreach ($request->color_id as $key => $val) {
+
+    $final_variation_images[$key] = []; // initialize empty
+
+    // ✔ If new images exist → upload them
+    if (!empty($request->variant_image[$key])) {
+
+        foreach ($request->variant_image[$key] as $index => $imageFile) {
+
+            $final_variation_images[$key][] = image_upload($imageFile, $dir);
         }
-     }
+
+    }
+    // ✔ Else use old images
+    elseif (!empty($request->old_variant_image[$key])) {
+
+        foreach ($request->old_variant_image[$key] as $oldImg) {
+
+            $final_variation_images[$key][] = $oldImg; // already saved paths
+        }
+    }
+    // ❌ Neither new nor old images -> skip or set empty
+    else {
+        $final_variation_images[$key] = [];  
+        // OR throw error if required
+        // continue;
+    }
+}
+
+
+
 
     //  Product Size Chart Upload 
      if($request->upload_size_chart){ 
@@ -864,7 +921,7 @@ $request_data=(object) [
 'product_spe_feature_ar'=> $request->product_spe_feature_ar,
 
       // product vartion start
-'variant_image' => $variation_image,
+'variant_image' => $final_variation_images,
 'color_id' => $request->color_id,
 'size_id' => $request->size_id,
       
@@ -927,14 +984,17 @@ $request_data=(object) [
 public function getPriceBySize(Request $request)
 {
 
+ $product_data_called= product::where('id', $request->product_id)->first();
+
+
     $sizes= ProductVariant::with('size')->where('product_id', $request->product_id)
     ->where('color_id',$request->color)
     ->where('size_id',$request->size)
     ->get();
 
-    // dd($sizes);
+    // dd($product_data);
 
-      return view('dealer.product.ajax.price', compact('sizes'))->render();
+     return view('dealer.product.ajax.price', compact('sizes','product_data_called'))->render();
 
 }
 
