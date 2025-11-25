@@ -58,6 +58,8 @@ Route::group(['prefix' => 'seller'], function () {
      Route::get('/get-variation', [SellerProductController::class, 'getSizeByVariation'])->name('get.product.variation');
 
 
+    Route::delete('/delete-product/{id}', [SellerProductController::class, 'product_delete'])->name('seller.product.product_delete');
+
      
 
     route::Match(['get','post'],'/edit-product/{id}',[SellerProductController::class,'edit_product'])->name('seller.edit-product');

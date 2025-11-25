@@ -1029,6 +1029,24 @@ public function getimagesBySize(Request $request)
 
 
 
+public function product_delete(Request $request, $id){
+
+    $request_data=(object) [
+    'product_id'=>$id,
+    ];
+
+  $data=  $this->SellerProductService->product_delete_code($request_data);
+
+  if(isset($data['status']) && $data['status']=='error' ){
+      return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+  }
+
+  return ApiResponse::generateResponse('success', $data['message'],(object)[], 200);
+  
+  }
+
+
+
 
     public function Inventory_Management(){
 

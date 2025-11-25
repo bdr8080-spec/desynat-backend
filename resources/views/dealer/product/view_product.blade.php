@@ -327,7 +327,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="1">Yes, Delete</button>
       </div>
     </div>
   </div>
@@ -528,6 +528,39 @@ $(document).ready(function () {
             }
             })
         })
+
+
+        
+        
+// Handle confirm delete
+
+
+$('#confirmDeleteBtn').on('click', function() {
+
+     deleteId = $(this).data('id');
+    $.ajax({
+        url: '/seller/delete-product/' + deleteId, // update with your route
+        type: 'get', // or POST if you use method spoofing
+        data: {
+            _token: '{{ csrf_token() }}', // Laravel CSRF token
+        },
+        success: function(response) {
+            // hide modal
+            $('#deleteConfirmModal').modal('hide');
+
+            // remove row from table or reload
+            $('#row_' + deleteId).remove();
+
+            // optional: show success message
+            // alert('Item deleted successfully');
+            
+        },
+        error: function(xhr) {
+            alert('Something went wrong!');
+        }
+    });
+});
+
 
 
     </script>
