@@ -44,18 +44,26 @@ use App\Models\UserCurrentLocation;
                             @if (Auth::guard('web')->check())
                             
                             <div class="user_nav_inner_profile">
-                                <span>
-                                    <img src="{{asset('user/assets/images/chat.svg')}}" class=img-fluid />
-                                </span>
-                                <span>
-                                    <img src="{{asset('user/assets/images/like_dislike.svg')}}" class=img-fluid />
-                                </span>
-                                <span>
-                                    <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
-                                </span>
-                                <span>
-                                    <img src="{{asset('user/assets/images/noti.svg')}}" class=img-fluid />
-                                </span>
+                                <a href="">
+                                    <span>
+                                        <img src="{{asset('user/assets/images/chat.svg')}}" class=img-fluid />
+                                    </span>
+                                </a>    
+                                <a href="{{url('/wishlist')}}">
+                                    <span >
+                                        <img src="{{asset('user/assets/images/like_dislike.svg')}}" class=img-fluid />
+                                    </span>
+                                </a>
+                                <a href="">
+                                    <span>
+                                        <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
+                                    </span>
+                                </a>
+                                <a href="">
+                                    <span>
+                                        <img src="{{asset('user/assets/images/noti.svg')}}" class=img-fluid />
+                                    </span>
+                                </a>
                             </div>
 
                             <div class="dropdown-center userDropdown">

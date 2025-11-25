@@ -9,11 +9,10 @@
         </span>
     </div>
 
-{{-- @foreach ($sizes as $key1 => $item1) --}}
     <div id="size" class="size-section" 
          style="">
 
-           {{-- @if($item1->category_id==2) --}}
+           @if($product_data_called->category_id==2)
 
             <div class="p-4 rounded-4 shadow-sm" style="background:#fff;" >
                 <div class="row mb-2">
@@ -41,7 +40,7 @@
                     <div class="col-6 text-end">{{$item1['length']}} </div>
                 </div>
             </div>
-            {{-- @endif --}}
+            @endif
             
         <div class="p-4 rounded-4 shadow-sm bg-white">
             <div class="row mb-2">

@@ -171,11 +171,18 @@ class AuthController extends Controller
 
     public function create_password(Request $req){
 
+        // $validate = Validator::make($req->all(), [
+        //     'user_id'=>'required|exists:delivery_boys,id',
+        //     'password' => 'required',
+        //     'confirm_password'=>"required|same:password"
+        //        ]);
         $validate = Validator::make($req->all(), [
-            'user_id'=>'required|exists:delivery_boys,id',
+            'user_id' => 'required|exists:delivery_boys,id',
             'password' => 'required',
-            'confirm_password'=>"required|same:password"
-               ]);
+            'confirm_password' => 'required|same:password'
+        ], [
+            'confirm_password.same' => 'Password does not match', 
+        ]);
         
        if($validate->fails()){
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);

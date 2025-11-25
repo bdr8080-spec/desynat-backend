@@ -44,10 +44,10 @@
                     <div class="col-lg-3 ">
                         <div class="d-flex gap-3 justify-content-end" >
                             <a href="{{route('admin.userManagement')}}" class="btn btn-dark customBtn"
-                                style="margin-top: 70px">
+                                style="margin-top: 60px">
                                 <span>Reset</span>
                             </a>
-                             <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                             <a class="btn btn-dark customBtn " style="margin-top: 60px">
                                 <span>Export </span></a>
                         </div>
                     </div>

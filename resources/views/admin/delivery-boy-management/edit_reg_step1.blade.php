@@ -39,23 +39,27 @@
     display: none;
 }
 .use-lc {
-    background: #fff;
+    /* background: #fff;
     box-shadow: 0px 2px 8px 0px #0000001f;
-    padding: 10px;
-    width: fit-content;
+    padding: 10px; */
+width: fit-content;
     border-radius: 50px;
     color: #a8824f;
     font-weight: 500;
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 239px;
+    right: 568px;
     cursor: pointer;
+    font-size: 17px;
 }
 .search-icon {
     position: absolute;
     left: 20px;
     top: 13px;
     font-size: 14px;
+}
+.card-body {
+    background: #6c757d0a;
 }
 </style>
 
@@ -79,11 +83,13 @@
                     <form id="deliveryBoyForm" enctype="multipart/form-data">
                         <div class="row">
                             <input type="hidden" name="id" value="{{$deliveryBoy->id}}">
-                            @if(isset($deliveryBoy->profile_pic) && !isset($step1Data['profile_pic']))
+                            <!-- @if(isset($deliveryBoy->profile_pic) && !isset($step1Data['profile_pic']))
                                 <input type="hidden" name="profile_pic_existing" value="{{ $deliveryBoy->profile_pic }}">
-                            @endif
+                            @endif -->
+                            <input type="hidden" name="profile_pic_existing" 
+                              value="{{ $step1Data['profile_pic'] ?? $deliveryBoy->profile_pic ?? '' }}">
                             <!-- Profile Image -->
-                            <div class="col-lg-12">
+                            <!-- <div class="col-lg-12">
                                 <div class="upload-title text-center">Upload Profile Image</div>
                                 <div class="upload-new text-center">
                                     <label for="profileUpload" class="upload-box">
@@ -96,6 +102,25 @@
                                         <img id="profilePreview" class="preview-image"
                                             src="{{ $step1Data['profile_pic'] ?? $deliveryBoy->profile_pic ?? '' }}"
                                             style="{{ isset($step1Data['profile_pic']) || isset($deliveryBoy->profile_pic) ? 'display:block;' : 'display:none;' }}" />
+                                    </label>
+                                    <span class="text-danger" id="profile_image_error"></span>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-12">
+                                <div class="upload-title text-center">Upload Profile Image</div>
+                                <div class="upload-new text-center">
+                                    <label for="profileUpload" class="upload-box">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                            id="profileUploadIcon"
+                                            class="upload-icon"
+                                            style="{{ ($step1Data['profile_pic'] ?? $deliveryBoy->profile_pic) ? 'display:none;' : '' }}" />
+                                        
+                                        <div class="upload-text">Upload Profile Image</div>
+                                        <input type="file" id="profileUpload" name="profile_pic" hidden accept="image/*" />
+                                        
+                                        <img id="profilePreview" class="preview-image"
+                                            src="{{ $step1Data['profile_pic'] ?? $deliveryBoy->profile_pic ?? '' }}"
+                                            style="{{ ($step1Data['profile_pic'] ?? $deliveryBoy->profile_pic) ? 'display:block;' : 'display:none;' }}" />
                                     </label>
                                     <span class="text-danger" id="profile_image_error"></span>
                                 </div>
@@ -126,11 +151,11 @@
                                 <!-- Address Line 1 -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 01</label>
+                                        <label class="mb-0">Address line 1</label>
                                     </div>
                                     <div class="position-relative mt-1">
                                         <input type="text" class="form-control" name="address_line1"
-                                            placeholder="Enter Address Line 01"
+                                            placeholder="Enter Address Line 1"
                                             value="{{ $step1Data['address_line1'] ?? $deliveryBoy->address_line1 ?? '' }}" />
                                         <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
                                         style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;"></i>
@@ -154,9 +179,9 @@
                                     <input type="password" id="password" class="form-control" name="password"
                                         placeholder="Enter password" value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"style="font-size: 17px;" />
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
-                                    style="right: 15px; cursor: pointer;top: 51px;"></i>
-                                    <span class="text-danger" id="password_error"></span>
+                                    style="right: 15px; cursor: pointer;"></i>
                                 </div>
+                                <span class="text-danger" id="password_error"></span>
 
                                 <!-- Zone -->
                                 <div class="mt-3">
@@ -206,10 +231,10 @@
                                 <!-- Address Line 2 -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 02</label>
+                                        <label class="mb-0">Address line 2</label>
                                     </div>
                                     <input type="text" class="form-control" name="address_line2"
-                                        placeholder="Enter Address Line 02"
+                                        placeholder="Enter Address Line 2"
                                         value="{{ $step1Data['address_line2'] ?? $deliveryBoy->address_line2 ?? '' }}" />
                                     <span class="text-danger" id="address_line2_error"></span>
                                 </div>
@@ -231,9 +256,9 @@
                                         placeholder="Enter Confirm password"
                                         value="{{ $step1Data['password'] ?? $deliveryBoy->unhashed_password ?? '' }}"  style="font-size: 17px;"/>
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
-                                    style="right: 15px; cursor: pointer; top: 51px;"></i>
-                                    <span class="text-danger" id="confirm_password_error"></span>
+                                    style="right: 15px; cursor: pointer; "></i>
                                 </div>
+                                <span class="text-danger" id="confirm_password_error"></span>
                             </div>
                         </div>
 
@@ -252,7 +277,7 @@
 </div>
 
 <div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <h2 class="h2">Address</h2>
@@ -261,21 +286,23 @@
 
             <div class="modal-body">
                 <div class="text-center mb-4">
-                    <div class="appointment-container d-flex flex-column align-items-center">
+                    <div class="appointment-container d-flex flex-column align-items-start">
                         <input id="searchBox" type="text" placeholder="Search your address"
                             class="form-control"
                             style="padding: 9px 18px;border-radius:4px;width: 80%;">
 
                         <div class="w-100 mb-3 d-flex justify-content-center">
-                            <div id="map" style="width: 100%; height: 300px; border-radius: 10px; overflow: hidden;"></div>
+                            <div id="map" style="width: 100%; height: 408px; border-radius: 10px; overflow: hidden;"></div>
                         </div>
 
                         <div class="find-location d-flex gap-3 py-4">
                             <div id="useCurrentLocation" class="use-lc">
                                 <i class="bi bi-crosshair"></i> Use Current Location
                             </div>
-                            <div><i class="bi bi-geo-alt-fill"></i></div>
-                            <p class="mb-0" id="selectedAddress">9XHG+629, Kuwait City, Kuwait</p>
+                            <div class="d-flex justify-content-start" style="gap: 23px;">
+                                <i class="bi bi-geo-alt-fill"></i>
+                                <p class="mb-0" id="selectedAddress">9XHG+629, Kuwait City, Kuwait</p>
+                            </div>
                         </div>
 
                         <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-3">
@@ -544,513 +571,8 @@ document.querySelector(".setup-done.button").addEventListener("click", function(
 <!-- reg1 validation -->
 
 <script>
-// document.addEventListener("DOMContentLoaded", function() {
 
-//     const profileUpload = document.getElementById('profileUpload');
-//     const profilePreview = document.getElementById('profilePreview');
-//     const profileImageError = document.getElementById('profile_image_error');
-//     const profileIcon = document.getElementById('profileUploadIcon');
-//     const form = document.getElementById('deliveryBoyForm');
 
-//     // -------------------------------
-//     // PROFILE IMAGE PREVIEW & VALIDATION
-//     // -------------------------------
-//     profileUpload.addEventListener('change', function() {
-//         const file = this.files[0];
-
-//         // Reset previous state
-//         profileImageError.innerText = '';
-//         profileImageError.style.display = 'none';
-
-//         if (!file) return;
-
-//         // Validate file type
-//         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-//         if (!allowedTypes.includes(file.type)) {
-//             profileImageError.innerText = "Only JPG, JPEG, or PNG images are allowed.";
-//             profileImageError.style.display = 'block';
-//             this.value = '';
-//             return;
-//         }
-
-//         // Validate file size (max 4MB)
-//         const maxSize = 4 * 1024 * 1024;
-//         if (file.size > maxSize) {
-//             profileImageError.innerText = "Image size must be less than 4MB.";
-//             profileImageError.style.display = 'block';
-//             this.value = '';
-//             return;
-//         }
-
-//         // Show preview
-//         const reader = new FileReader();
-//         reader.onload = function(e) {
-//             profilePreview.src = e.target.result;
-//             profilePreview.style.display = 'block';
-//             profileIcon.style.display = 'none';
-//         };
-//         reader.readAsDataURL(file);
-//     });
-
-//     // -------------------------------
-//     // FORM VALIDATION & SUBMISSION
-//     // -------------------------------
-//     form.addEventListener('submit', function(e) {
-//         e.preventDefault();
-
-//         // Clear previous errors
-//         const errorSpans = form.querySelectorAll('.text-danger, .text-success');
-//         errorSpans.forEach(span => {
-//             span.innerText = '';
-//             span.style.display = 'none';
-//             span.classList.remove('text-success');
-//         });
-
-//         let hasError = false;
-
-//         // Required fields
-//         const fields = [
-//             {name: 'profile_pic', errorId: 'profile_image_error', message: 'Please upload profile image'},
-//             {name: 'full_name_english', errorId: 'full_name_en_error', message: 'Please enter full name (English)'},
-//             {name: 'full_name_arabic', errorId: 'full_name_ar_error', message: 'Please enter full name (Arabic)'},
-//             {name: 'email', errorId: 'email_error', message: 'Please enter email'},
-//             {name: 'mobile', errorId: 'mobile_error', message: 'Please enter mobile number'},
-//             {name: 'address_line1', errorId: 'address_line1_error', message: 'Please enter address line 1'},
-//             {name: 'address_line2', errorId: 'address_line2_error', message: 'Please enter address line 2'},
-//             {name: 'city', errorId: 'city_error', message: 'Please enter city'},
-//             {name: 'state', errorId: 'state_error', message: 'Please enter state'},
-//             {name: 'password', errorId: 'password_error', message: 'Please enter password'},
-//             {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please confirm password'},
-//             {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
-//         ];
-
-//         fields.forEach(field => {
-//             const input = form.querySelector(`[name="${field.name}"]`);
-
-//             if (field.name === 'profile_pic') {
-//                 // If no new file, check existing hidden input or preview
-//                 const existingImage = form.querySelector('input[name="profile_pic_existing"]');
-//                 if (input.files.length === 0 && (!existingImage || !existingImage.value)) {
-//                     const errorSpan = document.getElementById(field.errorId);
-//                     errorSpan.innerText = field.message;
-//                     errorSpan.classList.add('text-danger');
-//                     errorSpan.style.display = 'block';
-//                     hasError = true;
-//                 }
-//             } else if (!input.value.trim()) {
-//                 const errorSpan = document.getElementById(field.errorId);
-//                 errorSpan.innerText = field.message;
-//                 errorSpan.classList.add('text-danger');
-//                 errorSpan.style.display = 'block';
-//                 hasError = true;
-//             }
-//         });
-
-//         // Password validation
-//         const password = form.querySelector('[name="password"]').value;
-//         const confirmPassword = form.querySelector('[name="confirm_password"]').value;
-
-//         if (password) {
-//             const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-//             if (!passwordPattern.test(password)) {
-//                 const ps = document.getElementById('password_error');
-//                 ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
-//                 ps.style.display = 'block';
-//                 hasError = true;
-//             }
-//         }
-
-//         if (confirmPassword && confirmPassword !== password) {
-//             const cps = document.getElementById('confirm_password_error');
-//             cps.innerText = "Confirm password does not match.";
-//             cps.style.display = 'block';
-//             hasError = true;
-//         }
-
-//         if (hasError) return;
-
-//         const formData = new FormData(form);
-
-//         fetch('/admin/store_reg1_edit', {
-//             method: 'POST',
-//             body: formData,
-//             headers: {
-//                 "X-CSRF-TOKEN": '{{ csrf_token() }}'
-//             }
-//         })
-//         .then(res => res.json())
-//         .then(response => {
-//             if (response.success === 'success' || response.success === true) {
-//                 form.reset();
-//                 profilePreview.src = '';
-//                 profilePreview.style.display = 'none';
-//                 profileIcon.style.display = 'block';
-
-//                 // Redirect to step2
-//                 window.location.href = "{{ route('admin.edit_deliveryboy_step2') }}";
-//             }
-
-//             if (response.errors) {
-//                 for (const key in response.errors) {
-//                     const errorSpan = document.getElementById(key + '_error');
-//                     if (errorSpan) {
-//                         errorSpan.innerText = response.errors[key][0];
-//                         errorSpan.style.display = 'block';
-//                         errorSpan.classList.add('text-danger');
-//                     }
-//                 }
-//             }
-//         })
-//         .catch(err => {
-//             console.error('Error:', err);
-//             alert('Something went wrong. Check console for details.');
-//         });
-//     });
-
-//     // -------------------------------
-//     // CLEAR ERRORS ON INPUT / CHANGE
-//     // -------------------------------
-//     const allInputs = form.querySelectorAll('input, select');
-//     allInputs.forEach(input => {
-//         input.addEventListener('input', function() {
-//             const err = document.getElementById(this.name + '_error');
-//             if (err) {
-//                 err.innerText = '';
-//                 err.style.display = 'none';
-//                 err.classList.remove('text-success', 'text-danger');
-//             }
-//         });
-//         input.addEventListener('change', function() {
-//             const err = document.getElementById(this.name + '_error');
-//             if (err) {
-//                 err.innerText = '';
-//                 err.style.display = 'none';
-//                 err.classList.remove('text-success', 'text-danger');
-//             }
-//         });
-//     });
-
-//     // -------------------------------
-//     // MOBILE & EMAIL AVAILABILITY
-//     // -------------------------------
-//     function checkAvailability(url, callback) {
-//         fetch(url)
-//         .then(res => res.json())
-//         .then(callback)
-//         .catch(err => console.error(err));
-//     }
-
-//     const deliveryBoyId = document.querySelector('[name="id"]').value;
-
-//     // MOBILE
-//     const mobileInput = document.querySelector('[name="mobile"]');
-//     mobileInput.addEventListener('input', function() {
-//         const mobileError = document.getElementById('mobile_error');
-//         const value = this.value.trim();
-
-//         if (value.length < 8 || value.length > 15) return; // skip invalid lengths
-
-//         checkAvailability(`/admin/check-mobile-edit?value=${encodeURIComponent(value)}&id=${deliveryBoyId}`, function(data) {
-//             if (data.exists) {
-//                 mobileError.innerText = "This number is already registered.";
-//                 mobileError.classList.remove('text-success');
-//                 mobileError.classList.add('text-danger');
-//             } else {
-//                 mobileError.innerText = "Mobile number available.";
-//                 mobileError.classList.remove('text-danger');
-//                 mobileError.classList.add('text-success');
-//             }
-//             mobileError.style.display = 'block';
-//         });
-//     });
-
-//     // EMAIL
-//     const emailInput = document.querySelector('[name="email"]');
-//     emailInput.addEventListener('input', function() {
-//         const emailError = document.getElementById('email_error');
-//         const value = this.value.trim();
-//         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-//         if (!pattern.test(value)) return;
-
-//         checkAvailability(`/admin/check-email-edit?value=${encodeURIComponent(value)}&id=${deliveryBoyId}`, function(data) {
-//             if (data.exists) {
-//                 emailError.innerText = "Email already registered.";
-//                 emailError.classList.remove('text-success');
-//                 emailError.classList.add('text-danger');
-//             } else {
-//                 emailError.innerText = "Email available.";
-//                 emailError.classList.remove('text-danger');
-//                 emailError.classList.add('text-success');
-//             }
-//             emailError.style.display = 'block';
-//         });
-//     });
-
-// });
-// document.addEventListener("DOMContentLoaded", function() {
-
-//     const profileUpload = document.getElementById('profileUpload');
-//     const profilePreview = document.getElementById('profilePreview');
-//     const profileImageError = document.getElementById('profile_image_error');
-//     const profileIcon = document.getElementById('profileUploadIcon');
-//     const form = document.getElementById('deliveryBoyForm');
-
-//     // -------------------------------
-//     // PROFILE IMAGE PREVIEW & VALIDATION
-//     // -------------------------------
-//     profileUpload.addEventListener('change', function() {
-//         const file = this.files[0];
-
-//         // Reset previous state
-//         profileImageError.innerText = '';
-//         profileImageError.style.display = 'none';
-
-//         if (!file) return;
-
-//         // Validate file type
-//         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-//         if (!allowedTypes.includes(file.type)) {
-//             profileImageError.innerText = "Only JPG, JPEG, or PNG images are allowed.";
-//             profileImageError.style.display = 'block';
-//             this.value = '';
-//             return;
-//         }
-
-//         // Validate file size (max 4MB)
-//         const maxSize = 4 * 1024 * 1024;
-//         if (file.size > maxSize) {
-//             profileImageError.innerText = "Image size must be less than 4MB.";
-//             profileImageError.style.display = 'block';
-//             this.value = '';
-//             return;
-//         }
-
-//         // Show preview
-//         const reader = new FileReader();
-//         reader.onload = function(e) {
-//             profilePreview.src = e.target.result;
-//             profilePreview.style.display = 'block';
-//             profileIcon.style.display = 'none';
-//         };
-//         reader.readAsDataURL(file);
-//     });
-
-//     // -------------------------------
-//     // FORM VALIDATION & SUBMISSION
-//     // -------------------------------
-//     form.addEventListener('submit', function(e) {
-//         e.preventDefault();
-
-//         // Clear previous errors
-//         const errorSpans = form.querySelectorAll('.text-danger, .text-success');
-//         errorSpans.forEach(span => {
-//             span.innerText = '';
-//             span.style.display = 'none';
-//             span.classList.remove('text-success');
-//         });
-
-//         let hasError = false;
-
-//         // Required fields
-//         const fields = [
-//             {name: 'profile_pic', errorId: 'profile_image_error', message: 'Please upload profile image'},
-//             {name: 'full_name_english', errorId: 'full_name_en_error', message: 'Please enter full name (English)'},
-//             {name: 'full_name_arabic', errorId: 'full_name_ar_error', message: 'Please enter full name (Arabic)'},
-//             {name: 'email', errorId: 'email_error', message: 'Please enter email'},
-//             {name: 'mobile', errorId: 'mobile_error', message: 'Please enter mobile number'},
-//             {name: 'address_line1', errorId: 'address_line1_error', message: 'Please enter address line 1'},
-//             {name: 'address_line2', errorId: 'address_line2_error', message: 'Please enter address line 2'},
-//             {name: 'city', errorId: 'city_error', message: 'Please enter city'},
-//             {name: 'state', errorId: 'state_error', message: 'Please enter state'},
-//             {name: 'password', errorId: 'password_error', message: 'Please enter password'},
-//             {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please confirm password'},
-//             {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
-//         ];
-
-//         fields.forEach(field => {
-//             const input = form.querySelector(`[name="${field.name}"]`);
-
-//             if (field.name === 'profile_pic') {
-//                 // If no new file, check existing hidden input or preview
-//                 const existingImage = form.querySelector('input[name="profile_pic_existing"]');
-//                 if (input.files.length === 0 && (!existingImage || !existingImage.value)) {
-//                     const errorSpan = document.getElementById(field.errorId);
-//                     errorSpan.innerText = field.message;
-//                     errorSpan.classList.add('text-danger');
-//                     errorSpan.style.display = 'block';
-//                     hasError = true;
-//                 } else if (input.files.length === 0) {
-//                     // If no new image and there is a preview, don't show error
-//                     const previewImage = profilePreview.src;
-//                     if (!previewImage || previewImage.trim() === '') {
-//                         const errorSpan = document.getElementById(field.errorId);
-//                         errorSpan.innerText = field.message;
-//                         errorSpan.classList.add('text-danger');
-//                         errorSpan.style.display = 'block';
-//                         hasError = true;
-//                     } else {
-//                         // Add hidden input with current profile_pic value to formData if no new image
-//                         if (!existingImage) {
-//                             const hiddenInput = document.createElement('input');
-//                             hiddenInput.type = 'hidden';
-//                             hiddenInput.name = 'profile_pic_existing';
-//                             hiddenInput.value = previewImage; // existing URL from session or DB
-//                             form.appendChild(hiddenInput);
-//                         }
-//                     }
-//                 }
-//             } else if (!input.value.trim()) {
-//                 const errorSpan = document.getElementById(field.errorId);
-//                 errorSpan.innerText = field.message;
-//                 errorSpan.classList.add('text-danger');
-//                 errorSpan.style.display = 'block';
-//                 hasError = true;
-//             }
-//         });
-
-//         // Password validation
-//         const password = form.querySelector('[name="password"]').value;
-//         const confirmPassword = form.querySelector('[name="confirm_password"]').value;
-
-//         if (password) {
-//             const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-//             if (!passwordPattern.test(password)) {
-//                 const ps = document.getElementById('password_error');
-//                 ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
-//                 ps.style.display = 'block';
-//                 hasError = true;
-//             }
-//         }
-
-//         if (confirmPassword && confirmPassword !== password) {
-//             const cps = document.getElementById('confirm_password_error');
-//             cps.innerText = "Confirm password does not match.";
-//             cps.style.display = 'block';
-//             hasError = true;
-//         }
-
-//         if (hasError) return;
-
-//         const formData = new FormData(form);
-
-//         fetch('/admin/store_reg1_edit', {
-//             method: 'POST',
-//             body: formData,
-//             headers: {
-//                 "X-CSRF-TOKEN": '{{ csrf_token() }}'
-//             }
-//         })
-//         .then(res => res.json())
-//         .then(response => {
-//             if (response.success === 'success' || response.success === true) {
-//                 form.reset();
-//                 profilePreview.src = '';
-//                 profilePreview.style.display = 'none';
-//                 profileIcon.style.display = 'block';
-
-//                 // Redirect to step2
-//                 window.location.href = "{{ route('admin.edit_deliveryboy_step2') }}";
-//             }
-
-//             if (response.errors) {
-//                 for (const key in response.errors) {
-//                     const errorSpan = document.getElementById(key + '_error');
-//                     if (errorSpan) {
-//                         errorSpan.innerText = response.errors[key][0];
-//                         errorSpan.style.display = 'block';
-//                         errorSpan.classList.add('text-danger');
-//                     }
-//                 }
-//             }
-//         })
-//         .catch(err => {
-//             console.error('Error:', err);
-//             alert('Something went wrong. Check console for details.');
-//         });
-//     });
-
-//     // -------------------------------
-//     // CLEAR ERRORS ON INPUT / CHANGE
-//     // -------------------------------
-//     const allInputs = form.querySelectorAll('input, select');
-//     allInputs.forEach(input => {
-//         input.addEventListener('input', function() {
-//             const err = document.getElementById(this.name + '_error');
-//             if (err) {
-//                 err.innerText = '';
-//                 err.style.display = 'none';
-//                 err.classList.remove('text-success', 'text-danger');
-//             }
-//         });
-//         input.addEventListener('change', function() {
-//             const err = document.getElementById(this.name + '_error');
-//             if (err) {
-//                 err.innerText = '';
-//                 err.style.display = 'none';
-//                 err.classList.remove('text-success', 'text-danger');
-//             }
-//         });
-//     });
-
-//     // -------------------------------
-//     // MOBILE & EMAIL AVAILABILITY
-//     // -------------------------------
-//     function checkAvailability(url, callback) {
-//         fetch(url)
-//         .then(res => res.json())
-//         .then(callback)
-//         .catch(err => console.error(err));
-//     }
-
-//     const deliveryBoyId = document.querySelector('[name="id"]').value;
-
-//     // MOBILE
-//     const mobileInput = document.querySelector('[name="mobile"]');
-//     mobileInput.addEventListener('input', function() {
-//         const mobileError = document.getElementById('mobile_error');
-//         const value = this.value.trim();
-
-//         if (value.length < 8 || value.length > 15) return; // skip invalid lengths
-
-//         checkAvailability(`/admin/check-mobile-edit?value=${encodeURIComponent(value)}&id=${deliveryBoyId}`, function(data) {
-//             if (data.exists) {
-//                 mobileError.innerText = "This number is already registered.";
-//                 mobileError.classList.remove('text-success');
-//                 mobileError.classList.add('text-danger');
-//             } else {
-//                 mobileError.innerText = "Mobile number available.";
-//                 mobileError.classList.remove('text-danger');
-//                 mobileError.classList.add('text-success');
-//             }
-//             mobileError.style.display = 'block';
-//         });
-//     });
-
-//     // EMAIL
-//     const emailInput = document.querySelector('[name="email"]');
-//     emailInput.addEventListener('input', function() {
-//         const emailError = document.getElementById('email_error');
-//         const value = this.value.trim();
-//         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-//         if (!pattern.test(value)) return;
-
-//         checkAvailability(`/admin/check-email-edit?value=${encodeURIComponent(value)}&id=${deliveryBoyId}`, function(data) {
-//             if (data.exists) {
-//                 emailError.innerText = "Email already registered.";
-//                 emailError.classList.remove('text-success');
-//                 emailError.classList.add('text-danger');
-//             } else {
-//                 emailError.innerText = "Email available.";
-//                 emailError.classList.remove('text-danger');
-//                 emailError.classList.add('text-success');
-//             }
-//             emailError.style.display = 'block';
-//         });
-//     });
-
-// });
 document.addEventListener("DOMContentLoaded", function() {
     const profileUpload = document.getElementById('profileUpload');
     const profilePreview = document.getElementById('profilePreview');
@@ -1058,19 +580,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const profileIcon = document.getElementById('profileUploadIcon');
     const form = document.getElementById('deliveryBoyForm');
 
-    // -------------------------------
-    // PROFILE IMAGE PREVIEW & VALIDATION
-    // -------------------------------
+    // --- PROFILE IMAGE PREVIEW & VALIDATION ---
     profileUpload.addEventListener('change', function() {
         const file = this.files[0];
-
-        // Reset previous state
         profileImageError.innerText = '';
         profileImageError.style.display = 'none';
 
         if (!file) return;
 
-        // Validate file type
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         if (!allowedTypes.includes(file.type)) {
             profileImageError.innerText = "Only JPG, JPEG, or PNG images are allowed.";
@@ -1079,7 +596,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Validate file size (max 4MB)
         const maxSize = 4 * 1024 * 1024;
         if (file.size > maxSize) {
             profileImageError.innerText = "Image size must be less than 4MB.";
@@ -1088,7 +604,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // Show preview
         const reader = new FileReader();
         reader.onload = function(e) {
             profilePreview.src = e.target.result;
@@ -1098,25 +613,21 @@ document.addEventListener("DOMContentLoaded", function() {
         reader.readAsDataURL(file);
     });
 
-    // -------------------------------
-    // FORM VALIDATION & SUBMISSION
-    // -------------------------------
+    // --- FORM SUBMISSION ---
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Clear previous errors
-        const errorSpans = form.querySelectorAll('.text-danger, .text-success');
-        errorSpans.forEach(span => {
+        // Clear errors
+        form.querySelectorAll('.text-danger, .text-success').forEach(span => {
             span.innerText = '';
             span.style.display = 'none';
-            span.classList.remove('text-success');
+            span.classList.remove('text-success', 'text-danger');
         });
 
         let hasError = false;
 
-        // Required fields
+        // Check required fields
         const fields = [
-            {name: 'profile_pic', errorId: 'profile_image_error', message: 'Please upload profile image'},
             {name: 'full_name_english', errorId: 'full_name_en_error', message: 'Please enter full name (English)'},
             {name: 'full_name_arabic', errorId: 'full_name_ar_error', message: 'Please enter full name (Arabic)'},
             {name: 'email', errorId: 'email_error', message: 'Please enter email'},
@@ -1126,27 +637,17 @@ document.addEventListener("DOMContentLoaded", function() {
             {name: 'city', errorId: 'city_error', message: 'Please enter city'},
             {name: 'state', errorId: 'state_error', message: 'Please enter state'},
             {name: 'password', errorId: 'password_error', message: 'Please enter password'},
-            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please confirm password'},
+            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please enter confirm password'},
             {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
         ];
 
         fields.forEach(field => {
             const input = form.querySelector(`[name="${field.name}"]`);
-
-            if (field.name === 'profile_pic') {
-                // If no new file AND no session-loaded preview, show error
-                if (input.files.length === 0 && (!profilePreview.src || profilePreview.src.trim() === '')) {
-                    const errorSpan = document.getElementById(field.errorId);
-                    errorSpan.innerText = field.message;
-                    errorSpan.classList.add('text-danger');
-                    errorSpan.style.display = 'block';
-                    hasError = true;
-                }
-            } else if (!input.value.trim()) {
+            if (!input.value.trim()) {
                 const errorSpan = document.getElementById(field.errorId);
                 errorSpan.innerText = field.message;
-                errorSpan.classList.add('text-danger');
                 errorSpan.style.display = 'block';
+                errorSpan.classList.add('text-danger');
                 hasError = true;
             }
         });
@@ -1154,15 +655,18 @@ document.addEventListener("DOMContentLoaded", function() {
         // Password validation
         const password = form.querySelector('[name="password"]').value;
         const confirmPassword = form.querySelector('[name="confirm_password"]').value;
+        // if (password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
+        //     const ps = document.getElementById('password_error');
+        //     ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
+        //     ps.style.display = 'block';
+        //     hasError = true;
+        // }
 
-        if (password) {
-            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-            if (!passwordPattern.test(password)) {
-                const ps = document.getElementById('password_error');
-                ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
-                ps.style.display = 'block';
-                hasError = true;
-            }
+        if (password.length > 0 && password.length < 6) {
+            const ps = document.getElementById('password_error');
+            ps.innerText = "Password should be minimum of 6 characters.";
+            ps.style.display = 'block';
+            hasError = true;
         }
 
         if (confirmPassword && confirmPassword !== password) {
@@ -1176,6 +680,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const formData = new FormData(form);
 
+        // If no new file, append existing session/DB URL
+        if (profileUpload.files.length === 0) {
+            const existing = form.querySelector('[name="profile_pic_existing"]').value;
+            if (existing) formData.append('profile_pic', existing);
+        }
+
         fetch('/admin/store_reg1_edit', {
             method: 'POST',
             body: formData,
@@ -1185,25 +695,20 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(res => res.json())
         .then(response => {
-            if (response.success === 'success' || response.success === true) {
-                form.reset();
-                profilePreview.src = '';
-                profilePreview.style.display = 'none';
-                profileIcon.style.display = 'block';
-
+            if (response.success) {
+                // Keep preview intact
+               // toastr.success(response.message);
                 // Redirect to step2
                 window.location.href = "{{ route('admin.edit_deliveryboy_step2') }}";
-            }
-
-            if (response.errors) {
-                for (const key in response.errors) {
+            } else if (response.errors) {
+                Object.keys(response.errors).forEach(key => {
                     const errorSpan = document.getElementById(key + '_error');
                     if (errorSpan) {
                         errorSpan.innerText = response.errors[key][0];
                         errorSpan.style.display = 'block';
                         errorSpan.classList.add('text-danger');
                     }
-                }
+                });
             }
         })
         .catch(err => {
@@ -1212,85 +717,20 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // -------------------------------
-    // CLEAR ERRORS ON INPUT / CHANGE
-    // -------------------------------
-    const allInputs = form.querySelectorAll('input, select');
-    allInputs.forEach(input => {
-        input.addEventListener('input', function() {
-            const err = document.getElementById(this.name + '_error');
-            if (err) {
-                err.innerText = '';
-                err.style.display = 'none';
-                err.classList.remove('text-success', 'text-danger');
-            }
-        });
-        input.addEventListener('change', function() {
-            const err = document.getElementById(this.name + '_error');
-            if (err) {
-                err.innerText = '';
-                err.style.display = 'none';
-                err.classList.remove('text-success', 'text-danger');
-            }
-        });
+    // Clear errors on input/change
+    form.querySelectorAll('input, select').forEach(input => {
+        input.addEventListener('input', () => clearError(input));
+        input.addEventListener('change', () => clearError(input));
     });
 
-    // -------------------------------
-    // MOBILE & EMAIL AVAILABILITY
-    // -------------------------------
-    function checkAvailability(url, callback) {
-        fetch(url)
-        .then(res => res.json())
-        .then(callback)
-        .catch(err => console.error(err));
+    function clearError(input) {
+        const err = document.getElementById(input.name + '_error');
+        if (err) {
+            err.innerText = '';
+            err.style.display = 'none';
+            err.classList.remove('text-danger', 'text-success');
+        }
     }
-
-    const deliveryBoyId = document.querySelector('[name="id"]').value;
-
-    // MOBILE
-    const mobileInput = document.querySelector('[name="mobile"]');
-    mobileInput.addEventListener('input', function() {
-        const mobileError = document.getElementById('mobile_error');
-        const value = this.value.trim();
-
-        if (value.length < 8 || value.length > 15) return; // skip invalid lengths
-
-        checkAvailability(`/admin/check-mobile-edit?value=${encodeURIComponent(value)}&id=${deliveryBoyId}`, function(data) {
-            if (data.exists) {
-                mobileError.innerText = "This number is already registered.";
-                mobileError.classList.remove('text-success');
-                mobileError.classList.add('text-danger');
-            } else {
-                mobileError.innerText = "Mobile number available.";
-                mobileError.classList.remove('text-danger');
-                mobileError.classList.add('text-success');
-            }
-            mobileError.style.display = 'block';
-        });
-    });
-
-    // EMAIL
-    const emailInput = document.querySelector('[name="email"]');
-    emailInput.addEventListener('input', function() {
-        const emailError = document.getElementById('email_error');
-        const value = this.value.trim();
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        if (!pattern.test(value)) return;
-
-        checkAvailability(`/admin/check-email-edit?value=${encodeURIComponent(value)}&id=${deliveryBoyId}`, function(data) {
-            if (data.exists) {
-                emailError.innerText = "Email already registered.";
-                emailError.classList.remove('text-success');
-                emailError.classList.add('text-danger');
-            } else {
-                emailError.innerText = "Email available.";
-                emailError.classList.remove('text-danger');
-                emailError.classList.add('text-success');
-            }
-            emailError.style.display = 'block';
-        });
-    });
 });
 
 

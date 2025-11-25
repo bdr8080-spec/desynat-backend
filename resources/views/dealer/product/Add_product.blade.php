@@ -53,7 +53,7 @@
                         <label>Other</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_en">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control" placeholder="Enter Brand name" name="other_en">
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
                 <div class="sub-form">
@@ -61,7 +61,7 @@
                         <label>Product Name</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_en">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control" placeholder="Enter Product name" name="product_name_en">
                     <p class="text-danger" id="error-product_name_en"></p>
                 </div>
                 <div class="sub-form">
@@ -69,7 +69,7 @@
                         <label>Description</label>
                         <span>In English</span>
                     </div>
-                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_en"></textarea>
+                    <textarea rows="4" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="Write Here" class="form-control" name="description_en"></textarea>
 
                     <p class="text-danger" id="error-description_en"></p>
                 </div>
@@ -95,7 +95,7 @@
                         <label>Other</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_ar">
+                    <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Brand name" name="other_ar">
 
                     <p class="text-danger" id="error-other_ar"></p>
                 </div>
@@ -104,7 +104,7 @@
                         <label>Product Name</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_ar">
+                    <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Product name" name="product_name_ar">
 
                     <p class="text-danger" id="error-product_name_ar"></p>
                 </div>
@@ -113,7 +113,7 @@
                         <label>Description</label>
                         <span>In Arabic</span>
                     </div>
-                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_ar"></textarea>
+                    <textarea rows="4" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" placeholder="Write Here" class="form-control" name="description_ar"></textarea>
                     <p class="text-danger" id="error-description_ar"></p>
 
                 </div>
@@ -135,7 +135,7 @@
                                 <label>Name</label>
                                 <span>In English</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter product name"
+                            <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product name"
                                 value="" name="product_spe_en[]">
 
                             <p id="error-product_spe_en_0" class="text-danger"></p>
@@ -152,7 +152,7 @@
                                     <label>Name</label>
                                     <span>In Arabic</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter product name"
+                                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product name"
                                     name="product_spe_ar[]" value="">
                                 <p class="text-danger" id="error-product_spe_ar_0"></p>
 
@@ -169,7 +169,7 @@
                                 <label>Feature</label>
                                 <span>In English</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter product feature"
+                            <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product feature"
                                 name="product_spe_feature_en[]" value="">
                             <p class="text-danger" id="error-product_spe_feature_en_0"></p>
 
@@ -184,7 +184,7 @@
                                     <label>Feature</label>
                                     <span>In Arabic</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter product feature"
+                                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product feature"
                                     name="product_spe_feature_ar[]" value="">
                                 <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
 
@@ -203,7 +203,7 @@
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Product Photo</div>
+                        <div class="mt-3">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[0][]" rel="0">
                     </label>
@@ -216,7 +216,7 @@
             </div>
 
             <div class="wapper-header mt-4">
-                <div class="row">
+                <div class="row price-block">
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
@@ -225,6 +225,7 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="color_id[]">
+                                <option value="">Select Colour</option>
                                 @foreach ($color as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -242,6 +243,7 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="size_id[]">
+                                <option value="">Select Size</option>
                                 @foreach ($size as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -339,7 +341,7 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU</label>
+                                <label>SKU Limit</label>
                             </div>
                             <input type="text" class="form-control notapplyspace" placeholder="20019"
                                 name="sku[]">
@@ -367,7 +369,7 @@
                                 <label>Actual Price</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
-                                name="actual_price[]">
+                                name="actual_price[]" id="actual_price_0">
                             <p class="text-danger" id="error-actual_price_0"></p>
 
                         </div>
@@ -384,14 +386,14 @@
                             class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[0]" checked value="1">
+                                    <input type="radio" name="discount_type[0]"  id="discount_type_percentage_0" checked value="1" >
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[0]" value="2">
+                                    <input type="radio" name="discount_type[0]"  id="discount_type_fixed_0" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -402,13 +404,15 @@
                 </div>
 
                 <div class="row">
+
+
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
-                                name="discount_value[]">
+                                name="discount_value[]" id="discount_value_0">
                             <p class="text-danger" id="error-discount_value_0"></p>
 
                         </div>
@@ -420,7 +424,7 @@
                                 <label>Final Price</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
-                                name="final_price[]">
+                                name="final_price[]" id="final_price_0">
                             <p class="text-danger" id="error-final_price_0"></p>
                         </div>
                     </div>
@@ -851,7 +855,7 @@
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Profile Photo</div>
+                        <div class="mt-3">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
@@ -1004,7 +1008,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
+                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
 
                             </div>
@@ -1021,14 +1025,14 @@
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="1" checked>
+                                    <input type="radio" id="discount_type_percentage_${product_Variation_count}" name="discount_type[${product_Variation_count}]" value="1" checked>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="2">
+                                    <input type="radio" id="discount_type_fixed_${product_Variation_count}" name="discount_type[${product_Variation_count}]" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -1044,7 +1048,7 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                           <input type="number" class="form-control" placeholder="Eg.10%" name="discount_value[]">
+                           <input type="number" id="discount_value_${product_Variation_count}" class="form-control" placeholder="Eg.10%" name="discount_value[]">
                           <p class="text-danger" id="error-discount_value_${product_Variation_count}"></p>
 
                            </div>
@@ -1055,7 +1059,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
+                            <input type="number" id="final_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}"></p>
 
                          </div>
@@ -1117,7 +1121,7 @@
 
                     var subcatgory_record = data.data;
 
-                    var htmlcontent = ' <option value="">Select SubCategory</option>';
+                    var htmlcontent = ' <option value="">Select Sub Category</option>';
 
                     subcatgory_record.forEach(function(item, val) {
                         htmlcontent +=
@@ -1266,6 +1270,73 @@
             $('input[name="exchangable_days"]').val('').closest('.row').hide();
         }
     });
+
+
+    // dynamic Price show after discount 
+ // dynamic Price show after discount 
+    // Listen for input changes
+$(document).on("input change", 
+    "input[id^='actual_price_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
+    function () {
+
+    let id = $(this).attr("id");
+    let index = id.split("_").pop();
+
+    let actualPrice = parseFloat($("#actual_price_" + index).val());
+    let discountInput = $("#discount_value_" + index);
+    let discountValue = parseFloat(discountInput.val());
+    let discountType = $(`input[name='discount_type[${index}]']:checked`).val();
+
+    // -----------------------------------------
+    // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
+    // -----------------------------------------
+    if (discountType == "1") {  
+        if (discountValue > 100) {
+            discountInput.val(100);
+            discountValue = 100;
+        }
+        if (discountValue < 0) {
+            discountInput.val(0);
+            discountValue = 0;
+        }
+    } else if (discountType == "2") {
+        // Fixed price → cannot exceed actual price
+        if (discountValue > actualPrice) {
+            discountInput.val(actualPrice);
+            discountValue = actualPrice;
+        }
+        if (discountValue < 0) {
+            discountInput.val(0);
+            discountValue = 0;
+        }
+    }
+    // Type=2 (Fixed price) → No restriction
+    // -----------------------------------------
+
+    if (!actualPrice || !discountValue) {
+        $("#final_price_" + index).val("");
+        return;
+    }
+
+    let finalPrice = 0;
+
+    // Percentage
+    if (discountType == "1") {
+        finalPrice = actualPrice - (actualPrice * (discountValue / 100));
+    }
+
+    // Fixed price
+    if (discountType == "2") {
+        finalPrice = actualPrice - discountValue;
+    }
+
+    if (finalPrice < 0) finalPrice = 0;
+
+    $("#final_price_" + index).val(finalPrice.toFixed(2));
+});
+
+
+
 </script>
 
 

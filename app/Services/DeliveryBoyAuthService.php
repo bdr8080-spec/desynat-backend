@@ -35,13 +35,13 @@ class DeliveryBoyAuthService
                 
                 $get_user_details->accessToken = $get_user_details->createToken('delivery-boy-token', ['delivery-boy'])->plainTextToken;
 
-                return ['status'=>'success','message'=>"Delivery Boy Login Successfully",'data'=>$get_user_details];                            
+                return ['status'=>'success','message'=>"Login Successfully",'data'=>$get_user_details];                            
             }else{
-                return ['status'=>'error','message'=>"Delivery Boy Password Is wrong",'data'=>(object)[]];                
+                return ['status'=>'error','message'=>"Please Enter Correct Password",'data'=>(object)[]];                
             }
         
         }else{
-        return ['status'=>'error','message'=>"Delivery Boy is Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
         }
     
     }
@@ -63,10 +63,10 @@ class DeliveryBoyAuthService
             $get_user_details->update(['otp'=>$otp]);
 
             $get_user_details->accessToken ='';            
-            return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
+            return ['status'=>'success','message'=>"OTP Sent Successfully",'data'=>$get_user_details];            
         
             }else{
-            return ['status'=>'error','message'=>"Delivery Boy is Not Existed",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
         }
     
     }
@@ -80,10 +80,10 @@ class DeliveryBoyAuthService
 
             $get_user_details->accessToken = $get_user_details->createToken('delivery-boy')->plainTextToken;
                 
-            return ['status'=>'success','message'=>"Delivery Boy Otp verify Successfully",'data'=>$get_user_details];            
+            return ['status'=>'success','message'=>"OTP Verify Successfully",'data'=>$get_user_details];            
         
         }else{
-            return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Invalid OTP",'data'=>(object)[]];                
         }
 
     }
@@ -105,10 +105,10 @@ class DeliveryBoyAuthService
         $get_user_details->update(['otp'=>$otp]);
 
         $get_user_details->accessToken ='';            
-        return ['status'=>'success','message'=>"Otp Resend Successfully",'data'=>$get_user_details];            
+        return ['status'=>'success','message'=>"OTP Resent Successfully",'data'=>$get_user_details];            
     
         }else{
-        return ['status'=>'error','message'=>"Delivery Boy is Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
         }
 
     }
@@ -125,7 +125,7 @@ class DeliveryBoyAuthService
         return ['status'=>'success','message'=>"Password Changed Successfully",'data'=>$get_user_details];            
     
         }else{
-        return ['status'=>'error','message'=>"Delivery Boy is Not Existed",'data'=>(object)[]];                
+        return ['status'=>'error','message'=>"Account Does Not Existed",'data'=>(object)[]];                
         }
 
     }

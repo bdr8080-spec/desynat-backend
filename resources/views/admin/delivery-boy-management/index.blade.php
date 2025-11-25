@@ -44,10 +44,10 @@
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="gap-3 " >
                         <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn"
-                            style="margin-top: 70px">
+                            style="margin-top: 60px">
                             <span>Reset</span>
                         </a>
-                         <a class="btn btn-dark customBtn" style="margin-top: 70px">
+                         <a class="btn btn-dark customBtn" style="margin-top: 60px">
                     <span>Export</span>
                 </a>
                     </div>
@@ -75,14 +75,14 @@
                             <th scope="col">Zone</th>
                             <th scope="col">Address</th>
                             <th scope="col">Vehicle Name</th>
-                            <th scope="col">Registration Number</th>
+                            <th scope="col">Registration <br> Number</th>
                             <th scope="col">Vehicle Image</th>
                             <th scope="col">Uploaded ID</th>
                             <th scope="col">Uploaded DL</th>
-                            <th scope="col">Uploaded Vehicle Insurance</th>
-                            <th scope="col">Uploaded Pollution Paper</th>
+                            <th scope="col">Uploaded <br> Vehicle <br> Insurance</th>
+                            <th scope="col">Uploaded <br> Pollution Paper</th>
                             <th scope="col">Uploaded RC</th>
-                            <th scope="col">Total Order Delivered</th>
+                            <th scope="col">Total Order <br> Delivered</th>
 
                             <th scope="col">Action</th>
                         </tr>
