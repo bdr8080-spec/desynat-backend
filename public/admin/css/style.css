@@ -96,7 +96,7 @@ li.nav-item.active {
 }
 
 p {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 500;
     line-height: 30px;
 }
@@ -1548,8 +1548,9 @@ button[type="submit"] {
 }
 .content {
     color: #001d27;
-    margin-left: 71px;
-    width: 92%;
+       margin-left: 138px;
+    width: 80%;
+
 }
 
 .sd-multiSelect .sd-CustomSelect {
@@ -1939,7 +1940,7 @@ a.btn.btn-dark.customBtn.button {
 
 #phone {
   padding-left: 90px !important;
-  height: 45px;
+  /* height: 45px; */
 }
 
 
