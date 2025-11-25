@@ -16,7 +16,7 @@
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
-                            <input type="date" id="from" name="from_date" value="{{ request()->from_date }}" onchange="document.getElementById('filterForm').submit();" class="form-control" />
+                            <input type="date" id="from" name="from_date" value="{{ request()->from_date }}" onchange="updateToDate(); document.getElementById('filterForm').submit();" class="form-control" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-12">
@@ -254,4 +254,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from').value;
+        const toDateInput = document.getElementById('to');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
 </script>
