@@ -145,7 +145,7 @@
                 <input type="hidden" id="userIdForWallet">
                 <div class="form-group w-100">
                     <label for="walletAmount" class="form-label">Enter Amount</label>
-                    <input type="text" id="walletAmount" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g,'$1').replace(/^(\d+)(\.\d{0,2}).*$/,'$1$2');" class="form-control w-100" />
+                    <input type="text" id="walletAmount" oninput="this.value=this.value.replace(/[^0-9]/g,'');if(this.value.startsWith('0')){this.value=this.value.substring(1);}this.value=this.value.slice(0,7);" class="form-control w-100" />
                     <small id="amountError" class="text-danger" style="display:none;">Please Enter Amount</small>
                 </div>
                 <div class="d-flex justify-content-center gap-3 mt-4">

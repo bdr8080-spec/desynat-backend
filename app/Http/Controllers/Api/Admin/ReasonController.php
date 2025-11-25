@@ -73,8 +73,8 @@ class ReasonController extends Controller
     public function add_reason(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'reason_english' => 'required|string|max:255',
-            'reason_arabic' => 'required|string|max:255',
+            'reason_english' => 'required|string',
+            'reason_arabic' => 'required|string',
             'type'          => 'required|integer|in:1,2,3',
         ]);
 
@@ -100,8 +100,8 @@ class ReasonController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'reason_id' => 'required|exists:reasons,id',
-            'reason_english' => 'required|string|max:255',
-            'reason_arabic' => 'required|string|max:255',
+            'reason_english' => 'required|string',
+            'reason_arabic' => 'required|string',
         ]);
 
         if ($validate->fails()) {

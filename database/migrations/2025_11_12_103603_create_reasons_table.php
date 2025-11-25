@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('reasons', function (Blueprint $table) {
             $table->id();
-            $table->string('reason_english');
-            $table->string('reason_arabic');
+            $table->text('reason_english');
+            $table->text('reason_arabic');
             $table->tinyInteger('type')->comment('1 - exchange, 2 - return, 3 - cancel');
             $table->tinyInteger('status')->default(1)->comment('0 - inactive, 1 - active');
             $table->timestamps();

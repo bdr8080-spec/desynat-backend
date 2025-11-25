@@ -275,7 +275,7 @@
                                 <i class="bi bi-crosshair"></i> Use Current Location
                             </div>
                             <div><i class="bi bi-geo-alt-fill"></i></div>
-                            <p class="mb-0" id="selectedAddress">20 Cooper Square, New Delhi, ND 110020</p>
+                            <p class="mb-0" id="selectedAddress">9XHG+629, Kuwait City, Kuwait</p>
                         </div>
 
                         <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-3">
