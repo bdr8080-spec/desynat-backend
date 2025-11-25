@@ -330,6 +330,22 @@ public function Add_product_code(Request $request){
         
       ]);
 
+       $validate->after(function ($validate) use ($request) {
+            $totalStock = $request->total_stock;
+            $sku        = $request->sku;
+
+            if (is_array($totalStock) && is_array($sku)) {
+                foreach ($sku as $index => $skuValue) {
+                    $stockValue = $totalStock[$index] ?? null;
+
+                    if ($stockValue !== null && $skuValue <= $stockValue) {
+                        $validate->errors()->add("sku.$index", "SKU Limit should be greater than Total Stock");
+                    }
+                }
+            }
+        });
+
+
 
      $validate->after(function ($validate) use ($request) {
 

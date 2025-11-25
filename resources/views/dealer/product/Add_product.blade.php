@@ -341,7 +341,7 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU</label>
+                                <label>SKU Limit</label>
                             </div>
                             <input type="text" class="form-control notapplyspace" placeholder="20019"
                                 name="sku[]">
