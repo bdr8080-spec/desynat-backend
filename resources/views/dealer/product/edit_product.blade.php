@@ -234,6 +234,10 @@
                     </label>
 
                     <p class="text-danger" id="error-variant_image_{{$product_Variation_count}}"></p>
+                
+                    @if($product_Variation_count >= 1)
+                    <p class="text-danger" id="error-variant_image"></p>
+                    @endif
 
                 </div>
                 

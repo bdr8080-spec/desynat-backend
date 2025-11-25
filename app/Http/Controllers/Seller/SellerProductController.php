@@ -885,6 +885,8 @@ $request_data=(object) [
 
      ];
 
+     dd($request_data);
+
   $data=  $this->SellerProductService->edit_Product($request_data);
 
   if(isset($data['status']) && $data['status']=='error' ){

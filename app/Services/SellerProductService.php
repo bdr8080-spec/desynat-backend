@@ -352,7 +352,9 @@ public function edit_Product($request){
         $product_data=  product::UpdateOrCreate($match,$product);
 
         $product_id= $request->product_id;
-        // specification 
+        
+        // old specification delete
+        ProductSpecification::where('product_id',$product_id)->delete();
 
         foreach($request->product_spe_en as $key=>$val){
 
@@ -381,7 +383,7 @@ public function edit_Product($request){
             ];
 
         $variation_array=[
-            'product_id'=> $product_id,
+     'product_id'=> $product_id,
 
             // product vartion start
         'variant_image' => $request->variant_image[$key],
