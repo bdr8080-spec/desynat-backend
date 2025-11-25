@@ -1,11 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 body {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-    /* background-color: rgba(227, 194, 149, 0.75) !important; */
+  font-family: "Poppins", sans-serif !important ;
+  color: #444444;
+  /* font-size: var(--label); */
+
 }
 
 * {
