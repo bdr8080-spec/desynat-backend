@@ -53,7 +53,7 @@
                         <label>Other</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_en">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control" placeholder="Enter Brand name" name="other_en">
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
                 <div class="sub-form">
@@ -61,7 +61,7 @@
                         <label>Product Name</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_en">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control" placeholder="Enter Product name" name="product_name_en">
                     <p class="text-danger" id="error-product_name_en"></p>
                 </div>
                 <div class="sub-form">
@@ -69,7 +69,7 @@
                         <label>Description</label>
                         <span>In English</span>
                     </div>
-                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_en"></textarea>
+                    <textarea rows="4" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="Write Here" class="form-control" name="description_en"></textarea>
 
                     <p class="text-danger" id="error-description_en"></p>
                 </div>
@@ -95,7 +95,7 @@
                         <label>Other</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_ar">
+                    <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Brand name" name="other_ar">
 
                     <p class="text-danger" id="error-other_ar"></p>
                 </div>
@@ -104,7 +104,7 @@
                         <label>Product Name</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_ar">
+                    <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Product name" name="product_name_ar">
 
                     <p class="text-danger" id="error-product_name_ar"></p>
                 </div>
@@ -113,7 +113,7 @@
                         <label>Description</label>
                         <span>In Arabic</span>
                     </div>
-                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_ar"></textarea>
+                    <textarea rows="4" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" placeholder="Write Here" class="form-control" name="description_ar"></textarea>
                     <p class="text-danger" id="error-description_ar"></p>
 
                 </div>
@@ -135,7 +135,7 @@
                                 <label>Name</label>
                                 <span>In English</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter product name"
+                            <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product name"
                                 value="" name="product_spe_en[]">
 
                             <p id="error-product_spe_en_0" class="text-danger"></p>
@@ -152,7 +152,7 @@
                                     <label>Name</label>
                                     <span>In Arabic</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter product name"
+                                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product name"
                                     name="product_spe_ar[]" value="">
                                 <p class="text-danger" id="error-product_spe_ar_0"></p>
 
@@ -169,7 +169,7 @@
                                 <label>Feature</label>
                                 <span>In English</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Enter product feature"
+                            <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product feature"
                                 name="product_spe_feature_en[]" value="">
                             <p class="text-danger" id="error-product_spe_feature_en_0"></p>
 
@@ -184,7 +184,7 @@
                                     <label>Feature</label>
                                     <span>In Arabic</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter product feature"
+                                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product feature"
                                     name="product_spe_feature_ar[]" value="">
                                 <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
 
@@ -225,6 +225,7 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="color_id[]">
+                                <option value="">Select Colour</option>
                                 @foreach ($color as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -242,6 +243,7 @@
 
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="size_id[]">
+                                <option value="">Select Size</option>
                                 @foreach ($size as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
@@ -1117,7 +1119,7 @@
 
                     var subcatgory_record = data.data;
 
-                    var htmlcontent = ' <option value="">Select SubCategory</option>';
+                    var htmlcontent = ' <option value="">Select Sub Category</option>';
 
                     subcatgory_record.forEach(function(item, val) {
                         htmlcontent +=

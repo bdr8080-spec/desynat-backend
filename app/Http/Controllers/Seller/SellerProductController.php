@@ -198,135 +198,135 @@ public function Add_product_code(Request $request){
       ],[
         
             // Basic fields
-            'category_id.required'       => 'Please select a category.',
-            'category_id.exists'         => 'Selected category does not exist.',
+            'category_id.required'       => 'Please select a category',
+            'category_id.exists'         => 'Selected category does not exist',
             
-            'subcategory_id.required'    => 'Please select a subcategory.',
-            'subcategory_id.exists'      => 'Selected subcategory does not exist.',
+            'subcategory_id.required'    => 'Please select a subcategory',
+            'subcategory_id.exists'      => 'Selected subcategory does not exist',
         
-            'brand_id.required'          => 'Please select a brand.',
-            'brand_id.exists'            => 'Selected brand does not exist.',
+            'brand_id.required'          => 'Please select a brand',
+            'brand_id.exists'            => 'Selected brand does not exist',
         
-            'other_en.required'          => 'Other (English) field is required.',
-            'other_ar.required'          => 'Other (Arabic) field is required.',
+            'other_en.required'          => 'Please Enter Other in English',
+            'other_ar.required'          => 'Please Enter Other in Arabic',
         
-            'product_name_en.required'   => 'Product name (English) is required.',
-            'product_name_en.unique'     => 'This English product name is already taken.',
+            'product_name_en.required'   => 'Please Enter Product Name in English',
+            'product_name_en.unique'     => 'This English product name is already taken',
         
-            'product_name_ar.required'   => 'Product name (Arabic) is required.',
-            'product_name_ar.unique'     => 'This Arabic product name is already taken.',
+            'product_name_ar.required'   => 'Please Enter Product Name in Arabic',
+            'product_name_ar.unique'     => 'This Arabic product name is already taken',
         
-            'description_en.required'    => 'Description (English) is required.',
-            'description_ar.required'    => 'Description (Arabic) is required.',
+            'description_en.required'    => 'Please Enter Description in English',
+            'description_ar.required'    => 'Please Enter Description in Arabic',
         
             // Specifications
-            'product_spe_en.required'           => 'English specifications are required.',
-            'product_spe_en.array'              => 'English specifications must be an array.',
-            'product_spe_en.*.required'         => 'Each English specification is required.',
+            'product_spe_en.required'           => 'Please Enter Specification in English',
+            'product_spe_en.array'              => 'English specifications must be an array',
+            'product_spe_en.*.required'         => 'Please Enter Each Specification in English',
         
-            'product_spe_feature_en.required'   => 'English specification features are required.',
-            'product_spe_feature_en.*.required' => 'Each English specification feature is required.',
+            'product_spe_feature_en.required'   => 'Please Enter Specification Feature in English',
+            'product_spe_feature_en.*.required' => 'Please Enter Each Specification Feature in English',
         
-            'product_spe_ar.required'           => 'Arabic specifications are required.',
-            'product_spe_ar.*.required'         => 'Each Arabic specification is required.',
+            'product_spe_ar.required'           => 'Please Enter Specification in Arabic',
+            'product_spe_ar.*.required'         => 'Please Enter Each Specification in Arabic',
         
-            'product_spe_feature_ar.required'   => 'Arabic specification features are required.',
-            'product_spe_feature_ar.*.required' => 'Each Arabic specification feature is required.',
+            'product_spe_feature_ar.required'   => 'Please Enter Specification Feature in Arabic',
+            'product_spe_feature_ar.*.required' => 'Please Enter Each Specification Feature in Arabic',
         
             // Product Variant Fields
-            'variant_image.required'      => 'Variant images are required.',
-            'variant_image.*.required'    => 'Each variant image is required.',
+            'variant_image.required'      => 'Please Upload Variant Images',
+            'variant_image.*.required'    => 'Please Upload Each Variant Image',
         
-            'color_id.required'           => 'Color field is required.',
-            'color_id.array'              => 'Color field must be an array.',
-            'color_id.*.required'         => 'Each color is required.',
-            'color_id.*.distinct'         => 'Duplicate colors are not allowed.',
-            'color_id.*.exists'           => 'Selected color does not exist.',
+            'color_id.required'           => 'Please Select a Colour',
+            'color_id.array'              => 'Color field must be an array',
+            'color_id.*.required'         => 'Please Select Colour',
+            'color_id.*.distinct'         => 'Duplicate colors are not allowed',
+            'color_id.*.exists'           => 'Selected color does not exist',
         
-            'size_id.required'            => 'Size field is required.',
-            'size_id.array'               => 'Size field must be an array.',
-            'size_id.*.required'          => 'Each size is required.',
-            'size_id.*.exists'            => 'Selected size does not exist.',
-            'size_id.*.distinct'          => 'Duplicate sizes are not allowed.',
+            'size_id.required'            => 'Size field is required',
+            'size_id.array'               => 'Size field must be an array',
+            'size_id.*.required'          => 'Please Select Size',
+            'size_id.*.exists'            => 'Selected size does not exist',
+            'size_id.*.distinct'          => 'Duplicate sizes are not allowed',
         
-            'total_stock.required'        => 'Stock field is required.',
-            'total_stock.*.required'      => 'Each stock value is required.',
+            'total_stock.required'        => 'Stock field is required',
+            'total_stock.*.required'      => 'Please Enter Total Stocks',
         
-            'sku.required'                => 'SKU field is required.',
-            'sku.*.required'              => 'Each SKU is required.',
+            'sku.required'                => 'SKU field is required',
+            'sku.*.required'              => 'Please Enter SKU',
         
-            'sku_threshold_value.required'   => 'SKU threshold field is required.',
-            'sku_threshold_value.*.required' => 'Each SKU threshold value is required.',
+            'sku_threshold_value.required'   => 'SKU threshold field is required',
+            'sku_threshold_value.*.required' => 'Please Enter SKU Threshold Value',
         
-            'actual_price.required'       => 'Actual price is required.',
-            'actual_price.*.required'     => 'Each actual price is required.',
+            'actual_price.required'       => 'Actual price is required',
+            'actual_price.*.required'     => 'Please Enter Actual Price',
         
-            'discount_type.required'      => 'Discount type is required.',
-            'discount_type.*.required'    => 'Each discount type is required.',
+            'discount_type.required'      => 'Discount type is required',
+            'discount_type.*.required'    => 'Each discount type is required',
         
-            'discount_value.required'     => 'Discount value is required.',
-            'discount_value.*.required'   => 'Each discount value is required.',
+            'discount_value.required'     => 'Discount value is required',
+            'discount_value.*.required'   => 'Plesae Enter Discount',
         
-            'final_price.required'        => 'Final price is required.',
-            'final_price.*.required'      => 'Each final price is required.',
+            'final_price.required'        => 'Final price is required',
+            'final_price.*.required'      => 'Plesae Enter Final Price',
         
             // General Product Details
-            'min_card_quantity.required'  => 'Minimum cart quantity is required.',
-            'max_card_quantity.required'  => 'Maximum cart quantity is required.',
+            'min_card_quantity.required'  => 'Plesae Enter Minimum Cart Quantity',
+            'max_card_quantity.required'  => 'Plesae Enter Maximum Cart Quantity',
         
             // Return
-            'product_return.required'     => 'Please choose if product is returnable.',
-            'product_return.in'           => 'Invalid return option.',
-            'return_days.required_if'     => 'Return days are required when product is returnable.',
-            'return_days.integer'         => 'Return days must be a number.',
+            'product_return.required'     => 'Please choose if product is returnable',
+            'product_return.in'           => 'Invalid return option',
+            'return_days.required_if'     => 'Please Enter Return Days When Product is Returnable',
+            'return_days.integer'         => 'Return days must be a number',
         
             // Exchange
-            'product_exchangable.required'     => 'Please choose if product is exchangeable.',
-            'product_exchangable.in'           => 'Invalid exchange option.',
-            'exchangable_days.required_if'     => 'Exchangable days are required when product is exchangeable.',
-            'exchangable_days.integer'         => 'Exchangable days must be a number.',
+            'product_exchangable.required'     => 'Please choose if product is exchangeable',
+            'product_exchangable.in'           => 'Invalid exchange option',
+            'exchangable_days.required_if'     => 'Please Enter Exchangable Days When Product is Exchangeable',
+            'exchangable_days.integer'         => 'Exchangable days must be a number',
         
             // Review
-            'review_rating.required'      => 'Please choose review rating option.',
-            'review_rating.in'            => 'Invalid rating option.',
+            'review_rating.required'      => 'Please choose review rating option',
+            'review_rating.in'            => 'Invalid rating option',
         
             // Affiliated
-            'affiliated_product.required' => 'Please choose affiliated product option.',
-            'affiliated_product.in'       => 'Invalid affiliated option.',
+            'affiliated_product.required' => 'Please choose affiliated product option',
+            'affiliated_product.in'       => 'Invalid affiliated option',
         
             // Customized
-            'customized_product.required' => 'Please choose customized product option.',
-            'customized_product.in'       => 'Invalid customized option.',
+            'customized_product.required' => 'Please choose customized product option',
+            'customized_product.in'       => 'Invalid customized option',
         
             // Shipping
-            'ready_to_ship.required'      => 'Ready to ship field is required.',
-            'ready_to_ship.in'            => 'Invalid ready-to-ship option.',
+            'ready_to_ship.required'      => 'Ready to ship field is required',
+            'ready_to_ship.in'            => 'Invalid ready-to-ship option',
         
             // COD
-            'cash_on_delivery.required'   => 'Cash on delivery option is required.',
-            'cash_on_delivery.in'         => 'Invalid cash on delivery option.',
+            'cash_on_delivery.required'   => 'Cash on delivery option is required',
+            'cash_on_delivery.in'         => 'Invalid cash on delivery option',
         
             // Size Chart
-            'upload_size_chart.required'  => 'Size chart is required.',
+            'upload_size_chart.required'  => 'Please Upload Size Chart',
         
             // Women Category (category_id = 2)
-            'bust.required'               => 'Bust field is required for women category.',
-            'bust.*.required'             => 'Each bust value is required.',
+            'bust.required'               => 'Bust field is required for women category',
+            'bust.*.required'             => 'Each bust value is required',
         
-            'waist.required'              => 'Waist field is required for women category.',
-            'waist.*.required'            => 'Each waist value is required.',
+            'waist.required'              => 'Waist field is required for women category',
+            'waist.*.required'            => 'Each waist value is required',
         
-            'hip.required'                => 'Hip field is required for women category.',
-            'hip.*.required'              => 'Each hip value is required.',
+            'hip.required'                => 'Hip field is required for women category',
+            'hip.*.required'              => 'Each hip value is required',
         
-            'shoulder.required'           => 'Shoulder field is required for women category.',
-            'shoulder.*.required'         => 'Each shoulder value is required.',
+            'shoulder.required'           => 'Shoulder field is required for women category',
+            'shoulder.*.required'         => 'Each shoulder value is required',
         
-            'sleeve_length.required'      => 'Sleeve length is required for women category.',
-            'sleeve_length.*.required'    => 'Each sleeve length value is required.',
+            'sleeve_length.required'      => 'Sleeve length is required for women category',
+            'sleeve_length.*.required'    => 'Each sleeve length value is required',
         
-            'length.required'             => 'Length field is required for women category.',
-            'length.*.required'           => 'Each length value is required.',
+            'length.required'             => 'Length field is required for women category',
+            'length.*.required'           => 'Each length value is required',
         
       ]);
 
