@@ -102,7 +102,7 @@ use App\Models\UserCurrentLocation;
                                                     <button class="custom-btn3">My saved Cards</button>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <button class="custom-btn3">Saved Addresses</button>
+                                                    <a  href="{{route('user.view_address')}}" class="custom-btn3">Saved Addresses</a>
                                                 </div>
                                             </div>
                                         </div>

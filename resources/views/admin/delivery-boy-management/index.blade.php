@@ -28,7 +28,7 @@
                         <label for="from" class="form-label">From:</label>
                         <input type="date" id="from" name="from_date" class="form-control"
                             value="{{ request()->from_date }}"
-                            onchange="document.getElementById('filterForm').submit();" />
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                     </div>
                 </div>
 
@@ -773,4 +773,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from').value;
+        const toDateInput = document.getElementById('to');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
 </script>
