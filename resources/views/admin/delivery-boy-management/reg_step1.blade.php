@@ -599,7 +599,7 @@ document.addEventListener("DOMContentLoaded", function() {
             {name: 'city', errorId: 'city_error', message: 'Please enter city'},
             {name: 'state', errorId: 'state_error', message: 'Please enter state'},
             {name: 'password', errorId: 'password_error', message: 'Please enter password'},
-            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please confirm password'},
+            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please enter confirm password'},
             {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
         ];
 
@@ -637,6 +637,14 @@ document.addEventListener("DOMContentLoaded", function() {
         //         hasError = true;
         //     }
         // }
+
+        if (password.length > 0 && password.length < 6) {
+            const ps = document.getElementById('password_error');
+            ps.innerText = "Password should be minimum of 6 characters.";
+            ps.style.display = 'block';
+            hasError = true;
+        }
+
 
         if (confirmPassword && confirmPassword !== password) {
             const cps = document.getElementById('confirm_password_error');
