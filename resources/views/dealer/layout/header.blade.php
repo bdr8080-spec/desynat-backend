@@ -147,7 +147,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/products') ? 'sidebar-active' : '' }}"
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/products') || Request::is('seller/Add-product') ? 'sidebar-active' : '' }}"
                     href="{{ route('seller.products') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon"
                         class="asideicon">

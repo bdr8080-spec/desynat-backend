@@ -799,6 +799,12 @@ h3.mid-headng{
     height: 100%;
     object-fit: cover;
 }
+.category_detail{
+    text-decoration: none;
+}
+.category_detail h3{
+    color: #0E1C21;
+}
 .categorie_cotent-img{
     width: 100%;
     height: 330px;
@@ -1137,6 +1143,15 @@ h3.mid-headng{
     border-radius: 8px;
     overflow: hidden;
 }
+.category_store_img{
+    height: 300px;
+    overflow: hidden;
+}
+.category_store_img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
 .category-store .category-store-content .user{
     width: 30px;
     height: 30px;
@@ -1144,6 +1159,9 @@ h3.mid-headng{
     overflow: hidden;
     margin-right: 10px;
     border: .5px solid ;
+}
+a{
+    color: ;
 }
 .category-store .category-store-content .user img{
     width: 100%;
@@ -1628,6 +1646,81 @@ h3.mid-headng{
     margin-bottom: 10px;
     font-size: 15px;
 }
+
+/* productdetail page end */
+
+
+.profile_buttons a.custom-btn3{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* saved address */
+
+.saved_address_content{
+    border: 1px solid #0000001A;
+    border-radius: 6px;
+    padding: 15px;
+    margin-top: 10px;
+}
+.setAsdefault{
+    padding: 3px;
+    color: var(--secondry2-color);
+}
+.saved_address_content h6{
+    font-weight: 500 !important;
+}
+.saved_address_content p{
+    margin-bottom: 0;
+}
+.saved-address-contenar a.add_new_address{
+    border: 1px solid #0000001A;
+    margin-top: 10px;
+    display: block;
+    color: var(--secondry2-color);
+    text-decoration: none;
+    padding: 8px;
+}
+.track{
+    position: absolute;
+    top: 30%;
+    right: 10px;
+    transform: translate(0, 50%);
+    color: var(--secondry2-color);
+}
+.address-tab span{
+    position: absolute;
+    top: 0%;
+    left: 10px;
+    transform: translate(0, 50%);
+}
+.address-tab input{
+    border: none;
+}
+.address-tab input:focus{
+    box-shadow: none;
+}
+.address-tab {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.address-tab:hover {
+    border-color: var(--secondry2-color);
+}
+
+.address-tab.active {
+    border-color: #0000001A;
+    background: #FFF7EA;
+}
+.address-tab.active span{
+    color: var(--secondry2-color);
+}
+
+/* saved address end */
 
 /* footer */
 

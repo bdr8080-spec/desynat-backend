@@ -134,8 +134,8 @@ class DeliveryBoyController extends Controller
             'password' => [
                 'required',
                 'string',
-                'min:8',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+                'min:6',
+                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
             ],
             'confirm_password' => 'required|same:password',
             'zone_id' => 'required|numeric',
@@ -181,8 +181,8 @@ class DeliveryBoyController extends Controller
             'long.max' => 'Longitude cannot exceed 255 characters.',
             'password.required' => 'Please enter a password.',
             'password.string' => 'Password must be a valid string.',
-            'password.min' => 'Password must be at least 8 characters.',
-            'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
+            'password.min' => 'Password must be at least 6 characters.',
+            // 'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
             'confirm_password.required' => 'Please confirm your password.',
             'confirm_password.same' => 'The confirm password does not match the password.',
             'zone_id.required' => 'Please select a zone.',
@@ -433,7 +433,7 @@ class DeliveryBoyController extends Controller
         $sessionData = Session::get('deliveryboy_step1', []);
 
         $rules = [
-            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+                'profile_pic' => $request->hasFile('profile_pic') ? 'image|mimes:jpeg,png,jpg,gif|max:5120' : 'nullable',
             'full_name_english' => 'required|string|max:255',
             'full_name_arabic' => 'required|string|max:255',
             'email'  => 'required|email|max:255|unique:delivery_boys,email,'.$request->id,
@@ -447,8 +447,8 @@ class DeliveryBoyController extends Controller
             'password' => [
                 'required',
                 'string',
-                'min:8',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+                'min:6',
+                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
             ],
             'confirm_password' => 'required|same:password',
             'zone_id' => 'required|numeric',
@@ -495,8 +495,8 @@ class DeliveryBoyController extends Controller
             'long.max' => 'Longitude cannot exceed 255 characters.',
             'password.required' => 'Please enter a password.',
             'password.string' => 'Password must be a valid string.',
-            'password.min' => 'Password must be at least 8 characters.',
-            'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
+            'password.min' => 'Password must be at least 6 characters.',
+            // 'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
             'confirm_password.required' => 'Please confirm your password.',
             'confirm_password.same' => 'The confirm password does not match the password.',
             'zone_id.required' => 'Please select a zone.',
@@ -512,17 +512,16 @@ class DeliveryBoyController extends Controller
             ]);
         }
 
-        $formData = $request->except('profile_pic', 'confirm_password');
+
+         $formData = $request->except('confirm_password');
 
         if ($request->hasFile('profile_pic')) {
-            $dir = "image";
-            $upload = image_upload($request->profile_pic, $dir);
-            $formData['profile_pic'] = $upload;
+            $formData['profile_pic'] = image_upload($request->file('profile_pic'), 'image');
+        } elseif ($request->filled('profile_pic')) {
+            // If we sent existing URL from hidden input
+            $formData['profile_pic'] = $request->profile_pic;
         } else {
-            // Use session profile_pic if available
-            if (isset($sessionData['profile_pic'])) {
-                $formData['profile_pic'] = $sessionData['profile_pic'];
-            }
+            $formData['profile_pic'] = $sessionData['profile_pic'] ?? null;
         }
 
         Session::put('deliveryboy_step1', $formData);
@@ -535,23 +534,21 @@ class DeliveryBoyController extends Controller
         ]);
     }
 
+
     public function store_reg2_edit(Request $request)
     {
-        // ---------------------------
-        // 1. VALIDATION
-        // ---------------------------
         $request->validate([
             'vehicle_name'          => 'required|string|max:255',
             'vehicle_reg'           => 'required|string|max:255',
 
             // Required uploads
-            'vehicleImgFront'       => 'required|mimes:jpg,jpeg,png,gif,pdf|max:4096',
-            'vehicleImgBack'        => 'required|mimes:jpg,jpeg,png,gif,pdf|max:4096',
-            'idProofFront'          => 'required|mimes:jpg,jpeg,png,gif,pdf|max:4096',
-            'idProofBack'           => 'required|mimes:jpg,jpeg,png,gif,pdf|max:4096',
-            'dlFront'               => 'required|mimes:jpg,jpeg,png,gif,pdf|max:4096',
-            'dlBack'                => 'required|mimes:jpg,jpeg,png,gif,pdf|max:4096',
-            'insuranceFront'        => 'required|mimes:jpg,jpeg,png,gif,pdf|max:4096',
+            'vehicleImgFront'       => 'required_without:vehicleImgFront_url|mimes:jpg,jpeg,png,gif,pdf|max:4096',
+            'vehicleImgBack'        => 'required_without:vehicleImgBack_url|mimes:jpg,jpeg,png,gif,pdf|max:4096',
+            'idProofFront'          => 'required_without:idProofFront_url|mimes:jpg,jpeg,png,gif,pdf|max:4096',
+            'idProofBack'           => 'required_without:idProofBack_url|mimes:jpg,jpeg,png,gif,pdf|max:4096',
+            'dlFront'               => 'required_without:dlFront_url|mimes:jpg,jpeg,png,gif,pdf|max:4096',
+            'dlBack'                => 'required_without:dlBack_url|mimes:jpg,jpeg,png,gif,pdf|max:4096',
+            'insuranceFront'        => 'required_without:insuranceFront_url|mimes:jpg,jpeg,png,gif,pdf|max:4096',
 
             // Optional uploads
             'pollutionFront'        => 'nullable|mimes:jpg,jpeg,png,gif,pdf|max:4096',
@@ -566,7 +563,7 @@ class DeliveryBoyController extends Controller
         $step1Data = Session::get('deliveryboy_step1', []);
 
         // ---------------------------
-        // 3. UPLOAD FILES USING image_upload()
+        // 3. UPLOAD FILES
         // ---------------------------
         $uploadFields = [
             'vehicleImgFront', 'vehicleImgBack',
@@ -581,12 +578,10 @@ class DeliveryBoyController extends Controller
 
         foreach ($uploadFields as $field) {
             if ($request->hasFile($field)) {
-
-                // Upload directory name
                 $dir = "image";
-
-                // Upload file using your helper (returns FULL URL)
                 $fileData[$field] = image_upload($request->$field, $dir);
+            } elseif ($request->filled($field . "_url")) {
+                $fileData[$field] = $request->input($field . "_url");
             }
         }
 
@@ -614,36 +609,27 @@ class DeliveryBoyController extends Controller
         ];
 
         // ---------------------------
-        // 5. MERGE: PREVIOUS SESSION + CURRENT DATA + UPLOADED FILES
+        // 5. MERGE DATA
         // ---------------------------
         $finalSessionData = array_merge($step1Data, $currentData, $fileData);
-
-        // ---------------------------
-        // 6. SAVE BACK INTO SESSION
-        // ---------------------------
         Session::put('deliveryboy_step1', $finalSessionData);
-
-        // ---------------------------
-        // 7. GET UPDATED DATA FROM SESSION
-        // ---------------------------
         $data = Session::get('deliveryboy_step1');
-       // dd($data);
+        //dd($data);
 
         if (!$data) {
             return back()->with('error', 'No registration data found in session.');
         }
 
         // ---------------------------
-        // 8. FIND EXISTING DELIVERY BOY
+        // 6. FIND DELIVERY BOY
         // ---------------------------
-        $deliveryBoy = DeliveryBoy::find($data["delivery_boy_id"]);
-
+        $deliveryBoy = DeliveryBoy::find($data["id"]);
         if (!$deliveryBoy) {
             return back()->with('error', 'Delivery Boy not found.');
         }
 
         // ---------------------------
-        // 9. UPDATE DELIVERY BOY RECORD WITH ALL FIELDS
+        // 7. UPDATE DELIVERY BOY RECORD
         // ---------------------------
         $deliveryBoy->update([
             "profile_pic"        => $data["profile_pic"],
@@ -666,67 +652,61 @@ class DeliveryBoyController extends Controller
         ]);
 
         // ---------------------------
-        // 10. DELETE EXISTING DOCUMENTS
+        // 8. DOCUMENTS (UPDATE/INSERT ONLY CHANGED FILES)
         // ---------------------------
-        DeliveryBoyDocument::where('delivery_boy_id', $deliveryBoy->id)->delete();
-
-        // -------------------------------------------------
-        // Document Mapping
-        // -------------------------------------------------
         $documents = [
-            // vehicle image (type=1)
-            "vehicleImgFront" => [1, 1],  // type, is_front
+            "vehicleImgFront" => [1, 1],
             "vehicleImgBack"  => [1, 0],
-
-            // identity proof (type=2)
-            "idProofFront" => [2, 1],
-            "idProofBack"  => [2, 0],
-
-            // driving license (type=3)
-            "dlFront" => [3, 1],
-            "dlBack"  => [3, 0],
-
-            // vehicle insurance (type=4)
-            "insuranceFront" => [4, 1],
-
-            // pollution paper (type=5)
-            "pollutionFront" => [5, 1],
-            "pollutionBack"  => [5, 0],
-
-            // registration certificate (type=6)
-            "rcFront" => [6, 1],
-            "rcBack"  => [6, 0],
+            "idProofFront"    => [2, 1],
+            "idProofBack"     => [2, 0],
+            "dlFront"         => [3, 1],
+            "dlBack"          => [3, 0],
+            "insuranceFront"  => [4, 0],
+            "pollutionFront"  => [5, 1],
+            "pollutionBack"   => [5, 0],
+            "rcFront"         => [6, 1],
+            "rcBack"          => [6, 0],
         ];
 
-        // ---------------------------
-        // 11. INSERT NEW DOCUMENTS
-        // ---------------------------
         foreach ($documents as $field => [$docType, $isFront]) {
 
-            if (!empty($data[$field])) { // optional fields safe check
+            if (!empty($data[$field])) {
+                $existingDoc = DeliveryBoyDocument::where('delivery_boy_id', $deliveryBoy->id)
+                                    ->where('document_type', $docType)
+                                    ->where('is_front', $isFront)
+                                    ->first();
 
-                DeliveryBoyDocument::create([
-                    "delivery_boy_id" => $deliveryBoy->id,
-                    "document_type"   => $docType,
-                    "document_path"   => $data[$field],   // full URL
-                    "is_front"        => $isFront,
-                ]);
+                if ($existingDoc) {
+                    if ($existingDoc->document_path != $data[$field]) {
+                        $existingDoc->update([
+                            'document_path' => $data[$field]
+                        ]);
+                    }
+                } else {
+                    DeliveryBoyDocument::create([
+                        "delivery_boy_id" => $deliveryBoy->id,
+                        "document_type"   => $docType,
+                        "document_path"   => $data[$field],
+                        "is_front"        => $isFront,
+                    ]);
+                }
             }
         }
 
         // ---------------------------
-        // 12. REMOVE SESSION DATA
+        // 9. REMOVE SESSION DATA
         // ---------------------------
         Session::forget('deliveryboy_step1');
 
         // ---------------------------
-        // 13. RETURN SUCCESS RESPONSE
+        // 10. RETURN RESPONSE
         // ---------------------------
         return response()->json([
             "success" => true,
             "message" => "Delivery Boy updated successfully.",
         ]);
     }
+
 
 
 

@@ -39,23 +39,27 @@
     display: none;
 }
 .use-lc {
-    background: #fff;
+    /* background: #fff;
     box-shadow: 0px 2px 8px 0px #0000001f;
-    padding: 10px;
-    width: fit-content;
+    padding: 10px; */
+width: fit-content;
     border-radius: 50px;
     color: #a8824f;
     font-weight: 500;
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 239px;
+    right: 568px;
     cursor: pointer;
+    font-size: 17px;
 }
 .search-icon {
     position: absolute;
     left: 20px;
     top: 13px;
     font-size: 14px;
+}
+.card-body {
+    background: #6c757d0a;
 }
 </style>
 
@@ -144,9 +148,9 @@
                                     <label>Password</label>
                                     <input type="password" id="password" class="form-control" name="password" placeholder="Enter password" value="{{ $step1Data['password'] ?? '' }}" style="font-size: 17px;" />
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#password"
-                                    style="right: 15px; cursor: pointer; top: 51px;"></i>
-                                    <span class="text-danger" id="password_error"></span>
+                                    style="right: 15px; cursor: pointer; "></i>
                                 </div>
+                                <span class="text-danger" id="password_error"></span>
 
                                 <div class="mt-3">
                                     <label>Select Zone</label>
@@ -210,9 +214,9 @@
                                     <input type="password" id="confirmPassword" class="form-control" name="confirm_password"
                                         placeholder="Enter Confirm password" value="{{ $step1Data['password'] ?? '' }}"  style="font-size: 17px;"/>
                                     <i class="fas fa-eye toggle-password position-absolute" toggle="#confirmPassword"
-                                    style="right: 15px; cursor: pointer; top: 51px;"></i>
-                                    <span class="text-danger" id="confirm_password_error"></span>
+                                    style="right: 15px; cursor: pointer; "></i>
                                 </div>
+                                <span class="text-danger" id="confirm_password_error"></span>
                             </div>
                         </div>
 
@@ -230,7 +234,7 @@
 </div>
 
 <div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <h2 class="h2">Address</h2>
@@ -239,21 +243,23 @@
 
             <div class="modal-body">
                 <div class="text-center mb-4">
-                    <div class="appointment-container d-flex flex-column align-items-center">
+                    <div class="appointment-container d-flex flex-column align-items-start">
                         <input id="searchBox" type="text" placeholder="Search your address"
                             class="form-control"
-                            style="padding: 9px 18px;border-radius:4px;width: 80%;">
+                            style="padding: 9px 18px;border-radius:4px;width: 100%%;">
 
                         <div class="w-100 mb-3 d-flex justify-content-center">
-                            <div id="map" style="width: 100%; height: 300px; border-radius: 10px; overflow: hidden;"></div>
+                            <div id="map" style="width: 100%; height: 408px; border-radius: 10px; overflow: hidden;"></div>
                         </div>
 
-                        <div class="find-location d-flex gap-3 py-4">
+                        <div class="find-location d-flex py-4">
                             <div id="useCurrentLocation" class="use-lc">
                                 <i class="bi bi-crosshair"></i> Use Current Location
                             </div>
-                            <div><i class="bi bi-geo-alt-fill"></i></div>
+                            <div class="d-flex justify-content-start" style="gap: 23px;">
+                                <i class="bi bi-geo-alt-fill"></i>
                             <p class="mb-0" id="selectedAddress">9XHG+629, Kuwait City, Kuwait</p>
+                        </div>
                         </div>
 
                         <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 mt-3">
@@ -593,7 +599,7 @@ document.addEventListener("DOMContentLoaded", function() {
             {name: 'city', errorId: 'city_error', message: 'Please enter city'},
             {name: 'state', errorId: 'state_error', message: 'Please enter state'},
             {name: 'password', errorId: 'password_error', message: 'Please enter password'},
-            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please confirm password'},
+            {name: 'confirm_password', errorId: 'confirm_password_error', message: 'Please enter confirm password'},
             {name: 'zone_id', errorId: 'zone_error', message: 'Please select zone'}
         ];
 
@@ -622,15 +628,23 @@ document.addEventListener("DOMContentLoaded", function() {
         const password = form.querySelector('[name="password"]').value;
         const confirmPassword = form.querySelector('[name="confirm_password"]').value;
 
-        if (password) {
-            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-            if (!passwordPattern.test(password)) {
-                const ps = document.getElementById('password_error');
-                ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
-                ps.style.display = 'block';
-                hasError = true;
-            }
+        // if (password) {
+        //     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+        //     if (!passwordPattern.test(password)) {
+        //         const ps = document.getElementById('password_error');
+        //         ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
+        //         ps.style.display = 'block';
+        //         hasError = true;
+        //     }
+        // }
+
+        if (password.length > 0 && password.length < 6) {
+            const ps = document.getElementById('password_error');
+            ps.innerText = "Password should be minimum of 6 characters.";
+            ps.style.display = 'block';
+            hasError = true;
         }
+
 
         if (confirmPassword && confirmPassword !== password) {
             const cps = document.getElementById('confirm_password_error');

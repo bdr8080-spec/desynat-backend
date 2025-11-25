@@ -1,43 +1,75 @@
 @extends('admin.layout.app')
 @section('content')
 <style>
-  #editPreviewImage {
-    display: block; 
+#editPreviewImage {
+    display: block;
+}
+
+.upload-box {
+    width: 220px;
+    height: 160px;
+    border: 2px dotted #c8ad8d;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.upload-icon {
+    width: 60px;
+    opacity: 0.5;
+}
+
+.upload-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
 }
 </style>
-      <div id="content-wrapper" class="d-flex flex-column position-relative">
-        <div id="content" class="">
-     
+<div id="content-wrapper" class="d-flex flex-column position-relative">
+    <div id="content" class="">
 
-          <div class="inner-content management">
+
+        <div class="inner-content management">
             <div class="row align-items-center justify-content-between">
-              <div class="col-lg-6 col-md-6 col-12">
-                <div class="d-flex align-items-center gap-3 mt-2">
-              <div class="arrow">
-                <a class="table-button" type="button" href="{{route('categoryManagement')}}">
-                  <i class="fas fa-angle-left"></i>
-                </a>
-              </div>
-              <h6 class="m-0">MANAGE SUB-CATEGORY</h6>
-            </div>
-              </div>
-
-              <div class="col-lg-3 col-md-4 col-12">
-                <div class="d-flex justify-content-end">
-                  <a
-                    class="btn btn-dark customBtn"
-                    data-bs-toggle="modal"
-                    data-bs-target="#sentModal2"
-                  >
-                    <span>Add Sub-Category</span>
-                  </a>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="d-flex align-items-center gap-3 mt-2">
+                        <div class="arrow">
+                            <a class="table-button" type="button" href="{{route('categoryManagement')}}">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </div>
+                        <h6 class="m-0">MANAGE SUB-CATEGORY</h6>
+                    </div>
                 </div>
-              </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
+                            <span>Add Sub-Category</span>
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <div class="userManagecontent">
-              <div class="mt-4">
-                <!-- <div class="align-items-end d-flex">
+                <div class="mt-4">
+                    <!-- <div class="align-items-end d-flex">
                   <div
                     class="search-box"
                     style="position: relative; "
@@ -63,212 +95,208 @@
                   </div>
                 </div> -->
 
-                <div class="table-responsive w-100">
-                  <table id="myTable" class="table w-100 ">
-                    <thead>
-                      <tr>
-                        <th scope="col">SR No.</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Sub-Category name(English)</th>
-                        <th scope="col">Sub-Category name(Arabic)</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @forelse ($subcategories as $key => $scat)
-                          <tr>
-                              <th scope="row">{{ $key + 1 }}</th>
-                              <td>
-                                  <img
-                                      src="{{ $scat->image }}"
-                                      width="40px"
-                                      height="40px"
-                                      class="square"
-                                  />
-                              </td>
-                              <td>{{ $scat->name_english }}</td>
-                              <td>{{ $scat->name_arabic }}</td>
-                              <td>{{ $scat->status == 1 ? 'Active' : 'Inactive' }}</td>
-                              <td>
-                                  <div class="d-flex gap-3 justify-content-center">
-                                      <!-- Edit button -->
-                                      <a 
-                                          class="table-button editBrandBtn" 
-                                          href="javascript:void(0);" 
-                                          data-bs-toggle="modal" 
-                                          data-bs-target="#editBrandModal" 
-                                          data-id="{{ $scat->id }}"
-                                          data-name-english="{{ $scat->name_english }}"
-                                          data-name-arabic="{{ $scat->name_arabic }}"
-                                          data-image="{{ $scat->image }}"
-                                      >
-                                          <i class="bi bi-pencil-square"></i>
-                                      </a>
+                    <div class="table-responsive w-100">
+                        <table id="myTable" class="table w-100 ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SR No.</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Sub-Category name(English)</th>
+                                    <th scope="col">Sub-Category name(Arabic)</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($subcategories as $key => $scat)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>
+                                        <img src="{{ $scat->image }}" width="40px" height="40px" class="square" />
+                                    </td>
+                                    <td>{{ $scat->name_english }}</td>
+                                    <td>{{ $scat->name_arabic }}</td>
+                                    <td>{{ $scat->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                    <td>
+                                        <div class="d-flex gap-3 justify-content-center">
+                                            <!-- Edit button -->
+                                            <a class="table-button editBrandBtn" href="javascript:void(0);"
+                                                data-bs-toggle="modal" data-bs-target="#editBrandModal"
+                                                data-id="{{ $scat->id }}" data-name-english="{{ $scat->name_english }}"
+                                                data-name-arabic="{{ $scat->name_arabic }}"
+                                                data-image="{{ $scat->image }}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
 
-                                      <!-- Delete button  -->
-                                     <a
-                                          href="javascript:void(0);"
-                                          class="table-button text-danger deleteBrand"
-                                          data-id="{{ $scat->id }}"
-                                      >
-                                          <i class="bi bi-trash3-fill"></i>
-                                      </a>
+                                            <!-- Delete button  -->
+                                            <a href="javascript:void(0);" class="table-button text-danger deleteBrand"
+                                                data-id="{{ $scat->id }}">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
 
-                                      <!-- Toggle switch -->
-                                      <div class="form-check form-switch">
-                                          <input
-                                              class="form-check-input toggleStatus"
-                                              type="checkbox"
-                                              role="switch"
-                                              id="switch{{ $scat->id }}"
-                                              data-id="{{ $scat->id }}"
-                                              {{ $scat->status == 1 ? 'checked' : '' }}
-                                          />
-                                      </div>
-                                  </div>
-                              </td>
-                          </tr>
-                      @empty
-                          <tr>
-                              <td colspan="4" class="text-center text-muted">No Sub Category found</td>
-                          </tr>
-                      @endforelse
-                  </tbody>
+                                            <!-- Toggle switch -->
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input toggleStatus" type="checkbox"
+                                                    role="switch" id="switch{{ $scat->id }}" data-id="{{ $scat->id }}"
+                                                    {{ $scat->status == 1 ? 'checked' : '' }} />
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No Sub Category found</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
 
-                  </table>
+                        </table>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    
-     <!-- Add Modal -->
-    <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                  <div class="modal-header management border-0">
-                      <h2 class="h2">Add New Sub Category</h2>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-
-                  <div class="modal-body">
-                      <div class="appointment-container">
-                          <form id="addBrandForm" enctype="multipart/form-data">
-                              @csrf
-                              <div class="row">
-
-                                  <!-- Upload Image -->
-                                  <div class="col-lg-12">
-                                      <div class="upload-title text-center">Upload Image</div>
-
-                                      <label for="fileUpload" class="upload-box" style="cursor:pointer;">
-                                          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="uploadIcon" />
-                                          <img id="previewImage" class="preview-image" style="display:none; max-width:100px; margin-top:10px;" />
-                                          <div class="upload-text">Upload Image</div>
-                                          <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
-                                      </label>
-                                      <div class="text-danger text-center" id="imageError"></div>
-                                  </div>
-                                   <input type="hidden" name="category_id" class="form-control" value="{{ $id }}"/>
-                                  <!-- Brand Name English -->
-                                  <div class="col-lg-12 col-md-12 col-12">
-                                      <div class="form-group">
-                                          <label class="form-label">Sub Category Name (English)</label>
-                                          <input type="text" name="name_english" class="form-control" placeholder="Sub Sub Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"/>
-                                          <div class="text-danger" id="nameEnError"></div>
-                                      </div>
-                                  </div>
-
-                                  <!-- Brand Name Arabic -->
-                                  <div class="col-lg-12 col-md-12 col-12">
-                                      <div class="form-group">
-                                          <label class="form-label">Sub Category Name (Arabic)</label>
-                                          <input type="text" name="name_arabic" class="form-control" placeholder="Enter Sub Category Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
-                                          <div class="text-danger" id="nameArError"></div>
-                                      </div>
-                                  </div>
-
-                                  <!-- Submit Button -->
-                                  <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                      <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</a>
-                                  </div>
-
-                              </div>
-                          </form>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-
-        <!-- Edit  Modal -->
-        <div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h2 class="h2">Edit Sub Category</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="appointment-container">
-                            <form id="editBrandForm" enctype="multipart/form-data">
-                                @csrf
-                                <input type="hidden" name="brand_id" id="editBrandId" value="" />
-
-                                <div class="row">
-                                    <!-- Upload Image -->
-                                    <div class="col-lg-12">
-                                        <div class="upload-title text-center">Upload Image</div>
-                                        <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="editPreviewImage" class="preview-image" style="max-width:100px; margin-top:10px;" />
-                                            <div class="upload-text">Upload Image</div>
-                                            <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
-                                        </label>
-                                        <div class="text-danger" id="editImageError"></div>
-                                    </div>
-                                    <input type="hidden" name="category_id" class="form-control" value="{{ $id }}"/>
-                                    <!-- Brand Name English -->
-                                    <div class="col-lg-12 col-md-12 col-12">
-                                        <div class="form-group">
-                                            <label class="form-label">Sub Category Name (English)</label>
-                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Enter Sub Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"/>
-                                            <div class="text-danger" id="editNameEnError"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Brand Name Arabic -->
-                                    <div class="col-lg-12 col-md-12 col-12">
-                                        <div class="form-group">
-                                            <label class="form-label">Sub Category Name (Arabic)</label>
-                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Enter Sub Category Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
-                                            <div class="text-danger" id="editNameArError"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Submit Button -->
-                                    <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
-                                        <a type="button" class="btn btn-dark customBtn" id="editBrandSubmit">Update</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+</div>
 </div>
 
- 
+<!-- Add Modal -->
+<div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Add New Sub Category</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <form id="addBrandForm" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+
+                            <!-- Upload Image -->
+                            <div class="col-lg-12">
+                                <div class="upload-title text-center">Upload Image</div>
+
+                                <div class="upload-new text-center">
+                                    <label for="fileUpload" class="upload-box" style="cursor:pointer;">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                            id="uploadIcon"  class="upload-icon" />
+                                        <img id="previewImage" class="preview-image"
+                                            style="display:none; max-width:216px; margin-top:-2px;" />
+                                        <div class="upload-text">Upload Image</div>
+                                        <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
+                                    </label>
+                                    <div class="text-danger text-center" id="imageError"></div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="category_id" class="form-control" value="{{ $id }}" />
+                            <!-- Brand Name English -->
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Sub Category Name (English)</label>
+                                    <input type="text" name="name_english" class="form-control"
+                                        placeholder="Sub Sub Category Name in English"
+                                        oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
+                                    <div class="text-danger" id="nameEnError"></div>
+                                </div>
+                            </div>
+
+                            <!-- Brand Name Arabic -->
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Sub Category Name (Arabic)</label>
+                                    <input type="text" name="name_arabic" class="form-control"
+                                        placeholder="Enter Sub Category Name in Arabic"
+                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                    <div class="text-danger" id="nameArError"></div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                                <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</a>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit  Modal -->
+<div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Edit Sub Category</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <form id="editBrandForm" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="brand_id" id="editBrandId" value="" />
+
+                        <div class="row">
+                            <!-- Upload Image -->
+                            <div class="col-lg-12">
+                                <div class="upload-title text-center">Upload Image</div>
+                                <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                        id="editPreviewImage" class="preview-image"
+                                        style="max-width:216px; margin-top:-2px;" />
+                                    <div class="upload-text">Upload Image</div>
+                                    <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
+                                </label>
+                                <div class="text-danger" id="editImageError"></div>
+                            </div>
+                            <input type="hidden" name="category_id" class="form-control" value="{{ $id }}" />
+                            <!-- Brand Name English -->
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Sub Category Name (English)</label>
+                                    <input type="text" name="name_english" class="form-control" id="editNameEnglish"
+                                        placeholder="Enter Sub Category Name in English"
+                                        oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
+                                    <div class="text-danger" id="editNameEnError"></div>
+                                </div>
+                            </div>
+
+                            <!-- Brand Name Arabic -->
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="form-group">
+                                    <label class="form-label">Sub Category Name (Arabic)</label>
+                                    <input type="text" name="name_arabic" class="form-control" id="editNameArabic"
+                                        placeholder="Enter Sub Category Name in Arabic"
+                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                    <div class="text-danger" id="editNameArError"></div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
+                                <a type="button" class="btn btn-dark customBtn" id="editBrandSubmit">Update</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
 @endsection
 
 <!-- Delete -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.deleteBrand').forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             let scatId = this.getAttribute('data-id');
 
             Swal.fire({
@@ -282,25 +310,25 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteSubCategory/${scatId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            toastr.success(data.message);
-                            this.closest('tr').remove();
-                        } else {
-                            toastr.error(data.message);
-                        }
-                    })
-                    .catch(() => {
-                        toastr.error('Something went wrong.');
-                    });
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                this.closest('tr').remove();
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
                 }
             });
         });
@@ -310,39 +338,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Update  Status -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.toggleStatus').forEach(toggle => {
-        toggle.addEventListener('change', function () {
+        toggle.addEventListener('change', function() {
             let scatId = this.getAttribute('data-id');
 
             fetch(`/admin/updateSubCategoryStatus/${scatId}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // toastr.success(data.message);
-                     if(data.status == 1){
-                        toastr.success(data.message); // Green for active
-                    } else {
-                        toastr.error(data.message);   // Red for deactivated
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     }
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                } else {
-                    toastr.error(data.message);
-                }
-            })
-            .catch(error => {
-                //console.error(error);
-                toastr.error('Something went wrong while updating status.');
-            });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // toastr.success(data.message);
+                        if (data.status == 1) {
+                            toastr.success(data.message); // Green for active
+                        } else {
+                            toastr.error(data.message); // Red for deactivated
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    //console.error(error);
+                    toastr.error('Something went wrong while updating status.');
+                });
         });
     });
 });
@@ -358,16 +386,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const text = document.querySelector('.upload-box .upload-text');
 
     // Show preview when selecting image
-    fileInput.addEventListener('change', function(event){
+    fileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
-        if(file){
+        if (file) {
             const reader = new FileReader();
-            reader.onload = function(e){
+            reader.onload = function(e) {
                 preview.src = e.target.result;
                 preview.style.display = 'block';
-                icon.style.display = 'none';   // Hide default icon
-                text.style.display = 'none';   // Hide upload text
-                document.getElementById('imageError').innerText = ''; 
+                icon.style.display = 'none'; // Hide default icon
+                text.style.display = 'none'; // Hide upload text
+                document.getElementById('imageError').innerText = '';
             }
             reader.readAsDataURL(file);
         } else {
@@ -382,16 +410,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const nameEnInput = document.querySelector('input[name="name_english"]');
     const nameArInput = document.querySelector('input[name="name_arabic"]');
 
-    nameEnInput.addEventListener('input', function(){
+    nameEnInput.addEventListener('input', function() {
         document.getElementById('nameEnError').innerText = '';
     });
 
-    nameArInput.addEventListener('input', function(){
+    nameArInput.addEventListener('input', function() {
         document.getElementById('nameArError').innerText = '';
     });
 
     const submitBtn = document.getElementById('submitBrandBtn');
-    submitBtn.addEventListener('click', function(e){
+    submitBtn.addEventListener('click', function(e) {
         e.preventDefault();
 
         document.getElementById('nameEnError').innerText = '';
@@ -402,50 +430,50 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(form);
 
         let hasError = false;
-        if(!formData.get('image').name){
+        if (!formData.get('image').name) {
             document.getElementById('imageError').innerText = 'Please Upload Image';
             hasError = true;
         }
-        if(!formData.get('name_english').trim()){
+        if (!formData.get('name_english').trim()) {
             document.getElementById('nameEnError').innerText = 'Please Enter Sub Category in English';
             hasError = true;
         }
-        if(!formData.get('name_arabic').trim()){
+        if (!formData.get('name_arabic').trim()) {
             document.getElementById('nameArError').innerText = 'Please Enter Sub Category in Arabic';
             hasError = true;
         }
-        if(hasError) return;
+        if (hasError) return;
 
         fetch('{{ route("addSubCategory") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                toastr.success(data.message);
-                setTimeout(() => {
-                    $('#sentModal2').modal('hide');
-                    location.reload();
-                }, 2000);
-            } else {
-                toastr.error(data.message || 'Something went wrong.');
-            }
-        })
-        .catch(err => {
-            toastr.error('Server error.');
-            console.log(err);
-        });
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        $('#sentModal2').modal('hide');
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(err => {
+                toastr.error('Server error.');
+                console.log(err);
+            });
     });
 
 });
 </script>
 
 <!-- Edit  -->
- <script>
+<script>
 document.addEventListener('DOMContentLoaded', function() {
     const editModal = new bootstrap.Modal(document.getElementById('editBrandModal'));
     const editForm = document.getElementById('editBrandForm');
@@ -457,14 +485,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Image preview when selecting a new file
     document.getElementById('editFileUpload').addEventListener('change', function(e) {
         const file = e.target.files[0];
-        if(file){
+        if (file) {
             const reader = new FileReader();
-            reader.onload = function(e){
-                editPreviewImage.src = e.target.result; 
+            reader.onload = function(e) {
+                editPreviewImage.src = e.target.result;
             }
             reader.readAsDataURL(file);
         }
-        document.getElementById('editImageError').innerText = '';  
+        document.getElementById('editImageError').innerText = '';
     });
 
     document.querySelectorAll('.editBrandBtn').forEach(button => {
@@ -473,7 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
             editBrandId.value = this.getAttribute('data-id');
             editNameEnglish.value = this.getAttribute('data-name-english');
             editNameArabic.value = this.getAttribute('data-name-arabic');
-            editPreviewImage.src = this.getAttribute('data-image');  
+            editPreviewImage.src = this.getAttribute('data-image');
         });
     });
 
@@ -492,48 +520,49 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('editImageError').innerText = '';
 
         let hasError = false;
-        if(!formData.get('name_english').trim()){
-            document.getElementById('editNameEnError').innerText = 'Please Enter Sub Category in English';
+        if (!formData.get('name_english').trim()) {
+            document.getElementById('editNameEnError').innerText =
+                'Please Enter Sub Category in English';
             hasError = true;
         }
-        if(!formData.get('name_arabic').trim()){
-            document.getElementById('editNameArError').innerText = 'Please Enter Sub Category in Arabic';
+        if (!formData.get('name_arabic').trim()) {
+            document.getElementById('editNameArError').innerText =
+            'Please Enter Sub Category in Arabic';
             hasError = true;
         }
-        if(hasError) return;
+        if (hasError) return;
 
         fetch(`/admin/updateSubCategory/${id}`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': editForm.querySelector('input[name="_token"]').value
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                toastr.success(data.message);
-                setTimeout(() => {
-                    editModal.hide();
-                    location.reload();
-                }, 2000);
-            } else {
-                toastr.error(data.message || 'Something went wrong.');
-            }
-        })
-        .catch(err => {
-            toastr.error('Server error.');
-            //console.log(err);
-        });
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': editForm.querySelector('input[name="_token"]').value
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        editModal.hide();
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(err => {
+                toastr.error('Server error.');
+                //console.log(err);
+            });
     });
 });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('sentModal2');
-    modal.addEventListener('hidden.bs.modal', function () {
-        location.reload(); 
+    modal.addEventListener('hidden.bs.modal', function() {
+        location.reload();
     });
 });
 </script>
-
