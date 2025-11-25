@@ -255,20 +255,10 @@
             <div class="modal-body">
                 <form id="reasonForm">
                     <input type="hidden" id="reasonType" name="type" value="" />
-                    <!-- <div class="mb-3">
-                        <label for="reasonEnglish" class="form-label">Reason (English)</label>
-                        <input type="text" id="reasonEnglish" name="reason_english" class="form-control" placeholder="Enter Reason in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
-                        <div class="text-danger mt-1 error-message" id="englishError" style="display:none;"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="reasonArabic" class="form-label">Reason (Arabic)</label>
-                        <input type="text" id="reasonArabic" name="reason_arabic" class="form-control" placeholder="Enter Reason in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
-                        <div class="text-danger mt-1 error-message" id="arabicError" style="display:none;"></div>
-                    </div> -->
                     <div class="mb-3">
                         <label for="reasonEnglish" class="form-label">Reason (English)</label>
                         <textarea id="reasonEnglish" name="reason_english" class="form-control" placeholder="Enter Reason in English"
-                            oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                            oninput="this.value=this.value.replace(/[^A-Za-z0-9 \n]/g,'').replace(/^\s+/,'')"
                             rows="3"></textarea>
                         <div class="text-danger mt-1 error-message" id="englishError" style="display:none;"></div>
                     </div>
@@ -276,11 +266,10 @@
                     <div class="mb-3">
                         <label for="reasonArabic" class="form-label">Reason (Arabic)</label>
                         <textarea id="reasonArabic" name="reason_arabic" class="form-control" placeholder="Enter Reason in Arabic"
-                            oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                            oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')"
                             rows="3"></textarea>
                         <div class="text-danger mt-1 error-message" id="arabicError" style="display:none;"></div>
                     </div>
-
                     <div class="d-flex justify-content-center gap-3 mt-3">
                         <button type="button" class="btn btn-dark customBtn" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-dark customBtn">Add</button>
@@ -302,22 +291,10 @@
             <div class="modal-body">
             <form id="editReasonForm">
           <input type="hidden" id="editReasonId" name="reason_id" value="">
-
-          <!-- <div class="mb-3">
-            <label for="editReasonEnglish" class="form-label">Reason (English)</label>
-            <input type="text" id="editReasonEnglish" name="reason_english" class="form-control" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"/>
-            <div id="editEnglishError" class="text-danger small" style="display:none;"></div>
-          </div>
-
-          <div class="mb-3">
-            <label for="editReasonArabic" class="form-label">Reason (Arabic)</label>
-            <input type="text" id="editReasonArabic" name="reason_arabic" class="form-control" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
-            <div id="editArabicError" class="text-danger small" style="display:none;"></div>
-          </div> -->
           <div class="mb-3">
                 <label for="editReasonEnglish" class="form-label">Reason (English)</label>
                 <textarea id="editReasonEnglish" name="reason_english" class="form-control"
-                    oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 \n]/g,'').replace(/^\s+/,'')"
                     rows="3"></textarea>
                 <div id="editEnglishError" class="text-danger small" style="display:none;"></div>
             </div>
@@ -325,7 +302,7 @@
             <div class="mb-3">
                 <label for="editReasonArabic" class="form-label">Reason (Arabic)</label>
                 <textarea id="editReasonArabic" name="reason_arabic" class="form-control"
-                    oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                    oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')"
                     rows="3"></textarea>
                 <div id="editArabicError" class="text-danger small" style="display:none;"></div>
             </div>
@@ -346,6 +323,8 @@
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/38.0.0/classic/ckeditor.js"></script>
+
 <!-- activate deactivate reason -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
