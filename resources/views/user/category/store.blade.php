@@ -107,9 +107,11 @@
 
                         @forelse ($store_data as $item)
                             <div class="col-lg-4 col-md-4 col-6 my-3">
-                                <a href="{{route('user.store_details',[$item->id])}}">
+                                <a  href="{{route('user.store_details',[$item->id])}}" style="text-decoration:none;">
                                     <div class="category-store">
-                                        <img src="{{ $item->store_image }}" class="img-fluid" />
+                                        <div class="category_store_img">
+                                            <img src="{{ $item->store_image }}" class="img-fluid" />
+                                        </div>
                                         <div class="category-store-content">
                                             <div class="user-infoCat_detail d-flex align-items-center">
                                                 <div class="user">

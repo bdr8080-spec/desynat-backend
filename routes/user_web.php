@@ -58,6 +58,15 @@ Route::match(['get', 'post'], '/route2', function () {
 Route::match(['get', 'post'], '/product-store-details', function () {
      return view('user.category.product-store-details');
 });
+Route::match(['get', 'post'], '/add-new-address', function () {
+     return view('user.profile.add-new-address');
+});
+Route::match(['get', 'post'], '/saved-address', function () {
+     return view('user.profile.saved-address');
+});
+Route::match(['get', 'post'], '/wishlist', function () {
+     return view('user.profile.wishlist');
+});
 //  Route::match(['get', 'post'], '/route2', function () {
 //      return view('user.profile.changePassword');
 // });

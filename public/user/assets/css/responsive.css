@@ -67,6 +67,9 @@
         transform: none !important;
         min-width: 100% !important;
     }
+    .category_store_img{
+        height: 240px !important;
+    }
 
 }
 
@@ -262,5 +265,14 @@
         padding: 5px;
         border-radius: 5px !important;
     }
+    .category_store_img{
+        height: 200px !important;
+    }
     
+}
+
+@media (max-width:441px) {
+    .category_store_img{
+        height: 150px !important;
+    }
 }

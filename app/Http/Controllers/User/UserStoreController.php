@@ -24,10 +24,6 @@ class UserStoreController extends Controller
 
     public function category_wise_store(Request $request,$id){
     
-
-     
-
-        $user_id=  $request->user()->id;
     
        $request_data=(object)[
         'category_id'=>$id,
@@ -62,10 +58,13 @@ class UserStoreController extends Controller
                 ->withInput();
         }
 
-        $user_id=  $request->user()->id;
+        if(isset($request->user()->id)){
+             $user_id=  $request->user()->id;
+        }
+       
       
         $request_data=(object)[
-         'user_id'=>$user_id,
+         'user_id'=>$user_id ??null,
          'store_id'=>$request->id,
          'search' =>$request->search,
          'sort_filter'=> $request->sort_filter
