@@ -91,7 +91,7 @@
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
                                     <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Status</th>
+                                    <th class="no-sort">Active/Inactive</th>
                                     <th class="no-sort">
                                         View more details
                                     </th>
@@ -211,7 +211,7 @@
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
                                     <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Status</th>
+                                    <th class="no-sort">Active/Inactive</th>
                                     <th class="no-sort">View more details</th>
                                 </tr>
                             </thead>
@@ -328,7 +328,7 @@
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
                                     <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Status</th>
+                                    <th class="no-sort">Active/Inactive</th>
                                     <th class="no-sort">View more details</th>
                                 </tr>
                             </thead>
