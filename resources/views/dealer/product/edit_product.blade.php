@@ -411,7 +411,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                            <input type="number" id="actual_price_{{$product_Variation_count}}" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
                                 name="actual_price[]"  value="{{$item->actual_price}}">
                             <p class="text-danger" id="error-actual_price_{{$product_Variation_count}}"></p>
 
@@ -429,14 +429,14 @@
                             class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[{{$product_Variation_count}}]" @if($item['discount_type']== 1) checked  @endif value="1">
+                                    <input type="radio" name="discount_type[{{$product_Variation_count}}]"  id="discount_type_percentage_{{$product_Variation_count}}" @if($item['discount_type']== 1) checked  @endif value="1">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[{{$product_Variation_count}}]"  @if($item['discount_type']== 2) checked  @endif value="2">
+                                    <input type="radio" name="discount_type[{{$product_Variation_count}}]" id="discount_type_fixed_{{$product_Variation_count}}"   @if($item['discount_type']== 2) checked  @endif value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -453,7 +453,7 @@
                                 <label>Percentage</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
-                                name="discount_value[]"  value="{{$item['discount_value']}}">
+                                name="discount_value[]"   id="discount_value_{{$product_Variation_count}}"  value="{{$item['discount_value']}}">
                             <p class="text-danger" id="error-discount_value_{{$product_Variation_count}}"></p>
 
                         </div>
@@ -465,7 +465,7 @@
                                 <label>Final Price</label>
                             </div>
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
-                                name="final_price[]"  value="{{$item['final_price']}}">
+                                name="final_price[]"  value="{{$item['final_price']}}" id="final_price_{{$product_Variation_count}}">
                             <p class="text-danger" id="error-final_price_{{$product_Variation_count}}"></p>
                         </div>
                     </div>
@@ -1076,7 +1076,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
+                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
 
                             </div>
@@ -1093,14 +1093,14 @@
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="1" checked>
+                                    <input type="radio" id="discount_type_percentage_${product_Variation_count}" name="discount_type[${product_Variation_count}]" value="1" checked>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${product_Variation_count}]" value="2">
+                                    <input type="radio" id="discount_type_fixed_${product_Variation_count} name="discount_type[${product_Variation_count}]" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -1116,7 +1116,7 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                           <input type="number" class="form-control" placeholder="Eg.10%" name="discount_value[]">
+                           <input type="number" class="form-control"  id="discount_value_${product_Variation_count}" placeholder="Eg.10%" name="discount_value[]">
                           <p class="text-danger" id="error-discount_value_${product_Variation_count}"></p>
 
                            </div>
@@ -1127,7 +1127,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
+                            <input type="number" class="form-control"  id="final_price_${product_Variation_count}" placeholder="Eg.KD 299.00" name="final_price[]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}"></p>
 
                          </div>
@@ -1349,6 +1349,72 @@
         imgDiv.remove();
     }
 });
+
+
+
+
+    // dynamic Price show after discount 
+    // Listen for input changes
+$(document).on("input change", 
+    "input[id^='actual_price_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
+    function () {
+
+    let id = $(this).attr("id");
+    let index = id.split("_").pop();
+
+    let actualPrice = parseFloat($("#actual_price_" + index).val());
+    let discountInput = $("#discount_value_" + index);
+    let discountValue = parseFloat(discountInput.val());
+    let discountType = $(`input[name='discount_type[${index}]']:checked`).val();
+
+    // -----------------------------------------
+    // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
+    // -----------------------------------------
+    if (discountType == "1") {  
+        if (discountValue > 100) {
+            discountInput.val(100);
+            discountValue = 100;
+        }
+        if (discountValue < 0) {
+            discountInput.val(0);
+            discountValue = 0;
+        }
+    } else if (discountType == "2") {
+        // Fixed price → cannot exceed actual price
+        if (discountValue > actualPrice) {
+            discountInput.val(actualPrice);
+            discountValue = actualPrice;
+        }
+        if (discountValue < 0) {
+            discountInput.val(0);
+            discountValue = 0;
+        }
+    }
+    // Type=2 (Fixed price) → No restriction
+    // -----------------------------------------
+
+    if (!actualPrice || !discountValue) {
+        $("#final_price_" + index).val("");
+        return;
+    }
+
+    let finalPrice = 0;
+
+    // Percentage
+    if (discountType == "1") {
+        finalPrice = actualPrice - (actualPrice * (discountValue / 100));
+    }
+
+    // Fixed price
+    if (discountType == "2") {
+        finalPrice = actualPrice - discountValue;
+    }
+
+    if (finalPrice < 0) finalPrice = 0;
+
+    $("#final_price_" + index).val(finalPrice.toFixed(2));
+});
+
 
 
 
