@@ -45,7 +45,7 @@
         font-size: 18px;
     }
     .upload-box {
-    width: 176px !important;
+    width: 143px !important;
   
 }
 }

@@ -19,7 +19,7 @@
 
     </div>
 
-    <div class="userManagecontent mt-4">
+    <div class="userManagecontent mt-3">
         <div class="">
             <form method="GET" action="{{ route('admin.deliveryBoyManagement') }}" id="filterForm">
             <div class="row">
@@ -28,7 +28,7 @@
                         <label for="from" class="form-label">From:</label>
                         <input type="date" id="from" name="from_date" class="form-control"
                             value="{{ request()->from_date }}"
-                            onchange="document.getElementById('filterForm').submit();" />
+                            onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                     </div>
                 </div>
 
@@ -53,8 +53,10 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">
-                    <div class="d-flex justify-content-end  mt-5">
-                        <a class="btn btn-dark customBtn"  href="{{route('admin.deliveryboy_reg_step1')}}">
+                    <div class="d-flex justify-content-end  mt-5 mb-5">
+                        <a class="btn btn-dark customBtn"  href="{{route('admin.deliveryboy_reg_step1')}}" style="
+    margin-top: -4px;
+">
                             <span >Add Delivery Boy</span>
                         </a>
                     </div>
@@ -62,7 +64,7 @@
             </div>
            </form>
 
-            <div class="table-responsive w-100 mt-5">
+            <div class="table-responsive w-100 mt-3">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
@@ -771,4 +773,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from').value;
+        const toDateInput = document.getElementById('to');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
 </script>
