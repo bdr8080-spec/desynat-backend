@@ -2,7 +2,7 @@
 @section('content')
 <style>
 .upload-box {
-    width: 176px;
+    /* width: 176px; */
     height: 160px;
     border: 2px dotted #c8ad8d;
     border-radius: 10px;
@@ -46,8 +46,11 @@
         font-size: 18px;
     }
     .upload-box {
-    width: 176px !important;
+    width: 143px !important;
   
+}
+label {
+    font-size: 18px;
 }
 }
 </style>
