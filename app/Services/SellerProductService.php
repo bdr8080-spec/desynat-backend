@@ -509,7 +509,7 @@ public function AllProduct($request)
 
     }
 
-    $productQuery=$this->applyStockStatus($productQuery->get());
+    $productQuery=$this->applyStockStatus($productQuery->orderBy('id','desc')->get());
 
     // active Product 
 
@@ -544,7 +544,7 @@ public function AllProduct($request)
     }
 
 
-$active_productQuery=$this->applyStockStatus($active_productQuery->where('product_active_status', 1)->get());
+$active_productQuery=$this->applyStockStatus($active_productQuery->where('product_active_status', 1)->orderBy('id','desc')->get());
 
 // inactive product
 
@@ -578,7 +578,7 @@ if ($request->type == '2') {
     }
 }
 
-$inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('product_active_status', 0)->get());
+$inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('product_active_status', 0)->orderBy('id','desc')->get());
 
     // if ($productQuery->isEmpty()) {
     //     return ['status'=>'success','message'=>'No Product found','data'=>[]];

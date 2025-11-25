@@ -111,8 +111,8 @@
         <div class="title24"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
         </div>
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-            <label class="form-check-label" for="switchCheckDefault"></label>
+            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" @if ($product->product_active_status==1) checked  @endif rel="{{ $product->id }}">
+            <label class="form-check-label" for="switchCheckDefault" ></label>
         </div>
     </div>
     </div>
@@ -425,6 +425,51 @@ $(document).ready(function () {
 
 });
 
+
+// Active and Inactive product 
+
+   $('body').on('click', '#switchCheckDefault', function() {
+            //alert('Hello');
+            var id = $(this).attr('rel');
+            //alert(id)
+            $.ajax({
+                url: "{{ url('seller/product-status-active-inactive') }}",
+                type: "get",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id
+                },
+                dataType: "json",
+                beforeSend: function() {
+                    $('#loader').show()
+                },
+                success: function(data) {
+                    console.log(data.data)
+                    if (data.data.product_active_status == 1) {
+                        toastr.success(data.message);
+
+                    } else if (data.data.product_active_status === 0) {
+                        toastr.error(data.message);
+
+                    } else {
+                        toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+                    }
+
+                    // setInterval(() => {
+                    //     window.location.reload();
+                    // }, 1000);
+
+
+                },
+                error: function() {
+                    alert("Fail")
+                },
+                 complete: function() {
+                // Hide loader (after success or error)
+                $('#loader').hide();
+            }
+            })
+        })
 
 
     </script>

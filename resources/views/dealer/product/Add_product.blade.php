@@ -1273,20 +1273,45 @@
 
 
     // dynamic Price show after discount 
-
+ // dynamic Price show after discount 
     // Listen for input changes
-$(document).on("input change", "input[id^='actual_price_'], input[id^='discount_value_'], input[id^='discount_type_']", function () {
+$(document).on("input change", 
+    "input[id^='actual_price_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
+    function () {
 
-    // Get ID of changed element
-    let id = $(this).attr('id');
-
-    // Extract dynamic index number (everything after last _ )
+    let id = $(this).attr("id");
     let index = id.split("_").pop();
 
-    // Get related fields using dynamic index
     let actualPrice = parseFloat($("#actual_price_" + index).val());
-    let discountValue = parseFloat($("#discount_value_" + index).val());
+    let discountInput = $("#discount_value_" + index);
+    let discountValue = parseFloat(discountInput.val());
     let discountType = $(`input[name='discount_type[${index}]']:checked`).val();
+
+    // -----------------------------------------
+    // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
+    // -----------------------------------------
+    if (discountType == "1") {  
+        if (discountValue > 100) {
+            discountInput.val(100);
+            discountValue = 100;
+        }
+        if (discountValue < 0) {
+            discountInput.val(0);
+            discountValue = 0;
+        }
+    } else if (discountType == "2") {
+        // Fixed price → cannot exceed actual price
+        if (discountValue > actualPrice) {
+            discountInput.val(actualPrice);
+            discountValue = actualPrice;
+        }
+        if (discountValue < 0) {
+            discountInput.val(0);
+            discountValue = 0;
+        }
+    }
+    // Type=2 (Fixed price) → No restriction
+    // -----------------------------------------
 
     if (!actualPrice || !discountValue) {
         $("#final_price_" + index).val("");
@@ -1295,9 +1320,13 @@ $(document).on("input change", "input[id^='actual_price_'], input[id^='discount_
 
     let finalPrice = 0;
 
+    // Percentage
     if (discountType == "1") {
         finalPrice = actualPrice - (actualPrice * (discountValue / 100));
-    } else {
+    }
+
+    // Fixed price
+    if (discountType == "2") {
         finalPrice = actualPrice - discountValue;
     }
 

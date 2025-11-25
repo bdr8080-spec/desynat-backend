@@ -86,12 +86,12 @@
                                     <th class="no-sort">S.No</th>
                                     <th class="no-sort">Image</th>
                                     <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Name</th>
+                                    <th class="no-sort">Product Name</th>
                                     <th class="no-sort">Brand</th>
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
                                     <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Status</th>
+                                    <th class="no-sort">Active/Inactive</th>
                                     <th class="no-sort">
                                         View more details
                                     </th>
@@ -206,12 +206,12 @@
                                     <th class="no-sort">S.No</th>
                                     <th class="no-sort">Image</th>
                                     <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Name</th>
+                                    <th class="no-sort">Product Name</th>
                                     <th class="no-sort">Brand</th>
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
                                     <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Status</th>
+                                    <th class="no-sort">Active/Inactive</th>
                                     <th class="no-sort">View more details</th>
                                 </tr>
                             </thead>
@@ -323,12 +323,12 @@
                                     <th class="no-sort">S.No</th>
                                     <th class="no-sort">Image</th>
                                     <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Name</th>
+                                    <th class="no-sort">Product Name</th>
                                     <th class="no-sort">Brand</th>
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
                                     <th class="no-sort">Availability</th>
-                                    <th class="no-sort">Status</th>
+                                    <th class="no-sort">Active/Inactive</th>
                                     <th class="no-sort">View more details</th>
                                 </tr>
                             </thead>
