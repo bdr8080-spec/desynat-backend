@@ -367,12 +367,17 @@ public function edit_Product($request){
         'feature_ar'=> $request->product_spe_feature_ar[$key],
         ];
 
-        $product_data=  ProductSpecification::UpdateOrCreate($specification_array);
+        $product_data=  ProductSpecification::updateOrCreate($specification_array);
 
         }
 
         // variation code 
-          ProductVariant::where('product_id',$product_id)->delete();
+        // OLD variants
+        $existingVariants = ProductVariant::where('product_id', $product_id)
+        ->pluck('id')
+        ->toArray();
+
+        $newVariantIDs = [];
 
         foreach($request->color_id as $key=>$val){
 
@@ -411,9 +416,15 @@ public function edit_Product($request){
             $variation_array['length']= $request->length[$key]??null; // only provide when category is women      
             }
 
-            $product_data=  ProductVariant::UpdateOrCreate($match,$variation_array);
+            $product_data=  ProductVariant::updateOrCreate($match,$variation_array);
+
+              $newVariantIDs[] = $product_data->id;
         }
 
+        // DELETE VARIANTS NOT INCLUDED IN FORM
+        ProductVariant::where('product_id', $product_id)
+            ->whereNotIn('id', $newVariantIDs)
+            ->delete();
 
         // if ($product->isEmpty()) {
         //         return ['status'=>'success','message'=>"No Product found",'data'=>[]];
