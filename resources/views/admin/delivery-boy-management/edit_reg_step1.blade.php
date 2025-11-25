@@ -151,11 +151,11 @@ width: fit-content;
                                 <!-- Address Line 1 -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 01</label>
+                                        <label class="mb-0">Address line 1</label>
                                     </div>
                                     <div class="position-relative mt-1">
                                         <input type="text" class="form-control" name="address_line1"
-                                            placeholder="Enter Address Line 01"
+                                            placeholder="Enter Address Line 1"
                                             value="{{ $step1Data['address_line1'] ?? $deliveryBoy->address_line1 ?? '' }}" />
                                         <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
                                         style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;"></i>
@@ -231,10 +231,10 @@ width: fit-content;
                                 <!-- Address Line 2 -->
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 02</label>
+                                        <label class="mb-0">Address line 2</label>
                                     </div>
                                     <input type="text" class="form-control" name="address_line2"
-                                        placeholder="Enter Address Line 02"
+                                        placeholder="Enter Address Line 2"
                                         value="{{ $step1Data['address_line2'] ?? $deliveryBoy->address_line2 ?? '' }}" />
                                     <span class="text-danger" id="address_line2_error"></span>
                                 </div>
