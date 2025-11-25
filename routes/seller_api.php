@@ -55,7 +55,10 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     
     Route::post('add-product',[SellerProductController::class, 'add_product']);
-        
+   
+    Route::post('edit-product',[SellerProductController::class, 'edit_product']);
+   
+
     Route::post('all-product',[SellerProductController::class, 'all_product']);
 
     Route::post('single-product-details',[SellerProductController::class, 'seller_single_product_details']);
