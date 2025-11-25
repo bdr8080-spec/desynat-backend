@@ -86,7 +86,7 @@
                                     <th class="no-sort">S.No</th>
                                     <th class="no-sort">Image</th>
                                     <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Name</th>
+                                    <th class="no-sort">Product Name</th>
                                     <th class="no-sort">Brand</th>
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
@@ -206,7 +206,7 @@
                                     <th class="no-sort">S.No</th>
                                     <th class="no-sort">Image</th>
                                     <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Name</th>
+                                    <th class="no-sort">Product Name</th>
                                     <th class="no-sort">Brand</th>
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
@@ -323,7 +323,7 @@
                                     <th class="no-sort">S.No</th>
                                     <th class="no-sort">Image</th>
                                     <th class="no-sort">Product code</th>
-                                    <th class="no-sort">Name</th>
+                                    <th class="no-sort">Product Name</th>
                                     <th class="no-sort">Brand</th>
                                     <th class="no-sort">Category</th>
                                     <th class="no-sort">Added on</th>
