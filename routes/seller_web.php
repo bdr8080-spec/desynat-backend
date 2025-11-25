@@ -55,7 +55,10 @@ Route::group(['prefix' => 'seller'], function () {
 
      Route::get('/get-images', [SellerProductController::class, 'getimagesBySize'])->name('get.product.images');
 
+     Route::get('/get-variation', [SellerProductController::class, 'getSizeByVariation'])->name('get.product.variation');
 
+
+     
 
     route::Match(['get','post'],'/edit-product/{id}',[SellerProductController::class,'edit_product'])->name('seller.edit-product');
     // route::Match(['get','post'],'/view-profile',[SellerProductController::class,'view_profile'])->name('seller.view_profile');

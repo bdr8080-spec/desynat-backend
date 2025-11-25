@@ -984,8 +984,22 @@ $request_data=(object) [
 public function getPriceBySize(Request $request)
 {
 
- $product_data_called= product::where('id', $request->product_id)->first();
+    $sizes= ProductVariant::with('size')->where('product_id', $request->product_id)
+    ->where('color_id',$request->color)
+    ->where('size_id',$request->size)
+    ->get();
 
+    // dd($product_data);
+
+     return view('dealer.product.ajax.price', compact('sizes'))->render();
+
+}
+
+
+public function getSizeByVariation(Request $request)
+{
+
+ $product_data_called= product::where('id', $request->product_id)->first();
 
     $sizes= ProductVariant::with('size')->where('product_id', $request->product_id)
     ->where('color_id',$request->color)
@@ -994,7 +1008,7 @@ public function getPriceBySize(Request $request)
 
     // dd($product_data);
 
-     return view('dealer.product.ajax.price', compact('sizes','product_data_called'))->render();
+     return view('dealer.product.ajax.variation_show', compact('sizes','product_data_called'))->render();
 
 }
 
