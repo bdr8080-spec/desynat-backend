@@ -920,10 +920,22 @@ public function getPriceBySize(Request $request)
 
       return view('dealer.product.ajax.price', compact('sizes'))->render();
 
-    // return response()->json(['price' => $sizes->actual_price]);
 }
 
 
+
+
+
+public function getimagesBySize(Request $request)
+{
+    $images_show= ProductVariant::with('size')->where('product_id', $request->product_id)
+    ->where('color_id',$request->color)
+    ->where('size_id',$request->size)
+    ->pluck('variant_image');
+
+      return view('dealer.product.ajax.images_show', compact('images_show'))->render();
+
+}
 
 
 

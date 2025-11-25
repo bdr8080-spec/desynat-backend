@@ -119,44 +119,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <div class="row my-4">
-        <div class="col-lg-6 col-xxl-6">
-            <!-- <div class="bg-header d-flex justify-content-between mt-3 align-items-center">
-                <div class="title24">Store availability</div>
-                <div class="d-flex gap-3">
-                    <div class="buy">Busy/On</div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-                        <label class="form-check-label" for="switchCheckDefault"></label>
-                    </div>
-                </div>
-            </div> -->
 
+    <div id="images_show-box" class="col-lg-6 col-xxl-6"></div>
 
-            <!-- Main Image -->
-            <div class="main-img-container mb-3">
-                <img id="mainImage" src="{{ asset('dealer/assets/img/image33.png') }}" class="img-fluid"
-                    class="img-fluid rounded main-img" alt="">
-                <!-- <img src="{{ asset('user/assets/images/categorie1.png') }}" class="img-fluid" /> -->
-            </div>
-
-            <div class="d-flex justify-content-center gap-2 mt-3">
-
-                <img src="{{ asset('dealer/assets/img/image33.png') }}" class="thumb-img"
-                    onclick="changeImage(this.src)">
-
-                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="thumb-img"
-                    onclick="changeImage(this.src)">
-
-                <img src="{{ asset('dealer/assets/img/image33.png') }}" class="thumb-img"
-                    onclick="changeImage(this.src)">
-
-                <img src="{{ asset('dealer/assets/img/image33.png') }}" class="thumb-img"
-                    onclick="changeImage(this.src)">
-
-            </div>
-
-        </div>
-        <div class="col-lg-6 col-xxl-6">
+    <div class="col-lg-6 col-xxl-6">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
                 <a href="{{ route('seller.edit-product',$product->id) }}">
                     <img src="{{ asset('dealer/assets/img/edit2.png') }}" class=""></a>
@@ -182,15 +148,18 @@
 <div class="d-flex gap-2 mb-4">
     @php $count=1;
     $countSize=1;
+     $i = 0;
     @endphp
 
     @foreach ($product['ColorPriceCombination'] as $key => $item)
     
-    <div class="color-box" id="color-list"
+    <div class="color-box {{ $i == 0 ? 'active' : '' }}" id="color-list"
          style="background:{{ $key }}"
-         data-color="{{ $item[0]['color_id'] }}">
+         data-color="{{ $item[0]['color_id'] }}" >
     </div>
-        @php $count++; @endphp
+        @php $count++;
+         $i++;
+         @endphp
         @endforeach
 </div>
 
@@ -333,15 +302,26 @@
         }
 
 
-        $(document).on('click', '.color-box', function () {
+        // When user clicks a color
+$(document).on('click', '.color-box', function () {
 
-        $('.color-box').removeClass('active');
-        // Add active to clicked one
-        $(this).addClass('active');
-   
-            let color = $(this).data('color');
-            let product_id = "{{ $product->id }}";
-          
+    $('.color-box').removeClass('active');
+    $(this).addClass('active');
+
+    loadSizes($(this).data('color'));
+
+});
+
+// Load sizes on first color automatically when page loads
+$(document).ready(function () {
+    let firstColor = $('.color-box').first().data('color');
+    loadSizes(firstColor);
+
+});
+
+// Function to load sizes using AJAX
+function loadSizes(color) {
+    let product_id = "{{ $product->id }}";
 
     $.ajax({
         url: "{{ route('get.sizes.by.color') }}",
@@ -351,24 +331,26 @@
             color: color
         },
         success: function (response) {
-            $("#size-list").html(response);   // loads size buttons
-            $("#price-box").html("");         // clear previous price
+            $("#size-list").html(response);
+            $("#price-box").html(""); // clear price
+
+               // Auto-select first size
+            let firstSizeBtn = $('.size-btn').first();
+            firstSizeBtn.addClass('active');
+            let size = firstSizeBtn.data('size');
+            // Auto-load price + images for first size
+            loadPriceAndImages(size, color, product_id);
+
+
         }
     });
-});
+}
 
+// load image and price
 
-$(document).on('click', '.size-btn', function () {
+function loadPriceAndImages(size, color, product_id) {
 
-       $('.size-btn').removeClass('active');
-        // Add active to clicked one
-        $(this).addClass('active');
-   
-
-    let size = $(this).data('size');
-    let color = $(".color-box.active").data('color');
-    let product_id = "{{ $product->id }}";
-
+    // Load price
     $.ajax({
         url: "{{ route('get.price.by.size') }}",
         type: "GET",
@@ -378,10 +360,71 @@ $(document).on('click', '.size-btn', function () {
             size: size
         },
         success: function (response) {  
-            $("#price-box").html(response);   // loads size buttons
+            $("#price-box").html(response);
         }
     });
+
+    // Load images
+    $.ajax({
+        url: "{{ route('get.product.images') }}",
+        type: "GET",
+        data: {
+            product_id: product_id,
+            color: color,
+            size: size
+        },
+        success: function (response) {  
+            $("#images_show-box").html(response);
+        }
+    });
+}
+
+
+$(document).on('click', '.size-btn', function () {
+
+    $('.size-btn').removeClass('active');
+    $(this).addClass('active');
+
+    let size = $(this).data('size');
+    let color = $(".color-box.active").data('color');
+    let product_id = "{{ $product->id }}";
+
+    loadPriceAndImages(size, color, product_id);
 });
+
+
+$(document).ready(function () {
+
+    let product_id = "{{ $product->id }}";
+
+    // 1️⃣ Get first color
+    let firstColor = $('.color-box').first().data('color');
+    $('.color-box').first().addClass('active');
+
+    // 2️⃣ Load sizes for first color
+    $.ajax({
+        url: "{{ route('get.sizes.by.color') }}",
+        type: "GET",
+        data: {
+            product_id: product_id,
+            color: firstColor
+        },
+        success: function (response) {
+            $("#size-list").html(response);
+
+            // 3️⃣ Auto-select first size
+            let firstSizeBtn = $('.size-btn').first();
+            firstSizeBtn.addClass('active');
+
+            let firstSize = firstSizeBtn.data('size');
+
+            // 4️⃣ Auto-load price + images
+            loadPriceAndImages(firstSize, firstColor, product_id);
+        }
+    });
+
+});
+
 
 
     </script>

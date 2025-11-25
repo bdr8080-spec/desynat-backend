@@ -53,6 +53,7 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('/get-sizes', [SellerProductController::class, 'getSizesByColor'])->name('get.sizes.by.color');
     Route::get('/get-price', [SellerProductController::class, 'getPriceBySize'])->name('get.price.by.size');
 
+     Route::get('/get-images', [SellerProductController::class, 'getimagesBySize'])->name('get.product.images');
 
 
 
