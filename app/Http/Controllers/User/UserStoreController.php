@@ -58,7 +58,10 @@ class UserStoreController extends Controller
                 ->withInput();
         }
 
-        $user_id=  $request->user()->id;
+        if(isset($request->user()->id)){
+             $user_id=  $request->user()->id;
+        }
+       
       
         $request_data=(object)[
          'user_id'=>$user_id,
