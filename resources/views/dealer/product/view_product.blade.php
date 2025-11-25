@@ -102,8 +102,8 @@
 
 <section class="section dashboard container">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between">
-        <div class="title24"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
-        </div>
+        <div class="title24"> <a href="{{route('seller.products')}}" style="color:rgb(57, 55, 55)"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
+       </a> </div>
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" @if ($product->product_active_status==1) checked  @endif rel="{{ $product->id }}">
             <label class="form-check-label" for="switchCheckDefault" ></label>
@@ -198,12 +198,12 @@
                 <div class="row mb-2">
                     <div class="col-6">Return allowed ?
                     </div>
-                    <div class="col-6 text-end">@if($product->return_days==1) Yes @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->product_return==1) {{$product->return_days}} days  @else No @endif </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Exchange allowed ?
                     </div>
-                    <div class="col-6 text-end">@if($product->product_exchangable==1) Yes @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->product_exchangable==1) {{$product->exchangable_days}} days @else No @endif </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Review & ratings allowed ?

@@ -45,10 +45,10 @@
                 <div class="col-6 text-end">{{ $item1['sku'] }}</div>
             </div>
 
-            <div class="row mb-2">
+            {{-- <div class="row mb-2">
                 <div class="col-6">SKU Threshold</div>
                 <div class="col-6 text-end">{{ $item1['sku_threshold_value'] }}</div>
-            </div>
+            </div> --}}
         </div>
 
     </div>
