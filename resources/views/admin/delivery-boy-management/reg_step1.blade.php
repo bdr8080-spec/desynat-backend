@@ -243,10 +243,10 @@ width: fit-content;
 
             <div class="modal-body">
                 <div class="text-center mb-4">
-                    <div class="appointment-container d-flex flex-column align-items-center">
+                    <div class="appointment-container d-flex flex-column align-items-start">
                         <input id="searchBox" type="text" placeholder="Search your address"
                             class="form-control"
-                            style="padding: 9px 18px;border-radius:4px;width: 80%;">
+                            style="padding: 9px 18px;border-radius:4px;width: 100%%;">
 
                         <div class="w-100 mb-3 d-flex justify-content-center">
                             <div id="map" style="width: 100%; height: 408px; border-radius: 10px; overflow: hidden;"></div>

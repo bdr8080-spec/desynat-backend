@@ -277,7 +277,7 @@ width: fit-content;
 </div>
 
 <div class="modal fade" id="sentModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered model-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <h2 class="h2">Address</h2>
@@ -286,7 +286,7 @@ width: fit-content;
 
             <div class="modal-body">
                 <div class="text-center mb-4">
-                    <div class="appointment-container d-flex flex-column align-items-center">
+                    <div class="appointment-container d-flex flex-column align-items-start">
                         <input id="searchBox" type="text" placeholder="Search your address"
                             class="form-control"
                             style="padding: 9px 18px;border-radius:4px;width: 80%;">

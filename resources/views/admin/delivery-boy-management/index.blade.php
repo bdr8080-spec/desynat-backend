@@ -44,10 +44,10 @@
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="gap-3 " >
                         <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn"
-                            style="margin-top: 70px">
+                            style="margin-top: 60px">
                             <span>Reset</span>
                         </a>
-                         <a class="btn btn-dark customBtn" style="margin-top: 70px">
+                         <a class="btn btn-dark customBtn" style="margin-top: 60px">
                     <span>Export</span>
                 </a>
                     </div>
