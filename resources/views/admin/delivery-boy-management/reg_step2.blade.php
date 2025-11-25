@@ -2,7 +2,7 @@
 @section('content')
 <style>
 .upload-box {
-    width: 220px;
+    width: 176px;
     height: 160px;
     border: 2px dotted #c8ad8d;
     border-radius: 10px;
@@ -33,6 +33,21 @@
 
 .card-body {
     background: #6c757d0a;
+}
+@media (min-width: 1200px) and (max-width: 1440px) {
+  
+      /* Column adjustments */
+    .col-lg-6 .col-6 {
+        padding: 10px;
+    }
+
+    .row.mt-4 h5 {
+        font-size: 18px;
+    }
+    .upload-box {
+    width: 176px !important;
+  
+}
 }
 </style>
 

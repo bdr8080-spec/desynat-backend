@@ -1796,6 +1796,18 @@ button[type="submit"] {
     .sidebar-dark .nav-item .nav-link {
         font-size: 13px;
     }
+      /* Column adjustments */
+    .col-lg-6 .col-6 {
+        padding: 10px;
+    }
+
+    .row.mt-4 h5 {
+        font-size: 18px;
+    }
+    .upload-box {
+    width: 176px !important;
+  
+}
 }
 .image-box {
     display: flex;
