@@ -134,8 +134,8 @@ class DeliveryBoyController extends Controller
             'password' => [
                 'required',
                 'string',
-                'min:8',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+                'min:6',
+                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
             ],
             'confirm_password' => 'required|same:password',
             'zone_id' => 'required|numeric',
@@ -181,8 +181,8 @@ class DeliveryBoyController extends Controller
             'long.max' => 'Longitude cannot exceed 255 characters.',
             'password.required' => 'Please enter a password.',
             'password.string' => 'Password must be a valid string.',
-            'password.min' => 'Password must be at least 8 characters.',
-            'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
+            'password.min' => 'Password must be at least 6 characters.',
+            // 'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
             'confirm_password.required' => 'Please confirm your password.',
             'confirm_password.same' => 'The confirm password does not match the password.',
             'zone_id.required' => 'Please select a zone.',
@@ -447,8 +447,8 @@ class DeliveryBoyController extends Controller
             'password' => [
                 'required',
                 'string',
-                'min:8',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
+                'min:6',
+                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/'
             ],
             'confirm_password' => 'required|same:password',
             'zone_id' => 'required|numeric',
@@ -495,8 +495,8 @@ class DeliveryBoyController extends Controller
             'long.max' => 'Longitude cannot exceed 255 characters.',
             'password.required' => 'Please enter a password.',
             'password.string' => 'Password must be a valid string.',
-            'password.min' => 'Password must be at least 8 characters.',
-            'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
+            'password.min' => 'Password must be at least 6 characters.',
+            // 'password.regex' => 'Password must have at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.',
             'confirm_password.required' => 'Please confirm your password.',
             'confirm_password.same' => 'The confirm password does not match the password.',
             'zone_id.required' => 'Please select a zone.',

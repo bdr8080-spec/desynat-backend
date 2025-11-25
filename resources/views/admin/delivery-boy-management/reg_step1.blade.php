@@ -628,15 +628,15 @@ document.addEventListener("DOMContentLoaded", function() {
         const password = form.querySelector('[name="password"]').value;
         const confirmPassword = form.querySelector('[name="confirm_password"]').value;
 
-        if (password) {
-            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-            if (!passwordPattern.test(password)) {
-                const ps = document.getElementById('password_error');
-                ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
-                ps.style.display = 'block';
-                hasError = true;
-            }
-        }
+        // if (password) {
+        //     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+        //     if (!passwordPattern.test(password)) {
+        //         const ps = document.getElementById('password_error');
+        //         ps.innerText = "Password must contain uppercase, lowercase, number, and special character.";
+        //         ps.style.display = 'block';
+        //         hasError = true;
+        //     }
+        // }
 
         if (confirmPassword && confirmPassword !== password) {
             const cps = document.getElementById('confirm_password_error');
