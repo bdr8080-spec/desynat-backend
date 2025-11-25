@@ -473,7 +473,10 @@ public function single_product_details_fetch($request){
 
 
       $new_data= [
+        'product_id'=>$val->product_id,
+        'color_id'=>$val->color->id,
         'color'=>$val->color->hex_code,
+        'size_id'=>$val->size->id,
         'size'=>$val->size->name,
         'actual_price'=>$val->actual_price,
         'discount_type'=>$val->discount_type,

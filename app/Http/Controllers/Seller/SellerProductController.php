@@ -11,6 +11,11 @@ use App\Models\SubCategory;
 use App\Models\{ Brand,color,size};
 
 
+
+use App\Models\{ product,ProductSpecification,ProductVariant};
+
+
+
 use App\Services\SellerProductService;
 
 use Auth;
@@ -492,16 +497,15 @@ $request_data=(object) [
 
 public function edit_product($id){
 
-    
     $category = Category::orderBy('id', 'asc')->get();
     $brand = Brand::all();
     $color = color::all();
     $size = size::all();
- 
-$request_data=(object) [
-    'product_id'=>$id,    
-];
-    
+        
+        $request_data=(object) [
+            'product_id'=>$id,    
+        ];
+            
     $product =  $this->SellerProductService->single_product_details_fetch($request_data);
 
     $product_details=$product['data'];
@@ -546,11 +550,11 @@ public function edit_product_code(Request $request, $id){
 
           // product vartion start
 
-    'variant_image' => ['required', 'array'],
-    // Each variation must be an array
-    'variant_image.*' => ['required', 'array'],
-    // Each image inside each variation is required
-    'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
+            'variant_image' => ['required', 'array'],
+            // Each variation must be an array
+            'variant_image.*' => ['required', 'array'],
+            // Each image inside each variation is required
+            'variant_image.*.*' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', new MatchArrayProductVariation],
 
           'color_id' => ['required', 'array'],
           'size_id' => ['required', 'array', ],
@@ -592,26 +596,26 @@ public function edit_product_code(Request $request, $id){
            'old_upload_size_chart' => 'required_without:upload_size_chart',
 
         //   if The category is women
-         // MAIN ARRAY FIELDS (required only if category_id = 2)
-    'bust'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'waist'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'hip'            => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'shoulder'       => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'sleeve_length'  => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'length'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+                // MAIN ARRAY FIELDS (required only if category_id = 2)
+            'bust'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+            'waist'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+            'hip'            => [Rule::requiredIf($request->category_id == 2), 'array'],
+            'shoulder'       => [Rule::requiredIf($request->category_id == 2), 'array'],
+            'sleeve_length'  => [Rule::requiredIf($request->category_id == 2), 'array'],
+            'length'         => [Rule::requiredIf($request->category_id == 2), 'array'],
 
-    // INNER ARRAY VALUES (apply required only if category_id = 2)
-    'bust.*'           => [Rule::requiredIf($request->category_id == 2)],
-    'waist.*'          => [Rule::requiredIf($request->category_id == 2)],
-    'hip.*'            => [Rule::requiredIf($request->category_id == 2)],
-    'shoulder.*'       => [Rule::requiredIf($request->category_id == 2)],
-    'sleeve_length.*'  => [Rule::requiredIf($request->category_id == 2)],
-    'length.*'         => [Rule::requiredIf($request->category_id == 2)], 
-       
+            // INNER ARRAY VALUES (apply required only if category_id = 2)
+            'bust.*'           => [Rule::requiredIf($request->category_id == 2)],
+            'waist.*'          => [Rule::requiredIf($request->category_id == 2)],
+            'hip.*'            => [Rule::requiredIf($request->category_id == 2)],
+            'shoulder.*'       => [Rule::requiredIf($request->category_id == 2)],
+            'sleeve_length.*'  => [Rule::requiredIf($request->category_id == 2)],
+            'length.*'         => [Rule::requiredIf($request->category_id == 2)], 
+            
       ],[
-         'upload_size_chart.required_without' => 'Upload size Chart image is required.',
-         'old_upload_size_chart.required_without' => 'oad size Chart image is required.',
-        
+            'upload_size_chart.required_without' => 'Upload size Chart image is required.',
+            'old_upload_size_chart.required_without' => 'oad size Chart image is required.',
+            
             // Basic fields
             'category_id.required'       => 'Please select a category.',
             'category_id.exists'         => 'Selected category does not exist.',
@@ -766,9 +770,9 @@ public function edit_product_code(Request $request, $id){
                 'size_id_'.$color,
                 "For color sizes must be different."
             );
-        }
-    }
-});
+               }
+                 }
+            });
 
       
       if($validate->fails()){
@@ -890,6 +894,35 @@ $request_data=(object) [
   return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
   
   }
+
+
+
+  public function getSizesByColor(Request $request)
+{
+    
+   $sizes= ProductVariant::with('size')->where('product_id', $request->product_id)->where('color_id',$request->color)->get();
+    
+   // $sizes = $product->ColorPriceCombination[$request->color];
+
+    return view('dealer.product.ajax.sizes', compact('sizes'))->render();
+}
+
+
+public function getPriceBySize(Request $request)
+{
+
+    $sizes= ProductVariant::with('size')->where('product_id', $request->product_id)
+    ->where('color_id',$request->color)
+    ->where('size_id',$request->size)
+    ->get();
+
+    // dd($sizes);
+
+      return view('dealer.product.ajax.price', compact('sizes'))->render();
+
+    // return response()->json(['price' => $sizes->actual_price]);
+}
+
 
 
 

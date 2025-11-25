@@ -50,6 +50,12 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/view-product/{id}',[SellerProductController::class,'view_product'])->name('seller.view_product');
 
+    Route::get('/get-sizes', [SellerProductController::class, 'getSizesByColor'])->name('get.sizes.by.color');
+    Route::get('/get-price', [SellerProductController::class, 'getPriceBySize'])->name('get.price.by.size');
+
+
+
+
     route::Match(['get','post'],'/edit-product/{id}',[SellerProductController::class,'edit_product'])->name('seller.edit-product');
     // route::Match(['get','post'],'/view-profile',[SellerProductController::class,'view_profile'])->name('seller.view_profile');
     // M3 Milestone Work
