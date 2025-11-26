@@ -811,8 +811,8 @@ public function addtoCart_Increment_decrement($request)
 
             $productIds = wishlist::where('user_id', $userId)->pluck('product_id');
 
-            $wishListProduct = product::with('product_variants')
-                ->whereIn('id', $productIds)
+            $wishListProduct = Product::with(['category','subcategory','brand','product_specifications','product_variants.color','product_variants.size'])
+            ->whereIn('id', $productIds)
                 ->get();
 
             $wishListProduct->map(function ($item) use ($user) {
