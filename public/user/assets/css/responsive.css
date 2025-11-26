@@ -183,7 +183,12 @@
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
         background-color: #F5F5F5;
     }
-
+    .user_nav_inner_profile{
+            gap: 13px;
+    }
+    .header_nav_button_dropdown .customBtn1{
+        width: 80%;
+    }
     .header_nav_button_dropdown::-webkit-scrollbar
     {
         height: 2px;

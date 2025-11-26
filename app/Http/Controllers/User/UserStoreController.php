@@ -9,7 +9,7 @@ use App\Helpers\ApiResponse;
 use App\Services\UserManagementService;
 use Validator;
 use App\Models\Brand;
-use App\Models\{Category,size};
+use App\Models\{Category,size,wishlist,product};
 use Auth;
 
 class UserStoreController extends Controller
@@ -161,6 +161,23 @@ class UserStoreController extends Controller
 
 
 
+     public function wishList(Request $request){
+        
+        $id = $request->user()->id;
+
+        $product_id = wishlist::where('user_id', $id)->pluck('product_id');
+
+        $wishListProduct = product::with('product_variants')->whereIn('id',$product_id)->get();
+        
+       $wishListProduct->map(function ($item) use ($request) {
+                $item->user_name = $request->user()->full_name;
+                return $item;
+            });
+
+        return view('user.profile.wishlist', compact('wishListProduct'));
+       
+
+     }
 
     
 }
