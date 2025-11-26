@@ -1282,9 +1282,11 @@ $(document).on('change', 'input[name="product_exchangable"]', function() {
     if (value == "1") {
         // YES → show return days
         $('input[name="exchangable_days"]').closest('.row').show();
+        $('input[name="exchangable_days"]').val('').closest('.row').removeClass('none_main');
+
     } else {
         // NO → hide return days & clear value
-        $('input[name="exchangable_days"]').val('').closest('.row').hide();
+        $('input[name="exchangable_days"]').val('').closest('.row').addClass('none_main');
     }
 });
 
