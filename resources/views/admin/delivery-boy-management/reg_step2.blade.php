@@ -69,7 +69,6 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <!-- VEHICLE NAME -->
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label class="mb-0">Vehicle Name</label>
@@ -80,7 +79,6 @@
                             </div>
                         </div>
 
-                        <!-- VEHICLE REGISTRATION NUMBER -->
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label class="mb-0">Vehicle Registration Number</label>
@@ -92,7 +90,6 @@
                         </div>
                     </div>
 
-                    <!-- VEHICLE IMAGES -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Image</h5>
@@ -121,7 +118,6 @@
                             </div>
                         </div>
 
-                        <!-- IDENTITY PROOF -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Identity Proof</h5>
                             <div class="row mt-3">
@@ -150,7 +146,6 @@
                         </div>
                     </div>
 
-                    <!-- DRIVING LICENSE -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Driving License</h5>
@@ -179,7 +174,6 @@
                             </div>
                         </div>
 
-                        <!-- VEHICLE INSURANCE -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Insurance</h5>
                             <div class="row mt-3 justify-content-start">
@@ -196,7 +190,6 @@
                         </div>
                     </div>
 
-                    <!-- POLLUTION & RC -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Pollution Paper (Optional)</h5>
@@ -253,7 +246,6 @@
                         </div>
                     </div>
 
-                    <!-- BUTTONS -->
                     <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4">
                         <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn">Cancel</a>
                         <a class="btn btn-dark customBtn" id="submitBtn">Add</a>
@@ -339,10 +331,23 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
+                    // if (ext === "pdf") {
+                    //     previewImg.style.display = "none";
+                    //     previewPdf.src = URL.createObjectURL(file);
+                    //     previewPdf.style.display = "block";
+                    // } else {
+                    //     previewPdf.style.display = "none";
+                    //     const reader = new FileReader();
+                    //     reader.onload = ev => {
+                    //         previewImg.src = ev.target.result;
+                    //         previewImg.style.display = "block";
+                    //     };
+                    //     reader.readAsDataURL(file);
+                    // }
                     if (ext === "pdf") {
-                        previewImg.style.display = "none";
-                        previewPdf.src = URL.createObjectURL(file);
-                        previewPdf.style.display = "block";
+                        previewPdf.style.display = "none"; 
+                        previewImg.src = "/admin/image/PDF_file_icon.svg";
+                        previewImg.style.display = "block";
                     } else {
                         previewPdf.style.display = "none";
                         const reader = new FileReader();
@@ -352,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         };
                         reader.readAsDataURL(file);
                     }
+
                 }
             });
         }
@@ -418,6 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
 
 </script>
 

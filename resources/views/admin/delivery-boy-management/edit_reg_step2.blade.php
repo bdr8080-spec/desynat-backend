@@ -69,11 +69,10 @@ label {
 
         </div>
 
-        <div class="content">
+        <!-- <div class="content">
             <div class="card p-3 mt-4">
                 <div class="card-body">
 
-                    <!-- VEHICLE NAME & REGISTRATION -->
                     <div class="row">
                         <div class="col-lg-6 mt-3">
                             <label class="mb-0">Vehicle Name</label>
@@ -94,13 +93,11 @@ label {
                         </div>
                     </div>
 
-                    <!-- ===== VEHICLE IMAGE ===== -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Image</h5>
                             <div class="row mt-3">
 
-                                <!-- Vehicle Front -->
                                 <div class="col-6 text-center">
                                     <label for="vehicleImgFront" class="upload-box">
 
@@ -119,7 +116,6 @@ label {
                                     <div id="vehicleImgFront_error" class="text-danger small"></div>
                                 </div>
 
-                                <!-- Vehicle Back -->
                                 <div class="col-6 text-center">
                                     <label for="vehicleImgBack" class="upload-box">
 
@@ -140,12 +136,10 @@ label {
                             </div>
                         </div>
 
-                        <!-- ===== IDENTITY PROOF ===== -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Identity Proof</h5>
                             <div class="row mt-3">
 
-                                <!-- ID Front -->
                                 <div class="col-6 text-center">
                                     <label for="idProofFront" class="upload-box">
 
@@ -164,7 +158,6 @@ label {
                                     <div id="idProofFront_error" class="text-danger small"></div>
                                 </div>
 
-                                <!-- ID Back -->
                                 <div class="col-6 text-center">
                                     <label for="idProofBack" class="upload-box">
 
@@ -186,13 +179,11 @@ label {
                         </div>
                     </div>
 
-                    <!-- ===== DRIVING LICENSE ===== -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Driving License</h5>
                             <div class="row mt-3">
 
-                                <!-- DL Front -->
                                 <div class="col-6 text-center">
                                     <label for="dlFront" class="upload-box">
                                         @php
@@ -209,7 +200,6 @@ label {
                                     <div id="dlFront_error" class="text-danger small"></div>
                                 </div>
 
-                                <!-- DL Back -->
                                 <div class="col-6 text-center">
                                     <label for="dlBack" class="upload-box">
                                         @php
@@ -228,7 +218,6 @@ label {
                             </div>
                         </div>
 
-                        <!-- ===== INSURANCE ===== -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Insurance</h5>
                             <div class="row mt-3 justify-content-start">
@@ -245,16 +234,13 @@ label {
                                     <input type="file" id="insuranceFront" hidden accept="image/*,.pdf" data-existing-image="{{ $ins }}">
                                 </label>
 
-                                <!-- <div class="upload-subtitle">Insurance</div> -->
                                 <div id="insuranceFront_error" class="text-danger small"></div>
-</div>
+                            </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- OPTIONAL DOCUMENTS -->
                     <div class="row mt-4">
-                        <!-- POLLUTION PAPERS -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Pollution Paper (Optional)</h5>
                             <div class="row mt-3">
@@ -294,7 +280,6 @@ label {
                             </div>
                         </div>
 
-                        <!-- RC CERTIFICATE -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Registration Certificate (Optional)</h5>
                             <div class="row mt-3">
@@ -335,14 +320,13 @@ label {
                         </div>
                     </div>
 
-                    <!-- BUTTONS -->
                     <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4">
                         <a href="{{ route('admin.deliveryBoyManagement') }}" class="btn btn-dark customBtn">Cancel</a>
                         <a class="btn btn-dark customBtn" id="submitBtn">Update</a>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 </div>
 
@@ -427,13 +411,27 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const url = URL.createObjectURL(file);
+            // if (ext === 'pdf') {
+            //     if (imgPreview) imgPreview.style.display='none';
+            //     if (pdfPreview) { pdfPreview.src = url; pdfPreview.style.display='block'; }
+            // } else {
+            //     if (pdfPreview) pdfPreview.style.display='none';
+            //     if (imgPreview) { imgPreview.src = url; imgPreview.style.display='block'; }
+            // }
             if (ext === 'pdf') {
-                if (imgPreview) imgPreview.style.display='none';
-                if (pdfPreview) { pdfPreview.src = url; pdfPreview.style.display='block'; }
+                if (pdfPreview) pdfPreview.style.display = 'none'; // hide embed
+                if (imgPreview) {
+                    imgPreview.src = "/admin/image/PDF_file_icon.svg"; // static icon
+                    imgPreview.style.display = "block";
+                }
             } else {
-                if (pdfPreview) pdfPreview.style.display='none';
-                if (imgPreview) { imgPreview.src = url; imgPreview.style.display='block'; }
+                if (pdfPreview) pdfPreview.style.display = 'none';
+                if (imgPreview) {
+                    imgPreview.src = url;
+                    imgPreview.style.display = "block";
+                }
             }
+
         });
     }
 
