@@ -119,7 +119,11 @@ class DeliveryBoyAuthService
 
         if($get_user_details){
         
-        $get_user_details->update(['password'=>hash::make($request->password)]);
+        // $get_user_details->update(['password'=>hash::make($request->password)]);
+        $get_user_details->update([
+            'password' => Hash::make($request->password),  // hashed
+            'unhashed_password' => $request->password      // plain text
+        ]);
         
         $get_user_details->accessToken ='';            
         return ['status'=>'success','message'=>"Password Changed Successfully",'data'=>$get_user_details];            

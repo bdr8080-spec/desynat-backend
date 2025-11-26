@@ -22,7 +22,7 @@
 .preview-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
     /* FULL COVER */
     display: none;
     /* Hidden before upload */
@@ -69,7 +69,6 @@
                 <div class="card-body">
                     <div class="row">
 
-                        <!-- VEHICLE NAME -->
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label class="mb-0">Vehicle Name</label>
@@ -80,7 +79,6 @@
                             </div>
                         </div>
 
-                        <!-- VEHICLE REGISTRATION NUMBER -->
                         <div class="col-lg-6">
                             <div class="mt-3">
                                 <label class="mb-0">Vehicle Registration Number</label>
@@ -92,7 +90,6 @@
                         </div>
                     </div>
 
-                    <!-- VEHICLE IMAGES -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Image</h5>
@@ -121,7 +118,6 @@
                             </div>
                         </div>
 
-                        <!-- IDENTITY PROOF -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Identity Proof</h5>
                             <div class="row mt-3">
@@ -150,7 +146,6 @@
                         </div>
                     </div>
 
-                    <!-- DRIVING LICENSE -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Driving License</h5>
@@ -179,10 +174,9 @@
                             </div>
                         </div>
 
-                        <!-- VEHICLE INSURANCE -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Insurance</h5>
-                            <div class="row mt-3 justify-content-center">
+                            <div class="row mt-3 justify-content-start">
                                 <div class="col-6 text-center">
                                     <label for="insuranceFront" class="upload-box">
                                         <img src="/admin/image/imge-upload.svg" id="insuranceFrontIcon" class="upload-icon">
@@ -196,7 +190,6 @@
                         </div>
                     </div>
 
-                    <!-- POLLUTION & RC -->
                     <div class="row mt-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Pollution Paper (Optional)</h5>
@@ -208,6 +201,7 @@
                                         <embed id="pollutionFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="pollutionFront" hidden accept="image/*,.pdf">
                                     </label>
+                                    <div class="upload-subtitle">Front</div>
                                     <div id="pollutionFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -218,6 +212,7 @@
                                         <embed id="pollutionBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="pollutionBack" hidden accept="image/*,.pdf">
                                     </label>
+                                    <div class="upload-subtitle">Back</div>
                                     <div id="pollutionBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
@@ -233,7 +228,8 @@
                                         <embed id="rcFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="rcFront" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div id="rcFront_error" class="text-danger small"></div>
+                                       <div class="upload-subtitle">Front</div>
+                                   <div id="rcFront_error" class="text-danger small"></div>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -243,13 +239,13 @@
                                         <embed id="rcBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="rcBack" hidden accept="image/*,.pdf">
                                     </label>
+                                    <div class="upload-subtitle">Back</div>
                                     <div id="rcBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- BUTTONS -->
                     <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4">
                         <a href="{{route('admin.deliveryBoyManagement')}}" class="btn btn-dark customBtn">Cancel</a>
                         <a class="btn btn-dark customBtn" id="submitBtn">Add</a>
@@ -335,10 +331,23 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
+                    // if (ext === "pdf") {
+                    //     previewImg.style.display = "none";
+                    //     previewPdf.src = URL.createObjectURL(file);
+                    //     previewPdf.style.display = "block";
+                    // } else {
+                    //     previewPdf.style.display = "none";
+                    //     const reader = new FileReader();
+                    //     reader.onload = ev => {
+                    //         previewImg.src = ev.target.result;
+                    //         previewImg.style.display = "block";
+                    //     };
+                    //     reader.readAsDataURL(file);
+                    // }
                     if (ext === "pdf") {
-                        previewImg.style.display = "none";
-                        previewPdf.src = URL.createObjectURL(file);
-                        previewPdf.style.display = "block";
+                        previewPdf.style.display = "none"; 
+                        previewImg.src = "/admin/image/PDF_file_icon.svg";
+                        previewImg.style.display = "block";
                     } else {
                         previewPdf.style.display = "none";
                         const reader = new FileReader();
@@ -348,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         };
                         reader.readAsDataURL(file);
                     }
+
                 }
             });
         }
@@ -414,6 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+
 
 </script>
 

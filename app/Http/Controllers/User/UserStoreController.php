@@ -22,9 +22,9 @@ class UserStoreController extends Controller
     }
 
 
-    public function category_wise_store(Request $request,$id){
-    
-    
+    public function category_wise_store(Request $request,$id=null){
+
+
        $request_data=(object)[
         'category_id'=>$id,
         'search'=>$request->search,
@@ -112,7 +112,7 @@ class UserStoreController extends Controller
         
         $request_data=(object)[
             'product_id'=>$id,
-            'user_id'=> $request->user()->id
+            'user_id'=> $request->user()->id ?? null
                    ];
         $result = $this->UserManagementService->singleproductView($request_data);
     

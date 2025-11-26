@@ -22,7 +22,7 @@
 .preview-image {
     width: 100%;
     height: 100%;
-    object-fit: contain !important;
+    object-fit: fill !important;
     /* FULL COVER */
     display: none;
     /* Hidden before upload */
@@ -73,7 +73,6 @@ label {
             <div class="card p-3 mt-4">
                 <div class="card-body">
 
-                    <!-- VEHICLE NAME & REGISTRATION -->
                     <div class="row">
                         <div class="col-lg-6 mt-3">
                             <label class="mb-0">Vehicle Name</label>
@@ -94,13 +93,12 @@ label {
                         </div>
                     </div>
 
-                    <!-- ===== VEHICLE IMAGE ===== -->
                     <div class="row mt-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Image</h5>
                             <div class="row mt-3">
 
-                                <!-- Vehicle Front -->
+                                <!-- VEHICLE FRONT -->
                                 <div class="col-6 text-center">
                                     <label for="vehicleImgFront" class="upload-box">
 
@@ -109,17 +107,30 @@ label {
                                             $extF = strtolower(pathinfo($front, PATHINFO_EXTENSION));
                                         @endphp
 
-                                        <img id="vehicleImgFrontPreview" class="preview-image" style="display:{{ $front && $extF !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $front ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="vehicleImgFrontPdfPreview" class="preview-pdf" style="display:{{ $front && $extF === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $front }}">
+                                        <img id="vehicleImgFrontPreview" class="preview-image"
+                                            src="
+                                                @if(!$front)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($extF === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $front }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
 
-                                        <input type="file" id="vehicleImgFront" hidden accept="image/*,.pdf" data-existing-image="{{ $front }}">
+                                        <embed id="vehicleImgFrontPdfPreview" class="preview-pdf"
+                                            style="display:none;" type="application/pdf">
+
+                                        <input type="file" id="vehicleImgFront" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $front }}">
                                     </label>
 
                                     <div class="upload-subtitle">Front</div>
                                     <div id="vehicleImgFront_error" class="text-danger small"></div>
                                 </div>
 
-                                <!-- Vehicle Back -->
+                                <!-- VEHICLE BACK -->
                                 <div class="col-6 text-center">
                                     <label for="vehicleImgBack" class="upload-box">
 
@@ -128,24 +139,38 @@ label {
                                             $extB = strtolower(pathinfo($back, PATHINFO_EXTENSION));
                                         @endphp
 
-                                        <img id="vehicleImgBackPreview" class="preview-image" style="display:{{ $back && $extB !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $back ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="vehicleImgBackPdfPreview" class="preview-pdf" style="display:{{ $back && $extB === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $back }}">
+                                        <img id="vehicleImgBackPreview" class="preview-image"
+                                            src="
+                                                @if(!$back)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($extB === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $back }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
 
-                                        <input type="file" id="vehicleImgBack" hidden accept="image/*,.pdf" data-existing-image="{{ $back }}">
+                                        <embed id="vehicleImgBackPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="vehicleImgBack" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $back }}">
                                     </label>
 
                                     <div class="upload-subtitle">Back</div>
                                     <div id="vehicleImgBack_error" class="text-danger small"></div>
                                 </div>
+
                             </div>
                         </div>
 
-                        <!-- ===== IDENTITY PROOF ===== -->
-                        <div class="col-lg-6">
+                        <!-- IDENTITY PROOF -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Identity Proof</h5>
                             <div class="row mt-3">
 
-                                <!-- ID Front -->
+                                <!-- ID PROOF FRONT -->
                                 <div class="col-6 text-center">
                                     <label for="idProofFront" class="upload-box">
 
@@ -154,17 +179,30 @@ label {
                                             $ext = strtolower(pathinfo($idF, PATHINFO_EXTENSION));
                                         @endphp
 
-                                        <img id="idProofFrontPreview" class="preview-image" style="display:{{ $idF && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $idF ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="idProofFrontPdfPreview" class="preview-pdf" style="display:{{ $idF && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $idF }}">
+                                        <img id="idProofFrontPreview" class="preview-image"
+                                            src="
+                                                @if(!$idF)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $idF }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
 
-                                        <input type="file" id="idProofFront" hidden accept="image/*,.pdf" data-existing-image="{{ $idF }}">
+                                        <embed id="idProofFrontPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="idProofFront" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $idF }}">
                                     </label>
 
                                     <div class="upload-subtitle">Front</div>
                                     <div id="idProofFront_error" class="text-danger small"></div>
                                 </div>
 
-                                <!-- ID Back -->
+                                <!-- ID PROOF BACK -->
                                 <div class="col-6 text-center">
                                     <label for="idProofBack" class="upload-box">
 
@@ -173,26 +211,40 @@ label {
                                             $ext = strtolower(pathinfo($idB, PATHINFO_EXTENSION));
                                         @endphp
 
-                                        <img id="idProofBackPreview" class="preview-image" style="display:{{ $idB && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $idB ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="idProofBackPdfPreview" class="preview-pdf" style="display:{{ $idB && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $idB }}">
+                                        <img id="idProofBackPreview" class="preview-image"
+                                            src="
+                                                @if(!$idB)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $idB }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
 
-                                        <input type="file" id="idProofBack" hidden accept="image/*,.pdf" data-existing-image="{{ $idB }}">
+                                        <embed id="idProofBackPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="idProofBack" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $idB }}">
                                     </label>
 
                                     <div class="upload-subtitle">Back</div>
                                     <div id="idProofBack_error" class="text-danger small"></div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <!-- ===== DRIVING LICENSE ===== -->
+                    <!-- DRIVING LICENSE -->
                     <div class="row mt-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Driving License</h5>
                             <div class="row mt-3">
 
-                                <!-- DL Front -->
+                                <!-- DL FRONT -->
                                 <div class="col-6 text-center">
                                     <label for="dlFront" class="upload-box">
                                         @php
@@ -200,16 +252,30 @@ label {
                                             $ext = strtolower(pathinfo($dlF, PATHINFO_EXTENSION));
                                         @endphp
 
-                                        <img id="dlFrontPreview" class="preview-image" style="display:{{ $dlF && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $dlF ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="dlFrontPdfPreview" class="preview-pdf" style="display:{{ $dlF && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $dlF }}">
+                                        <img id="dlFrontPreview" class="preview-image"
+                                            src="
+                                                @if(!$dlF)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $dlF }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
 
-                                        <input type="file" id="dlFront" hidden accept="image/*,.pdf" data-existing-image="{{ $dlF }}">
+                                        <embed id="dlFrontPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" hidden id="dlFront" accept="image/*,.pdf"
+                                            data-existing-image="{{ $dlF }}">
                                     </label>
+
                                     <div class="upload-subtitle">Front</div>
                                     <div id="dlFront_error" class="text-danger small"></div>
                                 </div>
 
-                                <!-- DL Back -->
+                                <!-- DL BACK -->
                                 <div class="col-6 text-center">
                                     <label for="dlBack" class="upload-box">
                                         @php
@@ -217,45 +283,77 @@ label {
                                             $ext = strtolower(pathinfo($dlB, PATHINFO_EXTENSION));
                                         @endphp
 
-                                        <img id="dlBackPreview" class="preview-image" style="display:{{ $dlB && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $dlB ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="dlBackPdfPreview" class="preview-pdf" style="display:{{ $dlB && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $dlB }}">
+                                        <img id="dlBackPreview" class="preview-image"
+                                            src="
+                                                @if(!$dlB)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $dlB }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
 
-                                        <input type="file" id="dlBack" hidden accept="image/*,.pdf" data-existing-image="{{ $dlB }}">
+                                        <embed id="dlBackPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" hidden id="dlBack" accept="image/*,.pdf"
+                                            data-existing-image="{{ $dlB }}">
                                     </label>
+
                                     <div class="upload-subtitle">Back</div>
                                     <div id="dlBack_error" class="text-danger small"></div>
                                 </div>
+
                             </div>
                         </div>
 
-                        <!-- ===== INSURANCE ===== -->
-                        <div class="col-lg-6">
+                        <!-- VEHICLE INSURANCE -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Insurance</h5>
-                            <div class="mt-3">
+                            <div class="row mt-3 justify-content-start">
                                 @php
                                     $ins = $deliveryBoy->vehicle_insurance[0]->document_path ?? '';
                                     $ext = strtolower(pathinfo($ins, PATHINFO_EXTENSION));
                                 @endphp
 
-                                <label for="insuranceFront" class="upload-box text-center">
-                                    <img id="insuranceFrontPreview" class="preview-image" style="display:{{ $ins && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $ins ?: '/admin/image/imge-upload.svg' }}">
-                                    <embed id="insuranceFrontPdfPreview" class="preview-pdf" style="display:{{ $ins && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $ins }}">
+                                <div class="col-6 text-center">
 
-                                    <input type="file" id="insuranceFront" hidden accept="image/*,.pdf" data-existing-image="{{ $ins }}">
-                                </label>
+                                    <label for="insuranceFront" class="upload-box text-center">
 
-                                <div class="upload-subtitle">Insurance</div>
-                                <div id="insuranceFront_error" class="text-danger small"></div>
+                                        <img id="insuranceFrontPreview" class="preview-image"
+                                            src="
+                                                @if(!$ins)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $ins }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
+
+                                        <embed id="insuranceFrontPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="insuranceFront" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $ins }}">
+                                    </label>
+
+                                    <div id="insuranceFront_error" class="text-danger small"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- OPTIONAL DOCUMENTS -->
+                    <!-- POLLUTION SECTION -->
                     <div class="row mt-4">
-                        <!-- POLLUTION PAPERS -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Pollution Paper (Optional)</h5>
                             <div class="row mt-3">
+
+                                <!-- POLLUTION FRONT -->
                                 <div class="col-6 text-center">
                                     @php
                                         $pf = $deliveryBoy->pollution_paper[0]->document_path ?? '';
@@ -263,16 +361,31 @@ label {
                                     @endphp
 
                                     <label for="pollutionFront" class="upload-box">
-                                        <img id="pollutionFrontPreview" class="preview-image" style="display:{{ $pf && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $pf ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="pollutionFrontPdfPreview" class="preview-pdf" style="display:{{ $pf && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $pf }}">
 
-                                        <input type="file" id="pollutionFront" hidden accept="image/*,.pdf" data-existing-image="{{ $pf }}">
+                                        <img id="pollutionFrontPreview" class="preview-image"
+                                            src="
+                                                @if(!$pf)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $pf }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
+
+                                        <embed id="pollutionFrontPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="pollutionFront" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $pf }}">
                                     </label>
 
                                     <div class="upload-subtitle">Front</div>
                                     <div id="pollutionFront_error" class="text-danger small"></div>
                                 </div>
 
+                                <!-- POLLUTION BACK -->
                                 <div class="col-6 text-center">
                                     @php
                                         $pb = $deliveryBoy->pollution_paper[1]->document_path ?? '';
@@ -280,22 +393,39 @@ label {
                                     @endphp
 
                                     <label for="pollutionBack" class="upload-box">
-                                        <img id="pollutionBackPreview" class="preview-image" style="display:{{ $pb && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $pb ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="pollutionBackPdfPreview" class="preview-pdf" style="display:{{ $pb && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $pb }}">
 
-                                        <input type="file" id="pollutionBack" hidden accept="image/*,.pdf" data-existing-image="{{ $pb }}">
+                                        <img id="pollutionBackPreview" class="preview-image"
+                                            src="
+                                                @if(!$pb)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $pb }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
+
+                                        <embed id="pollutionBackPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="pollutionBack" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $pb }}">
                                     </label>
 
                                     <div class="upload-subtitle">Back</div>
                                     <div id="pollutionBack_error" class="text-danger small"></div>
                                 </div>
+
                             </div>
                         </div>
 
-                        <!-- RC CERTIFICATE -->
-                        <div class="col-lg-6">
+                        <!-- RC SECTION -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Registration Certificate (Optional)</h5>
                             <div class="row mt-3">
+
+                                <!-- RC FRONT -->
                                 <div class="col-6 text-center">
                                     @php
                                         $rcF = $deliveryBoy->registration_certificate[0]->document_path ?? '';
@@ -303,16 +433,31 @@ label {
                                     @endphp
 
                                     <label for="rcFront" class="upload-box">
-                                        <img id="rcFrontPreview" class="preview-image" style="display:{{ $rcF && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $rcF ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="rcFrontPdfPreview" class="preview-pdf" style="display:{{ $rcF && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $rcF }}">
 
-                                        <input type="file" id="rcFront" hidden accept="image/*,.pdf" data-existing-image="{{ $rcF }}">
+                                        <img id="rcFrontPreview" class="preview-image"
+                                            src="
+                                                @if(!$rcF)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $rcF }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
+
+                                        <embed id="rcFrontPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="rcFront" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $rcF }}">
                                     </label>
 
                                     <div class="upload-subtitle">Front</div>
                                     <div id="rcFront_error" class="text-danger small"></div>
                                 </div>
 
+                                <!-- RC BACK -->
                                 <div class="col-6 text-center">
                                     @php
                                         $rcB = $deliveryBoy->registration_certificate[1]->document_path ?? '';
@@ -320,27 +465,43 @@ label {
                                     @endphp
 
                                     <label for="rcBack" class="upload-box">
-                                        <img id="rcBackPreview" class="preview-image" style="display:{{ $rcB && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $rcB ?: '/admin/image/imge-upload.svg' }}">
-                                        <embed id="rcBackPdfPreview" class="preview-pdf" style="display:{{ $rcB && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $rcB }}">
 
-                                        <input type="file" id="rcBack" hidden accept="image/*,.pdf" data-existing-image="{{ $rcB }}">
+                                        <img id="rcBackPreview" class="preview-image"
+                                            src="
+                                                @if(!$rcB)
+                                                    /admin/image/imge-upload.svg
+                                                @elseif($ext === 'pdf')
+                                                    /admin/image/PDF_file_icon.svg
+                                                @else
+                                                    {{ $rcB }}
+                                                @endif
+                                            "
+                                            style="display:block; pointer-events:none;">
+
+                                        <embed id="rcBackPdfPreview" class="preview-pdf"
+                                            style="display:none;">
+
+                                        <input type="file" id="rcBack" hidden accept="image/*,.pdf"
+                                            data-existing-image="{{ $rcB }}">
                                     </label>
 
                                     <div class="upload-subtitle">Back</div>
                                     <div id="rcBack_error" class="text-danger small"></div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
 
-                    <!-- BUTTONS -->
                     <div class="col-lg-6 d-flex justify-content-center m-auto mb-3 gap-4 mt-4">
                         <a href="{{ route('admin.deliveryBoyManagement') }}" class="btn btn-dark customBtn">Cancel</a>
                         <a class="btn btn-dark customBtn" id="submitBtn">Update</a>
                     </div>
+
                 </div>
             </div>
         </div>
+
 
 </div>
 
@@ -425,13 +586,27 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const url = URL.createObjectURL(file);
+            // if (ext === 'pdf') {
+            //     if (imgPreview) imgPreview.style.display='none';
+            //     if (pdfPreview) { pdfPreview.src = url; pdfPreview.style.display='block'; }
+            // } else {
+            //     if (pdfPreview) pdfPreview.style.display='none';
+            //     if (imgPreview) { imgPreview.src = url; imgPreview.style.display='block'; }
+            // }
             if (ext === 'pdf') {
-                if (imgPreview) imgPreview.style.display='none';
-                if (pdfPreview) { pdfPreview.src = url; pdfPreview.style.display='block'; }
+                if (pdfPreview) pdfPreview.style.display = 'none'; // hide embed
+                if (imgPreview) {
+                    imgPreview.src = "/admin/image/PDF_file_icon.svg"; // static icon
+                    imgPreview.style.display = "block";
+                }
             } else {
-                if (pdfPreview) pdfPreview.style.display='none';
-                if (imgPreview) { imgPreview.src = url; imgPreview.style.display='block'; }
+                if (pdfPreview) pdfPreview.style.display = 'none';
+                if (imgPreview) {
+                    imgPreview.src = url;
+                    imgPreview.style.display = "block";
+                }
             }
+
         });
     }
 
