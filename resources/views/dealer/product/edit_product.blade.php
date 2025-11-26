@@ -308,7 +308,7 @@
                             <div class="label-flex">
                                 <label>Bust </label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10"
                                 name="bust[]" value="{{$item->bust}}">
                             <p class="text-danger" id="error-bust_{{$product_Variation_count}}"></p>
 
@@ -320,7 +320,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.12"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12"
                                 name="waist[]" value="{{$item->waist}}">
 
                             <p class="text-danger" id="error-waist_{{$product_Variation_count}}"></p>
@@ -332,7 +332,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.14"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
                                 name="hip[]"  value="{{$item->hip}}">
                             <p class="text-danger" id="error-hip_{{$product_Variation_count}}"></p>
 
@@ -344,7 +344,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.16"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
                                 name="shoulder[]"  value="{{$item->shoulder}}">
                             <p class="text-danger" id="error-shoulder_{{$product_Variation_count}}"></p>
 
@@ -356,7 +356,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.18"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
                                 name="sleeve_length[]"  value="{{$item->sleeve_length}}">
                             <p class="text-danger" id="error-sleeve_length_{{$product_Variation_count}}"></p>
 
@@ -368,7 +368,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20"
                                 name="length[]"  value="{{$item->length}}">
 
                             <p class="text-danger" id="error-length_{{$product_Variation_count}}"></p>
@@ -380,7 +380,7 @@
                             <div class="label-flex">
                                 <label>Total Stocks</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.13208"
                                 name="total_stock[]"  value="{{$item->total_stock}}">
 
                             <p class="text-danger" id="error-total_stock_{{$product_Variation_count}}"></p>
@@ -392,7 +392,7 @@
                             <div class="label-flex">
                                 <label>SKU Limit </label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="20019"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="20019"
                                 name="sku[]"  value="{{$item->sku}}">
 
                             <p class="text-danger" id="error-sku_{{$product_Variation_count}}"></p>
@@ -986,7 +986,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.10" name="bust[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
 
                             </div>
@@ -997,7 +997,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.12" name="waist[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
 
                    </div>
@@ -1008,7 +1008,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.14" name="hip[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
 
                             </div>
@@ -1019,7 +1019,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.16" name="shoulder[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
 
                             </div>
@@ -1030,7 +1030,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.18" name="sleeve_length[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
 
                             </div>
@@ -1041,7 +1041,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.20" name="length[]" >
+                            <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}"></p>
 
                             </div>
@@ -1455,7 +1455,7 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
 });
 
 
-// Check Brand and other Field
+// Check Brand inside other field and other Field
 
     function checkBrand() {
         const select = document.getElementById('brand_id');
@@ -1481,7 +1481,12 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
 
 
 
+
+
 </script>
+
+{{-- // common j s --}}
+@include('dealer.product.ajax.product_commonjs'); 
 
 
 @include('dealer.layout.custom_code');

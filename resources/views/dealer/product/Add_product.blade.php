@@ -1409,5 +1409,8 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
 
 </script>
 
+{{-- // common j s --}}
+@include('dealer.product.ajax.product_commonjs'); 
+
 
 @include('dealer.layout.custom_code');
