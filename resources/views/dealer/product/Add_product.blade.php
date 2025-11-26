@@ -1,5 +1,8 @@
 @include('dealer.layout.header')
+<style>
 
+    
+</style>
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
@@ -14,19 +17,18 @@
         <div class="pt-3">
             <div class="title24">Select Category</div>
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                <div class="col-lg-6">
+                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 pe-3 justify-content-between">
 
                         @foreach ($category as $key => $item)
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="category_id" value="{{ $item->id }}"
-                                        onclick="catgoryFunction({{ $item->id }})"
-                                        @if ($key == 0) checked @endif>
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">{{ $item->name }}</span>
-                                </label>
-                            </div>
+                        <div class="check_radio">
+                            <label class="radio-group">
+                                <input type="radio" name="category_id" value="{{ $item->id }}"
+                                    onclick="catgoryFunction({{ $item->id }})" @if ($key==0) checked @endif>
+                                <span class="custom-radio"></span>
+                                <span class="radio-label">{{ $item->name }}</span>
+                            </label>
+                        </div>
                         @endforeach
 
                     </div>
@@ -53,7 +55,8 @@
                         <label>Other</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control" placeholder="Enter Brand name" name="other_en">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                        class="form-control" placeholder="Enter Brand name" name="other_en">
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
                 <div class="sub-form">
@@ -61,7 +64,8 @@
                         <label>Product Name</label>
                         <span>In English</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  class="form-control" placeholder="Enter Product name" name="product_name_en">
+                    <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                        class="form-control" placeholder="Enter Product name" name="product_name_en">
                     <p class="text-danger" id="error-product_name_en"></p>
                 </div>
                 <div class="sub-form">
@@ -69,7 +73,8 @@
                         <label>Description</label>
                         <span>In English</span>
                     </div>
-                    <textarea rows="4" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  placeholder="Write Here" class="form-control" name="description_en"></textarea>
+                    <textarea rows="4" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                        placeholder="Write Here" class="form-control" name="description_en"></textarea>
 
                     <p class="text-danger" id="error-description_en"></p>
                 </div>
@@ -85,7 +90,7 @@
                         <option value="">Select Brand</option>
 
                         @foreach ($brand as $item)
-                            <option value="{{ $item->id }}">{{ $item->name_english }}</option>
+                        <option value="{{ $item->id }}">{{ $item->name_english }}</option>
                         @endforeach
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
@@ -95,7 +100,9 @@
                         <label>Other</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Brand name" name="other_ar">
+                    <input type="text"
+                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                        class="form-control" placeholder="Enter Brand name" name="other_ar">
 
                     <p class="text-danger" id="error-other_ar"></p>
                 </div>
@@ -104,7 +111,9 @@
                         <label>Product Name</label>
                         <span>In Arabic</span>
                     </div>
-                    <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Product name" name="product_name_ar">
+                    <input type="text"
+                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                        class="form-control" placeholder="Enter Product name" name="product_name_ar">
 
                     <p class="text-danger" id="error-product_name_ar"></p>
                 </div>
@@ -113,7 +122,9 @@
                         <label>Description</label>
                         <span>In Arabic</span>
                     </div>
-                    <textarea rows="4" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" placeholder="Write Here" class="form-control" name="description_ar"></textarea>
+                    <textarea rows="4"
+                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                        placeholder="Write Here" class="form-control" name="description_ar"></textarea>
                     <p class="text-danger" id="error-description_ar"></p>
 
                 </div>
@@ -135,8 +146,9 @@
                                 <label>Name</label>
                                 <span>In English</span>
                             </div>
-                            <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product name"
-                                value="" name="product_spe_en[]">
+                            <input type="text"
+                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                class="form-control" placeholder="Enter product name" value="" name="product_spe_en[]">
 
                             <p id="error-product_spe_en_0" class="text-danger"></p>
 
@@ -152,8 +164,10 @@
                                     <label>Name</label>
                                     <span>In Arabic</span>
                                 </div>
-                                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product name"
-                                    name="product_spe_ar[]" value="">
+                                <input type="text"
+                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                    class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
+                                    value="">
                                 <p class="text-danger" id="error-product_spe_ar_0"></p>
 
                             </div>
@@ -169,8 +183,10 @@
                                 <label>Feature</label>
                                 <span>In English</span>
                             </div>
-                            <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product feature"
-                                name="product_spe_feature_en[]" value="">
+                            <input type="text"
+                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]"
+                                value="">
                             <p class="text-danger" id="error-product_spe_feature_en_0"></p>
 
                         </div>
@@ -184,7 +200,9 @@
                                     <label>Feature</label>
                                     <span>In Arabic</span>
                                 </div>
-                                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter product feature"
+                                <input type="text"
+                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                    class="form-control" placeholder="Enter product feature"
                                     name="product_spe_feature_ar[]" value="">
                                 <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
 
@@ -227,7 +245,7 @@
                                 name="color_id[]">
                                 <option value="">Select Colour</option>
                                 @foreach ($color as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                             <p class="text-danger" id="error-color_id_0"></p>
@@ -245,7 +263,7 @@
                                 name="size_id[]">
                                 <option value="">Select Size</option>
                                 @foreach ($size as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
                             <p class="text-danger" id="error-size_id_0"></p>
@@ -259,8 +277,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
-                                name="bust[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="bust[]">
                             <p class="text-danger" id="error-bust_0"></p>
 
                         </div>
@@ -271,8 +288,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
-                                name="waist[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="waist[]">
 
                             <p class="text-danger" id="error-waist_0"></p>
                         </div>
@@ -283,8 +299,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
-                                name="hip[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="hip[]">
                             <p class="text-danger" id="error-hip_0"></p>
 
                         </div>
@@ -319,8 +334,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
-                                name="length[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="length[]">
 
                             <p class="text-danger" id="error-length_0"></p>
                         </div>
@@ -343,8 +357,7 @@
                             <div class="label-flex">
                                 <label>SKU Limit</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="20019"
-                                name="sku[]">
+                            <input type="text" class="form-control notapplyspace" placeholder="20019" name="sku[]">
 
                             <p class="text-danger" id="error-sku_0"></p>
                         </div>
@@ -386,14 +399,15 @@
                             class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[0]"  id="discount_type_percentage_0" checked value="1" >
+                                    <input type="radio" name="discount_type[0]" id="discount_type_percentage_0" checked
+                                        value="1">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[0]"  id="discount_type_fixed_0" value="2">
+                                    <input type="radio" name="discount_type[0]" id="discount_type_fixed_0" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -500,8 +514,7 @@
                                 <div class="label-flex">
                                     <label>If Yes,Total days for returning</label>
                                 </div>
-                                <input type="number" class="form-control" placeholder="Eg.KD 299.00"
-                                    name="return_days">
+                                <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="return_days">
                                 <p class="text-danger" id="error-return_days"></p>
 
                             </div>
@@ -706,71 +719,71 @@
 @include('dealer.layout.footer');
 
 <script>
-    // When The Page Load Then auto select Category
-    $(document).ready(function() {
-        var checked_category = $("input[name='category_id']:checked").val();
-        if (checked_category) {
-            catgoryFunction(checked_category);
-        }
-    });
+// When The Page Load Then auto select Category
+$(document).ready(function() {
+    var checked_category = $("input[name='category_id']:checked").val();
+    if (checked_category) {
+        catgoryFunction(checked_category);
+    }
+});
 
 
-    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
-
-
-
-
-
-    });
+$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
 
 
 
 
-    // When User select Image vartion Then Show dynamic Image Preview
-    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
-        let rel = $(this).attr('rel');
-        let files = e.target.files;
-        // $('#previewContainer').empty(); // clear old previews
-        [...files].forEach(f => {
-            let url = URL.createObjectURL(f);
-            let imgBox = $(`
+
+});
+
+
+
+
+// When User select Image vartion Then Show dynamic Image Preview
+$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+    let rel = $(this).attr('rel');
+    let files = e.target.files;
+    // $('#previewContainer').empty(); // clear old previews
+    [...files].forEach(f => {
+        let url = URL.createObjectURL(f);
+        let imgBox = $(`
       <div class="multiple-img position-relative">
         <img src="${url}" class="w-100 rounded">
         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
       </div>
     `);
-            imgBox.find('.remove-ic').click(() => imgBox.remove());
-            $('#previewContainer' + rel).append(imgBox);
-        });
+        imgBox.find('.remove-ic').click(() => imgBox.remove());
+        $('#previewContainer' + rel).append(imgBox);
     });
+});
 
 
-    // Upload Chart Image in footer side
-    $('#edit_uploadChart').on('change', e => {
-        let files = e.target.files;
-        $('#edit_uploadChart_preview').empty(); // clear old previews
-        [...files].forEach(f => {
-            let url = URL.createObjectURL(f);
-            let imgBox = $(`
+// Upload Chart Image in footer side
+$('#edit_uploadChart').on('change', e => {
+    let files = e.target.files;
+    $('#edit_uploadChart_preview').empty(); // clear old previews
+    [...files].forEach(f => {
+        let url = URL.createObjectURL(f);
+        let imgBox = $(`
       <div class="multiple-img position-relative">
         <img src="${url}" class="w-100 rounded">
         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
       </div>
     `);
-            imgBox.find('.remove-ic').click(() => imgBox.remove());
-            $('#edit_uploadChart_preview').append(imgBox);
-        });
+        imgBox.find('.remove-ic').click(() => imgBox.remove());
+        $('#edit_uploadChart_preview').append(imgBox);
     });
+});
 </script>
 
 <script>
-    // ADD NEW ROW In specification
+// ADD NEW ROW In specification
 
-    var specification_count = 1;
+var specification_count = 1;
 
-    $("#addmore").click(function() {
+$("#addmore").click(function() {
 
-        $(".append-panel").append(`
+    $(".append-panel").append(`
 
        <div class="specifications-row">
         <div class="row">
@@ -834,24 +847,24 @@
         </div>
         </div>
        `)
-        specification_count++;
+    specification_count++;
 
-    });
+});
 
-    // REMOVE ROW
-    $(document).on("click", ".remove-btn", function() {
-        $(this).closest(".specifications-row").remove();
-    });
+// REMOVE ROW
+$(document).on("click", ".remove-btn", function() {
+    $(this).closest(".specifications-row").remove();
+});
 </script>
 
 <script>
-    // ADD NEW ROWs In product Variation Section
+// ADD NEW ROWs In product Variation Section
 
-    var product_Variation_count = 1;
+var product_Variation_count = 1;
 
-    // ADD NEW Variant
-    $(".addVariantBtn").click(function() {
-        $(".variant-panel").append(`
+// ADD NEW Variant
+$(".addVariantBtn").click(function() {
+    $(".variant-panel").append(`
         <div class="variant-panel-bg">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
@@ -1076,274 +1089,278 @@
         </div>
 
        `)
-        var checked_category = $("input[name='category_id']:checked").val();
-        if (checked_category) {
-            remove_Not_in_women_Category(checked_category);
-        }
-
-        product_Variation_count++; // Update Product Quantity
-
-    });
-
-    // REMOVE ROW
-    $(document).on("click", ".removerow", function() {
-        $(this).closest(".variant-panel-bg").remove();
-    });
-
-    // When User select Again Category Then remove Error Message 
-    function remove_Not_in_women_Category(val) {
-        $('.text-danger').empty();
-        if (val != '2') {
-            $('.remove_Not_in_women_Category').hide();
-        } else {
-            $('.remove_Not_in_women_Category').show();
-        }
-
+    var checked_category = $("input[name='category_id']:checked").val();
+    if (checked_category) {
+        remove_Not_in_women_Category(checked_category);
     }
 
-    //Category Wise Show sub-category data
-    function catgoryFunction(val) {
+    product_Variation_count++; // Update Product Quantity
 
-        remove_Not_in_women_Category(val); // remove extra field in Product
+});
 
-        $.ajax({
-            url: "{{ url('api/seller/sub-category?category_id=') }}" + val,
-            type: "get",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                id: val
-            },
-            dataType: "json",
-            beforeSend: function() {
-                $('#loader').show()
-            },
-            success: function(data) {
+// REMOVE ROW
+$(document).on("click", ".removerow", function() {
+    $(this).closest(".variant-panel-bg").remove();
+});
 
-                if (data.status == "success") {
+// When User select Again Category Then remove Error Message 
+function remove_Not_in_women_Category(val) {
+    $('.text-danger').empty();
+    if (val != '2') {
+        $('.remove_Not_in_women_Category').hide();
+    } else {
+        $('.remove_Not_in_women_Category').show();
+    }
 
-                    var subcatgory_record = data.data;
+}
 
-                    var htmlcontent = ' <option value="">Select Sub Category</option>';
+//Category Wise Show sub-category data
+function catgoryFunction(val) {
 
-                    subcatgory_record.forEach(function(item, val) {
-                        htmlcontent +=
-                            `<option value="${item.id}">${item.name_english} </option>`;
-                    })
+    remove_Not_in_women_Category(val); // remove extra field in Product
 
-                    $('#getSubcategry').empty();
-                    $('#getSubcategry').append(htmlcontent);
+    $.ajax({
+        url: "{{ url('api/seller/sub-category?category_id=') }}" + val,
+        type: "get",
+        data: {
+            "_token": "{{ csrf_token() }}",
+            id: val
+        },
+        dataType: "json",
+        beforeSend: function() {
+            $('#loader').show()
+        },
+        success: function(data) {
 
+            if (data.status == "success") {
+
+                var subcatgory_record = data.data;
+
+                var htmlcontent = ' <option value="">Select Sub Category</option>';
+
+                subcatgory_record.forEach(function(item, val) {
+                    htmlcontent +=
+                        `<option value="${item.id}">${item.name_english} </option>`;
+                })
+
+                $('#getSubcategry').empty();
+                $('#getSubcategry').append(htmlcontent);
+
+
+            } else {
+                toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+            }
+
+            // setInterval(() => {
+            //     window.location.reload();
+            // }, 1000);
+
+
+        },
+        error: function() {
+            alert("Fail")
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+    })
+}
+
+// When user Submit From submit code Apply
+
+$(document).on('submit', 'form#addproduct', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $("#file-error").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                toastr.success(response.message);
+
+                $('.submit').attr('disabled', true);
+                window.setTimeout(function() {
+                    window.location = "{{ route('seller.products') }}";
+                }, 2000);
+            }
+        },
+        error: function(xhr) {
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+
+                    // Example → #error-product_spe_en_0
+                    $("#error-" + fieldName + "_" + index).html(messages[0]);
 
                 } else {
-                    toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
-                }
 
-                // setInterval(() => {
-                //     window.location.reload();
-                // }, 1000);
-
-
-            },
-            error: function() {
-                alert("Fail")
-            },
-            complete: function() {
-                // Hide loader (after success or error)
-                $('#loader').hide();
-            }
-
-        })
-    }
-
-    // When user Submit From submit code Apply
-
-    $(document).on('submit', 'form#addproduct', function(event) {
-        event.preventDefault();
-        $('p.error_container').html("");
-        $("#file-error").html("");
-
-        var form = $(this);
-        var data = new FormData($(this)[0]);
-        var url = form.attr("action");
-        var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
-
-        $('.submit').attr('disabled', true);
-        // $('.form-control').attr('readonly', true).addClass('disabled-link');
-        $('.error-control').addClass('disabled-link');
-
-        if ($('.submit').html() !== loadingText) {
-            $('.submit').html(loadingText);
-        }
-
-        $.ajax({
-            type: form.attr('method'),
-            url: url,
-            data: data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-                // Show loader
-                $('#loader').show();
-            },
-            success: function(response) {
-                console.log(response);
-
-                window.setTimeout(function() {
-                    $('.customBtn, .form-control').attr('disabled', false).removeClass(
-                        'disabled-link');
-                    $('.submit').html('Upload');
-                }, 2000);
-
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-
-                    $('.submit').attr('disabled', true);
-                    window.setTimeout(function() {
-                        window.location = "{{ route('seller.products') }}";
-                    }, 2000);
-                }
-            },
-            error: function(xhr) {
-                $('.text-danger').empty(); // Clear previous errors
-
-                let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
-
-                $.each(errors, function(field, messages) {
-
-                    // 1️⃣ Handle array fields with index → product_spe_en.0
-                    if (field.includes(".")) {
-
-                        let parts = field.split(".");
-                        let fieldName = parts[0];
-                        let index = parts[1];
-
-                        // Example → #error-product_spe_en_0
-                        $("#error-" + fieldName + "_" + index).html(messages[0]);
-
-                    } else {
-
-                        // 2️⃣ File special case
-                        if (field === "file") {
-                            $("#file-error").html(messages[0]);
-                        }
-
-                        // 3️⃣ Handle whole array errors (custom rule)
-                        $("#error-" + field).html(messages[0]);
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
                     }
-                });
-            },
-            complete: function() {
-                // Hide loader (after success or error)
-                $('#loader').hide();
-            }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
 
 
 
 
-        });
-
-        return false;
     });
 
-
-
-    $(document).on('change', 'input[name="product_return"]', function() {
-        let value = $(this).val();
-
-        if (value == "1") {
-            // YES → show return days
-            $('input[name="return_days"]').closest('.row').show();
-        } else {
-            // NO → hide return days & clear value
-            $('input[name="return_days"]').val('').closest('.row').hide();
-        }
-    });
-
-
-    $(document).on('change', 'input[name="product_exchangable"]', function() {
-        let value = $(this).val();
-
-        if (value == "1") {
-            // YES → show return days
-            $('input[name="exchangable_days"]').closest('.row').show();
-        } else {
-            // NO → hide return days & clear value
-            $('input[name="exchangable_days"]').val('').closest('.row').hide();
-        }
-    });
-
-
-    // dynamic Price show after discount 
- // dynamic Price show after discount 
-    // Listen for input changes
-$(document).on("input change", 
-    "input[id^='actual_price_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
-    function () {
-
-    let id = $(this).attr("id");
-    let index = id.split("_").pop();
-
-    let actualPrice = parseFloat($("#actual_price_" + index).val());
-    let discountInput = $("#discount_value_" + index);
-    let discountValue = parseFloat(discountInput.val());
-    let discountType = $(`input[name='discount_type[${index}]']:checked`).val();
-
-    // -----------------------------------------
-    // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
-    // -----------------------------------------
-    if (discountType == "1") {  
-        if (discountValue > 100) {
-            discountInput.val(100);
-            discountValue = 100;
-        }
-        if (discountValue < 0) {
-            discountInput.val(0);
-            discountValue = 0;
-        }
-    } else if (discountType == "2") {
-        // Fixed price → cannot exceed actual price
-        if (discountValue > actualPrice) {
-            discountInput.val(actualPrice);
-            discountValue = actualPrice;
-        }
-        if (discountValue < 0) {
-            discountInput.val(0);
-            discountValue = 0;
-        }
-    }
-    // Type=2 (Fixed price) → No restriction
-    // -----------------------------------------
-
-    if (!actualPrice || !discountValue) {
-        $("#final_price_" + index).val("");
-        return;
-    }
-
-    let finalPrice = 0;
-
-    // Percentage
-    if (discountType == "1") {
-        finalPrice = actualPrice - (actualPrice * (discountValue / 100));
-    }
-
-    // Fixed price
-    if (discountType == "2") {
-        finalPrice = actualPrice - discountValue;
-    }
-
-    if (finalPrice < 0) finalPrice = 0;
-
-    $("#final_price_" + index).val(finalPrice.toFixed(2));
+    return false;
 });
+
+
+
+$(document).on('change', 'input[name="product_return"]', function() {
+    let value = $(this).val();
+
+    if (value == "1") {
+        // YES → show return days
+        $('input[name="return_days"]').closest('.row').show();
+        $('input[name="return_days"]').val('').closest('.row').removeClass('none_main');
+
+    } else {
+        // NO → hide return days & clear value
+        $('input[name="return_days"]').val('').closest('.row').addClass('none_main');
+    }
+});
+
+
+$(document).on('change', 'input[name="product_exchangable"]', function() {
+    let value = $(this).val();
+
+    if (value == "1") {
+        // YES → show return days
+        $('input[name="exchangable_days"]').closest('.row').show();
+        $('input[name="exchangable_days"]').val('').closest('.row').removeClass('none_main');
+
+    } else {
+        // NO → hide return days & clear value
+        $('input[name="exchangable_days"]').val('').closest('.row').addClass('none_main');
+    }
+});
+
+
+// dynamic Price show after discount 
+// dynamic Price show after discount 
+// Listen for input changes
+$(document).on("input change",
+    "input[id^='actual_price_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
+    function() {
+
+        let id = $(this).attr("id");
+        let index = id.split("_").pop();
+
+        let actualPrice = parseFloat($("#actual_price_" + index).val());
+        let discountInput = $("#discount_value_" + index);
+        let discountValue = parseFloat(discountInput.val());
+        let discountType = $(`input[name='discount_type[${index}]']:checked`).val();
+
+        // -----------------------------------------
+        // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
+        // -----------------------------------------
+        if (discountType == "1") {
+            if (discountValue > 100) {
+                discountInput.val(100);
+                discountValue = 100;
+            }
+            if (discountValue < 0) {
+                discountInput.val(0);
+                discountValue = 0;
+            }
+        } else if (discountType == "2") {
+            // Fixed price → cannot exceed actual price
+            if (discountValue > actualPrice) {
+                discountInput.val(actualPrice);
+                discountValue = actualPrice;
+            }
+            if (discountValue < 0) {
+                discountInput.val(0);
+                discountValue = 0;
+            }
+        }
+        // Type=2 (Fixed price) → No restriction
+        // -----------------------------------------
+
+        if (!actualPrice || !discountValue) {
+            $("#final_price_" + index).val("");
+            return;
+        }
+
+        let finalPrice = 0;
+
+        // Percentage
+        if (discountType == "1") {
+            finalPrice = actualPrice - (actualPrice * (discountValue / 100));
+        }
+
+        // Fixed price
+        if (discountType == "2") {
+            finalPrice = actualPrice - discountValue;
+        }
+
+        if (finalPrice < 0) finalPrice = 0;
+
+        $("#final_price_" + index).val(finalPrice.toFixed(2));
+    });
 
 // Min value and Max greater then Input Field
 
-$(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_quantity_']", function () {
+$(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_quantity_']", function() {
 
     // Get dynamic index from id
-    let id = $(this).attr("id");                  // example: min_card_quantity_3
-    let index = id.split("_").pop();              // "3"
+    let id = $(this).attr("id"); // example: min_card_quantity_3
+    let index = id.split("_").pop(); // "3"
 
     // Get values using dynamic IDs
     let minQty = parseInt($("#min_card_quantity_" + index).val()) || 0;
@@ -1373,7 +1390,6 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
         }
     }
 });
-
 </script>
 
 

@@ -71,15 +71,19 @@
 
      
     .size-btn {
-        padding: 8px 15px;
+        width: 32px;
+        height: 32px;
+        padding:2px;
         background: #f5f5f5;
-        border: 1px solid #ccc;
+        border: 1px solid #DFBF8F;
         border-radius: 6px;
         cursor: pointer;
     }
     .size-btn.active {
-        background: #000;
-        color: #fff;
+        background: #fff;
+        color: #000;
+        border: 1px solid #DFBF8F;
+
     }
 
     .color-box {
@@ -92,15 +96,17 @@
 }
 
 .color-box.active {
-    border: 3px solid #000;
+    border: 1px solid #DFBF8F;
     box-shadow: 0 0 0 3px #fff inset;
 }
-
+p, span{
+    font-size:14px;
+}
 
 
 </style>
 
-<section class="section dashboard container">
+<section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between">
         <div class="title24"> <a href="{{route('seller.products')}}" style="color:rgb(57, 55, 55)"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
        </a> </div>
@@ -112,21 +118,21 @@
     </div>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <div class="row my-4">
+    <div class="row my-3">
 
     <div id="images_show-box" class="col-lg-6 col-xxl-6"></div>
 
     <div class="col-lg-6 col-xxl-6">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
                 <a href="{{ route('seller.edit-product',$product->id) }}">
-                    <img src="{{ asset('dealer/assets/img/edit2.png') }}" class=""></a>
+                    <img src="{{ asset('dealer/assets/img/edit2.png') }}" height="33px" width="33px"></a>
         
                 <a href="#" class="text-brown fw-semibold text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteProduct">
-        <img src="{{ asset('dealer/assets/img/delete2.png') }}" class="">
+        <img src="{{ asset('dealer/assets/img/delete2.png') }}" height="35px" width="35px">
                 </a>
 
             </div>
-            <h4 class="fw-semibold">{{ $product->brand->name_english }}</h4>
+            <h6 class="fw-semibold">{{ $product->brand->name_english }}</h6>
             <p class="text-muted mb-1">{{ $product->product_name_en }} ({{ $product->category->name }}) </p>
            
             <div class="d-flex align-items-center mb-2">
@@ -138,11 +144,11 @@
 
      <p class="text-success small">inclusive of all taxes</p>
 
-        <hr>
+        <hr class="mt-0">
 
 <h6 class="fw-semibold mb-2">More Color</h6>
            
-<div class="d-flex gap-2 mb-4">
+<div class="d-flex gap-2 mb-2">
     @php $count=1;
     $countSize=1;
      $i = 0;
@@ -168,7 +174,7 @@
 
 <div id="size-list"></div>
 
-<div id="variation-box"></div>
+<div id="variation-box" class="ps-0 desc-box rounded-4 my-3"></div>
 
     </div>
 
@@ -176,13 +182,13 @@
     <div class="row">
         <div class="col-lg-6 col-xxl-6">
 
-            <div class="container my-4">
+            <div class="my-3">
                 <div class="desc-box p-4 rounded-4">
-                    <h5 class="fw-semibold">Description</h5>
+                    <h6 class="fw-semibold">Description</h6>
                     <p class="mt-3 text-muted">
                         {{ $product->description_en }}
                     </p>
-                    <h5 class="fw-semibold mt-4">Specification</h5>
+                    <h6 class="fw-semibold mt-4">Specification</h6>
                     <ul class="mt-3 spec-list">
 
                     @foreach ($product->product_specifications as $item)
@@ -194,7 +200,7 @@
                         </ul>
                 </div>
             </div>
-            <div class="p-4 rounded-4 shadow-sm" style="background:#fff;">
+            <div class="p-4 rounded-4 shadow-sm desc-box">
                 <div class="row mb-2">
                     <div class="col-6">Return allowed ?
                     </div>
@@ -237,8 +243,8 @@
             </div>
         </div>
         <div class="col-lg-6 col-xxl-6">
-            <div class="container my-4">
-                <div class="review-box p-4 rounded-4">
+            <div class="container my-3">
+                <div class="review-box p-4 rounded-4 desc-box">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center gap-3">
                             <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -261,7 +267,7 @@
                     </div>
                 </div>
 
-                <div class="review-box p-4 rounded-4">
+                <div class="review-box p-4 rounded-4 desc-box my-3">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center gap-3">
                             <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
@@ -416,6 +422,8 @@ function loadPriceAndImages(size, color, product_id) {
         },
         success: function (response) {  
             $("#images_show-box").html(response);
+                        $("#images_show-box").html(response);
+
         }
     });
 

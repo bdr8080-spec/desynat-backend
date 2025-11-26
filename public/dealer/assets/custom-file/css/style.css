@@ -1260,6 +1260,12 @@ label {
   font-size: 19px;
 }
 
+.none_main{
+  visibility: hidden;
+  display: none !important;
+  margin: 0;
+}
+
 
 @media (min-width:992px) and (max-width:1140px) {
   .planheight {

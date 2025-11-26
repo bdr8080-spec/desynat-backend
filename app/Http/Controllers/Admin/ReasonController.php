@@ -73,10 +73,11 @@ class ReasonController extends Controller
         try {
 
             $reason = $this->ReasonService->createReason($request);
+            $message = $reason['message'];
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Reason added successfully',
+                'message' => $message,
                 'data' => $reason
             ]);
 
@@ -101,10 +102,11 @@ class ReasonController extends Controller
 
         try {
             $updatedReason = $this->ReasonService->updateReason($request, $reasonId);
+            $message = $updatedReason['message'];
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Reason updated successfully',
+                'message' => $message,
                 'data' => $updatedReason
             ]);
 

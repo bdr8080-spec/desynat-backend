@@ -107,9 +107,23 @@ class ReasonService
                 'type' => $request->type,
             ]);
 
+            switch ($reason->type) {
+                case 1:
+                    $message = 'Exchange Reason Created Successfully';
+                    break;
+                case 2:
+                    $message = 'Return Reason Created Successfully';
+                    break;
+                case 3:
+                    $message = 'Cancel Reason Created Successfully';
+                    break;
+                default:
+                    $message = 'Reason Created Successfully';
+            }
+
             return [
                 'status' => 'success',
-                'message' => 'Reason created successfully',
+                'message' => $message,
                 'data' => $reason
             ];
 
