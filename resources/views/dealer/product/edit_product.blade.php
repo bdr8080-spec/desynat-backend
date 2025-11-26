@@ -257,7 +257,7 @@
                     @endif
                             {{-- database image code end Here --}}
 
-                <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer{{$product_Variation_count}}"></div>
+                <div class="product-multiple d-flex flex-wrap gap-2" id="previewContainer{{$product_Variation_count}}"></div>
             </div>
 
             <div class="wapper-header mt-4">
@@ -743,9 +743,9 @@
 
             </div>
 
-             <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview">
+             <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
         @if(!empty($product_details->upload_size_chart))
-                <div class="position-relative" style="width:100px;height:100px;">
+                <div class="position-relative multiple-img"  >
                     <img src="{{ $product_details->upload_size_chart }}" 
                          style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
                     <span class="remove-ic remove-image" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>

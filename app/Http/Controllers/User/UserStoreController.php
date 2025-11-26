@@ -112,7 +112,7 @@ class UserStoreController extends Controller
         
         $request_data=(object)[
             'product_id'=>$id,
-            'user_id'=> $request->user()->id
+            'user_id'=> $request->user()->id ?? null
                    ];
         $result = $this->UserManagementService->singleproductView($request_data);
     

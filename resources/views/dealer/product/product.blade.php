@@ -110,7 +110,10 @@
                                                     @endphp
                                                 @endif
                                                 <img src="{{ $img }}" class="img-fluid" alt="image"
-                                                    class="pro-image" style="width:150px; height:auto;">
+                                                    class="pro-image" style="    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;">
                                             @endforeach
 
                                         </td>
@@ -227,7 +230,7 @@
                                                     @endphp
                                                 @endif
                                                 <img src="{{ $img }}" class="img-fluid" alt="image"
-                                                    class="pro-image" style="width:150px; height:auto;">
+                                                    class="pro-image" >
                                             @endforeach
 
                                         </td>
