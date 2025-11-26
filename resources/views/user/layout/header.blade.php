@@ -49,7 +49,7 @@ use App\Models\UserCurrentLocation;
                                         <img src="{{asset('user/assets/images/chat.svg')}}" class=img-fluid />
                                     </span>
                                 </a>    
-                                <a href="{{url('/wishlist')}}">
+                                <a href="{{route('user.wishList')}}">
                                     <span >
                                         <img src="{{asset('user/assets/images/like_dislike.svg')}}" class=img-fluid />
                                     </span>
