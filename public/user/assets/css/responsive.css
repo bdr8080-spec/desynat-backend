@@ -175,9 +175,6 @@
     a.mobileSignup i{
             font-size: 16px;
     }
-    .mobileLang .customBtn1 img{
-        width: 15px !important;
-    }
     .mobileResponsive .navbar-toggler:focus{
         box-shadow: none;
     }
@@ -192,7 +189,10 @@
         height: 2px;
         background-color: #F5F5F5;
     }
-
+    .user_nav_inner_profile a span{
+        width: 10px;
+        display: block;
+    }
     .header_nav_button_dropdown::-webkit-scrollbar-thumb
     {
         background-color: #000000;

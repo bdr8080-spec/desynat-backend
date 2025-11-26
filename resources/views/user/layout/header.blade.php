@@ -348,7 +348,7 @@ use App\Models\UserCurrentLocation;
                         </div>
                         <div class="dropdown-center mobileLang">
                             <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 3px 8px !important;">
-                                <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
+                                <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" style="width: 15px !important;" /> EN
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end langu">
                                 <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>

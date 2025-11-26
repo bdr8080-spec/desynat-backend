@@ -17,8 +17,8 @@
         <div class="pt-3">
             <div class="title24">Select Category</div>
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                <div class="col-lg-6">
+                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 pe-3 justify-content-between">
 
                         @foreach ($category as $key => $item)
                         <div class="check_radio">
@@ -1282,9 +1282,11 @@ $(document).on('change', 'input[name="product_exchangable"]', function() {
     if (value == "1") {
         // YES → show return days
         $('input[name="exchangable_days"]').closest('.row').show();
+        $('input[name="exchangable_days"]').val('').closest('.row').removeClass('none_main');
+
     } else {
         // NO → hide return days & clear value
-        $('input[name="exchangable_days"]').val('').closest('.row').hide();
+        $('input[name="exchangable_days"]').val('').closest('.row').addClass('none_main');
     }
 });
 

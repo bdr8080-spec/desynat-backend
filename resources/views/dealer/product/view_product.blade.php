@@ -422,6 +422,8 @@ function loadPriceAndImages(size, color, product_id) {
         },
         success: function (response) {  
             $("#images_show-box").html(response);
+                        $("#images_show-box").html(response);
+
         }
     });
 
