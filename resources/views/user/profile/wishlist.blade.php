@@ -24,7 +24,7 @@
                                         <div class="product-card">
                                             <div class="product-img">
                                                 <img src="{{ $item->product_variants->first()->variant_image[0] ?? '' }}" width="120">
-                                                <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                                <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
                                             </div>
                                             <div class="product-content">
                                                 <h5>{{$item->product_name_en}} (by Abaya)</h5>
