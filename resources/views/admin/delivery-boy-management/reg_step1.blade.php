@@ -47,7 +47,7 @@ width: fit-content;
     color: #a8824f;
     font-weight: 500;
     position: absolute;
-    bottom: 239px;
+    bottom: 221px;
     right: 568px;
     cursor: pointer;
     font-size: 17px;
@@ -122,12 +122,12 @@ width: fit-content;
 
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 01</label>
+                                        <label class="mb-0">Address line 1</label>
                                     </div>
 
                                     <div class="position-relative mt-1">
                                         <input type="text" class="form-control" name="address_line1"
-                                            placeholder="Enter Address Line 01"
+                                            placeholder="Enter Address Line 1"
                                             value="{{ $step1Data['address_line1'] ?? '' }}" />
                                         <i class="bi bi-crosshair" data-bs-toggle="modal" data-bs-target="#sentModal5"
                                         style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor:pointer;"></i>
@@ -190,11 +190,11 @@ width: fit-content;
 
                                 <div class="mt-3">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <label class="mb-0">Address line 02</label>
+                                        <label class="mb-0">Address line 2</label>
                                     </div>
                                     <div class="position-relative mt-1">
                                         <input type="text" class="form-control" name="address_line2"
-                                            placeholder="Enter Address Line 02"
+                                            placeholder="Enter Address Line 2"
                                             value="{{ $step1Data['address_line2'] ?? '' }}" />
                                     </div>
                                     <span class="text-danger" id="address_line2_error"></span>

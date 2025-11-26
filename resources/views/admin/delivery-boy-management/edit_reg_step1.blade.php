@@ -47,7 +47,7 @@ width: fit-content;
     color: #a8824f;
     font-weight: 500;
     position: absolute;
-    bottom: 239px;
+    bottom: 221px;
     right: 568px;
     cursor: pointer;
     font-size: 17px;

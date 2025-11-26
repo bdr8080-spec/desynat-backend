@@ -69,13 +69,7 @@
 
     }
 
-       .color-box {
-        width: 40px;
-        height: 40px;
-        border-radius: 6px;
-        cursor: pointer;
-        border: 2px solid transparent;
-    }
+     
     .size-btn {
         padding: 8px 15px;
         background: #f5f5f5;
@@ -91,7 +85,7 @@
     .color-box {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     border: 2px solid transparent;
     cursor: pointer;
     position: relative;
@@ -108,8 +102,8 @@
 
 <section class="section dashboard container">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between">
-        <div class="title24"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
-        </div>
+        <div class="title24"> <a href="{{route('seller.products')}}" style="color:rgb(57, 55, 55)"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
+       </a> </div>
         <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" @if ($product->product_active_status==1) checked  @endif rel="{{ $product->id }}">
             <label class="form-check-label" for="switchCheckDefault" ></label>
@@ -126,22 +120,25 @@
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
                 <a href="{{ route('seller.edit-product',$product->id) }}">
                     <img src="{{ asset('dealer/assets/img/edit2.png') }}" class=""></a>
-                <img src="{{ asset('dealer/assets/img/delete2.png') }}" class="">
+        
+                <a href="#" class="text-brown fw-semibold text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteProduct">
+        <img src="{{ asset('dealer/assets/img/delete2.png') }}" class="">
+                </a>
 
             </div>
             <h4 class="fw-semibold">{{ $product->brand->name_english }}</h4>
-            <p class="text-muted mb-1">{{ $product->product_name_en }}</p>
-            <p class="text-muted">{{ $product->category->name }}</p>
-
+            <p class="text-muted mb-1">{{ $product->product_name_en }} ({{ $product->category->name }}) </p>
+           
             <div class="d-flex align-items-center mb-2">
                 <span class="text-warning fs-5">★★★★☆</span>
                 <span class="ms-2 text-muted">(1K)</span>
             </div>
-
             
-            <p class="text-success small">inclusive of all taxes</p>
+     <div id="price-box"></div>
 
-            <hr>
+     <p class="text-success small">inclusive of all taxes</p>
+
+        <hr>
 
 <h6 class="fw-semibold mb-2">More Color</h6>
            
@@ -165,12 +162,13 @@
 
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h6 class="fw-semibold">Available Size</h6>
-        <a href="#" class="text-brown fw-semibold text-decoration-none">Size Guide</a>
+        <a href="#" class="text-brown fw-semibold text-decoration-none" data-bs-toggle="modal" data-bs-target="#sizeGuideModal">Size Guide</a>
+
     </div>
 
 <div id="size-list"></div>
 
-<div id="price-box"></div>
+<div id="variation-box"></div>
 
     </div>
 
@@ -200,12 +198,12 @@
                 <div class="row mb-2">
                     <div class="col-6">Return allowed ?
                     </div>
-                    <div class="col-6 text-end">@if($product->return_days==1) Yes @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->product_return==1) {{$product->return_days}} days  @else No @endif </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Exchange allowed ?
                     </div>
-                    <div class="col-6 text-end">@if($product->product_exchangable==1) Yes @else No @endif </div>
+                    <div class="col-6 text-end">@if($product->product_exchangable==1) {{$product->exchangable_days}} days @else No @endif </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">Review & ratings allowed ?
@@ -294,6 +292,49 @@
     </div>
     </div>
 
+    <!-- Size Guide Modal -->
+<div class="modal fade" id="sizeGuideModal" tabindex="-1" aria-labelledby="sizeGuideModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sizeGuideModalLabel">Size Guide</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="position: relative">
+        <!-- Add your size guide content here -->
+        <p>Here you can show image of size guide:</p>
+    
+        <img src="{{$product->upload_size_chart}}" style="width:100%">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteProduct" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this item?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
     @include('dealer.layout.footer');
 
     <script>
@@ -377,6 +418,23 @@ function loadPriceAndImages(size, color, product_id) {
             $("#images_show-box").html(response);
         }
     });
+
+    // load variation
+
+     $.ajax({
+        url: "{{ route('get.product.variation') }}",
+        type: "GET",
+        data: {
+            product_id: product_id,
+            color: color,
+            size: size
+        },
+        success: function (response) {  
+            $("#variation-box").html(response);
+        }
+    });
+
+
 }
 
 
@@ -470,6 +528,52 @@ $(document).ready(function () {
             }
             })
         })
+
+
+        
+        
+// Handle confirm delete
+
+
+$('#confirmDeleteBtn').on('click', function() {
+
+     deleteId = $(this).data('id');
+    $.ajax({
+        url: '/seller/delete-product/' + deleteId, // update with your route
+        type: 'get', // or POST if you use method spoofing
+        data: {
+            _token: '{{ csrf_token() }}', // Laravel CSRF token
+        },
+        success: function(response) {
+            // hide modal
+            $('#deleteConfirmModal').modal('hide');
+
+             toastr.success(response.message);
+
+               window.setTimeout(function() {
+                        window.location = "{{ route('seller.products') }}";
+                    }, 2000);
+
+
+            // remove row from table or reload
+            // $('#row_' + deleteId).remove();
+
+            // optional: show success message
+            // alert('Item deleted successfully');
+
+        },
+        error: function(xhr) {
+            // console.log(xhr.responseJSON);
+
+            // alert('Something went wrong!');
+                toastr.error(xhr.responseJSON.message);
+                  $('#deleteConfirmModal').modal('hide');
+
+                   
+        }
+    });
+});
+
 
 
     </script>
