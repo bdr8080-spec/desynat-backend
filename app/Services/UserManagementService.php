@@ -574,7 +574,7 @@ public function product_view_cart_details($request)
             return [
                 'status'  => 'success',
                 'message' => 'Add To Cart Is Empty',
-                'data'    => []
+                'data'    => (object)[]
             ];
         }
 

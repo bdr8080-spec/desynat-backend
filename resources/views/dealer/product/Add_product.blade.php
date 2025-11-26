@@ -50,7 +50,7 @@
                     </select>
                     <p class="text-danger" id="error-subcategory_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form  other-field"   style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In English</span>
@@ -92,10 +92,11 @@
                         @foreach ($brand as $item)
                         <option value="{{ $item->id }}">{{ $item->name_english }}</option>
                         @endforeach
+
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form other-field"   style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In Arabic</span>
@@ -1380,6 +1381,20 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
         }
     }
 });
+
+
+    document.querySelector('.brand-select').addEventListener('change', function () {
+        const otherField = document.querySelector('.other-field');
+
+        if (this.value === 'other') {
+            otherField.style.display = 'block';
+        } else {
+            otherField.style.display = 'none';
+        }
+    });
+
+
+
 </script>
 
 
