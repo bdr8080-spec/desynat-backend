@@ -9,7 +9,7 @@
 
     <div class="saved-address-contenar">
         @forelse ($address as $item)
-             <div class="saved_address_content">
+        <div class="saved_address_content">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <span><i class="bi bi-building"></i> {{$item->save_address_as == 0 ? 'Home' : 'Office'}}</span>
@@ -24,7 +24,7 @@
             <p>{{$item->address}}</p>
         </div>
         @empty
-            <h3>No Data Found</h3>
+            <h3>No address added</h3>
         @endforelse
        
         <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address" >+ Add New Address</a>
