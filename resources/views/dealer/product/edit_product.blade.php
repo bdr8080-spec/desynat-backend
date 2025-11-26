@@ -540,14 +540,14 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" checked value='1'  @if($product_details->product_return== 1) selcted  @endif>
+                                        <input type="radio" name="product_return"  value='1'  @if($product_details->product_return== 1) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" value='0'  @if($product_details->product_return== 0) selcted  @endif>
+                                        <input type="radio" name="product_return" value='0'  @if($product_details->product_return== 0) checked  @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
