@@ -19,14 +19,15 @@
                         <div class="col-lg-12">
                             <div class="categoryDetail_content">
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3 col-12 my-3">
+                                    @forelse ($wishListProduct as $item)
+                                          <div class="col-lg-3 col-md-3 col-12 my-3">
                                         <div class="product-card">
                                             <div class="product-img">
-                                                <img src="{{asset('user')}}/assets/images/product.svg" alt="Product">
+                                                <img src="{{ $item->product_variants->first()->variant_image[0] ?? '' }}" width="120">
                                                 <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                                             </div>
                                             <div class="product-content">
-                                                <h5>3pcs Set (by Abaya)</h5>
+                                                <h5>{{$item->product_name_en}} (by Abaya)</h5>
                                                 <div class="rating">
                                                     <i class="fa-solid fa-star"></i>
                                                     <i class="fa-solid fa-star"></i>
@@ -42,7 +43,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-12 my-3">
+                                    @empty
+                                        <h3>No WishList Found</h3>
+                                    @endforelse
+                                  
+                                    {{-- <div class="col-lg-3 col-md-3 col-12 my-3">
                                         <div class="product-card">
                                             <div class="product-img">
                                                 <img src="{{asset('user')}}/assets/images/product.svg" alt="Product">
@@ -225,7 +230,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
