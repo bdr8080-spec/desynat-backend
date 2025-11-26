@@ -114,8 +114,8 @@ public function Add_product_code(Request $request){
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
           'brand_id' => 'required|exists:brands,id',
-          'other_en' => 'required',
-          'other_ar' => 'required',
+          'other_en' => 'nullable',
+          'other_ar' => 'nullable',
        
           'product_name_en' => 'required|unique:products,product_name_en',
           'product_name_ar' => 'required|unique:products,product_name_ar',
@@ -429,8 +429,8 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
-'other_en' => $request->other_en,
-'other_ar' => $request->other_ar,
+'other_en' => $request->other_en??null,
+'other_ar' => $request->other_ar??null,
 
 'product_name_en' => $request->product_name_en,
 'product_name_ar' => $request->product_name_ar,
@@ -542,8 +542,8 @@ public function edit_product_code(Request $request, $id){
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
           'brand_id' => 'required|exists:brands,id',
-          'other_en' => 'required',
-          'other_ar' => 'required',
+          'other_en' => 'nullable',
+          'other_ar' => 'nullable',
        
         'product_name_en' => 'required|unique:products,product_name_en,' . $id,
         'product_name_ar' => 'required|unique:products,product_name_ar,' . $id,
@@ -921,8 +921,8 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
-'other_en' => $request->other_en,
-'other_ar' => $request->other_ar,
+'other_en' => $request->other_en??null,
+'other_ar' => $request->other_ar??null,
 
 'product_name_en' => $request->product_name_en,
 'product_name_ar' => $request->product_name_ar,

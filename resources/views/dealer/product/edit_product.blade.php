@@ -63,7 +63,7 @@
                     </select>
                     <p class="text-danger" id="error-subcategory_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form" id="other-field0" style="display: none">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In English</span>
@@ -95,8 +95,7 @@
                     <div class="label-flex">
                         <label>Select Brand</label>
                     </div>
-                    <select class="form-select form-control" aria-label="Default select example" name="brand_id">
-
+                    <select class="form-select form-control" aria-label="Default select example" name="brand_id" id="brand_id">
                         <option value="">Select Brand</option>
 
                         @foreach ($brand as $item)
@@ -105,7 +104,7 @@
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form" id="other-field1" style="display: none">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In Arabic</span>
@@ -1454,6 +1453,31 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
         }
     }
 });
+
+
+// Check Brand and other Field
+
+    function checkBrand() {
+        const select = document.getElementById('brand_id');
+        const otherField = document.querySelector('#other-field0');
+        const otherField1 = document.querySelector('#other-field1');
+
+        const selectedText = select.options[select.selectedIndex].text.trim().toLowerCase();
+
+        if (selectedText === 'other') {
+            otherField.style.display = 'block';
+            otherField1.style.display = 'block';
+        } else {
+            otherField.style.display = 'none';
+            otherField1.style.display = 'none';
+        }
+    }
+
+    // Run on change
+    document.getElementById('brand_id').addEventListener('change', checkBrand);
+
+    // Run on page load
+    window.addEventListener('DOMContentLoaded', checkBrand);
 
 
 

@@ -50,7 +50,7 @@
                     </select>
                     <p class="text-danger" id="error-subcategory_id"></p>
                 </div>
-                <div class="sub-form  other-field"   style="display:none;">
+                <div class="sub-form"   id="other-field0"  style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In English</span>
@@ -59,6 +59,8 @@
                         class="form-control" placeholder="Enter Brand name" name="other_en">
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
+
+                
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Product Name</label>
@@ -85,7 +87,7 @@
                     <div class="label-flex">
                         <label>Select Brand</label>
                     </div>
-                    <select class="form-select form-control" aria-label="Default select example" name="brand_id">
+                    <select class="form-select form-control" aria-label="Default select example" id="brand_id" name="brand_id">
 
                         <option value="">Select Brand</option>
 
@@ -96,7 +98,7 @@
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
                 </div>
-                <div class="sub-form other-field"   style="display:none;">
+                <div class="sub-form " id="other-field1"   style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In Arabic</span>
@@ -1383,13 +1385,23 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
 });
 
 
-    document.querySelector('.brand-select').addEventListener('change', function () {
-        const otherField = document.querySelector('.other-field');
 
-        if (this.value === 'other') {
+    // document.querySelector('.brand-select').addEventListener('change', function () {
+      document.getElementById('brand_id').addEventListener('change', function () {
+        const otherField = document.querySelector('#other-field0');
+      const otherField1 = document.querySelector('#other-field1');
+
+        const selectedText = this.options[this.selectedIndex].text.trim().toLowerCase();
+
+        // console.log(selectedText);
+
+        if (selectedText  === 'other') {
             otherField.style.display = 'block';
+            otherField1.style.display = 'block';
+            
         } else {
             otherField.style.display = 'none';
+            otherField1.style.display = 'none';
         }
     });
 
