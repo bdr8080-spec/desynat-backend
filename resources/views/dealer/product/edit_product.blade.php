@@ -221,9 +221,9 @@
 
       
         <!----- variant panel ------>
-          @foreach ($product_details['product_variants'] as $item)
+          @foreach ($product_details['product_variants'] as $key=> $item)
          
-        <div class="variant-panel specifications-row">
+        <div class="variant-panel specifications-row variant-panel-bg">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
@@ -244,13 +244,13 @@
                 {{-- database image code --}}
 
                     @if(!empty($item->variant_image))
-                        @foreach($item->variant_image as $chart)
+                        @foreach($item->variant_image as $key0=> $chart)
                     <div class="multiple-img position-relative">
                     <img src="{{$chart}}" class="w-100 rounded">
                     <span class="remove-ic remove-image" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
                
                      <input type="text" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
-                            name="old_variant_image[{{$product_Variation_count}}][]" value="{{$chart}}" rel="{{$product_Variation_count}}">
+                            name="old_variant_image[{{$product_Variation_count}}][{{$key0}}]" value="{{$chart}}" rel="{{$product_Variation_count}}">
                  
                 </div>
                         @endforeach
@@ -288,7 +288,7 @@
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="size_id[]">
                                 @foreach ($size as $item1)
-                                    <option value="{{ $item1->id }}" @if($item->color_id== $item1->id ) selected  @endif >{{ $item1->name }}</option>
+                                    <option value="{{ $item1->id }}" @if($item->size_id== $item1->id ) selected  @endif >{{ $item1->name }}</option>
                                 @endforeach
                             </select>
                             <p class="text-danger" id="error-size_id_{{$product_Variation_count}}"></p>
@@ -302,7 +302,7 @@
                             <div class="label-flex">
                                 <label>Bust </label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="bust[]" value="{{$item->bust}}">
                             <p class="text-danger" id="error-bust_{{$product_Variation_count}}"></p>
 
@@ -314,7 +314,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="waist[]" value="{{$item->waist}}">
 
                             <p class="text-danger" id="error-waist_{{$product_Variation_count}}"></p>
@@ -326,7 +326,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="hip[]"  value="{{$item->hip}}">
                             <p class="text-danger" id="error-hip_{{$product_Variation_count}}"></p>
 
@@ -338,7 +338,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="shoulder[]"  value="{{$item->shoulder}}">
                             <p class="text-danger" id="error-shoulder_{{$product_Variation_count}}"></p>
 
@@ -350,7 +350,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="sleeve_length[]"  value="{{$item->sleeve_length}}">
                             <p class="text-danger" id="error-sleeve_length_{{$product_Variation_count}}"></p>
 
@@ -362,7 +362,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="length[]"  value="{{$item->length}}">
 
                             <p class="text-danger" id="error-length_{{$product_Variation_count}}"></p>
@@ -500,8 +500,10 @@
                             <label>Set Min.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="min_card_quantity" value="{{$product_details->min_card_quantity}}">
+                            name="min_card_quantity" value="{{$product_details->min_card_quantity}}" id="min_card_quantity_0">
                         <p class="text-danger" id="error-min_card_quantity"></p>
+                         <p class="text-danger" id="error-min_card_quantity_0"></p>
+
 
                     </div>
                 </div>
@@ -511,8 +513,10 @@
                             <label>Set Max.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="max_card_quantity" value="{{$product_details->max_card_quantity}}">
+                            name="max_card_quantity" value="{{$product_details->max_card_quantity}}" id="max_card_quantity_0">
                         <p class="text-danger" id="error-max_card_quantity"></p>
+                         <p class="text-danger" id="error-max_card_quantity_0"></p>
+
 
                     </div>
                 </div>
@@ -759,7 +763,7 @@
 
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
-                onclick="location.href='{{ route('seller.products') }}'">Cancel</button>
+                onclick="location.href='{{ route('seller.view_product',Request()->id) }}'">Cancel</button>
             <button type="submit" class="btn add-fillbtn w-100">Edit Product</button>
         </div>
     </form>
@@ -976,7 +980,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="bust[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="bust[]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
 
                             </div>
@@ -987,7 +991,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="waist[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="waist[]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
 
                    </div>
@@ -998,7 +1002,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="hip[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="hip[]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
 
                             </div>
@@ -1009,7 +1013,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="shoulder[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="shoulder[]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
 
                             </div>
@@ -1020,7 +1024,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="sleeve_length[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="sleeve_length[]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
 
                             </div>
@@ -1031,7 +1035,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="length[]" >
+                            <input type="number" class="form-control" placeholder="Eg.32" name="length[]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}"></p>
 
                             </div>
@@ -1251,10 +1255,10 @@
             cache: false,
             contentType: false,
             processData: false,
-            beforeSend: function() {
-                // Show loader
-                $('#loader').show();
-            },
+            // beforeSend: function() {
+            //     // Show loader
+            //     $('#loader').show();
+            // },
             success: function(response) {
                 console.log(response);
 
@@ -1302,10 +1306,10 @@
                     }
                 });
             },
-            complete: function() {
-                // Hide loader (after success or error)
-                $('#loader').hide();
-            }
+            // complete: function() {
+            //     // Hide loader (after success or error)
+            //     $('#loader').hide();
+            // }
 
 
 
@@ -1415,6 +1419,44 @@ $(document).on("input change",
     $("#final_price_" + index).val(finalPrice.toFixed(2));
 });
 
+
+
+// Min value and Max greater then Input Field
+
+$(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_quantity_']", function () {
+
+    // Get dynamic index from id
+    let id = $(this).attr("id");                  // example: min_card_quantity_3
+    let index = id.split("_").pop();              // "3"
+
+    // Get values using dynamic IDs
+    let minQty = parseInt($("#min_card_quantity_" + index).val()) || 0;
+    let maxQty = parseInt($("#max_card_quantity_" + index).val()) || 0;
+
+    // Clear previous errors
+    $("#error-min_card_quantity_" + index).text("");
+    $("#error-max_card_quantity_" + index).text("");
+
+    // Validate only if both have values
+    if (minQty > 0 && maxQty > 0) {
+
+        // ❌ Min cannot be greater than Max
+        if (minQty > maxQty) {
+            $("#error-min_card_quantity_" + index).text(
+                "Min quantity cannot be greater than max quantity"
+            );
+            $("#min_card_quantity_" + index).val(maxQty); // auto-fix
+        }
+
+        // ❌ Max cannot be less than Min
+        if (maxQty < minQty) {
+            $("#error-max_card_quantity_" + index).text(
+                "Max quantity cannot be less than min quantity"
+            );
+            $("#max_card_quantity_" + index).val(minQty); // auto-fix
+        }
+    }
+});
 
 
 

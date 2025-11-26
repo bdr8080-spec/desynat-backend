@@ -259,7 +259,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="bust[]">
                             <p class="text-danger" id="error-bust_0"></p>
 
@@ -271,7 +271,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="waist[]">
 
                             <p class="text-danger" id="error-waist_0"></p>
@@ -283,7 +283,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="hip[]">
                             <p class="text-danger" id="error-hip_0"></p>
 
@@ -295,7 +295,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="shoulder[]">
                             <p class="text-danger" id="error-shoulder_0"></p>
 
@@ -307,7 +307,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="sleeve_length[]">
                             <p class="text-danger" id="error-sleeve_length_0"></p>
 
@@ -319,7 +319,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="Eg.32D"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
                                 name="length[]">
 
                             <p class="text-danger" id="error-length_0"></p>
@@ -447,8 +447,9 @@
                             <label>Set Min.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="min_card_quantity">
+                            name="min_card_quantity" id="min_card_quantity_0">
                         <p class="text-danger" id="error-min_card_quantity"></p>
+                        <p class="text-danger" id="error-min_card_quantity_0"></p>
 
                     </div>
                 </div>
@@ -458,8 +459,9 @@
                             <label>Set Max.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="max_card_quantity">
+                            name="max_card_quantity" id="max_card_quantity_0">
                         <p class="text-danger" id="error-max_card_quantity"></p>
+                        <p class="text-danger" id="error-max_card_quantity_0"></p>
 
                     </div>
                 </div>
@@ -908,7 +910,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="bust[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="bust[]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
 
                             </div>
@@ -919,7 +921,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="waist[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="waist[]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
 
                    </div>
@@ -930,7 +932,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="hip[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="hip[]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
 
                             </div>
@@ -941,7 +943,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="shoulder[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="shoulder[]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
 
                             </div>
@@ -952,7 +954,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="sleeve_length[]">
+                            <input type="number" class="form-control" placeholder="Eg.32" name="sleeve_length[]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
 
                             </div>
@@ -963,7 +965,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="text" class="form-control" placeholder="Eg.32D" name="length[]" >
+                            <input type="number" class="form-control" placeholder="Eg.32" name="length[]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}"></p>
 
                             </div>
@@ -1335,7 +1337,42 @@ $(document).on("input change",
     $("#final_price_" + index).val(finalPrice.toFixed(2));
 });
 
+// Min value and Max greater then Input Field
 
+$(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_quantity_']", function () {
+
+    // Get dynamic index from id
+    let id = $(this).attr("id");                  // example: min_card_quantity_3
+    let index = id.split("_").pop();              // "3"
+
+    // Get values using dynamic IDs
+    let minQty = parseInt($("#min_card_quantity_" + index).val()) || 0;
+    let maxQty = parseInt($("#max_card_quantity_" + index).val()) || 0;
+
+    // Clear previous errors
+    $("#error-min_card_quantity_" + index).text("");
+    $("#error-max_card_quantity_" + index).text("");
+
+    // Validate only if both have values
+    if (minQty > 0 && maxQty > 0) {
+
+        // ❌ Min cannot be greater than Max
+        if (minQty > maxQty) {
+            $("#error-min_card_quantity_" + index).text(
+                "Min quantity cannot be greater than max quantity"
+            );
+            $("#min_card_quantity_" + index).val(maxQty); // auto-fix
+        }
+
+        // ❌ Max cannot be less than Min
+        if (maxQty < minQty) {
+            $("#error-max_card_quantity_" + index).text(
+                "Max quantity cannot be less than min quantity"
+            );
+            $("#max_card_quantity_" + index).val(minQty); // auto-fix
+        }
+    }
+});
 
 </script>
 
