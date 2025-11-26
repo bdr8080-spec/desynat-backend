@@ -441,7 +441,7 @@ use App\Models\UserCurrentLocation;
                                         <a class="nav-link active" aria-current="page" href="#">Gift Card</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Stores</a>
+                                        <a class="nav-link" href="{{route('user.category_wise_store')}}">Stores</a>
                                     </li>
                                     
                                 </ul>
