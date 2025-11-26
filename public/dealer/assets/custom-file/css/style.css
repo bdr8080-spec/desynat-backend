@@ -1262,6 +1262,8 @@ label {
 
 .none_main{
   visibility: hidden;
+  display: none !important;
+  margin: 0;
 }
 
 

@@ -103,7 +103,7 @@ $variation_array=[
 
 'total_stock' => $request->total_stock[$key],
 'sku' => $request->sku[$key],
-'sku_threshold_value' => $request->sku_threshold_value[$key],
+// 'sku_threshold_value' => $request->sku_threshold_value[$key],
 'actual_price' => $request->actual_price[$key],
 'discount_type' => $request->discount_type[$key],
 'discount_value' => $request->discount_value[$key],
@@ -236,7 +236,7 @@ $variation_array=[
 
 'total_stock' => $request->total_stock[$key],
 'sku' => $request->sku[$key],
-'sku_threshold_value' => $request->sku_threshold_value[$key],
+// 'sku_threshold_value' => $request->sku_threshold_value[$key],
 'actual_price' => $request->actual_price[$key],
 'discount_type' => $request->discount_type[$key],
 'discount_value' => $request->discount_value[$key],
@@ -397,7 +397,7 @@ public function edit_Product($request){
 
         'total_stock' => $request->total_stock[$key],
         'sku' => $request->sku[$key],
-        'sku_threshold_value' => $request->sku_threshold_value[$key],
+        // 'sku_threshold_value' => $request->sku_threshold_value[$key],
         'actual_price' => $request->actual_price[$key],
         'discount_type' => $request->discount_type[$key],
         'discount_value' => $request->discount_value[$key],
@@ -638,7 +638,7 @@ public function single_product_details_fetch($request){
         'length'=>$val->length,
         'total_stock'=>$val->total_stock,
         'sku'=>$val->sku,
-        'sku_threshold_value'=>$val->sku_threshold_value,
+        // 'sku_threshold_value'=>$val->sku_threshold_value,
 
       ];
 

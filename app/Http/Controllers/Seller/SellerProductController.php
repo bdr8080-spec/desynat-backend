@@ -146,7 +146,7 @@ public function Add_product_code(Request $request){
 
           'total_stock' => ['required', 'array'],
           'sku' => ['required', 'array'],
-          'sku_threshold_value' => ['required', 'array'],
+        //   'sku_threshold_value' => ['required', 'array'],
           'actual_price' => ['required', 'array'],
           'discount_type' => ['required', 'array'],
           'discount_value' => ['required', 'array'],
@@ -155,7 +155,7 @@ public function Add_product_code(Request $request){
           'variant_image.*' => ['required'],
          'total_stock.*' => ['required'],
           'sku.*' => ['required'],
-          'sku_threshold_value.*' => ['required'],
+        //   'sku_threshold_value.*' => ['required'],
           'actual_price.*' => ['required'],
           'discount_type.*' => ['required'],
           'discount_value.*' => ['required'],
@@ -338,8 +338,8 @@ public function Add_product_code(Request $request){
                 foreach ($sku as $index => $skuValue) {
                     $stockValue = $totalStock[$index] ?? null;
 
-                    if ($stockValue !== null && $skuValue <= $stockValue) {
-                        $validate->errors()->add("sku.$index", "SKU Limit should be greater than Total Stock");
+                    if ($stockValue !== null && $skuValue >= $stockValue) {
+                        $validate->errors()->add("sku.$index", "SKU Limit Not should be greater than Total Stock");
                     }
                 }
             }
@@ -459,7 +459,7 @@ $request_data=(object) [
       
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-'sku_threshold_value' => $request->sku_threshold_value,
+// 'sku_threshold_value' => $request->sku_threshold_value,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,
@@ -951,7 +951,7 @@ $request_data=(object) [
       
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-'sku_threshold_value' => $request->sku_threshold_value,
+// 'sku_threshold_value' => $request->sku_threshold_value,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,

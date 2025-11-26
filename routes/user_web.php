@@ -47,6 +47,8 @@ use App\Http\Controllers\User\AddressController;
    
    Route::get('product/detail-page/{id}', [UserStoreController::class, 'productDetails'])->name('user.product_details');
   
+   Route::get('wishlist',[UserStoreController::class, 'wishList'])->name('user.wishList');
+
    Route::get('view-address', [AddressController::class, 'viewAddress'])->name('user.view_address');
   
    Route::match(['get','post'],'save-address', [AddressController::class, 'saveAddress'])->name('user.save_address');
@@ -55,6 +57,7 @@ use App\Http\Controllers\User\AddressController;
    Route::get('edit-address/{id}', [AddressController::class, 'updateAddress'])->name('user.update_address');
 
    Route::get('delete-address/{id}', [AddressController::class, 'deleteAddress'])->name('user.delete_address');
+
 
 
    });
@@ -75,9 +78,9 @@ Route::match(['get', 'post'], '/add-new-address', function () {
 Route::match(['get', 'post'], '/saved-address', function () {
      return view('user.profile.saved-address');
 });
-Route::match(['get', 'post'], '/wishlist', function () {
-     return view('user.profile.wishlist');
-});
+// Route::match(['get', 'post'], '/wishlist', function () {
+//      return view('user.profile.wishlist');
+// });
 //  Route::match(['get', 'post'], '/route2', function () {
 //      return view('user.profile.changePassword');
 // });

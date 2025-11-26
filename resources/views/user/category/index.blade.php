@@ -402,57 +402,49 @@
                                 <div class="row">
 
                                     @foreach ($store_details['All_Product'] as $item)
-                                        <div class="col-lg-4 col-md-4 col-12 my-3">
-
-                                            <div class="product-card">
-                                                <div class="product-img">
-
-                                                    <a href="{{ route('user.product_details',[$item->id]) }}">
+                                        <div class="col-lg-4 col-md-4 col-6 my-3">
+                                            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                                                <div class="product-card">
+                                                    <div class="product-img">
                                                         @foreach ($item->product_variants[0]->variant_image as $key => $val)
                                                             @if ($key != 0)
                                                                 @php break  @endphp
                                                             @endif
                                                             <img src="{{ $val }}" alt="Product">
                                                         @endforeach
+                                                        <span class="wishlist-btn"><i id="wishlistProduct{{ $item->id }}"
+                                                                class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                                                onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                                                    </div>
+                                                    <div class="product-content">
+                                                            <h5>{{ $item->product_name_en }}</h5>
+                                                            <div class="rating">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                                <span>(1K)</span>
+                                                            </div>
+                                                            <div class="price">
+                                                                <strong>{{ $item->product_variants[0]->actual_price }}
+                                                                    KD</strong>
+                                                                <div class="d-block">
+                                                                    <span class="old-price">{{ $item->product_variants[0]->final_price }}
+                                                                        KD</span>
+                                                                    <span class="discount">
 
-                                                    </a>
+                                                                        {{ $item->product_variants[0]->discount_value }}
+                                                                        {{ $item->product_variants[0]->discount_type == '1' ? '%' : 'Off' }}
+
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        
 
 
-                                                    <span class="wishlist-btn"><i id="wishlistProduct{{ $item->id }}"
-                                                            class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
-                                                            onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                                                    </div>
                                                 </div>
-                                                <div class="product-content">
-
-                                                    <a href="{{ route('user.product_details',[$item->id]) }}">
-
-                                                        <h5>{{ $item->product_name_en }}</h5>
-                                                        <div class="rating">
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                                            <span>(1K)</span>
-                                                        </div>
-                                                        <div class="price">
-                                                            <strong>{{ $item->product_variants[0]->actual_price }}
-                                                                KD</strong>
-                                                            <span
-                                                                class="old-price">{{ $item->product_variants[0]->final_price }}
-                                                                KD</span>
-                                                            <span class="discount">
-
-                                                                {{ $item->product_variants[0]->discount_value }}
-                                                                {{ $item->product_variants[0]->discount_type == '1' ? '%' : 'Off' }}
-
-                                                            </span>
-                                                        </div>
-                                                    </a>
-
-
-                                                </div>
-                                            </div>
-
+                                            </a>
                                         </div>
                                     @endforeach
 

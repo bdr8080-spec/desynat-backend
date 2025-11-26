@@ -17,8 +17,8 @@
         <div class="pt-3">
             <div class="title24">Select Category</div>
             <div class="row">
-                <div class="col-lg-4">
-                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                <div class="col-lg-6">
+                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 pe-3 justify-content-between">
 
                         @foreach ($category as $key => $item)
                         <div class="check_radio">
@@ -50,7 +50,7 @@
                     </select>
                     <p class="text-danger" id="error-subcategory_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form  other-field"   style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In English</span>
@@ -92,10 +92,11 @@
                         @foreach ($brand as $item)
                         <option value="{{ $item->id }}">{{ $item->name_english }}</option>
                         @endforeach
+
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form other-field"   style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In Arabic</span>
@@ -363,7 +364,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-3">
+                    {{-- <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
@@ -374,7 +375,7 @@
 
                         </div>
 
-                    </div>
+                    </div> --}}
 
                     <div class="col-lg-3">
                         <div class="sub-form">
@@ -998,7 +999,7 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU</label>
+                                <label>SKU Limit </label>
                             </div>
                             <input type="text" class="form-control" placeholder="20019" name="sku[]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
@@ -1006,17 +1007,7 @@ $(".addVariantBtn").click(function() {
                             </div>
 
                     </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>SKU Threshold value</label>
-                            </div>
-                            <input type="number" class="form-control" placeholder="20019" name="sku_threshold_value[]">
-                          <p class="text-danger" id="error-sku_threshold_value_${product_Variation_count}"></p>
-
-                            </div>
-
-                    </div>
+                 
                   
                     <div class="col-lg-3">
                         <div class="sub-form">
@@ -1282,9 +1273,11 @@ $(document).on('change', 'input[name="product_exchangable"]', function() {
     if (value == "1") {
         // YES → show return days
         $('input[name="exchangable_days"]').closest('.row').show();
+        $('input[name="exchangable_days"]').val('').closest('.row').removeClass('none_main');
+
     } else {
         // NO → hide return days & clear value
-        $('input[name="exchangable_days"]').val('').closest('.row').hide();
+        $('input[name="exchangable_days"]').val('').closest('.row').addClass('none_main');
     }
 });
 
@@ -1388,6 +1381,20 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
         }
     }
 });
+
+
+    document.querySelector('.brand-select').addEventListener('change', function () {
+        const otherField = document.querySelector('.other-field');
+
+        if (this.value === 'other') {
+            otherField.style.display = 'block';
+        } else {
+            otherField.style.display = 'none';
+        }
+    });
+
+
+
 </script>
 
 
