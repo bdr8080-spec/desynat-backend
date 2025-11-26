@@ -447,8 +447,9 @@
                             <label>Set Min.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="min_card_quantity">
+                            name="min_card_quantity" id="min_card_quantity_0">
                         <p class="text-danger" id="error-min_card_quantity"></p>
+                        <p class="text-danger" id="error-min_card_quantity_0"></p>
 
                     </div>
                 </div>
@@ -458,8 +459,9 @@
                             <label>Set Max.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="max_card_quantity">
+                            name="max_card_quantity" id="max_card_quantity_0">
                         <p class="text-danger" id="error-max_card_quantity"></p>
+                        <p class="text-danger" id="error-max_card_quantity_0"></p>
 
                     </div>
                 </div>
@@ -1335,7 +1337,42 @@ $(document).on("input change",
     $("#final_price_" + index).val(finalPrice.toFixed(2));
 });
 
+// Min value and Max greater then Input Field
 
+$(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_quantity_']", function () {
+
+    // Get dynamic index from id
+    let id = $(this).attr("id");                  // example: min_card_quantity_3
+    let index = id.split("_").pop();              // "3"
+
+    // Get values using dynamic IDs
+    let minQty = parseInt($("#min_card_quantity_" + index).val()) || 0;
+    let maxQty = parseInt($("#max_card_quantity_" + index).val()) || 0;
+
+    // Clear previous errors
+    $("#error-min_card_quantity_" + index).text("");
+    $("#error-max_card_quantity_" + index).text("");
+
+    // Validate only if both have values
+    if (minQty > 0 && maxQty > 0) {
+
+        // ❌ Min cannot be greater than Max
+        if (minQty > maxQty) {
+            $("#error-min_card_quantity_" + index).text(
+                "Min quantity cannot be greater than max quantity"
+            );
+            $("#min_card_quantity_" + index).val(maxQty); // auto-fix
+        }
+
+        // ❌ Max cannot be less than Min
+        if (maxQty < minQty) {
+            $("#error-max_card_quantity_" + index).text(
+                "Max quantity cannot be less than min quantity"
+            );
+            $("#max_card_quantity_" + index).val(minQty); // auto-fix
+        }
+    }
+});
 
 </script>
 
