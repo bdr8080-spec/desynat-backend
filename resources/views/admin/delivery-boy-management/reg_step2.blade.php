@@ -22,7 +22,7 @@
 .preview-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
     /* FULL COVER */
     display: none;
     /* Hidden before upload */
@@ -182,7 +182,7 @@
                         <!-- VEHICLE INSURANCE -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Insurance</h5>
-                            <div class="row mt-3 justify-content-center">
+                            <div class="row mt-3 justify-content-start">
                                 <div class="col-6 text-center">
                                     <label for="insuranceFront" class="upload-box">
                                         <img src="/admin/image/imge-upload.svg" id="insuranceFrontIcon" class="upload-icon">
@@ -208,6 +208,7 @@
                                         <embed id="pollutionFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="pollutionFront" hidden accept="image/*,.pdf">
                                     </label>
+                                    <div class="upload-subtitle">Front</div>
                                     <div id="pollutionFront_error" class="text-danger small"></div>
                                 </div>
 
@@ -218,6 +219,7 @@
                                         <embed id="pollutionBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="pollutionBack" hidden accept="image/*,.pdf">
                                     </label>
+                                    <div class="upload-subtitle">Back</div>
                                     <div id="pollutionBack_error" class="text-danger small"></div>
                                 </div>
                             </div>
@@ -233,7 +235,8 @@
                                         <embed id="rcFrontPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="rcFront" hidden accept="image/*,.pdf">
                                     </label>
-                                    <div id="rcFront_error" class="text-danger small"></div>
+                                       <div class="upload-subtitle">Front</div>
+                                   <div id="rcFront_error" class="text-danger small"></div>
                                 </div>
 
                                 <div class="col-6 text-center">
@@ -243,6 +246,7 @@
                                         <embed id="rcBackPdfPreview" type="application/pdf" style="display:none; width:100%; height:150px; pointer-events:none;">
                                         <input type="file" id="rcBack" hidden accept="image/*,.pdf">
                                     </label>
+                                    <div class="upload-subtitle">Back</div>
                                     <div id="rcBack_error" class="text-danger small"></div>
                                 </div>
                             </div>

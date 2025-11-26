@@ -22,7 +22,7 @@
 .preview-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill !important;
     /* FULL COVER */
     display: none;
     /* Hidden before upload */
@@ -96,7 +96,7 @@ label {
 
                     <!-- ===== VEHICLE IMAGE ===== -->
                     <div class="row mt-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Image</h5>
                             <div class="row mt-3">
 
@@ -141,7 +141,7 @@ label {
                         </div>
 
                         <!-- ===== IDENTITY PROOF ===== -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Identity Proof</h5>
                             <div class="row mt-3">
 
@@ -188,7 +188,7 @@ label {
 
                     <!-- ===== DRIVING LICENSE ===== -->
                     <div class="row mt-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Driving License</h5>
                             <div class="row mt-3">
 
@@ -229,13 +229,14 @@ label {
                         </div>
 
                         <!-- ===== INSURANCE ===== -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Vehicle Insurance</h5>
-                            <div class="mt-3">
+                            <div class="row mt-3 justify-content-start">
                                 @php
                                     $ins = $deliveryBoy->vehicle_insurance[0]->document_path ?? '';
                                     $ext = strtolower(pathinfo($ins, PATHINFO_EXTENSION));
                                 @endphp
+                                <div class="col-6 text-center">
 
                                 <label for="insuranceFront" class="upload-box text-center">
                                     <img id="insuranceFrontPreview" class="preview-image" style="display:{{ $ins && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $ins ?: '/admin/image/imge-upload.svg' }}">
@@ -244,8 +245,9 @@ label {
                                     <input type="file" id="insuranceFront" hidden accept="image/*,.pdf" data-existing-image="{{ $ins }}">
                                 </label>
 
-                                <div class="upload-subtitle">Insurance</div>
+                                <!-- <div class="upload-subtitle">Insurance</div> -->
                                 <div id="insuranceFront_error" class="text-danger small"></div>
+</div>
                             </div>
                         </div>
                     </div>
@@ -253,7 +255,7 @@ label {
                     <!-- OPTIONAL DOCUMENTS -->
                     <div class="row mt-4">
                         <!-- POLLUTION PAPERS -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Pollution Paper (Optional)</h5>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
@@ -293,7 +295,7 @@ label {
                         </div>
 
                         <!-- RC CERTIFICATE -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h5>Upload Registration Certificate (Optional)</h5>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
