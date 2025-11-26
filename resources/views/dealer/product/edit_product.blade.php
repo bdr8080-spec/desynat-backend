@@ -391,7 +391,7 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU</label>
+                                <label>SKU Limit </label>
                             </div>
                             <input type="text" class="form-control notapplyspace" placeholder="20019"
                                 name="sku[]"  value="{{$item->sku}}">
@@ -400,7 +400,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-3">
+                    {{-- <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
@@ -411,7 +411,7 @@
 
                         </div>
 
-                    </div>
+                    </div> --}}
 
                     <div class="col-lg-3">
                         <div class="sub-form">
@@ -1062,7 +1062,7 @@
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU</label>
+                                <label>SKU Limit</label>
                             </div>
                             <input type="text" class="form-control" placeholder="20019" name="sku[]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
@@ -1070,17 +1070,7 @@
                             </div>
 
                     </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>SKU Threshold value</label>
-                            </div>
-                            <input type="number" class="form-control" placeholder="20019" name="sku_threshold_value[]">
-                          <p class="text-danger" id="error-sku_threshold_value_${product_Variation_count}"></p>
-
-                            </div>
-
-                    </div>
+                   
                   
                     <div class="col-lg-3">
                         <div class="sub-form">
