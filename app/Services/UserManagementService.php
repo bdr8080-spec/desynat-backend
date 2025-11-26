@@ -795,6 +795,49 @@ public function addtoCart_Increment_decrement($request)
         }
     }
 
+    public function getWishlist($userId)
+    {
+        try {
+
+            $user = User::find($userId);
+
+            if (!$user) {
+                return [
+                    'status' => 'error',
+                    'message' => 'User not found',
+                    'data' => []
+                ];
+            }
+
+            $productIds = wishlist::where('user_id', $userId)->pluck('product_id');
+
+            $wishListProduct = product::with('product_variants')
+                ->whereIn('id', $productIds)
+                ->get();
+
+            $wishListProduct->map(function ($item) use ($user) {
+                $item->user_name = $user->full_name; 
+                return $item;
+            });
+
+            return [
+                'status' => 'success',
+                'message' => 'Wishlist fetched successfully',
+                'data' => $wishListProduct
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch wishlist: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+
     
 
 
