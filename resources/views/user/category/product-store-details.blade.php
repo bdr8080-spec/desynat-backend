@@ -58,7 +58,7 @@
                         <div class="productList_content">
 
                             <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
-                            <p class="text-muted mb-1">{{$data->product_name_en}}</p>
+                            <p class="text-muted mb-1">{{$data->description_en}}</p>
 
                             <div class="d-flex align-items-center mb-1">
                                 <h4 class="fw-bold text-dark me-2" id="finalPrice">{{$firstVariant['final_price']}} KD</h4>
