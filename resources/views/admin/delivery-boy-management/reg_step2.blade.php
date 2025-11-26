@@ -2,8 +2,8 @@
 @section('content')
 <style>
 .upload-box {
-    width: 176px;
-    height: 160px;
+     width: 250px;
+    height: 181px;
     border: 2px dotted #c8ad8d;
     border-radius: 10px;
     display: flex;
@@ -22,7 +22,7 @@
 .preview-image {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: contain;
     /* FULL COVER */
     display: none;
     /* Hidden before upload */
