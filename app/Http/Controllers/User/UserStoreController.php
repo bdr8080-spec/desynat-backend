@@ -169,7 +169,11 @@ class UserStoreController extends Controller
 
         $wishListProduct = product::with('product_variants')->whereIn('id',$product_id)->get();
         
-        // dd($wishListProduct);
+       $wishListProduct->map(function ($item) use ($request) {
+                $item->user_name = $request->user()->full_name;
+                return $item;
+            });
+
         return view('user.profile.wishlist', compact('wishListProduct'));
        
 

@@ -27,7 +27,7 @@
                                                 <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
                                             </div>
                                             <div class="product-content">
-                                                <h5>{{$item->product_name_en}} (by Abaya)</h5>
+                                                <h5>{{$item->product_name_en}} ({{$item->user_name}})</h5>
                                                 <div class="rating">
                                                     <i class="fa-solid fa-star"></i>
                                                     <i class="fa-solid fa-star"></i>
