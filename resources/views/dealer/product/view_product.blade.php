@@ -327,7 +327,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="1">Yes, Delete</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">Yes, Delete</button>
       </div>
     </div>
   </div>
@@ -548,15 +548,28 @@ $('#confirmDeleteBtn').on('click', function() {
             // hide modal
             $('#deleteConfirmModal').modal('hide');
 
+             toastr.success(response.message);
+
+               window.setTimeout(function() {
+                        window.location = "{{ route('seller.products') }}";
+                    }, 2000);
+
+
             // remove row from table or reload
-            $('#row_' + deleteId).remove();
+            // $('#row_' + deleteId).remove();
 
             // optional: show success message
             // alert('Item deleted successfully');
-            
+
         },
         error: function(xhr) {
-            alert('Something went wrong!');
+            // console.log(xhr.responseJSON);
+
+            // alert('Something went wrong!');
+                toastr.error(xhr.responseJSON.message);
+                  $('#deleteConfirmModal').modal('hide');
+
+                   
         }
     });
 });

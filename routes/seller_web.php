@@ -58,7 +58,7 @@ Route::group(['prefix' => 'seller'], function () {
      Route::get('/get-variation', [SellerProductController::class, 'getSizeByVariation'])->name('get.product.variation');
 
 
-    Route::delete('/delete-product/{id}', [SellerProductController::class, 'product_delete'])->name('seller.product.product_delete');
+    Route::get('/delete-product/{id}', [SellerProductController::class, 'product_delete'])->name('seller.product.product_delete');
 
      
 
