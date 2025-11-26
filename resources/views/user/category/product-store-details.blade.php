@@ -104,27 +104,24 @@
                         <div class="desc-box p-4 rounded-4">
                             <h5 class="fw-semibold">Description</h5>
                             <p class="mt-3 text-muted">
-                                lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore
-
-                                dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor incididunt ut labore
-                                aliqua
-
-                                dolore magna aliqua. Ut enim ad minim aliqua.
+                                  {{ $data->description_en }}
                             </p>
                             <h5 class="fw-semibold mt-4">Specification</h5>
                             <ul class="mt-3 spec-list">
-                                <li>Type 1 - Feature</li>
-                                <li>Type 2 - Feature</li>
-                                <li>Type 3 - Feature</li>
+                                   @foreach ($data->product_specifications as $item)
+
+                                     <li>{{$item->name_en}} - {{$item->feature_en}}</li>
+                        
+                                      @endforeach
                             </ul>
                         </div>
                     </div>
-                    <div class="p-4 rounded-4 shadow-sm" style="background:#fff;">
+                    {{-- <div class="p-4 rounded-4 shadow-sm" style="background:#fff;">
                         <div class="row mb-2">
-                            <div class="col-6">Return allowed ?
-                            </div>
-                            <div class="col-6 text-end">32</div>
+                            <div class="col-6">
+                                @if($product->product_return==1) {{$product->return_days}} days  @else No @endif
+                             </div>
+                            <div class="col-6 text-end">@if($product->product_exchangable==1) {{$product->exchangable_days}} days @else No @endif</div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-6">Exchange allowed ?
@@ -157,7 +154,48 @@
                             </div>
                             <div class="col-6 text-end">32</div>
                         </div>
+                    </div> --}}
+                       <div class="p-4 rounded-4 shadow-sm desc-box">
+                <div class="row mb-2">
+                    <div class="col-6">Return allowed ?
                     </div>
+                    <div class="col-6 text-end">@if($data->product_return==1) {{$data->return_days}} days  @else No @endif </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">Exchange allowed ?
+                    </div>
+                    <div class="col-6 text-end">@if($data->product_exchangable==1) {{$data->exchangable_days}} days @else No @endif </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">Review & ratings allowed ?
+                    </div>
+                <div class="col-6 text-end">@if($data->review_rating==1) Yes @else No @endif </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">Is it an Affiliated Product?
+                    </div>
+                <div class="col-6 text-end">@if($data->affiliated_product==1) Yes @else No @endif </div>
+             
+                </div>
+                <div class="row mb-2">
+                    <div class="col-6">Is this a Customized product?
+                    </div>
+                <div class="col-6 text-end">@if($data->customized_product==1) Yes @else No @endif </div>
+             
+                </div>
+                <div class="row">
+                    <div class="col-6">Ready to ship?
+                    </div>
+                       <div class="col-6 text-end">@if($data->ready_to_ship==1) Yes @else No @endif </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">Cash on delivery allowed?
+
+                    </div>
+                       <div class="col-6 text-end">@if($data->cash_on_delivery==1) Yes @else No @endif </div>
+             
+                </div>
+            </div>
 
                     <div class="container my-4">
                         <div class="review-box p-4 rounded-4">
