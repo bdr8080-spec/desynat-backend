@@ -163,18 +163,41 @@
             /* position: relative; */
             padding: 5px;
     }
+    .mobileSignup{
+        font-size: 0 !important;
+        border: none !important;
+        padding: 0 !important;
+        height: 15px !important;
+    }
+    .header_nav_button_dropdown {
+        gap: 0px !important;
+    }
+    a.mobileSignup i{
+            font-size: 16px;
+    }
+    .mobileResponsive .navbar-toggler:focus{
+        box-shadow: none;
+    }
     .header_nav_button_dropdown::-webkit-scrollbar-track
     {
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
         background-color: #F5F5F5;
     }
-
+    .user_nav_inner_profile{
+            gap: 13px;
+    }
+    .header_nav_button_dropdown .customBtn1{
+        width: 80%;
+    }
     .header_nav_button_dropdown::-webkit-scrollbar
     {
         height: 2px;
         background-color: #F5F5F5;
     }
-
+    .user_nav_inner_profile a span{
+        width: 10px;
+        display: block;
+    }
     .header_nav_button_dropdown::-webkit-scrollbar-thumb
     {
         background-color: #000000;

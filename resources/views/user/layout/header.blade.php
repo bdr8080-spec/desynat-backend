@@ -169,7 +169,7 @@ use App\Models\UserCurrentLocation;
                             @endif
                     
                         <div class="dropdown-center mobileLang">
-                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px 10px !important;">
+                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 3px 8px !important;">
                                 <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}" class="img-fluid" />
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu" aria-labelledby="countryDropdownBtn">
@@ -261,7 +261,7 @@ use App\Models\UserCurrentLocation;
                             </ul>
                         </div>
                         <div class="dropdown-center mobileLang">
-                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px 10px !important;">
+                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 3px 8px !important;">
                                 <span id="selectedCurrency">KWD</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
@@ -347,8 +347,8 @@ use App\Models\UserCurrentLocation;
                             </ul>
                         </div>
                         <div class="dropdown-center mobileLang">
-                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 5px 10px !important;">
-                                <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" /> EN
+                            <button class="btn btn-secondary dropdown-toggle customBtn1" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 3px 8px !important;">
+                                <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid" style="width: 15px !important;" /> EN
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end langu">
                                 <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>

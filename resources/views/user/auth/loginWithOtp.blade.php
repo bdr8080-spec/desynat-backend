@@ -8,7 +8,6 @@
         <header class="inner-header">
             <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
             <div class="d-flex align-items-center becomSeller">
-                <a href="">Become a seller</a>
                 <div class="dropdown ms-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="assets/images/global.svg" class="img-fluid" /> EN
@@ -18,6 +17,7 @@
                         <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                     </ul>
                 </div>
+                <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
             </div>
         </header>
         <div class="login_content login_content_left">
