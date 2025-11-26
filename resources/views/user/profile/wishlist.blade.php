@@ -36,9 +36,15 @@
                                                     <span>(123K)</span>
                                                 </div>
                                                 <div class="price">
-                                                    <strong>KD 239</strong>
-                                                    <span class="old-price">KD 299</span>
-                                                    <span class="discount">20% off</span>
+                                                    <strong>{{ $item->product_variants[0]->actual_price }}
+                                                                KD</strong>
+                                                            <span
+                                                                class="old-price">{{ $item->product_variants[0]->final_price }}
+                                                                KD</span>
+                                                            <span class="discount">
+                                                                {{ $item->product_variants[0]->discount_value }}
+                                                                {{ $item->product_variants[0]->discount_type == '1' ? '%' : 'Off' }}
+                                                            </span>
                                                 </div>
                                             </div>
                                         </div>
