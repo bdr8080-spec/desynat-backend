@@ -185,8 +185,14 @@ class UserManagementService
     {
         try {
 
-            $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
-            ->where('category_id', $request->category_id)->pluck('store_id');
+            if(isset($request->category_id)){
+                      $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                 ->where('category_id', $request->category_id)->pluck('store_id');
+            }else{
+                      $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+                        ->pluck('store_id');
+            }
+      
 
             if($productQuery->isEmpty()){
                 return [

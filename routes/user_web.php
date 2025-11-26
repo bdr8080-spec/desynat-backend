@@ -41,7 +41,7 @@ use App\Http\Controllers\User\AddressController;
    
    Route::match(['get','post'],'/store-details/{id}', [UserStoreController::class, 'store_details'])->name('user.store_details');
 
-   Route::match(['get','post'],'/category-wise-store/{id}', [UserStoreController::class, 'category_wise_store'])->name('user.category_wise_store');
+   Route::match(['get','post'],'/category-wise-store/{id?}', [UserStoreController::class, 'category_wise_store'])->name('user.category_wise_store');
 
    Route::get('addOremovewishlist', [UserStoreController::class, 'AddOrRemove_wishlist'])->name('user.AddOrRemove_wishlist');
    
