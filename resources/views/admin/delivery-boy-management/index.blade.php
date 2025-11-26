@@ -331,9 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!documentContainer || !modalTitle) return;
 
-    if (modalTitle) {
-        modalTitle.innerText = 'Vehicle Image';
-    }
+    modalTitle.innerText = 'Vehicle Document';
 
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -352,31 +350,76 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             documents.forEach(doc => {
-                const imgPath = doc.document_path;
+                const filePath = doc.document_path;
                 const isFront = doc.is_front ? 'Front' : 'Back';
+                const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
                 wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '5px';
+                wrapper.style.margin = '10px';
+                wrapper.style.display = 'inline-block';
 
-                const img = document.createElement('img');
-                img.src = imgPath;
-                img.alt = 'Document';
-                img.classList.add('img-fluid', 'rounded', 'border');
-                img.style.maxWidth = '200px';
-                img.style.maxHeight = '200px';
-                img.style.cursor = 'pointer';
+                // Create preview container for pointer cursor
+                const previewContainer = document.createElement('div');
+                previewContainer.style.display = 'inline-block';
 
-                img.addEventListener('click', () => window.open(imgPath, '_blank'));
+                if (ext === 'pdf') {
+                    // Wrap iframe in a clickable div
+                    const wrapperDiv = document.createElement('div');
+                    wrapperDiv.style.width = '200px';
+                    wrapperDiv.style.height = '200px';
+                    wrapperDiv.style.border = '1px solid #ddd';
+                    wrapperDiv.style.borderRadius = '5px';
+                    wrapperDiv.style.cursor = 'pointer';
+                    wrapperDiv.style.display = 'inline-block';
+                    wrapperDiv.style.position = 'relative';
+                    wrapperDiv.title = "Click to open PDF in new tab";
+
+                    const iframe = document.createElement('iframe');
+                    iframe.src = filePath;
+                    iframe.type = 'application/pdf';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.pointerEvents = 'none';  // disables interactions on iframe
+                    iframe.style.border = 'none';
+
+                    wrapperDiv.appendChild(iframe);
+
+                    wrapperDiv.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(wrapperDiv);
+                    wrapper.appendChild(previewContainer);
+
+                } else {
+                    // For images
+                    previewContainer.style.cursor = 'pointer';
+
+                    const img = document.createElement('img');
+                    img.src = filePath;
+                    img.alt = 'Document Image';
+                    img.style.maxWidth = '200px';
+                    img.style.maxHeight = '200px';
+                    img.style.borderRadius = '5px';
+                    img.style.border = '1px solid #ddd';
+
+                    img.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(img);
+                    wrapper.appendChild(previewContainer);
+                }
 
                 const label = document.createElement('div');
                 label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
                 label.style.fontWeight = '500';
-                label.style.marginTop = '3px';
+                label.style.marginTop = '8px';
 
-                wrapper.appendChild(img);
                 wrapper.appendChild(label);
+
                 documentContainer.appendChild(wrapper);
             });
         });
@@ -396,7 +439,6 @@ document.addEventListener('DOMContentLoaded', function() {
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
             modalTitle.innerText = 'Identity Proof';
-
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -413,36 +455,81 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             documents.forEach(doc => {
-                const imgPath = doc.document_path;
+                const filePath = doc.document_path;
                 const isFront = doc.is_front ? 'Front' : 'Back';
+                const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
                 wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '5px';
+                wrapper.style.margin = '10px';
+                wrapper.style.display = 'inline-block';
 
-                const img = document.createElement('img');
-                img.src = imgPath;
-                img.alt = 'Document';
-                img.classList.add('img-fluid', 'rounded', 'border');
-                img.style.maxWidth = '200px';
-                img.style.maxHeight = '200px';
-                img.style.cursor = 'pointer';
+                // Preview container
+                const previewContainer = document.createElement('div');
+                previewContainer.style.display = 'inline-block';
 
-                img.addEventListener('click', () => window.open(imgPath, '_blank'));
+                if (ext === 'pdf') {
+                    // PDF preview
+                    const wrapperDiv = document.createElement('div');
+                    wrapperDiv.style.width = '200px';
+                    wrapperDiv.style.height = '200px';
+                    wrapperDiv.style.border = '1px solid #ddd';
+                    wrapperDiv.style.borderRadius = '5px';
+                    wrapperDiv.style.cursor = 'pointer';
+                    wrapperDiv.style.display = 'inline-block';
+                    wrapperDiv.style.position = 'relative';
+                    wrapperDiv.title = "Click to open PDF in new tab";
+
+                    const iframe = document.createElement('iframe');
+                    iframe.src = filePath;
+                    iframe.type = 'application/pdf';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.pointerEvents = 'none'; // let clicks pass through
+                    iframe.style.border = 'none';
+
+                    wrapperDiv.appendChild(iframe);
+
+                    wrapperDiv.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(wrapperDiv);
+                    wrapper.appendChild(previewContainer);
+
+                } else {
+                    // Image preview
+                    previewContainer.style.cursor = 'pointer';
+
+                    const img = document.createElement('img');
+                    img.src = filePath;
+                    img.alt = 'Document Image';
+                    img.style.maxWidth = '200px';
+                    img.style.maxHeight = '200px';
+                    img.style.borderRadius = '5px';
+                    img.style.border = '1px solid #ddd';
+
+                    img.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(img);
+                    wrapper.appendChild(previewContainer);
+                }
 
                 const label = document.createElement('div');
                 label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
                 label.style.fontWeight = '500';
-                label.style.marginTop = '3px';
+                label.style.marginTop = '8px';
 
-                wrapper.appendChild(img);
                 wrapper.appendChild(label);
                 documentContainer.appendChild(wrapper);
             });
         });
     });
 });
+
 </script>
 
 <!-- driving license -->
@@ -457,7 +544,6 @@ document.addEventListener('DOMContentLoaded', function() {
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
             modalTitle.innerText = 'Driving License';
-
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -474,36 +560,79 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             documents.forEach(doc => {
-                const imgPath = doc.document_path;
+                const filePath = doc.document_path;
                 const isFront = doc.is_front ? 'Front' : 'Back';
+                const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
                 wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '5px';
+                wrapper.style.margin = '10px';
+                wrapper.style.display = 'inline-block';
 
-                const img = document.createElement('img');
-                img.src = imgPath;
-                img.alt = 'Document';
-                img.classList.add('img-fluid', 'rounded', 'border');
-                img.style.maxWidth = '200px';
-                img.style.maxHeight = '200px';
-                img.style.cursor = 'pointer';
+                const previewContainer = document.createElement('div');
+                previewContainer.style.display = 'inline-block';
 
-                img.addEventListener('click', () => window.open(imgPath, '_blank'));
+                if (ext === 'pdf') {
+                    // PDF preview
+                    const wrapperDiv = document.createElement('div');
+                    wrapperDiv.style.width = '200px';
+                    wrapperDiv.style.height = '200px';
+                    wrapperDiv.style.border = '1px solid #ddd';
+                    wrapperDiv.style.borderRadius = '5px';
+                    wrapperDiv.style.cursor = 'pointer';
+                    wrapperDiv.style.position = 'relative';
+                    wrapperDiv.title = "Click to open PDF in new tab";
+
+                    const iframe = document.createElement('iframe');
+                    iframe.src = filePath;
+                    iframe.type = 'application/pdf';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.pointerEvents = 'none'; // let clicks pass through
+                    iframe.style.border = 'none';
+
+                    wrapperDiv.appendChild(iframe);
+
+                    wrapperDiv.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(wrapperDiv);
+                    wrapper.appendChild(previewContainer);
+
+                } else {
+                    // Image preview
+                    previewContainer.style.cursor = 'pointer';
+
+                    const img = document.createElement('img');
+                    img.src = filePath;
+                    img.alt = 'Document Image';
+                    img.style.maxWidth = '200px';
+                    img.style.maxHeight = '200px';
+                    img.style.borderRadius = '5px';
+                    img.style.border = '1px solid #ddd';
+
+                    img.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(img);
+                    wrapper.appendChild(previewContainer);
+                }
 
                 const label = document.createElement('div');
                 label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
                 label.style.fontWeight = '500';
-                label.style.marginTop = '3px';
+                label.style.marginTop = '8px';
 
-                wrapper.appendChild(img);
                 wrapper.appendChild(label);
                 documentContainer.appendChild(wrapper);
             });
         });
     });
 });
+
 </script>
 
 <!-- vehicle insurance -->
@@ -518,7 +647,6 @@ document.addEventListener('DOMContentLoaded', function() {
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
             modalTitle.innerText = 'Vehicle Insurance';
-
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -534,36 +662,66 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            documents.forEach(doc => {
-                const imgPath = doc.document_path;
-                const isFront = doc.is_front ? 'Front' : 'Back';
+            // Assuming there's only one document in the list
+            const doc = documents[0];
+            const filePath = doc.document_path;
+            const ext = filePath.split('.').pop().toLowerCase();
 
-                const wrapper = document.createElement('div');
-                wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '5px';
+            const wrapper = document.createElement('div');
+            wrapper.style.textAlign = 'center';
+            wrapper.style.margin = '10px';
+            wrapper.style.display = 'inline-block';
 
+            if (ext === 'pdf') {
+                // PDF preview
+                const wrapperDiv = document.createElement('div');
+                wrapperDiv.style.width = '200px';
+                wrapperDiv.style.height = '200px';
+                wrapperDiv.style.border = '1px solid #ddd';
+                wrapperDiv.style.borderRadius = '5px';
+                wrapperDiv.style.cursor = 'pointer';
+                wrapperDiv.style.position = 'relative';
+                wrapperDiv.title = "Click to open PDF in new tab";
+
+                const iframe = document.createElement('iframe');
+                iframe.src = filePath;
+                iframe.type = 'application/pdf';
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.pointerEvents = 'none'; // let clicks pass through
+                iframe.style.border = 'none';
+
+                wrapperDiv.appendChild(iframe);
+
+                wrapperDiv.addEventListener('click', () => {
+                    window.open(filePath, '_blank');
+                });
+
+                wrapper.appendChild(wrapperDiv);
+            } else {
+                // Image preview
                 const img = document.createElement('img');
-                img.src = imgPath;
-                img.alt = 'Document';
-                img.classList.add('img-fluid', 'rounded', 'border');
+                img.src = filePath;
+                img.alt = 'Document Image';
                 img.style.maxWidth = '200px';
                 img.style.maxHeight = '200px';
+                img.style.borderRadius = '5px';
+                img.style.border = '1px solid #ddd';
                 img.style.cursor = 'pointer';
 
-                img.addEventListener('click', () => window.open(imgPath, '_blank'));
-
-                const label = document.createElement('div');
-                label.style.fontSize = '0.9rem';
-                label.style.fontWeight = '500';
-                label.style.marginTop = '3px';
+                img.addEventListener('click', () => {
+                    window.open(filePath, '_blank');
+                });
 
                 wrapper.appendChild(img);
-                wrapper.appendChild(label);
-                documentContainer.appendChild(wrapper);
-            });
+            }
+
+            documentContainer.appendChild(wrapper);
         });
     });
 });
+
+
 </script>
 
 <!-- pollution paper -->
@@ -578,7 +736,6 @@ document.addEventListener('DOMContentLoaded', function() {
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
             modalTitle.innerText = 'Pollution Paper';
-
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -595,35 +752,80 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             documents.forEach(doc => {
-                const imgPath = doc.document_path;
+                const filePath = doc.document_path;
                 const isFront = doc.is_front ? 'Front' : 'Back';
+                const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
                 wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '5px';
+                wrapper.style.margin = '10px';
+                wrapper.style.display = 'inline-block';
 
-                const img = document.createElement('img');
-                img.src = imgPath;
-                img.alt = 'Document';
-                img.classList.add('img-fluid', 'rounded', 'border');
-                img.style.maxWidth = '200px';
-                img.style.maxHeight = '200px';
-                img.style.cursor = 'pointer';
+                const previewContainer = document.createElement('div');
+                previewContainer.style.display = 'inline-block';
 
-                img.addEventListener('click', () => window.open(imgPath, '_blank'));
+                if (ext === 'pdf') {
+                    // PDF preview
+                    const wrapperDiv = document.createElement('div');
+                    wrapperDiv.style.width = '200px';
+                    wrapperDiv.style.height = '200px';
+                    wrapperDiv.style.border = '1px solid #ddd';
+                    wrapperDiv.style.borderRadius = '5px';
+                    wrapperDiv.style.cursor = 'pointer';
+                    wrapperDiv.style.position = 'relative';
+                    wrapperDiv.title = "Click to open PDF in new tab";
 
+                    const iframe = document.createElement('iframe');
+                    iframe.src = filePath;
+                    iframe.type = 'application/pdf';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.pointerEvents = 'none'; // let clicks pass through
+                    iframe.style.border = 'none';
+
+                    wrapperDiv.appendChild(iframe);
+
+                    wrapperDiv.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(wrapperDiv);
+                    wrapper.appendChild(previewContainer);
+
+                } else {
+                    // Image preview
+                    previewContainer.style.cursor = 'pointer';
+
+                    const img = document.createElement('img');
+                    img.src = filePath;
+                    img.alt = 'Document Image';
+                    img.style.maxWidth = '200px';
+                    img.style.maxHeight = '200px';
+                    img.style.borderRadius = '5px';
+                    img.style.border = '1px solid #ddd';
+
+                    img.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(img);
+                    wrapper.appendChild(previewContainer);
+                }
+
+                // Label for Front/Back
                 const label = document.createElement('div');
+                label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
                 label.style.fontWeight = '500';
-                label.style.marginTop = '3px';
+                label.style.marginTop = '8px';
 
-                wrapper.appendChild(img);
                 wrapper.appendChild(label);
                 documentContainer.appendChild(wrapper);
             });
         });
     });
 });
+
 </script>
 
 <!-- registration certificate -->
@@ -638,7 +840,6 @@ document.addEventListener('DOMContentLoaded', function() {
     documentButtons.forEach(button => {
         button.addEventListener('click', function() {
             modalTitle.innerText = 'Registration Certificate';
-
             documentContainer.innerHTML = '';
 
             let documents = [];
@@ -655,36 +856,80 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             documents.forEach(doc => {
-                const imgPath = doc.document_path;
+                const filePath = doc.document_path;
                 const isFront = doc.is_front ? 'Front' : 'Back';
+                const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
                 wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '5px';
+                wrapper.style.margin = '10px';
+                wrapper.style.display = 'inline-block';
 
-                const img = document.createElement('img');
-                img.src = imgPath;
-                img.alt = 'Document';
-                img.classList.add('img-fluid', 'rounded', 'border');
-                img.style.maxWidth = '200px';
-                img.style.maxHeight = '200px';
-                img.style.cursor = 'pointer';
+                const previewContainer = document.createElement('div');
+                previewContainer.style.display = 'inline-block';
 
-                img.addEventListener('click', () => window.open(imgPath, '_blank'));
+                if (ext === 'pdf') {
+                    // PDF preview using iframe
+                    const wrapperDiv = document.createElement('div');
+                    wrapperDiv.style.width = '200px';
+                    wrapperDiv.style.height = '200px';
+                    wrapperDiv.style.border = '1px solid #ddd';
+                    wrapperDiv.style.borderRadius = '5px';
+                    wrapperDiv.style.cursor = 'pointer';
+                    wrapperDiv.style.position = 'relative';
+                    wrapperDiv.title = "Click to open PDF in new tab";
 
+                    const iframe = document.createElement('iframe');
+                    iframe.src = filePath;
+                    iframe.type = 'application/pdf';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.pointerEvents = 'none';  // Let clicks pass through iframe
+                    iframe.style.border = 'none';
+
+                    wrapperDiv.appendChild(iframe);
+
+                    // Click to open PDF in new tab
+                    wrapperDiv.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(wrapperDiv);
+                    wrapper.appendChild(previewContainer);
+
+                } else {
+                    // Image preview
+                    const img = document.createElement('img');
+                    img.src = filePath;
+                    img.alt = 'Document Image';
+                    img.style.maxWidth = '200px';
+                    img.style.maxHeight = '200px';
+                    img.style.borderRadius = '5px';
+                    img.style.border = '1px solid #ddd';
+                    img.style.cursor = 'pointer';
+
+                    img.addEventListener('click', () => {
+                        window.open(filePath, '_blank');
+                    });
+
+                    previewContainer.appendChild(img);
+                    wrapper.appendChild(previewContainer);
+                }
+
+                // Label for Front/Back
                 const label = document.createElement('div');
                 label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
                 label.style.fontWeight = '500';
-                label.style.marginTop = '3px';
+                label.style.marginTop = '8px';
 
-                wrapper.appendChild(img);
                 wrapper.appendChild(label);
                 documentContainer.appendChild(wrapper);
             });
         });
     });
 });
+
 </script>
 
 <!-- Delete Delivery Boy -->
