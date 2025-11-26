@@ -22,7 +22,7 @@
 .preview-image {
     width: 100%;
     height: 100%;
-    object-fit: contain !important;
+    object-fit: cover;
     /* FULL COVER */
     display: none;
     /* Hidden before upload */
