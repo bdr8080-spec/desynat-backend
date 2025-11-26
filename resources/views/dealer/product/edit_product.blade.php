@@ -792,34 +792,25 @@
     });
 
 
-    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
 
 
-
-
-
-    });
-
-
-
-
-    // When User select Image vartion Then Show dynamic Image Preview
-    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
-        let rel = $(this).attr('rel');
-        let files = e.target.files;
-        // $('#previewContainer').empty(); // clear old previews
-        [...files].forEach(f => {
-            let url = URL.createObjectURL(f);
-            let imgBox = $(`
-      <div class="multiple-img position-relative">
-        <img src="${url}" class="w-100 rounded">
-        <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-      </div>
-    `);
-            imgBox.find('.remove-ic').click(() => imgBox.remove());
-            $('#previewContainer' + rel).append(imgBox);
-        });
-    });
+    // // When User select Image vartion Then Show dynamic Image Preview
+    // $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+    //     let rel = $(this).attr('rel');
+    //     let files = e.target.files;
+    //     // $('#previewContainer').empty(); // clear old previews
+    //     [...files].forEach(f => {
+    //         let url = URL.createObjectURL(f);
+    //         let imgBox = $(`
+    //   <div class="multiple-img position-relative">
+    //     <img src="${url}" class="w-100 rounded">
+    //     <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+    //   </div>
+    // `);
+    //         imgBox.find('.remove-ic').click(() => imgBox.remove());
+    //         $('#previewContainer' + rel).append(imgBox);
+    //     });
+    // });
 
 
     // Upload Chart Image in footer side
@@ -838,6 +829,67 @@
             $('#edit_uploadChart_preview').append(imgBox);
         });
     });
+
+    
+// Store files for each variant input
+let fileStore = {};
+
+$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+
+    let rel = $(this).attr('rel');
+
+    // Initialize store for this input if not exists
+    if (!fileStore[rel]) {
+        fileStore[rel] = new DataTransfer();
+    }
+
+    let dt = fileStore[rel];
+    let files = e.target.files;
+
+    [...files].forEach(f => {
+
+        // Add file to DataTransfer
+        dt.items.add(f);
+
+        // Create preview
+        let url = URL.createObjectURL(f);
+        let imgBox = $(`
+          <div class="multiple-img position-relative" data-name="${f.name}">
+            <img src="${url}" class="w-100 rounded">
+            <span class="remove-ic" 
+                  style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">
+                &times;
+            </span>
+          </div>
+        `);
+
+        // Remove preview + remove file
+        imgBox.find('.remove-ic').click(() => {
+
+            let filename = imgBox.data('name');
+
+            // remove from DataTransfer
+            for (let i = 0; i < dt.items.length; i++) {
+                if (dt.items[i].getAsFile().name === filename) {
+                    dt.items.remove(i);
+                    break;
+                }
+            }
+
+            // update input files
+            document.querySelector(`input[rel="${rel}"]`).files = dt.files;
+
+            // remove preview
+            imgBox.remove();
+        });
+
+        $('#previewContainer' + rel).append(imgBox);
+    });
+
+    // Assign new accumulated file list to input
+    this.files = dt.files;
+});
+
 </script>
 
 <script>
@@ -923,7 +975,7 @@
 
 <script>
 
-      var product_Variation_count = {{$product_Variation_count}};
+  product_Variation_count = {{$product_Variation_count}};
 
     // ADD NEW Variant
     $(".addVariantBtn").click(function() {
@@ -1141,7 +1193,8 @@
 
         </div>
 
-       `)
+       `);
+
         var checked_category = $("input[name='category_id']:checked").val();
         if (checked_category) {
             remove_Not_in_women_Category(checked_category);

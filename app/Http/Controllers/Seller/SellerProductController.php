@@ -107,6 +107,9 @@ public function Add_product(){
 
 public function Add_product_code(Request $request){
 
+    
+    //  dd($request->variant_image);
+
     $seller_details=Auth::guard('seller')->user();
     $seller_id=$seller_details->id;
     
@@ -401,6 +404,7 @@ public function Add_product_code(Request $request){
       }
 
      }
+
 
 
      // Product Vartion Image

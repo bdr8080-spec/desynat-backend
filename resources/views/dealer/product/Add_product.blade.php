@@ -280,7 +280,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10" name="bust[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10" name="bust[]">
                             <p class="text-danger" id="error-bust_0"></p>
 
                         </div>
@@ -291,7 +291,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.12" name="waist[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12" name="waist[]">
 
                             <p class="text-danger" id="error-waist_0"></p>
                         </div>
@@ -302,7 +302,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.14" name="hip[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14" name="hip[]">
                             <p class="text-danger" id="error-hip_0"></p>
 
                         </div>
@@ -313,7 +313,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.16"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
                                 name="shoulder[]">
                             <p class="text-danger" id="error-shoulder_0"></p>
 
@@ -325,7 +325,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.18"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
                                 name="sleeve_length[]">
                             <p class="text-danger" id="error-sleeve_length_0"></p>
 
@@ -337,7 +337,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.20" name="length[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20" name="length[]">
 
                             <p class="text-danger" id="error-length_0"></p>
                         </div>
@@ -742,22 +742,83 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
 
 
-// When User select Image vartion Then Show dynamic Image Preview
+// // When User select Image vartion Then Show dynamic Image Preview
+// $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+//     let rel = $(this).attr('rel');
+//     let files = e.target.files;
+//     // $('#previewContainer').empty(); // clear old previews
+//     [...files].forEach(f => {
+//         let url = URL.createObjectURL(f);
+//         let imgBox = $(`
+//       <div class="multiple-img position-relative">
+//         <img src="${url}" class="w-100 rounded">
+//         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+//       </div>
+//     `);
+//         imgBox.find('.remove-ic').click(() => imgBox.remove());
+//         $('#previewContainer' + rel).append(imgBox);
+//     });
+
+ 
+// });
+
+// Store files for each variant input
+let fileStore = {};
+
 $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+
     let rel = $(this).attr('rel');
+
+    // Initialize store for this input if not exists
+    if (!fileStore[rel]) {
+        fileStore[rel] = new DataTransfer();
+    }
+
+    let dt = fileStore[rel];
     let files = e.target.files;
-    // $('#previewContainer').empty(); // clear old previews
+
     [...files].forEach(f => {
+
+        // Add file to DataTransfer
+        dt.items.add(f);
+
+        // Create preview
         let url = URL.createObjectURL(f);
         let imgBox = $(`
-      <div class="multiple-img position-relative">
-        <img src="${url}" class="w-100 rounded">
-        <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-      </div>
-    `);
-        imgBox.find('.remove-ic').click(() => imgBox.remove());
+          <div class="multiple-img position-relative" data-name="${f.name}">
+            <img src="${url}" class="w-100 rounded">
+            <span class="remove-ic" 
+                  style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">
+                &times;
+            </span>
+          </div>
+        `);
+
+        // Remove preview + remove file
+        imgBox.find('.remove-ic').click(() => {
+
+            let filename = imgBox.data('name');
+
+            // remove from DataTransfer
+            for (let i = 0; i < dt.items.length; i++) {
+                if (dt.items[i].getAsFile().name === filename) {
+                    dt.items.remove(i);
+                    break;
+                }
+            }
+
+            // update input files
+            document.querySelector(`input[rel="${rel}"]`).files = dt.files;
+
+            // remove preview
+            imgBox.remove();
+        });
+
         $('#previewContainer' + rel).append(imgBox);
     });
+
+    // Assign new accumulated file list to input
+    this.files = dt.files;
 });
 
 
@@ -894,6 +955,7 @@ $(".addVariantBtn").click(function() {
                         </div>
 
                         <select class="form-select form-control" aria-label="Default select example" name="color_id[]">
+                                <option value="">Select Colour</option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
@@ -910,6 +972,8 @@ $(".addVariantBtn").click(function() {
                         </div>
 
                         <select class="form-select form-control" aria-label="Default select example" name="size_id[]">
+                               <option value="">Select Colour</option>
+                           
                             @foreach ($size as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
@@ -926,7 +990,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.10" name="bust[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
 
                             </div>
@@ -937,7 +1001,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.12" name="waist[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
 
                    </div>
@@ -948,7 +1012,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.14" name="hip[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
 
                             </div>
@@ -959,7 +1023,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.16" name="shoulder[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
 
                             </div>
@@ -970,7 +1034,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.18" name="sleeve_length[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
 
                             </div>
@@ -981,7 +1045,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.20" name="length[]" >
+                            <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}"></p>
 
                             </div>
@@ -1243,8 +1307,6 @@ $(document).on('submit', 'form#addproduct', function(event) {
             // Hide loader (after success or error)
             $('#loader').hide();
         }
-
-
 
 
     });
