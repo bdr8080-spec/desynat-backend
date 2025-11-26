@@ -459,7 +459,7 @@ $request_data=(object) [
       
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-// 'sku_threshold_value' => $request->sku_threshold_value,
+'sku_threshold_value' => $request->sku_threshold_value??null,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,
@@ -586,7 +586,7 @@ public function edit_product_code(Request $request, $id){
 
           'total_stock' => ['required', 'array'],
           'sku' => ['required', 'array'],
-          'sku_threshold_value' => ['required', 'array'],
+        //   'sku_threshold_value' => ['required', 'array'],
           'actual_price' => ['required', 'array'],
           'discount_type' => ['required', 'array'],
           'discount_value' => ['required', 'array'],
@@ -594,7 +594,7 @@ public function edit_product_code(Request $request, $id){
 
          'total_stock.*' => ['required'],
           'sku.*' => ['required'],
-          'sku_threshold_value.*' => ['required'],
+        //   'sku_threshold_value.*' => ['required'],
           'actual_price.*' => ['required'],
           'discount_type.*' => ['required'],
           'discount_value.*' => ['required'],
