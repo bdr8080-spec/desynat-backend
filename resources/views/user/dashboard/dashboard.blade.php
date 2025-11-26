@@ -23,7 +23,7 @@
         <div class="row">
             @forelse ($subCategory as $item)
                 <div class="col-lg-4 col-md-4 col-6 my-lg-3 my-2 text-center">
-                    <a class="category_detail" href="{{ route('user.category_wise_store', $item->id) }}">
+                    <a class="category_detail" href="{{ route('user.category_wise_store', $item->category_id) }}">
                         <div class="categorie_cotent">
                             <div class="categorie_cotent-img">
                                 <img src="{{ $item->image }}" class="img-fluid" />
