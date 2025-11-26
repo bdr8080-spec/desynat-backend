@@ -221,9 +221,9 @@
 
       
         <!----- variant panel ------>
-          @foreach ($product_details['product_variants'] as $item)
+          @foreach ($product_details['product_variants'] as $key=> $item)
          
-        <div class="variant-panel specifications-row">
+        <div class="variant-panel specifications-row variant-panel-bg">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
@@ -244,13 +244,13 @@
                 {{-- database image code --}}
 
                     @if(!empty($item->variant_image))
-                        @foreach($item->variant_image as $chart)
+                        @foreach($item->variant_image as $key0=> $chart)
                     <div class="multiple-img position-relative">
                     <img src="{{$chart}}" class="w-100 rounded">
                     <span class="remove-ic remove-image" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
                
                      <input type="text" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
-                            name="old_variant_image[{{$product_Variation_count}}][]" value="{{$chart}}" rel="{{$product_Variation_count}}">
+                            name="old_variant_image[{{$product_Variation_count}}][{{$key0}}]" value="{{$chart}}" rel="{{$product_Variation_count}}">
                  
                 </div>
                         @endforeach
@@ -288,7 +288,7 @@
                             <select class="form-select form-control" aria-label="Default select example"
                                 name="size_id[]">
                                 @foreach ($size as $item1)
-                                    <option value="{{ $item1->id }}" @if($item->color_id== $item1->id ) selected  @endif >{{ $item1->name }}</option>
+                                    <option value="{{ $item1->id }}" @if($item->size_id== $item1->id ) selected  @endif >{{ $item1->name }}</option>
                                 @endforeach
                             </select>
                             <p class="text-danger" id="error-size_id_{{$product_Variation_count}}"></p>
@@ -1251,10 +1251,10 @@
             cache: false,
             contentType: false,
             processData: false,
-            beforeSend: function() {
-                // Show loader
-                $('#loader').show();
-            },
+            // beforeSend: function() {
+            //     // Show loader
+            //     $('#loader').show();
+            // },
             success: function(response) {
                 console.log(response);
 
@@ -1302,10 +1302,10 @@
                     }
                 });
             },
-            complete: function() {
-                // Hide loader (after success or error)
-                $('#loader').hide();
-            }
+            // complete: function() {
+            //     // Hide loader (after success or error)
+            //     $('#loader').hide();
+            // }
 
 
 

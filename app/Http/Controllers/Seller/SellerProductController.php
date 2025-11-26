@@ -859,37 +859,53 @@ public function edit_product_code(Request $request, $id){
     //     }
     //  }
 
-    foreach ($request->color_id as $key => $val) {
+   $final_variation_images = [];
 
-    $final_variation_images[$key] = []; // initialize empty
+//    dd($request->variant_image);
 
-    // ✔ If new images exist → upload them
+foreach ($request->color_id as $key => $val) {
+
+    $final_variation_images[$key] = []; // initialize
+
+    $count_array=0;
+
+    // 1️⃣ Add OLD images (if exist)
+    if (!empty($request->old_variant_image)) {
+
+        foreach ($request->old_variant_image[$key] as $oldImgPath) {
+
+            //  foreach($oldImgPath as $key1=>$Image2){
+                  $final_variation_images[$key][$count_array]=$oldImgPath;  // chart Image
+
+
+                  $count_array++;
+            //  }
+
+            // $final_variation_images[$key][] = $oldImgPath;  // existing saved path
+        }
+    }
+
+
+    // 2️⃣ Add NEW uploaded images (if exist)
     if (!empty($request->variant_image[$key])) {
 
-        foreach ($request->variant_image[$key] as $index => $imageFile) {
+        foreach ($request->variant_image[$key] as $imgFile) {
 
-            $final_variation_images[$key][] = image_upload($imageFile, $dir);
-        }
+            // foreach($imgFile as $key1=>$Image2){
 
-    }
-    // ✔ Else use old images
-    elseif (!empty($request->old_variant_image[$key])) {
+            $uploadedPath = image_upload($imgFile, $dir);   // upload
+            $final_variation_images[$key][$count_array] = $uploadedPath;
 
-        foreach ($request->old_variant_image[$key] as $oldImg) {
-
-            $final_variation_images[$key][] = $oldImg; // already saved paths
+            //  }
         }
     }
-    // ❌ Neither new nor old images -> skip or set empty
-    else {
-        $final_variation_images[$key] = [];  
-        // OR throw error if required
-        // continue;
-    }
+
+    // 3️⃣ If neither → stays empty
 }
 
 
 
+// dd($final_variation_images);
 
     //  Product Size Chart Upload 
      if($request->upload_size_chart){ 
@@ -957,6 +973,8 @@ $request_data=(object) [
 'upload_size_chart'=> $upload_size_chart
 
      ];
+
+
 
   $data=  $this->SellerProductService->edit_Product($request_data);
 
