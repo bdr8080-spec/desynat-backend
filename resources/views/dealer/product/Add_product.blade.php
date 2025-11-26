@@ -280,7 +280,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="bust[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10" name="bust[]">
                             <p class="text-danger" id="error-bust_0"></p>
 
                         </div>
@@ -291,7 +291,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="waist[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.12" name="waist[]">
 
                             <p class="text-danger" id="error-waist_0"></p>
                         </div>
@@ -302,7 +302,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="hip[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.14" name="hip[]">
                             <p class="text-danger" id="error-hip_0"></p>
 
                         </div>
@@ -313,7 +313,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.16"
                                 name="shoulder[]">
                             <p class="text-danger" id="error-shoulder_0"></p>
 
@@ -325,7 +325,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.18"
                                 name="sleeve_length[]">
                             <p class="text-danger" id="error-sleeve_length_0"></p>
 
@@ -337,7 +337,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="length[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.20" name="length[]">
 
                             <p class="text-danger" id="error-length_0"></p>
                         </div>
@@ -360,7 +360,7 @@
                             <div class="label-flex">
                                 <label>SKU Limit</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="20019" name="sku[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[]">
 
                             <p class="text-danger" id="error-sku_0"></p>
                         </div>
@@ -926,7 +926,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="bust[]">
+                            <input type="number" class="form-control" placeholder="Eg.10" name="bust[]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
 
                             </div>
@@ -937,7 +937,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="waist[]">
+                            <input type="number" class="form-control" placeholder="Eg.12" name="waist[]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
 
                    </div>
@@ -948,7 +948,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="hip[]">
+                            <input type="number" class="form-control" placeholder="Eg.14" name="hip[]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
 
                             </div>
@@ -959,7 +959,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="shoulder[]">
+                            <input type="number" class="form-control" placeholder="Eg.16" name="shoulder[]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
 
                             </div>
@@ -970,7 +970,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="sleeve_length[]">
+                            <input type="number" class="form-control" placeholder="Eg.18" name="sleeve_length[]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
 
                             </div>
@@ -981,7 +981,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="length[]" >
+                            <input type="number" class="form-control" placeholder="Eg.20" name="length[]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}"></p>
 
                             </div>
@@ -1003,7 +1003,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>SKU Limit </label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019" name="sku[]">
+                            <input type="number" class="form-control" placeholder="20019" name="sku[]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
 
                             </div>
