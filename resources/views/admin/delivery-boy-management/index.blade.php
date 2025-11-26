@@ -339,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             documentContainer.innerHTML = '';
             let documents = [];
+
             try {
                 documents = JSON.parse(this.getAttribute('data-documents') || '[]');
             } catch (e) {
@@ -361,50 +362,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 wrapper.style.margin = '10px';
                 wrapper.style.display = 'inline-block';
 
-                // Create preview container for pointer cursor
                 const previewContainer = document.createElement('div');
                 previewContainer.style.display = 'inline-block';
+                previewContainer.style.cursor = 'pointer';
 
+                // ----------------------------
+                // 💠 UNIFORM PREVIEW BOX STYLE
+                // ----------------------------
+                const previewStyle = {
+                    width: "200px",
+                    height: "200px",
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    objectFit: "contain",
+                    padding: "10px",
+                    background: "#fafafa"
+                };
+
+                // ----------------------------
+                // 📌 PDF → STATIC ICON
+                // ----------------------------
                 if (ext === 'pdf') {
-                    // Wrap iframe in a clickable div
-                    const wrapperDiv = document.createElement('div');
-                    wrapperDiv.style.width = '200px';
-                    wrapperDiv.style.height = '200px';
-                    wrapperDiv.style.border = '1px solid #ddd';
-                    wrapperDiv.style.borderRadius = '5px';
-                    wrapperDiv.style.cursor = 'pointer';
-                    wrapperDiv.style.display = 'inline-block';
-                    wrapperDiv.style.position = 'relative';
-                    wrapperDiv.title = "Click to open PDF in new tab";
+                    const icon = document.createElement('img');
+                    icon.src = "/admin/image/PDF_file_icon.svg";
+                    icon.alt = "PDF File";
 
-                    const iframe = document.createElement('iframe');
-                    iframe.src = filePath;
-                    iframe.type = 'application/pdf';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.pointerEvents = 'none';  // disables interactions on iframe
-                    iframe.style.border = 'none';
+                    Object.assign(icon.style, previewStyle);
 
-                    wrapperDiv.appendChild(iframe);
-
-                    wrapperDiv.addEventListener('click', () => {
+                    icon.addEventListener('click', () => {
                         window.open(filePath, '_blank');
                     });
 
-                    previewContainer.appendChild(wrapperDiv);
+                    previewContainer.appendChild(icon);
                     wrapper.appendChild(previewContainer);
 
                 } else {
-                    // For images
-                    previewContainer.style.cursor = 'pointer';
-
+                    // ----------------------------
+                    // 📌 IMAGE PREVIEW
+                    // ----------------------------
                     const img = document.createElement('img');
                     img.src = filePath;
-                    img.alt = 'Document Image';
-                    img.style.maxWidth = '200px';
-                    img.style.maxHeight = '200px';
-                    img.style.borderRadius = '5px';
-                    img.style.border = '1px solid #ddd';
+                    img.alt = "Document Image";
+
+                    Object.assign(img.style, previewStyle);
 
                     img.addEventListener('click', () => {
                         window.open(filePath, '_blank');
@@ -414,6 +414,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     wrapper.appendChild(previewContainer);
                 }
 
+                // ----------------------------
+                // LABEL
+                // ----------------------------
                 const label = document.createElement('div');
                 label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
@@ -421,12 +424,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 label.style.marginTop = '8px';
 
                 wrapper.appendChild(label);
-
                 documentContainer.appendChild(wrapper);
             });
         });
     });
 });
+
 </script>
 
 <!-- identity proof -->
@@ -466,50 +469,49 @@ document.addEventListener('DOMContentLoaded', function() {
                 wrapper.style.margin = '10px';
                 wrapper.style.display = 'inline-block';
 
-                // Preview container
                 const previewContainer = document.createElement('div');
                 previewContainer.style.display = 'inline-block';
+                previewContainer.style.cursor = 'pointer';
+
+                // ----------------------------
+                // 💠 UNIFORM PREVIEW STYLE
+                // ----------------------------
+                const previewStyle = {
+                    width: "200px",
+                    height: "200px",
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    objectFit: "contain",
+                    padding: "10px",
+                    background: "#fafafa"
+                };
 
                 if (ext === 'pdf') {
-                    // PDF preview
-                    const wrapperDiv = document.createElement('div');
-                    wrapperDiv.style.width = '200px';
-                    wrapperDiv.style.height = '200px';
-                    wrapperDiv.style.border = '1px solid #ddd';
-                    wrapperDiv.style.borderRadius = '5px';
-                    wrapperDiv.style.cursor = 'pointer';
-                    wrapperDiv.style.display = 'inline-block';
-                    wrapperDiv.style.position = 'relative';
-                    wrapperDiv.title = "Click to open PDF in new tab";
+                    // ----------------------------
+                    // PDF → STATIC ICON
+                    // ----------------------------
+                    const icon = document.createElement('img');
+                    icon.src = "/admin/image/PDF_file_icon.svg";
+                    icon.alt = "PDF File";
 
-                    const iframe = document.createElement('iframe');
-                    iframe.src = filePath;
-                    iframe.type = 'application/pdf';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.pointerEvents = 'none'; // let clicks pass through
-                    iframe.style.border = 'none';
+                    Object.assign(icon.style, previewStyle);
 
-                    wrapperDiv.appendChild(iframe);
-
-                    wrapperDiv.addEventListener('click', () => {
+                    icon.addEventListener('click', () => {
                         window.open(filePath, '_blank');
                     });
 
-                    previewContainer.appendChild(wrapperDiv);
+                    previewContainer.appendChild(icon);
                     wrapper.appendChild(previewContainer);
 
                 } else {
-                    // Image preview
-                    previewContainer.style.cursor = 'pointer';
-
+                    // ----------------------------
+                    // IMAGE PREVIEW
+                    // ----------------------------
                     const img = document.createElement('img');
                     img.src = filePath;
-                    img.alt = 'Document Image';
-                    img.style.maxWidth = '200px';
-                    img.style.maxHeight = '200px';
-                    img.style.borderRadius = '5px';
-                    img.style.border = '1px solid #ddd';
+                    img.alt = "Document Image";
+
+                    Object.assign(img.style, previewStyle);
 
                     img.addEventListener('click', () => {
                         window.open(filePath, '_blank');
@@ -519,6 +521,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     wrapper.appendChild(previewContainer);
                 }
 
+                // ----------------------------
+                // LABEL
+                // ----------------------------
                 const label = document.createElement('div');
                 label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
@@ -531,6 +536,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 
 </script>
 
@@ -573,46 +579,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const previewContainer = document.createElement('div');
                 previewContainer.style.display = 'inline-block';
+                previewContainer.style.cursor = 'pointer';
+
+                // ----------------------------
+                // UNIFORM PREVIEW STYLE
+                // ----------------------------
+                const previewStyle = {
+                    width: "200px",
+                    height: "200px",
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    objectFit: "contain",
+                    padding: "10px",
+                    background: "#fafafa"
+                };
 
                 if (ext === 'pdf') {
-                    // PDF preview
-                    const wrapperDiv = document.createElement('div');
-                    wrapperDiv.style.width = '200px';
-                    wrapperDiv.style.height = '200px';
-                    wrapperDiv.style.border = '1px solid #ddd';
-                    wrapperDiv.style.borderRadius = '5px';
-                    wrapperDiv.style.cursor = 'pointer';
-                    wrapperDiv.style.position = 'relative';
-                    wrapperDiv.title = "Click to open PDF in new tab";
+                    // PDF → STATIC ICON
+                    const icon = document.createElement('img');
+                    icon.src = "/admin/image/PDF_file_icon.svg";
+                    icon.alt = "PDF File";
+                    Object.assign(icon.style, previewStyle);
 
-                    const iframe = document.createElement('iframe');
-                    iframe.src = filePath;
-                    iframe.type = 'application/pdf';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.pointerEvents = 'none'; // let clicks pass through
-                    iframe.style.border = 'none';
-
-                    wrapperDiv.appendChild(iframe);
-
-                    wrapperDiv.addEventListener('click', () => {
+                    icon.addEventListener('click', () => {
                         window.open(filePath, '_blank');
                     });
 
-                    previewContainer.appendChild(wrapperDiv);
+                    previewContainer.appendChild(icon);
                     wrapper.appendChild(previewContainer);
 
                 } else {
-                    // Image preview
-                    previewContainer.style.cursor = 'pointer';
-
+                    // IMAGE PREVIEW
                     const img = document.createElement('img');
                     img.src = filePath;
-                    img.alt = 'Document Image';
-                    img.style.maxWidth = '200px';
-                    img.style.maxHeight = '200px';
-                    img.style.borderRadius = '5px';
-                    img.style.border = '1px solid #ddd';
+                    img.alt = "Document Image";
+                    Object.assign(img.style, previewStyle);
 
                     img.addEventListener('click', () => {
                         window.open(filePath, '_blank');
@@ -622,6 +623,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     wrapper.appendChild(previewContainer);
                 }
 
+                // LABEL
                 const label = document.createElement('div');
                 label.innerText = isFront;
                 label.style.fontSize = '0.9rem';
@@ -664,7 +666,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Assuming there's only one document in the list
+            // Assuming there's only one document
             const doc = documents[0];
             const filePath = doc.document_path;
             const ext = filePath.split('.').pop().toLowerCase();
@@ -674,42 +676,38 @@ document.addEventListener('DOMContentLoaded', function() {
             wrapper.style.margin = '10px';
             wrapper.style.display = 'inline-block';
 
+            // ----------------------------
+            // UNIFORM PREVIEW STYLE
+            // ----------------------------
+            const previewStyle = {
+                width: "200px",
+                height: "200px",
+                border: "1px solid #ddd",
+                borderRadius: "5px",
+                objectFit: "contain",
+                padding: "10px",
+                background: "#fafafa",
+                cursor: "pointer"
+            };
+
             if (ext === 'pdf') {
-                // PDF preview
-                const wrapperDiv = document.createElement('div');
-                wrapperDiv.style.width = '200px';
-                wrapperDiv.style.height = '200px';
-                wrapperDiv.style.border = '1px solid #ddd';
-                wrapperDiv.style.borderRadius = '5px';
-                wrapperDiv.style.cursor = 'pointer';
-                wrapperDiv.style.position = 'relative';
-                wrapperDiv.title = "Click to open PDF in new tab";
+                // PDF → STATIC ICON
+                const icon = document.createElement('img');
+                icon.src = "/admin/image/PDF_file_icon.svg";
+                icon.alt = "PDF File";
+                Object.assign(icon.style, previewStyle);
 
-                const iframe = document.createElement('iframe');
-                iframe.src = filePath;
-                iframe.type = 'application/pdf';
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.pointerEvents = 'none'; // let clicks pass through
-                iframe.style.border = 'none';
-
-                wrapperDiv.appendChild(iframe);
-
-                wrapperDiv.addEventListener('click', () => {
+                icon.addEventListener('click', () => {
                     window.open(filePath, '_blank');
                 });
 
-                wrapper.appendChild(wrapperDiv);
+                wrapper.appendChild(icon);
             } else {
-                // Image preview
+                // IMAGE PREVIEW
                 const img = document.createElement('img');
                 img.src = filePath;
-                img.alt = 'Document Image';
-                img.style.maxWidth = '200px';
-                img.style.maxHeight = '200px';
-                img.style.borderRadius = '5px';
-                img.style.border = '1px solid #ddd';
-                img.style.cursor = 'pointer';
+                img.alt = "Document Image";
+                Object.assign(img.style, previewStyle);
 
                 img.addEventListener('click', () => {
                     window.open(filePath, '_blank');
@@ -722,6 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 
 
 </script>
@@ -755,7 +754,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             documents.forEach(doc => {
                 const filePath = doc.document_path;
-                const isFront = doc.is_front ? 'Front' : 'Back';
                 const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
@@ -763,70 +761,52 @@ document.addEventListener('DOMContentLoaded', function() {
                 wrapper.style.margin = '10px';
                 wrapper.style.display = 'inline-block';
 
-                const previewContainer = document.createElement('div');
-                previewContainer.style.display = 'inline-block';
+                // ----------------------------
+                // UNIFORM PREVIEW STYLE
+                // ----------------------------
+                const previewStyle = {
+                    width: "200px",
+                    height: "200px",
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    objectFit: "contain",
+                    padding: "10px",
+                    background: "#fafafa",
+                    cursor: "pointer"
+                };
 
                 if (ext === 'pdf') {
-                    // PDF preview
-                    const wrapperDiv = document.createElement('div');
-                    wrapperDiv.style.width = '200px';
-                    wrapperDiv.style.height = '200px';
-                    wrapperDiv.style.border = '1px solid #ddd';
-                    wrapperDiv.style.borderRadius = '5px';
-                    wrapperDiv.style.cursor = 'pointer';
-                    wrapperDiv.style.position = 'relative';
-                    wrapperDiv.title = "Click to open PDF in new tab";
+                    // PDF → STATIC ICON
+                    const icon = document.createElement('img');
+                    icon.src = "/admin/image/PDF_file_icon.svg";
+                    icon.alt = "PDF File";
+                    Object.assign(icon.style, previewStyle);
 
-                    const iframe = document.createElement('iframe');
-                    iframe.src = filePath;
-                    iframe.type = 'application/pdf';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.pointerEvents = 'none'; // let clicks pass through
-                    iframe.style.border = 'none';
-
-                    wrapperDiv.appendChild(iframe);
-
-                    wrapperDiv.addEventListener('click', () => {
+                    icon.addEventListener('click', () => {
                         window.open(filePath, '_blank');
                     });
 
-                    previewContainer.appendChild(wrapperDiv);
-                    wrapper.appendChild(previewContainer);
-
+                    wrapper.appendChild(icon);
                 } else {
-                    // Image preview
-                    previewContainer.style.cursor = 'pointer';
-
+                    // IMAGE PREVIEW
                     const img = document.createElement('img');
                     img.src = filePath;
-                    img.alt = 'Document Image';
-                    img.style.maxWidth = '200px';
-                    img.style.maxHeight = '200px';
-                    img.style.borderRadius = '5px';
-                    img.style.border = '1px solid #ddd';
+                    img.alt = "Document Image";
+                    Object.assign(img.style, previewStyle);
 
                     img.addEventListener('click', () => {
                         window.open(filePath, '_blank');
                     });
 
-                    previewContainer.appendChild(img);
-                    wrapper.appendChild(previewContainer);
+                    wrapper.appendChild(img);
                 }
 
-                // Label for Front/Back
-                const label = document.createElement('div');
-                label.innerText = isFront;
-                label.style.fontSize = '0.9rem';
-                label.style.fontWeight = '500';
-                label.style.marginTop = '8px';
-
-                wrapper.appendChild(label);
                 documentContainer.appendChild(wrapper);
             });
         });
     });
 });
+
 
 </script>
 
@@ -859,7 +839,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             documents.forEach(doc => {
                 const filePath = doc.document_path;
-                const isFront = doc.is_front ? 'Front' : 'Back';
                 const ext = filePath.split('.').pop().toLowerCase();
 
                 const wrapper = document.createElement('div');
@@ -867,70 +846,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 wrapper.style.margin = '10px';
                 wrapper.style.display = 'inline-block';
 
-                const previewContainer = document.createElement('div');
-                previewContainer.style.display = 'inline-block';
+                // Uniform preview style
+                const previewStyle = {
+                    width: "200px",
+                    height: "200px",
+                    border: "1px solid #ddd",
+                    borderRadius: "5px",
+                    objectFit: "contain",
+                    padding: "10px",
+                    background: "#fafafa",
+                    cursor: "pointer"
+                };
 
                 if (ext === 'pdf') {
-                    // PDF preview using iframe
-                    const wrapperDiv = document.createElement('div');
-                    wrapperDiv.style.width = '200px';
-                    wrapperDiv.style.height = '200px';
-                    wrapperDiv.style.border = '1px solid #ddd';
-                    wrapperDiv.style.borderRadius = '5px';
-                    wrapperDiv.style.cursor = 'pointer';
-                    wrapperDiv.style.position = 'relative';
-                    wrapperDiv.title = "Click to open PDF in new tab";
+                    // PDF → static icon
+                    const icon = document.createElement('img');
+                    icon.src = "/admin/image/PDF_file_icon.svg";
+                    icon.alt = "PDF File";
+                    Object.assign(icon.style, previewStyle);
 
-                    const iframe = document.createElement('iframe');
-                    iframe.src = filePath;
-                    iframe.type = 'application/pdf';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.pointerEvents = 'none';  // Let clicks pass through iframe
-                    iframe.style.border = 'none';
-
-                    wrapperDiv.appendChild(iframe);
-
-                    // Click to open PDF in new tab
-                    wrapperDiv.addEventListener('click', () => {
+                    icon.addEventListener('click', () => {
                         window.open(filePath, '_blank');
                     });
 
-                    previewContainer.appendChild(wrapperDiv);
-                    wrapper.appendChild(previewContainer);
-
+                    wrapper.appendChild(icon);
                 } else {
-                    // Image preview
+                    // IMAGE preview
                     const img = document.createElement('img');
                     img.src = filePath;
-                    img.alt = 'Document Image';
-                    img.style.maxWidth = '200px';
-                    img.style.maxHeight = '200px';
-                    img.style.borderRadius = '5px';
-                    img.style.border = '1px solid #ddd';
-                    img.style.cursor = 'pointer';
+                    img.alt = "Document Image";
+                    Object.assign(img.style, previewStyle);
 
                     img.addEventListener('click', () => {
                         window.open(filePath, '_blank');
                     });
 
-                    previewContainer.appendChild(img);
-                    wrapper.appendChild(previewContainer);
+                    wrapper.appendChild(img);
                 }
 
-                // Label for Front/Back
-                const label = document.createElement('div');
-                label.innerText = isFront;
-                label.style.fontSize = '0.9rem';
-                label.style.fontWeight = '500';
-                label.style.marginTop = '8px';
-
-                wrapper.appendChild(label);
                 documentContainer.appendChild(wrapper);
             });
         });
     });
 });
+
 
 </script>
 
