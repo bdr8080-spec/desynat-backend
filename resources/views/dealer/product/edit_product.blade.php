@@ -759,7 +759,7 @@
 
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
-                onclick="location.href='{{ route('seller.products') }}'">Cancel</button>
+                onclick="location.href='{{ route('seller.view_product',Request()->id) }}'">Cancel</button>
             <button type="submit" class="btn add-fillbtn w-100">Edit Product</button>
         </div>
     </form>
