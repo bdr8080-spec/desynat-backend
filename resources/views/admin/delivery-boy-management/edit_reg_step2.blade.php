@@ -305,7 +305,6 @@ label {
                                     @endphp
 
                                     <label for="rcFront" class="upload-box">
-                                                                                <img src="/admin/image/imge-upload.svg" class="upload-icon">
                                         <img id="rcFrontPreview" class="preview-image" style="display:{{ $rcF && $ext !== 'pdf' ? 'block' : 'none' }}; pointer-events:none;" src="{{ $rcF ?: '/admin/image/imge-upload.svg' }}">
                                         <embed id="rcFrontPdfPreview" class="preview-pdf" style="display:{{ $rcF && $ext === 'pdf' ? 'block' : 'none' }}; pointer-events:none;" type="application/pdf" src="{{ $rcF }}">
 
