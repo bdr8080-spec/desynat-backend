@@ -7,6 +7,13 @@
  
 @endphp
 
+
+<style>
+    .specifications-row {
+        background: #FAFAFA;
+        border: 1px solid #cccccc45;
+        }
+</style>
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
