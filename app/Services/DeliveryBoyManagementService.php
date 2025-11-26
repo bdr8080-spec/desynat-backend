@@ -336,21 +336,34 @@ class DeliveryBoyManagementService
                 ['field' => 'registration_certificate_back', 'doc_type' => 6]
             ];
 
+            //dd($documents);
+
             foreach ($documents as $doc) {
-                DeliveryBoyDocument::create([
-                    'delivery_boy_id' => $deliveryBoy->id,
-                    'document_type' => $doc['doc_type'],
-                    'document_path' => $request->{$doc['field']},
-                    'is_front' => $doc['is_front'] ?? 0
-                ]);
+                $field = $doc['field'];
+
+                if (!empty($request->$field)) {
+
+                    DeliveryBoyDocument::create([
+                        'delivery_boy_id' => $deliveryBoy->id,
+                        'document_type' => $doc['doc_type'],
+                        'document_path' => $request->$field,
+                        'is_front' => $doc['is_front'] ?? 0,
+                    ]);
+
+                }
             }
+
+            $updatedDocuments = DeliveryBoyDocument::where('delivery_boy_id', $deliveryBoy->id)->get();
 
             DB::commit();
 
             return [
                 'status'  => 'success',
                 'message' => 'Delivery boy updated successfully',
-                'data'    => $deliveryBoy
+                'data'    => [
+                    'delivery_boy' => $deliveryBoy,
+                    'documents' => $updatedDocuments
+                ]
             ];
 
         } catch (\Exception $e) {
