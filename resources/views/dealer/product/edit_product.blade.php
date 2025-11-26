@@ -235,7 +235,7 @@
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                         <div class="mt-3">Upload Product Photo</div>
-                        <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
+                        <input type="file" accept="image/*" id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[{{$product_Variation_count}}][]" rel="{{$product_Variation_count}}">
                     </label>
 
