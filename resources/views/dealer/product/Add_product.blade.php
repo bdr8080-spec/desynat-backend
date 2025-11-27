@@ -222,7 +222,7 @@
 
         <!----- variant panel ------>
         <div class="variant-panel">
-            <div class="product-pnls mt-4">
+            <div class="product-pnls mt-4" id="variant_image_id0">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
@@ -241,13 +241,13 @@
             <div class="wapper-header mt-4">
                 <div class="row price-block">
                     <div class="col-lg-3">
-                        <div class="sub-form">
+                        <div class="sub-form product-row">
                             <div class="label-flex">
                                 <label>Colour</label>
                             </div>
 
-                            <select class="form-select form-control" aria-label="Default select example"
-                                name="color_id[]">
+                            <select class="form-select form-control color-select" aria-label="Default select example"
+                                name="color_id[]" rel="0">
                                 <option value="">Select Colour</option>
                                 @foreach ($color as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -973,7 +973,7 @@ var product_Variation_count = 1;
 $(".addVariantBtn").click(function() {
     $(".variant-panel").append(`
         <div class="variant-panel-bg">
-            <div class="product-pnls mt-4">
+            <div class="product-pnls mt-4"  id="variant_image_id${product_Variation_count}">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
@@ -992,13 +992,13 @@ $(".addVariantBtn").click(function() {
                 <div class="row">
                 
                      <div class="col-lg-3">
-                    <div class="sub-form">
+                    <div class="sub-form product-row">
                         <div class="label-flex">
                             <label>Colour</label>
                         </div>
 
-                        <select class="form-select form-control" aria-label="Default select example" name="color_id[]">
-                                <option value="">Select Colour</option>
+                        <select class="form-select form-control color-select" aria-label="Default select example" name="color_id[]" rel="${product_Variation_count}">
+                            <option value="">Select Colour</option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
@@ -1518,6 +1518,54 @@ document.getElementById('brand_id').addEventListener('change', function() {
         otherField1.style.display = 'none';
     }
 });
+
+
+// {{-- When User Select Same Color then remove Image Field --}}
+
+$(document).ready(function() {
+
+    // Use event delegation for dynamically added rows
+    $(document).on('change', '.color-select', function() {
+
+         let dynamic_id = $(this).attr("rel");
+
+        let selectedColors = [];
+
+        // Collect all selected colors
+        $('.color-select').each(function() {
+            let val = $(this).val();
+            if(val !== "") selectedColors.push(val);
+
+            debugger;
+        });
+
+        // Loop through each row to hide/show image upload
+        $('.product-row').each(function() {
+            let rowColor = $(this).find('.color-select').val();
+            
+            debugger;
+            if(rowColor === "") return; // skip empty
+
+            // Count occurrences of this color
+            let occurrences = selectedColors.filter(c => c === rowColor).length;
+
+            if(occurrences > 1){
+                
+            debugger;
+
+                $('#variant_image_id'+dynamic_id).hide();
+            } else {
+                
+            debugger;
+                 $('#variant_image_id'+dynamic_id).show();
+            }
+
+        });
+
+    });
+
+});
+
 </script>
 
 {{-- // common j s --}}

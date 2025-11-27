@@ -936,11 +936,7 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
 $("#addmore").click(function() {
 
-    specification_count = {
-        {
-            $specification_count
-        }
-    }
+    specification_count =    {{ $specification_count }}
 
     $(".append-panel").append(`
 
@@ -1017,11 +1013,7 @@ $(document).on("click", ".remove-btn", function() {
 </script>
 
 <script>
-product_Variation_count = {
-    {
-        $product_Variation_count
-    }
-};
+product_Variation_count = {{ $product_Variation_count }};
 
 // ADD NEW Variant
 $(".addVariantBtn").click(function() {
@@ -1508,7 +1500,8 @@ $(document).on("input change",
                finalPrice=finalPrice;
           } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
                 finalPrice=finalPrice.toFixed(2);
-         }
+            }
+
 
         }
 
