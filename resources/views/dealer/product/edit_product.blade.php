@@ -16,6 +16,27 @@ $product_Variation_count=0;
 .mltimg img{
     object-fit: fill !important;
 }
+
+  .upload-image1 {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 10px;
+    margin-bottom: 15px; /* this prevents overlap */
+}
+
+#edit_uploadChart_preview {
+    /* margin-top: 15px; ensures preview goes below */
+    position: absolute;
+    z-index: 2;
+}
+
+.multiple-img1{
+    height: 70%;
+    width: 70%;
+    overflow: hidden;
+    margin-left: 13px;
+}
+
 </style>
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
@@ -786,27 +807,29 @@ $product_Variation_count=0;
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
                 </label>
-                <p class="text-danger" id="error-upload_size_chart"></p>
 
-            </div>
-
-
-
-            <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
+                
+                        {{-- show image code --}}
+                        
+             <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
                 @if(!empty($product_details->upload_size_chart))
-                <div class="position-relative multiple-img mltimg">
-                    <img src="{{ $product_details->upload_size_chart }}"
-                        style="width:100%;height:100%;object-fit:cover;border-radius:8px; object-fit:fill!importent:">
-                    <span class="remove-ic remove-image"
+
+                <div class="multiple-img1 position-relative">
+                <img src="{{ $product_details->upload_size_chart }}" class="w-100 rounded">
+              <span class="remove-ic remove-image"
                         style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
 
-                    <input type="hidden" accept="image/*" value="{{ $product_details->upload_size_chart }}"
+                <input type="hidden" accept="image/*" value="{{ $product_details->upload_size_chart }}"
                         name="old_upload_size_chart">
+    
+            </div>
 
-
-                </div>
                 @endif
             </div>
+                        {{-- show image code end here --}}
+                <p class="text-danger" id="error-upload_size_chart"></p>
+           
+        </div>
 
             {{-- <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div> --}}
         </div>
@@ -864,7 +887,7 @@ $('#edit_uploadChart').on('change', e => {
     [...files].forEach(f => {
         let url = URL.createObjectURL(f);
         let imgBox = $(`
-      <div class="multiple-img position-relative">
+      <div class="multiple-img1 position-relative">
         <img src="${url}" class="w-100 rounded">
         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
       </div>
