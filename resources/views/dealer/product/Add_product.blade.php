@@ -712,21 +712,8 @@
                     <p class="text-danger" id="error-upload_size_chart"></p>
                 </label>
             </div>
-            <!-- <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div> -->
+             <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
         </div>
-
-        <!-- <div class="product-pnls mt-4">
-            <div class="upload-image" style="height:170px;">
-                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
-                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                    <div class="py-2">Upload Size Chart</div>
-                    <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
-                        name="upload_size_chart">
-                    <p class="text-danger" id="error-upload_size_chart"></p>
-                </label>
-            </div>
-            <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
-        </div> -->
 
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
@@ -837,49 +824,25 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
     this.files = dt.files;
 });
 
+// Upload Chart Image in footer side
 
-// Upload Chart Image in footer side
-// $('#edit_uploadChart').on('change', e => {
-//     let files = e.target.files;
-//     $('#edit_uploadChart_preview').empty(); // clear old previews
-//     [...files].forEach(f => {
-//         let url = URL.createObjectURL(f);
-//         let imgBox = $(`
-//       <div class="multiple-img position-relative">
-//         <img src="${url}" class="w-100 rounded">
-//         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-//       </div>
-//     `);
-//         imgBox.find('.remove-ic').click(() => imgBox.remove());
-//         $('#edit_uploadChart_preview').append(imgBox);
-//     });
-// });
-// Upload Chart Image in footer side
-// Upload Chart Image in footer side
 $('#edit_uploadChart').on('change', e => {
     let files = e.target.files;
-
-    // Replace placeholder image with second img tag
-    if (files.length > 0) {
-        let firstUrl = URL.createObjectURL(files[0]);
-
-        $('#placeholderImg').hide();     // hide placeholder
-        $('#uploadedImg').attr('src', firstUrl).show();   // show preview img
-    }
-
     $('#edit_uploadChart_preview').empty(); // clear old previews
     [...files].forEach(f => {
         let url = URL.createObjectURL(f);
         let imgBox = $(`
-          <div class="multiple-img position-relative">
-            <img src="${url}" class="w-100 rounded">
-            <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-          </div>
-        `);
+      <div class="multiple-img position-relative">
+        <img src="${url}" class="w-100 rounded">
+        <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+      </div>
+    `);
         imgBox.find('.remove-ic').click(() => imgBox.remove());
         $('#edit_uploadChart_preview').append(imgBox);
     });
 });
+
+// Upload Chart Image in footer side
 
 </script>
 
@@ -1524,45 +1487,45 @@ document.getElementById('brand_id').addEventListener('change', function() {
 
 $(document).ready(function() {
 
-    // Use event delegation for dynamically added rows
-    $(document).on('change', '.color-select', function() {
+    // // Use event delegation for dynamically added rows
+    // $(document).on('change', '.color-select', function() {
 
-         let dynamic_id = $(this).attr("rel");
+    //      let dynamic_id = $(this).attr("rel");
 
-        let selectedColors = [];
+    //     let selectedColors = [];
 
-        // Collect all selected colors
-        $('.color-select').each(function() {
-            let val = $(this).val();
-            if(val !== "") selectedColors.push(val);
+    //     // Collect all selected colors
+    //     $('.color-select').each(function() {
+    //         let val = $(this).val();
+    //         if(val !== "") selectedColors.push(val);
 
-            debugger;
-        });
+    //         // debugger;
+    //     });
 
-        // Loop through each row to hide/show image upload
-        $('.product-row').each(function() {
-            let rowColor = $(this).find('.color-select').val();
+    //     // Loop through each row to hide/show image upload
+    //     $('.product-row').each(function() {
+    //         let rowColor = $(this).find('.color-select').val();
             
-            debugger;
-            if(rowColor === "") return; // skip empty
+    //         // debugger;
+    //         if(rowColor === "") return; // skip empty
 
-            // Count occurrences of this color
-            let occurrences = selectedColors.filter(c => c === rowColor).length;
+    //         // Count occurrences of this color
+    //         let occurrences = selectedColors.filter(c => c === rowColor).length;
 
-            if(occurrences > 1){
+    //         if(occurrences > 1){
                 
-            debugger;
+    //         // debugger;
 
-                $('#variant_image_id'+dynamic_id).hide();
-            } else {
-                
-            debugger;
-                 $('#variant_image_id'+dynamic_id).show();
-            }
+    //             $('#variant_image_id'+dynamic_id).hide();
+    //         } else {
 
-        });
+    //         // debugger;
+    //              $('#variant_image_id'+dynamic_id).show();
+    //         }
 
-    });
+    //     });
+
+    // });
 
 });
 
