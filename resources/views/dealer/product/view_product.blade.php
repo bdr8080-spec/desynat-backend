@@ -121,8 +121,14 @@ p, span{
     justify-content: center;
     text-align: center;
     left: 40%;
-}Size Guide
+}
 
+.modal-footer, .modal-header{
+    border:0;
+}
+.cstm-pd{
+    padding:auto 5px;
+}
 
 </style>
 
@@ -194,7 +200,7 @@ p, span{
 
 <div id="size-list"></div>
 
-<div id="variation-box" class="ps-0 desc-box rounded-4 my-3"></div>
+<div id="variation-box" class="desc-box cstm-pd rounded-4 my-3"></div>
 
     </div>
 
@@ -349,8 +355,8 @@ p, span{
       <div class="modal-body">
         Are you sure you want to delete this item?
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">No</button>
         <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">Yes, Delete</button>
       </div>
     </div>
