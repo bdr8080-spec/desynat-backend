@@ -230,20 +230,23 @@
                                         <div class="form-group mt-4">
                                             <h5>Color</h5>
 
+                                            @foreach ($color as $item)
                                             <div class="form-check my-4">
                                                 <input class="form-check-input"
-                                                    type="radio"
+                                                    type="checkbox"
                                                     name="color"
-                                                    value="1"
+                                                    value="{{$item->id}}"
                                                     id="color1"
-                                                    {{ request()->color == 1 ? 'checked' : '' }}>
+                                                    {{ request()->color == $item->id ? 'checked' : '' }}>
 
                                                 <label class="form-check-label" for="color1">
-                                                    Color
+                                                   {{$item->name}}
                                                 </label>
                                             </div>
+                                            @endforeach
+                                           
 
-                                            <div class="form-check my-4">
+                                            {{-- <div class="form-check my-4">
                                                 <input class="form-check-input"
                                                     type="radio"
                                                     name="color"
@@ -254,7 +257,7 @@
                                                 <label class="form-check-label" for="color2">
                                                     Color
                                                 </label>
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                         {{-- Discount Range --}}

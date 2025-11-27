@@ -598,6 +598,10 @@ $product_Variation_count=0;
                         </div>
                     </div>
                 </div>
+                </div>
+
+                <div class="row">
+
                 <div class="col-lg-6 col-md-6">
                     <div class="title24">Is this product Exchangable ?</div>
                     <div class="row">
@@ -639,6 +643,8 @@ $product_Variation_count=0;
                     </div>
 
                 </div>
+                </div>
+
             </div>
         </div>
 
@@ -814,7 +820,7 @@ $product_Variation_count=0;
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
                 onclick="location.href='{{ route('seller.view_product',Request()->id) }}'">Cancel</button>
-            <button type="submit" class="btn add-fillbtn w-100">Edit Product</button>
+            <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
         </div>
     </form>
 

@@ -40,7 +40,7 @@ class UserAddressService
     }
 
     public function viewAddress($request){
-        $viewAddress = userAddress::where('user_id', $request->user()->id)->get();
+        $viewAddress = userAddress::orderBy('set_as_default','desc')->where('user_id', $request->user()->id)->get();
 
             if ($viewAddress->isEmpty()) {
                 return [
@@ -80,6 +80,22 @@ class UserAddressService
 
 
     }
+
+
+   public function addressSetDefault($request){
+    
+     userAddress::where('user_id', $request->id)->update(['set_as_default' => '0']);
+
+        $updateSetAddress = userAddress::where('id', $request->address_id)
+        ->update(['set_as_default' => '1']);
+
+        return [
+            'status' => 'success',
+            'message' => "Address set as default successfully",
+            'data' => $updateSetAddress
+        ];
+
+   }
 
 
 
