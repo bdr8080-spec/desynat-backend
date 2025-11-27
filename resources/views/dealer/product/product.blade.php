@@ -119,8 +119,10 @@
                                         </td>
                                         <td>
 
-                                            {{ $item->product_variants['0']->sku }}
+                                            {{-- {{ $item->product_variants['0']->sku }} --}}
 
+                                            {{ $item->id }}
+                                            
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
                                         <td>{{ $item->brand->name_english }}</td>
@@ -236,7 +238,8 @@
                                         </td>
                                         <td>
 
-                                            {{ $item->product_variants['0']->sku }}
+                                            {{-- {{ $item->product_variants['0']->sku }} --}}
+                                            {{ $item->id }}
 
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
@@ -353,7 +356,8 @@
                                         </td>
                                         <td>
 
-                                            {{ $item->product_variants['0']->sku }}
+                                            {{-- {{ $item->product_variants['0']->sku }} --}}
+                                            {{ $item->id }}
 
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
