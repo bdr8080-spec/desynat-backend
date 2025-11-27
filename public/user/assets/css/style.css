@@ -1701,7 +1701,7 @@ h3.mid-headng{
     color: var(--secondry2-color);
     margin-top: 20px;
 }
-.address-tab span{
+.address-tab span.selectAddress_{
     position: absolute;
     top: 0%;
     left: 10px;

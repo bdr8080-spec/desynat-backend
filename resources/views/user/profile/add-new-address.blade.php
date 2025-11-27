@@ -15,7 +15,7 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">Name</label>
-                    <input type="text" name="name" class="form-control notapplyspace" placeholder="Faizan Ansari" value="{{@$address->name}}" />
+                    <input type="text" name="name" class="form-control notapplyspace" placeholder="Enter Name" value="{{@$address->name}}" />
                     <span class="text-danger" id="error-name"></span>
                 </div>
             </div>
@@ -97,15 +97,15 @@
             <div class="col-lg-6 mt-3">
                 <div class="form-group address-tab position-relative {{ (isset($address) && $address->save_address_as == 1) ? 'active' : '' }}">
                     <input type="radio" name="save_address_as" value="1" class="form-control notapplyspace" style="background: transparent;"  {{ (isset($address) && $address->save_address_as == 1) ? 'checked' : '' }} />
-                    <span><i class="bi bi-house"></i> Home</span>
-                    <span class="text-danger" id="error-save_address_as"></span>
+                    <span class="selectAddress_"><i class="bi bi-house"></i> Home</span>
                 </div>
+                <span class="text-danger" id="error-save_address_as"></span>
             </div>
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group address-tab position-relative  {{ (isset($address) && $address->save_address_as == 0) ? 'active' : '' }}">
                     <input type="radio" name="save_address_as" value="0" class="form-control notapplyspace" style="background: transparent;"  {{ (isset($address) && $address->save_address_as == 1) ? 'checked' : '' }}/>
-                    <span><i class="bi bi-building"></i> Office</span>
+                    <span class="selectAddress_"><i class="bi bi-building"></i> Office</span>
                 </div>
             </div>
 
