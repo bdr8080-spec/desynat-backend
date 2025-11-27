@@ -44,7 +44,7 @@ class AddressController extends Controller
             'mobile'          => 'required|digits_between:7,15',
             'address'         => 'required',
             'house_no'        => 'required',
-            'street_no'       => 'required',
+            // 'street_no'       => 'required',
             'city'            => 'required',
             'state'           => 'required',
             'save_address_as' => 'required',
