@@ -46,7 +46,7 @@ class MatchArrayProductVariation implements ValidationRule
         $count3 = count($data->size_id ?? []);
         $count4 = count($data->total_stock ?? []);
         $count5 = count($data->sku ?? []);
-        $count6 = count($data->sku_threshold_value ?? []);
+        // $count6 = count($data->sku_threshold_value ?? []);
         $count7 = count($data->actual_price ?? []);
         $count8 = count($data->discount_type ?? []);
         $count9 = count($data->discount_value ?? []);
@@ -55,7 +55,6 @@ class MatchArrayProductVariation implements ValidationRule
 
         if (!($count1 === $count2 && $count1 === $count3 && $count1 === $count4 && 
         $count1 === $count5 && 
-        $count1 === $count6 && 
         $count1 === $count7 && 
         $count1 === $count8 && 
         $count1 === $count9 && 

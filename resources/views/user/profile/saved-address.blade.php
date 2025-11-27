@@ -12,11 +12,11 @@
         <div class="saved_address_content">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span><i class="bi bi-building"></i> {{$item->save_address_as == 0 ? 'Home' : 'Office'}}</span>
+                    <span><i class="bi bi-building"></i> {{$item->save_address_as == 1 ? 'Home' : 'Office'}}</span>
                 </div>
                 <div>
                     <a href="{{route('user.update_address',[$item->id])}}"><img src="{{asset('user/assets/images/edit.svg')}}" class="img-fluid"/></a>
-                    <a href="{{route('user.delete_address',[$item->id])}}"><img src="{{asset('assets/images/delete.svg')}}" class="img-fluid" /></a>
+                    <a href="{{route('user.delete_address',[$item->id])}}"><img src="{{asset('user/assets/images/delete.svg')}}" class="img-fluid" /></a>
                     <span class="setAsdefault custom-btn3">Set as Default</span>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             <p>{{$item->address}}</p>
         </div>
         @empty
-            <h3 class="text-center my-5">No address added</h3>
+            <h3 class="text-center my-5" style="font-weight:500 !important;">No address added</h3>
         @endforelse
        
         <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address mb-45" >+ Add New Address</a>

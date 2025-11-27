@@ -1,7 +1,7 @@
 @include('dealer.layout.header')
 <style>
 
-    
+
 </style>
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
@@ -18,7 +18,8 @@
             <div class="title24">Select Category</div>
             <div class="row">
                 <div class="col-lg-6">
-                    <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 pe-3 justify-content-between">
+                    <div
+                        class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 pe-3 justify-content-between">
 
                         @foreach ($category as $key => $item)
                         <div class="check_radio">
@@ -50,7 +51,7 @@
                     </select>
                     <p class="text-danger" id="error-subcategory_id"></p>
                 </div>
-                <div class="sub-form"   id="other-field0"  style="display:none;">
+                <div class="sub-form" id="other-field0" style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In English</span>
@@ -60,7 +61,7 @@
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
 
-                
+
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Product Name</label>
@@ -87,7 +88,8 @@
                     <div class="label-flex">
                         <label>Select Brand</label>
                     </div>
-                    <select class="form-select form-control" aria-label="Default select example" id="brand_id" name="brand_id">
+                    <select class="form-select form-control" aria-label="Default select example" id="brand_id"
+                        name="brand_id">
 
                         <option value="">Select Brand</option>
 
@@ -98,7 +100,7 @@
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
                 </div>
-                <div class="sub-form " id="other-field1"   style="display:none;">
+                <div class="sub-form " id="other-field1" style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In Arabic</span>
@@ -222,9 +224,9 @@
         <div class="variant-panel">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
-                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
-                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Product Images</div>
+                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
+                        <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[0][]" rel="0">
                     </label>
@@ -233,7 +235,7 @@
 
                 </div>
 
-                <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer0"></div>
+                <div class="product-multiple d-flex flex-wrap gap-2" id="previewContainer0"></div>
             </div>
 
             <div class="wapper-header mt-4">
@@ -280,7 +282,8 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10" name="bust[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10"
+                                name="bust[]">
                             <p class="text-danger" id="error-bust_0"></p>
 
                         </div>
@@ -291,7 +294,8 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12" name="waist[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12"
+                                name="waist[]">
 
                             <p class="text-danger" id="error-waist_0"></p>
                         </div>
@@ -302,7 +306,8 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14" name="hip[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
+                                name="hip[]">
                             <p class="text-danger" id="error-hip_0"></p>
 
                         </div>
@@ -337,7 +342,8 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20" name="length[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20"
+                                name="length[]">
 
                             <p class="text-danger" id="error-length_0"></p>
                         </div>
@@ -693,18 +699,34 @@
         <div class="title24">Upload Size Chart</div>
         <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;">
-                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
+                    <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"    
+                        style="width:70px;object-fit:cover; border-radius:6px;">
+
+                    <img id="uploadedImg" src=""
+                        style="width:100px; display:none; object-fit:cover; border-radius:6px;width:100px;object-fit: fill; height: 110px;">
+
+                    <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
+                    <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
+                        name="upload_size_chart">
+                    <p class="text-danger" id="error-upload_size_chart"></p>
+                </label>
+            </div>
+            <!-- <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div> -->
+        </div>
+
+        <!-- <div class="product-pnls mt-4">
+            <div class="upload-image" style="height:170px;">
+                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                     <div class="py-2">Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
+                    <p class="text-danger" id="error-upload_size_chart"></p>
                 </label>
-                <p class="text-danger" id="error-upload_size_chart"></p>
-
             </div>
-
-            <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div>
-        </div>
+            <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
+        </div> -->
 
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
@@ -731,13 +753,7 @@ $(document).ready(function() {
 });
 
 
-$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
-
-
-
-
-
-});
+$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {});
 
 
 
@@ -759,7 +775,7 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 //         $('#previewContainer' + rel).append(imgBox);
 //     });
 
- 
+
 // });
 
 // Store files for each variant input
@@ -823,21 +839,48 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
 
 // Upload Chart Image in footer side
+// $('#edit_uploadChart').on('change', e => {
+//     let files = e.target.files;
+//     $('#edit_uploadChart_preview').empty(); // clear old previews
+//     [...files].forEach(f => {
+//         let url = URL.createObjectURL(f);
+//         let imgBox = $(`
+//       <div class="multiple-img position-relative">
+//         <img src="${url}" class="w-100 rounded">
+//         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+//       </div>
+//     `);
+//         imgBox.find('.remove-ic').click(() => imgBox.remove());
+//         $('#edit_uploadChart_preview').append(imgBox);
+//     });
+// });
+// Upload Chart Image in footer side
+// Upload Chart Image in footer side
 $('#edit_uploadChart').on('change', e => {
     let files = e.target.files;
+
+    // Replace placeholder image with second img tag
+    if (files.length > 0) {
+        let firstUrl = URL.createObjectURL(files[0]);
+
+        $('#placeholderImg').hide();     // hide placeholder
+        $('#uploadedImg').attr('src', firstUrl).show();   // show preview img
+    }
+
     $('#edit_uploadChart_preview').empty(); // clear old previews
     [...files].forEach(f => {
         let url = URL.createObjectURL(f);
         let imgBox = $(`
-      <div class="multiple-img position-relative">
-        <img src="${url}" class="w-100 rounded">
-        <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-      </div>
-    `);
+          <div class="multiple-img position-relative">
+            <img src="${url}" class="w-100 rounded">
+            <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+          </div>
+        `);
         imgBox.find('.remove-ic').click(() => imgBox.remove());
         $('#edit_uploadChart_preview').append(imgBox);
     });
 });
+
 </script>
 
 <script>
@@ -932,7 +975,7 @@ $(".addVariantBtn").click(function() {
         <div class="variant-panel-bg">
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
-                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                         <div class="mt-3">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
@@ -1397,6 +1440,14 @@ $(document).on("input change",
         // Percentage
         if (discountType == "1") {
             finalPrice = actualPrice - (actualPrice * (discountValue / 100));
+
+         if (Number.isInteger(finalPrice)) {
+            finalPrice=finalPrice;
+            } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
+                finalPrice=finalPrice.toFixed(2);
+            }
+
+
         }
 
         // Fixed price
@@ -1406,7 +1457,8 @@ $(document).on("input change",
 
         if (finalPrice < 0) finalPrice = 0;
 
-        $("#final_price_" + index).val(finalPrice.toFixed(2));
+        // $("#final_price_" + index).val(finalPrice.toFixed(2));
+        $("#final_price_" + index).val(finalPrice);
     });
 
 // Min value and Max greater then Input Field
@@ -1448,31 +1500,28 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
 
 
 
-    // document.querySelector('.brand-select').addEventListener('change', function () {
-      document.getElementById('brand_id').addEventListener('change', function () {
-        const otherField = document.querySelector('#other-field0');
-      const otherField1 = document.querySelector('#other-field1');
+// document.querySelector('.brand-select').addEventListener('change', function () {
+document.getElementById('brand_id').addEventListener('change', function() {
+    const otherField = document.querySelector('#other-field0');
+    const otherField1 = document.querySelector('#other-field1');
 
-        const selectedText = this.options[this.selectedIndex].text.trim().toLowerCase();
+    const selectedText = this.options[this.selectedIndex].text.trim().toLowerCase();
 
-        // console.log(selectedText);
+    // console.log(selectedText);
 
-        if (selectedText  === 'other') {
-            otherField.style.display = 'block';
-            otherField1.style.display = 'block';
-            
-        } else {
-            otherField.style.display = 'none';
-            otherField1.style.display = 'none';
-        }
-    });
+    if (selectedText === 'other') {
+        otherField.style.display = 'block';
+        otherField1.style.display = 'block';
 
-
-
+    } else {
+        otherField.style.display = 'none';
+        otherField1.style.display = 'none';
+    }
+});
 </script>
 
 {{-- // common j s --}}
-@include('dealer.product.ajax.product_commonjs'); 
+@include('dealer.product.ajax.product_commonjs');
 
 
 @include('dealer.layout.custom_code');
