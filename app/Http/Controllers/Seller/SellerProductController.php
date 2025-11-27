@@ -413,13 +413,13 @@ public function Add_product_code(Request $request){
      foreach($request->variant_image as $key=>$Image1){
 
         foreach($Image1 as $key1=>$Image2){
-            $variation_image[$key][$key1]=image_upload($Image2,$dir);  // chart Image
+            $variation_image[$key][$key1]=doc_upload($Image2,$dir);  // chart Image
         }
      }
 
     //  Product Size Chart Upload 
      if($request->upload_size_chart){ 
-     $upload_size_chart=image_upload($request->upload_size_chart,$dir);  // chart Image
+     $upload_size_chart=doc_upload($request->upload_size_chart,$dir);  // chart Image
      
     }
 
@@ -910,7 +910,7 @@ foreach ($request->color_id as $key => $val) {
 
             // foreach($imgFile as $key1=>$Image2){
 
-            $uploadedPath = image_upload($imgFile, $dir);   // upload
+            $uploadedPath = doc_upload($imgFile, $dir);   // upload
             $final_variation_images[$key][$count_array] = $uploadedPath;
 
             //  }
@@ -926,7 +926,7 @@ foreach ($request->color_id as $key => $val) {
 
     //  Product Size Chart Upload 
      if($request->upload_size_chart){ 
-     $upload_size_chart=image_upload($request->upload_size_chart,$dir);  // chart Image
+     $upload_size_chart=doc_upload($request->upload_size_chart,$dir);  // chart Image
      
     }else{
           $upload_size_chart=$request->old_upload_size_chart;  // old Image Upload
