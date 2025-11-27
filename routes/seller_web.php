@@ -99,6 +99,9 @@ Route::group(['prefix' => 'seller'], function () {
 route::Match(['get','post'],'/view-profile', function(){
     return view('dealer.product.view_profile');
 });
+route::Match(['get','post'],'/Add-product-2', function(){
+    return view('dealer.product.Add_product_2');
+});
 
 
 
