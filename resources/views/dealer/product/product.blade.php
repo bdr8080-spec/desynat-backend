@@ -40,8 +40,8 @@
                             <div class="from-group position-relative">
                                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                     class="search-icon">
-                                <input type="search" class="form-control tableSearch" placeholder="Search" id="
-                                mySearch" data-table="table1">
+                                  <input type="search" class="form-control tableSearch" placeholder="Search"  data-table="table1">
+                           
                             </div>
                         </div>
 
@@ -81,7 +81,7 @@
 
                     {{-- All Product show --}}
                     <div class="table-responsive">
-                        <table id="example" class="table datatable table-bordered" id="table1">
+                        <table  class="table datatable table-bordered" id="table1">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
