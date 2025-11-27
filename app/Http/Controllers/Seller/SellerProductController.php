@@ -407,7 +407,7 @@ public function Add_product_code(Request $request){
 
      // Product Vartion Image
 
-     $dir="Product/";
+     $dir="Product";
      $variation_image=[];
 
      foreach($request->variant_image as $key=>$Image1){
@@ -867,7 +867,7 @@ public function edit_product_code(Request $request, $id){
 
      // Product Vartion Image
 
-     $dir="Product/";
+     $dir="Product";
      $variation_image=[];
 
     //  foreach($request->variant_image as $key=>$Image1){
