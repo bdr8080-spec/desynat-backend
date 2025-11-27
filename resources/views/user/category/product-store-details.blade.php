@@ -31,7 +31,7 @@
                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
                                 @if($index == 0)
                                     <button class="share-btn"><i class="fa-solid fa-share"></i></button>
-                                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                    <button class="wishlist-btn"><i class="{{$data->wishlist == '1' ? 'fa-solid' : 'fa-regular' }} fa-heart" onclick="addWishListFunctionproduct({{$data->id}})"></i></button>
                                 @endif
 
                                 <div class="carousel_item_img">

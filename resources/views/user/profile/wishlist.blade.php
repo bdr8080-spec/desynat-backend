@@ -20,7 +20,7 @@
                             <div class="categoryDetail_content">
                                 <div class="row">
                                     @forelse ($wishListProduct as $item)
-                                          <div class="col-lg-3 col-md-3 col-12 my-3">
+                                    <div class="col-lg-3 col-md-3 col-12 my-3" id="hideWisListProduct{{$item->id}}">
                                         <div class="product-card">
                                             <div class="product-img">
                                                 <img src="{{ $item->product_variants->first()->variant_image[0] ?? '' }}" width="120">
@@ -315,5 +315,8 @@
             </div>
         </div>
     </div>
+
+
+
 
 @endsection
