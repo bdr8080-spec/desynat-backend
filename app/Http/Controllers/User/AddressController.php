@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\UserAddressService;
 use App\Models\userAddress;
+use App\Models\all_countrie;
 use Validator;
 
 
@@ -33,8 +34,8 @@ class AddressController extends Controller
 
     public function saveAddress(Request $request){
         if($request->isMethod('get')){
-            
-            return view('user.profile.add-new-address');
+            $country =   all_countrie::all();
+            return view('user.profile.add-new-address', compact('country'));
         }else{
 
             $rules =  [
@@ -111,7 +112,8 @@ class AddressController extends Controller
      public function updateAddress(string $id){
 
        $address = userAddress::where('id', $id)->first();
-        return view('user.profile.add-new-address', compact('address'));
+        $country =   all_countrie::all();
+        return view('user.profile.add-new-address', compact('address','country'));
      }
 
 
