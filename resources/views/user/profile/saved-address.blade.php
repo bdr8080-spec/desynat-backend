@@ -24,7 +24,7 @@
             <p>{{$item->address}}</p>
         </div>
         @empty
-            <h3 class="text-center my-5">No address added</h3>
+            <h3 class="text-center my-5" style="font-weight:500 !important;">No address added</h3>
         @endforelse
        
         <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address mb-45" >+ Add New Address</a>
