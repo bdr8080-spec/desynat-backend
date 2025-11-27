@@ -3,6 +3,10 @@
     td img{
         width: 65px;height: 65px !important;border-radius: 50%;object-fit: fill;"
     }
+    td {
+    max-width: 200px;
+    text:truncate;
+}
 </style>
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
@@ -119,12 +123,10 @@
                                             @endforeach
 
                                         </td>
-                                        <td>
-
+                                        <td style="text-align: center;">
                                             {{-- {{ $item->product_variants['0']->sku }} --}}
 
                                             {{ $item->id }}
-
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
                                         <td>{{ $item->brand->name_english }}</td>
@@ -244,8 +246,7 @@
                                             @endforeach
 
                                         </td>
-                                        <td>
-
+                                        <td style="text-align: center;">
                                             {{-- {{ $item->product_variants['0']->sku }} --}}
                                             {{ $item->id }}
 
@@ -366,13 +367,13 @@
                                             @endforeach
 
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
 
                                             {{-- {{ $item->product_variants['0']->sku }} --}}
                                             {{ $item->id }}
 
                                         </td>
-                                        <td> {{ $item->product_name_en }}</td>
+                                        <td > {{ $item->product_name_en }}</td>
                                         <td>{{ $item->brand->name_english }}</td>
                                         <td>{{ $item->category->name }}</td>
                                         <td>{{ $item->created_at }}</td>

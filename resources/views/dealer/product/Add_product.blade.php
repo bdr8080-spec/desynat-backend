@@ -712,13 +712,13 @@
 
         <div class="title24">Upload Size Chart</div>
         <div class="product-pnls mt-4">
-            <div class="upload-image" style="height:170px;">
-                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
+            <div class="upload-image" style="height:170px;width: 270px;">
+                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                     <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"    
-                        style="width:70px;object-fit:cover; border-radius:6px;">
+                        style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
 
                     <img id="uploadedImg" src=""
-                        style="width:100px; display:none; object-fit:cover; border-radius:6px;width:100px;object-fit: fill; height: 110px;">
+                        style="width:100px; display:none; object-fit:cover; border-radius:6px;object-fit:cover; height: 110px;">
 
                     <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
@@ -731,7 +731,21 @@
             
         </div>
 
-        <!-- <div class="product-pnls mt-4">
+        <!--
+  <div class="product-pnls mt-4">
+                <div class="upload-image" style="height:170px; width: 270px;">
+                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px;padding-top:2rem;">
+
+
+
+              style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
+                    <img id="uploadedImg" src="" 
+                        style="display:none; object-fit:cover; border-radius:6px;width:225px;object-fit: fill; height: 125px;padding-top: 12px;">
+                    <div class="py-2"  style="color:#875C3A" >Upload Size Chart</div>
+                    <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;display: none; width:50px;"
+        
+        <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;">
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
