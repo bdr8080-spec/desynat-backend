@@ -50,7 +50,7 @@
                     </select>
                     <p class="text-danger" id="error-subcategory_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form"   id="other-field0"  style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In English</span>
@@ -59,6 +59,8 @@
                         class="form-control" placeholder="Enter Brand name" name="other_en">
                     <p class="text-danger" id="error-other_en"></p>
                 </div>
+
+                
                 <div class="sub-form">
                     <div class="label-flex">
                         <label>Product Name</label>
@@ -85,17 +87,18 @@
                     <div class="label-flex">
                         <label>Select Brand</label>
                     </div>
-                    <select class="form-select form-control" aria-label="Default select example" name="brand_id">
+                    <select class="form-select form-control" aria-label="Default select example" id="brand_id" name="brand_id">
 
                         <option value="">Select Brand</option>
 
                         @foreach ($brand as $item)
                         <option value="{{ $item->id }}">{{ $item->name_english }}</option>
                         @endforeach
+
                     </select>
                     <p class="text-danger" id="error-brand_id"></p>
                 </div>
-                <div class="sub-form">
+                <div class="sub-form " id="other-field1"   style="display:none;">
                     <div class="label-flex">
                         <label>Other</label>
                         <span>In Arabic</span>
@@ -277,7 +280,7 @@
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="bust[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10" name="bust[]">
                             <p class="text-danger" id="error-bust_0"></p>
 
                         </div>
@@ -288,7 +291,7 @@
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="waist[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12" name="waist[]">
 
                             <p class="text-danger" id="error-waist_0"></p>
                         </div>
@@ -299,7 +302,7 @@
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="hip[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14" name="hip[]">
                             <p class="text-danger" id="error-hip_0"></p>
 
                         </div>
@@ -310,7 +313,7 @@
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
                                 name="shoulder[]">
                             <p class="text-danger" id="error-shoulder_0"></p>
 
@@ -322,7 +325,7 @@
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32"
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
                                 name="sleeve_length[]">
                             <p class="text-danger" id="error-sleeve_length_0"></p>
 
@@ -334,7 +337,7 @@
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.32" name="length[]">
+                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20" name="length[]">
 
                             <p class="text-danger" id="error-length_0"></p>
                         </div>
@@ -357,13 +360,13 @@
                             <div class="label-flex">
                                 <label>SKU Limit</label>
                             </div>
-                            <input type="text" class="form-control notapplyspace" placeholder="20019" name="sku[]">
+                            <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[]">
 
                             <p class="text-danger" id="error-sku_0"></p>
                         </div>
 
                     </div>
-                    <div class="col-lg-3">
+                    {{-- <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
@@ -374,14 +377,14 @@
 
                         </div>
 
-                    </div>
+                    </div> --}}
 
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                 name="actual_price[]" id="actual_price_0">
                             <p class="text-danger" id="error-actual_price_0"></p>
 
@@ -437,7 +440,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                 name="final_price[]" id="final_price_0">
                             <p class="text-danger" id="error-final_price_0"></p>
                         </div>
@@ -739,22 +742,83 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
 
 
-// When User select Image vartion Then Show dynamic Image Preview
+// // When User select Image vartion Then Show dynamic Image Preview
+// $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+//     let rel = $(this).attr('rel');
+//     let files = e.target.files;
+//     // $('#previewContainer').empty(); // clear old previews
+//     [...files].forEach(f => {
+//         let url = URL.createObjectURL(f);
+//         let imgBox = $(`
+//       <div class="multiple-img position-relative">
+//         <img src="${url}" class="w-100 rounded">
+//         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+//       </div>
+//     `);
+//         imgBox.find('.remove-ic').click(() => imgBox.remove());
+//         $('#previewContainer' + rel).append(imgBox);
+//     });
+
+ 
+// });
+
+// Store files for each variant input
+let fileStore = {};
+
 $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+
     let rel = $(this).attr('rel');
+
+    // Initialize store for this input if not exists
+    if (!fileStore[rel]) {
+        fileStore[rel] = new DataTransfer();
+    }
+
+    let dt = fileStore[rel];
     let files = e.target.files;
-    // $('#previewContainer').empty(); // clear old previews
+
     [...files].forEach(f => {
+
+        // Add file to DataTransfer
+        dt.items.add(f);
+
+        // Create preview
         let url = URL.createObjectURL(f);
         let imgBox = $(`
-      <div class="multiple-img position-relative">
-        <img src="${url}" class="w-100 rounded">
-        <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-      </div>
-    `);
-        imgBox.find('.remove-ic').click(() => imgBox.remove());
+          <div class="multiple-img position-relative" data-name="${f.name}">
+            <img src="${url}" class="w-100 rounded">
+            <span class="remove-ic" 
+                  style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">
+                &times;
+            </span>
+          </div>
+        `);
+
+        // Remove preview + remove file
+        imgBox.find('.remove-ic').click(() => {
+
+            let filename = imgBox.data('name');
+
+            // remove from DataTransfer
+            for (let i = 0; i < dt.items.length; i++) {
+                if (dt.items[i].getAsFile().name === filename) {
+                    dt.items.remove(i);
+                    break;
+                }
+            }
+
+            // update input files
+            document.querySelector(`input[rel="${rel}"]`).files = dt.files;
+
+            // remove preview
+            imgBox.remove();
+        });
+
         $('#previewContainer' + rel).append(imgBox);
     });
+
+    // Assign new accumulated file list to input
+    this.files = dt.files;
 });
 
 
@@ -891,6 +955,7 @@ $(".addVariantBtn").click(function() {
                         </div>
 
                         <select class="form-select form-control" aria-label="Default select example" name="color_id[]">
+                                <option value="">Select Colour</option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
@@ -907,6 +972,8 @@ $(".addVariantBtn").click(function() {
                         </div>
 
                         <select class="form-select form-control" aria-label="Default select example" name="size_id[]">
+                               <option value="">Select Colour</option>
+                           
                             @foreach ($size as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
@@ -923,7 +990,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="bust[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[]">
                           <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
 
                             </div>
@@ -934,7 +1001,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="waist[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[]">
                           <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
 
                    </div>
@@ -945,7 +1012,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="hip[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[]">
                           <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
 
                             </div>
@@ -956,7 +1023,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="shoulder[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[]">
                           <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
 
                             </div>
@@ -967,7 +1034,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="sleeve_length[]">
+                            <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[]">
                           <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
 
                             </div>
@@ -978,7 +1045,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.32" name="length[]" >
+                            <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[]" >
                           <p class="text-danger" id="error-length_${product_Variation_count}"></p>
 
                             </div>
@@ -998,32 +1065,22 @@ $(".addVariantBtn").click(function() {
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
-                                <label>SKU</label>
+                                <label>SKU Limit </label>
                             </div>
-                            <input type="text" class="form-control" placeholder="20019" name="sku[]">
+                            <input type="number" class="form-control" placeholder="20019" name="sku[]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
 
                             </div>
 
                     </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>SKU Threshold value</label>
-                            </div>
-                            <input type="number" class="form-control" placeholder="20019" name="sku_threshold_value[]">
-                          <p class="text-danger" id="error-sku_threshold_value_${product_Variation_count}"></p>
-
-                            </div>
-
-                    </div>
+                 
                   
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
+                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
 
                             </div>
@@ -1252,8 +1309,6 @@ $(document).on('submit', 'form#addproduct', function(event) {
         }
 
 
-
-
     });
 
     return false;
@@ -1390,7 +1445,34 @@ $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_qu
         }
     }
 });
+
+
+
+    // document.querySelector('.brand-select').addEventListener('change', function () {
+      document.getElementById('brand_id').addEventListener('change', function () {
+        const otherField = document.querySelector('#other-field0');
+      const otherField1 = document.querySelector('#other-field1');
+
+        const selectedText = this.options[this.selectedIndex].text.trim().toLowerCase();
+
+        // console.log(selectedText);
+
+        if (selectedText  === 'other') {
+            otherField.style.display = 'block';
+            otherField1.style.display = 'block';
+            
+        } else {
+            otherField.style.display = 'none';
+            otherField1.style.display = 'none';
+        }
+    });
+
+
+
 </script>
+
+{{-- // common j s --}}
+@include('dealer.product.ajax.product_commonjs'); 
 
 
 @include('dealer.layout.custom_code');

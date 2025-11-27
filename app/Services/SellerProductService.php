@@ -63,7 +63,8 @@ $product=[
 'customized_product'=> $request->customized_product, // // 0 not 1 yes
 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
-'upload_size_chart'=> $request->upload_size_chart
+'upload_size_chart'=> $request->upload_size_chart,
+'product_active_status'=>1
 ];
 
 
@@ -103,7 +104,7 @@ $variation_array=[
 
 'total_stock' => $request->total_stock[$key],
 'sku' => $request->sku[$key],
-'sku_threshold_value' => $request->sku_threshold_value[$key],
+// 'sku_threshold_value' => $request->sku_threshold_value[$key],
 'actual_price' => $request->actual_price[$key],
 'discount_type' => $request->discount_type[$key],
 'discount_value' => $request->discount_value[$key],
@@ -236,7 +237,7 @@ $variation_array=[
 
 'total_stock' => $request->total_stock[$key],
 'sku' => $request->sku[$key],
-'sku_threshold_value' => $request->sku_threshold_value[$key],
+// 'sku_threshold_value' => $request->sku_threshold_value[$key],
 'actual_price' => $request->actual_price[$key],
 'discount_type' => $request->discount_type[$key],
 'discount_value' => $request->discount_value[$key],
@@ -397,7 +398,7 @@ public function edit_Product($request){
 
         'total_stock' => $request->total_stock[$key],
         'sku' => $request->sku[$key],
-        'sku_threshold_value' => $request->sku_threshold_value[$key],
+        // 'sku_threshold_value' => $request->sku_threshold_value[$key],
         'actual_price' => $request->actual_price[$key],
         'discount_type' => $request->discount_type[$key],
         'discount_value' => $request->discount_value[$key],
@@ -607,7 +608,7 @@ $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('pr
 
 public function single_product_details_fetch($request){
         
-    $product_data=  product::with('brand','category','product_specifications','product_variants.color','product_variants.size')->where('id',$request->product_id)->first();
+    $product_data=  product::with('seller_details.store_info','brand','category','product_specifications','product_variants.color','product_variants.size')->where('id',$request->product_id)->first();
     
     if (!$product_data) {
         return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];
@@ -638,7 +639,7 @@ public function single_product_details_fetch($request){
         'length'=>$val->length,
         'total_stock'=>$val->total_stock,
         'sku'=>$val->sku,
-        'sku_threshold_value'=>$val->sku_threshold_value,
+        // 'sku_threshold_value'=>$val->sku_threshold_value,
 
       ];
 

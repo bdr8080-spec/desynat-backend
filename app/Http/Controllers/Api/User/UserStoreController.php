@@ -270,6 +270,24 @@ class UserStoreController extends Controller
      
          }
 
+    public function get_wishlist_products(Request $request)
+    {
+        $user_id=$request->user()->id;
+
+        try {
+            $data = $this->UserManagementService->getWishlist($user_id);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 200);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
        
 
     

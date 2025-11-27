@@ -574,7 +574,7 @@ public function product_view_cart_details($request)
             return [
                 'status'  => 'success',
                 'message' => 'Add To Cart Is Empty',
-                'data'    => []
+                'data'    => (object)[]
             ];
         }
 
@@ -794,6 +794,49 @@ public function addtoCart_Increment_decrement($request)
             ];
         }
     }
+
+    public function getWishlist($userId)
+    {
+        try {
+
+            $user = User::find($userId);
+
+            if (!$user) {
+                return [
+                    'status' => 'error',
+                    'message' => 'User not found',
+                    'data' => []
+                ];
+            }
+
+            $productIds = wishlist::where('user_id', $userId)->pluck('product_id');
+
+            $wishListProduct = Product::with(['category','subcategory','brand','product_specifications','product_variants.color','product_variants.size'])
+            ->whereIn('id', $productIds)
+                ->get();
+
+            $wishListProduct->map(function ($item) use ($user) {
+                $item->user_name = $user->full_name; 
+                return $item;
+            });
+
+            return [
+                'status' => 'success',
+                'message' => 'Wishlist fetched successfully',
+                'data' => $wishListProduct
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch wishlist: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
 
     
 
