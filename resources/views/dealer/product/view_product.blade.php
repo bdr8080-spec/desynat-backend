@@ -106,12 +106,14 @@ p, span{
 }
 .main-img-container{
     height:60vh;
+    background: #fff7eae8;
+    border-radius: 16px;
 }
 
 .main-img-container img{
     width: 100%;
     HEIGHT: 100%;
-    OBJECT-FIT: fill;
+    OBJECT-FIT: contain;
     border-radius:12px;
 }   
 /* .{
@@ -144,9 +146,9 @@ p, span{
 
     <div class="row my-3">
 
-    <div id="images_show-box" class="col-lg-6 col-xxl-6 position-relative" style="position:relative;"></div>
+    <div id="images_show-box" class="col-lg-5 col-xxl-5 position-relative" style="position:relative;"></div>
 
-    <div class="col-lg-6 col-xxl-6">
+    <div class="col-lg-7 col-xxl-7">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
                 <a href="{{ route('seller.edit-product',$product->id) }}">
                     <img src="{{ asset('dealer/assets/img/edit2.png') }}" height="33px" width="33px"></a>
@@ -204,7 +206,7 @@ p, span{
 
     </div>
     <div class="row">
-        <div class="col-lg-6 col-xxl-6">
+        <div class="col-lg-5 col-xxl-5">
 
             <div class="my-3">
                 <div class="desc-box p-4 rounded-4">
@@ -266,7 +268,7 @@ p, span{
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-xxl-6">
+        <div class="col-lg-7 col-xxl-7">
             <div class="container my-3">
                 <div class="review-box p-4 rounded-4 desc-box">
                     <div class="d-flex justify-content-between">
