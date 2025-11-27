@@ -146,9 +146,9 @@
                         <div class="col-lg-4">
                             <div class="category_filter pb-3 mb-3 d-flex align-items-center justify-content-between">
                                 <h3>Sort By</h3>
-                                <span>
+                                <a data-bs-toggle="modal" data-bs-target="#sortMOdal">
                                     <img src="{{asset('user')}}/assets/images/sort.svg" class="img-fluid" />
-                                </span>
+</a>
                             </div>
                             <div class="category_filter">
                                 <div class="d-flex align-items-center justify-content-between">
@@ -161,7 +161,7 @@
                                             @foreach ($category as $key => $item)
                                             <div class="form-check my-4">
                                                 <input class="form-check-input mb-1"
-                                                    type="checkbox"
+                                                    type="radio"
                                                     name="category[]"
                                                     value="{{ $item->id }}"
                                                     id="category_{{ $key }}"
@@ -417,7 +417,7 @@
                                                     </div>
                                                 <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                                                     <div class="product-content">
-                                                            <h5>{{ $item->product_name_en }}</h5>
+                                                            <h5>{{ $item->product_name_en }} ({{ "by " . $store_details['store']['store_name'] }})</h5>
                                                             <div class="rating">
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
@@ -530,6 +530,68 @@
         </div>
     </div>
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="sortMOdal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h3 class="modal-title fs-5" id="exampleModalLabel">Sort By</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                            <label class="form-check-label" for="radioDefault1">
+                                Recommended
+                            </label>
+                        </div>
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Price: Low to High
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Price: High to Low
+                            </label>
+                        </div>
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Newest First
+                            </label>
+                        </div>
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Customer Ratings
+                            </label>
+                        </div>
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Best Selling
+                            </label>
+                        </div>
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Fastest Delivery
+                            </label>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <button type="button" class="custom-btn3">Clear</button>
+                        <button type="button" class="customBtn6" style="padding:8px 10px; color:#fff !important;">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         var images = [

@@ -13,7 +13,9 @@ $product_Variation_count=0;
     background: #FAFAFA;
     border: 1px solid #cccccc45;
 }
-
+.mltimg img{
+    object-fit: fill !important;
+}
 </style>
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
@@ -242,9 +244,9 @@ $product_Variation_count=0;
 
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
-                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
-                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                        <div class="mt-3">Upload Product Photo</div>
+                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top: 2.7rem;">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"  style="width:70px">
+                        <div class="mt-3" style="color:#875C3A">Upload Product Photo</div>
                         <input type="file" accept="image/*" id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[{{$product_Variation_count}}][]" rel="{{$product_Variation_count}}">
                     </label>
@@ -778,9 +780,9 @@ $product_Variation_count=0;
         <div class="title24">Upload Size Chart</div>
         <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;">
-                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem; ">
-                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
-                    <div class="py-2">Upload Size Chart</div>
+                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.7rem; ">
+                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:60px;">
+                    <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
                 </label>
@@ -788,9 +790,11 @@ $product_Variation_count=0;
 
             </div>
 
+
+
             <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
                 @if(!empty($product_details->upload_size_chart))
-                <div class="position-relative multiple-img">
+                <div class="position-relative multiple-img mltimg">
                     <img src="{{ $product_details->upload_size_chart }}"
                         style="width:100%;height:100%;object-fit:cover;border-radius:8px; object-fit:fill!importent:">
                     <span class="remove-ic remove-image"

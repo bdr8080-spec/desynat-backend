@@ -28,11 +28,11 @@
 
                     <div class="carousel-inner">
                         @foreach ($allImages as $index => $img)
+                            @if($index == 0)
+                                <button class="share-btn"><i class="fa-solid fa-share"></i></button>
+                                <button class="wishlist-btn"><i class="{{$data->wishlist == '1' ? 'fa-solid' : 'fa-regular' }} fa-heart" onclick="addWishListFunctionproduct({{$data->id}})"></i></button>
+                            @endif
                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                @if($index == 0)
-                                    <button class="share-btn"><i class="fa-solid fa-share"></i></button>
-                                    <button class="wishlist-btn"><i class="{{$data->wishlist == '1' ? 'fa-solid' : 'fa-regular' }} fa-heart" onclick="addWishListFunctionproduct({{$data->id}})"></i></button>
-                                @endif
 
                                 <div class="carousel_item_img">
                                     <img src="{{ $img }}" class="img-fluid" alt="Slide Image">
@@ -85,6 +85,13 @@
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h6 class="fw-semibold">Available Size</h6>
                     </div>
+
+                        <div class="d-flex gap-2 mb-4" id="sizeContainer">
+                                @foreach ($firstVariant['sizes'] as $size)
+                                    <button class="size-btn">{{ $size }}</button>
+                                @endforeach
+                            </div>
+
 
                             <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
                             <p class="text-muted mb-1">{{$data->description_en}}</p>

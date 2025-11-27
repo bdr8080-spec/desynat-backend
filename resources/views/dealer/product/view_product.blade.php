@@ -10,7 +10,7 @@
     .thumb-img {
         width: 65px;
         height: 80px;
-        object-fit: cover;
+        object-fit: fill;
         border-radius: 8px;
         cursor: pointer;
         border: 2px solid #ccc;
@@ -111,18 +111,22 @@ p, span{
 .main-img-container img{
     width: 100%;
     HEIGHT: 100%;
-    OBJECT-FIT: cover;
+    OBJECT-FIT: fill;
     border-radius:12px;
-}
-.{
+}   
+/* .{
     position: absolute;
     bottom: 1.3rem;
     margin: auto;
     justify-content: center;
     text-align: center;
-    left: 40%;
-}Size Guide
-
+} */
+.modal-footer, .modal-header{
+    border:0;
+}
+.cstm-pd{
+    padding:auto 5px;
+}
 
 </style>
 
@@ -160,7 +164,7 @@ p, span{
                 <span class="ms-2 text-muted">(1K)</span>
             </div>
             
-     <div id="price-box"></div>
+     <div id="price-box" class="mb-0"></div>
 
      <p class="text-success small">inclusive of all taxes</p>
 
@@ -194,7 +198,7 @@ p, span{
 
 <div id="size-list"></div>
 
-<div id="variation-box" class="ps-0 desc-box rounded-4 my-3"></div>
+<div id="variation-box" class="cstm-pd rounded-4 my-3"></div>
 
     </div>
 
@@ -349,8 +353,8 @@ p, span{
       <div class="modal-body">
         Are you sure you want to delete this item?
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">No</button>
         <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">Yes, Delete</button>
       </div>
     </div>

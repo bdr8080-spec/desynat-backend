@@ -97,7 +97,7 @@ input[type=number] {
 
                         
 
-                                <span class="text-danger"></span>
+                                <span class="text-danger" id="error-mobile"></span>
                         </div>
 
                     </div>
@@ -121,18 +121,18 @@ input[type=number] {
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">House no./Building no/Area</label>
-                    <input type="text" name="house_no" class="form-control notapplyspace" placeholder="Enter House no./Building no/Area" value="{{@$address->house_no}}" />
+                    <input type="text" id="block" name="house_no" class="form-control notapplyspace" placeholder="Enter House no./Building no/Area" value="{{@$address->house_no}}" />
                     <span class="text-danger" id="error-house_no"></span>
                 </div>
             </div>
 
-            <div class="col-lg-6 mt-3">
+            {{-- <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">Block/Street</label>
                     <input type="text" id="block" name="street_no" class="form-control notapplyspace" placeholder="Enter Block/Street" value="{{@$address->street_no}}" />
                     <span class="text-danger" id="error-street_no"></span>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
