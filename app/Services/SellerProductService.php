@@ -481,7 +481,7 @@ public function AllProduct($request)
         return ['status'=>'error','message'=>'Seller not found','data'=>[]];
     }
 
-    $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants'])
+    $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
                            ->where('seller_id', $seller->id);
         if ($request->search) {
         if ($request->type == '0') {
