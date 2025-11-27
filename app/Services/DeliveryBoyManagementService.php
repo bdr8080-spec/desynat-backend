@@ -406,6 +406,91 @@ class DeliveryBoyManagementService
         }
     }
 
+    public function updateDeliveryBoyProfileExceptDocument(Request $request)
+    {
+        try {
+
+            $deliveryBoy = DeliveryBoy::find($request->delivery_boy_id);
+
+            if (!$deliveryBoy) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Delivery Boy not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $deliveryBoy->profile_pic = $request->profile_pic;
+            $deliveryBoy->full_name_english = $request->full_name_english;
+            $deliveryBoy->full_name_arabic = $request->full_name_arabic;
+            $deliveryBoy->email = $request->email;
+            $deliveryBoy->country_code = $request->country_code;
+            $deliveryBoy->mobile = $request->mobile;
+            // $deliveryBoy->password = Hash::make($request->password);
+            // $deliveryBoy->unhashed_password = $request->password;
+            $deliveryBoy->address_line1 = $request->address_line1;
+            $deliveryBoy->address_line2 = $request->address_line2;
+            $deliveryBoy->city = $request->city;
+            $deliveryBoy->state = $request->state;
+            $deliveryBoy->let = $request->let;
+            $deliveryBoy->long = $request->long;
+            $deliveryBoy->zone_id = $request->zone_id;
+            // $deliveryBoy->vehicle_name = $request->vehicle_name;
+            // $deliveryBoy->vehicle_reg_no = $request->vehicle_reg_no;
+            $deliveryBoy->save();
+
+            return [
+                'status'  => 'success',
+                'message' => 'Profile updated successfully',
+                'data'    => $deliveryBoy
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update delivery boy: ' . $e->getMessage(),
+                'data' => (object)[]
+            ];
+        }
+    }
+
+    public function dutyOnOff($deliveryBoyId)
+    {
+        try {
+            $deliveryboy = DeliveryBoy::find($deliveryBoyId);
+
+            if (!$deliveryboy) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Delivery Boy not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $previousDutyStatus = $deliveryboy->on_duty; 
+            $deliveryboy->on_duty = $deliveryboy->on_duty == 1 ? 0 : 1;
+            $deliveryboy->save();
+
+            $message = $deliveryboy->on_duty == 1
+                ? 'Setting changed to on Duty Successfully'
+                : 'Setting changed to off Duty Successfully';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $deliveryboy
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update delivery boy duty status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 
