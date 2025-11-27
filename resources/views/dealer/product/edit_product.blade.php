@@ -790,6 +790,8 @@ $product_Variation_count=0;
 
             </div>
 
+
+
             <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
                 @if(!empty($product_details->upload_size_chart))
                 <div class="position-relative multiple-img mltimg">
