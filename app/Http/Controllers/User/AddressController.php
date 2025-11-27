@@ -130,4 +130,22 @@ class AddressController extends Controller
          
       }
 
+          public function addressSetDefault(Request $request){
+        
+            $id = $request->user()->id;
+
+              $request_data= (object)  [
+                'id'=>$id,
+                'address_id'=>$request->address_id
+            ];
+
+           $data = $this->UserAddressService->addressSetDefault($request_data);
+
+           return response()->json([
+            'status'=>true,
+            'message'=>$data['message']
+           ]);
+
+     }
+
 }
