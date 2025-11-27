@@ -4,6 +4,41 @@
   #editPreviewImage {
     display: block; 
 }
+.upload-box {
+    width: 220px;
+    height: 160px;
+    border: 2px dotted #c8ad8d;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.upload-icon {
+    width: 60px;
+    opacity: 0.5;
+}
+
+.upload-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
 </style>
       <div id="content-wrapper" class="d-flex flex-column position-relative">
         <div id="content" class="">
@@ -158,8 +193,8 @@
                                       <div class="upload-title text-center">Upload Image</div>
 
                                       <label for="fileUpload" class="upload-box" style="cursor:pointer;">
-                                          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="uploadIcon" />
-                                          <img id="previewImage" class="preview-image" style="display:none; max-width:100px; margin-top:10px;" />
+                                          <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
+                                          <img id="previewImage" class="preview-image" style="display:none; max-width:216px; margin-top:-2px;" />
                                           <div class="upload-text">Upload Image</div>
                                           <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                                       </label>
@@ -217,7 +252,7 @@
                                     <div class="col-lg-12">
                                         <div class="upload-title text-center">Upload Image</div>
                                         <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
-                                            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" id="editPreviewImage" class="preview-image" style="max-width:100px; margin-top:10px;" />
+                                            <img src="/admin/image/imge-upload.svg" id="editPreviewImage" class="preview-image"  style="max-width:216px; margin-top:-2px;" />
                                             <div class="upload-text">Upload Image</div>
                                             <input type="file" id="editFileUpload" name="image" accept="image/*" hidden />
                                         </label>
