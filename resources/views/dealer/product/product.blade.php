@@ -100,7 +100,7 @@
                             </thead>
                             <tbody>
 
-                                @foreach ($data['all_product_data'] as $key => $item)
+                                @forelse ($data['all_product_data'] as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>
@@ -111,10 +111,7 @@
                                                     @endphp
                                                 @endif
                                                 <img src="{{ $img }}" class="img-fluid" alt="image"
-                                                    class="pro-image" style="    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    object-fit: cover;">
+                                                    class="pro-image" style="    width: 65px;height: 65px;border-radius: 50%;object-fit: cover;">
                                             @endforeach
 
                                         </td>
@@ -152,7 +149,13 @@
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                {{-- @endforeach --}}
+
+                                 @empty
+                          <tr>
+                              <td colspan="10" class="text-center text-muted">No Product found</td>
+                          </tr>
+                      @endforelse
 
                             </tbody>
                         </table>
@@ -222,7 +225,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data['active_product'] as $key => $item)
+                                @forelse ($data['active_product'] as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>
@@ -270,7 +273,12 @@
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                {{-- @endforeach --}}
+                                 @empty
+                          <tr>
+                              <td colspan="10" class="text-center text-muted">No Category found</td>
+                          </tr>
+                      @endforelse
 
                             </tbody>
                         </table>
@@ -340,7 +348,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data['inactive_product'] as $key => $item)
+                                @forelse ($data['inactive_product'] as $key => $item)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>
@@ -389,7 +397,13 @@
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
-                                @endforeach
+                                {{-- @endforeach --}}
+
+                                 @empty
+                          <tr>
+                              <td colspan="10" class="text-center text-muted">No Category found</td>
+                          </tr>
+                      @endforelse
 
                             </tbody>
                         </table>
