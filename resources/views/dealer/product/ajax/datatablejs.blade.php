@@ -20,17 +20,7 @@ $(document).ready(function () {
     // init datatables for multiple tables
     var tableInstances = {};
 
-  
-
-    // apply search for each table
-    $('.tableSearch').on('keyup', function () {
-        var tableId = $(this).data('table');
-        // alert(tableId);
-        tableInstances[tableId].search(this.value).draw();
-    });
-
-
-      $('.datatable').each(function () {
+     $('.datatable').each(function () {
         var tableId = $(this).attr('id');
         tableInstances[tableId] = $(this).DataTable({
             searching: true,
@@ -42,6 +32,16 @@ $(document).ready(function () {
             ]
         });
     });
+
+    // apply search for each table
+    $('.tableSearch').on('keyup', function () {
+        var tableId = $(this).data('table');
+        // alert(tableId);
+        tableInstances[tableId].search(this.value).draw();
+    });
+
+
+     
 
 });
 

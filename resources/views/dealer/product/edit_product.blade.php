@@ -1505,6 +1505,13 @@ $(document).on("input change",
         // Percentage
         if (discountType == "1") {
             finalPrice = actualPrice - (actualPrice * (discountValue / 100));
+
+          if (Number.isInteger(finalPrice)) {
+               finalPrice=finalPrice;
+          } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
+                finalPrice=finalPrice.toFixed(2);
+         }
+
         }
 
         // Fixed price
