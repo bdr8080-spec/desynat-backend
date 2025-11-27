@@ -148,7 +148,7 @@
                                 <h3>Sort By</h3>
                                 <a data-bs-toggle="modal" data-bs-target="#sortMOdal">
                                     <img src="{{asset('user')}}/assets/images/sort.svg" class="img-fluid" />
-</a>
+                                </a>
                             </div>
                             <div class="category_filter">
                                 <div class="d-flex align-items-center justify-content-between">
@@ -178,19 +178,24 @@
                                             <h5>Brand</h5>
                                             <small>A-z</small>
                                             @foreach ($brand as $key => $item)
-                                            <div class="form-check my-4">
-                                                <input class="form-check-input mb-1"
-                                                    type="checkbox"
-                                                    name="brand_id[]"
-                                                    value="{{ $item->id }}"
-                                                    id="brand_{{ $key }}"
-                                                    {{ is_array(request()->brand_id) && in_array($item->id, request()->brand_id) ? 'checked' : '' }}>
-                                                
-                                                <label class="form-check-label" for="brand_{{ $key }}">
-                                                    {{ $item->name_english }}
-                                                </label>
-                                            </div>
+                                                <div class="form-check my-4 brand-item {{ $key >= 8 ? 'd-none extra-brand' : '' }}">
+                                                    <input class="form-check-input mb-1"
+                                                        type="checkbox"
+                                                        name="brand_id[]"
+                                                        value="{{ $item->id }}"
+                                                        id="brand_{{ $key }}"
+                                                        {{ is_array(request()->brand_id) && in_array($item->id, request()->brand_id) ? 'checked' : '' }}>
+                                                    
+                                                    <label class="form-check-label" for="brand_{{ $key }}">
+                                                        {{ $item->name_english }}
+                                                    </label>
+                                                </div>
                                             @endforeach
+                                            @if(count($brand) > 8)
+                                                <button id="seeMoreBtn" type="button" class="btn btn-link p-0" style="font-size:14px; color:var(--third-color);font-weight: 500;">
+                                                    See More
+                                                </button>
+                                            @endif
                                         </div>
 
                                         <div class="form-group mt-4">
@@ -390,7 +395,7 @@
                                             </div>
                                         </div>
 
-                                        <button class="customBtn customBtn5 mt-5">Apply</button>
+                                        <!-- <button class="customBtn customBtn5 mt-5">Apply</button> -->
 
                                     </form>
 
@@ -461,67 +466,67 @@
                 <div class="categoryDetail_content reels_content">
                     <div class="row">
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/m1.jpg" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/m2.png" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/m3.jpg" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/m4.png" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-12 my-3">
-                            <div class="product-card">
-                                <div class="product-img">
-                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
-                                    <button class="wishlist-btn"><i class="fa-solid fa-heart"></i></button>
-                                </div>
+                            <div class="product-img">
+                                <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
+                                <button class="wishlist-btn">
+                                    <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid" alt="check" />
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -586,7 +591,7 @@
                     </div>
                     <div class="d-flex align-items-center gap-3">
                         <button type="button" class="custom-btn3">Clear</button>
-                        <button type="button" class="customBtn6" style="padding:8px 10px; color:#fff !important;">Apply</button>
+                        <button type="button" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">Apply</button>
                     </div>
                 </div>
             </div>
@@ -723,6 +728,17 @@
 
             updateVisuals(); // initialize
         })();
+
+
+        document.getElementById('seeMoreBtn')?.addEventListener('click', function () {
+    const extras = document.querySelectorAll('.extra-brand');
+
+    const hidden = [...extras].some(e => e.classList.contains('d-none'));
+
+    extras.forEach(e => e.classList.toggle('d-none'));
+
+    this.textContent = hidden ? 'See Less' : 'See More';
+});
 </script>   
 
 @endsection
