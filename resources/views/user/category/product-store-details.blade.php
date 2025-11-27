@@ -161,47 +161,48 @@
                             <div class="col-6 text-end">32</div>
                         </div>
                     </div> --}}
-                       <div class="p-4 rounded-4 shadow-sm desc-box">
-                <div class="row mb-2">
-                    <div class="col-6">Return allowed ?
-                    </div>
-                    <div class="col-6 text-end">@if($data->product_return==1) {{$data->return_days}} days  @else No @endif </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Exchange allowed ?
-                    </div>
-                    <div class="col-6 text-end">@if($data->product_exchangable==1) {{$data->exchangable_days}} days @else No @endif </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Review & ratings allowed ?
-                    </div>
-                <div class="col-6 text-end">@if($data->review_rating==1) Yes @else No @endif </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Is it an Affiliated Product?
-                    </div>
-                <div class="col-6 text-end">@if($data->affiliated_product==1) Yes @else No @endif </div>
-             
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Is this a Customized product?
-                    </div>
-                <div class="col-6 text-end">@if($data->customized_product==1) Yes @else No @endif </div>
-             
-                </div>
-                <div class="row">
-                    <div class="col-6">Ready to ship?
-                    </div>
-                       <div class="col-6 text-end">@if($data->ready_to_ship==1) Yes @else No @endif </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">Cash on delivery allowed?
+                    <div class="p-4 rounded-4 shadow-sm desc-box">
+                        <div class="row mb-2">
+                            <div class="col-6">Return allowed ?
+                            </div>
+                            <div class="col-6 text-end">@if($data->product_return==1) {{$data->return_days}} days  @else No @endif </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Exchange allowed ?
+                            </div>
+                            <div class="col-6 text-end">@if($data->product_exchangable==1) {{$data->exchangable_days}} days @else No @endif </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Review & ratings allowed ?
+                            </div>
+                        <div class="col-6 text-end">@if($data->review_rating==1) Yes @else No @endif </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Is it an Affiliated Product?
+                            </div>
+                        <div class="col-6 text-end">@if($data->affiliated_product==1) Yes @else No @endif </div>
+                    
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Is this a Customized product?
+                            </div>
+                        <div class="col-6 text-end">@if($data->customized_product==1) Yes @else No @endif </div>
+                    
+                        </div>
+                        <div class="row">
+                            <div class="col-6">Ready to ship?
+                            </div>
+                            <div class="col-6 text-end">@if($data->ready_to_ship==1) Yes @else No @endif </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">Cash on delivery allowed?
 
+                            </div>
+                        <div class="col-6 text-end">@if($data->cash_on_delivery==1) Yes @else No @endif </div>
+                
+                        </div>
                     </div>
-                       <div class="col-6 text-end">@if($data->cash_on_delivery==1) Yes @else No @endif </div>
-             
-                </div>
-            </div>
+
 
                     <div class="container my-4">
                         <div class="review-box p-4 rounded-4">
@@ -254,12 +255,13 @@
             </div>
 
             <div class="col-lg-12">
-                <section class="bestSelling customContainer mt-3">
+                <h3>Similiar Product</h3>
+                <section class="bestSelling customContainer mt-3 pb-0">
                     <div class="owl-carousel topRatedCarousel">
                         <div class="item">
                             <div class="product-card">
                                 <div class="product-img">
-                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
+                                    <img src="{{ asset('user/assets/images/simliar1.png') }}" alt="Product">
                                     <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                                 </div>
                                 <div class="product-content">
@@ -282,7 +284,7 @@
                         <div class="item">
                             <div class="product-card">
                                 <div class="product-img">
-                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
+                                    <img src="{{ asset('user/assets/images/simliar2.png') }}" alt="Product">
                                     <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                                 </div>
                                 <div class="product-content">
@@ -305,7 +307,7 @@
                         <div class="item">
                             <div class="product-card">
                                 <div class="product-img">
-                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
+                                    <img src="{{ asset('user/assets/images/simliar3.jpg') }}" alt="Product">
                                     <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                                 </div>
                                 <div class="product-content">
@@ -328,7 +330,7 @@
                         <div class="item">
                             <div class="product-card">
                                 <div class="product-img">
-                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
+                                    <img src="{{ asset('user/assets/images/simliar4.jpg') }}" alt="Product">
                                     <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                                 </div>
                                 <div class="product-content">
@@ -351,7 +353,7 @@
                         <div class="item">
                             <div class="product-card">
                                 <div class="product-img">
-                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
+                                    <img src="{{ asset('user/assets/images/simliar4.png') }}" alt="Product">
                                     <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                                 </div>
                                 <div class="product-content">
@@ -374,7 +376,150 @@
                         <div class="item">
                             <div class="product-card">
                                 <div class="product-img">
-                                    <img src="{{ asset('user/assets/images/product.svg') }}" alt="Product">
+                                    <img src="{{ asset('user/assets/images/simliar5.png') }}" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                </div>
+                                <div class="product-content">
+                                    <h5>3pcs Set (by Abaya)</h5>
+                                    <div class="rating">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <span>(123K)</span>
+                                    </div>
+                                    <div class="price">
+                                        <strong>KD 239</strong>
+                                        <span class="old-price">KD 299</span>
+                                        <span class="discount">20% off</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bestSelling customContainer mt-3 pt-0">
+                    <div class="owl-carousel topRatedCarousel">
+                        <div class="item">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/assets/images/simliar1.png') }}" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                </div>
+                                <div class="product-content">
+                                    <h5>3pcs Set (by Abaya)</h5>
+                                    <div class="rating">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <span>(123K)</span>
+                                    </div>
+                                    <div class="price">
+                                        <strong>KD 239</strong>
+                                        <span class="old-price">KD 299</span>
+                                        <span class="discount">20% off</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/assets/images/simliar2.png') }}" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                </div>
+                                <div class="product-content">
+                                    <h5>3pcs Set (by Abaya)</h5>
+                                    <div class="rating">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <span>(123K)</span>
+                                    </div>
+                                    <div class="price">
+                                        <strong>KD 239</strong>
+                                        <span class="old-price">KD 299</span>
+                                        <span class="discount">20% off</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/assets/images/simliar3.jpg') }}" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                </div>
+                                <div class="product-content">
+                                    <h5>3pcs Set (by Abaya)</h5>
+                                    <div class="rating">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <span>(123K)</span>
+                                    </div>
+                                    <div class="price">
+                                        <strong>KD 239</strong>
+                                        <span class="old-price">KD 299</span>
+                                        <span class="discount">20% off</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/assets/images/simliar4.jpg') }}" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                </div>
+                                <div class="product-content">
+                                    <h5>3pcs Set (by Abaya)</h5>
+                                    <div class="rating">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <span>(123K)</span>
+                                    </div>
+                                    <div class="price">
+                                        <strong>KD 239</strong>
+                                        <span class="old-price">KD 299</span>
+                                        <span class="discount">20% off</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/assets/images/simliar4.png') }}" alt="Product">
+                                    <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                                </div>
+                                <div class="product-content">
+                                    <h5>3pcs Set (by Abaya)</h5>
+                                    <div class="rating">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                        <span>(123K)</span>
+                                    </div>
+                                    <div class="price">
+                                        <strong>KD 239</strong>
+                                        <span class="old-price">KD 299</span>
+                                        <span class="discount">20% off</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="product-card">
+                                <div class="product-img">
+                                    <img src="{{ asset('user/assets/images/simliar5.png') }}" alt="Product">
                                     <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                                 </div>
                                 <div class="product-content">
