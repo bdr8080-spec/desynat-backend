@@ -161,7 +161,7 @@
                                             @foreach ($category as $key => $item)
                                             <div class="form-check my-4">
                                                 <input class="form-check-input mb-1"
-                                                    type="checkbox"
+                                                    type="radio"
                                                     name="category[]"
                                                     value="{{ $item->id }}"
                                                     id="category_{{ $key }}"
