@@ -2,6 +2,19 @@
 
 @section('content')
 
+<style>
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+</style>
+
 <div class="my-profile customContainer">
     <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
         <a class="text-black" href="{{route('user.view_address')}}"><i class="fa-solid fa-chevron-left"></i> Add New Address</a>
@@ -23,11 +36,76 @@
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="">Mobile No.</label>
-                    <input type="hidden" value="+964" name="country_code">
-                    <input type="text" name="mobile" class="form-control notapplyspace" placeholder="Enter Mobile No." value="{{@$address->mobile}}" />
-                    <span class="text-danger" id="error-mobile"></span>
+
+                    <div class="d-flex align-items-center">
+                        <div class="me-2">
+                            <div class="dropdown">
+                                <button class="btn btn-light border dropdown-toggle d-flex align-items-center"
+                                    type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    
+                                    <span id="selected-flag">
+                                       @php
+                                            $selectedCode = $address->country_code 
+                                                            ?? old('country_code') 
+                                                            ?? $country[0]->dial_code;
+
+                                            $selectedItem = $country->firstWhere('dial_code', $selectedCode);
+                                        @endphp
+
+                                        <img src="{{ $selectedItem->flag }}" alt="flag" width="25" height="16">
+                                    </span>
+
+                                    <span id="selected-code" class="ms-2">{{ $selectedItem->dial_code }}</span>
+                                </button>
+
+                                <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">
+                                    @foreach ($country as $item)
+                                        <li>
+                                            <label class="dropdown-item d-flex align-items-center gap-2 country-option" style="cursor: pointer;">
+                                                
+                                                <input type="radio"
+                                                    name="country_code"
+                                                    value="{{ $item->dial_code }}"
+                                                    data-flag="{{ $item->flag }}"
+                                                    class="country-radio"
+                                                    {{ $selectedCode == $item->dial_code ? 'checked' : '' }}
+                                                    hidden>
+
+                                                <img src="{{ $item->flag }}" alt="Flag of {{ $item->name }}" width="25" height="16">
+                                                <span>{{ $item->dial_code }} ({{ $item->name }})</span>
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
+                
+                        </div>
+
+                    
+                        <div class="w-100">
+                            <input 
+                                type="number" 
+                                class="form-control"
+                                placeholder="Enter Mobile Number"
+                                name="mobile"
+                                value="{{ old('mobile', $address->mobile ?? '') }}"
+                                oninput="this.value = this.value.slice(0, 15);"
+                                minlength="7"
+                                maxlength="15"
+                            >
+
+                        
+
+                                <span class="text-danger" id="error-mobile"></span>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
+
+           
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group position-relative">
@@ -43,18 +121,18 @@
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">House no./Building no/Area</label>
-                    <input type="text" name="house_no" class="form-control notapplyspace" placeholder="Enter House no./Building no/Area" value="{{@$address->house_no}}" />
+                    <input type="text" id="block" name="house_no" class="form-control notapplyspace" placeholder="Enter House no./Building no/Area" value="{{@$address->house_no}}" />
                     <span class="text-danger" id="error-house_no"></span>
                 </div>
             </div>
 
-            <div class="col-lg-6 mt-3">
+            {{-- <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">Block/Street</label>
                     <input type="text" id="block" name="street_no" class="form-control notapplyspace" placeholder="Enter Block/Street" value="{{@$address->street_no}}" />
                     <span class="text-danger" id="error-street_no"></span>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
@@ -330,6 +408,24 @@ $("#applyLocationBtn").click(function () {
                 $(this).addClass("active");
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const radios = document.querySelectorAll('.country-radio');
+            const selectedFlag = document.getElementById('selected-flag');
+            const selectedCode = document.getElementById('selected-code');
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const parent = this.closest('label');
+                    const flagImg = parent.querySelector('img').src;
+                    const dialCode = this.value;
+
+                    selectedFlag.innerHTML = `<img src="${flagImg}" width="25" height="16">`;
+                    selectedCode.textContent = dialCode;
+                });
+            });
+        });
+
     </script>
 
 @endsection

@@ -24,7 +24,7 @@
                 <div class="category_filter">
                     <div class="d-flex align-items-center justify-content-between">
                         <h3>Filter</h3>
-                        <span>Clear</span>
+                        <a href="{{ url('user/category-wise-store/' . request()->id)}}">Clear</a>
                     </div>
                     <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
                         <div class="form-group mt-4">

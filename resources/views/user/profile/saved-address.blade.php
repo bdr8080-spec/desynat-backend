@@ -12,7 +12,7 @@
         <div class="saved_address_content">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <span><i class="bi bi-building"></i> {{$item->save_address_as == 0 ? 'Home' : 'Office'}}</span>
+                    <span><i class="bi bi-building"></i> {{$item->save_address_as == 1 ? 'Home' : 'Office'}}</span>
                 </div>
                 <div>
                     <a href="{{route('user.update_address',[$item->id])}}"><img src="{{asset('user/assets/images/edit.svg')}}" class="img-fluid"/></a>

@@ -10,10 +10,10 @@
     .thumb-img {
         width: 65px;
         height: 80px;
-        object-fit: cover;
+        object-fit: fill;
         border-radius: 8px;
         cursor: pointer;
-        border: 2px solid transparent;
+        border: 2px solid #ccc;
         transition: 0.3s;
     }
 
@@ -68,7 +68,9 @@
         font-size: 15px;
 
     }
-
+    a:hover {
+    color: #8a4f2d;
+}
      
     .size-btn {
         width: 32px;
@@ -102,7 +104,29 @@
 p, span{
     font-size:14px;
 }
+.main-img-container{
+    height:60vh;
+}
 
+.main-img-container img{
+    width: 100%;
+    HEIGHT: 100%;
+    OBJECT-FIT: fill;
+    border-radius:12px;
+}   
+/* .{
+    position: absolute;
+    bottom: 1.3rem;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+} */
+.modal-footer, .modal-header{
+    border:0;
+}
+.cstm-pd{
+    padding:auto 5px;
+}
 
 </style>
 
@@ -120,7 +144,7 @@ p, span{
 
     <div class="row my-3">
 
-    <div id="images_show-box" class="col-lg-6 col-xxl-6"></div>
+    <div id="images_show-box" class="col-lg-6 col-xxl-6 position-relative" style="position:relative;"></div>
 
     <div class="col-lg-6 col-xxl-6">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
@@ -133,15 +157,14 @@ p, span{
 
             </div>
             <h6 class="fw-semibold">{{ $product->brand->name_english }}</h6>
-            <p class="text-muted mb-1">{{ $product->product_name_en }} </p>
-            <p class="text-muted mb-1">{{ $product->seller_details->store_info->store_name }} ({{ $product->category->name }}) </p>
+            <p class="text-muted mb-1">{{ $product->product_name_en }} ({{ $product->category->name }}) </p>
            
             <div class="d-flex align-items-center mb-2">
                 <span class="text-warning fs-5">★★★★☆</span>
                 <span class="ms-2 text-muted">(1K)</span>
             </div>
             
-     <div id="price-box"></div>
+     <div id="price-box" class="mb-0"></div>
 
      <p class="text-success small">inclusive of all taxes</p>
 
@@ -175,7 +198,7 @@ p, span{
 
 <div id="size-list"></div>
 
-<div id="variation-box" class="ps-0 desc-box rounded-4 my-3"></div>
+<div id="variation-box" class="cstm-pd rounded-4 my-3"></div>
 
     </div>
 
@@ -314,9 +337,7 @@ p, span{
         <img src="{{$product->upload_size_chart}}" style="width:100%">
 
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+   
     </div>
   </div>
 </div>
@@ -332,8 +353,8 @@ p, span{
       <div class="modal-body">
         Are you sure you want to delete this item?
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">No</button>
         <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">Yes, Delete</button>
       </div>
     </div>
@@ -422,6 +443,8 @@ function loadPriceAndImages(size, color, product_id) {
             size: size
         },
         success: function (response) {  
+            console.log(response)
+
             $("#images_show-box").html(response);
                         $("#images_show-box").html(response);
 

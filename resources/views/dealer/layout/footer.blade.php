@@ -46,11 +46,6 @@
 
 
 
-
-
-
-    new DataTable('#example');
-
     @if (session('success'))
         toastr.success("{{ session('success') }}");
     @endif

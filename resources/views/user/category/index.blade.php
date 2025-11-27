@@ -153,7 +153,7 @@
                             <div class="category_filter">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <h3>Filters</h3>
-                                    <span>Clear</span>
+                                    <a href="{{route('user.store_details',[request()->id])}}">Clear</a>
                                 </div>
                                 <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
                                         <div class="form-group mt-4">
@@ -161,7 +161,7 @@
                                             @foreach ($category as $key => $item)
                                             <div class="form-check my-4">
                                                 <input class="form-check-input mb-1"
-                                                    type="checkbox"
+                                                    type="radio"
                                                     name="category[]"
                                                     value="{{ $item->id }}"
                                                     id="category_{{ $key }}"
@@ -403,7 +403,6 @@
 
                                     @foreach ($store_details['All_Product'] as $item)
                                         <div class="col-lg-4 col-md-4 col-6 my-3">
-                                            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                                                 <div class="product-card">
                                                     <div class="product-img">
                                                         @foreach ($item->product_variants[0]->variant_image as $key => $val)
@@ -412,12 +411,13 @@
                                                             @endif
                                                             <img src="{{ $val }}" alt="Product">
                                                         @endforeach
-                                                        <span class="wishlist-btn"><i id="wishlistProduct{{ $item->id }}"
+                                                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
                                                                 class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
                                                                 onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
                                                     </div>
+                                                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                                                     <div class="product-content">
-                                                            <h5>{{ $item->product_name_en }}</h5>
+                                                            <h5>{{ $item->product_name_en }} ({{ "by " . $store_details['store']['store_name'] }})</h5>
                                                             <div class="rating">
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
@@ -443,6 +443,7 @@
 
 
                                                     </div>
+                                                </a>
                                                 </div>
                                             </a>
                                         </div>
