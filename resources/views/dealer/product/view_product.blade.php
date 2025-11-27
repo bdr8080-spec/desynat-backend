@@ -10,7 +10,7 @@
     .thumb-img {
         width: 65px;
         height: 80px;
-        object-fit: cover;
+        object-fit: fill;
         border-radius: 8px;
         cursor: pointer;
         border: 2px solid #ccc;
@@ -111,18 +111,16 @@ p, span{
 .main-img-container img{
     width: 100%;
     HEIGHT: 100%;
-    OBJECT-FIT: cover;
+    OBJECT-FIT: fill;
     border-radius:12px;
-}
-.{
+}   
+/* .{
     position: absolute;
     bottom: 1.3rem;
     margin: auto;
     justify-content: center;
     text-align: center;
-    left: 40%;
-}
-
+} */
 .modal-footer, .modal-header{
     border:0;
 }
@@ -200,7 +198,7 @@ p, span{
 
 <div id="size-list"></div>
 
-<div id="variation-box" class="desc-box cstm-pd rounded-4 my-3"></div>
+<div id="variation-box" class="cstm-pd rounded-4 my-3"></div>
 
     </div>
 

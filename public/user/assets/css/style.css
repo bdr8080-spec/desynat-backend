@@ -140,6 +140,17 @@ section{
     line-height: var(--p-font-height);
     font-weight: var(--p-font-weight);
 }
+.custom-btn6{
+    background: var(--gradient-color6);
+    border: none;
+    color: var(--third-color);
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 0;
+    font-size: var(--p-font-size);
+    line-height: var(--p-font-height);
+    font-weight: var(--p-font-weight);
+}
 .customBtn5{
     background: var(--gradient-color6) !important;
 }
@@ -762,20 +773,21 @@ h3.mid-headng{
 }
 
 .wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: 1px solid transparent;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: 50%;
     background: linear-gradient(#fff, #fff) padding-box,
                 linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
-  width: 32px;
-  color: var(--secondry2-color);
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 32px;
+    color: var(--secondry2-color);
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      z-index: 15;
 }
 .share-btn {
     position: absolute;
@@ -793,6 +805,11 @@ h3.mid-headng{
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 15;
+}
+.customProduct_Carousel .share-btn{
+    right: 50px;
+    left: auto;
 }
 .share-btn img{
     width: 100%;
@@ -1077,6 +1094,10 @@ h3.mid-headng{
     padding: 6% 4%;
     background: #DFBF8F1A;
 }
+.category_filter a{
+    color: var(--secondry2-color);
+    text-decoration: none;
+}
 
 .form-check-input {
   appearance: none; /* Remove default browser style */
@@ -1321,8 +1342,17 @@ h3.mid-headng{
     background: var(--gradient-color);
     color: #fff;
 }
+.reels_content .product-img{
+    height: 500px !important;
+    border-radius: 15px;
+}
 .reels_content .product-img img{
-    height: 350px !important;
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: cover;
+}
+.reels_content .product-img .wishlist-btn img{
+    height: auto !important;
 }
 
 .status-viewer {
@@ -1538,7 +1568,7 @@ h3.mid-headng{
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap:0;
-    margin-top:13%;
+    margin-top:5%;
     align-items:center;
     justify-content: space-between;
   }
