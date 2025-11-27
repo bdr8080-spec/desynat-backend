@@ -276,7 +276,7 @@
                                 {{-- @endforeach --}}
                                  @empty
                           <tr>
-                              <td colspan="10" class="text-center text-muted">No Category found</td>
+                              <td colspan="10" class="text-center text-muted">No Product found</td>
                           </tr>
                       @endforelse
 
@@ -401,7 +401,7 @@
 
                                  @empty
                           <tr>
-                              <td colspan="10" class="text-center text-muted">No Category found</td>
+                              <td colspan="10" class="text-center text-muted">No product found</td>
                           </tr>
                       @endforelse
 
