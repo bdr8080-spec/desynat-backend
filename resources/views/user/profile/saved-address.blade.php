@@ -16,7 +16,7 @@
                 </div>
                 <div>
                     <a href="{{route('user.update_address',[$item->id])}}"><img src="{{asset('user/assets/images/edit.svg')}}" class="img-fluid"/></a>
-                    <a href="{{route('user.delete_address',[$item->id])}}"><img src="{{asset('assets/images/delete.svg')}}" class="img-fluid" /></a>
+                    <a href="{{route('user.delete_address',[$item->id])}}"><img src="{{asset('user/assets/images/delete.svg')}}" class="img-fluid" /></a>
                     <span class="setAsdefault custom-btn3">Set as Default</span>
                 </div>
             </div>
