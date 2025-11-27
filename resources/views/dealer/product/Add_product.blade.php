@@ -384,7 +384,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                 name="actual_price[]" id="actual_price_0">
                             <p class="text-danger" id="error-actual_price_0"></p>
 
@@ -440,7 +440,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                 name="final_price[]" id="final_price_0">
                             <p class="text-danger" id="error-final_price_0"></p>
                         </div>
@@ -1080,7 +1080,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="actual_price[]">
+                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
 
                             </div>
