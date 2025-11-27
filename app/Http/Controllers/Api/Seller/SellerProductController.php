@@ -65,7 +65,7 @@ class SellerProductController extends Controller
             
             'total_stock' => ['required', 'array', new MatchArrayProductVariation],
             'sku' => ['required', 'array', new MatchArrayProductVariation],
-            'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
+            // 'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
             'actual_price' => ['required', 'array', new MatchArrayProductVariation],
             'discount_type' => ['required', 'array', new MatchArrayProductVariation],
             'discount_value' => ['required', 'array', new MatchArrayProductVariation],
@@ -149,7 +149,7 @@ class SellerProductController extends Controller
         
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-'sku_threshold_value' => $request->sku_threshold_value,
+'sku_threshold_value' => $request->sku_threshold_value??null,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,
@@ -227,7 +227,7 @@ class SellerProductController extends Controller
             
             'total_stock' => ['required', 'array', new MatchArrayProductVariation],
             'sku' => ['required', 'array', new MatchArrayProductVariation],
-            'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
+            // 'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
             'actual_price' => ['required', 'array', new MatchArrayProductVariation],
             'discount_type' => ['required', 'array', new MatchArrayProductVariation],
             'discount_value' => ['required', 'array', new MatchArrayProductVariation],
@@ -312,7 +312,7 @@ class SellerProductController extends Controller
         
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-'sku_threshold_value' => $request->sku_threshold_value,
+'sku_threshold_value' => $request->sku_threshold_value??null,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,
