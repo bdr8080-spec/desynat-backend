@@ -229,7 +229,7 @@
         <!----- variant panel ------>
           @foreach ($product_details['product_variants'] as $key=> $item)
          
-        <div class="variant-panel specifications-row variant-panel-bg">
+        <div class="specifications-row variant-panel-bg">
             
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
@@ -492,6 +492,8 @@
 
     @endforeach
         <!-----End variant panel ------>
+
+    <div class="variant-panel"></div>   
 
         <div class="row py-3 mt-4">
             <div class="col-lg-12 col-md-12">
@@ -980,6 +982,7 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
 
     // ADD NEW Variant
     $(".addVariantBtn").click(function() {
+
         $(".variant-panel").append(`
         <div class="variant-panel-bg">
             <div class="product-pnls mt-4">
