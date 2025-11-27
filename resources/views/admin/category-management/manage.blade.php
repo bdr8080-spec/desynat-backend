@@ -39,7 +39,7 @@
     left: 0;
     display: none;
 }
-}
+
 </style>
 <div id="content-wrapper" class="d-flex flex-column position-relative">
     <div id="content" class="">
@@ -109,7 +109,8 @@
                             </thead>
                             <tbody>
                                 @forelse ($subcategories as $key => $scat)
-                                <tr>
+                                <thello by Paras Jain QA
+r>
                                     <th scope="row">{{ $key + 1 }}</th>
                                     <td>
                                         <img src="{{ $scat->image }}" width="40px" height="40px" class="square" />
@@ -178,9 +179,9 @@
                             <div class="col-lg-12">
                                 <div class="upload-title text-center">Upload Image</div>
 
-                                <div class="upload-new text-center">
+                                <!-- <div class="upload-new text-center"> -->
                                     <label for="fileUpload" class="upload-box" style="cursor:pointer;">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                        <img src="/admin/image/imge-upload.svg"
                                             id="uploadIcon"  class="upload-icon" />
                                         <img id="previewImage" class="preview-image"
                                             style="display:none; max-width:216px; margin-top:-2px;" />
@@ -188,7 +189,7 @@
                                         <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                                     </label>
                                     <div class="text-danger text-center" id="imageError"></div>
-                                </div>
+                                <!-- </div> -->
                             </div>
                             <input type="hidden" name="category_id" class="form-control" value="{{ $id }}" />
                             <!-- Brand Name English -->
@@ -245,7 +246,7 @@
                             <div class="col-lg-12">
                                 <div class="upload-title text-center">Upload Image</div>
                                 <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                                    <img src="/admin/image/imge-upload.svg"
                                         id="editPreviewImage" class="preview-image"
                                         style="max-width:216px; margin-top:-2px;" />
                                     <div class="upload-text">Upload Image</div>

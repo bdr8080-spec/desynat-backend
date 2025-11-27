@@ -39,8 +39,8 @@ class SellerProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'required|exists:sub_categories,id',
             'brand_id' => 'required|exists:brands,id',
-            'other_en' => 'required',
-            'other_ar' => 'required',
+            // 'other_en' => 'required',
+            // 'other_ar' => 'required',
          
             'product_name_en' => 'required|unique:products,product_name_en',
             'product_name_ar' => 'required|unique:products,product_name_ar',
@@ -65,7 +65,7 @@ class SellerProductController extends Controller
             
             'total_stock' => ['required', 'array', new MatchArrayProductVariation],
             'sku' => ['required', 'array', new MatchArrayProductVariation],
-            'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
+            // 'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
             'actual_price' => ['required', 'array', new MatchArrayProductVariation],
             'discount_type' => ['required', 'array', new MatchArrayProductVariation],
             'discount_value' => ['required', 'array', new MatchArrayProductVariation],
@@ -119,8 +119,8 @@ class SellerProductController extends Controller
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
-'other_en' => $request->other_en,
-'other_ar' => $request->other_ar,
+'other_en' => $request->other_en??null,
+'other_ar' => $request->other_ar??null,
 
 'product_name_en' => $request->product_name_en,
 'product_name_ar' => $request->product_name_ar,
@@ -149,7 +149,7 @@ class SellerProductController extends Controller
         
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-'sku_threshold_value' => $request->sku_threshold_value,
+'sku_threshold_value' => $request->sku_threshold_value??null,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,
@@ -201,8 +201,8 @@ class SellerProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'required|exists:sub_categories,id',
             'brand_id' => 'required|exists:brands,id',
-            'other_en' => 'required',
-            'other_ar' => 'required',
+            // 'other_en' => 'required',
+            // 'other_ar' => 'required',
          
             'product_name_en' => 'required|unique:products,product_name_en,' . $request->product_id,
             'product_name_ar' => 'required|unique:products,product_name_ar,' . $request->product_id,
@@ -227,7 +227,7 @@ class SellerProductController extends Controller
             
             'total_stock' => ['required', 'array', new MatchArrayProductVariation],
             'sku' => ['required', 'array', new MatchArrayProductVariation],
-            'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
+            // 'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
             'actual_price' => ['required', 'array', new MatchArrayProductVariation],
             'discount_type' => ['required', 'array', new MatchArrayProductVariation],
             'discount_value' => ['required', 'array', new MatchArrayProductVariation],
@@ -282,8 +282,8 @@ class SellerProductController extends Controller
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
-'other_en' => $request->other_en,
-'other_ar' => $request->other_ar,
+'other_en' => $request->other_en??null,
+'other_ar' => $request->other_ar??null,
 
 'product_name_en' => $request->product_name_en,
 'product_name_ar' => $request->product_name_ar,
@@ -312,7 +312,7 @@ class SellerProductController extends Controller
         
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-'sku_threshold_value' => $request->sku_threshold_value,
+'sku_threshold_value' => $request->sku_threshold_value??null,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,

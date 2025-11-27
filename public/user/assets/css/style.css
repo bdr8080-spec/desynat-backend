@@ -1693,16 +1693,15 @@ h3.mid-headng{
     text-decoration: none;
     padding: 8px;
 }
-.track{
+.saved_track_address{
     position: absolute;
-    top: -12%;
+    top: 7%;
     right: 10px;
     transform: translate(0, 50%);
     color: var(--secondry2-color);
-    width: 100%;
     margin-top: 20px;
 }
-.address-tab span{
+.address-tab span.selectAddress_{
     position: absolute;
     top: 0%;
     left: 10px;
@@ -1735,6 +1734,9 @@ h3.mid-headng{
 }
 
 /* saved address end */
+.modal-body .customBtn{
+    color: var(--third-color) !important;
+}
 
 /* footer */
 

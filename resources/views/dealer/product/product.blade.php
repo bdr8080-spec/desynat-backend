@@ -40,7 +40,8 @@
                             <div class="from-group position-relative">
                                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                     class="search-icon">
-                                <input type="search" class="form-control" placeholder="Search">
+                                <input type="search" class="form-control tableSearch" placeholder="Search" id="
+                                mySearch" data-table="table1">
                             </div>
                         </div>
 
@@ -80,7 +81,7 @@
 
                     {{-- All Product show --}}
                     <div class="table-responsive">
-                        <table id="example" class="table datatable table-bordered">
+                        <table id="example" class="table datatable table-bordered" id="table1">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -119,7 +120,9 @@
                                         </td>
                                         <td>
 
-                                            {{ $item->product_variants['0']->sku }}
+                                            {{-- {{ $item->product_variants['0']->sku }} --}}
+
+                                            {{ $item->id }}
 
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
@@ -163,7 +166,7 @@
                     <div class="table-header">
                         <div class="search-field">
                             <div class="from-group position-relative">
-                                <input type="search" class="form-control" placeholder="Search">
+                                <input type="search" class="form-control tableSearch" placeholder="Search"  data-table="table2">
                             </div>
                         </div>
                         <form method="GET" action="">
@@ -203,7 +206,7 @@
 
                     {{-- // Active product List  --}}
                     <div class="table-responsive">
-                        <table class="table datatable table-bordered">
+                        <table class="table datatable table-bordered" id="table2">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -236,7 +239,8 @@
                                         </td>
                                         <td>
 
-                                            {{ $item->product_variants['0']->sku }}
+                                            {{-- {{ $item->product_variants['0']->sku }} --}}
+                                            {{ $item->id }}
 
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
@@ -281,7 +285,7 @@
                     <div class="table-header">
                         <div class="search-field">
                             <div class="from-group position-relative">
-                                <input type="search" class="form-control" placeholder="Search">
+                                <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table3">
                             </div>
                         </div>
 
@@ -320,7 +324,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table datatable table-bordered">
+                        <table class="table datatable table-bordered" id="table3">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -353,7 +357,8 @@
                                         </td>
                                         <td>
 
-                                            {{ $item->product_variants['0']->sku }}
+                                            {{-- {{ $item->product_variants['0']->sku }} --}}
+                                            {{ $item->id }}
 
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
@@ -468,4 +473,9 @@
         });
     </script>
 
-    @include('dealer.layout.footer');
+
+
+@include('dealer.layout.footer');
+
+{{-- datatable show code --}}
+@include('dealer.product.ajax.datatablejs'); 
