@@ -1308,10 +1308,10 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
             cache: false,
             contentType: false,
             processData: false,
-            // beforeSend: function() {
-            //     // Show loader
-            //     $('#loader').show();
-            // },
+            beforeSend: function() {
+                // Show loader
+                $('#loader').show();
+            },
             success: function(response) {
                 console.log(response);
 
@@ -1359,10 +1359,10 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
                     }
                 });
             },
-            // complete: function() {
-            //     // Hide loader (after success or error)
-            //     $('#loader').hide();
-            // }
+            complete: function() {
+                // Hide loader (after success or error)
+                $('#loader').hide();
+            }
 
 
 
