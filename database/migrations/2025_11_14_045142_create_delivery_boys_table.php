@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('vehicle_reg_no');
             $table->string('document_information')->default('0')->comment('0 not upload 1 upload');
             $table->string('status')->default('1')->comment('0 inactive 1 active');
+            $table->string('on_duty')->default('1')->comment('0 no 1 yes');
             $table->timestamps();
         });
     }

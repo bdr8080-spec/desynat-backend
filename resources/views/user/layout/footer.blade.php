@@ -638,6 +638,8 @@
                          //     window.location.replace("{{ url('user/dashboard') }}");
                          // }, 2000);
 
+                         $(`#hideWisListProduct${id}`).hide();
+
                      } else {
                          toastr.error("There was a problem deleting the subcategory.");
                      }

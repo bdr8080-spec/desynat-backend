@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DeliveryBoy\AuthController;
 
 use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyDashboardController;
+use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyProfileController;
 
 
 // M1 Milestone 
@@ -22,6 +23,11 @@ Route::group(['prefix' => 'deliveryboy'], function () {
 
     Route::get('/logout', [DeliveryBoyDashboardController::class,'logout']);
     Route::get('/delivery_boy_profile', [DeliveryBoyDashboardController::class,'delivery_boy_profile']);
+
+    //M4
+    Route::get('/get_profile_details', [DeliveryBoyProfileController::class,'get_profile_details']);
+    Route::post('/update_profile', [DeliveryBoyProfileController::class,'update_profile']);
+    Route::post('/duty_on_off', [DeliveryBoyProfileController::class,'duty_on_off']);
 
 
 
