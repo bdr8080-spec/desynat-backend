@@ -1538,7 +1538,7 @@ h3.mid-headng{
     display:grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap:0;
-    margin-top:28px;
+    margin-top:13%;
     align-items:center;
     justify-content: space-between;
   }
@@ -1695,10 +1695,12 @@ h3.mid-headng{
 }
 .track{
     position: absolute;
-    top: 30%;
+    top: -12%;
     right: 10px;
     transform: translate(0, 50%);
     color: var(--secondry2-color);
+    width: 100%;
+    margin-top: 20px;
 }
 .address-tab span{
     position: absolute;
@@ -1708,6 +1710,7 @@ h3.mid-headng{
 }
 .address-tab input{
     border: none;
+    height: 50px;
 }
 .address-tab input:focus{
     box-shadow: none;
