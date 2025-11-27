@@ -58,6 +58,7 @@ use App\Http\Controllers\User\AddressController;
 
    Route::get('delete-address/{id}', [AddressController::class, 'deleteAddress'])->name('user.delete_address');
 
+   Route::get('address/set-default',[AddressController::class, 'addressSetDefault'])->name('user.address_set_default');
 
 
    });

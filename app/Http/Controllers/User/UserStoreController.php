@@ -9,6 +9,7 @@ use App\Helpers\ApiResponse;
 use App\Services\UserManagementService;
 use Validator;
 use App\Models\Brand;
+use App\Models\color;
 use App\Models\{Category,size,wishlist,product};
 use Auth;
 
@@ -78,10 +79,11 @@ class UserStoreController extends Controller
       $brand =  Brand::orderBy('name_english','asc')->get();
       $category =  Category::orderBy('id','desc')->get();
       $size =  size::orderBy('name','desc')->get();
+      $color = color::orderBy('name','asc')->get();
        
    
       
-        return view('user.category.index',compact('store_details','category','brand','size'));
+        return view('user.category.index',compact('store_details','category','brand','size','color'));
     }
     
 
