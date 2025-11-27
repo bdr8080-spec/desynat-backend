@@ -1,6 +1,20 @@
 @include('dealer.layout.header')
 <style>
 
+    .upload-image {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 10px;
+    margin-bottom: 15px; /* this prevents overlap */
+}
+
+#edit_uploadChart_preview {
+    /* margin-top: 15px; ensures preview goes below */
+    position: absolute;
+    z-index: 0;
+}
+
+
 
 </style>
 <section class="section dashboard">
@@ -222,10 +236,10 @@
 
         <!----- variant panel ------>
         <div class="variant-panel">
-            <div class="product-pnls mt-4">
-                <div class="upload-image" style="height:170px; width: 270px;">
-                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
-                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px;padding-top:2rem;">
+            <div class="product-pnls mt-4" id="variant_image_id0">
+                <div class="upload-image" style="height:170px;">
+                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
                         <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
                         <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[0][]" rel="0">
@@ -241,13 +255,13 @@
             <div class="wapper-header mt-4">
                 <div class="row price-block">
                     <div class="col-lg-3">
-                        <div class="sub-form">
+                        <div class="sub-form product-row">
                             <div class="label-flex">
                                 <label>Colour</label>
                             </div>
 
-                            <select class="form-select form-control" aria-label="Default select example"
-                                name="color_id[]">
+                            <select class="form-select form-control color-select" aria-label="Default select example"
+                                name="color_id[]" rel="0">
                                 <option value="">Select Colour</option>
                                 @foreach ($color as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -702,18 +716,36 @@
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
                     <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"    
                         style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
+
+                    <img id="uploadedImg" src=""
+                        style="width:100px; display:none; object-fit:cover; border-radius:6px;object-fit:cover; height: 110px;">
+
+                    <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
+                    <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
+                        name="upload_size_chart">
+                    <p class="text-danger" id="error-upload_size_chart"></p>
+                </label>
+
+                 <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
+            </div>
+            
+        </div>
+
+        <!--
+  <div class="product-pnls mt-4">
+                <div class="upload-image" style="height:170px; width: 270px;">
+                    <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px;padding-top:2rem;">
+
+
+
+              style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
                     <img id="uploadedImg" src="" 
                         style="display:none; object-fit:cover; border-radius:6px;width:225px;object-fit: fill; height: 125px;padding-top: 12px;">
                     <div class="py-2"  style="color:#875C3A" >Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;display: none; width:50px;"
-                        name="upload_size_chart">
-                    <p class="text-danger" id="error-upload_size_chart"></p>
-                </label>
-            </div>
-            <!-- <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div> -->
-        </div>
-
-        <!-- <div class="product-pnls mt-4">
+        
+        <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;">
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
@@ -835,51 +867,25 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
     this.files = dt.files;
 });
 
+// Upload Chart Image in footer side
 
-// Upload Chart Image in footer side
-// $('#edit_uploadChart').on('change', e => {
-//     let files = e.target.files;
-//     $('#edit_uploadChart_preview').empty(); // clear old previews
-//     [...files].forEach(f => {
-//         let url = URL.createObjectURL(f);
-//         let imgBox = $(`
-//       <div class="multiple-img position-relative">
-//         <img src="${url}" class="w-100 rounded">
-//         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-//       </div>
-//     `);
-//         imgBox.find('.remove-ic').click(() => imgBox.remove());
-//         $('#edit_uploadChart_preview').append(imgBox);
-//     });
-// });
-// Upload Chart Image in footer side
-// Upload Chart Image in footer side
 $('#edit_uploadChart').on('change', e => {
     let files = e.target.files;
-
-    // Replace placeholder image with second img tag
-    if (files.length > 0) {
-        let firstUrl = URL.createObjectURL(files[0]);
-
-        $('#placeholderImg').hide();     // hide placeholder
-        $('#uploadedImg').attr('src', firstUrl).show();   // show preview img
-        $('#uploadLabel .py-2').hide();  // hide title text
-    }
-
     $('#edit_uploadChart_preview').empty(); // clear old previews
     [...files].forEach(f => {
         let url = URL.createObjectURL(f);
         let imgBox = $(`
-          <div class="multiple-img position-relative">
-            <img src="${url}" class="w-100 rounded">
-            <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-          </div>
-        `);
+      <div class="position-relative">
+        <img src="${url}" class="w-100 rounded">
+        <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+      </div>
+    `);
         imgBox.find('.remove-ic').click(() => imgBox.remove());
         $('#edit_uploadChart_preview').append(imgBox);
     });
 });
 
+// Upload Chart Image in footer side
 
 </script>
 
@@ -973,7 +979,7 @@ var product_Variation_count = 1;
 $(".addVariantBtn").click(function() {
     $(".variant-panel").append(`
         <div class="variant-panel-bg">
-            <div class="product-pnls mt-4">
+            <div class="product-pnls mt-4"  id="variant_image_id${product_Variation_count}">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
@@ -992,13 +998,13 @@ $(".addVariantBtn").click(function() {
                 <div class="row">
                 
                      <div class="col-lg-3">
-                    <div class="sub-form">
+                    <div class="sub-form product-row">
                         <div class="label-flex">
                             <label>Colour</label>
                         </div>
 
-                        <select class="form-select form-control" aria-label="Default select example" name="color_id[]">
-                                <option value="">Select Colour</option>
+                        <select class="form-select form-control color-select" aria-label="Default select example" name="color_id[]" rel="${product_Variation_count}">
+                            <option value="">Select Colour</option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
@@ -1518,6 +1524,54 @@ document.getElementById('brand_id').addEventListener('change', function() {
         otherField1.style.display = 'none';
     }
 });
+
+
+// {{-- When User Select Same Color then remove Image Field --}}
+
+$(document).ready(function() {
+
+    // // Use event delegation for dynamically added rows
+    // $(document).on('change', '.color-select', function() {
+
+    //      let dynamic_id = $(this).attr("rel");
+
+    //     let selectedColors = [];
+
+    //     // Collect all selected colors
+    //     $('.color-select').each(function() {
+    //         let val = $(this).val();
+    //         if(val !== "") selectedColors.push(val);
+
+    //         // debugger;
+    //     });
+
+    //     // Loop through each row to hide/show image upload
+    //     $('.product-row').each(function() {
+    //         let rowColor = $(this).find('.color-select').val();
+            
+    //         // debugger;
+    //         if(rowColor === "") return; // skip empty
+
+    //         // Count occurrences of this color
+    //         let occurrences = selectedColors.filter(c => c === rowColor).length;
+
+    //         if(occurrences > 1){
+                
+    //         // debugger;
+
+    //             $('#variant_image_id'+dynamic_id).hide();
+    //         } else {
+
+    //         // debugger;
+    //              $('#variant_image_id'+dynamic_id).show();
+    //         }
+
+    //     });
+
+    // });
+
+});
+
 </script>
 
 {{-- // common j s --}}
