@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="my-profile customContainer" style="margin-top: 11%;">
-    <div class="d-flex align-items-center mt-3 justify-content-between">
-        <a href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i>My Saved Address</a>
+<div class="my-profile customContainer">
+    <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
+        <a class="text-black" href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i>My Saved Address</a>
     </div>
 
     <div class="saved-address-contenar">
@@ -24,10 +24,10 @@
             <p>{{$item->address}}</p>
         </div>
         @empty
-            <h3>No address added</h3>
+            <h3 class="text-center my-5">No address added</h3>
         @endforelse
        
-        <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address" >+ Add New Address</a>
+        <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address mb-45" >+ Add New Address</a>
     </div>
 </div>
 

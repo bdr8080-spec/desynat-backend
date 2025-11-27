@@ -63,7 +63,8 @@ $product=[
 'customized_product'=> $request->customized_product, // // 0 not 1 yes
 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
-'upload_size_chart'=> $request->upload_size_chart
+'upload_size_chart'=> $request->upload_size_chart,
+'product_active_status'=>1
 ];
 
 
@@ -607,7 +608,7 @@ $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('pr
 
 public function single_product_details_fetch($request){
         
-    $product_data=  product::with('brand','category','product_specifications','product_variants.color','product_variants.size')->where('id',$request->product_id)->first();
+    $product_data=  product::with('seller_details.store_info','brand','category','product_specifications','product_variants.color','product_variants.size')->where('id',$request->product_id)->first();
     
     if (!$product_data) {
         return ['status'=>'error','message'=>"No product id is invalid",'data'=>(object)[]];

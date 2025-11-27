@@ -107,6 +107,9 @@ public function Add_product(){
 
 public function Add_product_code(Request $request){
 
+    
+    //  dd($request->variant_image);
+
     $seller_details=Auth::guard('seller')->user();
     $seller_id=$seller_details->id;
     
@@ -114,8 +117,8 @@ public function Add_product_code(Request $request){
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
           'brand_id' => 'required|exists:brands,id',
-          'other_en' => 'required',
-          'other_ar' => 'required',
+          'other_en' => 'nullable',
+          'other_ar' => 'nullable',
        
           'product_name_en' => 'required|unique:products,product_name_en',
           'product_name_ar' => 'required|unique:products,product_name_ar',
@@ -403,6 +406,7 @@ public function Add_product_code(Request $request){
      }
 
 
+
      // Product Vartion Image
 
      $dir="Product/";
@@ -429,8 +433,8 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
-'other_en' => $request->other_en,
-'other_ar' => $request->other_ar,
+'other_en' => $request->other_en??null,
+'other_ar' => $request->other_ar??null,
 
 'product_name_en' => $request->product_name_en,
 'product_name_ar' => $request->product_name_ar,
@@ -459,7 +463,7 @@ $request_data=(object) [
       
 'total_stock' => $request->total_stock,
 'sku' => $request->sku,
-// 'sku_threshold_value' => $request->sku_threshold_value,
+'sku_threshold_value' => $request->sku_threshold_value??null,
 'actual_price' => $request->actual_price,
 'discount_type' => $request->discount_type,
 'discount_value' => $request->discount_value,
@@ -542,8 +546,8 @@ public function edit_product_code(Request $request, $id){
           'category_id' => 'required|exists:categories,id',
           'subcategory_id' => 'required|exists:sub_categories,id',
           'brand_id' => 'required|exists:brands,id',
-          'other_en' => 'required',
-          'other_ar' => 'required',
+          'other_en' => 'nullable',
+          'other_ar' => 'nullable',
        
         'product_name_en' => 'required|unique:products,product_name_en,' . $id,
         'product_name_ar' => 'required|unique:products,product_name_ar,' . $id,
@@ -586,7 +590,7 @@ public function edit_product_code(Request $request, $id){
 
           'total_stock' => ['required', 'array'],
           'sku' => ['required', 'array'],
-          'sku_threshold_value' => ['required', 'array'],
+        //   'sku_threshold_value' => ['required', 'array'],
           'actual_price' => ['required', 'array'],
           'discount_type' => ['required', 'array'],
           'discount_value' => ['required', 'array'],
@@ -594,7 +598,7 @@ public function edit_product_code(Request $request, $id){
 
          'total_stock.*' => ['required'],
           'sku.*' => ['required'],
-          'sku_threshold_value.*' => ['required'],
+        //   'sku_threshold_value.*' => ['required'],
           'actual_price.*' => ['required'],
           'discount_type.*' => ['required'],
           'discount_value.*' => ['required'],
@@ -772,6 +776,21 @@ public function edit_product_code(Request $request, $id){
         
       ]);
 
+        $validate->after(function ($validate) use ($request) {
+            $totalStock = $request->total_stock;
+            $sku        = $request->sku;
+
+            if (is_array($totalStock) && is_array($sku)) {
+                foreach ($sku as $index => $skuValue) {
+                    $stockValue = $totalStock[$index] ?? null;
+
+                    if ($stockValue !== null && $skuValue >= $stockValue) {
+                        $validate->errors()->add("sku.$index", "SKU Limit Not should be greater than Total Stock");
+                    }
+                }
+            }
+        });
+        
 
      $validate->after(function ($validate) use ($request) {
 
@@ -921,8 +940,8 @@ $request_data=(object) [
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
 'brand_id' => $request->brand_id,
-'other_en' => $request->other_en,
-'other_ar' => $request->other_ar,
+'other_en' => $request->other_en??null,
+'other_ar' => $request->other_ar??null,
 
 'product_name_en' => $request->product_name_en,
 'product_name_ar' => $request->product_name_ar,

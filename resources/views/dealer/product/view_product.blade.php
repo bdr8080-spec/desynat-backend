@@ -133,7 +133,8 @@ p, span{
 
             </div>
             <h6 class="fw-semibold">{{ $product->brand->name_english }}</h6>
-            <p class="text-muted mb-1">{{ $product->product_name_en }} ({{ $product->category->name }}) </p>
+            <p class="text-muted mb-1">{{ $product->product_name_en }} </p>
+            <p class="text-muted mb-1">{{ $product->seller_details->store_info->store_name }} ({{ $product->category->name }}) </p>
            
             <div class="d-flex align-items-center mb-2">
                 <span class="text-warning fs-5">★★★★☆</span>
