@@ -33,7 +33,7 @@
                 <div class="form-group position-relative">
                     <label for="">Address</label>
                     <input type="text" id="full_address" name="address" class="form-control notapplyspace" placeholder="Enter Address" value="{{@$address->address}}" />
-                    <a class="track" data-bs-toggle="modal" data-bs-target="#locationModal">
+                    <a class="saved_track_address" data-bs-toggle="modal" data-bs-target="#locationModal">
                         <i class="bi bi-crosshair"></i>
                     </a>
                     <span class="text-danger" id="error-address"></span>
@@ -147,7 +147,7 @@
                     <p id="selectedLocationText" class="text-dark">Select a location…</p>
                 </div>
 
-                <button type="button" id="applyLocationBtn" class="customBtn mt-2 btn-close" data-bs-dismiss="modal">
+                <button type="button" id="applyLocationBtn" class="customBtn mt-2" data-bs-dismiss="modal">
                    save
                 </button>
 
