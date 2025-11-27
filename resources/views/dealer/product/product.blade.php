@@ -81,7 +81,7 @@
 
                     {{-- All Product show --}}
                     <div class="table-responsive">
-                        <table  class="table datatable table-bordered" id="table1">
+                        <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable   @endif" id="table1">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -206,7 +206,7 @@
 
                     {{-- // Active product List  --}}
                     <div class="table-responsive">
-                        <table class="table datatable table-bordered" id="table2">
+                        <table class="table table-bordered @if(count($data['active_product']) > 0 ) datatable   @endif" id="table2">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -324,7 +324,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table datatable table-bordered" id="table3">
+                        <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable   @endif" id="table3">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
