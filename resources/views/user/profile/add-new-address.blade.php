@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="my-profile customContainer">
-    <div class="d-flex align-items-center mt-3 justify-content-between">
-        <a href="{{route('user.view_address')}}"><i class="fa-solid fa-chevron-left"></i> Add New Address</a>
+    <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
+        <a class="text-black" href="{{route('user.view_address')}}"><i class="fa-solid fa-chevron-left"></i> Add New Address</a>
     </div>
 
         <form id="saveAddress">
@@ -113,7 +113,7 @@
             <input type="hidden" name="longitude" id="longitude">
 
             <div class="col-lg-12">
-                <button class="customBtn w-100 mt-4">Add Address</button>
+                <button class="customBtn w-100 mt-4 mb-45">Add Address</button>
             </div>
         </div>
     </form>
