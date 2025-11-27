@@ -140,6 +140,17 @@ section{
     line-height: var(--p-font-height);
     font-weight: var(--p-font-weight);
 }
+.custom-btn6{
+    background: var(--gradient-color6);
+    border: 1px solid var(--secondry2-color);
+    color: var(--third-color);
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px 0;
+    font-size: var(--p-font-size);
+    line-height: var(--p-font-height);
+    font-weight: var(--p-font-weight);
+}
 .customBtn5{
     background: var(--gradient-color6) !important;
 }
@@ -762,20 +773,21 @@ h3.mid-headng{
 }
 
 .wishlist-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: 1px solid transparent;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: 50%;
     background: linear-gradient(#fff, #fff) padding-box,
                 linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
-  width: 32px;
-  color: var(--secondry2-color);
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 32px;
+    color: var(--secondry2-color);
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      z-index: 15;
 }
 .share-btn {
     position: absolute;
@@ -793,6 +805,11 @@ h3.mid-headng{
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 15;
+}
+.customProduct_Carousel .share-btn{
+    right: 50px;
+    left: auto;
 }
 .share-btn img{
     width: 100%;
