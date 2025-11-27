@@ -86,6 +86,13 @@
                         <h6 class="fw-semibold">Available Size</h6>
                     </div>
 
+                        <div class="d-flex gap-2 mb-4" id="sizeContainer">
+                                @foreach ($firstVariant['sizes'] as $size)
+                                    <button class="size-btn">{{ $size }}</button>
+                                @endforeach
+                            </div>
+
+
                             <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
                             <p class="text-muted mb-1">{{$data->description_en}}</p>
 
