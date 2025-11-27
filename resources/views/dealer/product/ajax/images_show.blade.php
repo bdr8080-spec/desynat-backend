@@ -5,7 +5,7 @@
            <!-- <img src="{{ asset('user/assets/images/categorie1.png') }}" class="img-fluid" /> -->
        </div>
 
-       <div class="d-flex justify-content-center gap-2  my-1" style="position:absolute;bottom:1rem;left:40%; ">
+       <div class="d-flex justify-content-center gap-2  my-1" style="position:absolute;bottom:1rem;left:50%; transform: translate(-50%, -20%);">
 
            @foreach ($images_show as $item)
 

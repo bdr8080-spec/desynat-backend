@@ -6,7 +6,7 @@
 
            @if($product_data_called->category_id==2)
 
-            <div class="p-4 rounded-4 shadow-sm" style="background:#fff;" >
+            <div class="p-4 desc-box rounded-4 my-2 shadow-sm" style="background:#fff;" >
                 <div class="row mb-2">
                     <div class="col-6">Bust</div>
                     <div class="col-6 text-end">{{$item1['bust']}}  </div>
@@ -34,7 +34,7 @@
             </div>
             @endif
             
-        <div class="p-4 rounded-4 shadow-sm bg-white">
+        <div class="p-4 rounded-4 desc-box shadow-sm bg-white">
             <div class="row mb-2">
                 <div class="col-6">Total Stocks</div>
                 <div class="col-6 text-end">{{ $item1['total_stock'] }}</div>

@@ -702,11 +702,9 @@
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
                     <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"    
                         style="width:70px;object-fit:cover; border-radius:6px;">
-
-                    <img id="uploadedImg" src=""
-                        style="width:100px; display:none; object-fit:cover; border-radius:6px;width:100px;object-fit: fill; height: 110px;">
-
-                    <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
+                    <img id="uploadedImg" src="" 
+                        style="display:none; object-fit:cover; border-radius:6px;width:200px;object-fit: fill; height: 120px;">
+                    <div class="py-2"  style="color:#875C3A">Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
                     <p class="text-danger" id="error-upload_size_chart"></p>
