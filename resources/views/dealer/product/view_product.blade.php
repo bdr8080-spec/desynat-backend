@@ -106,7 +106,7 @@ p, span{
 }
 .main-img-container{
     height:60vh;
-    background: #fff7eae8;
+    background: #f7f7f7;
     border-radius: 16px;
 }
 
