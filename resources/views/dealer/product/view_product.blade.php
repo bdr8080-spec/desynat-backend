@@ -160,7 +160,7 @@ p, span{
                 <span class="ms-2 text-muted">(1K)</span>
             </div>
             
-     <div id="price-box"></div>
+     <div id="price-box" class="mb-0"></div>
 
      <p class="text-success small">inclusive of all taxes</p>
 
