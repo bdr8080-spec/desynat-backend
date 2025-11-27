@@ -230,6 +230,7 @@
           @foreach ($product_details['product_variants'] as $key=> $item)
          
         <div class="variant-panel specifications-row variant-panel-bg">
+            
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
@@ -480,7 +481,7 @@
 
               @if($product_Variation_count >= 1)
               <div class="d-flex justify-content-end">
-                <div class="remove-btn removerow"><i class="bi bi-x"></i> Remove </div>
+                <div class="removerow"><i class="bi bi-x"></i> Remove </div>
             </div> 
             @endif
         </div>
@@ -1188,7 +1189,7 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="remove-btn removerow"><i class="bi bi-x"></i> Remove </div>
+                <div class="removerow"><i class="bi bi-x"></i> Remove </div>
             </div>
 
         </div>
