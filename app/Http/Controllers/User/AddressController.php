@@ -36,17 +36,36 @@ class AddressController extends Controller
             
             return view('user.profile.add-new-address');
         }else{
-             $validate = Validator::make($request->all(), [
-            'name' => 'required',
-            'country_code' => 'required',
-            'mobile' => 'required',
-            'address'=>  'required',
-            'house_no' => 'required',
-            'street_no' => 'required',
-            'city'=> 'required',
-            'state'=>'required',
-            'save_address_as'=>'required'
-        ]);
+
+            $rules =  [
+            'name'            => 'required',
+            'country_code'    => 'required',
+            'mobile'          => 'required|digits_between:7,15',
+            'address'         => 'required',
+            'house_no'        => 'required',
+            'street_no'       => 'required',
+            'city'            => 'required',
+            'state'           => 'required',
+            'save_address_as' => 'required',
+        ];
+
+
+                    $messages = [
+                'name.required'            => 'Please Enter Name',
+                'mobile.required'          => 'Please Enter Mobile Number',
+                'address.required'         => 'Please Enter Address',
+                'house_no.required'        => 'Please Enter House No.',
+                'street_no.required'       => 'Please Enter Street No.',
+                'city.required'            => 'Please Enter City',
+                'state.required'           => 'Please Enter State',
+                'country_code.required'    => 'Please Select Country Code',
+                'save_address_as.required' => 'Please Select Save Address As',
+                'mobile.digits_between'    => 'Mobile number must be between 7 to 15 digits',
+            ];
+
+
+
+             $validate = Validator::make($request->all(),$rules, $messages);
             
             if($validate->fails()){
                     return response()->json([
