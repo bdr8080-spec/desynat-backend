@@ -30,7 +30,10 @@
                         @foreach ($allImages as $index => $img)
                             @if($index == 0)
                                 <button class="share-btn"><i class="fa-solid fa-share"></i></button>
-                                <button class="wishlist-btn"><i class="{{$data->wishlist == '1' ? 'fa-solid' : 'fa-regular' }} fa-heart" onclick="addWishListFunctionproduct({{$data->id}})"></i></button>
+                                {{-- <button class="wishlist-btn"><i class="{{$data->wishlist == '1' ? 'fa-solid' : 'fa-regular' }} fa-heart" onclick="addWishListFunctionproduct({{$data->id}})"></i></button> --}}
+                                  <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $data->id }}"
+                                                                class="fa-regular {{ $data->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+                                                                onclick="addWishListFunctionproduct({{ $data->id }})"></i></span>
                             @endif
                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
 
