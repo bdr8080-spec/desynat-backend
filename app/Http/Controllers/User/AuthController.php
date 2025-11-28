@@ -558,7 +558,7 @@ class AuthController extends Controller
 
     public function dashboard(Request $request){    
 
-    $subCategory = SubCategory::where('category_id','1')->orderBy('name_english','desc')->get();
+    $subCategory = SubCategory::orderBy('name_english','desc')->get();
     
     if($request->ajax()){
             $subCategory = SubCategory::where('category_id', $request->id)->orderBy('name_english','desc')->get();
