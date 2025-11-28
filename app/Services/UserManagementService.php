@@ -347,7 +347,7 @@ class UserManagementService
     public function singleStoreWiseAllproduct($data)
     {
         try {
-            $store_information = sellerStoreInformation::find($data->store_id);
+            $store_information = sellerStoreInformation::with('seller_information')->find($data->store_id);
 
             if (!$store_information) {
                 return [

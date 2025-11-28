@@ -80,8 +80,7 @@ class UserStoreController extends Controller
       $category =  Category::orderBy('id','desc')->get();
       $size =  size::orderBy('name','desc')->get();
       $color = color::orderBy('name','asc')->get();
-       
-   
+
       
         return view('user.category.index',compact('store_details','category','brand','size','color'));
     }
