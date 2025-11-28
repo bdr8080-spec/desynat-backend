@@ -161,7 +161,7 @@ input[type=number] {
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">Country</label>
-                    <input type="text" id="country" class="form-control notapplyspace" placeholder="Enter Country Name" name="country_name" />
+                    <input type="text" id="country" class="form-control notapplyspace" value="{{$address->country_name}}" placeholder="Enter Country Name" name="country_name" />
                     <span class="text-danger" id="error-country_name"></span>
                 </div>
             </div>
