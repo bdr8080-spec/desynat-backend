@@ -89,10 +89,12 @@ class UserAddressService
         $updateSetAddress = userAddress::where('id', $request->address_id)
         ->update(['set_as_default' => '1']);
 
+        $addresses = userAddress::where('id', $request->address_id)->get();
+
         return [
             'status' => 'success',
             'message' => "Address set as default successfully",
-            'data' => $updateSetAddress
+            'data' => $addresses
         ];
 
    }
