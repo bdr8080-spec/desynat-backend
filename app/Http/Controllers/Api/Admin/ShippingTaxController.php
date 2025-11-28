@@ -138,6 +138,30 @@ class ShippingTaxController extends Controller
         }
     }
 
+    public function blobk_unblock_shippingFee(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'shipping_charge_id' => 'required|exists:shipping_charges,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->ShippingTaxService->blockUnblockShipping($request->shipping_charge_id);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 
