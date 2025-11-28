@@ -178,7 +178,7 @@ class ShippingTaxService
             return [
                 'status' => 'success',
                 'message' => 'Shipping Fee deleted successfully',
-                'data' => []
+                'data' => null
             ];
 
         } catch (\Exception $e) {
