@@ -539,6 +539,19 @@ class UserManagementService
 
             }
 
+            // add to cart check 
+
+             $addtocart = Addtocart::where('user_id', $request->user_id)
+             ->where('product_id',$product_details->id)
+             ->first();
+
+              if($addtocart){
+                $product_details->addtocart = $addtocart;
+            }else{
+                $product_details->addtocart = (object)[];
+                
+            }
+
            
             return [
                 'status'  => 'success',
