@@ -17,7 +17,7 @@ input[type=number] {
 
 <div class="my-profile customContainer">
     <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
-        <a class="text-black" href="{{route('user.view_address')}}"><i class="fa-solid fa-chevron-left"></i> Add New Address</a>
+        <a class="text-black" href="{{route('user.view_address')}}"  style="text-decoration: none;"><i class="fa-solid fa-chevron-left"></i> Add New Address</a>
     </div>
 
         <form id="saveAddress">
@@ -38,10 +38,10 @@ input[type=number] {
                     <label for="">Mobile No.</label>
 
                     <div class="d-flex align-items-center">
-                        <div class="me-2">
+                        <div class="">
                             <div class="dropdown">
                                 <button class="btn btn-light border dropdown-toggle d-flex align-items-center"
-                                    type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    type="button" id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 12px 5px;">
                                     
                                     <span id="selected-flag">
                                        @php
@@ -78,29 +78,19 @@ input[type=number] {
                                     @endforeach
                                 </ul>
                             </div>
-
-                
                         </div>
-
                     
                         <div class="w-100">
-                            <input 
-                                type="number" 
-                                class="form-control"
+                            <input type="number" class="form-control"
                                 placeholder="Enter Mobile Number"
-                                name="mobile"
-                                value="{{ old('mobile', $address->mobile ?? '') }}"
+                                name="mobile" value="{{ old('mobile', $address->mobile ?? '') }}"
                                 oninput="this.value = this.value.slice(0, 15);"
-                                minlength="7"
-                                maxlength="15"
-                            >
+                                minlength="7" maxlength="15">
 
-                        
-
-                                <span class="text-danger" id="error-mobile"></span>
                         </div>
-
+                        
                     </div>
+                    <span class="text-danger" id="error-mobile"></span>
 
                 </div>
             </div>

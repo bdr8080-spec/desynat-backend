@@ -145,7 +145,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="category_filter pb-3 mb-3 d-flex align-items-center justify-content-between">
-                                <h3>Sort By</h3>
+                                <h3 style="color: var(--secondry2-color);">Sort By</h3>
                                 <a data-bs-toggle="modal" data-bs-target="#sortMOdal">
                                     <img src="{{asset('user')}}/assets/images/sort.svg" class="img-fluid" />
                                 </a>
@@ -220,7 +220,7 @@
 
                                                 <div class="ticks">
                                                     <div class="tick text-start">99 KD</div>
-                                                    <div class="tick">249 KD</div>
+                                                    <!-- <div class="tick">249 KD</div> -->
                                                     <div class="tick text-end">999 KD</div>
                                                 </div>
                                             </div>
@@ -230,34 +230,26 @@
                                         <div class="form-group mt-4">
                                             <h5>Color</h5>
 
-                                            @foreach ($color as $item)
-                                            <div class="form-check my-4">
-                                                <input class="form-check-input"
-                                                    type="checkbox"
-                                                    name="color"
-                                                    value="{{$item->id}}"
-                                                    id="color1"
-                                                    {{ request()->color == $item->id ? 'checked' : '' }}>
+                                            @foreach ($color as $key => $item)
+                                                <div class="form-check my-4 color-item {{ $key >= 10 ? 'd-none extra-color' : '' }}">
+                                                    <input class="form-check-input"
+                                                        type="checkbox"
+                                                        name="color[]"
+                                                        value="{{ $item->id }}"
+                                                        id="color{{ $item->id }}"
+                                                        {{ request()->color == $item->id ? 'checked' : '' }}>
 
-                                                <label class="form-check-label" for="color1">
-                                                   {{$item->name}}
-                                                </label>
-                                            </div>
+                                                    <label class="form-check-label" for="color{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </label>
+                                                </div>
                                             @endforeach
-                                           
 
-                                            {{-- <div class="form-check my-4">
-                                                <input class="form-check-input"
-                                                    type="radio"
-                                                    name="color"
-                                                    value="2"
-                                                    id="color2"
-                                                    {{ request()->color == 2 ? 'checked' : '' }}>
-
-                                                <label class="form-check-label" for="color2">
-                                                    Color
-                                                </label>
-                                            </div> --}}
+                                            @if(count($color) > 10)
+                                                <button type="button" id="toggleColors" class="btn btn-sm btn-link p-0 mt-2">
+                                                    See More
+                                                </button>
+                                            @endif
                                         </div>
 
                                         {{-- Discount Range --}}
@@ -734,14 +726,25 @@
 
 
         document.getElementById('seeMoreBtn')?.addEventListener('click', function () {
-    const extras = document.querySelectorAll('.extra-brand');
+            const extras = document.querySelectorAll('.extra-brand');
 
-    const hidden = [...extras].some(e => e.classList.contains('d-none'));
+            const hidden = [...extras].some(e => e.classList.contains('d-none'));
 
-    extras.forEach(e => e.classList.toggle('d-none'));
+            extras.forEach(e => e.classList.toggle('d-none'));
 
-    this.textContent = hidden ? 'See Less' : 'See More';
-});
+            this.textContent = hidden ? 'See Less' : 'See More';
+        });
+
+        document.getElementById('toggleColors')?.addEventListener('click', function () {
+            const extraColors = document.querySelectorAll('.extra-color');
+            const isHidden = extraColors[0].classList.contains('d-none');
+
+            extraColors.forEach(item => {
+                item.classList.toggle('d-none');
+            });
+
+            this.textContent = isHidden ? "See Less" : "See More";
+        });
 </script>   
 
 @endsection

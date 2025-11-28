@@ -4,7 +4,7 @@
 
 <div class="my-profile customContainer">
     <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
-        <a class="text-black" href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i>My Saved Address</a>
+        <a class="text-black" href="{{route('dashboard')}}" style="text-decoration: none;"><i class="fa-solid fa-chevron-left"></i>My Saved Address</a>
     </div>
 
     <div class="saved-address-contenar">

@@ -83,21 +83,19 @@
                         @endforeach
 
                     </div>
-
                     
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h6 class="fw-semibold">Available Size</h6>
                     </div>
 
-                        <div class="d-flex gap-2 mb-4" id="sizeContainer">
-                                @foreach ($firstVariant['sizes'] as $size)
-                                    <button class="size-btn">{{ $size }}</button>
-                                @endforeach
-                            </div>
+                    <div class="d-flex gap-2 mb-4" id="sizeContainer">
+                        @foreach ($firstVariant['sizes'] as $size)
+                            <button class="size-btn">{{ $size }}</button>
+                        @endforeach
+                    </div>
 
-
-                            <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
-                            <p class="text-muted mb-1">{{$data->description_en}}</p>
+                    <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
+                    <p class="text-muted mb-1">{{$data->description_en}}</p>
 
                     <button class="customBtn2">Custom Order</button>
 
@@ -106,7 +104,7 @@
                         <button class="customBtn">Buy Now</button>
                     </div>
 
-                    <div class="container my-4">
+                    <div class="my-4">
                         <div class="desc-box p-4 rounded-4">
                             <h5 class="fw-semibold">Description</h5>
                             <p class="mt-3 text-muted">
@@ -121,6 +119,31 @@
                                       @endforeach
                             </ul>
                         </div>
+                    </div>
+                    <div class="check-delivery-box">
+                        <div class="cd-header">
+                            <h4>Check delivery</h4>
+                            <button class="cd-change-btn">Change</button>
+                        </div>
+
+                        <div class="cd-input">
+                            <input type="number" placeholder="Enter Pincode" value="125478">
+                        </div>
+
+                        <ul class="cd-info">
+                            <li>
+                                <i class="bi bi-truck"></i>
+                                Get it by <strong>24/12/2024</strong>
+                            </li>
+                            <li>
+                                <i class="bi bi-cash-coin"></i>
+                                Cash on Delivery Available
+                            </li>
+                            <li>
+                                <i class="bi bi-arrow-repeat"></i>
+                                7 Days Return & Exchange
+                            </li>
+                        </ul>
                     </div>
                     {{-- <div class="p-4 rounded-4 shadow-sm" style="background:#fff;">
                         <div class="row mb-2">
