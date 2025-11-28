@@ -158,13 +158,13 @@ input[type=number] {
                 </div>
             </div>
 
-            {{-- <div class="col-lg-6 mt-3">
+            <div class="col-lg-6 mt-3">
                 <div class="form-group">
-                    <label for="">Landmark (optional)</label>
-                    <input type="text" name="landmark" class="form-control notapplyspace" placeholder="Enter Landmark" />
-                    <span class="text-danger" id="error-landmark"></span>
+                    <label for="">Country</label>
+                    <input type="text" id="country" class="form-control notapplyspace" placeholder="Enter Country Name" name="country_name" />
+                    <span class="text-danger" id="error-country_name"></span>
                 </div>
-            </div> --}}
+            </div>
 
             <div class="col-lg-12 mt-3">
                 <div class="form-group">
@@ -221,7 +221,7 @@ input[type=number] {
 
                 <!-- Selected Address -->
                 <div class="mt-3">
-                    <h5>Location</h5>
+                    <h5 id="currentLocation">Current Location</h5>
                     <p id="selectedLocationText" class="text-dark">Select a location…</p>
                 </div>
 
@@ -251,13 +251,12 @@ input[type=number] {
 <script>
 let map, marker, autocomplete;
 
-// Initialize map inside modal ONLY
 function initMap() {
     const defaultLocation = { lat: 28.6139, lng: 77.2090 };
 
     map = new google.maps.Map(document.getElementById("modalMap"), {
         center: defaultLocation,
-        zoom: 13,
+        zoom: 13
     });
 
     marker = new google.maps.Marker({
@@ -266,9 +265,9 @@ function initMap() {
         draggable: true
     });
 
-    // AUTOCOMPLETE
-    const input = document.getElementById("searchAddressInput");
-    autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete = new google.maps.places.Autocomplete(
+        document.getElementById("searchAddressInput")
+    );
     autocomplete.bindTo("bounds", map);
 
     autocomplete.addListener("place_changed", () => {
@@ -282,56 +281,57 @@ function initMap() {
         fillFields(place);
     });
 
-    // DRAG MARKER
     google.maps.event.addListener(marker, "dragend", function () {
         const pos = marker.getPosition();
         reverseGeocode(pos.lat(), pos.lng());
     });
 }
 
-
 function fillFields(place) {
-
-    $("#full_address").val(place.formatted_address);
     $("#latitude").val(place.geometry.location.lat());
     $("#longitude").val(place.geometry.location.lng());
     $("#selectedLocationText").text(place.formatted_address);
+    $("#searchAddressInput").val(place.formatted_address);
 
-    let street_no = "",
-        street_name = "",
-        block = "",
-        city = "",
+    let components = place.address_components;
+
+    let city = "",
         state = "",
         country = "",
         pincode = "";
 
-    place.address_components.forEach(c => {
-        if (c.types.includes("street_number")) street_no = c.long_name;
-        if (c.types.includes("route")) street_name = c.long_name;
-
-        // Block/Sector/Area
-        if (c.types.includes("sublocality") || c.types.includes("sublocality_level_1")) {
-            block = c.long_name;
-        }
-
+    components.forEach(c => {
         if (c.types.includes("locality")) city = c.long_name;
         if (c.types.includes("administrative_area_level_1")) state = c.long_name;
         if (c.types.includes("country")) country = c.long_name;
         if (c.types.includes("postal_code")) pincode = c.long_name;
     });
 
+    let cleanFullAddress = components
+        .filter(c =>
+            !c.types.includes("locality") &&
+            !c.types.includes("administrative_area_level_1") &&
+            !c.types.includes("administrative_area_level_2") &&
+            !c.types.includes("country") &&
+            !c.types.includes("postal_code")
+        )
+        .map(c => c.long_name)
+        .join(", ");
+        let parts = cleanFullAddress.split(",");
+        let full_address = parts.slice(0, 2).join(", ").trim();
+        let block = parts.slice(2, 5).join(", ").trim();
 
-    $("#block").val(block?? street_no);
+    $("#full_address").val(full_address);
+    $("#block").val(block);
     $("#city").val(city);
     $("#state").val(state);
     $("#country").val(country);
     $("#pincode").val(pincode);
 }
 
-
-// Reverse geocode
 function reverseGeocode(lat, lng) {
     const geocoder = new google.maps.Geocoder();
+
     geocoder.geocode({ location: { lat, lng } }, function (results, status) {
         if (status === "OK" && results[0]) {
             fillFields(results[0]);
@@ -339,21 +339,39 @@ function reverseGeocode(lat, lng) {
     });
 }
 
-// Load map when modal opens
 $('#locationModal').on('shown.bs.modal', function () {
-    setTimeout(() => { initMap(); }, 300);
+    setTimeout(() => initMap(), 300);
 });
 
-// Apply location
 $("#applyLocationBtn").click(function () {
-    if ($("#full_address").val() == "") {
+    if ($("#full_address").val() === "") {
         alert("Please select a location.");
         return;
     }
-
     $("#locationModal").modal('hide');
 });
+
+$("#currentLocation").click(function () {
+    if (!navigator.geolocation) {
+        alert("Geolocation not supported.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(function (pos) {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        const position = { lat, lng };
+
+        map.setCenter(position);
+        map.setZoom(16);
+        marker.setPosition(position);
+
+        reverseGeocode(lat, lng);
+    });
+});
 </script>
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
