@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('postal_code')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
+            $table->string('country_name')->nullable();
             $table->string('landmark')->nullable();
             $table->tinyInteger('save_address_as')->default(1)->comment('0 = Office, 1 = Home');
             $table->tinyInteger('status')->default(1)->comment('0 = Inactive, 1 = Active');
