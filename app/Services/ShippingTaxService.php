@@ -126,65 +126,65 @@ class ShippingTaxService
         }
     }
 
-    public function blockUnblockSeller($sellerId)
+    public function blockUnblockShipping($shippingId)
     {
         try {
-            $seller = seller::find($sellerId);
+            $data = ShippingCharge::find($shippingId);
 
-            if (!$seller) {
+            if (!$data) {
                 return [
                     'status' => 'error',
-                    'message' => 'Seller not found',
+                    'message' => 'Shipping Fee not found',
                     'data' => (object)[]
                 ];
             }
 
-            $previousStatus = $seller->is_block; 
-            $seller->is_block = $seller->is_block == 0 ? 1 : 0;
-            $seller->save();
+            $previousStatus = $data->status; 
+            $data->status = $data->status == 0 ? 1 : 0;
+            $data->save();
 
-            $message = $seller->is_block == 1
-                ? 'Seller Blocked Successfully'
-                : 'Seller Unblocked Successfully';
+            $message = $data->status == 1
+                ? 'Shipping Fee Unblocked Successfully'
+                : 'Shipping Fee blocked Successfully';
 
             return [
                 'status' => 'success',
                 'message' => $message,
-                'data' => $seller
+                'data' => $data
             ];
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'message' => 'Failed to update shipping fee status: ' . $e->getMessage(),
                 'data' => []
             ];
         }
     }
 
-    public function deletePlan($planId)
+    public function deleteShippingCharge($shippingId)
     {
         try {
-            $plan = Plan::find($planId);
+            $data = ShippingCharge::find($shippingId);
 
-            if (!$plan) {
+            if (!$data) {
                 return [
                     'status' => 'error',
-                    'message' => 'Plan not found',
+                    'message' => 'Shipping Fee not found',
                     'data' => (object)[]
                 ];
             }
-            $plan->delete();
+            $data->delete();
 
             return [
                 'status' => 'success',
-                'message' => 'Plan deleted successfully',
+                'message' => 'Shipping Fee deleted successfully',
                 'data' => []
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to delete plan',
+                'message' => 'Failed to delete shipping fee',
                 'data' => (object)[]
             ];
         }

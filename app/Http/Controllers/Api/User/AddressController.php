@@ -30,6 +30,7 @@ class AddressController extends Controller
             'street_no' => 'required',
             'city'=> 'required',
             'state'=>'required',
+            //'country_id'=>'required',
             'save_address_as'=>'required'
         ]);
         
@@ -48,6 +49,7 @@ class AddressController extends Controller
             'postal_code'=>$request->postal_code ?? null,
             'city'=>$request->city,
             'state'=>$request->state,
+            'country_id'=>$request->country_id,
             'landmark'=>$request->landmark ?? null,
             'save_address_as'=>$request->save_address_as,
             'latitude'=>$request->latitude ?? null,
@@ -79,6 +81,7 @@ class AddressController extends Controller
             'street_no' => 'required',
             'city'=> 'required',
             'state'=>'required',
+            //'country_id'=>'required',
             'save_address_as'=>'required'
         ]);
         
@@ -97,6 +100,7 @@ class AddressController extends Controller
             'postal_code'=>$request->postal_code ?? null,
             'city'=>$request->city,
             'state'=>$request->state,
+            'country_id'=>$request->country_id,
             'landmark'=>$request->landmark ?? null,
             'save_address_as'=>$request->save_address_as,
             'latitude'=>$request->latitude ?? null,
