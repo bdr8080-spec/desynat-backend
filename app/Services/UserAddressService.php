@@ -40,7 +40,7 @@ class UserAddressService
     }
 
     public function viewAddress($request){
-        $viewAddress = userAddress::orderBy('set_as_default','desc')->where('user_id', $request->user()->id)->get();
+        $viewAddress = userAddress::orderBy('id','desc')->where('user_id', $request->user()->id)->get();
 
             if ($viewAddress->isEmpty()) {
                 return [
