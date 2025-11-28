@@ -79,6 +79,12 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('/Add-product1',[SellerProductController::class,'Add_product1'])->name('seller.Add_product1');
     Route::post('add-product1',[SellerProductController::class, 'Add_product_code1'])->name('seller.Add_product_code1');
 
+     route::Match(['get','post'],'/edit-product1/{id}',[SellerProductController::class,'edit_product1'])->name('seller.edit-product1');
+    // route::Match(['get','post'],'/view-profile',[SellerProductController::class,'view_profile'])->name('seller.view_profile');
+    // M3 Milestone Work
+
+     Route::post('Update-product1/{id}',[SellerProductController::class, 'edit_product_code1'])->name('seller.edit_product_code1');
+
 
 
 
