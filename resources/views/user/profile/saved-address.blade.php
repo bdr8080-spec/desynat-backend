@@ -4,7 +4,7 @@
 
 <div class="my-profile customContainer">
     <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
-        <a class="text-black" href="{{route('dashboard')}}"><i class="fa-solid fa-chevron-left"></i>My Saved Address</a>
+        <a class="text-black" href="{{route('dashboard')}}" style="text-decoration: none;"><i class="fa-solid fa-chevron-left"></i>My Saved Address</a>
     </div>
 
     <div class="saved-address-contenar">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <h6>{{$item->name}}</h6>
-            <p>{{$item->address}}</p>
+            <p>{{$item->address}} {{$item->house_no}} {{$item->street_no}} {{$item->postal_code}} {{$item->city}} {{$item->state}} {{$item->country}}</p>
         </div>
         @empty
             <h3 class="text-center my-5" style="font-weight:500 !important;">No address added</h3>
