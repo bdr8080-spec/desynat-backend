@@ -234,108 +234,268 @@ class UserManagementService
         }
     }
 
+    // public function singleStoreWiseAllproduct($data)
+    // {
+    //     try {
+    
+    //         // Step 1: Find store
+    //         $store_information = sellerStoreInformation::find($data->store_id);
+    
+    //         // If store not found
+    //         if (!$store_information) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => 'No Store Found',
+    //                 'data'   => []
+    //             ];
+    //         }
+
+    //         $wishlistIds = wishlist::where('user_id', $data->user_id)
+    //                    ->pluck('product_id')
+    //                    ->toArray();
+    
+    //         // Step 2: Product query
+    //         $products = $store_information->All_product()
+    //             ->with([
+    //                 'brand',
+    //                 'category',
+    //                 'subcategory',
+    //                 'product_specifications',
+    //                 'product_variants.color',
+    //                 'product_variants.size'
+    //             ]);
+    
+    //         // Step 3: Search
+    //         if (!empty($data->search)) {
+    //             $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
+    //         }
+
+    //         // Apply Filter
+
+    //         switch ($data->sort_filter) {
+
+    //             case 1: // Recommended
+    //                 // $products = $products->orderBy('recommended_score', 'desc');
+    //                 break;
+            
+    //             case 2: // Price: Low to High
+    //                 $products = $products->whereHas('product_variants',function($query){
+    //                     $query->orderBy('actual_price', 'asc');
+                        
+    //                 });
+    //                 break;
+            
+    //             case 3: // Price: High to Low
+    //                 $products = $products->whereHas('product_variants',function($query){
+    //                     $query->orderBy('actual_price', 'desc');
+                        
+    //                 });
+    //                 break;
+            
+    //             case 4: // Newest First
+    //                 $products = $products->orderBy('created_at', 'desc');
+    //                 break;
+            
+    //             case 5: // Customer Rating
+    //                 // $products = $products->orderBy('rating', 'desc');
+    //                 break;
+            
+    //             case 6: // Best selling
+    //                 // $products = $products->orderBy('total_sales', 'desc');
+    //                 break;
+            
+    //             case 7: // Fastest delivery
+    //                 // $products = $products->orderBy('delivery_time', 'asc');
+    //                 break;
+            
+    //             default:
+    //                 // No filter
+    //                 break;
+    //         }
+            
+
+    //         // Step 4: Pagination (convert stdClass to array)
+    //         $products = $products->paginate()
+    //         ->through(function ($product) use ($wishlistIds) {
+    //             $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+    //             return $product;
+    //         })
+    //         ->appends((array) $data);
+
+    //         // Step 5: Response
+    //         $response = [
+    //             'store'       => $store_information,
+    //             'All_Product' => $products,
+    //         ];
+    
+    //         return [
+    //             'status'  => 'success',
+    //             'message' => "single Store Information fetch Successfully",
+    //             'data'    => $response
+    //         ];
+    
+    //     } catch (\Exception $e) {
+    
+    //         return [
+    //             'status'  => 'error',
+    //             'message' => 'Failed: ' . $e->getMessage(),
+    //             'data'    => (object)[]
+    //         ];
+    //     }
+    // }
+
     public function singleStoreWiseAllproduct($data)
     {
         try {
-    
-            // Step 1: Find store
             $store_information = sellerStoreInformation::find($data->store_id);
-    
-            // If store not found
+
             if (!$store_information) {
                 return [
-                    'status' => 'success',
+                    'status'  => 'success',
                     'message' => 'No Store Found',
-                    'data'   => []
+                    'data'    => []
                 ];
             }
 
             $wishlistIds = wishlist::where('user_id', $data->user_id)
-                       ->pluck('product_id')
-                       ->toArray();
-    
-            // Step 2: Product query
+                ->pluck('product_id')
+                ->toArray();
+
             $products = $store_information->All_product()
                 ->with([
                     'brand',
                     'category',
                     'subcategory',
                     'product_specifications',
+                    'product_variants' => function ($q) use ($data) {
+                        // Size filter
+                        if (!empty($data->size_id) && is_array($data->size_id)) {
+                            $sizeIds = array_map('intval', $data->size_id);
+                            $q->whereIn('size_id', $sizeIds);
+                        }
+
+                        // Color filter
+                        if (!empty($data->color_id) && is_array($data->color_id)) {
+                            $colorIds = array_map('intval', $data->color_id);
+                            $q->whereIn('color_id', $colorIds);
+                        }
+
+                        // Price filter
+                        if (isset($data->price_min)) {
+                            $q->where('final_price', '>=', $data->price_min);
+                        }
+                        if (isset($data->price_max)) {
+                            $q->where('final_price', '<=', $data->price_max);
+                        }
+                    },
                     'product_variants.color',
                     'product_variants.size'
                 ]);
-    
-            // Step 3: Search
+
+            // Search filter
             if (!empty($data->search)) {
                 $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
             }
 
-            // Apply Filter
-
-            switch ($data->sort_filter) {
-
-                case 1: // Recommended
-                    // $products = $products->orderBy('recommended_score', 'desc');
-                    break;
-            
-                case 2: // Price: Low to High
-                    $products = $products->whereHas('product_variants',function($query){
-                        $query->orderBy('actual_price', 'asc');
-                        
-                    });
-                    break;
-            
-                case 3: // Price: High to Low
-                    $products = $products->whereHas('product_variants',function($query){
-                        $query->orderBy('actual_price', 'desc');
-                        
-                    });
-                    break;
-            
-                case 4: // Newest First
-                    $products = $products->orderBy('created_at', 'desc');
-                    break;
-            
-                case 5: // Customer Rating
-                    // $products = $products->orderBy('rating', 'desc');
-                    break;
-            
-                case 6: // Best selling
-                    // $products = $products->orderBy('total_sales', 'desc');
-                    break;
-            
-                case 7: // Fastest delivery
-                    // $products = $products->orderBy('delivery_time', 'asc');
-                    break;
-            
-                default:
-                    // No filter
-                    break;
+            //  Brand filter
+            if (!empty($data->brand_id) && is_array($data->brand_id)) {
+                $brandIds = array_map('intval', $data->brand_id);
+                $products->whereIn('brand_id', $brandIds);
             }
-            
 
-            // Step 4: Pagination (convert stdClass to array)
+            // Category filter
+            if (!empty($data->category_id) && is_array($data->category_id)) {
+                $categoryIds = array_map('intval', $data->category_id);
+                $products->whereIn('category_id', $categoryIds);
+            }
+
+            //  Filter by variants for product existence
+            if (!empty($data->size_id) || !empty($data->color_id) || isset($data->price_min) || isset($data->price_max)) {
+                $products->whereHas('product_variants', function ($q) use ($data) {
+                    if (!empty($data->size_id) && is_array($data->size_id)) {
+                        $sizeIds = array_map('intval', $data->size_id);
+                        $q->whereIn('size_id', $sizeIds);
+                    }
+
+                    if (!empty($data->color_id) && is_array($data->color_id)) {
+                        $colorIds = array_map('intval', $data->color_id);
+                        $q->whereIn('color_id', $colorIds);
+                    }
+
+                    if (isset($data->price_min)) {
+                        $q->where('final_price', '>=', $data->price_min);
+                    }
+                    if (isset($data->price_max)) {
+                        $q->where('final_price', '<=', $data->price_max);
+                    }
+                });
+            }
+
+            // Sorting
+            if (!empty($data->sort_filter)) {
+                switch ($data->sort_filter) {
+                    case 1: // Recommended
+                        // $products = $products->orderBy('recommended_score', 'desc');
+                        break;
+
+                    case 2: // Price: Low to High
+                        $products->with(['product_variants' => function ($q) {
+                            $q->orderBy('final_price', 'asc');
+                        }]);
+                        break;
+
+                    case 3: // Price: High to Low
+                        $products->with(['product_variants' => function ($q) {
+                            $q->orderBy('final_price', 'desc');
+                        }]);
+                        break;
+
+                    case 4: // Newest First
+                        $products->orderBy('created_at', 'desc');
+                        break;
+
+                    case 5: // Customer Rating
+                        // $products = $products->orderBy('rating', 'desc');
+                        break;
+
+                    case 6: // Best selling
+                        // $products = $products->orderBy('total_sales', 'desc');
+                        break;
+
+                    case 7: // Fastest delivery
+                        // $products = $products->orderBy('delivery_time', 'asc');
+                        break;
+
+                    case 8: // Oldest First
+                        $products->orderBy('created_at', 'asc');
+                        break;
+
+                    default:
+                        // No filter
+                        break;
+                }
+            }
+
+            // Pagination & Wishlist marking
             $products = $products->paginate()
-            ->through(function ($product) use ($wishlistIds) {
-                $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
-                return $product;
-            })
-            ->appends((array) $data);
+                ->through(function ($product) use ($wishlistIds) {
+                    $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+                    return $product;
+                })
+                ->appends((array) $data);
 
-            // Step 5: Response
             $response = [
                 'store'       => $store_information,
                 'All_Product' => $products,
             ];
-    
+
             return [
                 'status'  => 'success',
-                'message' => "single Store Information fetch Successfully",
+                'message' => "Single Store Information fetched successfully",
                 'data'    => $response
             ];
-    
+
         } catch (\Exception $e) {
-    
             return [
                 'status'  => 'error',
                 'message' => 'Failed: ' . $e->getMessage(),
@@ -343,6 +503,10 @@ class UserManagementService
             ];
         }
     }
+
+
+
+
 
 
     public function singleproductView($request)

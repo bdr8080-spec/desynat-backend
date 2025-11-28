@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Admin\PlanController;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\ReasonController;
 use App\Http\Controllers\Api\Admin\DeliveryBoyController;
+use App\Http\Controllers\Api\Admin\ShippingTaxController;
 
 
 // Admin APi M1
@@ -104,6 +105,17 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/add_deliveryBoy',[DeliveryBoyController::class,'add_deliveryBoy']);
      Route::post('/update_deliveryBoy',[DeliveryBoyController::class,'update_deliveryBoy']);
      Route::get('/get_kuwait_zones',[DeliveryBoyController::class,'get_kuwait_zones']);
+
+     //M3 api ends
+
+     //M4 api starts
+
+     //tax and shipping management
+     Route::post('/add_tax',[ShippingTaxController::class,'add_tax']);
+     Route::get('/countries_with_tax_shipping',[ShippingTaxController::class,'countries_with_tax_shipping']);
+     Route::post('/add_shipping_charge',[ShippingTaxController::class,'add_shipping_charge']);
+     Route::post('/update_shipping_charge',[ShippingTaxController::class,'update_shipping_charge']);
+
 
 
 
