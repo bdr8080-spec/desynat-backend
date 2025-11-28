@@ -74,7 +74,13 @@ class UserStoreController extends Controller
         'user_id'=>$user_id,
         'store_id'=>$request->store_id,
         'search' =>$request->search,
-        'sort_filter'=> $request->sort_filter
+        'sort_filter'=> $request->sort_filter,
+        'brand_id'     => is_array($request->brand_id) ? $request->brand_id : [],     
+        'category_id'  => is_array($request->category_id) ? $request->category_id : [],   
+        'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
+        'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
+        'price_min'    => $request->price_min ?? null,
+        'price_max'    => $request->price_max ?? null
        ];
 
        $data=$this->UserManagementService->singleStoreWiseAllproduct($request_data);
