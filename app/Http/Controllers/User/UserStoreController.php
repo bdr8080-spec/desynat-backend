@@ -100,6 +100,7 @@ class UserStoreController extends Controller
 
          $data=$this->UserManagementService->product_add_to_wishlist($request_data);
 
+        
            if(isset($data['status']) && $data['status']=='error' ){
                return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
            }
@@ -120,7 +121,7 @@ class UserStoreController extends Controller
     
         $data = $result['data'];
 
-        // dd($data);
+
 
         $product_variants = [];
 

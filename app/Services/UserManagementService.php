@@ -515,9 +515,10 @@ class UserManagementService
     
             // Step 1: Find store
             
-            $product_details = Product::with(['category','subcategory','brand','product_specifications','product_variants.color','product_variants.size'])
+            $product_details = Product::with(['category','subcategory','store','brand','product_specifications','product_variants.color','product_variants.size'])
             ->where('id', $request->product_id)->first();
 
+           
     
             // If store not found
             if (!$product_details) {
@@ -618,11 +619,16 @@ class UserManagementService
                 $msg="Product Add From Wishlist";
                 $update_status=1;
             }
+
+            
+            $count = wishlist::where('user_id',$request->user_id)->count();
+
           
             return [
                 'status'  => 'success',
                 'message' => $msg,
-                'data'    => $update_status
+                'data'    => $update_status,
+                'count' => $count
             ];
     
         } catch (\Exception $e) {
