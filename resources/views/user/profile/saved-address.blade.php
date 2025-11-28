@@ -29,7 +29,7 @@
                 </div>
             </div>
             <h6>{{$item->name}}</h6>
-            <p>{{$item->address}}</p>
+            <p>{{$item->address}}{{$item->house_no}}{{$item->street_no}}{{$item->postal_code}}{{$item->city}}{{$item->state}}{{$item->country}}</p>
         </div>
         @empty
             <h3 class="text-center my-5" style="font-weight:500 !important;">No address added</h3>
