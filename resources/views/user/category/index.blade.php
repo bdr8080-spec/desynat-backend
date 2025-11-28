@@ -34,7 +34,7 @@
                                 </span>
                             </div>
                             <div class="product-content">
-                                <p>{{ $store_details['store']['store_name'] }}</p>
+                                <p> {{$store_details['store']->seller_information->first_name}} {{$store_details['store']->seller_information->last_name}}</p>
                                 <div class="rating">
                                     <span><i class="fa-solid fa-star"></i></span>
                                     <span><i class="fa-solid fa-star"></i></span>

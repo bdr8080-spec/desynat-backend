@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::put('/update-address',[AddressController::class, 'updateAddress']);
   Route::get('/view-address', [AddressController::class, 'viewAddress']);
   Route::delete('/delete-address/{id}', [AddressController::class, 'deleteAddress']);
+  Route::post('/set_default_address',[AddressController::class, 'set_default_address']);
 
 
   // M3 Api User

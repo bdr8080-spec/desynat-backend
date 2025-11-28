@@ -297,7 +297,12 @@
             },
             error: function() {
                 alert("Fail")
-            }
+            },
+              complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
         })
 
 

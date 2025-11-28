@@ -1613,7 +1613,7 @@ $(".addmoreVariation").click(function() {
 
   let variation_dynamicid=  $(this).attr('rel');
 
-  alert(variation_dynamicid);
+ alert(variation_dynamicid);
 
 
     $("#inside_variation"+variation_dynamicid).append(`

@@ -347,7 +347,7 @@ class UserManagementService
     public function singleStoreWiseAllproduct($data)
     {
         try {
-            $store_information = sellerStoreInformation::find($data->store_id);
+            $store_information = sellerStoreInformation::with('seller_information')->find($data->store_id);
 
             if (!$store_information) {
                 return [
@@ -537,6 +537,19 @@ class UserManagementService
             if($product_details){
                 $product_details->wishlist = in_array($product_details->id, $wishlistIds) ? 1 : 0;
 
+            }
+
+            // add to cart check 
+
+             $addtocart = Addtocart::where('user_id', $request->user_id)
+             ->where('product_id',$product_details->id)
+             ->first();
+
+              if($addtocart){
+                $product_details->addtocart = $addtocart;
+            }else{
+                $product_details->addtocart = (object)[];
+                
             }
 
            
