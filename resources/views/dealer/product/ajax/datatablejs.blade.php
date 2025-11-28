@@ -20,18 +20,18 @@ $(document).ready(function () {
     // init datatables for multiple tables
     var tableInstances = {};
 
-     $('.datatable').each(function () {
-        var tableId = $(this).attr('id');
-        tableInstances[tableId] = $(this).DataTable({
-            searching: true,
-            paging: true,
-            info: true,
-            ordering: true,
-            columnDefs: [
-                { orderable: false, targets: "no-sort" }
-            ]
-        });
-    });
+    //  $('.datatable').each(function () {
+    //     var tableId = $(this).attr('id');
+    //     tableInstances[tableId] = $(this).DataTable({
+    //         searching: true,
+    //         paging: true,
+    //         info: true,
+    //         ordering: true,
+    //         columnDefs: [
+    //             { orderable: false, targets: "no-sort" }
+    //         ]
+    //     });
+    // });
 
     // apply search for each table
     $('.tableSearch').on('keyup', function () {

@@ -13,8 +13,43 @@ $product_Variation_count=0;
     background: #FAFAFA;
     border: 1px solid #cccccc45;
 }
-.mltimg img{
+
+.mltimg img {
     object-fit: fill !important;
+}
+
+.upload-image1 {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    /* this prevents overlap */
+}
+
+#edit_uploadChart_preview {
+    /* margin-top: 15px; ensures preview goes below */
+    position: absolute;
+    z-index: 2;
+}
+
+#edit_uploadChart_preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
+
+.multiple-img1 {
+    height: 125px;
+    width: 270px;
+
+}
+
+.multiple-img1 img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+
+
 }
 </style>
 <section class="section dashboard">
@@ -245,7 +280,7 @@ $product_Variation_count=0;
             <div class="product-pnls mt-4">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top: 2.7rem;">
-                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"  style="width:70px">
+                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
                         <div class="mt-3" style="color:#875C3A">Upload Product Photo</div>
                         <input type="file" accept="image/*" id="edit_imageUpload" style="opacity:0;"
                             name="variant_image[{{$product_Variation_count}}][]" rel="{{$product_Variation_count}}">
@@ -598,6 +633,10 @@ $product_Variation_count=0;
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+
                 <div class="col-lg-6 col-md-6">
                     <div class="title24">Is this product Exchangable ?</div>
                     <div class="row">
@@ -640,6 +679,8 @@ $product_Variation_count=0;
 
                 </div>
             </div>
+
+        </div>
         </div>
 
         <div class="pt-3">
@@ -779,31 +820,35 @@ $product_Variation_count=0;
 
         <div class="title24">Upload Size Chart</div>
         <div class="product-pnls mt-4">
-            <div class="upload-image" style="height:170px;">
+            <div class="upload-image" style="height:170px; width: 300px;">
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.7rem; ">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:60px;">
                     <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
                 </label>
+
+
+                {{-- show image code --}}
+
+                <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
+                    @if(!empty($product_details->upload_size_chart))
+
+                    <div class="multiple-img1 position-relative">
+                        <img src="{{ $product_details->upload_size_chart }}">
+                        <span class="remove-ic remove-image"
+                            style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+
+                        <input type="hidden" accept="image/*" value="{{ $product_details->upload_size_chart }}"
+                            name="old_upload_size_chart">
+
+                    </div>
+
+                    @endif
+                </div>
+                {{-- show image code end here --}}
                 <p class="text-danger" id="error-upload_size_chart"></p>
 
-            </div>
-
-            <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
-                @if(!empty($product_details->upload_size_chart))
-                <div class="position-relative multiple-img mltimg">
-                    <img src="{{ $product_details->upload_size_chart }}"
-                        style="width:100%;height:100%;object-fit:cover;border-radius:8px; object-fit:fill!importent:">
-                    <span class="remove-ic remove-image"
-                        style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-
-                    <input type="hidden" accept="image/*" value="{{ $product_details->upload_size_chart }}"
-                        name="old_upload_size_chart">
-
-
-                </div>
-                @endif
             </div>
 
             {{-- <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div> --}}
@@ -812,7 +857,7 @@ $product_Variation_count=0;
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
                 onclick="location.href='{{ route('seller.view_product',Request()->id) }}'">Cancel</button>
-            <button type="submit" class="btn add-fillbtn w-100">Edit Product</button>
+            <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
         </div>
     </form>
 
@@ -862,7 +907,7 @@ $('#edit_uploadChart').on('change', e => {
     [...files].forEach(f => {
         let url = URL.createObjectURL(f);
         let imgBox = $(`
-      <div class="multiple-img position-relative">
+      <div class="multiple-img1 position-relative">
         <img src="${url}" class="w-100 rounded">
         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
       </div>
@@ -1506,11 +1551,12 @@ $(document).on("input change",
         if (discountType == "1") {
             finalPrice = actualPrice - (actualPrice * (discountValue / 100));
 
-          if (Number.isInteger(finalPrice)) {
-               finalPrice=finalPrice;
-          } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
-                finalPrice=finalPrice.toFixed(2);
-         }
+            if (Number.isInteger(finalPrice)) {
+                finalPrice = finalPrice;
+            } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
+                finalPrice = finalPrice.toFixed(2);
+            }
+
 
         }
 

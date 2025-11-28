@@ -1,5 +1,13 @@
 @include('dealer.layout.header')
-
+<style>
+    td img{
+        width: 65px;height: 65px !important;border-radius: 50%;object-fit: fill;"
+    }
+    td {
+    max-width: 200px;
+    text:truncate;
+}
+</style>
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Product Management</div>
@@ -81,7 +89,7 @@
 
                     {{-- All Product show --}}
                     <div class="table-responsive">
-                        <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable   @endif" id="table1">
+                        <table  class="table  table-bordered @if(count($data['all_product_data']) > 0 ) datatable @endif" id="table1">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -111,16 +119,14 @@
                                                     @endphp
                                                 @endif
                                                 <img src="{{ $img }}" class="img-fluid" alt="image"
-                                                    class="pro-image" style="    width: 65px;height: 65px;border-radius: 50%;object-fit: cover;">
+                                                    class="pro-image" style="width: 65px;height: 65px;border-radius: 50%;object-fit: cover;">
                                             @endforeach
 
                                         </td>
-                                        <td>
-
+                                        <td style="text-align: center;">
                                             {{-- {{ $item->product_variants['0']->sku }} --}}
 
                                             {{ $item->id }}
-
                                         </td>
                                         <td> {{ $item->product_name_en }}</td>
                                         <td>{{ $item->brand->name_english }}</td>
@@ -236,12 +242,11 @@
                                                     @endphp
                                                 @endif
                                                 <img src="{{ $img }}" class="img-fluid" alt="image"
-                                                    class="pro-image" >
+                                                    class="img-fluid" >
                                             @endforeach
 
                                         </td>
-                                        <td>
-
+                                        <td style="text-align: center;">
                                             {{-- {{ $item->product_variants['0']->sku }} --}}
                                             {{ $item->id }}
 
@@ -332,7 +337,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable   @endif" id="table3">
+                        <table class="table table-bordered  @if(count($data['inactive_product']) > 0 ) datatable  @endif" id="table3">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -358,18 +363,17 @@
                                                         break;
                                                     @endphp
                                                 @endif
-                                                <img src="{{ $img }}" class="img-fluid" alt="image"
-                                                    class="pro-image" style="width:150px; height:auto;">
+                                                <img src="{{ $img }}" class="img-fluid" alt="image">
                                             @endforeach
 
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
 
                                             {{-- {{ $item->product_variants['0']->sku }} --}}
                                             {{ $item->id }}
 
                                         </td>
-                                        <td> {{ $item->product_name_en }}</td>
+                                        <td > {{ $item->product_name_en }}</td>
                                         <td>{{ $item->brand->name_english }}</td>
                                         <td>{{ $item->category->name }}</td>
                                         <td>{{ $item->created_at }}</td>
@@ -414,8 +418,6 @@
 
         </div>
     </div>
-
-
 
 
 

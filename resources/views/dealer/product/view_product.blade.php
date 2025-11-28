@@ -10,7 +10,7 @@
     .thumb-img {
         width: 65px;
         height: 80px;
-        object-fit: cover;
+        object-fit: fill;
         border-radius: 8px;
         cursor: pointer;
         border: 2px solid #ccc;
@@ -106,23 +106,23 @@ p, span{
 }
 .main-img-container{
     height:60vh;
+    background: #f7f7f7;
+    border-radius: 16px;
 }
 
 .main-img-container img{
     width: 100%;
     HEIGHT: 100%;
-    OBJECT-FIT: cover;
+    OBJECT-FIT: contain;
     border-radius:12px;
-}
-.{
+}   
+/* .{
     position: absolute;
     bottom: 1.3rem;
     margin: auto;
     justify-content: center;
     text-align: center;
-    left: 40%;
-}
-
+} */
 .modal-footer, .modal-header{
     border:0;
 }
@@ -146,9 +146,9 @@ p, span{
 
     <div class="row my-3">
 
-    <div id="images_show-box" class="col-lg-6 col-xxl-6 position-relative" style="position:relative;"></div>
+    <div id="images_show-box" class="col-lg-5 col-xxl-5 position-relative" style="position:relative;"></div>
 
-    <div class="col-lg-6 col-xxl-6">
+    <div class="col-lg-7 col-xxl-7">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
                 <a href="{{ route('seller.edit-product',$product->id) }}">
                     <img src="{{ asset('dealer/assets/img/edit2.png') }}" height="33px" width="33px"></a>
@@ -200,13 +200,13 @@ p, span{
 
 <div id="size-list"></div>
 
-<div id="variation-box" class="desc-box cstm-pd rounded-4 my-3"></div>
+<div id="variation-box" class="cstm-pd rounded-4 my-3"></div>
 
     </div>
 
     </div>
     <div class="row">
-        <div class="col-lg-6 col-xxl-6">
+        <div class="col-lg-5 col-xxl-5">
 
             <div class="my-3">
                 <div class="desc-box p-4 rounded-4">
@@ -268,7 +268,7 @@ p, span{
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-xxl-6">
+        <div class="col-lg-7 col-xxl-7">
             <div class="container my-3">
                 <div class="review-box p-4 rounded-4 desc-box">
                     <div class="d-flex justify-content-between">

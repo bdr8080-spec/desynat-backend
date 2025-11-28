@@ -94,3 +94,11 @@ Route::get('user/sub-category',[ProfileController::class, 'getSubCategories']);
 Route::post('upload', [CommonController::class, 'upload']);
 Route::get('country', [CommonController::class, 'country']);
 Route::get('all_country', [CommonController::class, 'all_country']);
+
+
+Route::get('category',[CommonController::class, 'getCategories']);
+Route::get('sub-category',[CommonController::class, 'getSubCategories']);
+Route::get('all-brand',[CommonController::class, 'get_brand']);
+
+Route::get('all-color',[CommonController::class, 'get_color']);
+Route::get('all-size',[CommonController::class, 'get_size']);

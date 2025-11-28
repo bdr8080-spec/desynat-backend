@@ -74,6 +74,12 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('product-status-active-inactive',[SellerProductController::class, 'product_status_active_inactive']);
 
     
+    // add product new demo Apis
+
+    Route::get('/Add-product1',[SellerProductController::class,'Add_product1'])->name('seller.Add_product1');
+    Route::post('add-product1',[SellerProductController::class, 'Add_product_code1'])->name('seller.Add_product_code1');
+
+
 
 
 
@@ -98,6 +104,9 @@ Route::group(['prefix' => 'seller'], function () {
 
 route::Match(['get','post'],'/view-profile', function(){
     return view('dealer.product.view_profile');
+});
+route::Match(['get','post'],'/Add-product-2', function(){
+    return view('dealer.product.Add_product_2');
 });
 
 
