@@ -34,7 +34,7 @@
                                 </span>
                             </div>
                             <div class="product-content">
-                                <p>{{ $store_details['store']['store_name'] }}</p>
+                                <p> {{$store_details['store']->seller_information->first_name}} {{$store_details['store']->seller_information->last_name}}</p>
                                 <div class="rating">
                                     <span><i class="fa-solid fa-star"></i></span>
                                     <span><i class="fa-solid fa-star"></i></span>
@@ -411,9 +411,17 @@
                                                             @endif
                                                             <img src="{{ $val }}" alt="Product">
                                                         @endforeach
-                                                        <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
+
+                                                             @if (Auth::guard('web')->user())
+                                                                <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $item->id }}"
                                                                 class="fa-regular {{ $item->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
                                                                 onclick="addWishListFunctionproduct({{ $item->id }})"></i></span>
+                                                             @else
+                                                              <a  class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
+                                                                    <i class="fa-regular fa-heart"></i>
+                                                                </a>
+                                                             @endif
+                                                     
                                                     </div>
                                                 <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                                                     <div class="product-content">

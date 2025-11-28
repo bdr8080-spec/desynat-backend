@@ -31,9 +31,18 @@
                             @if($index == 0)
                                 <button class="share-btn"><i class="fa-solid fa-share"></i></button>
                                 {{-- <button class="wishlist-btn"><i class="{{$data->wishlist == '1' ? 'fa-solid' : 'fa-regular' }} fa-heart" onclick="addWishListFunctionproduct({{$data->id}})"></i></button> --}}
-                                  <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $data->id }}"
+                               
+                                 
+                                @if (Auth::guard('web')->user())
+                                <span class="wishlist-btn" style="cursor: pointer"><i id="wishlistProduct{{ $data->id }}"
                                                                 class="fa-regular {{ $data->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
                                                                 onclick="addWishListFunctionproduct({{ $data->id }})"></i></span>
+                                @else
+                                <a  class="wishlist-btn text-decoration-underline" href="{{route('userLogin')}}">
+                                    <i class="fa-regular fa-heart"></i>
+                                </a>
+                                @endif
+                               
                             @endif
                             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
 
@@ -60,7 +69,7 @@
             <div class="col-lg-7">
                 <div class="productList_content">
 
-                    <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
+                    <h4 class="fw-semibold">{{$data->brand->name_english}}</h4>
                     <p class="text-muted mb-1">{{$data->product_name_en}}</p>
 
                     <div class="d-flex align-items-center mb-1">
@@ -68,6 +77,9 @@
                         <del class="text-muted me-2" id="actualPrice">{{$firstVariant['actual_price']}} KD</del>
                         <span class="text-danger fw-semibold">{{$firstVariant['discount_value']}}% off</span>
                     </div>
+
+                            <p class="text-muted mb-1">{{$data->store->store_name}}/{{$data->category->name}}</p> 
+
 
                     <hr>
 
@@ -94,10 +106,18 @@
                         @endforeach
                     </div>
 
+<<<<<<< HEAD
                     <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
                     <p class="text-muted mb-1">{{$data->description_en}}</p>
+=======
+                            {{-- <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
+                            <p class="text-muted mb-1">{{$data->description_en}}</p> --}}
+>>>>>>> 3041526a1a83afdf1cd7b5ebd7b403d5b8df0543
 
-                    <button class="customBtn2">Custom Order</button>
+                    @if ($data->customized_product==1)
+                         <button class="customBtn2">Custom Order</button>
+                    @endif
+                   
 
                     <div class="d-flex align-items-center gap-3 mt-5">
                         <button class="customBtn2 mt-0">Add to Bag</button>
@@ -569,79 +589,99 @@
     </div>
 
 
+    @php
+    ob_start();
+@endphp
+
+<button class='share-btn'><i class='fa-solid fa-share'></i></button>
+
+@if(Auth::guard('web')->user())
+    <span class="wishlist-btn" style="cursor: pointer">
+        <i id="wishlistProduct{{ $data->id }}"
+           class="fa-regular {{ $data->wishlist == 1 ? 'fa-solid fa-heart' : 'fa-heart' }}"
+           onclick="addWishListFunctionproduct({{ $data->id }})"></i>
+    </span>
+@else
+    <a class="wishlist-btn text-decoration-underline" href="{{ route('userLogin') }}">
+        <i class="fa-regular fa-heart"></i>
+    </a>
+@endif
+
+@php
+    $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
+@endphp
+
+
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
 <script>
-    var productVariants = @json($product_variants);
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-
-        const productVariants = @json($product_variants);
-
-        document.querySelectorAll(".choose-color").forEach(box => {
-
-            box.addEventListener("click", function () {
-
-                let colorHex = this.dataset.color;
-                let variant = Object.values(productVariants).find(v => v.color_hex === colorHex);
-
-                if (!variant) return;
-
-
-                document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
-                document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
+    const wishlistHTML = `{!! $wishlistBlock !!}`;
 
 
     
-                let sizeContainer = document.getElementById("sizeContainer");
-                sizeContainer.innerHTML = ""; 
-                variant.sizes.forEach(size => {
-                    sizeContainer.innerHTML += `<button class="size-btn">${size}</button>`;
-                });
+document.addEventListener("DOMContentLoaded", function () {
 
+    const productVariants = @json($product_variants);
 
-            
-                let images = variant.variant_image;
-                let carouselIndicators = document.querySelector(".carousel-indicators");
-                let carouselInner = document.querySelector(".carousel-inner");
+    document.querySelectorAll(".choose-color").forEach(box => {
 
-                carouselIndicators.innerHTML = "";
-                carouselInner.innerHTML = "";
+        box.addEventListener("click", function () {
 
-                images.forEach((img, index) => {
+            let colorHex = this.dataset.color;
+            let variant = Object.values(productVariants).find(v => v.color_hex === colorHex);
 
-                    carouselIndicators.innerHTML += `
-                        <button type="button" 
-                            data-bs-target="#carouselExampleCaptions" 
-                            data-bs-slide-to="${index}" 
-                            class="${index == 0 ? 'active' : ''}">
-                            <div class="product_slide_img">
-                                <img src="${img}" class="img-fluid"/>
-                            </div>
-                        </button>
-                    `;
+            if (!variant) return;
 
-                    carouselInner.innerHTML += `
-                        <div class="carousel-item ${index == 0 ? 'active' : ''}">
-                            ${index == 0 ? `
-                                <button class='share-btn'><i class='fa-solid fa-share'></i></button>
-                                <button class='wishlist-btn'><i class='fa-regular fa-heart'></i></button>
-                            ` : ''}
-                            <div class="carousel_item_img">
-                            <img src="${img}" class="img-fluid">
-                            </div>
+            // Update Prices
+            document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
+            document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
+
+            // Update Sizes
+            let sizeContainer = document.getElementById("sizeContainer");
+            sizeContainer.innerHTML = "";
+            variant.sizes.forEach(size => {
+                sizeContainer.innerHTML += `<button class="size-btn">${size}</button>`;
+            });
+
+            // Update Images
+            let images = variant.variant_image;
+            let carouselIndicators = document.querySelector(".carousel-indicators");
+            let carouselInner = document.querySelector(".carousel-inner");
+
+            carouselIndicators.innerHTML = "";
+            carouselInner.innerHTML = "";
+
+            images.forEach((img, index) => {
+
+                // Indicators
+                carouselIndicators.innerHTML += `
+                    <button type="button" 
+                        data-bs-target="#carouselExampleCaptions" 
+                        data-bs-slide-to="${index}" 
+                        class="${index == 0 ? 'active' : ''}">
+                        <div class="product_slide_img">
+                            <img src="${img}" class="img-fluid"/>
                         </div>
-                    `;
-                });
+                    </button>
+                `;
+
+                // Carousel Items
+                carouselInner.innerHTML += `
+                    <div class="carousel-item ${index == 0 ? 'active' : ''}">
+                        ${index == 0 ? wishlistHTML : ''}
+                        <div class="carousel_item_img">
+                            <img src="${img}" class="img-fluid">
+                        </div>
+                    </div>
+                `;
             });
         });
-
     });
+
+});
 </script>
+
 
 
     <script>

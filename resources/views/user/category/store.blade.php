@@ -118,8 +118,9 @@
                                                     <img src="{{ $item->seller_information->profile_pic }}"
                                                         class="img-fluid" />
                                                 </div>
-                                                <p>{{ $item->seller_information->first_name }}
-                                                    {{ $item->seller_information->last_name }}</p>
+                                                {{-- <p>{{ $item->seller_information->first_name }}
+                                                    {{ $item->seller_information->last_name }}</p> --}}
+                                                    <p> {{$item->store_name}}</p>
                                             </div>
                                             <div class="rate-content d-flex align-items-center">
                                                 <div class="rate">

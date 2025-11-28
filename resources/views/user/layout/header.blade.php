@@ -392,9 +392,9 @@ use App\Models\UserCurrentLocation;
                             <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
                                
                                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 w-100 justify-content-end flex-wrap">
-                                    @foreach ($data as $item)
+                                    @foreach ($data as $index =>$item)
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="handleSubCategory({{$item->id}})">
+                                        <a class="nav-link dropdown-toggle position-relative {{ $index == 0 ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="handleSubCategory({{$item->id}})">
                                             {{$item->name}}
                                         </a>
                                         <div class="dropdown-menu sell_clothes">

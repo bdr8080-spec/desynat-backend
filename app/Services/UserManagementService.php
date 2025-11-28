@@ -347,7 +347,7 @@ class UserManagementService
     public function singleStoreWiseAllproduct($data)
     {
         try {
-            $store_information = sellerStoreInformation::find($data->store_id);
+            $store_information = sellerStoreInformation::with('seller_information')->find($data->store_id);
 
             if (!$store_information) {
                 return [
@@ -515,9 +515,10 @@ class UserManagementService
     
             // Step 1: Find store
             
-            $product_details = Product::with(['category','subcategory','brand','product_specifications','product_variants.color','product_variants.size'])
+            $product_details = Product::with(['category','subcategory','store','brand','product_specifications','product_variants.color','product_variants.size'])
             ->where('id', $request->product_id)->first();
 
+           
     
             // If store not found
             if (!$product_details) {
@@ -536,6 +537,19 @@ class UserManagementService
             if($product_details){
                 $product_details->wishlist = in_array($product_details->id, $wishlistIds) ? 1 : 0;
 
+            }
+
+            // add to cart check 
+
+             $addtocart = Addtocart::where('user_id', $request->user_id)
+             ->where('product_id',$product_details->id)
+             ->first();
+
+              if($addtocart){
+                $product_details->addtocart = $addtocart;
+            }else{
+                $product_details->addtocart = (object)[];
+                
             }
 
            
@@ -618,11 +632,16 @@ class UserManagementService
                 $msg="Product Add From Wishlist";
                 $update_status=1;
             }
+
+            
+            $count = wishlist::where('user_id',$request->user_id)->count();
+
           
             return [
                 'status'  => 'success',
                 'message' => $msg,
-                'data'    => $update_status
+                'data'    => $update_status,
+                'count' => $count
             ];
     
         } catch (\Exception $e) {

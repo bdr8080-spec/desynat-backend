@@ -30,6 +30,7 @@ class AddressController extends Controller
             'street_no' => 'required',
             'city'=> 'required',
             'state'=>'required',
+            //'country_id'=>'required',
             'save_address_as'=>'required'
         ]);
         
@@ -48,6 +49,7 @@ class AddressController extends Controller
             'postal_code'=>$request->postal_code ?? null,
             'city'=>$request->city,
             'state'=>$request->state,
+            'country_name'=>$request->country_name,
             'landmark'=>$request->landmark ?? null,
             'save_address_as'=>$request->save_address_as,
             'latitude'=>$request->latitude ?? null,
@@ -79,6 +81,7 @@ class AddressController extends Controller
             'street_no' => 'required',
             'city'=> 'required',
             'state'=>'required',
+            //'country_id'=>'required',
             'save_address_as'=>'required'
         ]);
         
@@ -97,6 +100,7 @@ class AddressController extends Controller
             'postal_code'=>$request->postal_code ?? null,
             'city'=>$request->city,
             'state'=>$request->state,
+            'country_name'=>$request->country_name,
             'landmark'=>$request->landmark ?? null,
             'save_address_as'=>$request->save_address_as,
             'latitude'=>$request->latitude ?? null,
@@ -145,5 +149,35 @@ class AddressController extends Controller
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
   
     }
+
+    public function set_default_address(Request $request){
+
+        $validate = Validator::make($request->all(), [
+                 'address_id' => 'required',
+        ]);
+
+        $user_id=$request->user()->id;
+        
+        $request_data= (object)  [
+                'id'=>$user_id,
+                'address_id'=>$request->address_id
+            ];
+                
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+        $data = $this->UserAddressService->addressSetDefault($request_data);
+
+         if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+  
+    }
+
+    
+
 
 }

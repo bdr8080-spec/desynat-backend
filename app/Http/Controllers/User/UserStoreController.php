@@ -80,8 +80,7 @@ class UserStoreController extends Controller
       $category =  Category::orderBy('id','desc')->get();
       $size =  size::orderBy('name','desc')->get();
       $color = color::orderBy('name','asc')->get();
-       
-   
+
       
         return view('user.category.index',compact('store_details','category','brand','size','color'));
     }
@@ -100,6 +99,7 @@ class UserStoreController extends Controller
 
          $data=$this->UserManagementService->product_add_to_wishlist($request_data);
 
+        
            if(isset($data['status']) && $data['status']=='error' ){
                return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
            }
@@ -120,7 +120,7 @@ class UserStoreController extends Controller
     
         $data = $result['data'];
 
-        // dd($data);
+
 
         $product_variants = [];
 
