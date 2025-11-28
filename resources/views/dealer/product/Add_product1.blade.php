@@ -9,25 +9,21 @@
 }
 
 #edit_uploadChart_preview {
-    /* margin-top: 15px; ensures preview goes below */
     position: absolute;
     z-index: 0;
 }
 
-
-
 </style>
+
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> Add New Product demo
+            <i class="bi bi-chevron-left"></i> Add New Product demo page
         </a>
     </div>
 
     <form id="addproduct" action="{{ route('seller.Add_product_code1') }}" method="post">
         @csrf
-
-
         <div class="pt-3">
             <div class="title24">Select Category</div>
             <div class="row">
@@ -235,6 +231,25 @@
         </div>
 
         <!----- variant panel ------>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form product-row">
+                    <div class="label-flex">
+                        <label>Colour</label>
+                    </div>
+
+                    <select class="form-select form-control color-select" aria-label="Default select example"
+                        name="color_id[]" rel="0">
+                        <option value="">Select Colour</option>
+                        @foreach ($color as $item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                    <p class="text-danger" id="error-color_id_0"></p>
+                </div>
+            </div>
+        </div>
+
         <div class="variant-panel">
          
             <div class="product-pnls mt-4" id="variant_image_id0">
@@ -253,38 +268,22 @@
                 <div class="product-multiple d-flex flex-wrap gap-2" id="previewContainer0"></div>
             </div>
 
+           
             {{-- Add New Variationc code --}}
              <div class="mt-3 d-flex justify-content-between py-3">
-            <div class="title24">Add Variation </div>
-            <div class="sep-icon addmoreVariation" rel="0">
-                <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add">
+            <div class="title24">Add Variation FDF </div>
+            <div class="sep-icon addmoreVariation-old" rel="0">
+                <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add" id="varAdd">
             </div>
            </div>
             {{-- Add New Variationc code --}}
 
 
-            <div class="inside_variation0">
+            <div class="inside_variation0 subvariant">
 
-            <div class="wapper-header mt-4">
+            <div class="wapper-header mt-2">
                 <div class="row price-block">
-                    <div class="col-lg-3">
-                        <div class="sub-form product-row">
-                            <div class="label-flex">
-                                <label>Colour</label>
-                            </div>
-
-                            <select class="form-select form-control color-select" aria-label="Default select example"
-                                name="color_id[]" rel="0">
-                                <option value="">Select Colour</option>
-                                @foreach ($color as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger" id="error-color_id_0"></p>
-
-                        </div>
-
-                    </div>
+                    
                     <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
@@ -907,6 +906,7 @@ $('#edit_uploadChart').on('change', e => {
 </script>
 
 <script>
+
 // ADD NEW ROW In specification
 
 var specification_count = 1;
@@ -1010,41 +1010,38 @@ $(".addVariantBtn").click(function() {
 
                 <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer${product_Variation_count}"></div>
             </div>
-
-            
-                  {{-- Add New Variationc code --}}
-             <div class="mt-3 d-flex justify-content-between py-3">
-            <div class="title24">Add Variation </div>
-            <div class="sep-icon addmoreVariation" rel="${product_Variation_count}">
-                <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add">
-            </div>
-           </div>
-            {{-- Add New Variationc code --}}
-
-            <div class="inside_variation${product_Variation_count}">
-
-
-
-            <div class="wapper-header mt-4">
-                <div class="row">
-                
-                     <div class="col-lg-3">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
                     <div class="sub-form product-row">
                         <div class="label-flex">
                             <label>Colour</label>
                         </div>
-
                         <select class="form-select form-control color-select" aria-label="Default select example" name="color_id[]" rel="${product_Variation_count}">
                             <option value="">Select Colour</option>
                             @foreach ($color as $item)
                                 <option value="{{ $item->id }}"">{{ $item->name }}</option>
                             @endforeach
                         </select>
-  <p class="text-danger" id="error-color_id_${product_Variation_count}"></p>
-
+                        <p class="text-danger" id="error-color_id_${product_Variation_count}"></p>
                     </div>
-                    
                 </div>
+            </div>
+
+            
+                  {{-- Add New Variationc code --}}
+             <div class="mt-3 d-flex justify-content-between py-2 align-items-center">
+            <div class="title24">Add Variation </div>
+            <div class="sep-icon addmoreVariation" rel="${product_Variation_count}">
+                <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add" id="varAdd2">
+            </div>
+           </div>
+            {{-- Add New Variationc code --}}
+
+            <div class="inside_variation">
+
+            <div class="wapper-header mt-2">
+                <div class="row">
+            
                 <div class="col-lg-3">
                     <div class="sub-form">
                         <div class="label-flex">
@@ -1789,6 +1786,233 @@ $(document).on("click", ".remove-btn", function() {
 // end only variation code
 
 </script>
+
+<script>
+
+$("#varAdd").click(function(){
+    $(".subvariant").append(`
+        <div class="inside_variation0 p-2 mt-4 newvariant" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
+        border-radius: 10px; box-shadow: 0px 2px 4px #ddd;">
+            <div class="wapper-header mt-2">
+                <div class="row price-block">
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Size</label>
+                            </div>
+                            <select class="form-select form-control" aria-label="Default select example" name="size_id[]">
+                                <option value="">Select Size</option>
+                                @foreach ($size as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            <p class="text-danger" id="error-size_id_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Total Stocks</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208" name="total_stock[]">
+
+                            <p class="text-danger" id="error-total_stock_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>SKU Limit</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[]">
+                            <p class="text-danger" id="error-sku_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Actual Price</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[]" id="actual_price_0">
+                            <p class="text-danger" id="error-actual_price_0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3">
+                <div class="title24">Discounted Price</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="discount_type[0]" id="discount_type_percentage_0" checked value="1">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Percentage</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="discount_type[0]" id="discount_type_fixed_0" value="2">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Fixed Price</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Percentage</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%" name="discount_value[]" id="discount_value_0">
+                            <p class="text-danger" id="error-discount_value_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Final Price</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[]" id="final_price_0">
+                            <p class="text-danger" id="error-final_price_0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="remove-btn2 text-danger"><i class="bi bi-x"></i> Remove </div>
+            </div>
+
+        </div>
+
+    `);
+ })
+
+ // REMOVE ROW
+$(document).on("click", ".remove-btn2", function() {
+    $(this).closest(".newvariant").remove();
+});
+
+
+// Add another sub Variation
+
+$(document).on("click", ".addmoreVariation", function () {
+    let variation_id = $(this).attr("rel");
+
+    $(`#variant_image_id${variation_id}`).closest(".variant-panel-bg").find(".inside_variation").append(`
+        <div class="p-2 mt-4 subpanel" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
+        border-radius: 10px; box-shadow: 0px 2px 4px #ddd;">
+           <div class="wapper-header mt-2">
+                <div class="row price-block">
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Size</label>
+                            </div>
+                            <select class="form-select form-control" aria-label="Default select example" name="size_id[]">
+                                <option value="">Select Size</option>
+                                @foreach ($size as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            <p class="text-danger" id="error-size_id_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Total Stocks</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208" name="total_stock[]">
+
+                            <p class="text-danger" id="error-total_stock_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>SKU Limit</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[]">
+                            <p class="text-danger" id="error-sku_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Actual Price</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[]" id="actual_price_0">
+                            <p class="text-danger" id="error-actual_price_0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3">
+                <div class="title24">Discounted Price</div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="discount_type[0]" id="discount_type_percentage_0" checked value="1">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Percentage</span>
+                                </label>
+                            </div>
+                            <div class="check_radio">
+                                <label class="radio-group">
+                                    <input type="radio" name="discount_type[0]" id="discount_type_fixed_0" value="2">
+                                    <span class="custom-radio"></span>
+                                    <span class="radio-label">Fixed Price</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Percentage</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%" name="discount_value[]" id="discount_value_0">
+                            <p class="text-danger" id="error-discount_value_0"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Final Price</label>
+                            </div>
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[]" id="final_price_0">
+                            <p class="text-danger" id="error-final_price_0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="remove-btn22 text-danger"><i class="bi bi-x"></i> Remove </div>
+            </div>
+
+        </div>
+    `);
+});
+
+ // REMOVE ROW
+ $(document).on("click", ".remove-btn22", function() {
+    $(this).closest(".subpanel").remove();
+});
+
+
+</script>
+
+
 
 {{-- // common j s --}}
 @include('dealer.product.ajax.product_commonjs');
