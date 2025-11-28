@@ -638,8 +638,14 @@
                          //     window.location.replace("{{ url('user/dashboard') }}");
                          // }, 2000);
 
-                         $(`#hideWisListProduct${id}`).hide();
+                        if (data.count <= 0) {
+                            $(`#hideWisListProduct${id}`).text("No WishList Found");
+                        }
 
+                        $(`#hideWisListProduct${id}`).hide();
+                       
+
+                     
                      } else {
                          toastr.error("There was a problem deleting the subcategory.");
                      }
