@@ -1904,7 +1904,6 @@ footer span{
   color: #5e4b3c;
 }
 .quantity-box {
-  display: flex;
   align-items: center;
      gap: 73px;
   margin-top: 15px;
