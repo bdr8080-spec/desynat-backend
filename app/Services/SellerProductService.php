@@ -705,6 +705,156 @@ public function single_product_details_fetch($request){
             }
 
 
+// New add product copy Code
+
+
+public function AddProduct1($request){
+        
+
+    try{
+    
+    
+    DB::beginTransaction();
+    
+    // FILTER PRODUCT TABLE DATA SEPRATE
+    
+    $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
+    
+        if($seller_details->admin_verify!=='2'){
+            return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
+        }
+    
+
+    $product=[
+    'seller_id'=>$request->seller_id,
+    'store_id'=>$seller_details->store_info->id,
+    'category_id' => $request->category_id,
+    'subcategory_id' => $request->subcategory_id,
+    'brand_id' => $request->brand_id,
+    'other_en' => $request->other_en,
+    'other_ar' => $request->other_ar,
+    
+    'product_name_en' => $request->product_name_en,
+    'product_name_ar' => $request->product_name_ar,
+         
+    'description_en' => $request->description_en,
+    'description_ar' => $request->description_ar,
+            
+    'min_card_quantity'=> $request->min_card_quantity,
+    'max_card_quantity'=> $request->max_card_quantity,
+    'product_return'=> $request->product_return, // 0 Not return 1 return Availble 
+    'return_days'=> $request->return_days,
+    'product_exchangable'=> $request->product_exchangable,  // 0 not 1 yes
+    'exchangable_days'=> $request->exchangable_days,
+    'review_rating'=> $request->review_rating, // 0 not 1 yes
+    'affiliated_product'=> $request->affiliated_product, // // 0 not 1 yes
+    'customized_product'=> $request->customized_product, // // 0 not 1 yes
+    'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
+    'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
+    'upload_size_chart'=> $request->upload_size_chart,
+    'product_active_status'=>1
+    ];
+    
+    
+    $product_data=  product::create($product);
+    
+    $product_id= $product_data->id;
+    
+    // specification 
+    
+    foreach($request->product_spe_en as $key=>$val){
+    
+    $specification_array=[
+        // specification
+    'product_id'=> $product_id,
+    'name_en'=> $request->product_spe_en[$key],
+    'feature_en'=> $request->product_spe_feature_en[$key],
+    'name_ar'=> $request->product_spe_ar[$key],
+    'feature_ar'=> $request->product_spe_feature_ar[$key],
+    ];
+    
+    $product_data=  ProductSpecification::create($specification_array);
+    
+    }
+    
+    // variation code 
+    
+    
+    // foreach ($request['product_variation'] as $variation) {
+
+
+
+    foreach($request->Product_data as $key=>$val){
+
+    
+
+      foreach($val['product_variation'] as $key1=>$product_variation){
+        
+                
+            $variation_array=[
+            'product_id'=> $product_id,
+                // product vartion start
+            'variant_image' => $val['variant_image'],
+            'color_id' => $val['color_id'],
+            'size_id' => $product_variation['size_id'],
+            
+            'total_stock' => $product_variation['total_stock'],
+            'sku' => $product_variation['sku'],
+            // 'sku_threshold_value' => $request->sku_threshold_value[$key],
+            'actual_price' => $product_variation['actual_price'],
+            'discount_type' => $product_variation['discount_type'],
+            'discount_value' => $product_variation['discount_value'],
+            'final_price' => $product_variation['final_price'],
+            
+            // product vartion end  
+            ];
+    
+    if($request->category_id==2){
+    
+        $variation_array['bust']= $product_variation->bust??null; // only provide when category is women
+        $variation_array['waist']= $product_variation->waist??null; // only provide when category is women
+        $variation_array['hip']= $product_variation->hip??null;  // only provide when category is women
+        $variation_array['shoulder']= $product_variation->shoulder??null; // only provide when category is women
+        $variation_array['sleeve_length']= $product_variation->sleeve_length??null; // only provide when category is women
+        $variation_array['length']= $product_variation->length??null; // only provide when category is women      
+       
+    }
+    
+    
+        $product_data=  ProductVariant::create($variation_array);
+
+    }
+
+    }
+    
+    
+    // if ($product->isEmpty()) {
+    //         return ['status'=>'success','message'=>"No Product found",'data'=>[]];
+    //     // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
+    // }
+    
+    
+    $request_data=(object) [
+        'product_id'=>$product_id,    
+    ];
+    
+    
+    $add_product_data=$this->single_product_details_fetch($request_data);
+    
+    DB::commit();
+    
+    return ['status'=>'success','message'=>"Product Add successfully",'data'=>$add_product_data['data']];
+    
+    } 
+    catch (\Exception $e) {
+        return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+    
+    }
+    
+    }
+    
+    
+
 
 
 }
