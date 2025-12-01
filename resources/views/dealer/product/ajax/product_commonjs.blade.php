@@ -31,11 +31,15 @@
 
         let variation_id = $(this).attr("rel");
 
+        if (variation_id == 0) {
+            var count_variation = document.querySelectorAll('.inside_variation' + variation_id).length - 1;
+            count_variation = count_variation + 1;
+        } else {
 
+            var count_variation = document.querySelectorAll('.inside_variation' + variation_id).length;
+            count_variation = count_variation + 1;
 
-        let count_variation = document.querySelectorAll('.inside_variation' + variation_id).length - 1;
-
-        count_variation = count_variation + 1;
+        }
 
 
         if (variation_id == 0) {
@@ -99,7 +103,7 @@
                                     <label>HIP</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
-                                    name="[${variation_id}][]">
+                                    name="hip[${variation_id}][]">
                                 <p class="text-danger" id="error-hip_${variation_id}_${count_variation}"></p>
 
                             </div>
