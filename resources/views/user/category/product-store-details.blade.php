@@ -635,7 +635,7 @@ $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
-<!-- <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
 
     const productVariants = @json($product_variants);
@@ -764,9 +764,75 @@ function attachSizeClickEvents() {
 </script>
 
 <script>
-document.getElementById("addToBagBtn").addEventListener("click", function () {
+let quantity = 1;
+let quantityBox = document.querySelector(".quantity-box");
+let qtyDisplay = document.getElementById("qtyNumber");
+let plusBtn = document.getElementById("plusBtn");
+let minusBtn = document.getElementById("minusBtn");
+let addToBagBtn = document.getElementById("addToBagBtn");
+let errorBox = document.getElementById("optionError");
 
-    const errorBox = document.getElementById("optionError");
+// Track if quantity box is already open
+let quantityBoxOpen = false;
+
+// Initially hide quantity box
+quantityBox.style.display = "none";
+
+// Function to update displayed quantity
+function updateQtyDisplay() {
+    qtyDisplay.textContent = quantity < 10 ? '0' + quantity : quantity;
+
+    // Hide quantity box if quantity is 0
+    if (quantity <= 0) {
+        quantityBox.style.display = "none";
+        quantityBoxOpen = false;
+    } else {
+        quantityBox.style.display = "flex";
+    }
+}
+
+// Send data to backend
+function sendToCart(qty) {
+    let product_id = document.getElementById("productId").value;
+    let variant_id = document.getElementById("variantId").value;
+
+    if (!product_id || !variant_id) {
+        errorBox.style.display = "block";
+        errorBox.innerHTML = "Something went wrong. Please reselect options.";
+        return;
+    }
+
+    fetch("{{ route('user.addToCart') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({
+            product_id: product_id,
+            variant_id: variant_id,
+            quantity: qty
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "error") {
+            toastr.error(data.message);
+            return;
+        }
+        toastr.success(data.message);
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        toastr.error("Something went wrong. Try again.");
+    });
+}
+
+// Add to Bag Button Click
+addToBagBtn.addEventListener("click", function () {
     errorBox.style.display = "none";
     errorBox.innerHTML = "";
 
@@ -786,80 +852,37 @@ document.getElementById("addToBagBtn").addEventListener("click", function () {
         return;
     }
 
-    // Get values from hidden inputs
-    let product_id = document.getElementById("productId").value;
-    let variant_id = document.getElementById("variantId").value;
-
-    if (!product_id || !variant_id) {
-        errorBox.style.display = "block";
-        errorBox.innerHTML = "Something went wrong. Please reselect options.";
-        return;
+    // First click: open quantity box
+    if (!quantityBoxOpen) {
+        quantity = 1;
+        updateQtyDisplay();
+        quantityBoxOpen = true;
+        return; // Do NOT call addToCart yet
     }
 
-    // Send to backend
-    addToCart(product_id, variant_id);
+    // Second click (or more): send to cart
+    sendToCart(quantity);
 });
-</script>
 
-<script>
-function addToCart(product_id, variant_id) {
-
-    fetch("{{ route('user.addToCart') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            product_id: product_id,
-            variant_id: variant_id,
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        if (data.status === "error") {
-            toastr.error(data.message);
-            return;
-        }
-
-        toastr.success(data.message);
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        toastr.error("Something went wrong. Try again.");
-    });
-}
-</script> -->
-
-
-
-<script>
-let quantity = 1;
-
-const qtyDisplay = document.getElementById("qtyNumber");
-const plusBtn = document.getElementById("plusBtn");
-const minusBtn = document.getElementById("minusBtn");
-
+// Plus Button
 plusBtn.addEventListener("click", () => {
+    if (!quantityBoxOpen) return; // prevent increment before box is open
     quantity++;
-    updateQty();
+    updateQtyDisplay();
 });
 
+// Minus Button
 minusBtn.addEventListener("click", () => {
-    if (quantity > 1) {
+    if (!quantityBoxOpen) return; // prevent decrement before box is open
+    if (quantity > 0) {
         quantity--;
-        updateQty();
+        updateQtyDisplay();
     }
 });
-
-function updateQty() {
-    qtyDisplay.textContent = quantity < 10 ? '0' + quantity : quantity;
-}
 </script>
+
+
+
 
 
 

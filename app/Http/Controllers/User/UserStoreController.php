@@ -208,8 +208,8 @@ class UserStoreController extends Controller
         $request_data = (object)[
             'user_id'     => $request->user()->id,
             'product_id'  => $request->product_id,
-            'variants_id' => $request->variant_id,  // Correct key
-            'quantity'    => 1
+            'variants_id' => $request->variant_id, 
+            'quantity'    => $request->quantity
         ];
         $data = $this->UserManagementService->product_add_to_cart($request_data);
 
