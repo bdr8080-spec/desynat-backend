@@ -435,10 +435,10 @@
                                                                 <span>(1K)</span>
                                                             </div>
                                                             <div class="price">
-                                                                <strong>{{ $item->product_variants[0]->actual_price }}
+                                                                <strong>{{ $item->product_variants[0]->final_price }}
                                                                     KD</strong>
                                                                 <div class="d-block">
-                                                                    <span class="old-price">{{ $item->product_variants[0]->final_price }}
+                                                                    <span class="old-price">{{ $item->product_variants[0]->actual_price }}
                                                                         KD</span>
                                                                     <span class="discount">
 
@@ -540,67 +540,79 @@
     </div>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="sortMOdal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+    <div class="modal fade" id="sortMOdal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
+
                 <div class="modal-header border-0">
-                    <h3 class="modal-title fs-5" id="exampleModalLabel">Sort By</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="modal-title fs-5">Sort By</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+
                 <div class="modal-body">
+
                     <div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                            <label class="form-check-label" for="radioDefault1">
-                                Recommended
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort1" value="1"
+                                {{ request('sort_filter') == 1 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort1">Recommended</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Price: Low to High
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort2" value="2"
+                                {{ request('sort_filter') == 2 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort2">Price: Low to High</label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Price: High to Low
-                            </label>
-                        </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Newest First
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort3" value="3"
+                                {{ request('sort_filter') == 3 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort3">Price: High to Low</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Customer Ratings
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort4" value="4"
+                                {{ request('sort_filter') == 4 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort4">Newest First</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Best Selling
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort5" value="5"
+                                {{ request('sort_filter') == 5 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort5">Customer Ratings</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Fastest Delivery
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort6" value="6"
+                                {{ request('sort_filter') == 6 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort6">Best Selling</label>
                         </div>
+
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort7" value="7"
+                                {{ request('sort_filter') == 7 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort7">Fastest Delivery</label>
+                        </div>
+
                     </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <button type="button" class="custom-btn3">Clear</button>
-                        <button type="button" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">Apply</button>
+
+                    <div class="d-flex align-items-center gap-3 mt-3">
+                        <a href="{{route('user.store_details',[request()->id])}}" id="clearSort" class="custom-btn3">Clear</a>
+                        <button type="submit" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">
+                            Apply
+                        </button>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
+</form>
+
+
 
     <script>
         var images = [

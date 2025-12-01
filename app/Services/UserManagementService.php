@@ -411,7 +411,7 @@ class UserManagementService
             }
 
             //  Filter by variants for product existence
-            if (!empty($data->size_id) || !empty($data->color_id) || isset($data->price_min) || isset($data->price_max) || isset($data->discount)  ) {
+            if (!empty($data->size_id) || !empty($data->color_id) || !empty($data->price_min) || !empty($data->price_max) || isset($data->discount)  ) {
                 $products->whereHas('product_variants', function ($q) use ($data) {
                     if (!empty($data->size_id) && is_array($data->size_id)) {
                         $sizeIds = array_map('intval', $data->size_id);
@@ -423,15 +423,15 @@ class UserManagementService
                         $q->whereIn('color_id', $colorIds);
                     }
 
-                    if (isset($data->price_min)) {
+                    if (!empty($data->price_min)) {
                         $q->where('final_price', '>=', $data->price_min);
                     }
-                    if (isset($data->price_max)) {
+                    if (!empty($data->price_max)) {
                         $q->where('final_price', '<=', $data->price_max);
                     }
 
                     
-                    if (isset($data->discount)) {
+                    if (!empty($data->discount)) {
                         $q->where('discount_value', '<=', $data->discount);
                     }
 

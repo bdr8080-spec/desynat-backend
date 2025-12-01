@@ -49,10 +49,70 @@ class UserStoreController extends Controller
     }
 
 
-    public function store_details(Request $request ,$id){
+    // public function store_details(Request $request ,$id){
 
-        $validate = Validator::make(['id'=>$id], [
-            // "profile_image"=>"required",
+    //     $validate = Validator::make(['id'=>$id], [
+    //         // "profile_image"=>"required",
+    //         'id' => 'required|exists:seller_store_information,id',
+    //     ]);
+
+    //     if ($validate->fails()) {
+    //         return redirect()->back()
+    //             ->withErrors($validate)
+    //             ->withInput();
+    //     }
+
+    //     if(isset($request->user()->id)){
+    //          $user_id=  $request->user()->id;
+    //     }
+       
+
+    
+
+    //     $request_data = (object)[
+    //         'user_id'        => $user_id,
+    //         'store_id'       => $id,
+    //         'search'         => $request->search ?? null,
+    //         'sort_filter'    => $request->sort_filter ?? null,
+    //         'brand_id'       => $request->brand_id ?? null,
+    //         'category_id'    => $request->category_id ?? null,
+    //         'size_id'        => $request->size_id ?? null,
+    //         'color_id'       => $request->color_id ?? null, 
+    //         'rating'         => $request->rating ?? null,
+    //         'delivery_time'  => $request->delivery_time ?? null,
+    //         'delivery_option'=> $request->delivery_option ?? null,
+    //     ];
+
+
+    //     if(isset($request->price_min)){
+    //         $request_data['price_min']  = Intval($request->price_min) ?? null;          
+    //     }
+    //     if(isset($request->price_max)){
+            
+    //         $request_data['price_max']  = Intval($request->price_max) ?? null;          
+    //     }
+    //     if(isset($request->discount)){
+            
+    //         $request_data['discount']  = Intval($request->discount) ?? null;          
+    //     }
+              
+    //     $store_details=$this->UserManagementService->singleStoreWiseAllproduct($request_data);
+
+
+    //    $store_details=$store_details['data'];
+
+    //   $brand =  Brand::orderBy('name_english','asc')->get();
+    //   $category =  Category::orderBy('id','desc')->get();
+    //   $size =  size::orderBy('name','desc')->get();
+    //   $color = color::orderBy('name','asc')->get();
+
+      
+    //     return view('user.category.index',compact('store_details','category','brand','size','color'));
+    // }
+    public function store_details(Request $request, $id)
+    {
+        // Validate store ID
+        $validate = Validator::make(['id' => $id], [
             'id' => 'required|exists:seller_store_information,id',
         ]);
 
@@ -62,13 +122,10 @@ class UserStoreController extends Controller
                 ->withInput();
         }
 
-        if(isset($request->user()->id)){
-             $user_id=  $request->user()->id;
-        }
-       
+        // Get logged-in user ID
+        $user_id = isset($request->user()->id) ? $request->user()->id : null;
 
-    
-
+        // Prepare request data as an object
         $request_data = (object)[
             'user_id'        => $user_id,
             'store_id'       => $id,
@@ -77,39 +134,28 @@ class UserStoreController extends Controller
             'brand_id'       => $request->brand_id ?? null,
             'category_id'    => $request->category_id ?? null,
             'size_id'        => $request->size_id ?? null,
-            'color_id'       => $request->color_id ?? null, 
-            'discount'       => $request->discount ?? null,
+            'color_id'       => $request->color_id ?? null,
+            'price_min'      => isset($request->price_min) ? intval($request->price_min) : null,
+            'price_max'      => isset($request->price_max) ? intval($request->price_max) : null,
+            'discount'       => isset($request->discount) ? intval($request->discount) : null,
             'rating'         => $request->rating ?? null,
             'delivery_time'  => $request->delivery_time ?? null,
             'delivery_option'=> $request->delivery_option ?? null,
         ];
 
+        // Call service method
+        $store_details = $this->UserManagementService->singleStoreWiseAllproduct($request_data);
+        $store_details = $store_details['data'];
 
-        if(isset($request->price_min)){
-            $request_data['price_min']  = Intval($request->price_min) ?? null;          
-        }
-        if(isset($request->price_max)){
-            
-            $request_data['price_max']  = Intval($request->price_max) ?? null;          
-        }
-        if(isset($request->discount)){
-            
-            $request_data['discount']  = Intval($request->discount) ?? null;          
-        }
-              
-        $store_details=$this->UserManagementService->singleStoreWiseAllproduct($request_data);
+        // Fetch filters for view
+        $brand = Brand::orderBy('name_english', 'asc')->get();
+        $category = Category::orderBy('id', 'desc')->get();
+        $size = Size::orderBy('name', 'desc')->get();
+        $color = Color::orderBy('name', 'asc')->get();
 
-
-       $store_details=$store_details['data'];
-
-      $brand =  Brand::orderBy('name_english','asc')->get();
-      $category =  Category::orderBy('id','desc')->get();
-      $size =  size::orderBy('name','desc')->get();
-      $color = color::orderBy('name','asc')->get();
-
-      
-        return view('user.category.index',compact('store_details','category','brand','size','color'));
+        return view('user.category.index', compact('store_details', 'category', 'brand', 'size', 'color'));
     }
+
     
 
 
