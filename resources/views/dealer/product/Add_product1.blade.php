@@ -298,6 +298,7 @@
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
+                                <p class="text-danger" id="error-size_id_0"></p>
                                 <p class="text-danger" id="error-size_id_0_0"></p>
 
                             </div>
@@ -396,6 +397,7 @@
                                 <input type="number" class="form-control notapplyspace" placeholder="20019"
                                     name="sku[0][]">
 
+                                <p class="text-danger" id="error-sku_0"></p>
                                 <p class="text-danger" id="error-sku_0_0"></p>
                             </div>
 
@@ -984,7 +986,7 @@
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
-                    <p class="text-danger" id="error-variant_image_${product_Variation_count}"></p>
+                    <p class="text-danger" id="error-variant_image_${product_Variation_count}_0"></p>
 
                 </div>
 
@@ -1035,7 +1037,8 @@
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                      <p class="text-danger" id="error-size_id_${product_Variation_count}"></p>
+                      <p class="text-danger" id="error-size_id_${product_Variation_count}_0"></p>
+                 <p class="text-danger" id="error-size_id_${product_Variation_count}"></p>
 
                         </div>
                    
@@ -1049,7 +1052,7 @@
                                 <label>Bust</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-bust_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1060,7 +1063,7 @@
                                 <label>Waist</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-waist_${product_Variation_count}_0"></p>
 
                    </div>
 
@@ -1071,7 +1074,7 @@
                                 <label>HIP</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-hip_${product_Variation_count}_0"></p>
 
                             </div>                        
                     </div>
@@ -1082,7 +1085,7 @@
                                 <label>Shoulder</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-shoulder_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1094,7 +1097,7 @@
                                 <label>Sleev Length</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-sleeve_length_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1105,7 +1108,7 @@
                                 <label>Length</label>
                             </div>
                             <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[${product_Variation_count}][]" >
-                          <p class="text-danger" id="error-length_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-length_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1116,7 +1119,7 @@
                                 <label>Total Stocks</label>
                             </div>
                             <input type="number" class="form-control" placeholder="Eg.13208" name="total_stock[${product_Variation_count}][]" >
-                          <p class="text-danger" id="error-total_stock_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-total_stock_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1128,6 +1131,7 @@
                             </div>
                             <input type="number" class="form-control" placeholder="20019" name="sku[${product_Variation_count}][]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-sku_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1140,7 +1144,7 @@
                                 <label>Actual Price</label>
                             </div>
                             <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-actual_price_${product_Variation_count}_0"></p>
 
                             </div>
                         
@@ -1179,7 +1183,7 @@
                                 <label>Percentage</label>
                             </div>
                            <input type="number" id="discount_value_${product_Variation_count}" class="form-control" placeholder="Eg.10%" name="discount_value[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-discount_value_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-discount_value_${product_Variation_count}_0"></p>
 
                            </div>
 
@@ -1190,7 +1194,7 @@
                                 <label>Final Price</label>
                             </div>
                             <input type="number" id="final_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
-                          <p class="text-danger" id="error-final_price_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-final_price_${product_Variation_count}_0"></p>
 
                          </div>
 
