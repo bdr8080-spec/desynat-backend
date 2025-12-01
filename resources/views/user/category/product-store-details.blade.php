@@ -612,7 +612,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function () {
 
     const productVariants = @json($product_variants);
@@ -810,7 +810,7 @@ function addToCart(product_id, variant_id) {
         toastr.error("Something went wrong. Try again.");
     });
 }
-</script>
+</script> -->
 
 
 
