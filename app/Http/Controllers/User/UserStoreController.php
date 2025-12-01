@@ -30,15 +30,18 @@ class UserStoreController extends Controller
         'category_id'=>$id,
         'search'=>$request->search,
         'rating'=>$request->rating,
-        'availability'=>$request->availability,
+        'availbility'=>$request->availability,
         'shortest_delivery'=>$request->shortest_delivery,
         'highest_sale'=>$request->highest_sale
        ];
+       
        
 
        $store_data=$this->UserManagementService->getStoreWithCatgory($request_data);
 
        $store_data=$store_data['data'];
+
+       //dd($store_data);
 
     
        return view('user.category.store',compact('store_data'));
@@ -63,13 +66,26 @@ class UserStoreController extends Controller
              $user_id=  $request->user()->id;
         }
        
-      
-        $request_data=(object)[
-         'user_id'=>$user_id ??null,
-         'store_id'=>$request->id,
-         'search' =>$request->search,
-         'sort_filter'=> $request->sort_filter
+    
+
+        $request_data = (object)[
+            'user_id'        => $user_id,
+            'store_id'       => $id,
+            'search'         => $request->search ?? null,
+            'sort_filter'    => $request->sort_filter ?? null,
+            'brand_id'       => $request->brand_id ?? null,
+            'category_id'    => $request->category_id ?? null,
+            'size_id'        => $request->size_id ?? null,
+            'color_id'       => $request->color_id ?? null, 
+            'price_min'      => $request->price_min ?? null,
+            'price_max'      => $request->price_max ?? null,
+            'discount'       => $request->discount ?? null,
+            'rating'         => $request->rating ?? null,
+            'delivery_time'  => $request->delivery_time ?? null,
+            'delivery_option'=> $request->delivery_option ?? null,
         ];
+
+        //dd($request_data);
  
         $store_details=$this->UserManagementService->singleStoreWiseAllproduct($request_data);
 
