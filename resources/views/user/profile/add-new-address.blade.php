@@ -172,7 +172,7 @@ input[type=number] {
 
             <div class="col-lg-6 mt-3">
                 <div class="form-group address-tab position-relative  {{ (isset($address) && $address->save_address_as == 0) ? 'active' : '' }}">
-                    <input type="radio" name="save_address_as" value="0" class="form-control notapplyspace" style="background: transparent;"  {{ (isset($address) && $address->save_address_as == 1) ? 'checked' : '' }}/>
+                    <input type="radio" name="save_address_as" value="0" class="form-control notapplyspace" style="background: transparent;"  {{ (isset($address) && $address->save_address_as == 0) ? 'checked' : '' }}/>
                     <span class="selectAddress_"><i class="bi bi-building"></i> Office</span>
                 </div>
             </div>
