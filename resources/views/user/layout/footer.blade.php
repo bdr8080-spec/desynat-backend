@@ -610,9 +610,11 @@
                          // Show Toastr Notification
                          if (data.data == 1) {
                              toastr.success(data.message);
+                             location.reload();
 
                          } else {
                              toastr.error(data.message);
+                             location.reload();
                          }
 
                          // $('#wishlistProduct' + id).val();

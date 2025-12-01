@@ -106,13 +106,8 @@
                         @endforeach
                     </div>
 
-<<<<<<< HEAD
-                    <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
-                    <p class="text-muted mb-1">{{$data->description_en}}</p>
-=======
                             {{-- <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
                             <p class="text-muted mb-1">{{$data->description_en}}</p> --}}
->>>>>>> 3041526a1a83afdf1cd7b5ebd7b403d5b8df0543
 
                     @if ($data->customized_product==1)
                          <button class="customBtn2">Custom Order</button>

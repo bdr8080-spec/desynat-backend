@@ -145,6 +145,7 @@ class UserStoreController extends Controller
     } else {
 
         $product_variants[$colorHex] = [
+            'variant_id' => $item->id,
             'color_hex'      => $colorHex,
             'variant_image'  => is_array($item->variant_image) ? $item->variant_image : [],
             'sizes'          => [$item->size->name],
@@ -155,6 +156,8 @@ class UserStoreController extends Controller
         ];
     }
 }
+
+//dd($product_variants);
 
 
 

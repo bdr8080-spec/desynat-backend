@@ -81,7 +81,7 @@ input[type=number] {
                         </div>
                     
                         <div class="w-100">
-                            <input type="number" class="form-control"
+                            <input type="number" class="form-control" id="phone"
                                 placeholder="Enter Mobile Number"
                                 name="mobile" value="{{ old('mobile', $address->mobile ?? '') }}"
                                 oninput="this.value = this.value.slice(0, 15);"
@@ -151,7 +151,7 @@ input[type=number] {
             <div class="col-lg-6 mt-3">
                 <div class="form-group">
                     <label for="">Country</label>
-                    <input type="text" id="country" class="form-control notapplyspace" value="{{$address->country_name}}" placeholder="Enter Country Name" name="country_name" />
+                    <input type="text" id="country" class="form-control notapplyspace" value="{{@$address->country_name}}" placeholder="Enter Country Name" name="country_name" />
                     <span class="text-danger" id="error-country_name"></span>
                 </div>
             </div>
@@ -435,5 +435,6 @@ $("#currentLocation").click(function () {
         });
 
     </script>
+
 
 @endsection
