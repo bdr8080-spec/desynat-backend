@@ -298,7 +298,7 @@
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                                <p class="text-danger" id="error-size_id_0"></p>
+                                <p class="text-danger" id="error-size_id_0_0"></p>
 
                             </div>
 
@@ -311,7 +311,7 @@
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10"
                                     name="bust[0][]">
-                                <p class="text-danger" id="error-bust_0"></p>
+                                <p class="text-danger" id="error-bust_0_0"></p>
 
                             </div>
 
@@ -324,7 +324,7 @@
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12"
                                     name="waist[0][]">
 
-                                <p class="text-danger" id="error-waist_0"></p>
+                                <p class="text-danger" id="error-waist_0_0"></p>
                             </div>
 
                         </div>
@@ -335,7 +335,7 @@
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
                                     name="hip[0][]">
-                                <p class="text-danger" id="error-hip_0"></p>
+                                <p class="text-danger" id="error-hip_0_0"></p>
 
                             </div>
 
@@ -347,7 +347,7 @@
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
                                     name="shoulder[0][]">
-                                <p class="text-danger" id="error-shoulder_0"></p>
+                                <p class="text-danger" id="error-shoulder_0_0"></p>
 
                             </div>
 
@@ -359,7 +359,7 @@
                                 </div>
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
                                     name="sleeve_length[0][]">
-                                <p class="text-danger" id="error-sleeve_length_0"></p>
+                                <p class="text-danger" id="error-sleeve_length_0_0"></p>
 
                             </div>
 
@@ -372,7 +372,7 @@
                                 <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20"
                                     name="length[0][]">
 
-                                <p class="text-danger" id="error-length_0"></p>
+                                <p class="text-danger" id="error-length_0_0"></p>
                             </div>
 
                         </div>
@@ -384,7 +384,7 @@
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg.13208"
                                     name="total_stock[0][]">
 
-                                <p class="text-danger" id="error-total_stock_0"></p>
+                                <p class="text-danger" id="error-total_stock_0_0"></p>
                             </div>
 
                         </div>
@@ -396,7 +396,7 @@
                                 <input type="number" class="form-control notapplyspace" placeholder="20019"
                                     name="sku[0][]">
 
-                                <p class="text-danger" id="error-sku_0"></p>
+                                <p class="text-danger" id="error-sku_0_0"></p>
                             </div>
 
                         </div>
@@ -420,7 +420,7 @@
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                     name="actual_price[0][]" id="actual_price_0">
-                                <p class="text-danger" id="error-actual_price_0"></p>
+                                <p class="text-danger" id="error-actual_price_0_0"></p>
 
                             </div>
 
@@ -464,7 +464,7 @@
                                     <label>Percentage</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
-                                    name="discount_value[0][]" id="discount_value_0">
+                                    name="discount_value[0][]" id="discount_value_0_0">
                                 <p class="text-danger" id="error-discount_value_0"></p>
 
                             </div>
@@ -477,7 +477,7 @@
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                     name="final_price[0][]" id="final_price_0">
-                                <p class="text-danger" id="error-final_price_0"></p>
+                                <p class="text-danger" id="error-final_price_0_0"></p>
                             </div>
                         </div>
                     </div>
@@ -1146,7 +1146,7 @@
                         
                     </div>
                 </div>
-                
+
 
             <div class="pt-3">
                 <div class="title24">Discounted Price</div>
@@ -1348,9 +1348,19 @@
                         let parts = field.split(".");
                         let fieldName = parts[0];
                         let index = parts[1];
+                        let index1 = parts[2];
+
 
                         // Example → #error-product_spe_en_0
-                        $("#error-" + fieldName + "_" + index).html(messages[0]);
+
+                        let errorId = "#error-" + fieldName + "_" + index;
+
+                        // If second index exists, append it
+                        if (typeof index1 !== "undefined" && index1 !== "") {
+                            errorId += "_" + index1;
+                        }
+                        $(errorId).html(messages[0]);
+
 
                     } else {
 

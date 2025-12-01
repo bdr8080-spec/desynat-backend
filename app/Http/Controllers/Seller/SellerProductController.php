@@ -1112,8 +1112,6 @@ public function Add_product1(){
 
 public function Add_product_code1(Request $request){
 
-
-    dd($request->all());
     
 
     $seller_details=Auth::guard('seller')->user();
@@ -1148,27 +1146,35 @@ public function Add_product_code1(Request $request){
 
           // product vartion start
           'variant_image' => ['required', 'array'],
-          'color_id' => ['required', 'array'],
-          'size_id' => ['required', 'array', ],
-          'color_id.*' => ['required','exists:colors,id'],
-          'size_id.*' => ['required','exists:sizes,id'],
-
-          'total_stock' => ['required', 'array'],
-          'sku' => ['required', 'array'],
-        //   'sku_threshold_value' => ['required', 'array'],
-          'actual_price' => ['required', 'array'],
-          'discount_type' => ['required', 'array'],
-          'discount_value' => ['required', 'array'],
-          'final_price' => ['required', 'array'],
-
           'variant_image.*' => ['required'],
-         'total_stock.*' => ['required'],
-          'sku.*' => ['required'],
-        //   'sku_threshold_value.*' => ['required'],
-          'actual_price.*' => ['required'],
-          'discount_type.*' => ['required'],
-          'discount_value.*' => ['required'],
-          'final_price.*' => ['required'],
+
+          
+        // Colors validation (first level array)
+        'color_id' => 'required|array|min:1',
+        'color_id.*' => 'required|integer|exists:colors,id',
+    
+        // Sizes: second level array
+        'size_id' => 'required|array|min:1',
+        'size_id.*' => 'required|array|min:1',
+        'size_id.*.*' => 'required|integer|exists:sizes,id',
+    
+        // Body measurement fields (same structure as size)
+        'bust.*.*' => 'nullable|numeric',
+        'waist.*.*' => 'nullable|numeric',
+        'hip.*.*' => 'nullable|numeric',
+        'shoulder.*.*' => 'nullable|numeric',
+        'sleeve_length.*.*' => 'nullable|numeric',
+        'length.*.*' => 'nullable|numeric',
+    
+        // Product Inventory
+        'total_stock.*.*' => 'required|integer|min:0',
+        'sku.*.*' => 'required|string|max:50',
+        'actual_price.*.*' => 'required|numeric|min:0',
+    
+        // Discount fields
+        'discount_type.*.*' => 'required|in:1,2', // 1=percentage, 2=fixed price
+        'discount_value.*.*' => 'required|numeric|min:0',
+        'final_price.*.*' => 'required|numeric|min:0',
 
 
           // product vartion end
@@ -1186,23 +1192,32 @@ public function Add_product_code1(Request $request){
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
           'upload_size_chart'=>'required',
 
-
-        //   if The category is women
-         // MAIN ARRAY FIELDS (required only if category_id = 2)
-    'bust'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'waist'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'hip'            => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'shoulder'       => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'sleeve_length'  => [Rule::requiredIf($request->category_id == 2), 'array'],
-    'length'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-
-    // INNER ARRAY VALUES (apply required only if category_id = 2)
-    'bust.*'           => [Rule::requiredIf($request->category_id == 2)],
-    'waist.*'          => [Rule::requiredIf($request->category_id == 2)],
-    'hip.*'            => [Rule::requiredIf($request->category_id == 2)],
-    'shoulder.*'       => [Rule::requiredIf($request->category_id == 2)],
-    'sleeve_length.*'  => [Rule::requiredIf($request->category_id == 2)],
-    'length.*'         => [Rule::requiredIf($request->category_id == 2)], 
+        // New Code 1
+        
+        // Body Measurements arrays (required only for category 2)
+        'bust'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'waist'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'hip'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'shoulder'      => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'sleeve_length' => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'length'        => [Rule::requiredIf($request->category_id == 2), 'array'],
+    
+        // Inner-level Arrays (color index)
+        'bust.*'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'waist.*'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'hip.*'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'shoulder.*'      => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'sleeve_length.*' => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'length.*'        => [Rule::requiredIf($request->category_id == 2), 'array'],
+    
+        // Actual input values (size-level)
+        'bust.*.*'          => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'waist.*.*'         => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'hip.*.*'           => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'shoulder.*.*'      => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'sleeve_length.*.*' => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'length.*.*'        => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+    
        
       ],[
         
@@ -1369,15 +1384,15 @@ public function Add_product_code1(Request $request){
         $grouped[$color][] = $size;
     }
 
-    // Validate: for same color → sizes must be unique
-    foreach ($grouped as $color => $sizesForColor) {
-        if (count($sizesForColor) !== count(array_unique($sizesForColor))) {
-            $validate->errors()->add(
-                'size_id_'.$color,
-                "For color sizes must be different."
-            );
-        }
-    }
+    // // Validate: for same color → sizes must be unique
+    // foreach ($grouped as $color => $sizesForColor) {
+    //     if (count($sizesForColor) !== count(array_unique($sizesForColor))) {
+    //         $validate->errors()->add(
+    //             'size_id_'.$color,
+    //             "For color sizes must be different."
+    //         );
+    //     }
+    // }
 });
 
       
@@ -1386,33 +1401,6 @@ public function Add_product_code1(Request $request){
          }
 
          
-     if($request->category_id=='2'){   // if the category is women Then These field is manditary
-
-      $validate = Validator::make($request->all(), [               
-          'bust'=>'required|array',
-          'waist'=>'required|array',
-          'hip'=>'required|array',
-          'shoulder'=>'required|array',
-          'sleeve_length'=>'required|array',
-          'length'=>'required|array',
-
-          'bust.*'=>'required',
-          'waist.*'=>'required',
-          'hip.*'=>'required',
-          'shoulder.*'=>'required',
-          'sleeve_length.*'=>'required',
-          'length.*'=>'required',  
-
-        ]);
-      
-      if($validate->fails()){
-          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
-      }
-
-     }
-
-
-
      // Product Vartion Image
 
      $dir="Product";
