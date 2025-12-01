@@ -42,7 +42,7 @@
 
         data1.append(`
 
-       <div class="inside_variation0 p-2 mt-4 newvariant" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
+       <div class="inside_variation${variation_id} p-2 mt-4 newvariant subpanel" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
         border-radius: 10px; box-shadow: 0px 2px 4px #ddd;">
             <div class="wapper-header mt-2">
                 <div class="row price-block">
@@ -210,7 +210,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="remove-btn22 text-danger"><i class="bi bi-x"></i> Remove </div>
+                <div class="remove-btn22 "><i class="bi bi-x"></i> Remove</div>
             </div>
         </div>
 

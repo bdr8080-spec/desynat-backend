@@ -1143,11 +1143,10 @@
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
 
                             </div>
-
                         
                     </div>
                 </div>
-         
+                
 
             <div class="pt-3">
                 <div class="title24">Discounted Price</div>
