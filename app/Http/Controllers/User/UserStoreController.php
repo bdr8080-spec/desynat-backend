@@ -12,6 +12,7 @@ use App\Models\Brand;
 use App\Models\color;
 use App\Models\{Category,size,wishlist,product};
 use Auth;
+use App\Models\Addtocart;
 
 class UserStoreController extends Controller
 {
@@ -191,6 +192,7 @@ class UserStoreController extends Controller
         $result = $this->UserManagementService->singleproductView($request_data);
     
         $data = $result['data'];
+        //dd($data);
 
 
 
@@ -230,12 +232,18 @@ class UserStoreController extends Controller
     }
 }
 
-//dd($product_variants);
+    //dd($product_variants);
+    $cartCount = Addtocart::where('user_id',$request->user()->id)
+        ->where('product_id',$id)
+        ->count();
+
+    //dd($cartCount);
+
 
 
 
   
-        return view('user.category.product-store-details', compact('data','product_variants'));
+        return view('user.category.product-store-details', compact('data','product_variants','cartCount'));
     }
 
 

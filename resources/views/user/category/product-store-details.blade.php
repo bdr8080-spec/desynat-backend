@@ -113,14 +113,14 @@
                 <button class="customBtn2">Custom Order</button>
                 @endif
                 <!-- start -->
-
+            <div class="quantity-box">
                 <div class="bag-topbar d-flex justify-content-between align-items-center mt-3">
                     <div>
-                        <strong>(2 Items)</strong> View My Bag
+                        <strong>({{$cartCount}} Items)</strong> View My Bag
                     </div>
                     <i class="bi bi-arrow-right arrow-icon"></i>
                 </div>
-                <div class="quantity-box">
+                <div>
 
                     <button class="qty-btn" id="minusBtn">
                         <i class="bi bi-dash icons"></i>
@@ -135,6 +135,7 @@
                     <button class="buy-btn">Buy Now</button>
 
                 </div>
+            </div>
                 <!-- end -->
 
                 <div class="d-flex align-items-center gap-3 mt-3">
