@@ -66,6 +66,7 @@ class UserStoreController extends Controller
              $user_id=  $request->user()->id;
         }
        
+
     
 
         $request_data = (object)[
@@ -77,16 +78,25 @@ class UserStoreController extends Controller
             'category_id'    => $request->category_id ?? null,
             'size_id'        => $request->size_id ?? null,
             'color_id'       => $request->color_id ?? null, 
-            'price_min'      => $request->price_min ?? null,
-            'price_max'      => $request->price_max ?? null,
             'discount'       => $request->discount ?? null,
             'rating'         => $request->rating ?? null,
             'delivery_time'  => $request->delivery_time ?? null,
             'delivery_option'=> $request->delivery_option ?? null,
         ];
 
-        //dd($request_data);
- 
+
+        if(isset($request->price_min)){
+            $request_data['price_min']  = Intval($request->price_min) ?? null;          
+        }
+        if(isset($request->price_max)){
+            
+            $request_data['price_max']  = Intval($request->price_max) ?? null;          
+        }
+        if(isset($request->discount)){
+            
+            $request_data['discount']  = Intval($request->discount) ?? null;          
+        }
+              
         $store_details=$this->UserManagementService->singleStoreWiseAllproduct($request_data);
 
 
