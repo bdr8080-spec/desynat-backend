@@ -102,25 +102,22 @@
 
                     <div class="d-flex gap-2 mb-4" id="sizeContainer">
                         @foreach ($firstVariant['sizes'] as $size)
-                            <button class="size-btn">{{ $size }}</button>
+                            <!-- <button class="size-btn">{{ $size }}</button> -->
+                             <button class="size-btn" data-size="{{ $size }}" data-variant-id="{{ $firstVariant['variant_id'] }}" data-product-id="{{ $firstVariant['product_id'] }}">{{ $size }}</button>
                         @endforeach
                     </div>
+                    <input type="hidden" id="variantId" name="variant_id">
+                    <input type="hidden" id="productId" name="product_id">
 
-<<<<<<< HEAD
-                    <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
-                    <p class="text-muted mb-1">{{$data->description_en}}</p>
-=======
                             {{-- <h4 class="fw-semibold">{{$data->product_name_en}}</h4>
                             <p class="text-muted mb-1">{{$data->description_en}}</p> --}}
->>>>>>> 3041526a1a83afdf1cd7b5ebd7b403d5b8df0543
-
+                    <div id="optionError" style="color:red; font-size:14px; display:none;"></div>
                     @if ($data->customized_product==1)
                          <button class="customBtn2">Custom Order</button>
                     @endif
                    
-
                     <div class="d-flex align-items-center gap-3 mt-5">
-                        <button class="customBtn2 mt-0">Add to Bag</button>
+                        <button class="customBtn2 mt-0" id="addToBagBtn">Add to Bag</button>
                         <button class="customBtn">Buy Now</button>
                     </div>
 
@@ -616,35 +613,59 @@
 
 
 <script>
-    const wishlistHTML = `{!! $wishlistBlock !!}`;
-
-
-    
 document.addEventListener("DOMContentLoaded", function () {
 
     const productVariants = @json($product_variants);
+    const wishlistHTML = `{!! $wishlistBlock !!}`;
 
-    document.querySelectorAll(".choose-color").forEach(box => {
+    // ======================
+    // COLOR CLICK HANDLER
+    // ======================
+    document.querySelectorAll(".choose-color").forEach(colorBox => {
 
-        box.addEventListener("click", function () {
+        colorBox.addEventListener("click", function () {
 
             let colorHex = this.dataset.color;
-            let variant = Object.values(productVariants).find(v => v.color_hex === colorHex);
 
+            // Highlight active color
+            document.querySelectorAll(".choose-color").forEach(c => c.classList.remove("active"));
+            this.classList.add("active");
+
+            // ==========================================
+            // FIXED: FIND VARIANT (productVariants IS OBJECT)
+            // ==========================================
+            let variant = Object.values(productVariants).find(v => v.color_hex === colorHex);
             if (!variant) return;
 
-            // Update Prices
+            // -----------------------
+            // UPDATE PRICE
+            // -----------------------
             document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
             document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
 
-            // Update Sizes
+            // -----------------------
+            // UPDATE SIZES
+            // -----------------------
             let sizeContainer = document.getElementById("sizeContainer");
             sizeContainer.innerHTML = "";
+
             variant.sizes.forEach(size => {
-                sizeContainer.innerHTML += `<button class="size-btn">${size}</button>`;
+                sizeContainer.innerHTML += `
+                    <button class="size-btn"
+                        data-size="${size}"
+                        data-variant-id="${variant.variant_id}"
+                        data-product-id="${variant.product_id}">
+                        ${size}
+                    </button>
+                `;
             });
 
-            // Update Images
+            // Re-attach size handlers for new buttons
+            attachSizeClickEvents();
+
+            // -----------------------
+            // UPDATE IMAGES
+            // -----------------------
             let images = variant.variant_image;
             let carouselIndicators = document.querySelector(".carousel-indicators");
             let carouselInner = document.querySelector(".carousel-inner");
@@ -654,54 +675,149 @@ document.addEventListener("DOMContentLoaded", function () {
 
             images.forEach((img, index) => {
 
-                // Indicators
                 carouselIndicators.innerHTML += `
-                    <button type="button" 
-                        data-bs-target="#carouselExampleCaptions" 
-                        data-bs-slide-to="${index}" 
-                        class="${index == 0 ? 'active' : ''}">
+                    <button type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to="${index}"
+                        class="${index === 0 ? 'active' : ''}">
                         <div class="product_slide_img">
                             <img src="${img}" class="img-fluid"/>
                         </div>
                     </button>
                 `;
 
-                // Carousel Items
                 carouselInner.innerHTML += `
-                    <div class="carousel-item ${index == 0 ? 'active' : ''}">
-                        ${index == 0 ? wishlistHTML : ''}
+                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                        ${index === 0 ? wishlistHTML : ''}
                         <div class="carousel_item_img">
                             <img src="${img}" class="img-fluid">
                         </div>
                     </div>
                 `;
             });
+
         });
+
     });
+
+    // Initialize size buttons for the first loaded variant
+    attachSizeClickEvents();
 
 });
 </script>
 
+<script>
+// ==============================
+// SIZE CLICK HANDLER FUNCTION
+// ==============================
+function attachSizeClickEvents() {
 
+    const sizeButtons = document.querySelectorAll(".size-btn");
+    const hiddenInputVariant = document.getElementById("variantId");
+    const hiddenInputProduct = document.getElementById("productId");
 
-    <script>
-        $(document).ready(function () {
-            $(".color-box").click(function () {
+    sizeButtons.forEach(button => {
 
-                // Remove active from all
-                $(".color-box").removeClass("active");
+        button.addEventListener("click", function () {
 
-                // Add active class to clicked one
-                $(this).addClass("active");
-
-                // Get color
-                let color = $(this).data("color");
-
-                // Apply color
-                $("#previewBox").css("background", color);
+            // Remove active styles
+            sizeButtons.forEach(btn => {
+                btn.classList.remove("active");
+                btn.style.background = "";
             });
+
+            // Add active style to selected size
+            this.classList.add("active");
+            this.style.background = "#FAEBD7";
+
+            // Update hidden fields
+            hiddenInputVariant.value = this.dataset.variantId;
+            hiddenInputProduct.value = this.dataset.productId;
         });
-    </script>
+
+    });
+
+}
+</script>
+
+<script>
+document.getElementById("addToBagBtn").addEventListener("click", function () {
+
+    const errorBox = document.getElementById("optionError");
+    errorBox.style.display = "none";
+    errorBox.innerHTML = "";
+
+    // Check selected color
+    let selectedColor = document.querySelector(".choose-color.active");
+    if (!selectedColor) {
+        errorBox.style.display = "block";
+        errorBox.innerHTML = "Please Select a Color.";
+        return;
+    }
+
+    // Check selected size
+    let selectedSize = document.querySelector(".size-btn.active");
+    if (!selectedSize) {
+        errorBox.style.display = "block";
+        errorBox.innerHTML = "Please Select a Size.";
+        return;
+    }
+
+    // Get values from hidden inputs
+    let product_id = document.getElementById("productId").value;
+    let variant_id = document.getElementById("variantId").value;
+
+    if (!product_id || !variant_id) {
+        errorBox.style.display = "block";
+        errorBox.innerHTML = "Something went wrong. Please reselect options.";
+        return;
+    }
+
+    // Send to backend
+    addToCart(product_id, variant_id);
+});
+</script>
+
+<script>
+function addToCart(product_id, variant_id) {
+
+    fetch("{{ route('user.addToCart') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({
+            product_id: product_id,
+            variant_id: variant_id,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        if (data.status === "error") {
+            toastr.error(data.message);
+            return;
+        }
+
+        toastr.success(data.message);
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        toastr.error("Something went wrong. Try again.");
+    });
+}
+</script>
+
+
+
+
+
+
+
 
 
 @endsection

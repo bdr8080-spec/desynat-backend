@@ -145,6 +145,8 @@ class UserStoreController extends Controller
     } else {
 
         $product_variants[$colorHex] = [
+            'variant_id' => $item->id,
+            'product_id' => $item->product_id,
             'color_hex'      => $colorHex,
             'variant_image'  => is_array($item->variant_image) ? $item->variant_image : [],
             'sizes'          => [$item->size->name],
@@ -155,6 +157,8 @@ class UserStoreController extends Controller
         ];
     }
 }
+
+//dd($product_variants);
 
 
 
@@ -180,6 +184,24 @@ class UserStoreController extends Controller
 
         return view('user.profile.wishlist', compact('wishListProduct'));
        
+
+     }
+
+      public function addToCart(Request $request){
+
+        $request_data = (object)[
+            'user_id'     => $request->user()->id,
+            'product_id'  => $request->product_id,
+            'variants_id' => $request->variant_id,  // Correct key
+            'quantity'    => 1
+        ];
+        $data = $this->UserManagementService->product_add_to_cart($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+               return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+           }
+
+           return ApiResponse::generateResponse($data['status'],$data['message'],$data['data'], 200); 
 
      }
 

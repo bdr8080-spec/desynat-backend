@@ -52,6 +52,8 @@ use App\Http\Controllers\User\AddressController;
    Route::get('view-address', [AddressController::class, 'viewAddress'])->name('user.view_address');
   
    Route::match(['get','post'],'save-address', [AddressController::class, 'saveAddress'])->name('user.save_address');
+
+   Route::post('addToCart',[UserStoreController::class, 'addToCart'])->name('user.addToCart');
  
 
    Route::get('edit-address/{id}', [AddressController::class, 'updateAddress'])->name('user.update_address');
