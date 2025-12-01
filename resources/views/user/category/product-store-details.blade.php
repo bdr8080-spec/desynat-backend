@@ -65,9 +65,9 @@
         </div>
 
         <div class="col-lg-7">
-            <div class="productList_content">
+            <div class="productList_content ps-3">
 
-                <h4 class="fw-semibold">{{$data->brand->name_english}}</h4>
+                <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
                 <p class="text-muted mb-1">{{$data->product_name_en}}</p>
 
                 <div class="d-flex align-items-center mb-1">
@@ -113,26 +113,25 @@
                 <button class="customBtn2">Custom Order</button>
                 @endif
                 <!-- start -->
-
-                <div class="bag-topbar d-flex justify-content-between align-items-center mt-3">
-                    <div>
-                        <strong>(2 Items)</strong> View My Bag
+                
+                <div class="quantity-box w-100">
+                    <div class="bag-topbar d-flex justify-content-between align-items-center mt-3">
+                        <div>
+                            <strong>({{$cartCount}} Items)</strong> View My Bag
+                        </div>
+                        <i class="bi bi-arrow-right arrow-icon"></i>
                     </div>
-                    <i class="bi bi-arrow-right arrow-icon"></i>
-                </div>
-                <div class="quantity-box">
+                    <div class="cart-counts d-flex gap-2 mt-2">
+                        <button class="qty-btn" id="minusBtn">
+                            <i class="bi bi-dash icons"></i>
+                        </button>
 
-                    <button class="qty-btn" id="minusBtn">
-                        <i class="bi bi-dash icons"></i>
-                    </button>
+                        <div class="qty-number" id="qtyNumber">01</div>
 
-                    <div class="qty-number" id="qtyNumber">01</div>
-
-                    <button class="qty-btn" id="plusBtn">
-                        <i class="bi bi-plus icons"></i>
-                    </button>
-
-                    <button class="buy-btn">Buy Now</button>
+                        <button class="qty-btn" id="plusBtn">
+                            <i class="bi bi-plus icons"></i>
+                        </button>
+                    </div>
 
                 </div>
                 <!-- end -->
@@ -787,7 +786,7 @@ function updateQtyDisplay() {
         quantityBox.style.display = "none";
         quantityBoxOpen = false;
     } else {
-        quantityBox.style.display = "flex";
+        quantityBox.style.display = "block";
     }
 }
 
