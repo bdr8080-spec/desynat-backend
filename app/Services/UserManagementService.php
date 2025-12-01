@@ -509,6 +509,8 @@ class UserManagementService
 
 
 
+
+
     public function singleproductView($request)
     {
         try {

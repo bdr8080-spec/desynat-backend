@@ -155,17 +155,17 @@
                                     <h3>Filters</h3>
                                     <a href="{{route('user.store_details',[request()->id])}}">Clear</a>
                                 </div>
-                                <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+                                    <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
                                         <div class="form-group mt-4">
                                             <h5>Category</h5>
                                             @foreach ($category as $key => $item)
                                             <div class="form-check my-4">
                                                 <input class="form-check-input mb-1"
                                                     type="radio"
-                                                    name="category[]"
+                                                    name="category_id[]"
                                                     value="{{ $item->id }}"
                                                     id="category_{{ $key }}"
-                                                    {{ is_array(request()->category) && in_array($item->id, request()->category) ? 'checked' : '' }}>
+                                                    {{ is_array(request()->category_id) && in_array($item->id, request()->category_id) ? 'checked' : '' }}>
                                                 
                                                 <label class="form-check-label" for="category_{{ $key }}">
                                                     {{ $item->name }}
@@ -197,7 +197,6 @@
                                                 </button>
                                             @endif
                                         </div>
-
                                         <div class="form-group mt-4">
                                             <h5>Price</h5>
                                             <div class="slider-wrap" id="priceArea">
@@ -212,19 +211,20 @@
                                                     <input type="range"
                                                         min="99"
                                                         max="999"
-                                                        value="{{ request()->price ?? 249 }}"
+                                                        value="{{ request()->price_max ?? 249 }}"
                                                         id="priceRange"
-                                                        name="price"
                                                         style="width:100%;">
+                                                    <input type="hidden" name="price_min" id="priceMin" value="{{ request()->price_min ?? 99 }}">
+                                                    <input type="hidden" name="price_max" id="priceMax" value="{{ request()->price_max ?? 249 }}">
                                                 </div>
 
                                                 <div class="ticks">
                                                     <div class="tick text-start">99 KD</div>
-                                                    <!-- <div class="tick">249 KD</div> -->
                                                     <div class="tick text-end">999 KD</div>
                                                 </div>
                                             </div>
                                         </div>
+
 
                                         {{-- Color --}}
                                         <div class="form-group mt-4">
@@ -234,10 +234,10 @@
                                                 <div class="form-check my-4 color-item {{ $key >= 10 ? 'd-none extra-color' : '' }}">
                                                     <input class="form-check-input"
                                                         type="checkbox"
-                                                        name="color[]"
+                                                        name="color_id[]"
                                                         value="{{ $item->id }}"
                                                         id="color{{ $item->id }}"
-                                                        {{ request()->color == $item->id ? 'checked' : '' }}>
+                                                        {{ request()->color_id == $item->id ? 'checked' : '' }}>
 
                                                     <label class="form-check-label" for="color{{ $item->id }}">
                                                         {{ $item->name }}
@@ -289,10 +289,10 @@
                                             <div class="form-check my-4">
                                                 <input class="form-check-input"
                                                     type="checkbox"
-                                                    name="size[]"
-                                                    value="{{ $item->name }}"
+                                                    name="size_id[]" 
+                                                    value="{{ $item->id }}" 
                                                     id="size_{{ $key }}"
-                                                    {{ is_array(request()->size) && in_array($item->name, request()->size) ? 'checked' : '' }}>
+                                                    {{ is_array(request()->size_id) && in_array($item->id, request()->size_id) ? 'checked' : '' }}>
                                                 
                                                 <label class="form-check-label" for="size_{{ $key }}">
                                                     {{ $item->name }}
@@ -300,6 +300,7 @@
                                             </div>
                                             @endforeach
                                         </div>
+
 
                                         {{-- Ratings --}}
                                         <div class="form-group mt-4">
@@ -390,7 +391,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- <button class="customBtn customBtn5 mt-5">Apply</button> -->
+                                        <button class="customBtn customBtn5 mt-5">Apply</button>
 
                                     </form>
 
@@ -753,6 +754,22 @@
 
             this.textContent = isHidden ? "See Less" : "See More";
         });
-</script>   
+</script>  
+
+<script>
+const slider = document.getElementById('priceRange');
+const priceMinInput = document.getElementById('priceMin');
+const priceMaxInput = document.getElementById('priceMax');
+const valueBubble = document.getElementById('valueBubble');
+
+slider.addEventListener('input', function() {
+    const value = this.value;
+    valueBubble.innerText = value + ' KD';
+    // Update the hidden input
+    priceMaxInput.value = value;
+});
+
+
+</script>
 
 @endsection
