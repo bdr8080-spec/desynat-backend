@@ -422,7 +422,7 @@
                                     <label>Actual Price</label>
                                 </div>
                                 <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
-                                    name="actual_price[0][]" id="actual_price_0_0">
+                                    name="actual_price[0][]" id="actualprice_0_0">
                                 <p class="text-danger" id="error-actual_price_0_0"></p>
 
                             </div>
@@ -1143,7 +1143,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number"  id="actual_price_${product_Variation_count}_${product_Variation_count}" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
+                            <input type="number"  id="actualprice_${product_Variation_count}_0" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}_0"></p>
 
                             </div>
@@ -1159,14 +1159,14 @@
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" id="discount_type_percentage_${product_Variation_count}" name="discount_type[${product_Variation_count}][${product_Variation_count}]" value="1" checked>
+                                    <input type="radio" id="discount_type_percentage_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="1" checked>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" id="discount_type_fixed_${product_Variation_count}" name="discount_type[${product_Variation_count}][${product_Variation_count}]" value="2">
+                                    <input type="radio" id="discount_type_fixed_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -1182,7 +1182,7 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                           <input type="number" id="discount_value_${product_Variation_count}_${product_Variation_count}" class="form-control" placeholder="Eg.10%" name="discount_value[${product_Variation_count}][]">
+                           <input type="number" id="discount_value_${product_Variation_count}_0" class="form-control" placeholder="Eg.10%" name="discount_value[${product_Variation_count}][]">
                           <p class="text-danger" id="error-discount_value_${product_Variation_count}_0"></p>
 
                            </div>
@@ -1193,7 +1193,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" id="final_price_${product_Variation_count}_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
+                            <input type="number" id="final_price_${product_Variation_count}_0" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}_0"></p>
 
                          </div>
@@ -1425,11 +1425,14 @@
     // dynamic Price show after discount 
     // Listen for input changes
     $(document).on("input change",
-        "input[id^='actual_price_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
+        "input[id^='actualprice_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
         function() {
+
+            debugger;
 
             let id = $(this).attr("id");
             // let index = id.split("_").pop();
+
 
             let parts = id.split("_");
 
@@ -1437,7 +1440,7 @@
             let index1 = parts[parts.length - 1]; // last
 
 
-            let actualPrice = parseFloat($("#actual_price_" + index + '_' + index1).val());
+            let actualPrice = $("#actualprice_" + index + '_' + index1).val();
             let discountInput = $("#discount_value_" + index + '_' + index1);
             let discountValue = parseFloat(discountInput.val());
             let discountType = $(`input[name='discount_type[${index}][${index1}]']:checked`).val();
@@ -1457,7 +1460,7 @@
                 }
 
 
-                debugger
+
 
             } else if (discountType == "2") {
                 // Fixed price → cannot exceed actual price
@@ -1471,7 +1474,6 @@
                 }
 
 
-                debugger
             }
             // Type=2 (Fixed price) → No restriction
             // -----------------------------------------
@@ -1482,7 +1484,6 @@
             }
 
 
-            debugger
 
             let finalPrice = 0;
 
@@ -1496,11 +1497,9 @@
                     finalPrice = finalPrice.toFixed(2);
                 }
 
-                debugger
 
             }
 
-            debugger
 
             // Fixed price
             if (discountType == "2") {
@@ -1508,6 +1507,8 @@
             }
 
             if (finalPrice < 0) finalPrice = 0;
+
+
 
             // $("#final_price_" + index).val(finalPrice.toFixed(2));
             $("#final_price_" + index + '_' + index1).val(finalPrice);

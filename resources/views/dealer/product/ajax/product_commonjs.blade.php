@@ -172,7 +172,7 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[${variation_id}][]" id="actual_price_${variation_id}_${count_variation}">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[${variation_id}][]" id="actualprice_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-actual_price_${variation_id}_${count_variation}"></p>
                         </div>
                     </div>
