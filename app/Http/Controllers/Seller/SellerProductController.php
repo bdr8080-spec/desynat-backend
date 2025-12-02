@@ -1465,11 +1465,11 @@ public function edit_product1($id){
             'product_id'=>$id,    
         ];
             
-    $product =  $this->SellerProductService->single_product_details_fetch($request_data);
+    $product =  $this->SellerProductService->single_product_details_fetchweb($request_data);
 
     $product_details=$product['data'];
 
-    // dump($product_details);
+    dump($product_details);
 
     return view('dealer.product.edit_product1',compact('category','brand','color','size','product_details'));
 
