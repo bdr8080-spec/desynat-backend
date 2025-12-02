@@ -36,6 +36,10 @@ class product extends Model
          return $this->hasOne(sellerStoreInformation::class,'id','store_id');
     }
 
+
+    public function product_variants_group(){
+        return $this->hasMany(ProductVariant::class,'product_id','id')->groupBy('color_id');
+    }
     
 
 }
