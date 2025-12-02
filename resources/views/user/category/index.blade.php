@@ -599,7 +599,7 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-3 mt-3">
-                        <a href="{{route('user.store_details',[request()->id])}}" id="clearSort" class="custom-btn3">Clear</a>
+                        <a href="{{route('user.store_details',[request()->id])}}" id="clearSort" class="custom-btn6 text-center w-100 text-white" style="    text-decoration: auto;">Clear</a>
                         <button type="submit" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">
                             Apply
                         </button>

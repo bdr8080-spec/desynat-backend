@@ -1235,29 +1235,59 @@ h3.mid-headng{
     height: 100%;
     object-fit: cover;
 }
+.storeClient_profile_content{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .storeClient_profile_content h3{
-    font-weight: 500 !important;
+    font-weight: 600 !important;
+    font-size: 20px;
+       margin-left: 21px;
 }
-.storeClient_profile_content span.status_on_off{
-    font-size: var(--p-font-size);
-    line-height: var(--p-font-height);
-    font-weight: 400 !important;
-    background: #D53B361F;
-    color: #D53B36;
-    padding: 0 5px;
-    border-radius: 4px;
+
+.storeClient_profile_content .status_on_off{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    background: #FEE2E2;
+    color: #DC2626;
+    padding: 2px 6px;
+    border-radius: 6px;
+    margin-left: 15px; 
 }
-.product-content h5{
-    color: var(--third-color);
+
+.product-content{
+    margin-top: 2px;
 }
+
+.product-content p{
+      margin-left: 9px;
+    font-size: 15px;
+    color: #4B5563;
+    font-weight: 500;
+}
+
+.product-content .rating{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: 15px;
+}
+
 .storeClient_profile_content .product-content .rating span{
     font-size: 18px;
     color: #FFA41B;
+    display: flex;
 }
+
 .storeClient_profile_content .product-content .rating span.totalstart{
     font-size: 14px;
-    color: #000000;
+    color: #4B5563;
+    margin-left: 4px;
 }
+
 .profile_main p{
     font-size: var(--nav-font-size) !important;
     line-height: var(--nav-font-height) !important;
@@ -1500,8 +1530,8 @@ h3.mid-headng{
   /* left decorative circle */
   .left-dot{
         /* position: absolute; */
-    width:47.4px;
-    height:42px;
+      width: 25px;
+    height: 25px;
     border-radius:50%;
     background: var(--gradient-color6);
     box-shadow: 0 4px 0 rgba(0,0,0,0.06) inset;
@@ -1943,4 +1973,37 @@ footer span{
 }
 i.bi.icons {
     font-size: 41px;
+}
+.iti {
+  width: 100%;
+}
+
+.iti__selected-flag {
+  padding: 8px 10px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.iti__country-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+#phone {
+  padding-left: 90px !important;
+  /* height: 45px; */
+}
+.use-lc {
+    /* background: #fff;
+    box-shadow: 0px 2px 8px 0px #0000001f;
+    padding: 10px; */
+width: fit-content;
+    border-radius: 50px;
+    color: #a8824f;
+    font-weight: 500;
+    /* position: absolute; */
+    bottom: 221px;
+    right: 568px;
+    cursor: pointer;
+    font-size: 17px;
 }
