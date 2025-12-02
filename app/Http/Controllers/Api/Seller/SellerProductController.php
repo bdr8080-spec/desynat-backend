@@ -561,23 +561,6 @@ public function product_delete(Request $request){
           return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
          }
 
-     if($request->category_id=='2'){   // if the category is women Then These field is manditary
-
-      $validate = Validator::make($request->all(), [               
-          'bust'=>'required|array',
-          'waist'=>'required|array',
-          'hip'=>'required|array',
-          'shoulder'=>'required|array',
-          'sleeve_length'=>'required|array',
-          'length'=>'required|array',
-      ]);
-      
-      if($validate->fails()){
-          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
-      }
-
-     }
-  
 
 $request_data=(object) [
 'seller_id'=>$seller_id,
