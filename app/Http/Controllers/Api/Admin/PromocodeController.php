@@ -43,9 +43,9 @@ class PromocodeController extends Controller
             'description_english' => 'required|string',
             'description_arabic' => 'required|string',
             'applicable_for' => 'required|in:1,2', // 1-first order, 2-all order
-            'discount_percent' => 'required|string|max:255',
-            'min_order_value' => 'required|string|max:255',
-            'upto_discount' => 'required|string|max:255',
+            'discount_percent' => 'required|integer',
+            'min_order_value' => 'required|integer',
+            'upto_discount' => 'required|integer',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
@@ -78,9 +78,9 @@ class PromocodeController extends Controller
             'description_english' => 'required|string',
             'description_arabic' => 'required|string',
             'applicable_for' => 'required|in:1,2', // 1-first order, 2-all order
-            'discount_percent' => 'required|string|max:255',
-            'min_order_value' => 'required|string|max:255',
-            'upto_discount' => 'required|string|max:255',
+            'discount_percent' => 'required|integer',
+            'min_order_value' => 'required|integer',
+            'upto_discount' => 'required|integer',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
