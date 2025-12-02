@@ -15,11 +15,22 @@ class PromocodeService
             $limit = $request->input('limit');
             $limit = (int)$limit;
 
-            $query = Promocode::query();
+            $query = Promocode::with('country_info');
+
+            if ($request->filled('country_id')) {
+                $query->where('country_id', $request->country_id);
+            }
 
             if ($request->filled('search')) {
                 $search = $request->input('search');
                 $query->where('name_english', 'like', '%' . $search . '%');
+            }
+
+            if ($request->filled('from_date')) {
+                $query->where('created_at', '>=', $request->from_date);
+            }
+            if ($request->filled('to_date')) {
+                $query->where('created_at', '<=', $request->to_date);
             }
 
             $query->orderBy('id', 'desc');
@@ -51,6 +62,7 @@ class PromocodeService
 
 
 
+
     public function changePromoCodeStatus($promoCodeId)
     {
         try {
@@ -60,7 +72,7 @@ class PromocodeService
                 return [
                     'status' => 'error',
                     'message' => 'Promocode not found',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
@@ -91,22 +103,30 @@ class PromocodeService
 
         try {
             $data = Promocode::create([
+                'country_id' => $request->country_id,
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $request->image,
+                'description_english' => $request->description_english,
+                'description_arabic' => $request->description_arabic,
+                'applicable_for' => $request->applicable_for,
+                'discount_percent' => $request->discount_percent,
+                'min_order_value' => $request->min_order_value,
+                'upto_discount' => $request->upto_discount,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
             ]);
 
             return [
                 'status' => 'success',
-                'message' => 'Gift Card created successfully',
+                'message' => 'Promocode added successfully',
                 'data' => $data
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to create gift card',
-                'data' => []
+                'message' => 'Failed to add promocode',
+                'data' => (object)[]
             ];
         }
     }
@@ -119,16 +139,24 @@ class PromocodeService
         if (!$data) {
             return [
                 'status' => 'error',
-                'message' => 'Gift Card not found',
-                'data' => []
+                'message' => 'Promocode not found',
+                'data' => (object)[]
             ];
         }
 
         try {
             $data->update([
+                'country_id' => $request->country_id,
                 'name_english' => $request->name_english,
                 'name_arabic' => $request->name_arabic,
-                'image' => $request->image,  
+                'description_english' => $request->description_english,
+                'description_arabic' => $request->description_arabic,
+                'applicable_for' => $request->applicable_for,
+                'discount_percent' => $request->discount_percent,
+                'min_order_value' => $request->min_order_value,
+                'upto_discount' => $request->upto_discount,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,  
             ]);
 
             return [
@@ -141,7 +169,7 @@ class PromocodeService
             return [
                 'status' => 'error',
                 'message' => 'Failed to update promocode',
-                'data' => []
+                'data' => (object)[]
             ];
         }
     }
@@ -155,7 +183,7 @@ class PromocodeService
                 return [
                     'status' => 'error',
                     'message' => 'Promocode not found',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
             $data->delete();
@@ -163,14 +191,14 @@ class PromocodeService
             return [
                 'status' => 'success',
                 'message' => 'Promocode deleted successfully',
-                'data' => []
+                'data' => null
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete promocode',
-                'data' => []
+                'data' => (object)[]
             ];
         }
     }
