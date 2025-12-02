@@ -4,7 +4,7 @@
     <div class="customContainer">
         <div class="">
             <div class="">
-                <img src="{{ asset('user/assets/images/image-sg.svg') }}" class="img-fluid" />
+                <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" />
             </div>
         </div>
     </div>
