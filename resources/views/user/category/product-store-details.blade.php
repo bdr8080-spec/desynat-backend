@@ -1,7 +1,20 @@
 @extends('user.layout.app')
 
 @section('content')
-
+<style>
+.cd-change-btn {
+     background: #8a6a4366;
+    border: 1px solid #d2b48c;
+    padding: 7px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}
+.cd-size{
+    color: #9b744d
+}
+</style>
 <div class="customContainer">
     <div class="row">
         <div class="col-lg-5">
@@ -66,8 +79,12 @@
 
         <div class="col-lg-7">
             <div class="productList_content ps-3">
+<div class="d-flex justify-content-between">
+    <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
+                            <button class="cd-change-btn">100+ Bought</button>
 
-                <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
+</div>
+
                 <p class="text-muted mb-1">{{$data->product_name_en}}</p>
 
                 <div class="d-flex align-items-center mb-1">
@@ -93,7 +110,9 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="fw-semibold">Available Size</h6>
+                    <h6 class="fw-semibold">Select Size</h6>
+                   <h6 class="cd-size">Size Guide</h6>
+
                 </div>
 
                 <div class="d-flex gap-2 mb-4" id="sizeContainer">
@@ -121,7 +140,7 @@
                         </div>
                         <i class="bi bi-arrow-right arrow-icon"></i>
                     </div>
-                    <div class="cart-counts d-flex gap-2 mt-2">
+                    <div class="cart-counts d-flex gap-5 mt-2">
                         <button class="qty-btn" id="minusBtn">
                             <i class="bi bi-dash icons"></i>
                         </button>
@@ -160,7 +179,7 @@
                 <div class="check-delivery-box">
                     <div class="cd-header">
                         <h4>Check delivery</h4>
-                        <button class="cd-change-btn">Change</button>
+                        <button class="cd-change-btnss">Change</button>
                     </div>
 
                     <div class="cd-input">
@@ -222,7 +241,7 @@
             <div class="col-6 text-end">32</div>
         </div>
     </div> --}}
-    <div class="p-4 rounded-4 shadow-sm desc-box">
+    <!-- <div class="p-4 rounded-4 shadow-sm desc-box mt-4   ">
         <div class="row mb-2">
             <div class="col-6">Return allowed ?
             </div>
@@ -263,54 +282,61 @@
             <div class="col-6 text-end">@if($data->cash_on_delivery==1) Yes @else No @endif </div>
 
         </div>
-    </div>
+    </div> -->
 
 
     <div class="container my-4">
-        <div class="review-box p-4 rounded-4">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center gap-3">
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img img-fluid"
-                        width="60" />
-                    <div>
-                        <h6 class="fw-semibold mb-1">Gimhana</h6>
-                        <span class="text-warning fs-5">★★★★☆</span>
+          <div class="cd-header">
+                        <h4>Customers Ratings</h4>
+                        <h6 class="cd-size">View All</h6>
                     </div>
+        <div class="desc-box p-4 rounded-4">
+            <div class="review-box p-4 rounded-4">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img img-fluid"
+                            width="60" />
+                        <div>
+                            <h6 class="fw-semibold mb-1">Gimhana</h6>
+                            <span class="text-warning fs-5">★★★★☆</span>
+                        </div>
+                    </div>
+                    <span class="text-muted">11 Nov 2025</span>
                 </div>
-                <span class="text-muted">11 Nov 2025</span>
+                <p class="mt-3 text-muted">
+                    lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                    ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
+                </p>
+                <div class="d-flex gap-3 mt-3">
+                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
+                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
+                </div>
             </div>
-            <p class="mt-3 text-muted">
-                lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
-            </p>
-            <div class="d-flex gap-3 mt-3">
-                <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
+    
+            <div class="review-box p-4 rounded-4">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img img-fluid"
+                            width="60" />
+                        <div>
+                            <h6 class="fw-semibold mb-1">Gimhana</h6>
+                            <span class="text-warning fs-5">★★★★☆</span>
+                        </div>
+                    </div>
+                    <span class="text-muted">11 Nov 2025</span>
+                </div>
+                <p class="mt-3 text-muted">
+                    lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                    ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
+                </p>
+                <div class="d-flex gap-3 mt-3">
+                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
+                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
+                </div>
             </div>
-        </div>
 
-        <div class="review-box p-4 rounded-4">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center gap-3">
-                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img img-fluid"
-                        width="60" />
-                    <div>
-                        <h6 class="fw-semibold mb-1">Gimhana</h6>
-                        <span class="text-warning fs-5">★★★★☆</span>
-                    </div>
-                </div>
-                <span class="text-muted">11 Nov 2025</span>
-            </div>
-            <p class="mt-3 text-muted">
-                lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
-            </p>
-            <div class="d-flex gap-3 mt-3">
-                <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-            </div>
         </div>
     </div>
 </div>
@@ -879,6 +905,7 @@ minusBtn.addEventListener("click", () => {
     }
 });
 </script>
+
 
 
 

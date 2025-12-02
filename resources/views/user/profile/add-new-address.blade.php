@@ -33,15 +33,18 @@ input[type=number] {
                     <span class="text-danger" id="error-name"></span>
                 </div>
             </div>
-
             <div class="col-lg-6">
-                  <div class="form-group">
-                        <label for="">Mobile No.</label>
-                        <input id="phone" type="tel" class="form-control" />
+                <div class="form-group">
+                    <label for="">Mobile No.</label>
+                    <input id="phone" type="tel" placeholder="Enter Mobile Number" name="mobile" class="form-control"
+                        value="{{ @$address->mobile ? @$address->mobile : '' }}" minlength="7" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '');"/>
+                    <input type="hidden" id="country_code" name="country_code"
+                        value="{{ @$address->country_code ? @$address->country_code : '' }}">
+                </div>
+                <span class="text-danger" id="error-mobile"></span>
+            </div>
 
-                        <input type="hidden" id="country_code" name="country_code">
-                    </div>
-                <!-- <div class="form-group">
+            <!-- <div class="form-group">
                     <label for="">Mobile No.</label>
 
                     <div class="d-flex align-items-center">
@@ -100,8 +103,6 @@ input[type=number] {
                     <span class="text-danger" id="error-mobile"></span>
 
                 </div> -->
-               
-            </div>
 
 
 
@@ -236,7 +237,7 @@ input[type=number] {
                       <div id="useCurrentLocation" class="use-lc">
                             <i class="bi bi-crosshair"></i> Use Current Location
                         </div>
-                    <h5 id="currentLocation">Current Location</h5>
+                    <!-- <h5 id="currentLocation">Current Location</h5> -->
                     <p id="selectedLocationText" class="text-dark">Select a location…</p>
                 </div>
 
@@ -265,138 +266,137 @@ input[type=number] {
 
 
 <script>
-let map, marker, autocomplete;
+document.addEventListener("DOMContentLoaded", function () {
 
-function initMap() {
-    const defaultLocation = {
-        lat: 28.6139,
-        lng: 77.2090
-    };
+    let map, marker, autocomplete;
 
-    map = new google.maps.Map(document.getElementById("modalMap"), {
-        center: defaultLocation,
-        zoom: 13
-    });
+    function initMap() {
+        const defaultLocation = { lat: 28.6139, lng: 77.2090 };
 
-    marker = new google.maps.Marker({
-        map: map,
-        position: defaultLocation,
-        draggable: true
-    });
+        map = new google.maps.Map(document.getElementById("modalMap"), {
+            center: defaultLocation,
+            zoom: 13
+        });
 
-    autocomplete = new google.maps.places.Autocomplete(
-        document.getElementById("searchAddressInput")
-    );
-    autocomplete.bindTo("bounds", map);
+        marker = new google.maps.Marker({
+            map: map,
+            position: defaultLocation,
+            draggable: true
+        });
 
-    autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-        if (!place.geometry) return;
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById("searchAddressInput")
+        );
+        autocomplete.bindTo("bounds", map);
 
-        map.setCenter(place.geometry.location);
-        map.setZoom(16);
-        marker.setPosition(place.geometry.location);
+        autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            if (!place.geometry) return;
 
-        fillFields(place);
-    });
+            map.setCenter(place.geometry.location);
+            map.setZoom(16);
+            marker.setPosition(place.geometry.location);
 
-    google.maps.event.addListener(marker, "dragend", function() {
-        const pos = marker.getPosition();
-        reverseGeocode(pos.lat(), pos.lng());
-    });
-}
+            fillFields(place);
+        });
 
-function fillFields(place) {
-    $("#latitude").val(place.geometry.location.lat());
-    $("#longitude").val(place.geometry.location.lng());
-    $("#selectedLocationText").text(place.formatted_address);
-    $("#searchAddressInput").val(place.formatted_address);
-
-    let components = place.address_components;
-
-    let city = "",
-        state = "",
-        country = "",
-        pincode = "";
-
-    components.forEach(c => {
-        if (c.types.includes("locality")) city = c.long_name;
-        if (c.types.includes("administrative_area_level_1")) state = c.long_name;
-        if (c.types.includes("country")) country = c.long_name;
-        if (c.types.includes("postal_code")) pincode = c.long_name;
-    });
-
-    let cleanFullAddress = components
-        .filter(c =>
-            !c.types.includes("locality") &&
-            !c.types.includes("administrative_area_level_1") &&
-            !c.types.includes("administrative_area_level_2") &&
-            !c.types.includes("country") &&
-            !c.types.includes("postal_code")
-        )
-        .map(c => c.long_name)
-        .join(", ");
-    let parts = cleanFullAddress.split(",");
-    let full_address = parts.slice(0, 2).join(", ").trim();
-    let block = parts.slice(2, 5).join(", ").trim();
-
-    $("#full_address").val(full_address);
-    $("#block").val(block);
-    $("#city").val(city);
-    $("#state").val(state);
-    $("#country").val(country);
-    $("#pincode").val(pincode);
-}
-
-function reverseGeocode(lat, lng) {
-    const geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode({
-        location: {
-            lat,
-            lng
-        }
-    }, function(results, status) {
-        if (status === "OK" && results[0]) {
-            fillFields(results[0]);
-        }
-    });
-}
-
-$('#locationModal').on('shown.bs.modal', function() {
-    setTimeout(() => initMap(), 300);
-});
-
-$("#applyLocationBtn").click(function() {
-    if ($("#full_address").val() === "") {
-        alert("Please select a location.");
-        return;
-    }
-    $("#locationModal").modal('hide');
-});
-
-$("#currentLocation").click(function() {
-    if (!navigator.geolocation) {
-        alert("Geolocation not supported.");
-        return;
+        google.maps.event.addListener(marker, "dragend", function () {
+            const pos = marker.getPosition();
+            reverseGeocode(pos.lat(), pos.lng());
+        });
     }
 
-    navigator.geolocation.getCurrentPosition(function(pos) {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        const position = {
-            lat,
-            lng
-        };
+    function fillFields(place) {
+        $("#latitude").val(place.geometry.location.lat());
+        $("#longitude").val(place.geometry.location.lng());
+        $("#selectedLocationText").text(place.formatted_address);
+        $("#searchAddressInput").val(place.formatted_address);
 
-        map.setCenter(position);
-        map.setZoom(16);
-        marker.setPosition(position);
+        let components = place.address_components;
 
-        reverseGeocode(lat, lng);
+        let city = "", state = "", country = "", pincode = "";
+
+        components.forEach(c => {
+            if (c.types.includes("locality")) city = c.long_name;
+            if (c.types.includes("administrative_area_level_1")) state = c.long_name;
+            if (c.types.includes("country")) country = c.long_name;
+            if (c.types.includes("postal_code")) pincode = c.long_name;
+        });
+
+        let cleanFullAddress = components
+            .filter(c =>
+                !c.types.includes("locality") &&
+                !c.types.includes("administrative_area_level_1") &&
+                !c.types.includes("administrative_area_level_2") &&
+                !c.types.includes("country") &&
+                !c.types.includes("postal_code")
+            )
+            .map(c => c.long_name)
+            .join(", ");
+
+        let parts = cleanFullAddress.split(",");
+        let full_address = parts.slice(0, 2).join(", ").trim();
+        let block = parts.slice(2, 5).join(", ").trim();
+
+        $("#full_address").val(full_address);
+        $("#block").val(block);
+        $("#city").val(city);
+        $("#state").val(state);
+        $("#country").val(country);
+        $("#pincode").val(pincode);
+    }
+
+    function reverseGeocode(lat, lng) {
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ location: { lat, lng } }, function (results, status) {
+            if (status === "OK" && results[0]) {
+                fillFields(results[0]);
+            }
+        });
+    }
+
+    // Initialize map after modal fully opens
+    $('#locationModal').on('shown.bs.modal', function () {
+        setTimeout(() => initMap(), 300);
     });
+
+    // Apply button
+    $(document).on("click", "#applyLocationBtn", function () {
+        if ($("#full_address").val() === "") {
+           // alert("Please select a location.");
+            return;
+        }
+        $("#locationModal").modal('hide');
+    });
+
+    // Use current location (DELEGATED CLICK - WORKS ALWAYS)
+    $(document).on("click", "#useCurrentLocation", function () {
+
+      //  alert("Current Location Clicked!");
+
+        if (!navigator.geolocation) {
+            alert("Geolocation not supported.");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+
+            const position = { lat, lng };
+
+            map.setCenter(position);
+            map.setZoom(16);
+            marker.setPosition(position);
+
+            reverseGeocode(lat, lng);
+        });
+    });
+
 });
 </script>
+
 
 
 
@@ -468,21 +468,184 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+
+<!-- <script>
+const input = document.querySelector("#phone");
+const countryCodeInput = document.querySelector("#country_code");
+
+// Default initialCountry
+let initialCountry = "auto";
+
+// Function to get ISO country code from dial code
+function getCountryIsoFromDialCode(dialCode) {
+    const countryData = window.intlTelInputGlobals.getCountryData();
+    for (const country of countryData) {
+        if (country.dialCode === dialCode) {
+            return country.iso2;
+        }
+    }
+    return null;
+}
+
+@if(!empty($address->country_code))
+    // Remove '+' from country code stored in DB
+    let initialDialCode = "{{ ltrim($address->country_code, '+') }}";
+    // Convert dial code to ISO country code
+    let isoCountryCode = getCountryIsoFromDialCode(initialDialCode);
+    if (isoCountryCode) {
+        initialCountry = isoCountryCode;
+    }
+@endif
+
+// Initialize intl-tel-input
+const iti = window.intlTelInput(input, {
+    initialCountry: initialCountry,
+    separateDialCode: true,
+    preferredCountries: ["in", "us", "gb", "ae"],
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    geoIpLookup: function(callback) {
+        if(initialCountry !== "auto") {
+            callback(initialCountry); // Skip geo lookup if we have initialCountry
+            return;
+        }
+        fetch("https://ipapi.co/json/")
+            .then(resp => resp.json())
+            .then(data => {
+                const countryCode = (data && data.country_code) ? data.country_code.toLowerCase() : "us";
+                callback(countryCode);
+            })
+            .catch(() => callback("us"));
+    }
+});
+
+// Set the phone input value with dial code and number if editing
+@if(!empty($address->mobile) && !empty($address->country_code))
+    let fullNumber = "{{ $address->country_code }}{{ $address->mobile }}";
+    iti.setNumber(fullNumber.replace(/\s+/g, ''));
+
+    // Immediately remove spaces added by intl-tel-input formatting
+    input.value = input.value.replace(/\s+/g, '');
+@endif
+
+// Set initial hidden input value with dial code
+countryCodeInput.value = "+" + iti.getSelectedCountryData().dialCode;
+
+// Update hidden input when user changes country
+input.addEventListener("countrychange", function() {
+    countryCodeInput.value = "+" + iti.getSelectedCountryData().dialCode;
+});
+
+// Remove spaces from input as user types
+input.addEventListener('input', () => {
+    input.value = input.value.replace(/\s+/g, '');
+});
+
+// Optional: MutationObserver to remove spaces if intl-tel-input modifies input internally
+const observer = new MutationObserver(() => {
+    input.value = input.value.replace(/\s+/g, '');
+});
+observer.observe(input, { attributes: true, attributeFilter: ['value'] });
+</script> -->
+
 <script>
 const input = document.querySelector("#phone");
+const countryCodeInput = document.querySelector("#country_code");
 
+// Default initialCountry
+let initialCountry = "auto";
+
+// Function to get ISO country code from dial code
+function getCountryIsoFromDialCode(dialCode) {
+    const countryData = window.intlTelInputGlobals.getCountryData();
+    for (const country of countryData) {
+        if (country.dialCode === dialCode) {
+            return country.iso2;
+        }
+    }
+    return null;
+}
+
+// Determine initial country
+@if(!empty($address->country_code))
+    let initialDialCode = "{{ ltrim($address->country_code, '+') }}";
+    let isoCountryCode = getCountryIsoFromDialCode(initialDialCode);
+    if (isoCountryCode) {
+        initialCountry = isoCountryCode;
+    }
+@endif
+
+// Initialize intl-tel-input
 const iti = window.intlTelInput(input, {
-    initialCountry: "us", // default country
-    separateDialCode: true, // shows +1 separately
-    preferredCountries: ["in", "us", "gb", "ae"], // top countries
+    initialCountry: initialCountry,
+    separateDialCode: true,
+    preferredCountries: ["in", "us", "gb", "ae"],
     utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    geoIpLookup: function(callback) {
+        if(initialCountry !== "auto") {
+            callback(initialCountry);
+            return;
+        }
+        fetch("https://ipapi.co/json/")
+            .then(resp => resp.json())
+            .then(data => {
+                const countryCode = (data && data.country_code) ? data.country_code.toLowerCase() : "us";
+                callback(countryCode);
+            })
+            .catch(() => callback("us"));
+    }
 });
 
-// Hidden input me code store karega
+// Function to strip all formatting: spaces, dashes, parentheses, dots
+function stripFormatting() {
+    input.value = input.value.replace(/[\s\-\(\)\.]/g, '');
+}
+
+// Function to repeatedly strip formatting until stable (fix initial load issue)
+function fixInitialFormatting() {
+    const attempts = 5; // number of tries
+    let count = 0;
+    const interval = setInterval(() => {
+        stripFormatting();
+        count++;
+        if (count >= attempts) clearInterval(interval);
+    }, 50);
+}
+
+// Set phone number if editing
+@if(!empty($address->mobile) && !empty($address->country_code))
+    let fullNumber = "{{ $address->country_code }}{{ $address->mobile }}";
+    iti.setNumber(fullNumber);
+
+    // Fix initial formatting issue
+    fixInitialFormatting();
+@endif
+
+// Set hidden input with country dial code
+countryCodeInput.value = "+" + iti.getSelectedCountryData().dialCode;
+
+// Remove formatting after country change
 input.addEventListener("countrychange", function() {
-    document.querySelector("#country_code").value = iti.getSelectedCountryData().dialCode;
+    countryCodeInput.value = "+" + iti.getSelectedCountryData().dialCode;
+    stripFormatting();
 });
+
+// Remove formatting as user types
+input.addEventListener('input', stripFormatting);
+
+// MutationObserver as a backup
+const observer = new MutationObserver(stripFormatting);
+observer.observe(input, { attributes: true, attributeFilter: ['value'] });
 </script>
+
+
+
+
+
+
+
+
+
 
 
 
