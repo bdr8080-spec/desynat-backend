@@ -811,17 +811,17 @@ public function AddProduct1($request){
     
     if($request->category_id==2){
     
-        $variation_array['bust']= $product_variation->bust??null; // only provide when category is women
-        $variation_array['waist']= $product_variation->waist??null; // only provide when category is women
-        $variation_array['hip']= $product_variation->hip??null;  // only provide when category is women
-        $variation_array['shoulder']= $product_variation->shoulder??null; // only provide when category is women
-        $variation_array['sleeve_length']= $product_variation->sleeve_length??null; // only provide when category is women
-        $variation_array['length']= $product_variation->length??null; // only provide when category is women      
-       
+        $variation_array['bust']= $product_variation['bust']??null; // only provide when category is women
+        $variation_array['waist']= $product_variation['waist']??null; // only provide when category is women
+        $variation_array['hip']= $product_variation['hip']??null;  // only provide when category is women
+        $variation_array['shoulder']= $product_variation['shoulder']??null; // only provide when category is women
+        $variation_array['sleeve_length']= $product_variation['sleeve_length']??null; // only provide when category is women
+        $variation_array['length']= $product_variation['length']??null; // only provide when category is women      
+
     }
     
-    
-        $product_data=  ProductVariant::create($variation_array);
+
+    $product_data=  ProductVariant::create($variation_array);
 
     }
 
