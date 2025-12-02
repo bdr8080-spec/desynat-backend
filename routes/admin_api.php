@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\ReasonController;
 use App\Http\Controllers\Api\Admin\DeliveryBoyController;
 use App\Http\Controllers\Api\Admin\ShippingTaxController;
+use App\Http\Controllers\Api\Admin\GiftCardController;
+use App\Http\Controllers\Api\Admin\BannerController;
 
 
 // Admin APi M1
@@ -118,6 +120,16 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/blobk_unblock_shippingFee',[ShippingTaxController::class,'blobk_unblock_shippingFee']);
      Route::post('/delete_shipping_fee',[ShippingTaxController::class,'delete_shipping_fee']);
 
+     //gift card management
+     Route::post('/add_giftCard',[GiftCardController::class,'add_giftCard']);
+     Route::post('/update_giftCard',[GiftCardController::class,'update_giftCard']);
+     Route::post('/delete_gift_card',[GiftCardController::class,'delete_gift_card']);
+     Route::post('/block_unblock_giftCard',[GiftCardController::class,'block_unblock_giftCard']);
+     Route::get('/get_giftCards',[GiftCardController::class,'get_giftCards']);
+
+     //banner per day price management
+     Route::post('/add_update_banner',[BannerController::class,'add_update_banner']);
+     Route::get('/get_banners',[BannerController::class,'get_banners']);
 
 
 
