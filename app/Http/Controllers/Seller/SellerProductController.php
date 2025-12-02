@@ -1142,28 +1142,22 @@ public function Add_product_code1(Request $request){
             'product_spe_feature_ar'   => ['required', 'array',new MatchArrayProductSpecification],
             'product_spe_feature_ar.*' => ['required'],
 
-
-          'variant_image' => ['required', 'array'],
-          'variant_image.*' => ['required','array'],
-
           
         // Colors validation (first level array)
         'color_id' => 'required|array|min:1',
         'color_id.*' => 'required|integer|exists:colors,id',
-    
+   
+        // Image Variation code
+        
+        'variant_image' => ['required', 'array'],
+        'variant_image.*' => ['required','array'],        
+        
+
         // Sizes: second level array
         'size_id' => 'required|array|min:1',
         'size_id.*' => 'required|array|min:1',
         'size_id.*.*' => 'required|integer|exists:sizes,id',
-    
-        // Body measurement fields (same structure as size)
-        // 'bust.*.*' => 'nullable|numeric',
-        // 'waist.*.*' => 'nullable|numeric',
-        // 'hip.*.*' => 'nullable|numeric',
-        // 'shoulder.*.*' => 'nullable|numeric',
-        // 'sleeve_length.*.*' => 'nullable|numeric',
-        // 'length.*.*' => 'nullable|numeric',
-    
+
         // Product Inventory
         'total_stock.*.*' => 'required|integer|min:0',
         'sku.*.*' => 'required|string|max:50',

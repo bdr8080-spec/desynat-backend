@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Admin\DeliveryBoyController;
 use App\Http\Controllers\Api\Admin\ShippingTaxController;
 use App\Http\Controllers\Api\Admin\GiftCardController;
 use App\Http\Controllers\Api\Admin\BannerController;
+use App\Http\Controllers\Api\Admin\PromocodeController;
 
 
 // Admin APi M1
@@ -130,6 +131,15 @@ Route::group(['prefix' => 'admin'], function () {
      //banner per day price management
      Route::post('/add_update_banner',[BannerController::class,'add_update_banner']);
      Route::get('/get_banners',[BannerController::class,'get_banners']);
+
+     //promocode management
+     Route::post('/add_promocode',[PromocodeController::class,'add_promocode']);
+     Route::post('/update_promocode',[PromocodeController::class,'update_promocode']);
+     Route::post('/delete_promocode',[PromocodeController::class,'delete_promocode']);
+     Route::post('/block_unblock_promocode',[PromocodeController::class,'block_unblock_promocode']);
+     Route::get('/get_promocodes',[PromocodeController::class,'get_promocodes']);
+
+     //M4 api ends
 
 
 

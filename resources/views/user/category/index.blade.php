@@ -4,7 +4,7 @@
     <div class="customContainer">
         <div class="">
             <div class="">
-                <img src="{{ asset('user/assets/images/image-sg.svg') }}" class="img-fluid" />
+                <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" />
             </div>
         </div>
     </div>
@@ -206,21 +206,21 @@
 
                                                     <div class="active-indicator" id="indicator"></div>
 
-                                                    <div class="value-bubble" id="valueBubble">249 KD</div>
+                                                    <div class="value-bubble" id="valueBubble">100000 KD</div>
 
                                                     <input type="range"
                                                         min="99"
-                                                        max="999"
-                                                        value="{{ request()->price_max ?? 249 }}"
+                                                        max="100000"
+                                                        value="{{ request()->price_max ?? 50000 }}"
                                                         id="priceRange"
                                                         style="width:100%;">
                                                     <input type="hidden" name="price_min" id="priceMin" value="{{ request()->price_min ?? 99 }}">
-                                                    <input type="hidden" name="price_max" id="priceMax" value="{{ request()->price_max ?? 249 }}">
+                                                    <input type="hidden" name="price_max" id="priceMax" value="{{ request()->price_max ?? 50000 }}">
                                                 </div>
 
                                                 <div class="ticks">
                                                     <div class="tick text-start">99 KD</div>
-                                                    <div class="tick text-end">999 KD</div>
+                                                    <div class="tick text-end">100000 KD</div>
                                                 </div>
                                             </div>
                                         </div>

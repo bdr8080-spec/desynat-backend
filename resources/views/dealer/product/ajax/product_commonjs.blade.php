@@ -172,12 +172,12 @@
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[${variation_id}][]" id="actual_price_0">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[${variation_id}][]" id="actualprice_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-actual_price_${variation_id}_${count_variation}"></p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div
 
             <div class="pt-3">
                 <div class="title24">Discounted Price</div>
@@ -186,14 +186,14 @@
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${variation_id}][${count_variation}]" id="discount_type_percentage_${variation_id}" checked value="1">
+                                    <input type="radio" name="discount_type[${variation_id}][${count_variation}]" id="discount_type_percentage_${variation_id}_${count_variation}" checked value="1">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" name="discount_type[${variation_id}][${count_variation}]" id="discount_type_fixed_${variation_id}" value="2">
+                                    <input type="radio" name="discount_type[${variation_id}][${count_variation}]" id="discount_type_fixed_${variation_id}_${count_variation}" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -207,7 +207,7 @@
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%" name="discount_value[${variation_id}][]" id="discount_value_0">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%" name="discount_value[${variation_id}][]" id="discount_value_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-discount_value_${variation_id}_${count_variation}"></p>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[${variation_id}][]" id="final_price_0">
+                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[${variation_id}][]" id="final_price_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-final_price_${variation_id}_${count_variation}"></p>
                         </div>
                     </div>
