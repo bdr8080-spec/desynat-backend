@@ -1470,9 +1470,9 @@ public function edit_product1($id){
     $product_details=$product['data'];
 
     dump($product_details);
-
-    return view('dealer.product.edit_product1',compact('category','brand','color','size','product_details'));
-
+    
+    return view('dealer.product.edit_product2',compact('category','brand','color','size','product_details'));
+    
 }
 
 

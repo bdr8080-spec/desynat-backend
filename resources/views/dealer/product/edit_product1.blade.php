@@ -59,7 +59,7 @@
         </a>
     </div>
 
-    <form id="editproduct" action="{{ route('seller.edit_product_code', request()->id) }}" method="post">
+    <form id="editproduct" action="{{ route('seller.edit_product_code1', request()->id) }}" method="post">
         @csrf
 
         <input type="hidden" class="form-control" name="product_id" value="{{ $product_details->id }}">
@@ -90,92 +90,92 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Select Sub-Category</label>
-                    </div>
-                    <select class="form-select form-control" name="subcategory_id" aria-label="Default select example"
-                        id="getSubcategry">
 
-                    </select>
-                    <p class="text-danger" id="error-subcategory_id"></p>
+            <div class="sub-form col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>Select Sub-Category</label>
                 </div>
-                <div class="sub-form" id="other-field0" style="display: none">
-                    <div class="label-flex">
-                        <label>Other</label>
-                        <span>In English</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_en"
-                        value="{{ $product_details->other_en }}">
-                    <p class="text-danger" id="error-other_en"></p>
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Product Name</label>
-                        <span>In English</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_en"
-                        value="{{ $product_details->product_name_en }}">
-                    <p class="text-danger" id="error-product_name_en"></p>
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Description</label>
-                        <span>In English</span>
-                    </div>
-                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_en"> {{ $product_details->description_en }}</textarea>
+                <select class="form-select form-control" name="subcategory_id" aria-label="Default select example"
+                    id="getSubcategry">
 
-                    <p class="text-danger" id="error-description_en"></p>
+                </select>
+                <p class="text-danger" id="error-subcategory_id"></p>
+            </div>
+            <div class="sub-form col-lg-6 col-md-6" id="other-field0" style="display: none">
+                <div class="label-flex">
+                    <label>Other</label>
+                    <span>In English</span>
                 </div>
+                <input type="text" class="form-control" placeholder="Enter Brand name" name="other_en"
+                    value="{{ $product_details->other_en }}">
+                <p class="text-danger" id="error-other_en"></p>
+            </div>
+            <div class="sub-form col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>Product Name</label>
+                    <span>In English</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_en"
+                    value="{{ $product_details->product_name_en }}">
+                <p class="text-danger" id="error-product_name_en"></p>
+            </div>
+            <div class="sub-form col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>Description</label>
+                    <span>In English</span>
+                </div>
+                <textarea rows="4" placeholder="Write Here" class="form-control" name="description_en"> {{ $product_details->description_en }}</textarea>
+
+                <p class="text-danger" id="error-description_en"></p>
             </div>
 
-            <div class="col-lg-6 col-md-6">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Select Brand</label>
-                    </div>
-                    <select class="form-select form-control" aria-label="Default select example" name="brand_id"
-                        id="brand_id">
-                        <option value="">Select Brand</option>
 
-                        @foreach ($brand as $item)
-                            <option value="{{ $item->id }}" @if ($product_details->brand_id == $item->id) selected @endif>
-                                {{ $item->name_english }}</option>
-                        @endforeach
-                    </select>
-                    <p class="text-danger" id="error-brand_id"></p>
-                </div>
-                <div class="sub-form" id="other-field1" style="display: none">
-                    <div class="label-flex">
-                        <label>Other</label>
-                        <span>In Arabic</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Brand name" name="other_ar"
-                        value="{{ $product_details->other_ar }}">
 
-                    <p class="text-danger" id="error-other_ar"></p>
+            <div class="sub-form col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>Select Brand</label>
                 </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Product Name</label>
-                        <span>In Arabic</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_ar"
-                        value="{{ $product_details->product_name_ar }}">
+                <select class="form-select form-control" aria-label="Default select example" name="brand_id"
+                    id="brand_id">
+                    <option value="">Select Brand</option>
 
-                    <p class="text-danger" id="error-product_name_ar"></p>
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Description</label>
-                        <span>In Arabic</span>
-                    </div>
-                    <textarea rows="4" placeholder="Write Here" class="form-control" name="description_ar">{{ $product_details->description_ar }} </textarea>
-                    <p class="text-danger" id="error-description_ar"></p>
-
-                </div>
+                    @foreach ($brand as $item)
+                        <option value="{{ $item->id }}" @if ($product_details->brand_id == $item->id) selected @endif>
+                            {{ $item->name_english }}</option>
+                    @endforeach
+                </select>
+                <p class="text-danger" id="error-brand_id"></p>
             </div>
+            <div class="sub-form col-lg-6 col-md-6" id="other-field1" style="display: none">
+                <div class="label-flex">
+                    <label>Other</label>
+                    <span>In Arabic</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Enter Brand name" name="other_ar"
+                    value="{{ $product_details->other_ar }}">
+
+                <p class="text-danger" id="error-other_ar"></p>
+            </div>
+            <div class="sub-form col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>Product Name</label>
+                    <span>In Arabic</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Enter Product name" name="product_name_ar"
+                    value="{{ $product_details->product_name_ar }}">
+
+                <p class="text-danger" id="error-product_name_ar"></p>
+            </div>
+            <div class="sub-form col-lg-6 col-md-6">
+                <div class="label-flex">
+                    <label>Description</label>
+                    <span>In Arabic</span>
+                </div>
+                <textarea rows="4" placeholder="Write Here" class="form-control" name="description_ar">{{ $product_details->description_ar }} </textarea>
+                <p class="text-danger" id="error-description_ar"></p>
+
+            </div>
+
         </div>
 
         <div class="mt-3 d-flex justify-content-between py-3">
@@ -271,11 +271,42 @@
 
 
         <!----- variant panel ------>
-        @foreach ($product_details->variation_Group as $key => $item1)
-            @foreach ($item1 as $key => $item)
-                <div class="specifications-row variant-panel-bg">
 
-                    <div class="product-pnls mt-4">
+
+        @foreach ($product_details->variation_Group as $key => $item)
+            @php
+                $vari_count = 0;
+            @endphp
+
+
+            <div class="specifications-row">
+
+                <div class="@if ($product_Variation_count == 0) subvariant @else  variant-panel-bg @endif">
+
+
+                    <div class="col-lg-4">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Colour</label>
+                            </div>
+
+                            <select class="form-select form-control" aria-label="Default select example"
+                                name="color_id[]">
+                                @foreach ($color as $item1)
+                                    <option value="{{ $item1->id }}"
+                                        @if ($item->color_id == $item1->id) selected @endif>
+                                        {{ $item1->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <p class="text-danger" id="error-color_id_{{ $product_Variation_count }}">
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="product-pnls mt-4" id="variant_image_id{{ $product_Variation_count }}">
                         <div class="upload-image" style="height:170px;">
                             <label id="uploadLabel"
                                 style="cursor:pointer;text-align:center;display:block;padding-top: 2.7rem;">
@@ -318,244 +349,275 @@
                         </div>
                     </div>
 
-                    <div class="wapper-header mt-4">
-                        <div class="row">
-                            <div class="col-lg-3">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Colour</label>
+                    {{-- Add New Variationc code --}}
+                    <div class="mt-3 d-flex justify-content-between py-3">
+                        <div class="title24">Add Variation FDF </div>
+                        <div class="sep-icon " rel="{{ $product_Variation_count }}">
+                            <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation"
+                                alt="add" rel="{{ $product_Variation_count }}">
+                        </div>
+                    </div>
+                    {{-- Add New Variationc code --}}
+
+                    @foreach ($item->otherVariation as $var => $value)
+                        <div class="inside_variation inside_variation{{ $product_Variation_count }}"
+                            @if ($var !== 0) style="
+                        background:#fff7ea;
+                        background: #fff;
+                        border: 1px dashed #0d0606;
+                        border-radius: 10px;
+                         box-shadow: 0px 2px 4px #ddd;
+                        " @endif>
+
+                            <div class="wapper-header mt-4">
+                                <div class="row">
+
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Size</label>
+                                            </div>
+
+                                            <select class="form-select form-control"
+                                                aria-label="Default select example" name="size_id[]">
+                                                @foreach ($size as $item1)
+                                                    <option value="{{ $item1->id }}"
+                                                        @if ($value->size_id == $item1->id) selected @endif>
+                                                        {{ $item1->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <p class="text-danger" id="error-size_id_{{ $product_Variation_count }}">
+                                            </p>
+
+                                        </div>
+
                                     </div>
 
-                                    <select class="form-select form-control" aria-label="Default select example"
-                                        name="color_id[]">
-                                        @foreach ($color as $item1)
-                                            <option value="{{ $item1->id }}"
-                                                @if ($item->color_id == $item1->id) selected @endif>{{ $item1->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-danger" id="error-color_id_{{ $product_Variation_count }}"></p>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Bust </label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.10" name="bust[]" value="{{ $value->bust }}">
+                                            <p class="text-danger" id="error-bust_{{ $product_Variation_count }}">
+                                            </p>
 
-                                </div>
+                                        </div>
 
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Size</label>
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Waist</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.12" name="waist[]" value="{{ $value->waist }}">
+
+                                            <p class="text-danger" id="error-waist_{{ $product_Variation_count }}">
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>HIP</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.14" name="hip[]" value="{{ $value->hip }}">
+                                            <p class="text-danger" id="error-hip_{{ $product_Variation_count }}"></p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Shoulder</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.16" name="shoulder[]"
+                                                value="{{ $value->shoulder }}">
+                                            <p class="text-danger"
+                                                id="error-shoulder_{{ $product_Variation_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Sleev Length</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.18" name="sleeve_length[]"
+                                                value="{{ $value->sleeve_length }}">
+                                            <p class="text-danger"
+                                                id="error-sleeve_length_{{ $product_Variation_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Length</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.20" name="length[]" value="{{ $value->length }}">
+
+                                            <p class="text-danger" id="error-length_{{ $product_Variation_count }}">
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Total Stocks</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.13208" name="total_stock[]"
+                                                value="{{ $value->total_stock }}">
+
+                                            <p class="text-danger"
+                                                id="error-total_stock_{{ $product_Variation_count }}">
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>SKU Limit </label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="20019" name="sku[]" value="{{ $value->sku }}">
+
+                                            <p class="text-danger" id="error-sku_{{ $product_Variation_count }}"></p>
+                                        </div>
+
                                     </div>
 
-                                    <select class="form-select form-control" aria-label="Default select example"
-                                        name="size_id[]">
-                                        @foreach ($size as $item1)
-                                            <option value="{{ $item1->id }}"
-                                                @if ($item->size_id == $item1->id) selected @endif>{{ $item1->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <p class="text-danger" id="error-size_id_{{ $product_Variation_count }}"></p>
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Actual Price</label>
+                                            </div>
+                                            <input type="number" id="actual_price_{{ $product_Variation_count }}"
+                                                class="form-control notapplyspace" placeholder="Eg.KD 299.00"
+                                                name="actual_price[]" value="{{ $value->actual_price }}">
+                                            <p class="text-danger"
+                                                id="error-actual_price_{{ $product_Variation_count }}">
+                                            </p>
 
-                                </div>
+                                        </div>
 
-                            </div>
-
-                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Bust </label>
                                     </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="Eg.10" name="bust[]" value="{{ $item->bust }}">
-                                    <p class="text-danger" id="error-bust_{{ $product_Variation_count }}"></p>
-
                                 </div>
-
                             </div>
-                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Waist</label>
+
+                            <div class="pt-3">
+                                <div class="title24">Discounted Price</div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div
+                                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                                            <div class="check_radio">
+                                                <label class="radio-group">
+                                                    <input type="radio"
+                                                        name="discount_type[{{ $product_Variation_count }}][{{ $vari_count }}]"
+                                                        id="discount_type_percentage_{{ $product_Variation_count }}"
+                                                        @if ($value->discount_type == 1) checked @endif
+                                                        value="1">
+                                                    <span class="custom-radio"></span>
+                                                    <span class="radio-label">Percentage</span>
+                                                </label>
+                                            </div>
+                                            <div class="check_radio">
+                                                <label class="radio-group">
+                                                    <input type="radio"
+                                                        name="discount_type[{{ $product_Variation_count }}][{{ $vari_count }}]"
+                                                        id="discount_type_fixed_{{ $product_Variation_count }}"
+                                                        @if ($value->discount_type == 2) checked @endif
+                                                        value="2">
+                                                    <span class="custom-radio"></span>
+                                                    <span class="radio-label">Fixed Price</span>
+                                                </label>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="Eg.12" name="waist[]" value="{{ $item->waist }}">
-
-                                    <p class="text-danger" id="error-waist_{{ $product_Variation_count }}"></p>
                                 </div>
 
-                            </div>
-                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>HIP</label>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Percentage</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace"
+                                                placeholder="Eg.10%" name="discount_value[]"
+                                                id="discount_value_{{ $product_Variation_count }}"
+                                                value="{{ $value['discount_value'] }}">
+                                            <p class="text-danger"
+                                                id="error-discount_value_{{ $product_Variation_count }}">
+                                            </p>
+
+                                        </div>
+
                                     </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="Eg.14" name="hip[]" value="{{ $item->hip }}">
-                                    <p class="text-danger" id="error-hip_{{ $product_Variation_count }}"></p>
-
-                                </div>
-
-                            </div>
-                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Shoulder</label>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Final Price</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace"
+                                                placeholder="Eg.KD 299.00" name="final_price[]"
+                                                value="{{ $value['final_price'] }}"
+                                                id="final_price_{{ $product_Variation_count }}">
+                                            <p class="text-danger"
+                                                id="error-final_price_{{ $product_Variation_count }}">
+                                            </p>
+                                        </div>
                                     </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="Eg.16" name="shoulder[]" value="{{ $item->shoulder }}">
-                                    <p class="text-danger" id="error-shoulder_{{ $product_Variation_count }}"></p>
-
                                 </div>
-
                             </div>
-                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Sleev Length</label>
+
+                            @php
+                                $vari_count++;
+                            @endphp
+
+                            @if ($key == 0)
+                                <div class="d-flex justify-content-end">
+                                    <div class="removerow"><i class="bi bi-x"></i> Remove </div>
+                                </div>
+                            @else
+                                @if ($product_Variation_count > 0)
+                                    <div class="d-flex justify-content-end">
+                                        <div class="remove-btn22"><i class="bi bi-x"></i> Remove </div>
                                     </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="Eg.18" name="sleeve_length[]"
-                                        value="{{ $item->sleeve_length }}">
-                                    <p class="text-danger" id="error-sleeve_length_{{ $product_Variation_count }}">
-                                    </p>
+                                @endif
+                            @endif
 
-                                </div>
 
-                            </div>
-                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Length</label>
-                                    </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="Eg.20" name="length[]" value="{{ $item->length }}">
 
-                                    <p class="text-danger" id="error-length_{{ $product_Variation_count }}"></p>
-                                </div>
+                        </div>
+                    @endforeach
 
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Total Stocks</label>
-                                    </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="Eg.13208" name="total_stock[]"
-                                        value="{{ $item->total_stock }}">
+                    {{-- Add New Variationc code --}}
 
-                                    <p class="text-danger" id="error-total_stock_{{ $product_Variation_count }}"></p>
-                                </div>
 
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>SKU Limit </label>
-                                    </div>
-                                    <input type="number" class="form-control notapplyspace no-zero"
-                                        placeholder="20019" name="sku[]" value="{{ $item->sku }}">
 
-                                    <p class="text-danger" id="error-sku_{{ $product_Variation_count }}"></p>
-                                </div>
-
-                            </div>
-                            {{-- <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>SKU Threshold value</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="20019"
-                                name="sku_threshold_value[]"  value="{{$item->sku_threshold_value}}">
-                    <p class="text-danger" id="error-sku_threshold_value_{{$product_Variation_count}}"></p>
 
                 </div>
 
-            </div> --}}
 
-                            <div class="col-lg-3">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Actual Price</label>
-                                    </div>
-                                    <input type="number" id="actual_price_{{ $product_Variation_count }}"
-                                        class="form-control notapplyspace" placeholder="Eg.KD 299.00"
-                                        name="actual_price[]" value="{{ $item->actual_price }}">
-                                    <p class="text-danger" id="error-actual_price_{{ $product_Variation_count }}">
-                                    </p>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="pt-3">
-                        <div class="title24">Discounted Price</div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div
-                                    class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                                    <div class="check_radio">
-                                        <label class="radio-group">
-                                            <input type="radio"
-                                                name="discount_type[{{ $product_Variation_count }}]"
-                                                id="discount_type_percentage_{{ $product_Variation_count }}"
-                                                @if ($item['discount_type'] == 1) checked @endif value="1">
-                                            <span class="custom-radio"></span>
-                                            <span class="radio-label">Percentage</span>
-                                        </label>
-                                    </div>
-                                    <div class="check_radio">
-                                        <label class="radio-group">
-                                            <input type="radio"
-                                                name="discount_type[{{ $product_Variation_count }}]"
-                                                id="discount_type_fixed_{{ $product_Variation_count }}"
-                                                @if ($item['discount_type'] == 2) checked @endif value="2">
-                                            <span class="custom-radio"></span>
-                                            <span class="radio-label">Fixed Price</span>
-                                        </label>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Percentage</label>
-                                    </div>
-                                    <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
-                                        name="discount_value[]" id="discount_value_{{ $product_Variation_count }}"
-                                        value="{{ $item['discount_value'] }}">
-                                    <p class="text-danger" id="error-discount_value_{{ $product_Variation_count }}">
-                                    </p>
-
-                                </div>
-
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Final Price</label>
-                                    </div>
-                                    <input type="number" class="form-control notapplyspace"
-                                        placeholder="Eg.KD 299.00" name="final_price[]"
-                                        value="{{ $item['final_price'] }}"
-                                        id="final_price_{{ $product_Variation_count }}">
-                                    <p class="text-danger" id="error-final_price_{{ $product_Variation_count }}"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    @if ($product_Variation_count >= 1)
-                        <div class="d-flex justify-content-end">
-                            <div class="removerow"><i class="bi bi-x"></i> Remove </div>
-                        </div>
-                    @endif
-                </div>
-            @endforeach
+            </div>
 
             @php
                 $product_Variation_count++;
@@ -1639,7 +1701,6 @@
 </script>
 
 {{-- // common j s --}}
-@include('dealer.product.ajax.product_commonjs');
-
+@include('dealer.product.ajax.product_commonjs_edit');
 
 @include('dealer.layout.custom_code');
