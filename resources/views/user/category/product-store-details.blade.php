@@ -1044,7 +1044,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const sizeChartImage = this.dataset.sizeChart;
 
         if (sizeChartImage) {
-            sizeChartBody.innerHTML = `<img src="${sizeChartImage}" class="img-fluid" alt="Size Chart">`;
+            sizeChartBody.innerHTML = `<img src="${sizeChartImage}" class="img-fluid" alt="Size Chart" style="max-width: 100%; height: 400px; object-fit: contain;">`;
         } else {
             sizeChartBody.innerHTML = `<p class="text-center">No size chart available.</p>`;
         }
