@@ -1,14 +1,14 @@
 @extends('user.layout.app')
 
 @section('content')
-    <div class="customContainer">
-        <div class="">
-            <div class="">
-                <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" />
-            </div>
+<div class="customContainer">
+    <div>
+        <div>
+            <img src="{{ $store_details['store']['store_image'] }}" class="store-banner-img" />
         </div>
     </div>
 </div>
+
 
     <div class="storeClient_profile customsmallContainer">
         <div class="row">

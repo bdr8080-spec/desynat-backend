@@ -1207,26 +1207,11 @@ public function single_product_details_fetchweb($request){
 
     $new_color[$val->color->hex_code][] = $new_data;  
 
-
-    // variation Combo code
-
-   if (!isset($variation_Group[$val->color->hex_code])) {
-
-    $variation_Group[$val->color->hex_code] = [];
-    
-}
-
-
-    $variation_Group[$val->color->hex_code][] = $val;    
-    
-    
-
     }
 
     if($product_data){
 
         $product_data->ColorPriceCombination=$new_color;
-        $product_data->variation_Group=$variation_Group;
         
     }
 
@@ -1234,37 +1219,38 @@ public function single_product_details_fetchweb($request){
     // Variation Code start Here 
 
     $product_variation = ProductVariant::where('product_id', $request->product_id)
-    ->with('color','size') // so we can access name or hex code
+    ->with('color', 'size')
     ->get()
     ->groupBy('color_id');
 
-    $variation_array=[];
+$variation_array = [];
 
-    foreach($product_variation as $key1=>$val){
+foreach ($product_variation as $color_id => $items) {
 
-        $in_variation_array=[];
+    $in_variation_array = [];
 
-        foreach($val as $key2=>$val2){
+    foreach ($items as $index => $val2) {
 
-            if($key2==0){
-                $variation_array=$val2;
-            }else{
-                $variation_array->otherVariation=$val2;
-
-
-            }
-
+        if ($index == 0) {
+            // First item will act as main record
+            $variation_array[$color_id] = $val2;
+            $variation_array[$color_id]->otherVariation = [];
+        } else {
+            // Correct array merge: assign back
         }
+
+        $in_variation_array[] = $val2;
+        
+
     }
 
+    // Assign merged items to `otherVariation`
+    if (!empty($in_variation_array)) {
+        $variation_array[$color_id]->otherVariation = $in_variation_array;
+    }
+}
 
-    dd($variation_array);
-
-
-    
-
-
-
+    $product_data->variation_Group=$variation_array;
 
 
           

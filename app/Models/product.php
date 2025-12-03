@@ -37,9 +37,4 @@ class product extends Model
     }
 
 
-    public function product_variants_group(){
-        return $this->hasMany(ProductVariant::class,'product_id','id')->groupBy('color_id');
-    }
-    
-
 }

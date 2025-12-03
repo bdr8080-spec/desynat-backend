@@ -53,6 +53,8 @@
 
         }
 
+        console.log(data1);
+
         data1.append(`
 
        <div class="inside_variation${variation_id} p-2 mt-4 newvariant subpanel" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
@@ -240,6 +242,7 @@
 
     // REMOVE ROW
     $(document).on("click", ".remove-btn22", function() {
+
         $(this).closest(".subpanel").remove();
     });
 </script>
