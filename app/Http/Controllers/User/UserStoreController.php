@@ -232,6 +232,22 @@ class UserStoreController extends Controller
     }
 }
 
+$productVariantsById = [];
+foreach ($data->product_variants as $item) {
+    $productVariantsById[$item->id] = [
+        'variant_id' => $item->id,
+        'product_id' => $item->product_id,
+        'color_hex' => $item->color->hex_code,
+        'size' => $item->size->name,
+        'actual_price' => $item->actual_price,
+        'final_price' => $item->final_price,
+        'discount_value' => $item->discount_value,
+        'discount_type' => $item->discount_type,
+        'variant_image' => is_array($item->variant_image) ? $item->variant_image : [],
+    ];
+}
+
+
     //dd($product_variants);
     if (!$request->user()) {
     $cartCount = 0;
@@ -256,7 +272,7 @@ class UserStoreController extends Controller
 
 
   
-        return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData'));
+        return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData','productVariantsById'));
     }
 
 

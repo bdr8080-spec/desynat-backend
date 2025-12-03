@@ -746,7 +746,7 @@ $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function () {
 
     // ------------------------------
@@ -1030,7 +1030,296 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+</script> -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ------------------------------
+    // VARIABLES
+    // ------------------------------
+    const productVariantsByColor = @json($product_variants);   // grouped by color
+    const productVariantsById    = @json($productVariantsById); // flat lookup by variant_id
+    const cartData               = @json($cartData);          // keyed by variants_id
+    const wishlistHTML           = `{!! $wishlistBlock !!}`;
+
+    let firstClick               = true;
+
+    let quantityBox      = document.querySelector(".quantity-box");
+    let qtyDisplay       = document.getElementById("qtyNumber");
+    let plusBtn          = document.getElementById("plusBtn");
+    let minusBtn         = document.getElementById("minusBtn");
+    let addToBagBtn      = document.getElementById("addToBagBtn");
+    let errorBox         = document.getElementById("optionError");
+    let viewMyBagDiv     = document.getElementById("bagTopbar");
+
+    // ------------------------------
+    // INITIAL UI STATE
+    // ------------------------------
+    quantityBox.style.setProperty("display", "none", "important");
+    viewMyBagDiv.style.setProperty("display", "none", "important");
+
+    // ------------------------------
+    // HELPER FUNCTIONS
+    // ------------------------------
+    function getQty() {
+        return parseInt(qtyDisplay.textContent) || 1;
+    }
+
+    function setQty(qty) {
+        qtyDisplay.textContent = qty < 10 ? "0" + qty : qty;
+    }
+
+    function sendToCart(qty) {
+        let product_id = document.getElementById("productId").value;
+        let variant_id = document.getElementById("variantId").value;
+
+        if (!product_id || !variant_id) {
+            toastr.error("Something went wrong. Please reselect options.");
+            return;
+        }
+
+        fetch("{{ route('user.addToCart') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                product_id: product_id,
+                variant_id: variant_id,
+                quantity: qty
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === "error") {
+                toastr.error(data.message);
+            } else {
+                toastr.success(data.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        })
+        .catch(() => {
+            toastr.error("Something went wrong.");
+        });
+    }
+
+    function updateCartUIForVariant(variantId) {
+        const cartItem = cartData[variantId];
+
+        if (cartItem) {
+            quantityBox.style.setProperty("display", "block", "important");
+            viewMyBagDiv.style.setProperty("display", "flex", "important");
+            addToBagBtn.style.display = "none";
+
+            setQty(cartItem.quantity);
+            firstClick = false;
+        } else {
+            quantityBox.style.setProperty("display", "none", "important");
+            viewMyBagDiv.style.setProperty("display", "none", "important");
+            addToBagBtn.style.display = "block";
+
+            setQty(1);
+            firstClick = true;
+        }
+    }
+
+    // ------------------------------
+    // REMOVE DUPLICATE EVENT LISTENERS
+    // ------------------------------
+    plusBtn.replaceWith(plusBtn.cloneNode(true));
+    minusBtn.replaceWith(minusBtn.cloneNode(true));
+    addToBagBtn.replaceWith(addToBagBtn.cloneNode(true));
+
+    plusBtn     = document.getElementById("plusBtn");
+    minusBtn    = document.getElementById("minusBtn");
+    addToBagBtn = document.getElementById("addToBagBtn");
+
+    // ------------------------------
+    // COLOR CLICK HANDLER
+    // ------------------------------
+    document.querySelectorAll(".choose-color").forEach((colorBox, index) => {
+        colorBox.addEventListener("click", function () {
+            const colorHex = this.dataset.color;
+
+            // Highlight active color
+            document.querySelectorAll(".choose-color").forEach(c => c.classList.remove("active"));
+            this.classList.add("active");
+
+            const variant = Object.values(productVariantsByColor).find(v => v.color_hex === colorHex);
+            if (!variant) return;
+
+            // Update price using first variant for this color
+            document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
+            document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
+
+            // Update sizes
+            const sizeContainer = document.getElementById("sizeContainer");
+            sizeContainer.innerHTML = "";
+
+            variant.sizes.forEach(size => {
+                // Find the correct variant_id for this color & size
+                const variantForSize = Object.values(productVariantsById).find(v => v.color_hex === colorHex && v.size === size);
+                sizeContainer.innerHTML += `
+                    <button class="size-btn"
+                        data-size="${size}"
+                        data-variant-id="${variantForSize.variant_id}"
+                        data-product-id="${variantForSize.product_id}">
+                        ${size}
+                    </button>
+                `;
+            });
+
+            attachSizeClickEvents(); // attach event to newly created size buttons
+
+            // Update images
+            const images = variant.variant_image;
+            const carouselIndicators = document.querySelector(".carousel-indicators");
+            const carouselInner      = document.querySelector(".carousel-inner");
+
+            carouselIndicators.innerHTML = "";
+            carouselInner.innerHTML      = "";
+
+            images.forEach((img, idx) => {
+                carouselIndicators.innerHTML += `
+                    <button type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to="${idx}"
+                        class="${idx === 0 ? 'active' : ''}">
+                        <div class="product_slide_img">
+                            <img src="${img}" class="img-fluid"/>
+                        </div>
+                    </button>
+                `;
+
+                carouselInner.innerHTML += `
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                        ${idx === 0 ? wishlistHTML : ''}
+                        <div class="carousel_item_img">
+                            <img src="${img}" class="img-fluid">
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Auto-select first size
+            const firstSizeButton = document.querySelector(".size-btn");
+            if (firstSizeButton) firstSizeButton.click();
+        });
+
+        if (index === 0) colorBox.click(); // auto-click first color
+    });
+
+    // ------------------------------
+    // SIZE CLICK HANDLER
+    // ------------------------------
+    function attachSizeClickEvents() {
+        const sizeButtons = document.querySelectorAll(".size-btn");
+        const hiddenInputVariant = document.getElementById("variantId");
+        const hiddenInputProduct = document.getElementById("productId");
+
+        sizeButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                sizeButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                    btn.style.background = "";
+                });
+
+                this.classList.add("active");
+                this.style.background = "#FAEBD7";
+
+                const variantId = this.dataset.variantId;
+                const variant = productVariantsById[variantId];
+
+                hiddenInputVariant.value = variant.variant_id;
+                hiddenInputProduct.value  = variant.product_id;
+
+                // Update price correctly for selected size
+                document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
+                document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
+
+                updateCartUIForVariant(variantId);
+            });
+        });
+    }
+
+    // ------------------------------
+    // ADD TO BAG CLICK
+    // ------------------------------
+    addToBagBtn.addEventListener("click", function () {
+        const selectedColor = document.querySelector(".choose-color.active");
+        const selectedSize  = document.querySelector(".size-btn.active");
+
+        errorBox.style.display = "none";
+        errorBox.innerHTML = "";
+
+        if (!selectedColor) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Color.";
+            return;
+        }
+        if (!selectedSize) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Size.";
+            return;
+        }
+
+        if (firstClick) {
+            firstClick = false;
+
+            setQty(1);
+
+            viewMyBagDiv.style.setProperty("display", "flex", "important");
+            quantityBox.style.setProperty("display", "block", "important");
+            addToBagBtn.style.display = "none";
+
+            sendToCart(1);
+        }
+    });
+
+    // ------------------------------
+    // PLUS BUTTON CLICK
+    // ------------------------------
+    plusBtn.addEventListener("click", () => {
+        if (quantityBox.style.getPropertyValue("display") !== "block") return;
+
+        let qty = getQty();
+        qty += 1;
+
+        setQty(qty);
+        sendToCart(qty);
+    });
+
+    // ------------------------------
+    // MINUS BUTTON CLICK
+    // ------------------------------
+    minusBtn.addEventListener("click", () => {
+        if (quantityBox.style.getPropertyValue("display") !== "block") return;
+
+        let qty = getQty();
+
+        if (qty === 1) {
+            quantityBox.style.setProperty("display", "none", "important");
+            viewMyBagDiv.style.setProperty("display", "none", "important");
+            addToBagBtn.style.display = "block";
+
+            setQty(1);
+            firstClick = true;
+            return;
+        }
+
+        qty -= 1;
+
+        setQty(qty);
+        sendToCart(qty);
+    });
+
+});
 </script>
+
 
 
 <script>
