@@ -3,7 +3,7 @@
 @section('content')
 <style>
 .cd-change-btn {
-     background: #8a6a4366;
+    background: #8a6a4366;
     border: 1px solid #d2b48c;
     padding: 7px 15px;
     border-radius: 8px;
@@ -11,8 +11,60 @@
     color: #000;
     cursor: pointer;
 }
-.cd-size{
-    color: #9b744d
+
+.cd-size {
+    color: #9b744d;
+    cursor: pointer;
+}
+
+.cart-counts button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: linear-gradient(to bottom, #c7a276, #9b744a);
+    color: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-counts {
+    margin-top: 12px;
+    align-items: center;
+}
+
+.qty-number {
+    font-size: 20px;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+}
+
+.action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-action {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.cart-counts {
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+
+.qty-wrapper {
+    margin-top: 12px;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
 }
 </style>
 <div class="customContainer">
@@ -79,11 +131,11 @@
 
         <div class="col-lg-7">
             <div class="productList_content ps-3">
-<div class="d-flex justify-content-between">
-    <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
-                            <button class="cd-change-btn">100+ Bought</button>
+                <div class="d-flex justify-content-between">
+                    <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
+                    <button class="cd-change-btn">100+ Bought</button>
 
-</div>
+                </div>
 
                 <p class="text-muted mb-1">{{$data->product_name_en}}</p>
 
@@ -111,7 +163,8 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="fw-semibold">Select Size</h6>
-                   <h6 class="cd-size">Size Guide</h6>
+                    <h6 class="cd-size"  data-bs-toggle="modal"
+                                        data-bs-target="#sizechart">Size Guide</h6>
 
                 </div>
 
@@ -131,34 +184,65 @@
                 @if ($data->customized_product==1)
                 <button class="customBtn2">Custom Order</button>
                 @endif
+
+
                 <!-- start -->
-                
-                <div class="quantity-box w-100">
-                    <div class="bag-topbar d-flex justify-content-between align-items-center mt-3">
-                        <div>
-                            <strong>({{$cartCount}} Items)</strong> View My Bag
-                        </div>
+                <div class="action-wrapper mt-3">
+
+                    <!-- VIEW MY BAG (ALWAYS FULL WIDTH) -->
+                    <div class="bag-topbar-full d-flex justify-content-between align-items-center" id="bagTopbar">
+                        <div><strong>({{$cartCount}} Items)</strong> View My Bag</div>
                         <i class="bi bi-arrow-right arrow-icon"></i>
                     </div>
-                    <div class="cart-counts d-flex gap-5 mt-2">
-                        <button class="qty-btn" id="minusBtn">
-                            <i class="bi bi-dash icons"></i>
-                        </button>
 
-                        <div class="qty-number" id="qtyNumber">01</div>
+                    <div class="action-row d-flex align-items-center gap-3 mt-2">
 
-                        <button class="qty-btn" id="plusBtn">
-                            <i class="bi bi-plus icons"></i>
-                        </button>
+                        <!-- LEFT SIDE -->
+                        <div class="left-action w-50">
+
+                            <!-- ADD TO BAG -->
+                            <button class="customBtn2 w-100" id="addToBagBtn">Add to Bag</button>
+
+                            <!-- QUANTITY BOX -->
+                            <div class="quantity-box">
+                                <div class="cart-counts d-flex justify-content-between align-items-center">
+                                    <button class="qty-btn" id="minusBtn"><i class="bi bi-dash icons"></i></button>
+                                    <div class="qty-number" id="qtyNumber">01</div>
+                                    <button class="qty-btn" id="plusBtn"><i class="bi bi-plus icons"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- BUY NOW BUTTON -->
+                        <button class="customBtn w-50" id="buyNowBtn">Buy Now</button>
+
                     </div>
 
                 </div>
-                <!-- end -->
+         <!-- end -->
 
-                <div class="d-flex align-items-center gap-3 mt-3">
-                    <button class="customBtn2 mt-0" id="addToBagBtn">Add to Bag</button>
-                    <button class="customBtn">Buy Now</button>
+
+                <!-- start -->
+                <!-- <div class="quantity-box w-100">
+                    <div class="bag-topbar d-flex justify-content-between align-items-center mt-3">
+                        <div> <strong>({{$cartCount}} Items)</strong> View My Bag </div> <i
+                            class="bi bi-arrow-right arrow-icon"></i>
+                    </div>
+                    <div class="cart-counts d-flex gap-5 mt-2">
+                        <button class="qty-btn" id="minusBtn"> <i class="bi bi-dash icons"></i>
+                        </button>
+                        <div class="qty-number" id="qtyNumber">01</div>
+                        <button class="qty-btn" id="plusBtn"> <i class="bi bi-plus icons"></i>
+                        </button>
+                    </div>
                 </div>
+                <div class="d-flex align-items-center gap-3 mt-3">
+                    <button class="customBtn2 mt-0" id="addToBagBtn">Add
+                        to Bag</button>
+                    <button class="customBtn">Buy Now</button>
+                </div> -->
+                <!-- end -->
 
                 <div class="my-4">
                     <div class="desc-box p-4 rounded-4">
@@ -219,6 +303,7 @@
             </div>
             <div class="col-6 text-end">32</div>
         </div>
+
         <div class="row mb-2">
             <div class="col-6">Is it an Affiliated Product?
             </div>
@@ -286,10 +371,10 @@
 
 
     <div class="container my-4">
-          <div class="cd-header">
-                        <h4>Customers Ratings</h4>
-                        <h6 class="cd-size">View All</h6>
-                    </div>
+        <div class="cd-header">
+            <h4>Customers Ratings</h4>
+            <h6 class="cd-size">View All</h6>
+        </div>
         <div class="desc-box p-4 rounded-4">
             <div class="review-box p-4 rounded-4">
                 <div class="d-flex justify-content-between">
@@ -313,7 +398,7 @@
                     <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
                 </div>
             </div>
-    
+
             <div class="review-box p-4 rounded-4">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center gap-3">
@@ -634,6 +719,24 @@
 </div>
 
 
+
+  <div class="modal fade sizechart" id="sizechart" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Size Chart</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
 @php
 ob_start();
 @endphp
@@ -659,7 +762,50 @@ $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const addToBagBtn = document.getElementById("addToBagBtn");
+    const quantityBox = document.querySelector(".quantity-box");
+    const bagTopbar = document.getElementById("bagTopbar");
 
+    const qtyNumber = document.getElementById("qtyNumber");
+    const plusBtn = document.getElementById("plusBtn");
+    const minusBtn = document.getElementById("minusBtn");
+
+    // Hide initially
+    quantityBox.style.display = "none";
+    bagTopbar.style.display = "none";
+
+    // ADD TO BAG CLICK
+    addToBagBtn.addEventListener("click", function() {
+        addToBagBtn.style.display = "none";
+        quantityBox.style.display = "block";
+        bagTopbar.style.display = "flex"; // full width
+    });
+
+    plusBtn.addEventListener("click", function() {
+        let qty = parseInt(qtyNumber.innerText);
+        qtyNumber.innerText = String(qty + 1).padStart(2, "0");
+    });
+
+    minusBtn.addEventListener("click", function() {
+        let qty = parseInt(qtyNumber.innerText);
+
+        if (qty > 1) {
+            qtyNumber.innerText = String(qty - 1).padStart(2, "0");
+        } else {
+            quantityBox.style.display = "none";
+            addToBagBtn.style.display = "block";
+            bagTopbar.style.display = "none";
+        }
+    });
+});
+
+document.querySelector(".quantity-box").style.display = "flex";
+</script>
+
+
+<!-- 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -910,7 +1056,7 @@ minusBtn.addEventListener("click", () => {
 
 
 
-
+ -->
 
 
 @endsection
