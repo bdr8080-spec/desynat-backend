@@ -163,8 +163,14 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="fw-semibold">Select Size</h6>
-                    <h6 class="cd-size"  data-bs-toggle="modal"
-                                        data-bs-target="#sizechart">Size Guide</h6>
+                    <h6 class="cd-size"
+                        id="sizeGuideBtn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#sizechart"
+                        data-size-chart="{{ $data->upload_size_chart }}">
+                        Size Guide
+                    </h6>
+
 
                 </div>
 
@@ -729,7 +735,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body" id="sizeChartBody">
 
                     </div>
             </div>
@@ -763,83 +769,132 @@ $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const addToBagBtn = document.getElementById("addToBagBtn");
-    const quantityBox = document.querySelector(".quantity-box");
-    const bagTopbar = document.getElementById("bagTopbar");
-
-    const qtyNumber = document.getElementById("qtyNumber");
-    const plusBtn = document.getElementById("plusBtn");
-    const minusBtn = document.getElementById("minusBtn");
-
-    // Hide initially
-    quantityBox.style.display = "none";
-    bagTopbar.style.display = "none";
-
-    // ADD TO BAG CLICK
-    addToBagBtn.addEventListener("click", function() {
-        addToBagBtn.style.display = "none";
-        quantityBox.style.display = "block";
-        bagTopbar.style.display = "flex"; // full width
-    });
-
-    plusBtn.addEventListener("click", function() {
-        let qty = parseInt(qtyNumber.innerText);
-        qtyNumber.innerText = String(qty + 1).padStart(2, "0");
-    });
-
-    minusBtn.addEventListener("click", function() {
-        let qty = parseInt(qtyNumber.innerText);
-
-        if (qty > 1) {
-            qtyNumber.innerText = String(qty - 1).padStart(2, "0");
-        } else {
-            quantityBox.style.display = "none";
-            addToBagBtn.style.display = "block";
-            bagTopbar.style.display = "none";
-        }
-    });
-});
-
-document.querySelector(".quantity-box").style.display = "flex";
-</script>
-
-
-<!-- 
-<script>
 document.addEventListener("DOMContentLoaded", function () {
 
+    // ------------------------------
+    // VARIABLES
+    // ------------------------------
     const productVariants = @json($product_variants);
-    const wishlistHTML = `{!! $wishlistBlock !!}`;
+    const cartData        = @json($cartData); // keyed by variants_id
+    const wishlistHTML    = `{!! $wishlistBlock !!}`;
 
-    // ======================
+    let firstClick       = true;
+
+    let quantityBox      = document.querySelector(".quantity-box");
+    let qtyDisplay       = document.getElementById("qtyNumber");
+    let plusBtn          = document.getElementById("plusBtn");
+    let minusBtn         = document.getElementById("minusBtn");
+    let addToBagBtn      = document.getElementById("addToBagBtn");
+    let errorBox         = document.getElementById("optionError");
+    let viewMyBagDiv     = document.getElementById("bagTopbar");
+
+    // ------------------------------
+    // INITIAL UI STATE
+    // ------------------------------
+    quantityBox.style.setProperty("display", "none", "important");
+    viewMyBagDiv.style.setProperty("display", "none", "important");
+
+    // ------------------------------
+    // HELPER FUNCTIONS
+    // ------------------------------
+    function getQty() {
+        return parseInt(qtyDisplay.textContent) || 1;
+    }
+
+    function setQty(qty) {
+        qtyDisplay.textContent = qty < 10 ? "0" + qty : qty;
+    }
+
+    function sendToCart(qty) {
+        let product_id = document.getElementById("productId").value;
+        let variant_id = document.getElementById("variantId").value;
+
+        if (!product_id || !variant_id) {
+            toastr.error("Something went wrong. Please reselect options.");
+            return;
+        }
+
+        fetch("{{ route('user.addToCart') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                product_id: product_id,
+                variant_id: variant_id,
+                quantity: qty
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === "error") {
+                toastr.error(data.message);
+            } else {
+                toastr.success(data.message);
+                    setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        })
+        .catch(() => {
+            toastr.error("Something went wrong.");
+        });
+    }
+
+    function updateCartUIForVariant(variantId) {
+        const cartItem = cartData[variantId];
+
+        if (cartItem) {
+            // Show quantity box and "View My Bag"
+            quantityBox.style.setProperty("display", "block", "important");
+            viewMyBagDiv.style.setProperty("display", "flex", "important");
+            addToBagBtn.style.display = "none";
+
+            setQty(cartItem.quantity);
+            firstClick = false; // prevent firstClick logic
+        } else {
+            // Reset UI if not in cart
+            quantityBox.style.setProperty("display", "none", "important");
+            viewMyBagDiv.style.setProperty("display", "none", "important");
+            addToBagBtn.style.display = "block";
+
+            setQty(1);
+            firstClick = true;
+        }
+    }
+
+    // ------------------------------
+    // REMOVE DUPLICATE EVENT LISTENERS
+    // ------------------------------
+    plusBtn.replaceWith(plusBtn.cloneNode(true));
+    minusBtn.replaceWith(minusBtn.cloneNode(true));
+    addToBagBtn.replaceWith(addToBagBtn.cloneNode(true));
+
+    plusBtn     = document.getElementById("plusBtn");
+    minusBtn    = document.getElementById("minusBtn");
+    addToBagBtn = document.getElementById("addToBagBtn");
+
+    // ------------------------------
     // COLOR CLICK HANDLER
-    // ======================
-    document.querySelectorAll(".choose-color").forEach(colorBox => {
-
+    // ------------------------------
+    document.querySelectorAll(".choose-color").forEach((colorBox, index) => {
         colorBox.addEventListener("click", function () {
-
             let colorHex = this.dataset.color;
 
             // Highlight active color
             document.querySelectorAll(".choose-color").forEach(c => c.classList.remove("active"));
             this.classList.add("active");
 
-            // ==========================================
-            // FIXED: FIND VARIANT (productVariants IS OBJECT)
-            // ==========================================
+            // Find variant
             let variant = Object.values(productVariants).find(v => v.color_hex === colorHex);
             if (!variant) return;
 
-            // -----------------------
-            // UPDATE PRICE
-            // -----------------------
+            // Update price
             document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
             document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
 
-            // -----------------------
-            // UPDATE SIZES
-            // -----------------------
+            // Update sizes
             let sizeContainer = document.getElementById("sizeContainer");
             sizeContainer.innerHTML = "";
 
@@ -854,26 +909,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
             });
 
-            // Re-attach size handlers for new buttons
-            attachSizeClickEvents();
+            attachSizeClickEvents(variant);
 
-            // -----------------------
-            // UPDATE IMAGES
-            // -----------------------
+            // Update images
             let images = variant.variant_image;
             let carouselIndicators = document.querySelector(".carousel-indicators");
-            let carouselInner = document.querySelector(".carousel-inner");
+            let carouselInner      = document.querySelector(".carousel-inner");
 
             carouselIndicators.innerHTML = "";
-            carouselInner.innerHTML = "";
+            carouselInner.innerHTML      = "";
 
-            images.forEach((img, index) => {
-
+            images.forEach((img, idx) => {
                 carouselIndicators.innerHTML += `
                     <button type="button"
                         data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide-to="${index}"
-                        class="${index === 0 ? 'active' : ''}">
+                        data-bs-slide-to="${idx}"
+                        class="${idx === 0 ? 'active' : ''}">
                         <div class="product_slide_img">
                             <img src="${img}" class="img-fluid"/>
                         </div>
@@ -881,8 +932,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
 
                 carouselInner.innerHTML += `
-                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                        ${index === 0 ? wishlistHTML : ''}
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                        ${idx === 0 ? wishlistHTML : ''}
                         <div class="carousel_item_img">
                             <img src="${img}" class="img-fluid">
                         </div>
@@ -890,165 +941,143 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
             });
 
+            // Auto-select first size
+            let firstSizeButton = document.querySelector(".size-btn");
+            if (firstSizeButton) firstSizeButton.click();
         });
 
+        // Auto-click first color on page load
+        if (index === 0) colorBox.click();
     });
 
-    // Initialize size buttons for the first loaded variant
-    attachSizeClickEvents();
+    // ------------------------------
+    // SIZE CLICK HANDLER
+    // ------------------------------
+    function attachSizeClickEvents(variant) {
+        const sizeButtons = document.querySelectorAll(".size-btn");
+        const hiddenInputVariant = document.getElementById("variantId");
+        const hiddenInputProduct = document.getElementById("productId");
 
-});
-</script>
+        sizeButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                sizeButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                    btn.style.background = "";
+                });
 
-<script>
-// ==============================
-// SIZE CLICK HANDLER FUNCTION
-// ==============================
-function attachSizeClickEvents() {
+                this.classList.add("active");
+                this.style.background = "#FAEBD7";
 
-    const sizeButtons = document.querySelectorAll(".size-btn");
-    const hiddenInputVariant = document.getElementById("variantId");
-    const hiddenInputProduct = document.getElementById("productId");
+                hiddenInputVariant.value = this.dataset.variantId;
+                hiddenInputProduct.value  = this.dataset.productId;
 
-    sizeButtons.forEach(button => {
+                document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
+                document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
 
-        button.addEventListener("click", function () {
-
-            // Remove active styles
-            sizeButtons.forEach(btn => {
-                btn.classList.remove("active");
-                btn.style.background = "";
+                // Update UI based on cart
+                updateCartUIForVariant(this.dataset.variantId);
             });
-
-            // Add active style to selected size
-            this.classList.add("active");
-            this.style.background = "#FAEBD7";
-
-            // Update hidden fields
-            hiddenInputVariant.value = this.dataset.variantId;
-            hiddenInputProduct.value = this.dataset.productId;
         });
-
-    });
-
-}
-</script>
-
-<script>
-let quantity = 1;
-let quantityBox = document.querySelector(".quantity-box");
-let qtyDisplay = document.getElementById("qtyNumber");
-let plusBtn = document.getElementById("plusBtn");
-let minusBtn = document.getElementById("minusBtn");
-let addToBagBtn = document.getElementById("addToBagBtn");
-let errorBox = document.getElementById("optionError");
-
-// Track if quantity box is already open
-let quantityBoxOpen = false;
-
-// Initially hide quantity box
-quantityBox.style.display = "none";
-
-// Function to update displayed quantity
-function updateQtyDisplay() {
-    qtyDisplay.textContent = quantity < 10 ? '0' + quantity : quantity;
-
-    // Hide quantity box if quantity is 0
-    if (quantity <= 0) {
-        quantityBox.style.display = "none";
-        quantityBoxOpen = false;
-    } else {
-        quantityBox.style.display = "block";
-    }
-}
-
-// Send data to backend
-function sendToCart(qty) {
-    let product_id = document.getElementById("productId").value;
-    let variant_id = document.getElementById("variantId").value;
-
-    if (!product_id || !variant_id) {
-        errorBox.style.display = "block";
-        errorBox.innerHTML = "Something went wrong. Please reselect options.";
-        return;
     }
 
-    fetch("{{ route('user.addToCart') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            product_id: product_id,
-            variant_id: variant_id,
-            quantity: qty
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "error") {
-            toastr.error(data.message);
+    // ------------------------------
+    // ADD TO BAG CLICK
+    // ------------------------------
+    addToBagBtn.addEventListener("click", function () {
+        let selectedColor = document.querySelector(".choose-color.active");
+        let selectedSize  = document.querySelector(".size-btn.active");
+
+        errorBox.style.display = "none";
+        errorBox.innerHTML = "";
+
+        if (!selectedColor) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Color.";
             return;
         }
-        toastr.success(data.message);
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        toastr.error("Something went wrong. Try again.");
+        if (!selectedSize) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Size.";
+            return;
+        }
+
+        if (firstClick) {
+            firstClick = false;
+
+            setQty(1);
+
+            viewMyBagDiv.style.setProperty("display", "flex", "important");
+            quantityBox.style.setProperty("display", "block", "important");
+            addToBagBtn.style.display = "none";
+
+            sendToCart(1);
+        }
     });
-}
 
-// Add to Bag Button Click
-addToBagBtn.addEventListener("click", function () {
-    errorBox.style.display = "none";
-    errorBox.innerHTML = "";
+    // ------------------------------
+    // PLUS BUTTON CLICK
+    // ------------------------------
+    plusBtn.addEventListener("click", () => {
+        if (quantityBox.style.getPropertyValue("display") !== "block") return;
 
-    // Check selected color
-    let selectedColor = document.querySelector(".choose-color.active");
-    if (!selectedColor) {
-        errorBox.style.display = "block";
-        errorBox.innerHTML = "Please Select a Color.";
-        return;
-    }
+        let qty = getQty();
+        qty += 1;
 
-    // Check selected size
-    let selectedSize = document.querySelector(".size-btn.active");
-    if (!selectedSize) {
-        errorBox.style.display = "block";
-        errorBox.innerHTML = "Please Select a Size.";
-        return;
-    }
+        setQty(qty);
+        sendToCart(qty);
+    });
 
-    // First click: open quantity box
-    if (!quantityBoxOpen) {
-        quantity = 1;
-        updateQtyDisplay();
-        quantityBoxOpen = true;
-        return; // Do NOT call addToCart yet
-    }
+    // ------------------------------
+    // MINUS BUTTON CLICK
+    // ------------------------------
+    minusBtn.addEventListener("click", () => {
+        if (quantityBox.style.getPropertyValue("display") !== "block") return;
 
-    // Second click (or more): send to cart
-    sendToCart(quantity);
+        let qty = getQty();
+
+        if (qty === 1) {
+            quantityBox.style.setProperty("display", "none", "important");
+            viewMyBagDiv.style.setProperty("display", "none", "important");
+            addToBagBtn.style.display = "block";
+
+            setQty(1);
+            firstClick = true;
+            return;
+        }
+
+        qty -= 1;
+
+        setQty(qty);
+        sendToCart(qty);
+    });
+
 });
+</script>
 
-// Plus Button
-plusBtn.addEventListener("click", () => {
-    if (!quantityBoxOpen) return; // prevent increment before box is open
-    quantity++;
-    updateQtyDisplay();
-});
 
-// Minus Button
-minusBtn.addEventListener("click", () => {
-    if (!quantityBoxOpen) return; // prevent decrement before box is open
-    if (quantity > 0) {
-        quantity--;
-        updateQtyDisplay();
-    }
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const sizeGuideBtn = document.getElementById("sizeGuideBtn");
+    const sizeChartBody = document.getElementById("sizeChartBody");
+
+    sizeGuideBtn.addEventListener("click", function() {
+        // Get size chart URL from button data attribute
+        const sizeChartImage = this.dataset.sizeChart;
+
+        if (sizeChartImage) {
+            sizeChartBody.innerHTML = `<img src="${sizeChartImage}" class="img-fluid" alt="Size Chart">`;
+        } else {
+            sizeChartBody.innerHTML = `<p class="text-center">No size chart available.</p>`;
+        }
+    });
+
+    // Clear modal content on close to avoid duplicates
+    const sizeChartModal = document.getElementById("sizechart");
+    sizeChartModal.addEventListener("hidden.bs.modal", function () {
+        sizeChartBody.innerHTML = "";
+    });
+
 });
 </script>
 
@@ -1056,7 +1085,13 @@ minusBtn.addEventListener("click", () => {
 
 
 
- -->
+
+
+
+
+
+
+
 
 
 @endsection

@@ -241,11 +241,22 @@ class UserStoreController extends Controller
             ->count();
     }
 
+    if (!$request->user()) {
+    $cartData = [];
+    } else {
+        $cartData = Addtocart::where('user_id', $request->user()->id)
+            ->where('product_id', $id)
+            ->get() 
+            ->keyBy('variants_id');
+    }
+
+    //dd($cartData);
+
 
 
 
   
-        return view('user.category.product-store-details', compact('data','product_variants','cartCount'));
+        return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData'));
     }
 
 
@@ -277,7 +288,7 @@ class UserStoreController extends Controller
             'variants_id' => $request->variant_id, 
             'quantity'    => $request->quantity
         ];
-        $data = $this->UserManagementService->product_add_to_cart($request_data);
+        $data = $this->UserManagementService->product_add_to_cart_without_quantity_increment($request_data);
 
         if(isset($data['status']) && $data['status']=='error' ){
                return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
