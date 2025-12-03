@@ -232,18 +232,47 @@ class UserStoreController extends Controller
     }
 }
 
-    //dd($product_variants);
-    $cartCount = Addtocart::where('user_id',$request->user()->id)
-        ->where('product_id',$id)
-        ->count();
+$productVariantsById = [];
+foreach ($data->product_variants as $item) {
+    $productVariantsById[$item->id] = [
+        'variant_id' => $item->id,
+        'product_id' => $item->product_id,
+        'color_hex' => $item->color->hex_code,
+        'size' => $item->size->name,
+        'actual_price' => $item->actual_price,
+        'final_price' => $item->final_price,
+        'discount_value' => $item->discount_value,
+        'discount_type' => $item->discount_type,
+        'variant_image' => is_array($item->variant_image) ? $item->variant_image : [],
+    ];
+}
 
-    //dd($cartCount);
+
+    //dd($product_variants);
+    if (!$request->user()) {
+    $cartCount = 0;
+    } else {
+        $cartCount = Addtocart::where('user_id', $request->user()->id)
+            ->where('product_id', $id)
+            ->count();
+    }
+
+    if (!$request->user()) {
+    $cartData = [];
+    } else {
+        $cartData = Addtocart::where('user_id', $request->user()->id)
+            ->where('product_id', $id)
+            ->get() 
+            ->keyBy('variants_id');
+    }
+
+    //dd($cartData);
 
 
 
 
   
-        return view('user.category.product-store-details', compact('data','product_variants','cartCount'));
+        return view('user.category.product-store-details', compact('data','product_variants','cartCount','cartData','productVariantsById'));
     }
 
 
@@ -275,7 +304,7 @@ class UserStoreController extends Controller
             'variants_id' => $request->variant_id, 
             'quantity'    => $request->quantity
         ];
-        $data = $this->UserManagementService->product_add_to_cart($request_data);
+        $data = $this->UserManagementService->product_add_to_cart_without_quantity_increment($request_data);
 
         if(isset($data['status']) && $data['status']=='error' ){
                return ApiResponse::generateResponse('error', $data['message'],(object)[],422);

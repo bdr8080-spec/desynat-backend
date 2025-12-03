@@ -3,7 +3,7 @@
 @section('content')
 <style>
 .cd-change-btn {
-     background: #8a6a4366;
+    background: #8a6a4366;
     border: 1px solid #d2b48c;
     padding: 7px 15px;
     border-radius: 8px;
@@ -11,8 +11,60 @@
     color: #000;
     cursor: pointer;
 }
-.cd-size{
-    color: #9b744d
+
+.cd-size {
+    color: #9b744d;
+    cursor: pointer;
+}
+
+.cart-counts button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: linear-gradient(to bottom, #c7a276, #9b744a);
+    color: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-counts {
+    margin-top: 12px;
+    align-items: center;
+}
+
+.qty-number {
+    font-size: 20px;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+}
+
+.action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-action {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.cart-counts {
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+
+.qty-wrapper {
+    margin-top: 12px;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
 }
 </style>
 <div class="customContainer">
@@ -79,11 +131,11 @@
 
         <div class="col-lg-7">
             <div class="productList_content ps-3">
-<div class="d-flex justify-content-between">
-    <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
-                            <button class="cd-change-btn">100+ Bought</button>
+                <div class="d-flex justify-content-between">
+                    <h4 class="fw-semibold text-capitalize">{{$data->brand->name_english}}</h4>
+                    <button class="cd-change-btn">100+ Bought</button>
 
-</div>
+                </div>
 
                 <p class="text-muted mb-1">{{$data->product_name_en}}</p>
 
@@ -111,7 +163,14 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="fw-semibold">Select Size</h6>
-                   <h6 class="cd-size">Size Guide</h6>
+                    <h6 class="cd-size"
+                        id="sizeGuideBtn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#sizechart"
+                        data-size-chart="{{ $data->upload_size_chart }}">
+                        Size Guide
+                    </h6>
+
 
                 </div>
 
@@ -131,34 +190,43 @@
                 @if ($data->customized_product==1)
                 <button class="customBtn2">Custom Order</button>
                 @endif
+
+
                 <!-- start -->
-                
-                <div class="quantity-box w-100">
-                    <div class="bag-topbar d-flex justify-content-between align-items-center mt-3">
-                        <div>
-                            <strong>({{$cartCount}} Items)</strong> View My Bag
-                        </div>
+                <div class="action-wrapper mt-3">
+
+                    <!-- VIEW MY BAG (ALWAYS FULL WIDTH) -->
+                    <div class="bag-topbar-full d-flex justify-content-between align-items-center" id="bagTopbar">
+                        <div><strong>({{$cartCount}} Items)</strong> View My Bag</div>
                         <i class="bi bi-arrow-right arrow-icon"></i>
                     </div>
-                    <div class="cart-counts d-flex gap-5 mt-2">
-                        <button class="qty-btn" id="minusBtn">
-                            <i class="bi bi-dash icons"></i>
-                        </button>
 
-                        <div class="qty-number" id="qtyNumber">01</div>
+                    <div class="action-row d-flex align-items-center gap-3 mt-2">
 
-                        <button class="qty-btn" id="plusBtn">
-                            <i class="bi bi-plus icons"></i>
-                        </button>
+                        <!-- LEFT SIDE -->
+                        <div class="left-action w-50">
+
+                            <!-- ADD TO BAG -->
+                            <button class="customBtn2 w-100" id="addToBagBtn">Add to Bag</button>
+
+                            <!-- QUANTITY BOX -->
+                            <div class="quantity-box">
+                                <div class="cart-counts d-flex justify-content-between align-items-center">
+                                    <button class="qty-btn" id="minusBtn"><i class="bi bi-dash icons"></i></button>
+                                    <div class="qty-number" id="qtyNumber">01</div>
+                                    <button class="qty-btn" id="plusBtn"><i class="bi bi-plus icons"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- BUY NOW BUTTON -->
+                        <button class="customBtn w-50" id="buyNowBtn">Buy Now</button>
+
                     </div>
 
                 </div>
-                <!-- end -->
-
-                <div class="d-flex align-items-center gap-3 mt-3">
-                    <button class="customBtn2 mt-0" id="addToBagBtn">Add to Bag</button>
-                    <button class="customBtn">Buy Now</button>
-                </div>
+            <!-- end -->
 
                 <div class="my-4">
                     <div class="desc-box p-4 rounded-4">
@@ -219,6 +287,7 @@
             </div>
             <div class="col-6 text-end">32</div>
         </div>
+
         <div class="row mb-2">
             <div class="col-6">Is it an Affiliated Product?
             </div>
@@ -286,10 +355,10 @@
 
 
     <div class="container my-4">
-          <div class="cd-header">
-                        <h4>Customers Ratings</h4>
-                        <h6 class="cd-size">View All</h6>
-                    </div>
+        <div class="cd-header">
+            <h4>Customers Ratings</h4>
+            <h6 class="cd-size">View All</h6>
+        </div>
         <div class="desc-box p-4 rounded-4">
             <div class="review-box p-4 rounded-4">
                 <div class="d-flex justify-content-between">
@@ -313,7 +382,7 @@
                     <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
                 </div>
             </div>
-    
+
             <div class="review-box p-4 rounded-4">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center gap-3">
@@ -634,6 +703,24 @@
 </div>
 
 
+
+  <div class="modal fade sizechart" id="sizechart" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Size Chart</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body" id="sizeChartBody">
+
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
 @php
 ob_start();
 @endphp
@@ -663,71 +750,160 @@ $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const productVariants = @json($product_variants);
-    const wishlistHTML = `{!! $wishlistBlock !!}`;
+    // ------------------------------
+    // VARIABLES
+    // ------------------------------
+    const productVariantsByColor = @json($product_variants);   // grouped by color
+    const productVariantsById    = @json($productVariantsById); // flat lookup by variant_id
+    const cartData               = @json($cartData);          // keyed by variants_id
+    const wishlistHTML           = `{!! $wishlistBlock !!}`;
 
-    // ======================
+    let firstClick               = true;
+
+    let quantityBox      = document.querySelector(".quantity-box");
+    let qtyDisplay       = document.getElementById("qtyNumber");
+    let plusBtn          = document.getElementById("plusBtn");
+    let minusBtn         = document.getElementById("minusBtn");
+    let addToBagBtn      = document.getElementById("addToBagBtn");
+    let errorBox         = document.getElementById("optionError");
+    let viewMyBagDiv     = document.getElementById("bagTopbar");
+
+    // ------------------------------
+    // INITIAL UI STATE
+    // ------------------------------
+    quantityBox.style.setProperty("display", "none", "important");
+    viewMyBagDiv.style.setProperty("display", "none", "important");
+
+    // ------------------------------
+    // HELPER FUNCTIONS
+    // ------------------------------
+    function getQty() {
+        return parseInt(qtyDisplay.textContent) || 1;
+    }
+
+    function setQty(qty) {
+        qtyDisplay.textContent = qty < 10 ? "0" + qty : qty;
+    }
+
+    function sendToCart(qty) {
+        let product_id = document.getElementById("productId").value;
+        let variant_id = document.getElementById("variantId").value;
+
+        if (!product_id || !variant_id) {
+            toastr.error("Something went wrong. Please reselect options.");
+            return;
+        }
+
+        fetch("{{ route('user.addToCart') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                product_id: product_id,
+                variant_id: variant_id,
+                quantity: qty
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === "error") {
+                toastr.error(data.message);
+            } else {
+                toastr.success(data.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        })
+        .catch(() => {
+            toastr.error("Something went wrong.");
+        });
+    }
+
+    function updateCartUIForVariant(variantId) {
+        const cartItem = cartData[variantId];
+
+        if (cartItem) {
+            quantityBox.style.setProperty("display", "block", "important");
+            viewMyBagDiv.style.setProperty("display", "flex", "important");
+            addToBagBtn.style.display = "none";
+
+            setQty(cartItem.quantity);
+            firstClick = false;
+        } else {
+            quantityBox.style.setProperty("display", "none", "important");
+            viewMyBagDiv.style.setProperty("display", "none", "important");
+            addToBagBtn.style.display = "block";
+
+            setQty(1);
+            firstClick = true;
+        }
+    }
+
+    // ------------------------------
+    // REMOVE DUPLICATE EVENT LISTENERS
+    // ------------------------------
+    plusBtn.replaceWith(plusBtn.cloneNode(true));
+    minusBtn.replaceWith(minusBtn.cloneNode(true));
+    addToBagBtn.replaceWith(addToBagBtn.cloneNode(true));
+
+    plusBtn     = document.getElementById("plusBtn");
+    minusBtn    = document.getElementById("minusBtn");
+    addToBagBtn = document.getElementById("addToBagBtn");
+
+    // ------------------------------
     // COLOR CLICK HANDLER
-    // ======================
-    document.querySelectorAll(".choose-color").forEach(colorBox => {
-
+    // ------------------------------
+    document.querySelectorAll(".choose-color").forEach((colorBox, index) => {
         colorBox.addEventListener("click", function () {
-
-            let colorHex = this.dataset.color;
+            const colorHex = this.dataset.color;
 
             // Highlight active color
             document.querySelectorAll(".choose-color").forEach(c => c.classList.remove("active"));
             this.classList.add("active");
 
-            // ==========================================
-            // FIXED: FIND VARIANT (productVariants IS OBJECT)
-            // ==========================================
-            let variant = Object.values(productVariants).find(v => v.color_hex === colorHex);
+            const variant = Object.values(productVariantsByColor).find(v => v.color_hex === colorHex);
             if (!variant) return;
 
-            // -----------------------
-            // UPDATE PRICE
-            // -----------------------
+            // Update price using first variant for this color
             document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
             document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
 
-            // -----------------------
-            // UPDATE SIZES
-            // -----------------------
-            let sizeContainer = document.getElementById("sizeContainer");
+            // Update sizes
+            const sizeContainer = document.getElementById("sizeContainer");
             sizeContainer.innerHTML = "";
 
             variant.sizes.forEach(size => {
+                // Find the correct variant_id for this color & size
+                const variantForSize = Object.values(productVariantsById).find(v => v.color_hex === colorHex && v.size === size);
                 sizeContainer.innerHTML += `
                     <button class="size-btn"
                         data-size="${size}"
-                        data-variant-id="${variant.variant_id}"
-                        data-product-id="${variant.product_id}">
+                        data-variant-id="${variantForSize.variant_id}"
+                        data-product-id="${variantForSize.product_id}">
                         ${size}
                     </button>
                 `;
             });
 
-            // Re-attach size handlers for new buttons
-            attachSizeClickEvents();
+            attachSizeClickEvents(); // attach event to newly created size buttons
 
-            // -----------------------
-            // UPDATE IMAGES
-            // -----------------------
-            let images = variant.variant_image;
-            let carouselIndicators = document.querySelector(".carousel-indicators");
-            let carouselInner = document.querySelector(".carousel-inner");
+            // Update images
+            const images = variant.variant_image;
+            const carouselIndicators = document.querySelector(".carousel-indicators");
+            const carouselInner      = document.querySelector(".carousel-inner");
 
             carouselIndicators.innerHTML = "";
-            carouselInner.innerHTML = "";
+            carouselInner.innerHTML      = "";
 
-            images.forEach((img, index) => {
-
+            images.forEach((img, idx) => {
                 carouselIndicators.innerHTML += `
                     <button type="button"
                         data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide-to="${index}"
-                        class="${index === 0 ? 'active' : ''}">
+                        data-bs-slide-to="${idx}"
+                        class="${idx === 0 ? 'active' : ''}">
                         <div class="product_slide_img">
                             <img src="${img}" class="img-fluid"/>
                         </div>
@@ -735,8 +911,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
 
                 carouselInner.innerHTML += `
-                    <div class="carousel-item ${index === 0 ? 'active' : ''}">
-                        ${index === 0 ? wishlistHTML : ''}
+                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                        ${idx === 0 ? wishlistHTML : ''}
                         <div class="carousel_item_img">
                             <img src="${img}" class="img-fluid">
                         </div>
@@ -744,167 +920,154 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
             });
 
+            // Auto-select first size
+            const firstSizeButton = document.querySelector(".size-btn");
+            if (firstSizeButton) firstSizeButton.click();
         });
 
+        if (index === 0) colorBox.click(); // auto-click first color
     });
 
-    // Initialize size buttons for the first loaded variant
-    attachSizeClickEvents();
+    // ------------------------------
+    // SIZE CLICK HANDLER
+    // ------------------------------
+    function attachSizeClickEvents() {
+        const sizeButtons = document.querySelectorAll(".size-btn");
+        const hiddenInputVariant = document.getElementById("variantId");
+        const hiddenInputProduct = document.getElementById("productId");
 
-});
-</script>
+        sizeButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                sizeButtons.forEach(btn => {
+                    btn.classList.remove("active");
+                    btn.style.background = "";
+                });
 
-<script>
-// ==============================
-// SIZE CLICK HANDLER FUNCTION
-// ==============================
-function attachSizeClickEvents() {
+                this.classList.add("active");
+                this.style.background = "#FAEBD7";
 
-    const sizeButtons = document.querySelectorAll(".size-btn");
-    const hiddenInputVariant = document.getElementById("variantId");
-    const hiddenInputProduct = document.getElementById("productId");
+                const variantId = this.dataset.variantId;
+                const variant = productVariantsById[variantId];
 
-    sizeButtons.forEach(button => {
+                hiddenInputVariant.value = variant.variant_id;
+                hiddenInputProduct.value  = variant.product_id;
 
-        button.addEventListener("click", function () {
+                // Update price correctly for selected size
+                document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
+                document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
 
-            // Remove active styles
-            sizeButtons.forEach(btn => {
-                btn.classList.remove("active");
-                btn.style.background = "";
+                updateCartUIForVariant(variantId);
             });
-
-            // Add active style to selected size
-            this.classList.add("active");
-            this.style.background = "#FAEBD7";
-
-            // Update hidden fields
-            hiddenInputVariant.value = this.dataset.variantId;
-            hiddenInputProduct.value = this.dataset.productId;
         });
-
-    });
-
-}
-</script>
-
-<script>
-let quantity = 1;
-let quantityBox = document.querySelector(".quantity-box");
-let qtyDisplay = document.getElementById("qtyNumber");
-let plusBtn = document.getElementById("plusBtn");
-let minusBtn = document.getElementById("minusBtn");
-let addToBagBtn = document.getElementById("addToBagBtn");
-let errorBox = document.getElementById("optionError");
-
-// Track if quantity box is already open
-let quantityBoxOpen = false;
-
-// Initially hide quantity box
-quantityBox.style.display = "none";
-
-// Function to update displayed quantity
-function updateQtyDisplay() {
-    qtyDisplay.textContent = quantity < 10 ? '0' + quantity : quantity;
-
-    // Hide quantity box if quantity is 0
-    if (quantity <= 0) {
-        quantityBox.style.display = "none";
-        quantityBoxOpen = false;
-    } else {
-        quantityBox.style.display = "block";
-    }
-}
-
-// Send data to backend
-function sendToCart(qty) {
-    let product_id = document.getElementById("productId").value;
-    let variant_id = document.getElementById("variantId").value;
-
-    if (!product_id || !variant_id) {
-        errorBox.style.display = "block";
-        errorBox.innerHTML = "Something went wrong. Please reselect options.";
-        return;
     }
 
-    fetch("{{ route('user.addToCart') }}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-        },
-        body: JSON.stringify({
-            product_id: product_id,
-            variant_id: variant_id,
-            quantity: qty
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "error") {
-            toastr.error(data.message);
+    // ------------------------------
+    // ADD TO BAG CLICK
+    // ------------------------------
+    addToBagBtn.addEventListener("click", function () {
+        const selectedColor = document.querySelector(".choose-color.active");
+        const selectedSize  = document.querySelector(".size-btn.active");
+
+        errorBox.style.display = "none";
+        errorBox.innerHTML = "";
+
+        if (!selectedColor) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Color.";
             return;
         }
-        toastr.success(data.message);
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        toastr.error("Something went wrong. Try again.");
+        if (!selectedSize) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Size.";
+            return;
+        }
+
+        if (firstClick) {
+            firstClick = false;
+
+            setQty(1);
+
+            viewMyBagDiv.style.setProperty("display", "flex", "important");
+            quantityBox.style.setProperty("display", "block", "important");
+            addToBagBtn.style.display = "none";
+
+            sendToCart(1);
+        }
     });
-}
 
-// Add to Bag Button Click
-addToBagBtn.addEventListener("click", function () {
-    errorBox.style.display = "none";
-    errorBox.innerHTML = "";
+    // ------------------------------
+    // PLUS BUTTON CLICK
+    // ------------------------------
+    plusBtn.addEventListener("click", () => {
+        if (quantityBox.style.getPropertyValue("display") !== "block") return;
 
-    // Check selected color
-    let selectedColor = document.querySelector(".choose-color.active");
-    if (!selectedColor) {
-        errorBox.style.display = "block";
-        errorBox.innerHTML = "Please Select a Color.";
-        return;
-    }
+        let qty = getQty();
+        qty += 1;
 
-    // Check selected size
-    let selectedSize = document.querySelector(".size-btn.active");
-    if (!selectedSize) {
-        errorBox.style.display = "block";
-        errorBox.innerHTML = "Please Select a Size.";
-        return;
-    }
+        setQty(qty);
+        sendToCart(qty);
+    });
 
-    // First click: open quantity box
-    if (!quantityBoxOpen) {
-        quantity = 1;
-        updateQtyDisplay();
-        quantityBoxOpen = true;
-        return; // Do NOT call addToCart yet
-    }
+    // ------------------------------
+    // MINUS BUTTON CLICK
+    // ------------------------------
+    minusBtn.addEventListener("click", () => {
+        if (quantityBox.style.getPropertyValue("display") !== "block") return;
 
-    // Second click (or more): send to cart
-    sendToCart(quantity);
-});
+        let qty = getQty();
 
-// Plus Button
-plusBtn.addEventListener("click", () => {
-    if (!quantityBoxOpen) return; // prevent increment before box is open
-    quantity++;
-    updateQtyDisplay();
-});
+        if (qty === 1) {
+            quantityBox.style.setProperty("display", "none", "important");
+            viewMyBagDiv.style.setProperty("display", "none", "important");
+            addToBagBtn.style.display = "block";
 
-// Minus Button
-minusBtn.addEventListener("click", () => {
-    if (!quantityBoxOpen) return; // prevent decrement before box is open
-    if (quantity > 0) {
-        quantity--;
-        updateQtyDisplay();
-    }
+            setQty(1);
+            firstClick = true;
+            return;
+        }
+
+        qty -= 1;
+
+        setQty(qty);
+        sendToCart(qty);
+    });
+
 });
 </script>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const sizeGuideBtn = document.getElementById("sizeGuideBtn");
+    const sizeChartBody = document.getElementById("sizeChartBody");
+
+    sizeGuideBtn.addEventListener("click", function() {
+        // Get size chart URL from button data attribute
+        const sizeChartImage = this.dataset.sizeChart;
+
+        if (sizeChartImage) {
+            sizeChartBody.innerHTML = `<img src="${sizeChartImage}" class="img-fluid" alt="Size Chart" style="max-width: 100%; height: 400px; object-fit: contain;">`;
+        } else {
+            sizeChartBody.innerHTML = `<p class="text-center">No size chart available.</p>`;
+        }
+    });
+
+    // Clear modal content on close to avoid duplicates
+    const sizeChartModal = document.getElementById("sizechart");
+    sizeChartModal.addEventListener("hidden.bs.modal", function () {
+        sizeChartBody.innerHTML = "";
+    });
+
+});
+</script>
+
+
+
+
+
+
 
 
 
