@@ -233,11 +233,13 @@ class UserStoreController extends Controller
 }
 
     //dd($product_variants);
-    $cartCount = Addtocart::where('user_id',$request->user()->id)
-        ->where('product_id',$id)
-        ->count();
-
-    //dd($cartCount);
+    if (!$request->user()) {
+    $cartCount = 0;
+    } else {
+        $cartCount = Addtocart::where('user_id', $request->user()->id)
+            ->where('product_id', $id)
+            ->count();
+    }
 
 
 
