@@ -20,6 +20,49 @@
         position: absolute;
         z-index: 0;
     }
+
+    .specifications-row {
+        background: #FAFAFA;
+        border: 1px solid #cccccc45;
+    }
+
+    .mltimg img {
+        object-fit: fill !important;
+    }
+
+    .upload-image1 {
+        position: relative;
+        z-index: 1;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        /* this prevents overlap */
+    }
+
+    #edit_uploadChart_preview {
+        /* margin-top: 15px; ensures preview goes below */
+        position: absolute;
+        z-index: 2;
+    }
+
+    #edit_uploadChart_preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover
+    }
+
+    .multiple-img1 {
+        height: 125px;
+        width: 270px;
+
+    }
+
+    .multiple-img1 img {
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+
+
+    }
 </style>
 
 <section class="section dashboard">
@@ -343,7 +386,8 @@
 
                             {{-- Other Variation show start --}}
                             @foreach ($item->otherVariation as $var => $value)
-                                <div class="Varient_show inside_variation{{ $product_Variation_count }}">
+                                <div class="Varient_show inside_variation{{ $product_Variation_count }}"
+                                    @if ($var !== 0) style="background: #fff;border: 1px dashed #0d0606;border-radius: 10px; box-shadow: 0px 2px 4px #ddd;" @endif>
                                     <div class="wapper-header mt-2">
                                         <div class="row price-block">
 
@@ -570,7 +614,8 @@
                                                         <label>Percentage</label>
                                                     </div>
                                                     <input type="number" class="form-control notapplyspace"
-                                                        placeholder="Eg.10%" name="discount_value[0][]"
+                                                        placeholder="Eg.10%"
+                                                        name="discount_value[{{ $product_Variation_count }}][]"
                                                         id="discount_value_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
                                                         value="{{ $value->discount_value }}">
                                                     <p class="text-danger"
@@ -586,7 +631,8 @@
                                                         <label>Final Price</label>
                                                     </div>
                                                     <input type="number" class="form-control notapplyspace"
-                                                        placeholder="Eg. 299.00 KD" name="final_price[0][]"
+                                                        placeholder="Eg. 299.00 KD"
+                                                        name="final_price[{{ $product_Variation_count }}][]"
                                                         id="final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
                                                         value="{{ $value->final_price }}">
                                                     <p class="text-danger"
@@ -638,9 +684,11 @@
                             <label>Set Min.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="min_card_quantity" id="min_card_quantity_0">
+                            name="min_card_quantity" value="{{ $product_details->min_card_quantity }}"
+                            id="min_card_quantity_0">
                         <p class="text-danger" id="error-min_card_quantity"></p>
                         <p class="text-danger" id="error-min_card_quantity_0"></p>
+
 
                     </div>
                 </div>
@@ -650,9 +698,11 @@
                             <label>Set Max.cart quantity</label>
                         </div>
                         <input type="number" class="form-control notapplyspace" placeholder="Eg.20"
-                            name="max_card_quantity" id="max_card_quantity_0">
+                            name="max_card_quantity" value="{{ $product_details->max_card_quantity }}"
+                            id="max_card_quantity_0">
                         <p class="text-danger" id="error-max_card_quantity"></p>
                         <p class="text-danger" id="error-max_card_quantity_0"></p>
+
 
                     </div>
                 </div>
@@ -670,14 +720,16 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" checked value='1'>
+                                        <input type="radio" name="product_return" value='1'
+                                            @if ($product_details->product_return == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_return" value='0'>
+                                        <input type="radio" name="product_return" value='0'
+                                            @if ($product_details->product_return == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -685,20 +737,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="@if ($product_details->product_return == 0) display:none; @endif">
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>If Yes,Total days for returning</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.KD 299.00"
-                                    name="return_days">
+                                    name="return_days" value="{{ $product_details->return_days }}">
                                 <p class="text-danger" id="error-return_days"></p>
 
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+
                 <div class="col-lg-6 col-md-6">
                     <div class="title24">Is this product Exchangable ?</div>
                     <div class="row">
@@ -707,14 +763,16 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_exchangable" checked value="1">
+                                        <input type="radio" name="product_exchangable" checked value="1"
+                                            @if ($product_details->product_exchangable == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="product_exchangable" value="0">
+                                        <input type="radio" name="product_exchangable" value="0"
+                                            @if ($product_details->product_exchangable == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -723,21 +781,23 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="@if ($product_details->product_exchangable == 0) display:none; @endif">
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Is this product exchangeable?</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.15 days"
-                                    name="exchangable_days">
+                                    name="exchangable_days" value="{{ $product_details->exchangable_days }}">
                                 <p class="text-danger" id="error-exchangable_days"></p>
 
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
+
         </div>
 
         <div class="pt-3">
@@ -750,14 +810,16 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="review_rating" value="1" checked>
+                                        <input type="radio" name="review_rating" value="1"
+                                            @if ($product_details->review_rating == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="review_rating" value="0">
+                                        <input type="radio" name="review_rating" value="0"
+                                            @if ($product_details->review_rating == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -774,14 +836,16 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="affiliated_product" checked value="1">
+                                        <input type="radio" name="affiliated_product" checked value="1"
+                                            @if ($product_details->affiliated_product == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="affiliated_product" value="0">
+                                        <input type="radio" name="affiliated_product" value="0"
+                                            @if ($product_details->affiliated_product == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -798,14 +862,16 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="customized_product" checked value="1">
+                                        <input type="radio" name="customized_product" value="1"
+                                            @if ($product_details->customized_product == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="customized_product" value="0">
+                                        <input type="radio" name="customized_product" value="0"
+                                            @if ($product_details->customized_product == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -822,14 +888,16 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="ready_to_ship" checked value="1">
+                                        <input type="radio" name="ready_to_ship" value="1"
+                                            @if ($product_details->ready_to_ship == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="ready_to_ship" value="0">
+                                        <input type="radio" name="ready_to_ship" value="0"
+                                            @if ($product_details->ready_to_ship == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -846,14 +914,16 @@
                                 class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="cash_on_delivery" checked value="1">
+                                        <input type="radio" name="cash_on_delivery" value="1"
+                                            @if ($product_details->cash_on_delivery == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
                                 </div>
                                 <div class="check_radio">
                                     <label class="radio-group">
-                                        <input type="radio" name="cash_on_delivery" value="0">
+                                        <input type="radio" name="cash_on_delivery" value="0"
+                                            @if ($product_details->cash_on_delivery == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -867,23 +937,36 @@
 
         <div class="title24">Upload Size Chart</div>
         <div class="product-pnls mt-4">
-            <div class="upload-image" style="height:170px;width: 270px;">
-                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
-                    <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
-                        style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
-
-                    <img id="uploadedImg" src=""
-                        style="width:100px; display:none; object-fit:cover; border-radius:6px;object-fit:cover; height: 110px;">
-
+            <div class="upload-image" style="height:170px; width: 300px;">
+                <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.7rem; ">
+                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:60px;">
                     <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;"
                         name="upload_size_chart">
-                    <p class="text-danger" id="error-upload_size_chart"></p>
                 </label>
 
-                <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
+
+                {{-- show image code --}}
+
+                <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
+                    @if (!empty($product_details->upload_size_chart))
+                        <div class="multiple-img1 position-relative">
+                            <img src="{{ $product_details->upload_size_chart }}">
+                            <span class="remove-ic remove-image"
+                                style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+
+                            <input type="hidden" accept="image/*"
+                                value="{{ $product_details->upload_size_chart }}" name="old_upload_size_chart">
+
+                        </div>
+                    @endif
+                </div>
+                {{-- show image code end here --}}
+                <p class="text-danger" id="error-upload_size_chart"></p>
+
             </div>
 
+            {{-- <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="edit_uploadChart_preview"></div> --}}
         </div>
 
         <!--
@@ -915,8 +998,10 @@
 
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn cancel-outline w-100"
-                onclick="location.href='{{ route('seller.products') }}'">Cancel</button>
-            <button type="submit" class="btn add-fillbtn w-100">Add Product</button>
+                onclick="location.href='{{ route('seller.view_product', Request()->id) }}'">Cancel</button>
+            <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
+
+
         </div>
     </form>
 
@@ -1119,7 +1204,7 @@
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
-                    <p class="text-danger" id="error-variant_image_${product_Variation_count}_0"></p>
+                    <p class="text-danger" id="error-variant_image_${product_Variation_count}"></p>
 
                 </div>
 
@@ -1457,10 +1542,10 @@
             cache: false,
             contentType: false,
             processData: false,
-            // beforeSend: function() {
-            //     // Show loader
-            //     $('#loader').show();
-            // },
+            beforeSend: function() {
+                // Show loader
+                $('#loader').show();
+            },
             success: function(response) {
                 console.log(response);
 
@@ -1518,10 +1603,10 @@
                     }
                 });
             },
-            // complete: function() {
-            //     // Hide loader (after success or error)
-            //     $('#loader').hide();
-            // }
+            complete: function() {
+                // Hide loader (after success or error)
+                $('#loader').hide();
+            }
 
 
         });

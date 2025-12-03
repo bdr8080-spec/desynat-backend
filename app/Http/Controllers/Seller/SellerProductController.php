@@ -1469,12 +1469,11 @@ public function edit_product1($id){
 
     $product_details=$product['data'];
 
-    dump($product_details);
+    // dump($product_details);
     
     return view('dealer.product.edit_product2',compact('category','brand','color','size','product_details'));
-    
+       
 }
-
 
 public function edit_product_code1(Request $request, $id){
 
@@ -1522,27 +1521,47 @@ public function edit_product_code1(Request $request, $id){
             'old_variant_image.*' => ['nullable'],
 
            
-          'color_id' => ['required', 'array'],
-          'size_id' => ['required', 'array', ],
-          'color_id.*' => ['required','exists:colors,id'],
-          'size_id.*' => ['required','exists:sizes,id'],
+        //   'color_id' => ['required', 'array'],
+        //   'size_id' => ['required', 'array', ],
+        //   'color_id.*' => ['required','exists:colors,id'],
+        //   'size_id.*' => ['required','exists:sizes,id'],
 
-          'total_stock' => ['required', 'array'],
-          'sku' => ['required', 'array'],
-        //   'sku_threshold_value' => ['required', 'array'],
-          'actual_price' => ['required', 'array'],
-          'discount_type' => ['required', 'array'],
-          'discount_value' => ['required', 'array'],
-          'final_price' => ['required', 'array'],
+        //   'total_stock' => ['required', 'array'],
+        //   'sku' => ['required', 'array'],
+        // //   'sku_threshold_value' => ['required', 'array'],
+        //   'actual_price' => ['required', 'array'],
+        //   'discount_type' => ['required', 'array'],
+        //   'discount_value' => ['required', 'array'],
+        //   'final_price' => ['required', 'array'],
 
-         'total_stock.*' => ['required'],
-          'sku.*' => ['required'],
-        //   'sku_threshold_value.*' => ['required'],
-          'actual_price.*' => ['required'],
-          'discount_type.*' => ['required'],
-          'discount_value.*' => ['required'],
-          'final_price.*' => ['required'],
+        //  'total_stock.*' => ['required'],
+        //   'sku.*' => ['required'],
+        // //   'sku_threshold_value.*' => ['required'],
+        //   'actual_price.*' => ['required'],
+        //   'discount_type.*' => ['required'],
+        //   'discount_value.*' => ['required'],
+        //   'final_price.*' => ['required'],
 
+
+          // Colors validation (first level array)
+          'color_id' => 'required|array|min:1',
+          'color_id.*' => 'required|integer|exists:colors,id',
+  
+          // Sizes: second level array
+          'size_id' => 'required|array|min:1',
+          'size_id.*' => 'required|array|min:1',
+          'size_id.*.*' => 'required|integer|exists:sizes,id',
+  
+          // Product Inventory
+          'total_stock.*.*' => 'required|integer|min:0',
+          'sku.*.*' => 'required|string|max:50',
+          'actual_price.*.*' => 'required|numeric|min:0',
+      
+          // Discount fields
+          'discount_type.*.*' => 'required|in:1,2', // 1=percentage, 2=fixed price
+          'discount_value.*.*' => 'required|numeric|min:0',
+          'final_price.*.*' => 'required|numeric|min:0',
+  
 
           // product vartion end
           
@@ -1561,22 +1580,47 @@ public function edit_product_code1(Request $request, $id){
            'upload_size_chart' => 'required_without:old_upload_size_chart',
            'old_upload_size_chart' => 'required_without:upload_size_chart',
 
-        //   if The category is women
-                // MAIN ARRAY FIELDS (required only if category_id = 2)
-            'bust'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-            'waist'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-            'hip'            => [Rule::requiredIf($request->category_id == 2), 'array'],
-            'shoulder'       => [Rule::requiredIf($request->category_id == 2), 'array'],
-            'sleeve_length'  => [Rule::requiredIf($request->category_id == 2), 'array'],
-            'length'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+        // //   if The category is women
+        //         // MAIN ARRAY FIELDS (required only if category_id = 2)
+        //     'bust'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+        //     'waist'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+        //     'hip'            => [Rule::requiredIf($request->category_id == 2), 'array'],
+        //     'shoulder'       => [Rule::requiredIf($request->category_id == 2), 'array'],
+        //     'sleeve_length'  => [Rule::requiredIf($request->category_id == 2), 'array'],
+        //     'length'         => [Rule::requiredIf($request->category_id == 2), 'array'],
 
-            // INNER ARRAY VALUES (apply required only if category_id = 2)
-            'bust.*'           => [Rule::requiredIf($request->category_id == 2)],
-            'waist.*'          => [Rule::requiredIf($request->category_id == 2)],
-            'hip.*'            => [Rule::requiredIf($request->category_id == 2)],
-            'shoulder.*'       => [Rule::requiredIf($request->category_id == 2)],
-            'sleeve_length.*'  => [Rule::requiredIf($request->category_id == 2)],
-            'length.*'         => [Rule::requiredIf($request->category_id == 2)], 
+        //     // INNER ARRAY VALUES (apply required only if category_id = 2)
+        //     'bust.*'           => [Rule::requiredIf($request->category_id == 2)],
+        //     'waist.*'          => [Rule::requiredIf($request->category_id == 2)],
+        //     'hip.*'            => [Rule::requiredIf($request->category_id == 2)],
+        //     'shoulder.*'       => [Rule::requiredIf($request->category_id == 2)],
+        //     'sleeve_length.*'  => [Rule::requiredIf($request->category_id == 2)],
+        //     'length.*'         => [Rule::requiredIf($request->category_id == 2)], 
+
+           // Body Measurements arrays (required only for category 2)
+           'bust'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'waist'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'hip'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'shoulder'      => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'sleeve_length' => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'length'        => [Rule::requiredIf($request->category_id == 2), 'array'],
+       
+           // Inner-level Arrays (color index)
+           'bust.*'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'waist.*'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'hip.*'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'shoulder.*'      => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'sleeve_length.*' => [Rule::requiredIf($request->category_id == 2), 'array'],
+           'length.*'        => [Rule::requiredIf($request->category_id == 2), 'array'],
+       
+           // Actual input values (size-level)
+           'bust.*.*'          => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+           'waist.*.*'         => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+           'hip.*.*'           => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+           'shoulder.*.*'      => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+           'sleeve_length.*.*' => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+           'length.*.*'        => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+            
             
       ],[
             'upload_size_chart.required_without' => 'Upload size Chart image is required.',
@@ -1715,20 +1759,25 @@ public function edit_product_code1(Request $request, $id){
         
       ]);
 
-        $validate->after(function ($validate) use ($request) {
-            $totalStock = $request->total_stock;
-            $sku        = $request->sku;
+      $validate->after(function ($validate) use ($request) {
+        $totalStock = $request->total_stock;
+        $sku        = $request->sku;
 
-            if (is_array($totalStock) && is_array($sku)) {
-                foreach ($sku as $index => $skuValue) {
-                    $stockValue = $totalStock[$index] ?? null;
+        if (is_array($totalStock) && is_array($sku)) {
+            foreach ($sku as $index => $skuValue) {
 
-                    if ($stockValue !== null && $skuValue >= $stockValue) {
-                        $validate->errors()->add("sku.$index", "SKU Limit Not should be greater than Total Stock");
-                    }
+                foreach ($skuValue as $index1 => $skuValue1) {
+
+                $stockValue = $totalStock[$index][$index1] ?? null;
+
+                if ($stockValue !== null && $skuValue1 >= $stockValue) {
+                    $validate->errors()->add("sku.$index.$index1", "SKU Limit Not should be greater than Total Stock");
                 }
             }
-        });
+
+        }
+        }
+    });
         
 
      $validate->after(function ($validate) use ($request) {
@@ -1758,20 +1807,27 @@ public function edit_product_code1(Request $request, $id){
     // Group sizes by color
     $grouped = [];
 
-    foreach ($colors as $i => $color) {
-        $size = $sizes[$i] ?? null;
-        $grouped[$color][] = $size;
-    }
+       // Group sizes by color
+       $grouped = [];
 
-    // Validate: for same color → sizes must be unique
-    foreach ($grouped as $color => $sizesForColor) {
-        if (count($sizesForColor) !== count(array_unique($sizesForColor))) {
-            $validate->errors()->add(
-                'size_id_'.$color,
-                "For color sizes must be different."
-            );
-               }
-                 }
+
+       foreach ($colors as $i => $color) {
+           $size = $sizes[$i] ?? null;
+   
+           foreach ($size as $i1 => $si) {
+               $grouped[$i][] = $si;
+           }
+       }
+       
+       // // Validate: for same color → sizes must be unique
+       foreach ($grouped as $color => $sizesForColor) {
+           if (count($sizesForColor) !== count(array_unique($sizesForColor))) {
+               $validate->errors()->add(
+                   'size_id_'.$color,
+                   "For color sizes must be different."
+               );
+           }
+       }
             });
 
       
@@ -1780,32 +1836,8 @@ public function edit_product_code1(Request $request, $id){
          }
 
          
-     if($request->category_id=='2'){   // if the category is women Then These field is manditary
 
-      $validate = Validator::make($request->all(), [               
-          'bust'=>'required|array',
-          'waist'=>'required|array',
-          'hip'=>'required|array',
-          'shoulder'=>'required|array',
-          'sleeve_length'=>'required|array',
-          'length'=>'required|array',
-
-          'bust.*'=>'required',
-          'waist.*'=>'required',
-          'hip.*'=>'required',
-          'shoulder.*'=>'required',
-          'sleeve_length.*'=>'required',
-          'length.*'=>'required',  
-
-        ]);
-      
-      if($validate->fails()){
-          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
-      }
-
-     }
-
-
+         
      // Product Vartion Image
 
      $dir="Product";
@@ -1821,6 +1853,7 @@ public function edit_product_code1(Request $request, $id){
 
 //    dd($request->variant_image);
 
+
 foreach ($request->color_id as $key => $val) {
 
     $final_variation_images[$key] = []; // initialize
@@ -1830,40 +1863,35 @@ foreach ($request->color_id as $key => $val) {
     // 1️⃣ Add OLD images (if exist)
     if (!empty($request->old_variant_image)) {
 
+        if(isset($request->old_variant_image[$key])!==false){
+
         foreach ($request->old_variant_image[$key] as $oldImgPath) {
-
-            //  foreach($oldImgPath as $key1=>$Image2){
                   $final_variation_images[$key][$count_array]=$oldImgPath;  // chart Image
-
-
                   $count_array++;
-            //  }
-
-            // $final_variation_images[$key][] = $oldImgPath;  // existing saved path
+                  
         }
+
     }
 
-
+    }
+    
     // 2️⃣ Add NEW uploaded images (if exist)
-    if (!empty($request->variant_image[$key])) {
+    if (isset($request->variant_image)) {
+        
+        if(isset($request->variant_image[$key])!==false){
 
         foreach ($request->variant_image[$key] as $imgFile) {
-
-            // foreach($imgFile as $key1=>$Image2){
 
             $uploadedPath = doc_upload($imgFile, $dir);   // upload
             $final_variation_images[$key][$count_array] = $uploadedPath;
 
-            //  }
         }
     }
 
-    // 3️⃣ If neither → stays empty
+    }
+
 }
 
-
-
-// dd($final_variation_images);
 
     //  Product Size Chart Upload 
      if($request->upload_size_chart){ 
@@ -1874,7 +1902,7 @@ foreach ($request->color_id as $key => $val) {
     }
 
 $request_data=(object) [
-'product_id'=>$request->product_id,
+'product_id'=>$id,
 'seller_id'=>$seller_id,
 'category_id' => $request->category_id,
 'subcategory_id' => $request->subcategory_id,
@@ -1934,7 +1962,7 @@ $request_data=(object) [
 
 
 
-  $data=  $this->SellerProductService->edit_Product($request_data);
+  $data=  $this->SellerProductService->edit_Product_web($request_data);
 
   if(isset($data['status']) && $data['status']=='error' ){
       return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);

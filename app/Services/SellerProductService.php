@@ -1257,6 +1257,176 @@ foreach ($product_variation as $color_id => $items) {
     return ['status'=>'success','message'=>'single product detaile fetch successfully','data'=>$product_data];
         }
 
+
+
+        
+
+
+
+public function edit_Product_web($request){
+
+    try{
+
+    
+        DB::beginTransaction();
+        
+        // FILTER PRODUCT TABLE DATA SEPRATE
+        
+        $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
+        
+            if($seller_details->admin_verify!=='2'){
+                return ['status'=>'error','message'=>"You store Didn't Accept or reject By Admin",'data'=>[]];    
+            }
+
+            $product_id= $request->product_id;
+
+            $match=[
+                'id'=>$product_id
+            ];
+        
+            $product=[
+                'id'=>$product_id,
+                'seller_id'=>$request->seller_id,
+                'store_id'=>$seller_details->store_info->id,
+                'category_id' => $request->category_id,
+                'subcategory_id' => $request->subcategory_id,
+                'brand_id' => $request->brand_id,
+                'other_en' => $request->other_en,
+                'other_ar' => $request->other_ar,
+        
+                'product_name_en' => $request->product_name_en,
+                'product_name_ar' => $request->product_name_ar,
+                    
+                'description_en' => $request->description_en,
+                'description_ar' => $request->description_ar,
+                        
+                'min_card_quantity'=> $request->min_card_quantity,
+                'max_card_quantity'=> $request->max_card_quantity,
+                'product_return'=> $request->product_return, // 0 Not return 1 return Availble 
+                'return_days'=> $request->return_days,
+                'product_exchangable'=> $request->product_exchangable,  // 0 not 1 yes
+                'exchangable_days'=> $request->exchangable_days,
+                'review_rating'=> $request->review_rating, // 0 not 1 yes
+                'affiliated_product'=> $request->affiliated_product, // // 0 not 1 yes
+                'customized_product'=> $request->customized_product, // // 0 not 1 yes
+                'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
+                'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
+                'upload_size_chart'=> $request->upload_size_chart
+                ];
+        
+            $product_data=  product::UpdateOrCreate($match,$product);     
+        
+        // old specification delete
+        ProductSpecification::where('product_id',$product_id)->delete();
+
+
+        // specification  code start
+        foreach($request->product_spe_en as $key=>$val){
+
+        $specification_array=[
+            // specification
+        'product_id'=> $product_id,
+        'name_en'=> $request->product_spe_en[$key],
+        'feature_en'=> $request->product_spe_feature_en[$key],
+        'name_ar'=> $request->product_spe_ar[$key],
+        'feature_ar'=> $request->product_spe_feature_ar[$key],
+        ];
+
+        $product_data=  ProductSpecification::create($specification_array);
+
+        }
+        
+        // variation code 
+        
+        $existingVariants = ProductVariant::where('product_id', $product_id)
+        ->pluck('id')
+        ->toArray();
+        
+        $newVariantIDs = [];
+
+foreach($request->color_id as $key=>$val){
+
+    foreach($request->size_id[$key] as $size_key=>$size_data){            
+        
+
+    $match=[
+        'product_id'=> $product_id,
+        'color_id' => $request->color_id[$key],
+        'size_id' => $size_data,
+            ];
+
+    $variation_array=[
+    'product_id'=> $product_id,
+    // product vartion start
+    'variant_image' => $request->variant_image[$key],
+    'color_id' => $request->color_id[$key],
+
+
+
+    'size_id' => $size_data,
+    'total_stock' => $request->total_stock[$key][$size_key],
+    'sku' => $request->sku[$key][$size_key],
+    // 'sku_threshold_value' => $request->sku_threshold_value[$key],
+    'actual_price' => $request->actual_price[$key][$size_key],
+    'discount_type' => $request->discount_type[$key][$size_key],
+    'discount_value' => $request->discount_value[$key][$size_key],
+    'final_price' => $request->final_price[$key][$size_key],
+    
+    // product vartion end  
+    ];
+    
+    if($request->category_id==2){
+    
+        $variation_array['bust']= $request->bust[$key][$size_key]??null; // only provide when category is women
+        $variation_array['waist']= $request->waist[$key][$size_key]??null; // only provide when category is women
+        $variation_array['hip']= $request->hip[$key][$size_key]??null;  // only provide when category is women
+        $variation_array['shoulder']= $request->shoulder[$key][$size_key]??null; // only provide when category is women
+        $variation_array['sleeve_length']= $request->sleeve_length[$key][$size_key]??null; // only provide when category is women
+        $variation_array['length']= $request->length[$key][$size_key]??null; // only provide when category is women      
+        }
+    
+        // dump($variation_array);
+        
+
+        $product_data=  ProductVariant::updateOrCreate($match,$variation_array);
+        $newVariantIDs[] = $product_data->id;
+
+
+    }
+    
+}
+
+dd("33");
+   // DELETE VARIANTS NOT INCLUDED IN FORM
+   ProductVariant::where('product_id', $product_id)
+   ->whereNotIn('id', $newVariantIDs)
+   ->delete();
+        
+        
+        // if ($product->isEmpty()) {
+        //         return ['status'=>'success','message'=>"No Product found",'data'=>[]];
+        //     // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
+        // }
+        
+        
+        $request_data=(object) [
+            'product_id'=>$product_id,    
+        ];
+        
+        $add_product_data=$this->single_product_details_fetch($request_data);
+        
+        DB::commit();
+        
+        return ['status'=>'success','message'=>"Product Update successfully",'data'=>$add_product_data['data']];
+        
+        } 
+        catch (\Exception $e) {
+            return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+        
+        }
+
+
+    }
     
 
 
