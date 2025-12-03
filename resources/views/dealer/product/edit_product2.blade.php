@@ -3,6 +3,7 @@
 @php
     $specification_count = 0;
     $product_Variation_count = 0;
+    $product_Variation_inside_count = 0;
 
 @endphp
 
@@ -80,7 +81,8 @@
                     <option value="">Select Brand</option>
 
                     @foreach ($brand as $item)
-                        <option value="{{ $item->id }}">{{ $item->name_english }}</option>
+                        <option value="{{ $item->id }}" @if ($product_details->brand_id == $item->id) selected @endif>
+                            {{ $item->name_english }}</option>
                     @endforeach
 
                 </select>
@@ -184,7 +186,7 @@
                                     class="form-control" placeholder="Enter product name" name="product_spe_en[]"
                                     value="{{ $item->name_en }}">
 
-                                <p id="error-product_spe_en_0" class="text-danger"></p>
+                                <p id="error-product_spe_en_{{ $specification_count }}" class="text-danger"></p>
 
                             </div>
 
@@ -202,7 +204,7 @@
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                                         class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
                                         value="{{ $item->name_ar }}">
-                                    <p class="text-danger" id="error-product_spe_ar_0"></p>
+                                    <p class="text-danger" id="error-product_spe_ar_{{ $specification_count }}"></p>
 
                                 </div>
 
@@ -221,7 +223,8 @@
                                     oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
                                     class="form-control" placeholder="Enter product feature"
                                     name="product_spe_feature_en[]" value="{{ $item->feature_en }}">
-                                <p class="text-danger" id="error-product_spe_feature_en_0"></p>
+                                <p class="text-danger" id="error-product_spe_feature_en_{{ $specification_count }}">
+                                </p>
 
                             </div>
 
@@ -238,13 +241,18 @@
                                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                                         class="form-control" placeholder="Enter product feature"
                                         name="product_spe_feature_ar[]" value="{{ $item->feature_ar }}">
-                                    <p class="text-danger" id="error-product_spe_feature_ar_0"></p>
+                                    <p class="text-danger"
+                                        id="error-product_spe_feature_ar_{{ $specification_count }}"></p>
 
                                 </div>
 
                             </div>
                         </div>
                     </div>
+
+                    @php
+                        $specification_count++;
+                    @endphp
                 @endforeach
 
             </div>
@@ -252,285 +260,367 @@
         </div>
 
         <!----- variant panel ------>
-        @foreach ($product_details->variation_Group as $key => $item)
-            <div class="MainVarient variant-panel-bg">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form product-row">
-                            <div class="label-flex">
-                                <label>Colour</label>
+
+        <div class="variant-panel">
+
+
+            @foreach ($product_details->variation_Group as $key => $item)
+                <div class="MainVarient variant-panel-bg ">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="sub-form product-row">
+                                <div class="label-flex">
+                                    <label>Colour</label>
+                                </div>
+
+                                <select class="form-select form-control color-select"
+                                    aria-label="Default select example" name="color_id[]" rel="0">
+                                    <option value="">Select Colour</option>
+                                    @foreach ($color as $item1)
+                                        <option value="{{ $item->id }}"
+                                            @if ($item->color_id == $item1->id) selected @endif>{{ $item1->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p class="text-danger" id="error-color_id_{{ $product_Variation_count }}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="">
+
+                        <div class="product-pnls mt-4" id="variant_image_id{{ $product_Variation_count }}">
+                            <div class="upload-image" style="height:170px;">
+                                <label id="uploadLabel"
+                                    style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
+                                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
+                                    <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
+                                    <input type="file" accept="image/*" multiple id="edit_imageUpload"
+                                        style="opacity:0;" name="variant_image[{{ $product_Variation_count }}][]"
+                                        rel="{{ $product_Variation_count }}">
+                                </label>
+
+                                <p class="text-danger" id="error-variant_image"></p>
+                                <p class="text-danger" id="error-variant_image_{{ $product_Variation_count }}"></p>
+
                             </div>
 
-                            <select class="form-select form-control color-select" aria-label="Default select example"
-                                name="color_id[]" rel="0">
-                                <option value="">Select Colour</option>
-                                @foreach ($color as $item1)
-                                    <option value="{{ $item->id }}"
-                                        @if ($item->color_id == $item1->id) selected @endif>{{ $item1->name }}</option>
+                            {{-- database image code --}}
+
+                            @if (!empty($item->variant_image))
+                                @foreach ($item->variant_image as $key0 => $chart)
+                                    <div class="multiple-img position-relative">
+                                        <img src="{{ $chart }}" class="w-100 rounded">
+                                        <span class="remove-ic remove-image"
+                                            style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+
+                                        <input type="text" accept="image/*" multiple id="edit_imageUpload"
+                                            style="opacity:0;"
+                                            name="old_variant_image[{{ $product_Variation_count }}][{{ $key0 }}]"
+                                            value="{{ $chart }}" rel="{{ $product_Variation_count }}">
+
+                                    </div>
                                 @endforeach
-                            </select>
-                            <p class="text-danger" id="error-color_id_0"></p>
-                        </div>
-                    </div>
-                </div>
+                            @endif
+                            {{-- database image code end Here --}}
 
-                <div class="variant-panel">
-
-                    <div class="product-pnls mt-4" id="variant_image_id{{ $product_Variation_count }}">
-                        <div class="upload-image" style="height:170px;">
-                            <label id="uploadLabel"
-                                style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
-                                <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
-                                <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
-                                <input type="file" accept="image/*" multiple id="edit_imageUpload"
-                                    style="opacity:0;" name="variant_image[{{ $product_Variation_count }}][]"
-                                    rel="{{ $product_Variation_count }}">
-                            </label>
-
-                            <p class="text-danger" id="error-variant_image"></p>
-                            <p class="text-danger" id="error-variant_image_0"></p>
-
+                            <div class="product-multiple d-flex flex-wrap gap-2"
+                                id="previewContainer{{ $product_Variation_count }}"></div>
                         </div>
 
-                        {{-- database image code --}}
+                        {{-- Add New Variationc code --}}
+                        <div class="mt-3 d-flex justify-content-between py-3">
+                            <div class="title24">Add Variation FDF </div>
+                            <div class="sep-icon " rel="{{ $product_Variation_count }}">
+                                <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation"
+                                    alt="add" rel="{{ $product_Variation_count }}">
+                            </div>
+                        </div>
+                        {{-- Add New Variationc code --}}
 
-                        @if (!empty($item->variant_image))
-                            @foreach ($item->variant_image as $key0 => $chart)
-                                <div class="multiple-img position-relative">
-                                    <img src="{{ $chart }}" class="w-100 rounded">
-                                    <span class="remove-ic remove-image"
-                                        style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
 
-                                    <input type="text" accept="image/*" multiple id="edit_imageUpload"
-                                        style="opacity:0;"
-                                        name="old_variant_image[{{ $product_Variation_count }}][{{ $key0 }}]"
-                                        value="{{ $chart }}" rel="{{ $product_Variation_count }}">
+                        <div class="inside_variation">
+
+                            {{-- Other Variation show start --}}
+                            @foreach ($item->otherVariation as $var => $value)
+                                <div class="Varient_show inside_variation{{ $product_Variation_count }}">
+                                    <div class="wapper-header mt-2">
+                                        <div class="row price-block">
+
+                                            <div class="col-lg-3">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Size</label>
+                                                    </div>
+
+                                                    <select class="form-select form-control"
+                                                        aria-label="Default select example"
+                                                        name="size_id[{{ $product_Variation_count }}][]">
+                                                        <option value="">Select Size</option>
+                                                        @foreach ($size as $item)
+                                                            <option value="{{ $item->id }}"
+                                                                @if ($value->color_id == $item->id) selected @endif>
+                                                                {{ $item->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger"
+                                                        id="error-size_id_{{ $product_Variation_count }}"></p>
+                                                    <p class="text-danger"
+                                                        id="error-size_id_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-lg-3 remove_Not_in_women_Category">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Bust</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace no-zero"
+                                                        placeholder="Eg.10"
+                                                        name="bust[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->bust }}">
+                                                    <p class="text-danger"
+                                                        id="error-bust_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-3 remove_Not_in_women_Category">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Waist</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace no-zero"
+                                                        placeholder="Eg.12"
+                                                        name="waist[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->waist }}">
+
+                                                    <p class="text-danger"
+                                                        id="error-waist_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-3 remove_Not_in_women_Category">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>HIP</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace no-zero"
+                                                        placeholder="Eg.14"
+                                                        name="hip[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->hip }}">
+                                                    <p class="text-danger"
+                                                        id="error-hip_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-3 remove_Not_in_women_Category">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Shoulder</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace no-zero"
+                                                        placeholder="Eg.16"
+                                                        name="shoulder[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->shoulder }}">
+                                                    <p class="text-danger"
+                                                        id="error-shoulder_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-3 remove_Not_in_women_Category">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Sleev Length</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace no-zero"
+                                                        placeholder="Eg.18"
+                                                        name="sleeve_length[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->sleeve_length }}">
+                                                    <p class="text-danger"
+                                                        id="error-sleeve_length_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-3 remove_Not_in_women_Category">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Length</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace no-zero"
+                                                        placeholder="Eg.20"
+                                                        name="length[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->length }}">
+
+                                                    <p class="text-danger"
+                                                        id="error-length_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Total Stocks</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace"
+                                                        placeholder="Eg.13208"
+                                                        name="total_stock[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->total_stock }}">
+
+                                                    <p class="text-danger"
+                                                        id="error-total_stock_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>SKU Limit</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace"
+                                                        placeholder="20019"
+                                                        name="sku[{{ $product_Variation_count }}][]"
+                                                        value="{{ $value->sku }}">
+
+                                                    <p class="text-danger"
+                                                        id="error-sku_{{ $product_Variation_count }}">
+                                                    </p>
+                                                    <p class="text-danger"
+                                                        id="error-sku_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="col-lg-3">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Actual Price</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace"
+                                                        placeholder="Eg. 299.00 KD"
+                                                        name="actual_price[{{ $product_Variation_count }}][]"
+                                                        id="actualprice_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                        value="{{ $value->actual_price }}">
+                                                    <p class="text-danger"
+                                                        id="error-actual_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="pt-3">
+                                        <div class="title24">Discounted Price</div>
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div
+                                                    class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                                                    <div class="check_radio">
+                                                        <label class="radio-group">
+                                                            <input type="radio"
+                                                                name="discount_type[{{ $product_Variation_count }}][{{ $product_Variation_inside_count }}]"
+                                                                id="discount_type_percentage_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                                value="1"
+                                                                @if ($value->discount_type == 1) checked @endif>
+                                                            <span class="custom-radio"></span>
+                                                            <span class="radio-label">Percentage</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="check_radio">
+                                                        <label class="radio-group">
+                                                            <input type="radio"
+                                                                name="discount_type[{{ $product_Variation_count }}][{{ $product_Variation_inside_count }}]"
+                                                                id="discount_type_fixed_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                                value="2"
+                                                                @if ($value->discount_type == 2) checked @endif>
+                                                            <span class="custom-radio"></span>
+                                                            <span class="radio-label">Fixed Price</span>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Percentage</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace"
+                                                        placeholder="Eg.10%" name="discount_value[0][]"
+                                                        id="discount_value_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                        value="{{ $value->discount_value }}">
+                                                    <p class="text-danger"
+                                                        id="error-discount_value_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="sub-form">
+                                                    <div class="label-flex">
+                                                        <label>Final Price</label>
+                                                    </div>
+                                                    <input type="number" class="form-control notapplyspace"
+                                                        placeholder="Eg. 299.00 KD" name="final_price[0][]"
+                                                        id="final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                        value="{{ $value->final_price }}">
+                                                    <p class="text-danger"
+                                                        id="error-final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
+
+                                @php
+                                    $product_Variation_inside_count++;
+                                @endphp
                             @endforeach
-                        @endif
-                        {{-- database image code end Here --}}
-
-                        <div class="product-multiple d-flex flex-wrap gap-2"
-                            id="previewContainer{{ $product_Variation_count }}"></div>
-                    </div>
-
-                    {{-- Add New Variationc code --}}
-                    <div class="mt-3 d-flex justify-content-between py-3">
-                        <div class="title24">Add Variation FDF </div>
-                        <div class="sep-icon " rel="{{ $product_Variation_count }}">
-                            <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation"
-                                alt="add" rel="{{ $product_Variation_count }}">
-                        </div>
-                    </div>
-                    {{-- Add New Variationc code --}}
+                            {{-- Other Variation show End Here --}}
 
 
-                    <div class="inside_variation">
-
-                        <div class="wapper-header mt-2">
-                            <div class="row price-block">
-
-                                <div class="col-lg-3">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Size</label>
-                                        </div>
-
-                                        <select class="form-select form-control" aria-label="Default select example"
-                                            name="size_id[0][]">
-                                            <option value="">Select Size</option>
-                                            @foreach ($size as $item)
-                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <p class="text-danger" id="error-size_id_0"></p>
-                                        <p class="text-danger" id="error-size_id_0_0"></p>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="col-lg-3 remove_Not_in_women_Category">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Bust</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace no-zero"
-                                            placeholder="Eg.10" name="bust[0][]">
-                                        <p class="text-danger" id="error-bust_0_0"></p>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-3 remove_Not_in_women_Category">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Waist</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace no-zero"
-                                            placeholder="Eg.12" name="waist[0][]">
-
-                                        <p class="text-danger" id="error-waist_0_0"></p>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-3 remove_Not_in_women_Category">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>HIP</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace no-zero"
-                                            placeholder="Eg.14" name="hip[0][]">
-                                        <p class="text-danger" id="error-hip_0_0"></p>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-3 remove_Not_in_women_Category">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Shoulder</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace no-zero"
-                                            placeholder="Eg.16" name="shoulder[0][]">
-                                        <p class="text-danger" id="error-shoulder_0_0"></p>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-3 remove_Not_in_women_Category">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Sleev Length</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace no-zero"
-                                            placeholder="Eg.18" name="sleeve_length[0][]">
-                                        <p class="text-danger" id="error-sleeve_length_0_0"></p>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-3 remove_Not_in_women_Category">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Length</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace no-zero"
-                                            placeholder="Eg.20" name="length[0][]">
-
-                                        <p class="text-danger" id="error-length_0_0"></p>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Total Stocks</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace"
-                                            placeholder="Eg.13208" name="total_stock[0][]">
-
-                                        <p class="text-danger" id="error-total_stock_0_0"></p>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>SKU Limit</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace" placeholder="20019"
-                                            name="sku[0][]">
-
-                                        <p class="text-danger" id="error-sku_0"></p>
-                                        <p class="text-danger" id="error-sku_0_0"></p>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="col-lg-3">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Actual Price</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace"
-                                            placeholder="Eg. 299.00 KD" name="actual_price[0][]"
-                                            id="actualprice_0_0">
-                                        <p class="text-danger" id="error-actual_price_0_0"></p>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt-3">
-                            <div class="title24">Discounted Price</div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div
-                                        class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                                        <div class="check_radio">
-                                            <label class="radio-group">
-                                                <input type="radio" name="discount_type[0][0]"
-                                                    id="discount_type_percentage_0_0" checked value="1">
-                                                <span class="custom-radio"></span>
-                                                <span class="radio-label">Percentage</span>
-                                            </label>
-                                        </div>
-                                        <div class="check_radio">
-                                            <label class="radio-group">
-                                                <input type="radio" name="discount_type[0][0]"
-                                                    id="discount_type_fixed_0_0" value="2">
-                                                <span class="custom-radio"></span>
-                                                <span class="radio-label">Fixed Price</span>
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Percentage</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
-                                            name="discount_value[0][]" id="discount_value_0_0">
-                                        <p class="text-danger" id="error-discount_value_0"></p>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="sub-form">
-                                        <div class="label-flex">
-                                            <label>Final Price</label>
-                                        </div>
-                                        <input type="number" class="form-control notapplyspace"
-                                            placeholder="Eg. 299.00 KD" name="final_price[0][]" id="final_price_0_0">
-                                        <p class="text-danger" id="error-final_price_0_0"></p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
 
-                </div>
+                    @php
+                        $product_Variation_count++;
 
-                @php
-                    $product_Variation_count++;
-                @endphp
+                        $product_Variation_inside_count = 0;
 
-            </div> {{-- end first variation code --}}
-        @endforeach
+                    @endphp
+
+                </div> {{-- end first variation code --}}
+            @endforeach
+
+        </div>
 
         <!-----End variant panel ------>
 
@@ -934,7 +1024,7 @@
 <script>
     // ADD NEW ROW In specification
 
-    var specification_count = 1;
+    var specification_count = {{ $specification_count }};
 
     $("#addmore").click(function() {
 
@@ -1015,12 +1105,12 @@
 <script>
     // ADD NEW ROWs In product Variation Section
 
-    var product_Variation_count = 1;
+    var product_Variation_count = {{ $product_Variation_count }};
 
     // ADD NEW Variant
     $(".addVariantBtn").click(function() {
         $(".variant-panel").append(`
-        <div class="variant-panel-bg">
+        <div class="MainVarient variant-panel-bg">
             <div class="product-pnls mt-4"  id="variant_image_id${product_Variation_count}">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
@@ -1035,6 +1125,7 @@
 
                 <div class="product-multiple d-flex flex-wrap gap-2 mt-2" id="previewContainer${product_Variation_count}"></div>
             </div>
+            <div class="variant-panel-bg">
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="sub-form product-row">
@@ -1250,6 +1341,8 @@
 
             </div>
             </div> 
+            </div>
+
 
         </div>
 
