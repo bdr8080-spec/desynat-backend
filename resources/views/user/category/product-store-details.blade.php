@@ -226,29 +226,7 @@
                     </div>
 
                 </div>
-         <!-- end -->
-
-
-                <!-- start -->
-                <!-- <div class="quantity-box w-100">
-                    <div class="bag-topbar d-flex justify-content-between align-items-center mt-3">
-                        <div> <strong>({{$cartCount}} Items)</strong> View My Bag </div> <i
-                            class="bi bi-arrow-right arrow-icon"></i>
-                    </div>
-                    <div class="cart-counts d-flex gap-5 mt-2">
-                        <button class="qty-btn" id="minusBtn"> <i class="bi bi-dash icons"></i>
-                        </button>
-                        <div class="qty-number" id="qtyNumber">01</div>
-                        <button class="qty-btn" id="plusBtn"> <i class="bi bi-plus icons"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center gap-3 mt-3">
-                    <button class="customBtn2 mt-0" id="addToBagBtn">Add
-                        to Bag</button>
-                    <button class="customBtn">Buy Now</button>
-                </div> -->
-                <!-- end -->
+            <!-- end -->
 
                 <div class="my-4">
                     <div class="desc-box p-4 rounded-4">
