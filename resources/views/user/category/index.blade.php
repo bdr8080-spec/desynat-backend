@@ -403,7 +403,7 @@
                                 <div class="row">
 
                                     @foreach ($store_details['All_Product'] as $item)
-                                        <div class="col-lg-4 col-md-4 col-6 my-3">
+                                        <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
                                                 <div class="product-card">
                                                     <div class="product-img">
                                                         @foreach ($item->product_variants[0]->variant_image as $key => $val)

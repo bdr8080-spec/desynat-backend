@@ -1943,7 +1943,10 @@ footer span{
     color: #000;
     font-size: 16px !important;
 }
-
+.cardblock{
+    display: grid;
+    justify-items: stretch;
+}
 
 /* footer end */
 .bag-topbar {
