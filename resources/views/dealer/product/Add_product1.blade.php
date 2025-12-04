@@ -1324,10 +1324,10 @@
             cache: false,
             contentType: false,
             processData: false,
-            // beforeSend: function() {
-            //     // Show loader
-            //     $('#loader').show();
-            // },
+            beforeSend: function() {
+                // Show loader
+                $('#loader').show();
+            },
             success: function(response) {
                 console.log(response);
 
@@ -1385,10 +1385,10 @@
                     }
                 });
             },
-            // complete: function() {
-            //     // Hide loader (after success or error)
-            //     $('#loader').hide();
-            // }
+            complete: function() {
+                // Hide loader (after success or error)
+                $('#loader').hide();
+            }
 
 
         });
@@ -1519,6 +1519,8 @@
 
             // $("#final_price_" + index).val(finalPrice.toFixed(2));
             $("#final_price_" + index + '_' + index1).val(finalPrice);
+            $("#error-final_price_" + index + '_' + index1).empty();
+
         });
 
     // Min value and Max greater then Input Field

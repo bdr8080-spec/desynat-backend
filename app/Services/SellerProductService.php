@@ -1252,7 +1252,6 @@ foreach ($product_variation as $color_id => $items) {
 
     $product_data->variation_Group=$variation_array;
 
-
           
     return ['status'=>'success','message'=>'single product detaile fetch successfully','data'=>$product_data];
         }

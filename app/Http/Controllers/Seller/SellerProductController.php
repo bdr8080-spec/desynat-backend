@@ -1252,7 +1252,7 @@ public function Add_product_code1(Request $request){
     // Colors
     'color_id.required' => 'At least one color must be selected.',
     'color_id.array' => 'Color input format invalid.',
-    'color_id.*.required' => 'Color entry is missing.',
+    'color_id.*.required' => 'Color Field is Required.',
     'color_id.*.exists' => 'Selected color is invalid.',
 
 
