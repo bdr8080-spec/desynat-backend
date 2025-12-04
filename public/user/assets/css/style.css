@@ -240,7 +240,7 @@ h3.mid-headng{
     position: absolute;
     top: 8.7%;
     left: 0;
-    width: 20%;
+    /* width: 20%; */
 }
 .login_content_left .left-img{
     position: absolute;
@@ -253,7 +253,7 @@ h3.mid-headng{
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 20%;
+    /* width: 20%; */
 }
 .login_content{
     display: flex;
@@ -267,7 +267,8 @@ h3.mid-headng{
 .becomSeller{
     max-width: 600px;
     width: 100%;
-    justify-content: space-between;
+    justify-content: end;
+    gap:20px;
 }
 .becomSeller a{
     color: var(--third-color);
