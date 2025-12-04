@@ -19,13 +19,17 @@ use App\Rules\MatchArrayProductVariation;
 
 
 use App\Services\SellerProductService;
+use App\Services\SellerAuthService;
 
 
 class SellerProductController extends Controller
 {
 
-    public function __construct(SellerProductService $SellerProductService){
+    public function __construct(SellerProductService $SellerProductService, SellerAuthService $SellerAuthService){
         $this->SellerProductService=$SellerProductService;
+
+        $this->SellerAuthService=$SellerAuthService;
+
     }
 
 
@@ -919,6 +923,131 @@ public function update_affilate_commission(Request $request){
       
       }
     
+
+
+
+public function view_profile(Request $request){
+
+
+    $seller_details=  $request->user();
+    $seller_id=$seller_details->id;
+    
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    ];
+    
+      $data=  $this->SellerProductService->View_seller_profile($request_data);
+    
+      if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+      }
+    
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+      
+      }
+
+
+
+
+    public function update_store_information(Request $req){
+
+
+        $seller_details=  $req->user();
+        $seller_id=$seller_details->id;
+
+        $validate = Validator::make($req->all(), [
+            // 'profile_pic'=>'nullable|required',
+            'full_name'=>'required',
+            
+            'store_image' => 'required',
+            'store_name' => 'required',
+            'country'=>"required",
+            "store_address"=>"required",
+            // 'address_line1'=>'required',
+            // 'address_line2'=>'required',
+            "store_phone"=>"required",
+            'store_mail_id'=>'required',
+            'bio'=>'required',
+            'let'=>'required',
+            'long'=>'required'
+            
+            ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+
+       $request_data= (object)[
+        'profile_pic' => $req->profile_pic??null,
+        'full_name' => $req->full_name??null,
+
+        'user_id' => $seller_id,
+        'store_image' => $req->store_image ,
+        'store_name' => $req->store_name ,
+        'country'=>$req->country ,
+        "store_address"=>$req->store_address ,
+        'address_line1'=>$req->address_line1 ,
+        'address_line2'=>$req->address_line2 ,
+        'country_code' => $req->country_code,
+        "store_phone"=>$req->store_phone ,
+        'store_mail_id'=>$req->store_mail_id,
+        'bio'=>$req->bio,
+        'let'=>$req->let,
+        'long'=>$req->long
+       ];
+
+        $data= $this->SellerProductService->profile_store_information_insert($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+
+    public function update_store_bank_details(Request $req){
+
+        $seller_details=  $request->user();
+        $seller_id=$seller_details->id;
+
+        $validate = Validator::make($req->all(), [
+            'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
+            // "iban"=>"required",
+            // 'swift'=>'required',
+            'bank_name'=>'required',
+            "account_holder_name"=>"required",
+            'upload_proof'=>'required'
+            ]);
+            
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       $request_data=[
+        'user_id' => $seller_id,
+        'type'=> '1',
+        'account_type' => strVal($req->account_type),
+        'iban' => $req->iban ,
+        'swift'=>$req->swift ,
+        "bank_name"=>$req->bank_name ,
+        'account_holder_name'=>$req->account_holder_name ,
+        'upload_proof'=>$req->upload_proof,
+       ];
+       
+        $data= $this->SellerProductService->store_document_and_bank_details($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+      
 
       
 

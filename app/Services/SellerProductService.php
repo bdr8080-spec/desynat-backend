@@ -7,7 +7,7 @@ use App\Models\SubCategory;
 use Hash;
 
 
-use App\Models\seller;
+use App\Models\{ seller,sellerStoreInformation,Bankdetails};
 use App\Models\color;
 use App\Models\Brand;
 
@@ -1532,6 +1532,156 @@ public function Update_affilate_commission_Inventory($request){
 
 
     }
+
+
+    
+
+
+
+
+public function View_seller_profile($request){
+
+    try{
+    
+        $seller_details=seller::with('store_info','seller_bank_details','subcription_plan','owner_document','store_document')->where('id',$request->seller_id)->first();
+
+        if($seller_details){
+        
+        return ['status'=>'success','message'=>"seller details fetch Successfully",'data'=>$seller_details];
+      
+        }else{
+            return ['status'=>'error','message'=>"Seller token is Invalid",'data'=>(object)[]];
+        }
+        
+        
+        } 
+        catch (\Exception $e) {
+            return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+        
+        }
+
+
+    }
+
+
+
+    public function profile_store_information_insert($request){
+
+       
+        // Update seller details 
+
+        $match_seller=[
+            'id' => $request->user_id
+          ];
+
+          if($request->profile_pic){
+            $seller_information['profile_pic'] = $request->profile_pic;
+          }
+
+          $fullname=explode(' ',$request->full_name);
+
+          if($fullname){
+
+            $seller_information['first_name'] = $fullname[0];
+            $seller_information['last_name'] = $fullname[1];
+          }
+    
+         seller::Updateorcreate($match_seller,$seller_information);
+         
+        // update store details
+
+        $match=[
+            'seller_id' => $request->user_id
+          ];
+
+        $data_insert=[
+          'seller_id' => $request->user_id,
+          'store_image' => $request->store_image ,
+          'store_name' => $request->store_name ,
+          'country'=>$request->country ,
+          "store_address"=>$request->store_address ,
+          'address_line1'=>$request->address_line1 ,
+          'address_line2'=>$request->address_line2 ,
+          'country_code' => $request->country_code,
+          "store_phone"=>$request->store_phone ,
+          'store_mail_id'=>$request->store_mail_id ,
+          'bio'=>$request->bio,
+          'let'=>$request->let,
+          'long'=>$request->long
+        ];
+  
+       $store_information=sellerStoreInformation::Updateorcreate($match,$data_insert);
+    
+        if($store_information){
+        // $get_seller_details=  seller::where('id',$request->user_id)->first();
+  
+        seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
+        
+        return ['status'=>'success','message'=>"Store information Save succesfully",'data'=>$store_information];            
+  
+          }else{
+            return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+          }
+    
+        }
+  
+  
+    
+    public function store_document_and_bank_details($request){
+
+        
+        sellerDocument::where('seller_id',$request->user_id)->update(['status'=>'0']);
+        
+        foreach($request->owner_document as $key=>$val){
+    
+          sellerDocument::create([
+            'seller_id'=>$request->user_id,
+            'document_type'=>'1',
+            'document_path'=>$val,
+            'status'=>'1'
+          ]);
+        }
+    
+    
+        foreach($request->store_document as $key=>$val){
+    
+          sellerDocument::create([
+            'seller_id'=>$request->user_id,
+            'document_type'=>'2',
+            'document_path'=>$val,
+            'status'=>'1'
+          ]);
+        }
+    
+            $match=[
+              'user_id' => $request->user_id
+            ];
+      
+            $bank_data=[
+              'user_id' => $request->user_id,
+              'type'=> '1',
+              'account_type' => strVal($request->account_type),
+              'iban' => $request->iban ,
+              'swift'=>$request->swift ,
+              "bank_name"=>$request->bank_name ,
+              'account_holder_name'=>$request->account_holder_name ,
+              'upload_proof'=>$request->upload_proof
+            ];
+      
+           $store_information=Bankdetails::Updateorcreate($match,$bank_data);
+        
+            if($store_information){
+    
+              seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
+      
+                return ['status'=>'success','message'=>"Document and Bank details Save succesfully",'data'=>$store_information];            
+      
+              }else{
+                return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                
+              }
+        
+            }
+    
 
 
 
