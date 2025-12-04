@@ -220,9 +220,13 @@ h3.mid-headng{
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 1111;
 }
-
+.newcountrybox {
+    height: 400px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
 .login_contenar{
     display: flex;
     align-items: center;
@@ -301,7 +305,7 @@ h3.mid-headng{
 .login_content_content .form-group input,
 .login_content_content .dropdown button{
     padding: 10px;
-    color: #00000080;
+    /* color: #00000080; */
     font-size: 16px;
 }
 .country{
@@ -1873,12 +1877,24 @@ h3.mid-headng{
 /* footer */
 
 footer{
-    background: var(--gradient-color);
+    background: var(--footer-bg);
     padding: 3% 2% 0;
     /* position: fixed;
     width: 100%;
     bottom: 0;    
     z-index: 1; */
+}
+.become-ln{
+   padding: 8px 12px;
+}
+.footer-copyright {
+    text-align: center;
+    border-top: 1px solid #00000080;
+    padding: 20px 0px;
+}
+.footer-copyright p {
+    margin-bottom: 0px;
+    font-size: 14px !important;
 }
 
 footer span{

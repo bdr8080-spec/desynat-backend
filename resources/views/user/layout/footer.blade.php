@@ -8,7 +8,7 @@
                      </div>
                      <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                          incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span>
-                     <button class="customBtn1">Become an Affiliate Customer</button>
+                     <button class="customBtn1 become-ln">Become an Affiliate Customer</button>
                  </div>
                  <div class="col-lg-5 col-md-5 col-12">
                      <div class="footerNavLink ms-20percenter">
@@ -49,11 +49,11 @@
                      <div class="footerNavLink">
                          <div class="footerNavLink_content ms-lg-auto ms-md-auto">
                              <h6>Get the App</h6>
-                             <div class="getTheApp gap-2 d-flex align-items-end">
-                                 <div style="width: 40%;">
-                                     <img src="{{ asset('user/assets/images/play-store.svg') }}" class="img-fluid" />
+                             <div class="getTheApp gap-2 ">
+                                 <div style="width: 80%;">
+                                     <img src="{{ asset('user/assets/images/play-store.svg') }}" class="img-fluid mb-2" />
                                  </div>
-                                 <div style="width: 40%;">
+                                 <div style="width: 80%;">
                                      <img src="{{ asset('user/assets/images/ios-app.svg') }}" class="img-fluid" />
                                  </div>
                              </div>
@@ -81,6 +81,12 @@
                      </div>
                  </div>
              </div>
+
+             <div class="footer-copyright">
+                <p>Lorem ipsum dolor sit odo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+             </div>
+
+
          </div>
      </footer>
 
