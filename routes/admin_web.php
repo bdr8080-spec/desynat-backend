@@ -12,6 +12,10 @@ use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DeliveryBoyController;
 use App\Http\Controllers\Admin\ReasonController;
+use App\Http\Controllers\Admin\ShippingController;
+use App\Http\Controllers\Admin\GiftCardController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\PromoCodeController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -97,6 +101,19 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/deleteReason/{id}', [ReasonController::class, 'deleteReason'])->name('admin.deleteReason');
         Route::post('/add_reason', [ReasonController::class, 'add_reason'])->name('admin.add_reason');
         Route::post('/update_reason', [ReasonController::class, 'update_reason'])->name('admin.update_reason');
+
+        //shipping charge and tax management
+        Route::get('/shipping-management', [ShippingController::class, 'shippingManagement'])->name('admin.shippingManagement');
+        Route::get('/manage-shipping-charge', [ShippingController::class, 'manageShippingCharges'])->name('admin.manageShippingCharges');
+
+        //gift card category management
+        Route::get('/giftcard-management', [GiftCardController::class, 'giftCardManagement'])->name('admin.giftCardManagement');
+
+        //banner per day price management
+        Route::get('/banner-management', [BannerController::class, 'bannerManagement'])->name('admin.bannerManagement');
+
+        //promocode management
+        Route::get('/promocode-management', [PromoCodeController::class, 'promoCodeManagement'])->name('admin.promoCodeManagement');
         
 
     });
