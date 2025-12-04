@@ -1940,6 +1940,9 @@ foreach ($request->color_id as $key => $val) {
 }
 
 
+dd($final_variation_images);
+
+
     //  Product Size Chart Upload 
      if($request->upload_size_chart){ 
      $upload_size_chart=doc_upload($request->upload_size_chart,$dir);  // chart Image

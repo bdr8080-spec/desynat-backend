@@ -54,7 +54,7 @@
                             <div class="login-grid-2">
                                 <div class="login">
                                     <div class="loginBackgroundeffect">
-                                        <h4 class="login-text "> <span>LogIn </span></h4>
+                                        <h4 class="login-text "> <span>Sign In </span></h4>
                                         <h6 class="welcome-text"> <span>Welcome Back !</span></h6>
 
                                         <div class="row mt-4">
@@ -66,7 +66,7 @@
                                                     <small id="emailError" style="color: red;"></small>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 mt-3">
+                                            <div class="col-lg-12 mt-4">
                                                 <div class="form-group">
                                                     <label for="password">Password</label>
                                                     <input type="password" id="password"
