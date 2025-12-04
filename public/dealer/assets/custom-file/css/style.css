@@ -297,7 +297,7 @@ label {
 }
 
 .login-header {
-  padding: 12px;
+  padding: 12px 4%;
   display: flex;
   justify-content: space-between;
   background: var(--bg-multiple);
@@ -521,7 +521,7 @@ label {
 
 .dropdown-menu .dropdown-item {
   font-size: 14px;
-  padding: 10px 15px;
+  padding: 1px 5px;
   transition: 0.3s;
 }
 
