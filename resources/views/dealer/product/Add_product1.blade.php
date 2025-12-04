@@ -262,7 +262,7 @@
                             name="variant_image[0][]" rel="0">
                     </label>
 
-                    <p class="text-danger" id="error-variant_image"></p>
+                    {{-- <p class="text-danger" id="error-variant_image"></p> --}}
                     <p class="text-danger" id="error-variant_image_0"></p>
 
                 </div>
@@ -861,6 +861,9 @@
             });
 
             $('#previewContainer' + rel).append(imgBox);
+
+            $('#error-variant_image_' + rel).empty();
+
         });
 
         // Assign new accumulated file list to input
@@ -882,6 +885,10 @@
     `);
             imgBox.find('.remove-ic').click(() => imgBox.remove());
             $('#edit_uploadChart_preview').append(imgBox);
+
+            $('#error-upload_size_chart').empty();
+
+
         });
     });
 
@@ -986,7 +993,7 @@
                         <input type="file" accept="image/*" multiple name="variant_image[${product_Variation_count}][]" style="opacity:0;" rel="${product_Variation_count}">
                     </label>
 
-                    <p class="text-danger" id="error-variant_image_${product_Variation_count}_0"></p>
+                    <p class="text-danger" id="error-variant_image_${product_Variation_count}"></p>
 
                 </div>
 

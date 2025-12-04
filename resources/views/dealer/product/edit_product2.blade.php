@@ -1079,6 +1079,8 @@
             });
 
             $('#previewContainer' + rel).append(imgBox);
+            $('#error-variant_image_' + rel).empty();
+
         });
 
         // Assign new accumulated file list to input
@@ -1100,6 +1102,8 @@
     `);
             imgBox.find('.remove-ic').click(() => imgBox.remove());
             $('#edit_uploadChart_preview').append(imgBox);
+            $('#error-upload_size_chart').empty();
+
         });
     });
 

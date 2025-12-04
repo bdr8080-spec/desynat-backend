@@ -1289,6 +1289,26 @@ public function Add_product_code1(Request $request){
 
      $validate->after(function ($validate) use ($request) {
 
+
+    // Image Upload Code Required Field
+
+  foreach ($request->size_id as $key => $val) {
+
+    $newImages = $request->variant_image[$key] ?? [];
+    $oldImages = $request->old_variant_image[$key] ?? [];
+
+    // Check if both are empty
+    if ((empty($newImages) || count($newImages) == 0) &&
+        (empty($oldImages) || count($oldImages) == 0)) {
+
+        $validate->errors()->add(
+            "variant_image.$key",
+            "At least one image is required for variation #".($key + 1)
+        );
+    }
+}
+
+
     $colors = $request->color_id;
     $sizes  = $request->size_id;
 
