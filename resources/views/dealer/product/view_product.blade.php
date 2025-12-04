@@ -417,7 +417,9 @@ function loadSizes(color) {
             firstSizeBtn.addClass('active');
             let size = firstSizeBtn.data('size');
             // Auto-load price + images for first size
-            loadPriceAndImages(size, color, product_id);
+            loadPriceAnddata(size, color, product_id);
+            loadImages_data(size, color, product_id);
+            
 
 
         }
@@ -426,7 +428,7 @@ function loadSizes(color) {
 
 // load image and price
 
-function loadPriceAndImages(size, color, product_id) {
+function loadPriceAnddata(size, color, product_id) {
 
     // Load price
     $.ajax({
@@ -442,23 +444,6 @@ function loadPriceAndImages(size, color, product_id) {
         }
     });
 
-    // Load images
-    $.ajax({
-        url: "{{ route('get.product.images') }}",
-        type: "GET",
-        data: {
-            product_id: product_id,
-            color: color,
-            size: size
-        },
-        success: function (response) {  
-            console.log(response)
-
-            $("#images_show-box").html(response);
-                        $("#images_show-box").html(response);
-
-        }
-    });
 
     // load variation
 
@@ -479,6 +464,33 @@ function loadPriceAndImages(size, color, product_id) {
 }
 
 
+function loadImages_data(size, color, product_id) {
+
+
+// Load images
+$.ajax({
+    url: "{{ route('get.product.images') }}",
+    type: "GET",
+    data: {
+        product_id: product_id,
+        color: color,
+        size: size
+    },
+    success: function (response) {  
+        console.log(response)
+
+        $("#images_show-box").html(response);
+                    $("#images_show-box").html(response);
+
+    }
+});
+
+
+}
+
+
+
+
 $(document).on('click', '.size-btn', function () {
 
     $('.size-btn').removeClass('active');
@@ -488,7 +500,7 @@ $(document).on('click', '.size-btn', function () {
     let color = $(".color-box.active").data('color');
     let product_id = "{{ $product->id }}";
 
-    loadPriceAndImages(size, color, product_id);
+    loadPriceAnddata(size, color, product_id);
 });
 
 
@@ -518,7 +530,9 @@ $(document).ready(function () {
             let firstSize = firstSizeBtn.data('size');
 
             // 4️⃣ Auto-load price + images
-            loadPriceAndImages(firstSize, firstColor, product_id);
+            loadPriceAnddata(firstSize, firstColor, product_id);
+            loadImages_data(firstSize, firstColor, product_id);
+  
         }
     });
 
