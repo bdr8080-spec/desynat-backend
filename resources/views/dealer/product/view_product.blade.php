@@ -158,7 +158,14 @@ p, span{
                 </a>
 
             </div>
-            <h6 class="fw-semibold">{{ $product->brand->name_english }}</h6>
+            <h6 class="fw-semibold">
+            @if (strtolower($product->brand->name_english) ==  'other')
+                    {{ $product->other_en }}
+                @else
+                    {{ $product->brand->name_english }}
+                @endif
+
+            </h6>
             <p class="text-muted mb-1">{{ $product->product_name_en }} ({{ $product->category->name }}) </p>
            
             <div class="d-flex align-items-center mb-2">
