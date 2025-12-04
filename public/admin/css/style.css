@@ -1217,6 +1217,13 @@ a.btn.btn-dark.customBtn {
     /* line-height: 18px; */
     font-size: 20px;
 }
+a.btn.btn-dark.customBtns {
+    border: 1px solid rgba(168, 130, 79, 1);
+    background:linear-gradient(179deg, #DFBF8F -53.71%, #6E4527 400.28%);
+    color: #000;
+    /* line-height: 18px; */
+    font-size: 20px;
+}
 button.btn.btn-dark.customBtn {
     border: 1px solid rgba(168, 130, 79, 1);
     background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
@@ -1261,8 +1268,8 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
-background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
-    color: #003a4e;
+background: linear-gradient(179deg, #DFBF8F -53.71%, #6E4527 400.28%);
+    color: #000;
     height: 100%;
 }
 .card-body {
@@ -1680,8 +1687,8 @@ button[type="submit"] {
 }
 
 .header-logo {
-       width: 212px;
-    height: 28px;
+width: 157px;
+    height: 97px;
     /* border-radius: 50%; */
     object-fit: contain;
 }

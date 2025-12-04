@@ -54,7 +54,7 @@
             Reason Management
         </a>
     </li>
-    <li class="nav-item {{ Request::routeIs('admin.shippingManagement') || Request::routeIs('admin.manageShippingCharges') ? 'active' : '' }}">
+    <!-- <li class="nav-item {{ Request::routeIs('admin.shippingManagement') || Request::routeIs('admin.manageShippingCharges') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.shippingManagement') }}">
             <span><img src="{{ asset('admin/image/category.svg') }}" alt="Shipping Management" /></span>
             Shipping Charge & Tax Management
@@ -77,7 +77,7 @@
             <span><img src="{{ asset('admin/image/help-circle.svg') }}" alt="Promo Code Management" /></span>
             Promo Code Management
         </a>
-    </li>
+    </li> -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
             <span><img src="{{ asset('admin/image/logout.svg') }}" alt="Logout" /></span>
