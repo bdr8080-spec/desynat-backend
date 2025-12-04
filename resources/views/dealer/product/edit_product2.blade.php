@@ -403,7 +403,7 @@
                                                         <option value="">Select Size</option>
                                                         @foreach ($size as $item)
                                                             <option value="{{ $item->id }}"
-                                                                @if ($value->color_id == $item->id) selected @endif>
+                                                                @if ($value->size_id == $item->id) selected @endif>
                                                                 {{ $item->name }}
                                                             </option>
                                                         @endforeach
@@ -1737,6 +1737,9 @@
 
             // $("#final_price_" + index).val(finalPrice.toFixed(2));
             $("#final_price_" + index + '_' + index1).val(finalPrice);
+
+            $("#error-final_price_" + index + '_' + index1).empty();
+
         });
 
     // Min value and Max greater then Input Field

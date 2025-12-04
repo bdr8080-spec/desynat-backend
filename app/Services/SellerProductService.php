@@ -1344,16 +1344,22 @@ public function edit_Product_web($request){
         
         $newVariantIDs = [];
 
+
 foreach($request->color_id as $key=>$val){
+
+
+
+    if (!isset($request->size_id[$key])) {
+        continue; // skip if no size for this color
+    }
 
     foreach($request->size_id[$key] as $size_key=>$size_data){            
         
-
     $match=[
         'product_id'=> $product_id,
         'color_id' => $request->color_id[$key],
         'size_id' => $size_data,
-            ];
+        ];
 
     $variation_array=[
     'product_id'=> $product_id,
@@ -1391,12 +1397,10 @@ foreach($request->color_id as $key=>$val){
         $product_data=  ProductVariant::updateOrCreate($match,$variation_array);
         $newVariantIDs[] = $product_data->id;
 
-
     }
     
 }
 
-dd("33");
    // DELETE VARIANTS NOT INCLUDED IN FORM
    ProductVariant::where('product_id', $product_id)
    ->whereNotIn('id', $newVariantIDs)
