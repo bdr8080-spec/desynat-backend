@@ -352,8 +352,8 @@ class SellerProductController extends Controller
 public function all_product(Request $request){
 
 
-    $seller_details=  $request->user();
-    $seller_id=$seller_details->id;
+$seller_details=  $request->user();
+$seller_id=$seller_details->id;
 
 $request_data=(object) [
 'seller_id'=>$seller_id,
@@ -806,5 +806,82 @@ $data=  $this->SellerProductService->edit_Product1($request_data);
   
   }
 
+
+public function all_Inventory_product(Request $request){
+
+
+    $validate = Validator::make($request->all(), [               
+        'cargory_filter'=>'required|array',
+     ]);
+    
+    if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $seller_details=  $request->user();
+    $seller_id=$seller_details->id;
+    
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    'search' =>$request->search,
+    'type' =>$request->type,
+    'cargory_filter' =>$request->cargory_filter,
+    'brand_filter' =>$request->brand_filter,
+    
+    ];
+    
+    
+      $data=  $this->SellerProductService->AllProduct($request_data);
+    
+      if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+      }
+    
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+      
+      }
+    
+
+
+
+public function update_stock_inventory(Request $request){
+
+    $validate = Validator::make($request->all(), [               
+        'product_id'=>'required|exists:products,id',
+        'variation_id'=>'required|exists:product_variants,id' ,
+        'stock_quantity'=>'required',
+        'sku' =>'nullable'
+        
+     ]);
+    
+    if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $seller_details=  $request->user();
+    $seller_id=$seller_details->id;
+    
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    'product_id'=>$request->product_id,
+    'variation_id'=>$request->variation_id,
+    'stock_quantity'=>$request->stock_quantity,
+    'sku'=>$request->sku??null
+    ];
+    
+      $data=  $this->SellerProductService->Update_Product_Inventory($request_data);
+    
+      if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+      }
+    
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+      
+      }
+    
+
+      
 
 }

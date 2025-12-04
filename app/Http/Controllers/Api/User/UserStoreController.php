@@ -80,7 +80,7 @@ class UserStoreController extends Controller
         'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
         'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
         'price_min'    => $request->price_min ?? null,
-        'price_max'    => $request->price_max ?? null
+        'price_max'    => $request->price_max ?? null,
        ];
 
        $data=$this->UserManagementService->singleStoreWiseAllproduct($request_data);
