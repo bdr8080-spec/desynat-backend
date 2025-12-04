@@ -426,7 +426,7 @@
                                                     </div>
                                                 <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                                                     <div class="product-content">
-                                                            <h5>{{ $item->product_name_en }} ({{ "by " . $store_details['store']['store_name'] }})</h5>
+                                                            <h5 class="black-title">{{ $item->product_name_en }} ({{ "by " . $store_details['store']['store_name'] }})</h5>
                                                             <div class="rating">
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
@@ -443,7 +443,7 @@
                                                                     <span class="discount">
 
                                                                         {{ $item->product_variants[0]->discount_value }}
-                                                                        {{ $item->product_variants[0]->discount_type == '1' ? '%' : 'Off' }}
+                                                                        {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }} 
 
                                                                     </span>
                                                                 </div>
