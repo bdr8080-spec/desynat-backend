@@ -39,7 +39,7 @@
         // } else {
 
         var count_variation = document.querySelectorAll('.inside_variation' + variation_id).length;
-        count_variation = count_variation + 1;
+        count_variation = count_variation;
 
         // }
 

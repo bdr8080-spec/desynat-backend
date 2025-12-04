@@ -1261,11 +1261,13 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(90deg, #c08f5329, #a36a2ab8);
+background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
     color: #003a4e;
     height: 100%;
 }
-
+.card-body {
+    background: rgba(255, 247, 234, 1);
+}
 .dashboard-pnl .border-radious-10 {
     border-radius: 13px !important;
     overflow: hidden;
