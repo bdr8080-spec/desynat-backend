@@ -1191,7 +1191,7 @@ td {
 .btn-export,
 .button .custom-btn {
     width: 100%;
-    background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+    background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
   padding: 14px;
     text-align: center;
     border-radius: 10prgba(111, 70, 40, 1) x;
@@ -1433,8 +1433,8 @@ a.nav-link.active {
 }
 
 .form-group label {
-    margin-bottom: 3px;
-       font-size: 16px;
+    margin-bottom: 2px;
+       font-size: 15px;
     color: #000;
 }
 
@@ -2004,10 +2004,10 @@ a.btn.btn-dark.customBtn.button {
     font-weight: 600;
 }
 .login-header {
-  padding: 7px 5%;
+  padding: 7px 4%;
   display: flex;
   justify-content: space-between;
-  background: var(--bg-multiple);
+  background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 99.99%);
   position: fixed;
   top: 0px;
   width: 100%;
