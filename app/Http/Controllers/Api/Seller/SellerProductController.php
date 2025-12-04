@@ -1010,7 +1010,7 @@ public function view_profile(Request $request){
 
     public function update_store_bank_details(Request $req){
 
-        $seller_details=  $request->user();
+        $seller_details=  $req->user();
         $seller_id=$seller_details->id;
 
         $validate = Validator::make($req->all(), [
@@ -1026,18 +1026,18 @@ public function view_profile(Request $request){
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
-       $request_data=[
+       $request_data= (object) [
         'user_id' => $seller_id,
         'type'=> '1',
         'account_type' => strVal($req->account_type),
-        'iban' => $req->iban ,
-        'swift'=>$req->swift ,
+        'iban' => $req->iban??null ,
+        'swift'=>$req->swift??null ,
         "bank_name"=>$req->bank_name ,
         'account_holder_name'=>$req->account_holder_name ,
         'upload_proof'=>$req->upload_proof,
        ];
        
-        $data= $this->SellerProductService->store_document_and_bank_details($request_data);
+        $data= $this->SellerProductService->store_bank_details_update($request_data);
 
         if(isset($data['status']) && $data['status']=='error' ){
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);

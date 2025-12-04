@@ -1615,7 +1615,7 @@ public function View_seller_profile($request){
         if($store_information){
         // $get_seller_details=  seller::where('id',$request->user_id)->first();
   
-        seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
+        // seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
         
         return ['status'=>'success','message'=>"Store information Save succesfully",'data'=>$store_information];            
   
@@ -1627,32 +1627,8 @@ public function View_seller_profile($request){
   
   
     
-    public function store_document_and_bank_details($request){
+    public function store_bank_details_update($request){
 
-        
-        sellerDocument::where('seller_id',$request->user_id)->update(['status'=>'0']);
-        
-        foreach($request->owner_document as $key=>$val){
-    
-          sellerDocument::create([
-            'seller_id'=>$request->user_id,
-            'document_type'=>'1',
-            'document_path'=>$val,
-            'status'=>'1'
-          ]);
-        }
-    
-    
-        foreach($request->store_document as $key=>$val){
-    
-          sellerDocument::create([
-            'seller_id'=>$request->user_id,
-            'document_type'=>'2',
-            'document_path'=>$val,
-            'status'=>'1'
-          ]);
-        }
-    
             $match=[
               'user_id' => $request->user_id
             ];
@@ -1672,7 +1648,7 @@ public function View_seller_profile($request){
         
             if($store_information){
     
-              seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
+            //   seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
       
                 return ['status'=>'success','message'=>"Document and Bank details Save succesfully",'data'=>$store_information];            
       
