@@ -46,56 +46,56 @@
                                 </select> --}}
 
                                 <div class="dropdown">
-                                <button
-                                    class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
-                                    type="button" id="countryDropdown"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button
+                                        class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                        type="button" id="countryDropdown"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
 
-                                    <span id="selected-flag">
-                                        {{ old('country_flag', $country[0]->flag1) }}
-                                        
+                                        <span id="selected-flag">
+                                            {{ old('country_flag', $country[0]->flag1) }}
+                                            
 
-                                    </span>
+                                        </span>
 
-                                    <span id="selected-code" class="ms-2">
-                                        {{ old('country_code', $country[0]->dial_code) }}
-                                    </span>
-                                </button>
+                                        <span id="selected-code" class="ms-2">
+                                            {{ old('country_code', $country[0]->dial_code) }}
+                                        </span>
+                                    </button>
 
-                                <ul class="dropdown-menu p-2 newcountrybox" aria-labelledby="countryDropdown">
+                                    <ul class="dropdown-menu p-2 newcountrybox" aria-labelledby="countryDropdown">
 
-                                    @foreach ($country as $index => $item)
-                                        <li>
-                                            <label
-                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
-                                                style="cursor: pointer;">
-                                                <input type="radio" name="country_code"
-                                                    value="{{ $item->dial_code }}"
-                                                    data-flag="{{ $item->flag1 }}"
-                                                    data-name="{{ $item->name }}"
-                                                    class="country-radio"
-                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
-                                                    hidden>
+                                        @foreach ($country as $index => $item)
+                                            <li>
+                                                <label
+                                                    class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                    style="cursor: pointer;">
+                                                    <input type="radio" name="country_code"
+                                                        value="{{ $item->dial_code }}"
+                                                        data-flag="{{ $item->flag1 }}"
+                                                        data-name="{{ $item->name }}"
+                                                        class="country-radio"
+                                                        {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                        hidden>
 
-                                                <!-- <img src="{{ $item->flag1 }}"
-                                                    alt="Flag of {{ $item->name }}"
-                                                    width="25" height="16">
+                                                    <!-- <img src="{{ $item->flag1 }}"
+                                                        alt="Flag of {{ $item->name }}"
+                                                        width="25" height="16">
 
-                                                <span>{{ $item->dial_code }}
-                                                    ({{ $item->name }})
-                                                </span> -->
-
-                                                <div width="25" height="16">
-                                                    <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                    <span>{{ $item->dial_code }}
                                                         ({{ $item->name }})
-                                                    </span>
-                                                </div>
+                                                    </span> -->
 
-                                            </label>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                                    <div width="25" height="16">
+                                                        <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                            ({{ $item->name }})
+                                                        </span>
+                                                    </div>
+
+                                                </label>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
 
                          </div> 
                          <div class="w-100 LoginMobileDesign">

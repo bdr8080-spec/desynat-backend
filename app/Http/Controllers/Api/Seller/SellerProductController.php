@@ -561,8 +561,39 @@ public function product_delete(Request $request){
                        
       ]);
 
+    //   check Color and size combination
+
+    $validate->after(function ($validate) use ($request) {
+        if (!$request->Products) return;
+    
+        foreach ($request->Products as $index => $product) {
+            $color_id = $product['color_id'] ?? null;
+    
+            if (!$color_id || empty($product['product_variation'])) continue;
+    
+            $combos = [];
+    
+            foreach ($product['product_variation'] as $i => $variation) {
+                $size_id = $variation['size_id'];
+    
+                $comboKey = $color_id . '-' . $size_id;
+    
+                if (isset($combos[$comboKey])) {
+                    $validate->errors()->add(
+                        "Products.$index.product_variation.$i.size_id",
+                        "Duplicate size for selected color."
+                    );
+                } else {
+                    $combos[$comboKey] = true;
+                }
+            }
+        }
+    });
+
+    // color and size combination end here
+
       if($validate->fails()){
-          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+          return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
          }
 
 
@@ -667,23 +698,6 @@ $request_data=(object) [
         'product_spe_ar'=>['required', 'array', new MatchArrayProductSpecification],
         'product_spe_feature_ar'=>['required', 'array', new MatchArrayProductSpecification],
 
-        // product vartion start
-      //   'variant_image' => ['required', 'array', new MatchArrayProductVariation],
-     
-     
-      //   'color_id' => ['required', 'array', new MatchArrayProductVariation],
-      //   'size_id' => ['required', 'array', new MatchArrayProductVariation],   
-      //   'color_id.*' => ['required','distinct','exists:colors,id'],
-      //   'size_id.*' => ['required','exists:sizes,id','distinct'],
-        
-      //   'total_stock' => ['required', 'array', new MatchArrayProductVariation],
-      //   'sku' => ['required', 'array', new MatchArrayProductVariation],
-      //   // 'sku_threshold_value' => ['required', 'array', new MatchArrayProductVariation],
-      //   'actual_price' => ['required', 'array', new MatchArrayProductVariation],
-      //   'discount_type' => ['required', 'array', new MatchArrayProductVariation],
-      //   'discount_value' => ['required', 'array', new MatchArrayProductVariation],
-      //   'final_price' => ['required', 'array', new MatchArrayProductVariation],
-
   'Products' => 'required|array',
   'Products.*.variant_image' => 'required|array|min:1',
   'Products.*.variant_image.*' => 'required|string',
@@ -730,9 +744,44 @@ $request_data=(object) [
         'upload_size_chart'=>'required',
                      
     ]);
+    
+
+
+    //   check Color and size combination
+
+    $validate->after(function ($validate) use ($request) {
+        if (!$request->Products) return;
+    
+        foreach ($request->Products as $index => $product) {
+            $color_id = $product['color_id'] ?? null;
+    
+            if (!$color_id || empty($product['product_variation'])) continue;
+    
+            $combos = [];
+    
+            foreach ($product['product_variation'] as $i => $variation) {
+                $size_id = $variation['size_id'];
+    
+                $comboKey = $color_id . '-' . $size_id;
+    
+                if (isset($combos[$comboKey])) {
+                    $validate->errors()->add(
+                        "Products.$index.product_variation.$i.size_id",
+                        "Duplicate size for selected color."
+                    );
+                } else {
+                    $combos[$comboKey] = true;
+                }
+            }
+        }
+    });
+
+    // color and size combination end here
+
+    
 
     if($validate->fails()){
-        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
        }
 
 
