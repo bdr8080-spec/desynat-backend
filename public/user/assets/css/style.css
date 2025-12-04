@@ -193,8 +193,8 @@ h3.mid-headng{
     padding: 0;
     border: none;
     border-radius: 50%;
-        width: 50px;
-    height: 50px;
+        width: 40px;
+    height: 40px;
     display: flex;
         overflow: hidden;
 }
@@ -1936,9 +1936,14 @@ footer span{
     padding-right: 7%;
 }
 .ms-20percenter{
-        margin-left: 20%;
+    margin-left: 20%;
 
 }
+.black-title {
+    color: #000;
+    font-size: 16px !important;
+}
+
 
 /* footer end */
 .bag-topbar {

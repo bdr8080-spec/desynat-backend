@@ -80,7 +80,7 @@
                                 <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     <img src="{{ Auth::guard('web')->user()->profile_image ?? asset('user/assets/images/user.png') }}"
-                                        alt="" height="50px" width="80px" />
+                                        alt="" height="40px" width="40px" />
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end profileDropdown">
                                     <li>
