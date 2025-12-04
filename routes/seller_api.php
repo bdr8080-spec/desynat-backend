@@ -70,12 +70,19 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::delete('product-delete',[SellerProductController::class, 'product_delete']);
 
 
+    // M4 Apis
+
     Route::post('all-Inventory-product',[SellerProductController::class, 'all_Inventory_product']);
 
     Route::put('update-stock-inventory',[SellerProductController::class, 'update_stock_inventory']);
 
     Route::put('update-affilate-commission',[SellerProductController::class, 'update_affilate_commission']);
 
+    Route::get('view-profile',[SellerProductController::class, 'view_profile']);
+    
+    Route::post('/update-store-information', [SellerProductController::class,'update_store_information']);
+    Route::post('/update-store-bank-details', [SellerProductController::class,'update_store_bank_details']);
+    
 });
 
 

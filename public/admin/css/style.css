@@ -18,6 +18,8 @@ body {
     --secondry-color: rgba(168, 130, 79, 1);
     --mb-6: 20px;
     --mt-5: 30px;
+      --bg-login:linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
+
 }
 
 .mb-6 {
@@ -139,6 +141,7 @@ hr {
     margin: 3% 0 2% !important;
     border: 2px solid var(--primary-color) !important;
     opacity: 1 !important;
+
 }
 
 .login {
@@ -193,7 +196,7 @@ hr {
 .form-group select.form-control,
 .form-group select.form-select {
     width: 100%;
-    padding: 9px 5px;
+    padding: 9px 10px;
     border: 1px solid var(--secondry-color);
     border-radius: 5px;
     font-size: 15px;
@@ -229,7 +232,7 @@ h5 {
     font-weight: 400;
     line-height: 26px;
     color: var(--primary-color);
-    text-decoration: underline;
+    text-decoration: auto;
 }
 
 .login .button {
@@ -984,7 +987,7 @@ table thead tr:nth-child(even) {
 .toggle-password {
     cursor: pointer;
     position: absolute;
-    bottom: 7px;
+    bottom: 12px;
     right: 10px;
 }
 
@@ -1188,12 +1191,12 @@ td {
 .button .custom-btn {
     width: 100%;
     background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
-    padding: 10px;
+  padding: 14px;
     text-align: center;
-    border-radius: 10prgba (111, 70, 40, 1) x;
+    border-radius: 10prgba(111, 70, 40, 1) x;
     color: #fff;
-    font-size: 16px;
-    line-height: 26px;
+    font-size: 18px;
+    line-height: 30px;
     font-weight: 500;
 }
 
@@ -1430,8 +1433,12 @@ a.nav-link.active {
 
 .form-group label {
     margin-bottom: 3px;
-    /* font-weight: bold; */
-    font-size: 18px;
+       font-size: 16px;
+    color: #000;
+}
+
+.form-control:focus {
+     box-shadow:none !important;
 }
 
 .form-group input,
@@ -1589,64 +1596,7 @@ button[type="submit"] {
     opacity: 1;
 }
 /* new css  */
- .auth-wrapper {
-        display: flex;
-        height: 100vh;
-        width: 100%;
-      }
-
-      .auth-left {
-        flex: 1;
-        background: url("image/background-image.svg") no-repeat center
-          center/cover;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .brand-header {
-        position: absolute;
-        top: 30px;
-        left: 30px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .brand-logo {
-        width: 45px;
-        height: 45px;
-      }
-
-      .brand-name {
-        font-size: 38px;
-        font-weight: 600;
-        font-family: "Georgia", serif;
-        color: #000;
-      }
-
-      .auth-right {
-        flex: 1;
-        background: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .auth-form-wrapper {
-        width: 350px;
-      }
-      .loginBackgroundeffect {
-        max-width: 470px;
-      }
-
-.header-logo {
-    width: 110px;
-    height: 66px;
-  border-radius: 50%;
-  object-fit: contain;
-}
+ 
 
 .brand-name {
   font-size: 22px;
@@ -1665,8 +1615,8 @@ button[type="submit"] {
 .lang-btn {
   background: transparent;
   border: 1px solid rgba(0,0,0,0.7);
-  padding: 6px 14px;
-  border-radius: 50px;
+ padding: 12px 18px;
+    border-radius: 15px;
   font-size: 14px;
   cursor: pointer;
   display: flex;
@@ -1707,17 +1657,7 @@ width: 157px;
     margin: 0 25px;
 }
 
-.lang-btn {
-    background: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.7);
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+
 .upload-title {
     font-size: 16px;
     font-weight: 600;
@@ -2010,4 +1950,55 @@ a.btn.btn-dark.customBtn.button {
 .text-success{
     font-size: 16px;
     
+}
+.login-text{
+        font-size: 30px;
+    color: #000;
+    font-weight: bolder;
+}
+.welcome-text{
+    color: #6F4628;
+       font-size: 25px;
+    font-weight: bold;
+
+}
+  .loginBackgroundeffect {
+        max-width: 563px !important;
+      }
+
+
+.bg-logo-wapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.vector-left {
+  position: absolute;
+  left: 0;
+  top: 9%;
+}
+
+.vector-right {
+  position: absolute;
+  right: 0;
+   bottom: 0%;
+}
+.login-grid-bg {
+  height: 100vh;
+  background: var(--bg-login);
+}
+.login-content.pt-40 {
+    background: #fff;
+    padding: 60px 40px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-grid-2 h1 {
+    font-size: var(--h1);
+    color: #000;
+    font-weight: 600;
 }
