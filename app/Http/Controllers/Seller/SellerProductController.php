@@ -1184,84 +1184,168 @@ public function Add_product_code1(Request $request){
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
           'upload_size_chart'=>'required',
 
+            // Body Measurements arrays (required only for category 2)
+        'bust'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'waist'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'hip'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'shoulder'      => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'sleeve_length' => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'length'        => [Rule::requiredIf($request->category_id == 2), 'array'],
+    
+        // Inner-level Arrays (color index)
+        'bust.*'          => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'waist.*'         => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'hip.*'           => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'shoulder.*'      => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'sleeve_length.*' => [Rule::requiredIf($request->category_id == 2), 'array'],
+        'length.*'        => [Rule::requiredIf($request->category_id == 2), 'array'],
+    
+        // Actual input values (size-level)
+        'bust.*.*'          => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'waist.*.*'         => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'hip.*.*'           => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'shoulder.*.*'      => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'sleeve_length.*.*' => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+        'length.*.*'        => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+
+
         
       ],[
-         // Basic Fields
+   
+    // Base Fields
     'category_id.required' => 'Category is required.',
     'category_id.exists' => 'Selected category is invalid.',
-    'subcategory_id.required' => 'Subcategory is required.',
-    'subcategory_id.exists' => 'Selected subcategory is invalid.',
+
+    'subcategory_id.required' => 'Sub-category is required.',
+    'subcategory_id.exists' => 'Selected sub-category is invalid.',
+
     'brand_id.required' => 'Brand is required.',
     'brand_id.exists' => 'Selected brand is invalid.',
+
     'product_name_en.required' => 'Product name (English) is required.',
-    'product_name_en.unique' => 'Product name (English) already exists.',
+    'product_name_en.unique' => 'English product name already exists.',
     'product_name_ar.required' => 'Product name (Arabic) is required.',
-    'product_name_ar.unique' => 'Product name (Arabic) already exists.',
-    'description_en.required' => 'Product description (English) is required.',
-    'description_ar.required' => 'Product description (Arabic) is required.',
+    'product_name_ar.unique' => 'Arabic product name already exists.',
 
-    // Product Specification
-    'product_spe_en.required' => 'Product specification title (EN) is required.',
-    'product_spe_en.*.required' => 'Each product specification title (EN) field is required.',
-    'product_spe_feature_en.required' => 'Product specification feature (EN) is required.',
-    'product_spe_feature_en.*.required' => 'Each specification feature (EN) field is required.',
+    'description_en.required' => 'English description is required.',
+    'description_ar.required' => 'Arabic description is required.',
 
-    'product_spe_ar.required' => 'Product specification title (AR) is required.',
-    'product_spe_ar.*.required' => 'Each product specification title (AR) field is required.',
-    'product_spe_feature_ar.required' => 'Product specification feature (AR) is required.',
-    'product_spe_feature_ar.*.required' => 'Each specification feature (AR) field is required.',
 
-    // Variant Images
-    'variant_image.required' => 'Please upload at least one variant image.',
-    'variant_image.*.required' => 'Image is required for each variant.',
+    // Specification
+    'product_spe_en.required' => 'Product specification (English) is required.',
+    'product_spe_en.array' => 'Product specification (English) must be in format.',
+    'product_spe_en.*.required' => 'Product specification value (English) is required.',
 
-    // Color Validation
+    'product_spe_feature_en.required' => 'Product feature (English) is required.',
+    'product_spe_feature_en.array' => 'Product feature (English) must be in format.',
+    'product_spe_feature_en.*.required' => 'Product feature value (English) is required.',
+
+    'product_spe_ar.required' => 'Product specification (Arabic) is required.',
+    'product_spe_ar.array' => 'Product specification (Arabic) must be in format.',
+    'product_spe_ar.*.required' => 'Product specification value (Arabic) is required.',
+
+    'product_spe_feature_ar.required' => 'Product feature (Arabic) is required.',
+    'product_spe_feature_ar.array' => 'Product feature (Arabic) must be in format.',
+    'product_spe_feature_ar.*.required' => 'Product feature value (Arabic) is required.',
+
+
+    // Colors
     'color_id.required' => 'At least one color must be selected.',
-    'color_id.*.required' => 'Color selection is required.',
-    'color_id.*.exists' => 'Selected color is not valid.',
+    'color_id.array' => 'Color input format invalid.',
+    'color_id.*.required' => 'Color entry is missing.',
+    'color_id.*.exists' => 'Selected color is invalid.',
+
+
+    // Variant Image
+    'variant_image.required' => 'Product variant image is required.',
+    'variant_image.array' => 'Variant images must be valid.',
+    'variant_image.*.required' => 'Please upload image for each color.',
+    'variant_image.*.array' => 'Image format invalid.',
+
 
     // Size Validation
-    'size_id.required' => 'Sizes are required.',
-    'size_id.*.required' => 'Size list for selected color is required.',
-    'size_id.*.*.required' => 'Each size field is required.',
+    'size_id.required' => 'At least one size must be selected.',
+    'size_id.array' => 'Size format invalid.',
+    'size_id.*.required' => 'Size entry missing.',
+    'size_id.*.array' => 'Size format invalid.',
+    'size_id.*.*.required' => 'Size is required.',
     'size_id.*.*.exists' => 'Selected size is invalid.',
 
-    // Inventory + Pricing
-    'total_stock.*.*.required' => 'Stock quantity is required.',
-    'total_stock.*.*.integer' => 'Stock must be a number.',
-    'sku.*.*.required' => 'SKU is required.',
-    'sku.*.*.string' => 'SKU must be a valid string.',
+
+    // Inventory
+    'total_stock.*.*.required' => 'Total stock is required.',
+    'total_stock.*.*.integer' => 'Total stock must be a valid number.',
+
+    'sku.*.*.required' => 'SKU value is required.',
+    'sku.*.*.max' => 'SKU must not exceed 50 characters.',
+
     'actual_price.*.*.required' => 'Actual price is required.',
     'actual_price.*.*.numeric' => 'Actual price must be a valid number.',
 
+
+    // Discount
     'discount_type.*.*.required' => 'Discount type is required.',
-    'discount_type.*.*.in' => 'Invalid discount type selected.',
+    'discount_type.*.*.in' => 'Discount type must be 1=percentage or 2=fixed.',
+
     'discount_value.*.*.required' => 'Discount value is required.',
     'discount_value.*.*.numeric' => 'Discount value must be numeric.',
+
     'final_price.*.*.required' => 'Final price is required.',
     'final_price.*.*.numeric' => 'Final price must be numeric.',
 
-    // General
+
+    // Product Policy
     'min_card_quantity.required' => 'Minimum cart quantity is required.',
     'max_card_quantity.required' => 'Maximum cart quantity is required.',
 
-    'product_return.required' => 'Product return option is required.',
-    'product_return.in' => 'Invalid product return option.',
-    'return_days.required_if' => 'Return days are required when return is enabled.',
-    'return_days.integer' => 'Return days must be a number.',
+    'product_return.required' => 'Please select return availability.',
+    'product_return.in' => 'Invalid return option.',
 
-    'product_exchangable.required' => 'Product exchange option is required.',
+    'return_days.required_if' => 'Return days are required if return is available.',
+    'return_days.integer' => 'Return days must be numeric.',
+
+    'product_exchangable.required' => 'Please select exchange availability.',
     'product_exchangable.in' => 'Invalid exchange option.',
-    'exchangable_days.required_if' => 'Exchange days are required when exchange is enabled.',
-    'exchangable_days.integer' => 'Exchange days must be a number.',
 
-    'review_rating.required' => 'Review and rating option is required.',
-    'affiliated_product.required' => 'Affiliate product option is required.',
-    'customized_product.required' => 'Customized product option is required.',
-    'ready_to_ship.required' => 'Ready to ship option is required.',
-    'cash_on_delivery.required' => 'Cash on delivery option is required.',
-    'upload_size_chart.required' => 'Size chart upload is required.',
+    'exchangable_days.required_if' => 'Exchange days required if exchange available.',
+    'exchangable_days.integer' => 'Exchange days must be numeric.',
 
+    'review_rating.required' => 'Review & Rating option is required.',
+    'review_rating.in' => 'Invalid rating option.',
+
+    'affiliated_product.required' => 'Affiliated product option is required.',
+    'affiliated_product.in' => 'Invalid option.',
+
+    'customized_product.required' => 'Customization option is required.',
+    'customized_product.in' => 'Invalid option.',
+
+    'ready_to_ship.required' => 'Ready to ship status required.',
+    'ready_to_ship.in' => 'Invalid ready to ship option.',
+
+    'cash_on_delivery.required' => 'Cash on delivery availability required.',
+    'cash_on_delivery.in' => 'Invalid COD option.',
+
+    'upload_size_chart.required' => 'Upload size chart is required.',
+
+
+    // Body measurement
+    'bust.*.*.required' => 'Bust measurement required.',
+    'bust.*.*.numeric' => 'Bust measurement must be numeric.',
+
+    'waist.*.*.required' => 'Waist measurement required.',
+    'waist.*.*.numeric' => 'Waist must be numeric.',
+
+    'hip.*.*.required' => 'Hip measurement required.',
+    'hip.*.*.numeric' => 'Hip must be numeric.',
+
+    'shoulder.*.*.required' => 'Shoulder measurement required.',
+    'shoulder.*.*.numeric' => 'Shoulder must be numeric.',
+
+    'sleeve_length.*.*.required' => 'Sleeve length is required.',
+    'sleeve_length.*.*.numeric' => 'Sleeve length must be numeric.',
+
+    'length.*.*.required' => 'Length is required.',
+    'length.*.*.numeric' => 'Length must be numeric.',
         
       ]);
 
@@ -1315,8 +1399,12 @@ public function Add_product_code1(Request $request){
     // Group sizes by color
     $grouped = [];
 
-
     foreach ($colors as $i => $color) {
+
+        if(!isset($sizes[$i])) {
+            continue;
+        }
+
         $size = $sizes[$i] ?? null;
 
         foreach ($size as $i1 => $si) {
@@ -1340,45 +1428,6 @@ public function Add_product_code1(Request $request){
           return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
          }
 
-         if($request->category_id=='2'){   // if the category is women Then These field is manditary
-
-            $validate = Validator::make($request->all(), [               
-               // New Code 1
-        
-        // Body Measurements arrays (required only for category 2)
-        'bust'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'waist'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'hip'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'shoulder'      => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'sleeve_length' => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'length'        => [Rule::requiredIf($request->category_id == 2), 'array'],
-    
-        // Inner-level Arrays (color index)
-        'bust.*'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'waist.*'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'hip.*'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'shoulder.*'      => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'sleeve_length.*' => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'length.*'        => [Rule::requiredIf($request->category_id == 2), 'array'],
-    
-        // Actual input values (size-level)
-        'bust.*.*'          => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'waist.*.*'         => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'hip.*.*'           => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'shoulder.*.*'      => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'sleeve_length.*.*' => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'length.*.*'        => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-
-      
-              ]);
-            
-            if($validate->fails()){
-                return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
-            }
-      
-           }
-
-         
 
 
      // Product Vartion Image
@@ -1540,29 +1589,7 @@ public function edit_product_code1(Request $request, $id){
             'old_variant_image' => ['array'],
             'old_variant_image.*' => ['nullable'],
 
-           
-        //   'color_id' => ['required', 'array'],
-        //   'size_id' => ['required', 'array', ],
-        //   'color_id.*' => ['required','exists:colors,id'],
-        //   'size_id.*' => ['required','exists:sizes,id'],
-
-        //   'total_stock' => ['required', 'array'],
-        //   'sku' => ['required', 'array'],
-        // //   'sku_threshold_value' => ['required', 'array'],
-        //   'actual_price' => ['required', 'array'],
-        //   'discount_type' => ['required', 'array'],
-        //   'discount_value' => ['required', 'array'],
-        //   'final_price' => ['required', 'array'],
-
-        //  'total_stock.*' => ['required'],
-        //   'sku.*' => ['required'],
-        // //   'sku_threshold_value.*' => ['required'],
-        //   'actual_price.*' => ['required'],
-        //   'discount_type.*' => ['required'],
-        //   'discount_value.*' => ['required'],
-        //   'final_price.*' => ['required'],
-
-
+      
           // Colors validation (first level array)
           'color_id' => 'required|array|min:1',
           'color_id.*' => 'required|integer|exists:colors,id',
@@ -1600,24 +1627,7 @@ public function edit_product_code1(Request $request, $id){
            'upload_size_chart' => 'required_without:old_upload_size_chart',
            'old_upload_size_chart' => 'required_without:upload_size_chart',
 
-        // //   if The category is women
-        //         // MAIN ARRAY FIELDS (required only if category_id = 2)
-        //     'bust'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-        //     'waist'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-        //     'hip'            => [Rule::requiredIf($request->category_id == 2), 'array'],
-        //     'shoulder'       => [Rule::requiredIf($request->category_id == 2), 'array'],
-        //     'sleeve_length'  => [Rule::requiredIf($request->category_id == 2), 'array'],
-        //     'length'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-
-        //     // INNER ARRAY VALUES (apply required only if category_id = 2)
-        //     'bust.*'           => [Rule::requiredIf($request->category_id == 2)],
-        //     'waist.*'          => [Rule::requiredIf($request->category_id == 2)],
-        //     'hip.*'            => [Rule::requiredIf($request->category_id == 2)],
-        //     'shoulder.*'       => [Rule::requiredIf($request->category_id == 2)],
-        //     'sleeve_length.*'  => [Rule::requiredIf($request->category_id == 2)],
-        //     'length.*'         => [Rule::requiredIf($request->category_id == 2)], 
-
-           // Body Measurements arrays (required only for category 2)
+       // Body Measurements arrays (required only for category 2)
            'bust'          => [Rule::requiredIf($request->category_id == 2), 'array'],
            'waist'         => [Rule::requiredIf($request->category_id == 2), 'array'],
            'hip'           => [Rule::requiredIf($request->category_id == 2), 'array'],
@@ -1643,140 +1653,152 @@ public function edit_product_code1(Request $request, $id){
             
             
       ],[
-            'upload_size_chart.required_without' => 'Upload size Chart image is required.',
-            'old_upload_size_chart.required_without' => 'oad size Chart image is required.',
-            
-            // Basic fields
-            'category_id.required'       => 'Please select a category.',
-            'category_id.exists'         => 'Selected category does not exist.',
-            
-            'subcategory_id.required'    => 'Please select a subcategory.',
-            'subcategory_id.exists'      => 'Selected subcategory does not exist.',
-        
-            'brand_id.required'          => 'Please select a brand.',
-            'brand_id.exists'            => 'Selected brand does not exist.',
-        
-            'other_en.required'          => 'Other (English) field is required.',
-            'other_ar.required'          => 'Other (Arabic) field is required.',
-        
-            'product_name_en.required'   => 'Product name (English) is required.',
-            'product_name_en.unique'     => 'This English product name is already taken.',
-        
-            'product_name_ar.required'   => 'Product name (Arabic) is required.',
-            'product_name_ar.unique'     => 'This Arabic product name is already taken.',
-        
-            'description_en.required'    => 'Description (English) is required.',
-            'description_ar.required'    => 'Description (Arabic) is required.',
-        
-            // Specifications
-            'product_spe_en.required'           => 'English specifications are required.',
-            'product_spe_en.array'              => 'English specifications must be an array.',
-            'product_spe_en.*.required'         => 'Each English specification is required.',
-        
-            'product_spe_feature_en.required'   => 'English specification features are required.',
-            'product_spe_feature_en.*.required' => 'Each English specification feature is required.',
-        
-            'product_spe_ar.required'           => 'Arabic specifications are required.',
-            'product_spe_ar.*.required'         => 'Each Arabic specification is required.',
-        
-            'product_spe_feature_ar.required'   => 'Arabic specification features are required.',
-            'product_spe_feature_ar.*.required' => 'Each Arabic specification feature is required.',
-        
-            // Product Variant Fields
-            'variant_image.required'      => 'Variant images are required.',
-            'variant_image.*.required'    => 'Each variant image is required.',
-        
-            'color_id.required'           => 'Color field is required.',
-            'color_id.array'              => 'Color field must be an array.',
-            'color_id.*.required'         => 'Each color is required.',
-            'color_id.*.distinct'         => 'Duplicate colors are not allowed.',
-            'color_id.*.exists'           => 'Selected color does not exist.',
-        
-            'size_id.required'            => 'Size field is required.',
-            'size_id.array'               => 'Size field must be an array.',
-            'size_id.*.required'          => 'Each size is required.',
-            'size_id.*.exists'            => 'Selected size does not exist.',
-            'size_id.*.distinct'          => 'Duplicate sizes are not allowed.',
-        
-            'total_stock.required'        => 'Stock field is required.',
-            'total_stock.*.required'      => 'Each stock value is required.',
-        
-            'sku.required'                => 'SKU field is required.',
-            'sku.*.required'              => 'Each SKU is required.',
-        
-            'sku_threshold_value.required'   => 'SKU threshold field is required.',
-            'sku_threshold_value.*.required' => 'Each SKU threshold value is required.',
-        
-            'actual_price.required'       => 'Actual price is required.',
-            'actual_price.*.required'     => 'Each actual price is required.',
-        
-            'discount_type.required'      => 'Discount type is required.',
-            'discount_type.*.required'    => 'Each discount type is required.',
-        
-            'discount_value.required'     => 'Discount value is required.',
-            'discount_value.*.required'   => 'Each discount value is required.',
-        
-            'final_price.required'        => 'Final price is required.',
-            'final_price.*.required'      => 'Each final price is required.',
-        
-            // General Product Details
-            'min_card_quantity.required'  => 'Minimum cart quantity is required.',
-            'max_card_quantity.required'  => 'Maximum cart quantity is required.',
-        
-            // Return
-            'product_return.required'     => 'Please choose if product is returnable.',
-            'product_return.in'           => 'Invalid return option.',
-            'return_days.required_if'     => 'Return days are required when product is returnable.',
-            'return_days.integer'         => 'Return days must be a number.',
-        
-            // Exchange
-            'product_exchangable.required'     => 'Please choose if product is exchangeable.',
-            'product_exchangable.in'           => 'Invalid exchange option.',
-            'exchangable_days.required_if'     => 'Exchangable days are required when product is exchangeable.',
-            'exchangable_days.integer'         => 'Exchangable days must be a number.',
-        
-            // Review
-            'review_rating.required'      => 'Please choose review rating option.',
-            'review_rating.in'            => 'Invalid rating option.',
-        
-            // Affiliated
-            'affiliated_product.required' => 'Please choose affiliated product option.',
-            'affiliated_product.in'       => 'Invalid affiliated option.',
-        
-            // Customized
-            'customized_product.required' => 'Please choose customized product option.',
-            'customized_product.in'       => 'Invalid customized option.',
-        
-            // Shipping
-            'ready_to_ship.required'      => 'Ready to ship field is required.',
-            'ready_to_ship.in'            => 'Invalid ready-to-ship option.',
-        
-            // COD
-            'cash_on_delivery.required'   => 'Cash on delivery option is required.',
-            'cash_on_delivery.in'         => 'Invalid cash on delivery option.',
-        
-            // Size Chart
-            'upload_size_chart.required'  => 'Size chart is required.',
-        
-            // Women Category (category_id = 2)
-            'bust.required'               => 'Bust field is required for women category.',
-            'bust.*.required'             => 'Each bust value is required.',
-        
-            'waist.required'              => 'Waist field is required for women category.',
-            'waist.*.required'            => 'Each waist value is required.',
-        
-            'hip.required'                => 'Hip field is required for women category.',
-            'hip.*.required'              => 'Each hip value is required.',
-        
-            'shoulder.required'           => 'Shoulder field is required for women category.',
-            'shoulder.*.required'         => 'Each shoulder value is required.',
-        
-            'sleeve_length.required'      => 'Sleeve length is required for women category.',
-            'sleeve_length.*.required'    => 'Each sleeve length value is required.',
-        
-            'length.required'             => 'Length field is required for women category.',
-            'length.*.required'           => 'Each length value is required.',
-        
+    
+        // Base Fields
+    'category_id.required' => 'Category is required.',
+    'category_id.exists' => 'Selected category is invalid.',
+
+    'subcategory_id.required' => 'Sub-category is required.',
+    'subcategory_id.exists' => 'Selected sub-category is invalid.',
+
+    'brand_id.required' => 'Brand is required.',
+    'brand_id.exists' => 'Selected brand is invalid.',
+
+    'product_name_en.required' => 'Product name (English) is required.',
+    'product_name_en.unique' => 'English product name already exists.',
+    'product_name_ar.required' => 'Product name (Arabic) is required.',
+    'product_name_ar.unique' => 'Arabic product name already exists.',
+
+    'description_en.required' => 'English description is required.',
+    'description_ar.required' => 'Arabic description is required.',
+
+
+    // Specifications
+    'product_spe_en.required' => 'English specifications are required.',
+    'product_spe_en.array' => 'Invalid format for English specifications.',
+    'product_spe_en.*.required' => 'Each English specification is required.',
+
+    'product_spe_feature_en.required' => 'English specification features are required.',
+    'product_spe_feature_en.array' => 'Invalid format for English specification features.',
+    'product_spe_feature_en.*.required' => 'Each English feature is required.',
+
+    'product_spe_ar.required' => 'Arabic specifications are required.',
+    'product_spe_ar.array' => 'Invalid format for Arabic specifications.',
+    'product_spe_ar.*.required' => 'Each Arabic specification is required.',
+
+    'product_spe_feature_ar.required' => 'Arabic specification features are required.',
+    'product_spe_feature_ar.array' => 'Invalid format for Arabic specification features.',
+    'product_spe_feature_ar.*.required' => 'Each Arabic feature is required.',
+
+
+    // Variation Images
+    'variant_image.array' => 'Variant images format is invalid.',
+    'variant_image.*.array' => 'Variant image group format is invalid.',
+    'variant_image.*.*.image' => 'Each uploaded file must be an image.',
+    'variant_image.*.*.mimes' => 'Images must be jpeg, png, jpg, or gif.',
+    'variant_image.*.*.max' => 'Image size must not exceed 2MB.',
+
+    'old_variant_image.array' => 'Old variant images format is invalid.',
+    'old_variant_image.*.nullable' => 'Old variant image field is invalid.',
+
+
+    // Colors
+    'color_id.required' => 'At least one color must be selected.',
+    'color_id.array' => 'Color format invalid.',
+    'color_id.*.required' => 'Color selection is required.',
+    'color_id.*.exists' => 'Selected color does not exist.',
+
+
+    // Sizes
+    'size_id.required' => 'At least one size is required.',
+    'size_id.array' => 'Size format invalid.',
+    'size_id.*.required' => 'Size group is required.',
+    'size_id.*.array' => 'Invalid size input format.',
+    'size_id.*.*.required' => 'Each size must be selected.',
+    'size_id.*.*.exists' => 'Invalid size selected.',
+
+
+    // Inventory
+    'total_stock.*.*.required' => 'Total stock is required.',
+    'total_stock.*.*.integer' => 'Total stock must be a number.',
+    'total_stock.*.*.min' => 'Stock cannot be negative.',
+
+    'sku.*.*.required' => 'SKU is required.',
+    'sku.*.*.string' => 'SKU format invalid.',
+    'sku.*.*.max' => 'SKU must not exceed 50 characters.',
+
+    'actual_price.*.*.required' => 'Actual price is required.',
+    'actual_price.*.*.numeric' => 'Actual price must be a number.',
+    'actual_price.*.*.min' => 'Actual price cannot be negative.',
+
+
+    // Discount
+    'discount_type.*.*.required' => 'Discount type is required.',
+    'discount_type.*.*.in' => 'Invalid discount type.',
+
+    'discount_value.*.*.required' => 'Discount value is required.',
+    'discount_value.*.*.numeric' => 'Discount value must be numeric.',
+    'discount_value.*.*.min' => 'Discount value cannot be negative.',
+
+    'final_price.*.*.required' => 'Final price is required.',
+    'final_price.*.*.numeric' => 'Final price must be numeric.',
+    'final_price.*.*.min' => 'Final price cannot be negative.',
+
+
+    // Product Policies
+    'min_card_quantity.required' => 'Minimum cart quantity is required.',
+    'max_card_quantity.required' => 'Maximum cart quantity is required.',
+
+    'product_return.required' => 'Return availability is required.',
+    'product_return.in' => 'Invalid return selection.',
+    'return_days.required_if' => 'Return days required if product is returnable.',
+    'return_days.integer' => 'Return days must be numeric.',
+
+    'product_exchangable.required' => 'Exchange availability is required.',
+    'product_exchangable.in' => 'Invalid exchange selection.',
+    'exchangable_days.required_if' => 'Exchange days required if exchange is available.',
+    'exchangable_days.integer' => 'Exchange days must be numeric.',
+
+    'review_rating.required' => 'Review & rating option required.',
+    'review_rating.in' => 'Invalid review & rating value.',
+
+    'affiliated_product.required' => 'Affiliated product selection required.',
+    'affiliated_product.in' => 'Invalid affiliated product option.',
+
+    'customized_product.required' => 'Customization selection required.',
+    'customized_product.in' => 'Invalid customization option.',
+
+    'ready_to_ship.required' => 'Ready to ship status required.',
+    'ready_to_ship.in' => 'Invalid ready to ship option.',
+
+    'cash_on_delivery.required' => 'Cash on delivery option required.',
+    'cash_on_delivery.in' => 'Invalid COD selection.',
+
+
+    // Upload Size Chart
+    'upload_size_chart.required_without' => 'Size chart upload is required if old size chart not uploaded.',
+    'old_upload_size_chart.required_without' => 'Old size chart required if new size chart not uploaded.',
+
+
+    // Body Measurements (only category 2)
+    'bust.*.*.required' => 'Bust measurement required.',
+    'bust.*.*.numeric' => 'Bust must be numeric.',
+
+    'waist.*.*.required' => 'Waist measurement required.',
+    'waist.*.*.numeric' => 'Waist must be numeric.',
+
+    'hip.*.*.required' => 'Hip measurement required.',
+    'hip.*.*.numeric' => 'Hip must be numeric.',
+
+    'shoulder.*.*.required' => 'Shoulder measurement required.',
+    'shoulder.*.*.numeric' => 'Shoulder must be numeric.',
+
+    'sleeve_length.*.*.required' => 'Sleeve length required.',
+    'sleeve_length.*.*.numeric' => 'Sleeve length must be numeric.',
+
+    'length.*.*.required' => 'Length is required.',
+    'length.*.*.numeric' => 'Length must be numeric.',
+
       ]);
 
       $validate->after(function ($validate) use ($request) {
@@ -1832,6 +1854,11 @@ public function edit_product_code1(Request $request, $id){
 
 
        foreach ($colors as $i => $color) {
+
+        if(!isset($sizes[$i])) {
+            continue;
+        }
+        
            $size = $sizes[$i] ?? null;
    
            foreach ($size as $i1 => $si) {
