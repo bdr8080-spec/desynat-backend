@@ -1023,6 +1023,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             setQty(1);
             firstClick = true;
+            sendToCart(0);
             return;
         }
 

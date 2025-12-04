@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 
 
-use App\Models\{ product,ProductSpecification,ProductVariant};
+use App\Models\{ product,ProductSpecification,ProductVariant,StockInventoryRecords};
 
 class SellerProductService
 {
@@ -1430,7 +1430,109 @@ foreach($request->color_id as $key=>$val){
 
 
     }
+
+
+
+public function Update_Product_Inventory($request){
+
+    try{
+
     
+        DB::beginTransaction();
+        
+        // FILTER PRODUCT TABLE DATA SEPRATE
+        
+        $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
+
+        $match=[
+        
+        'product_id'=> $request->product_id,
+        'id'=> $request->variation_id,
+        ];
+
+        $data=[
+            'total_stock'=> $request->stock_quantity,  
+        ];
+
+        if($request->sku){
+            $data['sku']= $request->sku;
+        }
+
+    $update_inventory=  ProductVariant::where($match)->first();
+    
+    if($update_inventory){
+        $update_inventory->update($data);
+    }else{
+        return ['status'=>'error','message'=>"Variation Id is Wrong",'data'=>(object)[]];
+    }
+
+    //   Update stock record in stock Table
+
+    $inventory_record=[
+        'user_type'=>'1',// seller
+        'user_id'=>$seller_details->id,
+        'product_id'=> $request->product_id,
+        'total_stock'=>$request->stock_quantity,
+        'sku'=> $request->sku,
+    ];
+    
+    StockInventoryRecords::create($inventory_record);
+
+        if($update_inventory){
+            DB::commit();
+
+        return ['status'=>'success','message'=>"Product Inventory Update successfully",'data'=>(object)[]];
+      
+        }
+        
+        
+        } 
+        catch (\Exception $e) {
+            return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+        
+        }
+
+
+    }
+
+    
+
+
+
+public function Update_affilate_commission_Inventory($request){
+
+    try{
+
+    
+        DB::beginTransaction();
+        
+        // FILTER PRODUCT TABLE DATA SEPRATE
+        
+        $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
+
+        if($seller_details){
+        $seller_details->update(['affilate_commission'=> $request->affilate_commission]);
+
+        }
+
+        if($seller_details){
+        
+        DB::commit();
+        
+        return ['status'=>'success','message'=>"Affilate Commission Update successfully",'data'=>(object)[]];
+      
+        }
+        
+        
+        } 
+        catch (\Exception $e) {
+            return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+        
+        }
+
+
+    }
+
 
 
 

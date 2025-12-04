@@ -61,7 +61,6 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::post('add-product1',[SellerProductController::class, 'add_product1']);
     Route::post('edit-product1',[SellerProductController::class, 'edit_product1']);
 
-
     Route::post('all-product',[SellerProductController::class, 'all_product']);
 
     Route::post('single-product-details',[SellerProductController::class, 'seller_single_product_details']);
@@ -69,6 +68,13 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::put('product-status-active-inactive',[SellerProductController::class, 'product_status_active_inactive']);
 
     Route::delete('product-delete',[SellerProductController::class, 'product_delete']);
+
+
+    Route::post('all-Inventory-product',[SellerProductController::class, 'all_Inventory_product']);
+
+    Route::put('update-stock-inventory',[SellerProductController::class, 'update_stock_inventory']);
+
+    Route::put('update-affilate-commission',[SellerProductController::class, 'update_affilate_commission']);
 
 });
 
