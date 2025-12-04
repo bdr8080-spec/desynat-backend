@@ -1931,6 +1931,7 @@ foreach ($request->color_id as $key => $val) {
 
             $uploadedPath = doc_upload($imgFile, $dir);   // upload
             $final_variation_images[$key][$count_array] = $uploadedPath;
+            $count_array++;
 
         }
     }
@@ -1939,8 +1940,6 @@ foreach ($request->color_id as $key => $val) {
 
 }
 
-
-dd($final_variation_images);
 
 
     //  Product Size Chart Upload 
