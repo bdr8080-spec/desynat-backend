@@ -305,6 +305,7 @@ label {
   top: 0px;
   width: 100%;
   z-index: 999;
+  align-items: center;
 }
 
 
@@ -1323,3 +1324,27 @@ label {
 
 }
 
+@media (max-width:1440px) {
+  .login-img img {
+      width: 55%;
+      margin: auto;
+      justify-content: center;
+      display: flex;
+  }
+  .vector-left {
+    position: absolute;
+    left: 0;
+    top: 9%;
+    width: 20%;
+}
+.vector-right {
+  position: absolute;
+  right: 0;
+  bottom: 0%;
+  width: 20%;
+}
+.login-header {
+  padding: 5px 4%;
+}
+
+}

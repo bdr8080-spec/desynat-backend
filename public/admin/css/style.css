@@ -2007,11 +2007,12 @@ a.btn.btn-dark.customBtn.button {
   padding: 7px 4%;
   display: flex;
   justify-content: space-between;
-  background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 99.99%);
+  background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);
   position: fixed;
   top: 0px;
   width: 100%;
   z-index: 999;
+  align-items: center;
 }
 /*--------------------------------------------------------------
 # Header Nav
