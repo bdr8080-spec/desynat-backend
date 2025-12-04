@@ -16,23 +16,24 @@
 
 <body>
 
-    <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
-
-
-        <div class="left-section d-flex align-items-center">
-            <img src="{{asset('admin/image/logo.svg')}}" class="img-fluid" />
-
+   
+        <div class="login-header">
+            <div class="des-logo">
+                <a href="#"><img src="{{asset('admin/image/logo.svg')}}" class="img-fluid" /> </a>
+            </div>
+            <div class="des-language">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="/admin/image/global.svg" class="img-fluid" /> EN
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
+                        <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <div class="header-divider"></div>
-
-        <div class="right-section">
-            <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-            </button>
-        </div>
-    </nav>
 
 
     <div class="container-fluid p-0">

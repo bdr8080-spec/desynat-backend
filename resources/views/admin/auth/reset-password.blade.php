@@ -12,116 +12,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 
-<body style="background-color: rgba(227, 194, 149, 0.75) !important;">
+<body>
 
-    <style>
-    /* .auth-wrapper {
-        display: flex;
-        height: 100vh;
-        width: 100%;
-            max-width: 900px;
-    margin: 10% auto;
-      } */
-
-    .auth-left {
-        flex: 1;
-        background: url("image/background-image.svg") no-repeat center center/cover;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .brand-header {
-        position: absolute;
-        top: 30px;
-        left: 30px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .brand-logo {
-        width: 45px;
-        height: 45px;
-    }
-
-    .brand-name {
-        font-size: 38px;
-        font-weight: 600;
-        font-family: "Georgia", serif;
-        color: #000;
-    }
-
-    .auth-rights {
-        flex: 1;
-        background: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 17px;
-        border: 1px solid #ddd;
-        border-radius: 0px 20px 20px 0px;
-    }
-
-
-    .auth-form-wrapper {
-        width: 350px;
-    }
-
-    .loginBackgroundeffect {
-        max-width: 576px;
-    }
-
-    .custom-topbar {
-        background: linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%) !important;
-        height: 74px;
-        border-radius: 6px;
-        padding: 0 25px;
-        display: flex;
-        align-items: center;
-    }
-
-    .header-logo {
-        width: 110px;
-        height: 66px;
-        border-radius: 50%;
-        object-fit: contain;
-    }
-
-    .brand-name {
-        font-size: 22px;
-        font-weight: 600;
-        font-family: 'Georgia', serif;
-        margin-left: 12px;
-        color: #000;
-    }
-
-    .header-divider {
-        flex: 1;
-        /* border-bottom: 1.5px dotted rgba(0, 0, 0, 0.5); */
-        margin: 0 25px;
-    }
-    </style>
-    <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
-
-
-        <div class="left-section d-flex align-items-center">
-            <img src="{{asset('admin/image/logo.svg')}}" class="img-fluid" />
-
+  
+        <div class="login-header">
+            <div class="des-logo">
+                <a href="#"><img src="{{asset('admin/image/logo.svg')}}" class="img-fluid" /> </a>
+            </div>
+            <div class="des-language">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="/admin/image/global.svg" class="img-fluid" /> EN
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
+                        <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <div class="header-divider"></div>
-
-        <div class="right-section">
-            <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-            </button>
-        </div>
-    </nav>
-
-
     <div class="container-fluid p-0">
         <div class="login-grid-bg">
 
