@@ -12,6 +12,7 @@
   --bg-multiple:linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%);
   --btn-gradient: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
   --plan-bg:linear-gradient(364.09deg, #7d532ffc, #F9DBAB 91%);
+  --bg-login:linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
   --h1: 24px;
   --h1-line-height: 35px;
 
@@ -143,9 +144,9 @@ label {
   margin-right: 8px;
 }
 
-.login-img {
+/* .login-img {
   width: 60%;
-}
+} */
 
 .planheight {
   background: var(--plan-bg);
@@ -286,13 +287,13 @@ label {
 .vector-left {
   position: absolute;
   left: 0;
-  top: 30px;
+  top: 9%;
 }
 
 .vector-right {
   position: absolute;
   right: 0;
-  bottom: 30px;
+  bottom: 0%;
 }
 
 .login-header {
@@ -312,7 +313,7 @@ label {
 --------------------------------------------------------------*/
 .login-grid-bg {
   height: 100vh;
-  background: var(--bg-multiple);
+  background: var(--bg-login);
 }
 
 .login-content.pt-40 {
