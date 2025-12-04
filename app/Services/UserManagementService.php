@@ -1028,6 +1028,77 @@ public function addtoCart_Increment_decrement($request)
         }
     }
 
+    // public function product_add_to_cart_without_quantity_increment($request)
+    // {
+    //     try {
+    //         // Match existing cart item for the user, product, and variant
+    //         $match = [
+    //             'user_id'     => $request->user_id,
+    //             'product_id'  => $request->product_id,
+    //             'variants_id' => $request->variants_id,
+    //         ];
+
+    //         // Prepare data to insert if not exists
+    //         $data = [
+    //             'user_id'     => $request->user_id,
+    //             'product_id'  => $request->product_id,
+    //             'quantity'    => $request->quantity,
+    //             'variants_id' => $request->variants_id,
+    //         ];
+
+    //         // Get variant stock and price
+    //         $variant = ProductVariant::find($request->variants_id);
+    //         if (!$variant) {
+    //             return [
+    //                 'status'  => 'error',
+    //                 'message' => 'Product variant not found.',
+    //                 'data'    => (object)[]
+    //             ];
+    //         }
+
+    //         // Check stock
+    //         if (intval($variant->total_stock) < $request->quantity) {
+    //             return [
+    //                 'status'  => 'error',
+    //                 'message' => 'Product stock is too low.',
+    //                 'data'    => (object)[]
+    //             ];
+    //         }
+
+    //         $product_amount = $variant->final_price;
+
+    //         // Find existing cart entry
+    //         $cartItem = Addtocart::where($match)->first();
+
+    //         if ($cartItem) {
+    //             // FIXED: SET EXACT QUANTITY (do NOT add)
+    //             $cartItem->quantity = $request->quantity;
+    //             $cartItem->amount = $product_amount * $request->quantity;
+    //             $cartItem->save();
+
+    //             $msg = "Cart updated successfully";
+    //         } else {
+    //             // Create new cart entry
+    //             $data['amount'] = $product_amount * $request->quantity;
+    //             $cartItem = Addtocart::create($data);
+    //             $msg = "Added to cart successfully";
+    //         }
+
+    //         return [
+    //             'status'  => 'success',
+    //             'message' => $msg,
+    //             'data'    => $cartItem
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status'  => 'error',
+    //             'message' => 'Failed: ' . $e->getMessage(),
+    //             'data'    => (object)[]
+    //         ];
+    //     }
+    // }
+
     public function product_add_to_cart_without_quantity_increment($request)
     {
         try {
@@ -1056,13 +1127,15 @@ public function addtoCart_Increment_decrement($request)
                 ];
             }
 
-            // Check stock
-            if (intval($variant->total_stock) < $request->quantity) {
-                return [
-                    'status'  => 'error',
-                    'message' => 'Product stock is too low.',
-                    'data'    => (object)[]
-                ];
+            // Check stock only if quantity is greater than 0
+            if ($request->quantity > 0) {
+                if (intval($variant->total_stock) < $request->quantity) {
+                    return [
+                        'status'  => 'error',
+                        'message' => 'Product stock is too low.',
+                        'data'    => (object)[]
+                    ];
+                }
             }
 
             $product_amount = $variant->final_price;
@@ -1070,15 +1143,33 @@ public function addtoCart_Increment_decrement($request)
             // Find existing cart entry
             $cartItem = Addtocart::where($match)->first();
 
+            if ($request->quantity == 0) {
+                // If quantity is 0, remove the item from the cart
+                if ($cartItem) {
+                    $cartItem->delete();
+                    return [
+                        'status'  => 'error',
+                        'message' => 'Item removed from cart successfully.',
+                        'data'    => (object)[]
+                    ];
+                } else {
+                    return [
+                        'status'  => 'error',
+                        'message' => 'Item not found in cart.',
+                        'data'    => (object)[]
+                    ];
+                }
+            }
+
             if ($cartItem) {
-                // FIXED: SET EXACT QUANTITY (do NOT add)
+                // Update the existing cart item if the quantity is non-zero
                 $cartItem->quantity = $request->quantity;
                 $cartItem->amount = $product_amount * $request->quantity;
                 $cartItem->save();
 
                 $msg = "Cart updated successfully";
             } else {
-                // Create new cart entry
+                // Create new cart entry if it doesn't exist
                 $data['amount'] = $product_amount * $request->quantity;
                 $cartItem = Addtocart::create($data);
                 $msg = "Added to cart successfully";
@@ -1098,6 +1189,7 @@ public function addtoCart_Increment_decrement($request)
             ];
         }
     }
+
 
 
 

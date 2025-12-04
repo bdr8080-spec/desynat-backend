@@ -539,6 +539,6 @@
 </script>
 
 
-@include('dealer.layout.custom_code');
+@include('dealer.layout.custom_code')
 
 </html>
