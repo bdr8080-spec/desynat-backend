@@ -87,7 +87,7 @@
                 </div>
                   <span class="text-danger" id="error-password"></span>
                 <p class=" mt-3 mb-4"><a href="{{route('userForgetPassword')}}">Forgot password</a></p>
-                <button type="submit" class="customBtn" id="loginButtom">Login</button>
+                <button type="submit" class="customBtn mb-3" id="loginButtom">Login</button>
             </form>
                 <a class="customBtn2" style="text-decoration: none;" href="{{route('loginWithOtp')}}">Login Via OTP</a>
                 <div class="accounts signUp">
