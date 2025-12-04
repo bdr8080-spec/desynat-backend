@@ -1495,6 +1495,44 @@ public function Update_Product_Inventory($request){
 
     }
 
+    
+
+
+
+public function Update_affilate_commission_Inventory($request){
+
+    try{
+
+    
+        DB::beginTransaction();
+        
+        // FILTER PRODUCT TABLE DATA SEPRATE
+        
+        $seller_details=seller::with('store_info','subcription_plan')->where('id',$request->seller_id)->first();
+
+        if($seller_details){
+        $seller_details->update(['affilate_commission'=> $request->affilate_commission]);
+
+        }
+
+        if($seller_details){
+        
+        DB::commit();
+        
+        return ['status'=>'success','message'=>"Affilate Commission Update successfully",'data'=>(object)[]];
+      
+        }
+        
+        
+        } 
+        catch (\Exception $e) {
+            return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+        
+        }
+
+
+    }
+
 
 
 

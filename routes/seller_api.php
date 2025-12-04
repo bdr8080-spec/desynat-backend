@@ -74,8 +74,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     Route::put('update-stock-inventory',[SellerProductController::class, 'update_stock_inventory']);
 
-    
-
+    Route::put('update-affilate-commission',[SellerProductController::class, 'update_affilate_commission']);
 
 });
 

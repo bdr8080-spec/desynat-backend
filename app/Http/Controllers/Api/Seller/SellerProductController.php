@@ -880,6 +880,44 @@ public function update_stock_inventory(Request $request){
       return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
       
       }
+
+      
+
+public function update_affilate_commission(Request $request){
+
+    $validate = Validator::make($request->all(), [               
+        'affilate_commission'=>'required|numeric|min:0|max:100'        
+     ],[
+        
+        'affilate_commission.required' => 'Affiliate commission is required.',
+        'affilate_commission.numeric' => 'Affiliate commission must be a number.',
+        'affilate_commission.min' => 'Affiliate commission cannot be less than 0%.',
+        'affilate_commission.max' => 'Affiliate commission cannot be more than 100%.',
+
+     ]);
+    
+    if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $seller_details=  $request->user();
+    $seller_id=$seller_details->id;
+    
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    'affilate_commission'=>$request->affilate_commission
+    ];
+    
+      $data=  $this->SellerProductService->Update_affilate_commission_Inventory($request_data);
+    
+      if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+      }
+    
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+      
+      }
     
 
       
