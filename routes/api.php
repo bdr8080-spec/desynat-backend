@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\UserStoreController;
 use App\Http\Controllers\Api\User\GiftCardControler;
+use App\Http\Controllers\Api\User\UserOrderController;
 
 
 use App\Http\Controllers\CommonController;
@@ -94,8 +95,20 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/giftcard-complete-Payment', [GiftCardControler::class,'giftcard_complete_Payment']);
 
-  Route::get('/view-gift-cards', [GiftCardControler::class,'view_gift_cards']);
+  Route::post('/view-gift-cards', [GiftCardControler::class,'view_gift_cards']);
 
+  Route::post('/view-promocode-list', [UserOrderController::class,'View_promocode_list']);
+  Route::post('/Apply-promocode', [UserOrderController::class,'Apply_promocode']);
+
+  Route::post('/create-order', [UserOrderController::class,'create_order']);
+
+  Route::post('/apply-gift-card', [UserOrderController::class,'apply_gift_card']);
+
+
+  Route::post('/product-order-complete-payment', [UserOrderController::class,'product_order_complete_payment']);
+
+  Route::post('/All-order', [UserOrderController::class,'All_order']);
+  Route::post('/single-order-summary', [UserOrderController::class,'single_order_summary']);
 
 });
 

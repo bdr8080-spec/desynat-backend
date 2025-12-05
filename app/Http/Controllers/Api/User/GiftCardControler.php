@@ -75,7 +75,7 @@ class GiftCardControler extends Controller
         $data=$this->UserGiftCardService->AddgiftCard($request_data);
 
         if(isset($data['status']) && $data['status']=='error' ){
-            return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
         }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
@@ -121,7 +121,7 @@ class GiftCardControler extends Controller
             $data=$this->UserGiftCardService->complete_giftCard_Payment($request_data);
     
             if(isset($data['status']) && $data['status']=='error' ){
-                return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
             }
     
             return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
@@ -138,10 +138,6 @@ class GiftCardControler extends Controller
     
     
         }
-
-        
-
-
 
 
     public function view_gift_cards(Request $request){
@@ -154,12 +150,13 @@ class GiftCardControler extends Controller
            $request_data=(object)[
             'user_id'=>$user_id,
             'email' => $user_email,
+            'search'=>$request->search
            ];
     
-            $data=$this->UserGiftCardService->view_giftCard_details($request_data);
+            $data=$this->UserGiftCardService->User_view_giftCard_details($request_data);
     
             if(isset($data['status']) && $data['status']=='error' ){
-                return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
             }
     
             return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
@@ -176,6 +173,7 @@ class GiftCardControler extends Controller
     
     
         }
+
 
 
 }

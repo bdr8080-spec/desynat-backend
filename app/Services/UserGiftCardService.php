@@ -5,6 +5,7 @@ use App\Models\User;
 
 
 use App\Models\{UserGiftCards,GiftCard};
+use App\Models\{Promocode,userAddress,country,all_countrie};
 
 
 class UserGiftCardService
@@ -13,7 +14,7 @@ class UserGiftCardService
     // get gift cards
     public function giftCard(){
         
-        $GiftCard = GiftCard::orderBy('id', 'asc')->get();
+        $GiftCard = GiftCard::where('status','1')->orderBy('id', 'asc')->get();
 
         if ($GiftCard->isEmpty()) {
              return ['status'=>'success','message'=>"No GiftCard found",'data'=>[]];
@@ -31,6 +32,10 @@ class UserGiftCardService
 
             $orderId="Order". rand('11111111111','999999999999999');
 
+
+            $giftCardNo=rand('1111111111111111','9999999999999999');
+            $giftCardPin=rand('1111','9999');
+
             // check receiver on Our system
 
           $c_receiver_on_System=  User::where('email',$request->receiver_email)->first();
@@ -40,11 +45,13 @@ class UserGiftCardService
           }else{
             $receiver_id=null;
           }
-
+          
             $data=[
                 'order_id'=>$orderId,
                 'user_id'=>$request->user_id,
                 'gift_card_id' => $request->gift_card_id ,
+                'giftCardNo'=>$giftCardNo,
+                'giftCardPin'=>$giftCardPin,
                 'amount' => $request->amount,
                 'receiver_id'=>$receiver_id,
                 'receiver_name' => $request->receiver_name  ,
@@ -55,9 +62,6 @@ class UserGiftCardService
                 'notes' =>$request->notes  
             ];
 
-
-
-        
             $AddGiftCard = UserGiftCards::Create($data);
     
         
@@ -120,8 +124,38 @@ class UserGiftCardService
         }
 
 
+ // View  gift card list
+ public function User_view_giftCard_details($request){
+
+    try{
+
+        $checkGiftCard = UserGiftCards::with('gift_details')->where('receiver_id',$request->user_id)->orWhere('receiver_email',$request->email)->where('payment_status','1');
+
+        if($request->search){
+            $checkGiftCard=$checkGiftCard->
+            where('order_id','like','%'.$request->search.'%')
+            ->Orwhere('sender_email','like','%'.$request->search.'%')
+            ->Orwhere('receiver_email','like','%'.$request->search.'%');
+        }
+
+        $checkGiftCard=$checkGiftCard->get();
+
+    return ['status'=>'success','message'=>"Gift Card fatch Successfully",'data'=>$checkGiftCard];
+
         
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
     
+    }
+
+
+
 
 
 

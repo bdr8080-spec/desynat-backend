@@ -16,6 +16,9 @@ return new class extends Migration
             $table->longText('order_id')->nullable();
             $table->string('user_id')->comment("User table id");
             $table->integer('gift_card_id')->nullable();
+           
+            $table->string('giftCardNo')->nullable();
+            $table->string('giftCardPin')->nullable();            
             $table->string('amount');
             $table->string('receiver_id')->nullable(); 
             $table->string('receiver_name')->nullable();
@@ -28,6 +31,8 @@ return new class extends Migration
             $table->enum('payment_status',['0','1','2'])->default('0')->comment('0 pending 1 paid 2 cancel');
             $table->longText('transaction_id')->nullable();
 
+            $table->enum('giftCardUse',['0'])->default('0')->comment('0 Not Used 1 used');
+            
             $table->timestamps();
         });
     }
