@@ -16,108 +16,120 @@
 
     <div class="row">
         <div class="col-lg-4 col-md-6">
-            <div class="giftcard">
-                <figure>
-                    <img src="{{asset('user/assets/images/gift/gift1.svg')}}" alt="gift image" class="img-fluid">
-                </figure>
-                <div class="gift-card-body p-3">
-                    <div class="gift-title">
-                        <h5>Atif Aslam</h5>
-                        <div class="giftdate">06 Aug 25, 6:15 pm</div>
-                    </div>
-                    <div class="gift-title">
-                        <h5>239 KD</h5>
-                        <div class="giftdate">Birthday Card</div>
+            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+                <div class="giftcard">
+                    <figure>
+                        <img src="{{asset('user/assets/images/gift/gift1.svg')}}" alt="gift image" class="img-fluid">
+                    </figure>
+                    <div class="gift-card-body p-3">
+                        <div class="gift-title">
+                            <h5>Atif Aslam</h5>
+                            <div class="giftdate">06 Aug 25, 6:15 pm</div>
+                        </div>
+                        <div class="gift-title">
+                            <h5>239 KD</h5>
+                            <div class="giftdate">Birthday Card</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-lg-4 col-md-6">
-            <div class="giftcard">
-                <figure>
-                    <img src="{{asset('user/assets/images/gift/gift2.svg')}}" alt="gift image" class="img-fluid">
-                </figure>
-                <div class="gift-card-body p-3">
-                    <div class="gift-title">
-                        <h5>Atif Aslam</h5>
-                        <div class="giftdate">06 Aug 25, 6:15 pm</div>
-                    </div>
-                    <div class="gift-title">
-                        <h5>239 KD</h5>
-                        <div class="giftdate">Birthday Card</div>
+            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+                <div class="giftcard">
+                    <figure>
+                        <img src="{{asset('user/assets/images/gift/gift2.svg')}}" alt="gift image" class="img-fluid">
+                    </figure>
+                    <div class="gift-card-body p-3">
+                        <div class="gift-title">
+                            <h5>Atif Aslam</h5>
+                            <div class="giftdate">06 Aug 25, 6:15 pm</div>
+                        </div>
+                        <div class="gift-title">
+                            <h5>239 KD</h5>
+                            <div class="giftdate">Birthday Card</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>    
         </div>
 
         <div class="col-lg-4 col-md-6">
-            <div class="giftcard">
-                <figure>
-                    <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
-                </figure>
-                <div class="gift-card-body p-3">
-                    <div class="gift-title">
-                        <h5>Atif Aslam</h5>
-                        <div class="giftdate">06 Aug 25, 6:15 pm</div>
-                    </div>
-                    <div class="gift-title">
-                        <h5>239 KD</h5>
-                        <div class="giftdate">Birthday Card</div>
+            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+                <div class="giftcard">
+                    <figure>
+                        <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
+                    </figure>
+                    <div class="gift-card-body p-3">
+                        <div class="gift-title">
+                            <h5>Atif Aslam</h5>
+                            <div class="giftdate">06 Aug 25, 6:15 pm</div>
+                        </div>
+                        <div class="gift-title">
+                            <h5>239 KD</h5>
+                            <div class="giftdate">Birthday Card</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-lg-4 col-md-6">
-            <div class="giftcard">
-                <figure>
-                    <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
-                </figure>
-                <div class="gift-card-body p-3">
-                    <div class="gift-title">
-                        <h5>Atif Aslam</h5>
-                        <div class="giftdate">06 Aug 25, 6:15 pm</div>
-                    </div>
-                    <div class="gift-title">
-                        <h5>239 KD</h5>
-                        <div class="giftdate">Birthday Card</div>
+            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+                <div class="giftcard">
+                    <figure>
+                        <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
+                    </figure>
+                    <div class="gift-card-body p-3">
+                        <div class="gift-title">
+                            <h5>Atif Aslam</h5>
+                            <div class="giftdate">06 Aug 25, 6:15 pm</div>
+                        </div>
+                        <div class="gift-title">
+                            <h5>239 KD</h5>
+                            <div class="giftdate">Birthday Card</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-lg-4 col-md-6">
-            <div class="giftcard">
-                <figure>
-                    <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
-                </figure>
-                <div class="gift-card-body p-3">
-                    <div class="gift-title">
-                        <h5>Atif Aslam</h5>
-                        <div class="giftdate">06 Aug 25, 6:15 pm</div>
-                    </div>
-                    <div class="gift-title">
-                        <h5>239 KD</h5>
-                        <div class="giftdate">Birthday Card</div>
+            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+                <div class="giftcard">
+                    <figure>
+                        <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
+                    </figure>
+                    <div class="gift-card-body p-3">
+                        <div class="gift-title">
+                            <h5>Atif Aslam</h5>
+                            <div class="giftdate">06 Aug 25, 6:15 pm</div>
+                        </div>
+                        <div class="gift-title">
+                            <h5>239 KD</h5>
+                            <div class="giftdate">Birthday Card</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>    
         </div>
         <div class="col-lg-4 col-md-6">
-            <div class="giftcard">
-                <figure>
-                    <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
-                </figure>
-                <div class="gift-card-body p-3">
-                    <div class="gift-title">
-                        <h5>Atif Aslam</h5>
-                        <div class="giftdate">06 Aug 25, 6:15 pm</div>
-                    </div>
-                    <div class="gift-title">
-                        <h5>239 KD</h5>
-                        <div class="giftdate">Birthday Card</div>
+            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+                <div class="giftcard">
+                    <figure>
+                        <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
+                    </figure>
+                    <div class="gift-card-body p-3">
+                        <div class="gift-title">
+                            <h5>Atif Aslam</h5>
+                            <div class="giftdate">06 Aug 25, 6:15 pm</div>
+                        </div>
+                        <div class="gift-title">
+                            <h5>239 KD</h5>
+                            <div class="giftdate">Birthday Card</div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
 
     </div>

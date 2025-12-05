@@ -2187,3 +2187,17 @@ width: fit-content;
     background: #b68d5c;
     color: #fff;
 }
+.gift_hover {
+    color: #000;
+    text-decoration: none;
+}
+.giftinfo {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2;
+}
+.border-1{
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+}
