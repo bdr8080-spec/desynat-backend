@@ -6,6 +6,9 @@ use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserStoreController;
 use App\Http\Controllers\User\AddressController;
+use App\Http\Controllers\User\UserGiftCardController;
+
+
 
 
 
@@ -63,6 +66,11 @@ use App\Http\Controllers\User\AddressController;
    Route::get('address/set-default',[AddressController::class, 'addressSetDefault'])->name('user.address_set_default');
 
 
+//    Route::get('gift-cards',[UserGiftCardController::class, 'gift_cards'])->name('user.gift-cards');
+
+//    Route::get('add-gift-cards',[UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift-cards');
+
+
    });
 
 
@@ -81,6 +89,20 @@ Route::match(['get', 'post'], '/add-new-address', function () {
 Route::match(['get', 'post'], '/saved-address', function () {
      return view('user.profile.saved-address');
 });
+
+Route::match(['get', 'post'], '/gift-cards', function () {
+
+     return view('user.giftcard.all_giftcard');
+
+});
+
+
+Route::match(['get', 'post'], '/add-gift-cards', function () {
+
+     return view('user.giftcard.add_giftcard');
+});
+
+
 // Route::match(['get', 'post'], '/wishlist', function () {
 //      return view('user.profile.wishlist');
 // });

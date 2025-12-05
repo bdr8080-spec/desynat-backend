@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\User\UserDashboardController;
 use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\AddressController;
 use App\Http\Controllers\Api\User\UserStoreController;
+use App\Http\Controllers\Api\User\GiftCardControler;
+
+
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Artisan;
 
@@ -80,6 +83,18 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/addtocart-increment-decrement', [UserStoreController::class,'addtocart_increment_decrement']);
 
   Route::get('/get_wishlist_products', [UserStoreController::class,'get_wishlist_products']);
+
+
+  // M4 APis start 
+
+
+  Route::get('/gift-card-occasion-list', [GiftCardControler::class,'gift_card_occasion']);
+
+  Route::post('/add-gift-card', [GiftCardControler::class,'user_add_gift_card']);
+
+  Route::post('/giftcard-complete-Payment', [GiftCardControler::class,'giftcard_complete_Payment']);
+
+  Route::get('/view-gift-cards', [GiftCardControler::class,'view_gift_cards']);
 
 
 });
