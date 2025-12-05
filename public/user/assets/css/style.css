@@ -1956,7 +1956,7 @@ footer span{
   font-size: 14px;
   color: #5e4b3c;
 }
-right
+
 .bag-topbar strong {
   font-weight: 700;
 }
@@ -2066,4 +2066,124 @@ width: fit-content;
     padding: 12px;
     border-radius: 10px;
     margin-top: 5px;
+}
+/* gift card */
+.gift-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.giftcard {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+.giftcard figure {
+    height: 204px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+.giftcard figure img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.giftdate {
+    font-size: 14px;
+}
+.giftcontrol{
+    height: 60px;
+    padding-left: 40px;
+}
+.add-icon img {
+    width: 60px;
+    cursor: pointer;
+}
+.btnsearch {
+    width: 100px;
+    color: #fff;
+    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+    border-radius: 0px 8px 8px 0px;
+}
+.searchicon {
+    position: absolute;
+    padding: 19px 14px;
+}
+.common-padding{
+    padding: var(--section);
+}
+.occasion-btn.active {
+    background-color: #b68d5c;
+    color: #fff;
+}
+.occasion-btn {
+    background: transparent;
+    border: 1px solid #714829;
+    padding: 6px 15px;
+    border-radius: 6px;
+    color: #714829;
+    margin: 5px 0px;
+    font-size: 14px;
+}
+.giftoff{
+    height: 200px;
+    overflow: hidden;
+}
+.giftoff img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.pline-10 {
+    padding: 10px;
+}
+.paycard {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+}
+.payment-option .label-content {
+    font-size: 15px;
+}
+.payment-option .title {
+    font-size: 17px;
+    font-weight: 500;
+}
+.cod-box {
+    border: 1px solid #ddd;
+    padding: 0px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+.balance {
+    font-size: 12px;
+}
+.paybtn-common {
+    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+    line-height: 35px;
+    color: #fff;
+    font-size: 19px;
+}
+.note-bg{
+    background-color: #FFF7EA;
+    padding: 10px;
+    border-radius: 10px;
+}
+.note-bg p {
+    font-size: 14px !important;
+    color: #00000099;
+    margin-bottom: 0px;
+}
+.amount-btn {
+    background: transparent;
+    border: 1px solid #714829;
+    padding: 6px 15px;
+    border-radius: 6px;
+    color: #714829;
+    margin: 5px 0px;
+    font-size: 14px;
+}
+.amount-btn.active{
+    background: #b68d5c;
+    color: #fff;
 }

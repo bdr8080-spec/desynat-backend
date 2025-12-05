@@ -94,13 +94,13 @@ Route::match(['get', 'post'], '/gift-cards', function () {
 
      return view('user.giftcard.all_giftcard');
 
-});
+})->name('user.gift-cards');
 
 
 Route::match(['get', 'post'], '/add-gift-cards', function () {
 
      return view('user.giftcard.add_giftcard');
-});
+})->name('user.add-gift-cards');
 
 
 // Route::match(['get', 'post'], '/wishlist', function () {
