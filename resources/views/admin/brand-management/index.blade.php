@@ -29,7 +29,7 @@
     color: #444;
 }
 
-.preview-image {
+.preview-image {Action
     width: 100%;
     height: 100%;
     object-fit: cover;
