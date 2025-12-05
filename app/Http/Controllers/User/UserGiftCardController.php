@@ -26,4 +26,5 @@ public function view_gift_cards(Request $request){
 
 }
 
+
 }

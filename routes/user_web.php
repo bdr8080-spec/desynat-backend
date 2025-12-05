@@ -107,6 +107,11 @@ Route::match(['get', 'post'], '/view-gift-cards', function () {
      return view('user.giftcard.view_giftcard');
 })->name('user.view-gift-cards');
 
+Route::match(['get', 'post'], '/view-cart', function () {
+
+     return view('user.carts.cartlist');
+})->name('user.view-cart');
+
 
 // Route::match(['get', 'post'], '/wishlist', function () {
 //      return view('user.profile.wishlist');
