@@ -16,8 +16,15 @@ class UserGiftCardController extends Controller
 
 public function add_gift_cards(Request $request){
 
-        return view('user.giftcard.add_giftcard');
+    return view('user.giftcard.add_giftcard');
 
 }
+
+public function view_gift_cards(Request $request){
+
+    return view('user.giftcard.view_giftcard');
+
+}
+
 
 }
