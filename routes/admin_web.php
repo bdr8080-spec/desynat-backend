@@ -104,7 +104,9 @@ Route::group(['prefix'=>'admin'], function(){
 
         //shipping charge and tax management
         Route::get('/shipping-management', [ShippingController::class, 'shippingManagement'])->name('admin.shippingManagement');
-        Route::get('/manage-shipping-charge', [ShippingController::class, 'manageShippingCharges'])->name('admin.manageShippingCharges');
+        Route::get('/manage-shipping-charge/{id}', [ShippingController::class, 'manageShippingCharges'])->name('admin.manageShippingCharges');
+        Route::post('/update_tax', [ShippingController::class, 'update_tax'])->name('admin.update_tax');
+
 
         //gift card category management
         Route::get('/giftcard-management', [GiftCardController::class, 'giftCardManagement'])->name('admin.giftCardManagement');

@@ -190,6 +190,30 @@ class ShippingTaxService
         }
     }
 
+    public function updateTaxById(Request $request)
+    {
+        try {
+            $tax = Tax::findOrFail($request->tax_id); 
+            
+            $tax->tax = $request->tax;
+            $tax->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Tax updated successfully',
+                'data' => $tax
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update tax: ' . $e->getMessage(),
+                'data' => (object)[]
+            ];
+        }
+    }
+
+
 
 
 

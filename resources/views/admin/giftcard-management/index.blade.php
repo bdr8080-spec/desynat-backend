@@ -63,21 +63,6 @@
 
             <div class="userManagecontent">
                 <div class="mt-4">
-                    <!-- <div class="align-items-end d-flex">
-                        <div class="search-box" style="position: relative;">
-                            <i class="bi bi-search" style="
-                        position: absolute;
-                        left: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        font-size: 16px;
-                        color: #888;
-                      ">
-                            </i>
-                            <input type="text" class="form-control" placeholder="Search for..."
-                                style="padding-left: 35px" />
-                        </div>
-                    </div> -->
 
                     <div class="table-responsive w-100">
                         <table id="myTable" class="table w-100">

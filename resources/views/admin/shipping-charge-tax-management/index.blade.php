@@ -14,21 +14,6 @@
 
             <div class="userManagecontent">
                 <div class="mt-4">
-                    <div class="align-items-end d-flex">
-                        <div class="search-box" style="position: relative;">
-                            <i class="bi bi-search" style="
-                        position: absolute;
-                        left: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        font-size: 16px;
-                        color: #888;
-                      ">
-                            </i>
-                            <input type="text" class="form-control" placeholder="Search for..."
-                                style="padding-left: 35px" />
-                        </div>
-                    </div>
 
                     <div class="table-responsive w-100">
                         <table class="table w-100">
@@ -42,38 +27,34 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @forelse ($getCountries as $key => $country)
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>UAE </td>
-                                    <td> <a class="btn btn-dark customBtn" href="{{ route('admin.manageShippingCharges') }}">
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ $country->name }}</td>
+                                    <td> <a class="btn btn-dark customBtn" href="{{ route('admin.manageShippingCharges', ['id' => $country->id]) }}">
                                             <span>Manage </span>
                                         </a></td>
-                                    <td>5%</td>
+                                    <td>{{ $country['tax_info'] ? $country['tax_info']->tax : 'N/A' }}</td>
 
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
-                                            <a class="table-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="javascript:void(0);" 
+                                                class="table-button edit-tax-btn" 
+                                                data-id="{{ $country['tax_info']->id }}"  
+                                                data-tax="{{ $country['tax_info']->tax }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editTaxModal">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
 
                                         </div>
                                     </td>
                                 </tr>
-                               <tr>
-                                    <th scope="row">1</th>
-                                    <td>UAE </td>
-                                    <td> <a class="btn btn-dark customBtn" href="">
-                                            <span >Manage </span>
-                                        </a></td>
-                                    <td>5%</td>
-
-                                    <td>
-                                        <div class="d-flex gap-3 justify-content-center">
-                                            <a class="table-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a>
-
-                                        </div>
-                                    </td>
-                                </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">No Data found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -82,5 +63,111 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="editTaxModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Update Tax</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editTaxForm">
+                <div class="modal-body m-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="hidden" id="editTaxId" name="tax_id">
+                            <div class="form-group w-100">
+                                <label for="from" class="form-label"> Tax</label>
+                                <input type="text" id="tax" name="tax" placeholder="Enter Tax" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control"
+                                    aria-describedby="passwordHelpInline" />
+                                <div id="editTaxError" class="text-danger small" style="display:none;"></div>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                    style="margin-top: 30px">
+                                    <button type="submit" class="btn btn-dark customBtn">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const editButtons = document.querySelectorAll(".edit-tax-btn");
+    const editTaxForm = document.getElementById("editTaxForm");
+    const editTaxIdInput = document.getElementById("editTaxId");
+    const editTaxInput = document.getElementById("tax");
+    const editTaxError = document.getElementById("editTaxError");
+
+    editButtons.forEach(btn => {
+        btn.addEventListener("click", function() {
+            const id = this.getAttribute("data-id");
+            const tax = this.getAttribute("data-tax");
+
+            editTaxIdInput.value = id;
+            editTaxInput.value = tax;
+
+            editTaxError.style.display = "none";
+        });
+    });
+
+    editTaxInput.addEventListener("input", () => {
+        editTaxError.style.display = "none";
+    });
+
+    editTaxForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const tax = editTaxInput.value.trim();
+        const id = editTaxIdInput.value;
+        let hasError = false;
+
+        if (!tax) {
+            editTaxError.innerText = "Please Enter Tax";
+            editTaxError.style.display = "block";
+            hasError = true;
+        }
+
+        if (hasError) return;
+        fetch(`/admin/update_tax`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                tax: tax,
+                tax_id: id
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                toastr.success(data.message);
+                const modal = bootstrap.Modal.getInstance(document.getElementById("editTaxModal"));
+                modal.hide();
+                editTaxForm.reset();
+                setTimeout(() => location.reload(), 2000);
+            } else {
+                toastr.error(data.message || "Failed to update tax.");
+            }
+        })
+        .catch(err => {
+            //console.error(err);
+            toastr.error("Something went wrong.");
+        });
+    });
+});
+
+</script>
 
 @endsection
