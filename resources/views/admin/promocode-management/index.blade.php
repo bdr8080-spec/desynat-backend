@@ -31,45 +31,69 @@
 
     <div class="userManagecontent">
         <div class="mt-4">
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-12">
-                    <div class="form-group mt-4 w-100">
-                        <label for="from" class="form-label">From:</label>
-                        <input type="date" id="from" class="form-control" />
+            <form method="GET" action="{{ route('admin.promoCodeManagement') }}" id="filterForm">
+                <div class="row">
+                    <!-- From Date Filter -->
+                    <div class="col-lg-3 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="from" class="form-label">From:</label>
+                            <input type="date" id="from" name="from_date" class="form-control"
+                                value="{{ request()->from_date }}"
+                                onchange="document.getElementById('filterForm').submit();" />
+                        </div>
+                    </div>
+
+                    <!-- To Date Filter -->
+                    <div class="col-lg-3 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="to" class="form-label">To:</label>
+                            <input type="date" id="to" name="to_date" class="form-control"
+                                value="{{ request()->to_date }}"
+                                onchange="document.getElementById('filterForm').submit();" />
+                        </div>
+                    </div>
+
+                    <!-- Country Filter -->
+                    <div class="col-lg-3 col-md-12 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="to" class="form-label">Select Country</label>
+                            <select name="country_id" id="country_id"
+                                class="form-select form-select-lg "
+                                onchange="document.getElementById('filterForm').submit();">
+                                <option value="">Select country</option>
+                                @foreach($countries as $country)
+                                <option value="{{ $country['id'] }}"
+                                    {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
+                                    {{ $country['name'] }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="status" class="form-label">Status-</label>
+                            <select id="status" name="status" class="form-select form-select-lg"
+                                    onchange="document.getElementById('filterForm').submit();">
+                                <option value="">Select Status</option>
+                                <option value="1" {{ request()->status == '1' ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ request()->status == '0' ? 'selected' : '' }}>Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 ">
+                    <div class="d-flex gap-3 justify-content-end" >
+                        <a href="{{route('admin.promoCodeManagement')}}" class="btn btn-dark customBtn"
+                            style="margin-top: 60px">
+                            <span>Reset</span>
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-12">
-                    <div class="form-group mt-4 w-100">
-                        <label for="from" class="form-label">To:</label>
-                        <input type="date" id="from" class="form-control" />
-                    </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-12">
-                    <div class="form-group mt-4 w-100">
-                        <label for="from" class="form-label">Country Name</label>
-                        <select class="form-select form-select-lg" aria-label="Large select example">
-                            <option selected>Select Country</option>
-                            <option value="1">country One</option>
-                            <option value="2">country Two</option>
-                            <option value="3">country Three</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-12">
-                    <div class="form-group mt-4 w-100">
-                        <label for="from" class="form-label">Status-</label>
-                        <select class="form-select form-select-lg" aria-label="Large select example">
-                            <option selected>Select Status</option>
-                            <option value="1">Status One</option>
-                            <option value="2">Status Two</option>
-                            <option value="3">Status Three</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            </form>
 
             <div class="table-responsive w-100">
-                <table class="table w-100">
+                <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
                             <th scope="col">SR No.</th>
@@ -87,70 +111,64 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($promoCodes as $index => $pc)
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Save20</td>
-                            <td>LOrem</td>
+                            <th scope="row">{{ $index + 1 }}</th>
+                            <td>{{$pc['name_english']}}</td>
+                            <td>{{ $pc['country_info']['name'] }}</td>
                             <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#sentModal1">
+                                    data-bs-target="#sentModal1"
+                                    data-description="{{ $pc['description_english'] }}">
                                     <i class="bi bi-eye-fill"></i>
                                 </a></td>
-                            <td>First Order</td>
-                            <td>KD 299</td>
-                            <td>KD 20</td>
-                            <td>10%</td>
-                            <td>21/05/25</td>
-                            <td>21/05/25</td>
-                            <td>Active</td>
+                            <td>
+                                @if($pc['applicable_for'] == 1)
+                                    First Order
+                                @elseif($pc['applicable_for'] == 2)
+                                    Every Order
+                                @endif
+                            </td>
+                            <td>{{$pc['min_order_value']}} KD</td>
+                            <td>{{$pc['upto_discount']}} KD</td>
+                            <td>{{$pc['discount_percent']}}%</td>
+                            <td>{{ \Carbon\Carbon::parse($pc['start_date'])->format('d-m-Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($pc['end_date'])->format('d-m-Y') }}</td>
+                            <td>
+                                @if($pc['status'] == 1)
+                                    Active
+                                @elseif($pc['status'] == 0)
+                                    Inactive
+                                @endif
+                            </td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
                                     <a class="table-button" type="button" data-bs-toggle="modal"
                                         data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a>
 
-                                    <a class="table-button" type="button">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </a>
+                                      <!-- Delete button  -->
+                                     <a
+                                          href="javascript:void(0);"
+                                          class="table-button text-danger deleteGiftCard"
+                                          data-id="{{ $pc->id }}"
+                                      >
+                                          <i class="bi bi-trash3-fill"></i>
+                                      </a>
 
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                            id="flexSwitchCheckChecked" />
-                                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                                    </div>
+                                      <!-- Toggle switch -->
+                                      <div class="form-check form-switch">
+                                          <input
+                                              class="form-check-input toggleStatus"
+                                              type="checkbox"
+                                              role="switch"
+                                              id="switch{{ $pc->id }}"
+                                              data-id="{{ $pc->id }}"
+                                              {{ $pc->status == 1 ? 'checked' : '' }}
+                                          />
+                                      </div>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Save20</td>
-                            <td>LOrem</td>
-                            <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#sentModal2">
-                                    <i class="bi bi-eye-fill"></i>
-                                </a></td>
-                            <td>First Order</td>
-                            <td>KD 299</td>
-                            <td>KD 20</td>
-                            <td>10%</td>
-                            <td>21/05/25</td>
-                            <td>21/05/25</td>
-                            <td>Active</td>
-                            <td>
-                                <div class="d-flex gap-3 justify-content-center">
-                                    <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a>
-
-                                    <a class="table-button" type="button">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </a>
-
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                            id="flexSwitchCheckChecked" />
-                                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -279,7 +297,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add New Brands</h2>
+                <h2 class="h2">Description</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -290,9 +308,9 @@
                         <div class="col-lg-12 col-md-12 col-12">
 
                             <div class="mb-3">
-                                <label for="editReasonArabic" class="form-label">Description</label>
-                                <textarea id="editReasonArabic" name="reason_arabic" class="form-control"
-                                    rows="3"></textarea>
+                                <label for="description" class="form-label">Description</label>
+                                <textarea id="description" class="form-control"
+                                    rows="3" readOnly></textarea>
                             </div>
                         </div>
                       
@@ -305,7 +323,7 @@
     </div>
 </div>
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<!-- <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.js"></script>
 
 <script>
@@ -324,6 +342,104 @@ fileInput.addEventListener("change", function() {
         };
         reader.readAsDataURL(file);
     }
+});
+</script> -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const sentModal = document.getElementById('sentModal1');
+    const descriptionTextarea = document.getElementById('description');
+
+    sentModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; 
+        const description = button.getAttribute('data-description');
+
+        descriptionTextarea.value = description;
+    });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.deleteGiftCard').forEach(button => {
+        button.addEventListener('click', function () {
+            let giftCardId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deleteGiftCard/${giftCardId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            toastr.success(data.message);
+                            this.closest('tr').remove();
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    })
+                    .catch(() => {
+                        toastr.error('Something went wrong.');
+                    });
+                }
+            });
+        });
+    });
+});
+</script>
+
+<!-- Update Brand Status -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            let giftCardId = this.getAttribute('data-id');
+
+            fetch(`/admin/updateGiftCardStatus/${giftCardId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // toastr.success(data.message);
+                     if(data.status == 1){
+                        toastr.success(data.message); // Green for active
+                    } else {
+                        toastr.error(data.message);   // Red for deactivated
+                    }
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(data.message);
+                }
+            })
+            .catch(error => {
+                //console.error(error);
+                toastr.error('Something went wrong while updating status.');
+            });
+        });
+    });
 });
 </script>
 
