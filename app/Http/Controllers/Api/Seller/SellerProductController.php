@@ -1006,7 +1006,8 @@ public function view_profile(Request $request){
 
         $validate = Validator::make($req->all(), [
             // 'profile_pic'=>'nullable|required',
-            'full_name'=>'required',
+            'first_name'=>'required',
+            'last_name'=>'required',
             
             'store_image' => 'required',
             'store_name' => 'required',
@@ -1029,7 +1030,8 @@ public function view_profile(Request $request){
 
        $request_data= (object)[
         'profile_pic' => $req->profile_pic??null,
-        'full_name' => $req->full_name??null,
+        'first_name' => $req->first_name??null,
+        'last_name' => $req->last_name??null,
 
         'user_id' => $seller_id,
         'store_image' => $req->store_image ,

@@ -1543,7 +1543,7 @@ public function View_seller_profile($request){
 
     try{
     
-        $seller_details=seller::with('store_info','seller_bank_details','subcription_plan','owner_document','store_document')->where('id',$request->seller_id)->first();
+        $seller_details=seller::with('store_info.country_info','seller_bank_details','subcription_plan','owner_document','store_document')->where('id',$request->seller_id)->first();
 
         if($seller_details){
         
@@ -1578,13 +1578,13 @@ public function View_seller_profile($request){
             $seller_information['profile_pic'] = $request->profile_pic;
           }
 
-          $fullname=explode(' ',$request->full_name);
+        //   $fullname=explode(' ',$request->full_name);
 
-          if($fullname){
+        //   if($fullname){
 
-            $seller_information['first_name'] = $fullname[0];
-            $seller_information['last_name'] = $fullname[1];
-          }
+            $seller_information['first_name'] = $request->first_name;
+            $seller_information['last_name'] = $request->last_name;
+        //   }
     
          seller::Updateorcreate($match_seller,$seller_information);
          

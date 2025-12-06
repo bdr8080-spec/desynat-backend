@@ -351,7 +351,9 @@ if($checkOrder->payment_status!=='0' ){
  // when i Received Payment in Cod
     if($checkOrder->payment_method=='3'){
 
+        $checkOrder->update(['delivery_status'=>'2']);
 
+        $this->AddtocartRemoveData($checkOrder->id);
 
 
         return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
@@ -369,10 +371,13 @@ if($checkOrder->payment_status!=='0' ){
 
     if($checkOrder->payment_method=='1'){
 
-        $checkOrder->update(['payment_status'=>$request->payment_status]);
+        $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
         if($request->payment_status=='1'){
         $msg="Order Payment Paid Successfully";
+
+        $this->AddtocartRemoveData($checkOrder->id);
+
         }else{
             $msg="Order Payment Cancelled";        
         }
@@ -409,7 +414,44 @@ if($checkOrder->payment_status!=='0' ){
         'order_details.product_details.subcategory',
         'order_details.product_details.seller_details',
 
-    'order_details.variation_details.color','order_details.variation_details.size')->where('user_id', $request->user_id)->get();
+    'order_details.variation_details.color','order_details.variation_details.size')->where('user_id', $request->user_id);
+    
+    if($request->filter){
+
+        $checkOrder=  $checkOrder->where('order_id', 'like','%'.$request->search.'%'); // Onging
+    }
+
+
+    if($request->filter){
+
+        switch ($request->filter) {
+            case '1':
+
+                break;
+         
+            case '2':
+              $checkOrder=  $checkOrder->where('payment_status','1')->where('delivery_status','2'); // Onging
+
+                break;
+            case '3':
+
+              $checkOrder=  $checkOrder->where('payment_status','1')->where('delivery_status','3'); // delivered
+
+            break;
+            case '4':
+              $checkOrder=  $checkOrder->where('payment_status','2'); // cancelled
+            break;
+            case '5':
+               $checkOrder= $checkOrder->where('payment_status','3')->where('delivery_status','4');
+            break;
+                
+            default:
+                # code...
+                break;
+        }
+    }
+    
+  $checkOrder=$checkOrder->get();
 
     return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$checkOrder];
 
@@ -422,10 +464,28 @@ if($checkOrder->payment_status!=='0' ){
         ];
     }
 
-    
     }
 
 
+    // delete Data from Add to cart
+    public function AddtocartRemoveData($orderid){
+
+        $checkOrder = Order::with('order_details.product_details')->where('id', $orderid)->first();
+
+        $userId = $checkOrder->user_id;  // ← correct source of user_id
+        
+        foreach ($checkOrder->order_details as $key => $val) {
+        
+            Addtocart::where([
+                'product_id' => $val->product_id,
+                'variants_id' => $val->variants_id,
+                'user_id'     => $userId
+            ])->delete();
+        
+        }
+
+        
+    }
 
  // User singleOrderDetails
  public function singleOrderDetails($request){

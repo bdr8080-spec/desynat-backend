@@ -277,6 +277,8 @@ class UserOrderController extends Controller
     
                $request_data=(object)[
                 'user_id'=>$user_id,
+                'search'=>$request->search,
+                'filter'=>$request->filter,
                 ];
         
                 $data=$this->UserOrderService->AllOrderDetails($request_data);
