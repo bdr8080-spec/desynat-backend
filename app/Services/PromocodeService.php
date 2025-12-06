@@ -33,6 +33,10 @@ class PromocodeService
                 $query->where('created_at', '<=', $request->to_date);
             }
 
+            if ($request->filled('status')) {
+                $query->where('status', $request->status);
+            }
+
             $query->orderBy('id', 'desc');
 
             $data = $query->paginate($limit);

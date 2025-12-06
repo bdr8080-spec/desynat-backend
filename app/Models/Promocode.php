@@ -26,6 +26,6 @@ class Promocode extends Model
 
     public function country_info()
     {
-        return $this->belongsTo(Country::class, 'country_id');
+        return $this->belongsTo(country::class, 'country_id');
     }
 }

@@ -108,12 +108,19 @@ Route::group(['prefix'=>'admin'], function(){
 
         //gift card category management
         Route::get('/giftcard-management', [GiftCardController::class, 'giftCardManagement'])->name('admin.giftCardManagement');
+        Route::post('/addGiftCard', [GiftCardController::class, 'addGiftCard'])->name('admin.addGiftCard');
+        Route::post('/updateGiftCard/{id}', [GiftCardController::class, 'updateGiftCard'])->name('admin.updateGiftCard');
+        Route::post('/deleteGiftCard/{id}', [GiftCardController::class, 'deleteGiftCard'])->name('admin.deleteGiftCard');
+        Route::post('/updateGiftCardStatus/{id}', [GiftCardController::class, 'updateGiftCardStatus'])->name('admin.updateGiftCardStatus');
 
         //banner per day price management
         Route::get('/banner-management', [BannerController::class, 'bannerManagement'])->name('admin.bannerManagement');
+        Route::post('/update_banner', [BannerController::class, 'update_banner'])->name('admin.update_banner');
 
         //promocode management
         Route::get('/promocode-management', [PromoCodeController::class, 'promoCodeManagement'])->name('admin.promoCodeManagement');
+        Route::post('/deletePromocode/{id}', [PromoCodeController::class, 'deletePromocode'])->name('admin.deletePromocode');
+        Route::post('/updatePromoCodeStatus/{id}', [PromoCodeController::class, 'updatePromoCodeStatus'])->name('admin.updatePromoCodeStatus');
         
 
     });

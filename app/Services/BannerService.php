@@ -52,10 +52,18 @@ class BannerService
     public function getBanners($request)
     {
         try {
+            // $data = Banner::with('country_info')
+            //         ->where('type', $request->type)
+            //         ->orderBy('id', 'desc')
+            //         ->get();
+
             $data = Banner::with('country_info')
-                    ->where('type', $request->type)
-                    ->orderBy('id', 'desc')
+                    ->leftJoin('countries', 'countries.id', '=', 'banners.country_id')
+                    ->where('banners.type', $request->type)
+                    ->orderBy('countries.name', 'asc')
+                    ->select('banners.*')
                     ->get();
+
 
             if ($data->isEmpty()) {
                 return [
@@ -107,6 +115,39 @@ class BannerService
             ];
         }
     }
+
+    public function updateBannerPrice(Request $request)
+    {
+        try {
+            $banner = Banner::find($request->banner_id);
+
+            if (!$banner) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Banner not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $banner->update([
+                'per_day_price' => $request->per_day_price,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Banner per day charge updated successfully',
+                'data' => $banner
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update banner',
+                'data' => (object)[]
+            ];
+        }
+    }
+
 
 
 
