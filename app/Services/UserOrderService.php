@@ -464,15 +464,21 @@ if($checkOrder->payment_status!=='0' ){
     // delete Data from Add to cart
     public function AddtocartRemoveData($orderid){
 
-        $checkOrder=Order::with('order_details.product_details')->where('id', $orderid)->first();
-            foreach($checkOrder->order_details as $key=>$val){
-              Addtocart::where([
+        $checkOrder = Order::with('order_details.product_details')->where('id', $orderid)->first();
+
+        $userId = $checkOrder->user_id;  // ← correct source of user_id
+        
+        foreach ($checkOrder->order_details as $key => $val) {
+        
+            Addtocart::where([
                 'product_id' => $val->product_id,
                 'variants_id' => $val->variants_id,
-                'user_id'     => $val->user_id
+                'user_id'     => $userId
             ])->delete();
+        
+        }
 
-            }
+        
     }
 
  // User singleOrderDetails

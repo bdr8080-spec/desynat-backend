@@ -1543,7 +1543,7 @@ public function View_seller_profile($request){
 
     try{
     
-        $seller_details=seller::with('store_info','seller_bank_details','subcription_plan','owner_document','store_document')->where('id',$request->seller_id)->first();
+        $seller_details=seller::with('store_info.country_info','seller_bank_details','subcription_plan','owner_document','store_document')->where('id',$request->seller_id)->first();
 
         if($seller_details){
         
