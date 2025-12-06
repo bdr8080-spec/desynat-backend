@@ -885,7 +885,7 @@ public function all_Inventory_product(Request $request){
     ];
     
     
-      $data=  $this->SellerProductService->AllProduct($request_data);
+      $data=  $this->SellerProductService->AllInventoryProduct($request_data);
     
       if(isset($data['status']) && $data['status']=='error' ){
           return ApiResponse::generateResponse('error', $data['message'],(object)[],422);

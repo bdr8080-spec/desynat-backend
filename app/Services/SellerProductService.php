@@ -475,6 +475,8 @@ private function applyStockStatus($products)
 
 public function AllProduct($request)
 {
+
+    
     $seller = Seller::with('store_info','subcription_plan')->find($request->seller_id);
 
     if (!$seller) {
@@ -511,6 +513,8 @@ public function AllProduct($request)
     }
 
     $productQuery=$this->applyStockStatus($productQuery->orderBy('id','desc')->get());
+
+    // dd($productQuery);
 
     // active Product 
 
@@ -577,6 +581,146 @@ if ($request->type == '2') {
             $q->whereIn('brand_id', $request->brand_filter);
             });
     }
+}
+
+$inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('product_active_status', 0)->orderBy('id','desc')->get());
+
+    // if ($productQuery->isEmpty()) {
+    //     return ['status'=>'success','message'=>'No Product found','data'=>[]];
+    // }
+    
+    return [
+        'status' => 'success',
+        'message' => 'All Product Data Fetched Successfully',
+        'data' => [
+          
+            'all_product_count' => $productQuery->count(),
+            'active_product_count'   => $active_productQuery->count(),
+            'inactive_product_count' => $inactive_productQuery->count(),
+
+            'all_product_data' => $productQuery,
+            'active_product'   => $active_productQuery,
+            'inactive_product' => $inactive_productQuery
+        ]
+    ];
+}
+
+
+
+public function AllInventoryProduct($request)
+{
+
+    
+    $seller = Seller::with('store_info','subcription_plan')->find($request->seller_id);
+
+    if (!$seller) {
+        return ['status'=>'error','message'=>'Seller not found','data'=>[]];
+    }
+
+    $productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+                           ->where('seller_id', $seller->id);
+        if ($request->search) {
+        if ($request->type == '0') {
+            // Search only English name
+            $productQuery->where(function($q) use ($request) {
+                $q->where('product_name_en', 'like', '%' . $request->search . '%')
+                    ->orWhere('product_name_ar', 'like', '%' . $request->search . '%');
+                });
+
+        }
+    } 
+
+    if ($request->type == '0') {
+
+     
+
+        if ($request->brand_filter) {
+            $productQuery->where(function($q) use ($request) {
+                $q->whereIn('brand_id', $request->brand_filter);
+                });
+        }
+
+    }
+
+    if ($request->cargory_filter) {
+        $productQuery->where(function($q) use ($request) {
+            $q->whereIn('category_id', $request->cargory_filter);
+            });
+    }
+
+    $productQuery=$this->applyStockStatus($productQuery->orderBy('id','desc')->get());
+
+    // dd($productQuery);
+
+    // active Product 
+
+    $active_productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+    ->where('seller_id', $seller->id);
+
+        if ($request->search) {
+        if ($request->type == '1') {
+        // Search only English name
+        $active_productQuery->where(function($q) use ($request) {
+        $q->where('product_name_en', 'like', '%' . $request->search . '%')
+        ->orWhere('product_name_ar', 'like', '%' . $request->search . '%');
+        });
+
+        }
+    } 
+
+    if ($request->type == '1') {
+
+
+        if ($request->brand_filter) {
+            $active_productQuery->where(function($q) use ($request) {
+                $q->whereIn('brand_id', $request->brand_filter);
+                });
+        }
+
+    }
+
+
+    if ($request->cargory_filter) {
+        $active_productQuery->where(function($q) use ($request) {
+            $q->whereIn('category_id', $request->cargory_filter);
+            });
+    }
+
+
+$active_productQuery=$this->applyStockStatus($active_productQuery->where('product_active_status', 1)->orderBy('id','desc')->get());
+
+// inactive product
+
+$inactive_productQuery = Product::with(['category','subcategory','brand','product_specifications','product_variants.color'])
+->where('seller_id', $seller->id);
+
+
+    if ($request->search) {
+    if ($request->type == '2') {
+    // Search only English name
+    $inactive_productQuery->where(function($q) use ($request) {
+    $q->where('product_name_en', 'like', '%' . $request->search . '%')
+    ->orWhere('product_name_ar', 'like', '%' . $request->search . '%');
+    });
+
+    }
+} 
+
+if ($request->type == '2') {
+    
+   
+    
+    if ($request->brand_filter) {
+        $inactive_productQuery->where(function($q) use ($request) {
+            $q->whereIn('brand_id', $request->brand_filter);
+            });
+    }
+}
+
+if ($request->cargory_filter) {
+    $inactive_productQuery->where(function($q) use ($request) {
+        $q->whereIn('category_id', $request->cargory_filter);
+        });
 }
 
 $inactive_productQuery=$this->applyStockStatus($inactive_productQuery->where('product_active_status', 0)->orderBy('id','desc')->get());

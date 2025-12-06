@@ -14,5 +14,12 @@ class Order extends Model
 
     }
 
+    public function delivery_details(){
+        
+        return $this->hasOne(OrderDeliveryAddress::class,'id','delivery_address');
+
+    }
+    
+
 
 }
