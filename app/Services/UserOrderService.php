@@ -418,6 +418,12 @@ if($checkOrder->payment_status!=='0' ){
     
     if($request->filter){
 
+        $checkOrder=  $checkOrder->where('order_id', 'like','%'.$request->search.'%'); // Onging
+    }
+
+
+    if($request->filter){
+
         switch ($request->filter) {
             case '1':
 
