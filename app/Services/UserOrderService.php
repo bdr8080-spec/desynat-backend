@@ -408,7 +408,7 @@ if($checkOrder->payment_status!=='0' ){
     DB::beginTransaction();
 
     $checkOrder=Order::with(
-
+        'delivery_details',
         'order_details.product_details.brand',
         'order_details.product_details.category',
         'order_details.product_details.subcategory',
@@ -495,6 +495,7 @@ if($checkOrder->payment_status!=='0' ){
     DB::beginTransaction();
 
     $checkOrder=Order::with(
+        'delivery_details',
         'order_details.product_details.brand',
         'order_details.product_details.category',
         'order_details.product_details.subcategory',
