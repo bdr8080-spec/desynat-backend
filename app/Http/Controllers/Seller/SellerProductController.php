@@ -513,6 +513,7 @@ $request_data=(object) [
 
 
 
+
 public function edit_product($id){
 
     $category = Category::orderBy('id', 'asc')->get();
@@ -1083,9 +1084,41 @@ public function product_delete(Request $request, $id){
 
 
 
-    public function Inventory_Management(){
+    public function Inventory_Management(Request $request){
+        $seller_details=  Auth::guard('seller')->user();
+        $seller_id=$seller_details->id;
+      
+        $category = Category::orderBy('id', 'asc')->get();
+        $brand = Brand::all();
+    
+        
+        if(isset($request->cargory_filter)){
+            $cargory_filter= [$request->cargory_filter];
+        }else{
+            $cargory_filter='';
+        }
 
-        return view('dealer.product.Inventory_Management');
+        if(isset($request->brand_filter)){
+            $brand_filter= [$request->brand_filter];
+        }else{
+            $brand_filter='';
+        }
+        
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'search' =>$request->search,
+        'type' =>$request->type, //  0 all product 1 active product 2 inactive product 
+        'cargory_filter' =>$cargory_filter,
+        'brand_filter' =>$brand_filter,    
+        ];
+    
+      $all_records= $this->SellerProductService->AllProduct($request_data);
+
+      
+      $data=$all_records['data'];
+
+    return view('dealer.product.Inventory_Management',compact('category','brand','data'));
+
 
     }
     public function Affilate_Commission(){
@@ -2026,6 +2059,24 @@ $request_data=(object) [
   // new Add edit product code End here 
     
 
+
+
+public function view_inventory(Request $request , $id){
+
+    $request_data=(object) [
+        'product_id'=>$id,    
+    ];
+        
+        $product =  $this->SellerProductService->single_product_details_fetch($request_data);
+    
+        $product=$product['data'];
+    
+        // dump($product);
+        
+        return view('dealer.product.view_inventory',compact('product'));
+        
+    }
+    
     
 
 }
