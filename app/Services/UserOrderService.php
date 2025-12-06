@@ -409,7 +409,15 @@ if($checkOrder->payment_status!=='0' ){
         'order_details.product_details.subcategory',
         'order_details.product_details.seller_details',
 
-    'order_details.variation_details.color','order_details.variation_details.size')->where('user_id', $request->user_id)->get();
+    'order_details.variation_details.color','order_details.variation_details.size')->where('user_id', $request->user_id);
+    
+    if($request->filter){
+
+ $checkOrder=$checkOrder->where('');
+
+    }
+    
+  $checkOrder->get();
 
     return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$checkOrder];
 

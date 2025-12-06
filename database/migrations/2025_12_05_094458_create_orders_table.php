@@ -32,8 +32,11 @@ return new class extends Migration
             $table->string('giftcard_amount')->nullable();
             $table->string('total_amount');
 
-            $table->enum('payment_status',['0','1','2','3'])->default('0')->comment('0 pending 1 paid 2 cancel or reject 3 refund');
+           
             $table->string('payment_method')->nullable()->comment(' 1 myfatoorah 2 wallet 3 Cod');
+            $table->enum('payment_status',['0','1','2','3'])->default('0')->comment('0 pending 1 paid 2 cancel or reject 3 refund');
+
+            $table->enum('delivery_status',['1','2','3','4','5'])->default('1')->comment(' 1 all 2 onging 3 delivered 4 cancelled 5 return ');
             $table->string('transaction_id')->nullable();
 
             $table->timestamps();
