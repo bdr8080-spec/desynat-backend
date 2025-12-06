@@ -85,14 +85,13 @@ Route::group(['prefix' => 'seller'], function () {
 
      Route::post('Update-product1/{id}',[SellerProductController::class, 'edit_product_code1'])->name('seller.edit_product_code1');
 
-
+    route::Match(['get','post'],'/view-inventory/{id}',[SellerProductController::class,'view_inventory'])->name('seller.view_inventory');
 
 
 
     });
-    
 
-
+ 
     route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
     route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
     route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');

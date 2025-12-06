@@ -10,7 +10,7 @@
   --bg-fill: #6E4527;
   --text-white: #fff;
   --bg-multiple:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);
-  --btn-gradient: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+  --btn-gradient: linear-gradient(to bottom left, #F9DBAB, #7D532F);
   --plan-bg:linear-gradient(364.09deg, #7d532ffc, #F9DBAB 91%);
   --bg-login:linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
   --h1: 24px;
@@ -149,7 +149,7 @@ label {
 } */
 
 .planheight {
-  background: var(--plan-bg);
+  background: var(--bg-multiple);
   height: 290px;
 }
 
@@ -288,12 +288,14 @@ label {
   position: absolute;
   left: 0;
   top: 9%;
+  width: 15%;
 }
 
 .vector-right {
   position: absolute;
   right: 0;
   bottom: 0%;
+  width: 15%;
 }
 
 .login-header {
@@ -1268,87 +1270,6 @@ label {
   margin: 0;
 }
 
-
-@media (min-width:992px) and (max-width:1140px) {
-  .planheight {
-    height: 200px !important;
-  }
-
-  .plan-body li {
-    line-height: 2.5;
-    font-size: 10px;
-  }
-
-  .plan-body.p-3 {
-    padding: 10px !important;
-  }
-  .font-600 {
-    font-size: 11px;
-}
-  .plan-header {
-    padding: 10px;
-    font-size: 14px;
-  }
-
-
-}
-
-@media (min-width:1141px) and (max-width:1280px) {
-  .planheight {
-    height: 200px !important;
-  }
-
-  .plan-body li {
-    line-height: 2.5;
-    font-size: 10px;
-  }
-
-  .plan-body.p-3 {
-    padding: 10px !important;
-  }
-  .font-600 {
-    font-size: 11px;
-}
-  .plan-header {
-    padding: 10px;
-    font-size: 14px;
-  }
-
-
-}
-
-@media (min-width:1440px) {
-  .planheight {
-    height: 270px;
-  }
-
-}
-
-@media (max-width:1440px) {
-  .login-img img {
-      width: 55%;
-      margin: auto;
-      justify-content: center;
-      display: flex;
-  }
-  .vector-left {
-    position: absolute;
-    left: 0;
-    top: 9%;
-    width: 20%;
-}
-.vector-right {
-  position: absolute;
-  right: 0;
-  bottom: 0%;
-  width: 20%;
-}
-.login-header {
-  padding: 5px 4%;
-}
-
-}
-
 .customContainer{
     max-width: 1443px;
     width: 100%;
@@ -1631,3 +1552,121 @@ storeClient_profile_img{
     color: black;
 }
 
+.des-logo .logo-login {
+  width: 90%;
+}
+.login-img .logo-login {
+  width: 80%;
+  margin: auto;
+  justify-content: center;
+  display: grid;
+}
+
+@media (min-width:992px) and (max-width:1140px) {
+  .planheight {
+    height: 200px !important;
+  }
+
+  .plan-body li {
+    line-height: 2.5;
+    font-size: 10px;
+  }
+
+  .plan-body.p-3 {
+    padding: 10px !important;
+  }
+  .font-600 {
+    font-size: 11px;
+}
+  .plan-header {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .des-logo .logo-login {
+    width: 60%;
+}
+.login-img .logo-login {
+  width: 50%;
+}
+
+}
+
+@media (min-width:1141px) and (max-width:1280px) {
+  .planheight {
+    height: 200px !important;
+  }
+
+  .plan-body li {
+    line-height: 2.5;
+    font-size: 10px;
+  }
+
+  .plan-body.p-3 {
+    padding: 10px !important;
+  }
+  .font-600 {
+    font-size: 11px;
+}
+  .plan-header {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .des-logo .logo-login {
+    width: 60%;
+}
+
+}
+
+@media (min-width:1440px) {
+  .planheight {
+    height: 270px;
+  }
+
+}
+
+@media (max-width:1440px) {
+  .login-img img {
+      width: 55% !important;
+      margin: auto;
+      justify-content: center;
+      display: flex;
+  }
+  .vector-left {
+    position: absolute;
+    left: 0;
+    top: 9%;
+    width: 15%;
+}
+  .vector-right {
+    position: absolute;
+    right: 0;
+    bottom: 0%;
+    width: 15%;
+  }
+  .login-header {
+    padding: 5px 4%;
+  }
+
+}
+
+@media (min-width: 1441px) and (max-width: 1500px) {
+  .vector-left {
+      position: absolute;
+      left: 0;
+      top: 12%;
+      width: 16%;
+  }
+  .vector-right {
+    position: absolute;
+    right: 0;
+    bottom: 0%;
+    width: 15%;
+  }
+  .login-img .logo-login {
+    width: 60%;
+    margin: auto;
+    justify-content: center;
+    display: grid;
+  }
+
+}
