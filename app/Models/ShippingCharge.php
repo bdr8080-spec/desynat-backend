@@ -10,6 +10,6 @@ class ShippingCharge extends Model
 
     public function country_info()
     {
-        return $this->belongsTo(Country::class, 'country_id', 'id');
+        return $this->belongsTo(country::class, 'country_id', 'id');
     }
 }
