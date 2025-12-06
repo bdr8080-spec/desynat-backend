@@ -375,6 +375,9 @@ if($checkOrder->payment_status!=='0' ){
 
         if($request->payment_status=='1'){
         $msg="Order Payment Paid Successfully";
+
+        $this->AddtocartRemoveData($checkOrder->id);
+
         }else{
             $msg="Order Payment Cancelled";        
         }
