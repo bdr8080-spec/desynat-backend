@@ -119,6 +119,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //promocode management
         Route::get('/promocode-management', [PromoCodeController::class, 'promoCodeManagement'])->name('admin.promoCodeManagement');
+        Route::post('/deletePromocode/{id}', [PromoCodeController::class, 'deletePromocode'])->name('admin.deletePromocode');
+        Route::post('/updatePromoCodeStatus/{id}', [PromoCodeController::class, 'updatePromoCodeStatus'])->name('admin.updatePromoCodeStatus');
         
 
     });

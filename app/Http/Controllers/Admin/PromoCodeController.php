@@ -24,6 +24,44 @@ class PromoCodeController extends Controller
         return view('admin.promocode-management.index',compact('promoCodes','countries'));
     }
 
+    public function deletePromocode($id)
+    {
+        $result = $this->PromocodeService->deletePromoCode($id);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function updatePromoCodeStatus($promoCodeId)
+    {
+        $data = $this->PromocodeService->changePromoCodeStatus($promoCodeId);
+        //dd($result);
+
+        if ($data['status'] == 'success') {
+            $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
+  
+            return response()->json([
+                'success' => true,
+                'status' => $data['data']->status,
+                'message' => $data['message']
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400); 
+        }
+    }
+
 
 
     

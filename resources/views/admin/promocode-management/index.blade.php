@@ -148,7 +148,7 @@
                                       <!-- Delete button  -->
                                      <a
                                           href="javascript:void(0);"
-                                          class="table-button text-danger deleteGiftCard"
+                                          class="table-button text-danger deletePromoCode"
                                           data-id="{{ $pc->id }}"
                                       >
                                           <i class="bi bi-trash3-fill"></i>
@@ -323,28 +323,6 @@
     </div>
 </div>
 
-<!-- <script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/jquery.js"></script>
-
-<script>
-const fileInput = document.getElementById("fileUpload");
-const previewImage = document.getElementById("previewImage");
-const uploadIcon = document.getElementById("uploadIcon");
-
-fileInput.addEventListener("change", function() {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            previewImage.src = e.target.result;
-            previewImage.style.display = "block";
-            uploadIcon.style.display = "none";
-        };
-        reader.readAsDataURL(file);
-    }
-});
-</script> -->
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const sentModal = document.getElementById('sentModal1');
@@ -362,9 +340,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.deleteGiftCard').forEach(button => {
+    document.querySelectorAll('.deletePromoCode').forEach(button => {
         button.addEventListener('click', function () {
-            let giftCardId = this.getAttribute('data-id');
+            let promoCodeId = this.getAttribute('data-id');
 
             Swal.fire({
                 title: "Are you sure?",
@@ -376,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 confirmButtonText: "Yes, delete it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch(`/admin/deleteGiftCard/${giftCardId}`, {
+                    fetch(`/admin/deletePromocode/${promoCodeId}`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -386,9 +364,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     })
                     .then(response => response.json())
                     .then(data => {
-                        if (data.success) {
+                        if(data.status == "success"){
                             toastr.success(data.message);
-                            this.closest('tr').remove();
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
                         } else {
                             toastr.error(data.message);
                         }
@@ -403,14 +383,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- Update Brand Status -->
+<!-- Update Promocode Status -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.toggleStatus').forEach(toggle => {
         toggle.addEventListener('change', function () {
-            let giftCardId = this.getAttribute('data-id');
+            let promoCodeId = this.getAttribute('data-id');
 
-            fetch(`/admin/updateGiftCardStatus/${giftCardId}`, {
+            fetch(`/admin/updatePromoCodeStatus/${promoCodeId}`, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -420,9 +400,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
                     // toastr.success(data.message);
-                     if(data.status == 1){
+                     if (data.status == 1) {
                         toastr.success(data.message); // Green for active
                     } else {
                         toastr.error(data.message);   // Red for deactivated
@@ -430,9 +409,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     setTimeout(() => {
                         location.reload();
                     }, 2000);
-                } else {
-                    toastr.error(data.message);
-                }
             })
             .catch(error => {
                 //console.error(error);
