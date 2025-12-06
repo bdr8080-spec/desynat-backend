@@ -129,16 +129,23 @@ class UserGiftCardService
 
     try{
 
-        $checkGiftCard = UserGiftCards::with('gift_details')->where('receiver_id',$request->user_id)->orWhere('receiver_email',$request->email)->where('payment_status','1');
+   
+$checkGiftCard = UserGiftCards::where(function($q) use ($request) {
+    $q->where('receiver_id', $request->user_id)
+      ->orWhere('receiver_email', $request->email);
+})
+->where('payment_status', '1');
 
-        if($request->search){
-            $checkGiftCard=$checkGiftCard->
-            where('order_id','like','%'.$request->search.'%')
-            ->Orwhere('sender_email','like','%'.$request->search.'%')
+if($request->search){
+    $checkGiftCard = $checkGiftCard->where('order_id','like','%'.$request->search.'%')
+    ->Orwhere('sender_email','like','%'.$request->search.'%')
             ->Orwhere('receiver_email','like','%'.$request->search.'%');
-        }
+      
+}
 
-        $checkGiftCard=$checkGiftCard->get();
+$checkGiftCard = $checkGiftCard->get();
+
+
 
     return ['status'=>'success','message'=>"Gift Card fatch Successfully",'data'=>$checkGiftCard];
 
