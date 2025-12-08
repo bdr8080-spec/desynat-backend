@@ -25,7 +25,9 @@ class ShippingController extends Controller
 
     public function manageShippingCharges(Request $request, $id){
         $country = country::find($id);
-        return view('admin.shipping-charge-tax-management.manage',compact('country'));
+        $shippingCharges = $this->ShippingTaxService->getShippingChargesByCountryId($id)['data'];
+        //dd($shippingCharges);
+        return view('admin.shipping-charge-tax-management.manage',compact('country','shippingCharges'));
     }
 
     public function update_tax(Request $request)
@@ -51,6 +53,44 @@ class ShippingController extends Controller
                 'message' => 'Failed to update tax',
                 'error' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function deleteShippingCharge($id)
+    {
+        $result = $this->ShippingTaxService->deleteShippingCharge($id);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function updateShippingChargeStatus($shippingId)
+    {
+        $data = $this->ShippingTaxService->blockUnblockShipping($shippingId);
+        //dd($result);
+
+        if ($data['status'] == 'success') {
+            $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
+  
+            return response()->json([
+                'success' => true,
+                'status' => $data['data']->status,
+                'message' => $data['message']
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400); 
         }
     }
 

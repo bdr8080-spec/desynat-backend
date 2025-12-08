@@ -273,8 +273,10 @@ label {
 .btn-success {
   line-height: 32px;
   background: var(--btn-gradient);
-  border: none;
   font-size: var(--btn-font);
+  padding: 9px;
+  border-radius: 4px;
+  border: none;
 }
 
 .bg-logo-wapper {
@@ -287,7 +289,7 @@ label {
 .vector-left {
   position: absolute;
   left: 0;
-  top: 9%;
+  top: 8.7%;
   width: 15%;
 }
 
@@ -299,7 +301,7 @@ label {
 }
 
 .login-header {
-  padding: 12px 4%;
+  padding: .5% 4%;
   display: flex;
   justify-content: space-between;
   background: var(--bg-multiple);
@@ -1552,14 +1554,16 @@ storeClient_profile_img{
     color: black;
 }
 
-.des-logo .logo-login {
+/* .des-logo .logo-login {
   width: 90%;
-}
+} */
+
 .login-img .logo-login {
-  width: 80%;
-  margin: auto;
-  justify-content: center;
-  display: grid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
 }
 
 @media (min-width:992px) and (max-width:1140px) {
@@ -1582,12 +1586,10 @@ storeClient_profile_img{
     padding: 10px;
     font-size: 14px;
   }
-  .des-logo .logo-login {
+  /* .des-logo .logo-login {
     width: 60%;
-}
-.login-img .logo-login {
-  width: 50%;
-}
+  } */
+
 
 }
 
@@ -1611,9 +1613,7 @@ storeClient_profile_img{
     padding: 10px;
     font-size: 14px;
   }
-  .des-logo .logo-login {
-    width: 60%;
-}
+  
 
 }
 
@@ -1625,48 +1625,15 @@ storeClient_profile_img{
 }
 
 @media (max-width:1440px) {
-  .login-img img {
-      width: 55% !important;
-      margin: auto;
-      justify-content: center;
-      display: flex;
-  }
-  .vector-left {
-    position: absolute;
-    left: 0;
-    top: 9%;
-    width: 15%;
-}
-  .vector-right {
-    position: absolute;
-    right: 0;
-    bottom: 0%;
-    width: 15%;
-  }
+  
   .login-header {
-    padding: 5px 4%;
+    padding: .5% 4%;
   }
 
 }
 
 @media (min-width: 1441px) and (max-width: 1500px) {
-  .vector-left {
-      position: absolute;
-      left: 0;
-      top: 12%;
-      width: 16%;
-  }
-  .vector-right {
-    position: absolute;
-    right: 0;
-    bottom: 0%;
-    width: 15%;
-  }
-  .login-img .logo-login {
-    width: 60%;
-    margin: auto;
-    justify-content: center;
-    display: grid;
-  }
+ 
+ 
 
 }

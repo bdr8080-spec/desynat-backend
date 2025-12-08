@@ -41,26 +41,26 @@ class ShippingTaxService
     public function getShippingChargesByCountryId($id)
     {
         try {
-            $countries = country::with('tax_info','shipping_info')->where('id',$id)->orderBy('name', 'asc')->get();
+            $data = ShippingCharge::with('country_info')->where('country_id',$id)->orderBy('id', 'desc')->get();
 
-            if ($countries->isEmpty()) {
+            if ($data->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No countries found',
+                    'message' => 'No shipping charge found',
                     'data' => (object)[]
                 ];
             }
 
             return [
                 'status' => 'success',
-                'message' => 'Country details fetched successfully',
-                'data' => $countries
+                'message' => 'Shipping Charges fetched successfully',
+                'data' => $data
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch countries: ' . $e->getMessage(),
+                'message' => 'Failed to fetch shipping charge: ' . $e->getMessage(),
                 'data' => []
             ];
         }
