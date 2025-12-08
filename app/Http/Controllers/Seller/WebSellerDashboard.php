@@ -241,8 +241,23 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
       public function view_profile(REQUEST $request){
 
-          return view('dealer.product.view_profile');
+          return view('dealer.profile.view_profile');
       }
+
+
+      public function edit_profile(REQUEST $request){
+
+          return view('dealer.profile.edit_profile');
+      }
+
+       public function update_commison(REQUEST $request){
+
+          return view('dealer.commission.commission');
+      }
+
+      
+
+      
 
       
 

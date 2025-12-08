@@ -119,7 +119,7 @@
             </a> 
         </div>
         
-        <a href="{{route('seller.dashboard')}}" class="pencil-btn">
+        <a href="{{route('seller.edit_profile')}}" class="pencil-btn">
             <i class="bi bi-pencil"></i>
         </a> 
        

@@ -132,7 +132,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('seller.view_product', $item->id) }}" class="eyebtn"><i
+                                        <a href="{{ route('seller.view_inventory', $item->id) }}" class="eyebtn"><i
                                                 class="bi bi-eye"></i></a>
                                     </td>
                                 </tr>
@@ -243,7 +243,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('seller.view_product', $item->id) }}" class="eyebtn"><i
+                                        <a href="{{ route('seller.view_inventory', $item->id) }}" class="eyebtn"><i
                                                 class="bi bi-eye"></i></a>
                                     </td>
                                 </tr>
@@ -356,7 +356,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('seller.view_product', $item->id) }}" class="eyebtn"><i
+                                        <a href="{{ route('seller.view_inventory', $item->id) }}" class="eyebtn"><i
                                                 class="bi bi-eye"></i></a>
                                     </td>
                                 </tr>
