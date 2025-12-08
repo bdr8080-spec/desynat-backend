@@ -94,6 +94,40 @@ class ShippingController extends Controller
         }
     }
 
+    public function add_shipping_fee(Request $request)
+    {
+        $result = $this->ShippingTaxService->addShippingFee($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function update_shipping_fee(Request $request)
+    {
+        $result = $this->ShippingTaxService->updateShippingFee($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
 
     
 
