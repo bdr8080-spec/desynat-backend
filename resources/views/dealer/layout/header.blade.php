@@ -102,7 +102,7 @@
                                         <div class="h-email">vijay@gmail.com</div>
                                     </div>
                                 </div>
-                                <a class="drop-profile" href="{{ url('/view-profile') }}" >
+                                <a class="drop-profile" href="{{ route('seller.view_profile') }}" >
                                     <span>View Profile</span>
                                 </a>
                             </div>

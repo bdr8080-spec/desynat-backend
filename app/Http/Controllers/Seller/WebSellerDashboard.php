@@ -237,6 +237,13 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
       }
 
+
+
+      public function view_profile(REQUEST $request){
+
+          return view('dealer.product.view_profile');
+      }
+
       
 
 }

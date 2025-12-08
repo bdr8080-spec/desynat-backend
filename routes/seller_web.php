@@ -85,7 +85,16 @@ Route::group(['prefix' => 'seller'], function () {
 
     //  Route::post('Update-product1/{id}',[SellerProductController::class, 'edit_product_code1'])->name('seller.edit_product_code1');
 
+    // M4 Work 
+
     route::Match(['get','post'],'/view-inventory/{id}',[SellerProductController::class,'view_inventory'])->name('seller.view_inventory');
+
+    route::Match(['get','post'],'/view-profile',[WebSellerDashboard::class,'view_profile'])->name('seller.view_profile');
+
+
+
+
+
 
 
 
@@ -107,9 +116,6 @@ Route::group(['prefix' => 'seller'], function () {
 });
 
 
-route::Match(['get','post'],'/view-profile', function(){
-    return view('dealer.product.view_profile');
-});
 route::Match(['get','post'],'/Add-product-2', function(){
     return view('dealer.product.Add_product_2');
 });
