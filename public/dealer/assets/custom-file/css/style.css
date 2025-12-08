@@ -1427,6 +1427,7 @@ storeClient_profile_img{
 .copy-link-box:hover .copy-icon {
     opacity: 1;
 }
+
 .reels{
     border: .5px solid #D9D9D9;
     background: #fff;
@@ -1449,11 +1450,11 @@ storeClient_profile_img{
     width: 80px;
     height: 80px;
 }
-.product_reels .customNavTabs{
+/* .product_reels .customNavTabs{
      border: 1px solid transparent;
     background: linear-gradient(#fff, #fff) padding-box,
                 linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
-}
+} */
 .product_reels .customNavTabs .nav-item{
     width: calc(100% / 2);
     border: none;
@@ -1510,17 +1511,11 @@ storeClient_profile_img{
     border-color: transparent;
 }
 
-.reels-wrapper {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 30px;
-}
-
 .reel-upload-box {
     background: #fdf5e6;
     border: 2px solid #e7d9c3;
     border-radius: 12px;
-    height: 380px;
+    height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1550,24 +1545,19 @@ storeClient_profile_img{
     font-size: 14px;
 }
 
-.reels-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 25px;
-}
-
 .reel-card {
     position: relative;
     overflow: hidden;
     border-radius: 18px;
     cursor: pointer;
+    height: 350px;
+    margin-bottom: 30px;
 }
 
 .reel-card img {
     width: 100%;
-    height: 350px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 18px;
 }
 
 .play-icon {
@@ -1600,6 +1590,48 @@ storeClient_profile_img{
   transform: translate(-50%, -50%);
   width: 50%;
 }
+
+.document-view {
+  border: 1px dashed #DFBF8F;
+  border-radius: 10px;
+  padding: 20px;
+}
+.doc-views{
+  height: 200px;
+}
+.doc-views img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.personal-list-2 {
+  display: flex;
+  justify-content: space-between;
+  line-height: 33px;
+}
+.bank-lists {
+  background: #ADADAD14;
+  padding: 10px;
+  border-radius: 12px;
+  margin: 20px 0px;
+}
+.doc-views2{
+  height: 170px;
+  width: 250px;
+}
+.doc-views2 img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+.pencil-btn{
+  background-color: #FFF7EA;
+  color: #6E4527;
+  border-radius: 6px;
+  padding: 10px 20px;
+}
+
+
 
 @media (min-width:992px) and (max-width:1140px) {
   .planheight {
