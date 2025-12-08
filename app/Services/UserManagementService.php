@@ -751,6 +751,7 @@ public function product_view_cart_details($request)
 {
     try {
 
+       $user_address= userAddress::where('user_id',$request->user_id)->where('set_as_default','1')->first();
 
         $total_mrp=0;
         $discount_on_mrp=0;
@@ -760,6 +761,7 @@ public function product_view_cart_details($request)
         $total_amount=0;
 
         $add_to_cart= Addtocart::with('product.seller_details','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
+
 
 
         if($add_to_cart->isEmpty()){
@@ -791,6 +793,8 @@ public function product_view_cart_details($request)
         $response['shipping_fees']=$shipping_fees;
         $response['tax']=$tax;
         $response['total_amount']=$total_amount;
+
+        $response['user_address']=$user_address;
         
         $response['cart_data']=$add_to_cart;
         
