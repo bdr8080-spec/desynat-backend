@@ -1465,7 +1465,7 @@ storeClient_profile_img{
     background: linear-gradient(#fff, #fff) padding-box,
                 linear-gradient(to bottom left, #DFBF8F, #6E4527) border-box;
     color: #000;
-    font-size: 24px;
+    font-size: 20px;
     line-height:30px;
     font-weight: 500;
 }
