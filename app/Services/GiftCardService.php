@@ -68,8 +68,8 @@ class GiftCardService
             $data->save();
 
             $message = $data->status == 1
-                ? 'Gift Card Unblocked Successfully'
-                : 'Gift Card blocked Successfully';
+                ? 'Gift Card Category Unblocked Successfully'
+                : 'Gift Card Category blocked Successfully';
 
             return [
                 'status' => 'success',
@@ -98,7 +98,7 @@ class GiftCardService
 
             return [
                 'status' => 'success',
-                'message' => 'Gift Card created successfully',
+                'message' => 'Gift Card Category Addeed Successfully',
                 'data' => $data
             ];
 
@@ -133,7 +133,7 @@ class GiftCardService
 
             return [
                 'status' => 'success',
-                'message' => 'Gift Card updated successfully',
+                'message' => 'Gift Card Category Updated Successfully',
                 'data' => $data
             ];
 
@@ -162,7 +162,7 @@ class GiftCardService
 
             return [
                 'status' => 'success',
-                'message' => 'Gift Card deleted successfully',
+                'message' => 'Gift Card Category deleted successfully',
                 'data' => []
             ];
 

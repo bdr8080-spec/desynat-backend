@@ -105,7 +105,7 @@ class ShippingTaxService
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'Same distance range already existed',
+                    'message' => 'Delivery charges already Existed',
                     'data' => (object)[]
                 ];
             }
@@ -160,7 +160,7 @@ class ShippingTaxService
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'Same distance range already existed',
+                    'message' => 'Delivery charges already Existed',
                     'data' => (object)[]
                 ];
             }
@@ -197,7 +197,7 @@ class ShippingTaxService
             if (!$data) {
                 return [
                     'status' => 'error',
-                    'message' => 'Shipping Fee not found',
+                    'message' => 'Delivery Charges not found',
                     'data' => (object)[]
                 ];
             }
@@ -207,8 +207,8 @@ class ShippingTaxService
             $data->save();
 
             $message = $data->status == 1
-                ? 'Shipping Fee Unblocked Successfully'
-                : 'Shipping Fee blocked Successfully';
+                ? 'Delivery Charges Unblocked Successfully'
+                : 'Delivery Charges blocked Successfully';
 
             return [
                 'status' => 'success',
@@ -218,7 +218,7 @@ class ShippingTaxService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to update shipping fee status: ' . $e->getMessage(),
+                'message' => 'Failed to update Delivery Charges status: ' . $e->getMessage(),
                 'data' => []
             ];
         }
@@ -232,7 +232,7 @@ class ShippingTaxService
             if (!$data) {
                 return [
                     'status' => 'error',
-                    'message' => 'Shipping Fee not found',
+                    'message' => 'Delivery Charges not found',
                     'data' => (object)[]
                 ];
             }
@@ -240,14 +240,14 @@ class ShippingTaxService
 
             return [
                 'status' => 'success',
-                'message' => 'Shipping Fee deleted successfully',
+                'message' => 'Delivery Charges delete succesfully ',
                 'data' => null
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to delete shipping fee',
+                'message' => 'Failed to delete Delivery Charges',
                 'data' => (object)[]
             ];
         }

@@ -43,6 +43,7 @@ class UserGiftCardController extends Controller
         //dd($sessionId);
 
         return view('user.giftcard.add_giftcard');
+        // return view('user.giftcard.add_giftcard', compact('sessionId'));
     }
 
     public function view_gift_card(Request $request){

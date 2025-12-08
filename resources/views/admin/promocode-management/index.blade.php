@@ -232,7 +232,7 @@
                         <div class="col-lg-6 col-md-12 col-12">
                             <div class="form-group">
                                 <label class="form-label">Promocode Name (Arabic)</label>
-                                <input type="text" id="nameArabic" name="name_arabic" oninput="this.value = this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Promocode in Arabic" />
+                                <input type="text" id="nameArabic" name="name_arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Promocode in Arabic" />
                                 <div id="nameArabicError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -250,7 +250,7 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="mb-3">
                                 <label for="descriptionArabic" class="form-label">Description (Arabic)</label>
-                                <textarea id="descriptionArabic"  name="description_arabic" oninput="this.value = this.value.replace(/[^A-Za-z0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')" class="form-control" rows="3"></textarea>
+                                <textarea id="descriptionArabic"  name="description_arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')" class="form-control" rows="3"></textarea>
                                 <div id="descriptionArabicError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -368,7 +368,7 @@
                         <div class="col-lg-6 col-md-12 col-12">
                             <div class="form-group">
                                 <label class="form-label">Promocode Name (Arabic)</label>
-                                <input type="text" id="update_nameArabic" oninput="this.value = this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Promocode in Arabic" />
+                                <input type="text" id="update_nameArabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" placeholder="Enter Promocode in Arabic" />
                                 <div id="update_nameArabicError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -386,7 +386,7 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="mb-3">
                                 <label for="update_descriptionArabic" class="form-label">Description (Arabic)</label>
-                                <textarea id="update_descriptionArabic" oninput="this.value = this.value.replace(/[^A-Za-z0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')" class="form-control" rows="3"></textarea>
+                                <textarea id="update_descriptionArabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')" class="form-control" rows="3"></textarea>
                                 <div id="update_descriptionArabicError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
@@ -482,7 +482,7 @@
                         <div class="col-lg-12 col-md-12 col-12">
 
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
+                                <!-- <label for="description" class="form-label">Description</label> -->
                                 <textarea id="description" class="form-control"
                                     rows="3" readOnly></textarea>
                             </div>

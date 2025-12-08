@@ -30,7 +30,7 @@ class GiftCardController extends Controller
             return response()->json(['success' => false, 'message' => 'Gift Card not found.']);
         }
         $giftCard->delete();
-        return response()->json(['success' => true, 'message' => 'Gift Card deleted successfully!']);
+        return response()->json(['success' => true, 'message' => 'Gift Card Category Deleted Successfully!']);
     }
 
     public function updateGiftCardStatus($id)
@@ -41,12 +41,12 @@ class GiftCardController extends Controller
         }
         $giftCard->status = $giftCard->status == 1 ? 0 : 1;
         $giftCard->save();
-        $statusText = $giftCard->status == 1 ? 'Activated' : 'Deactivated';
+        $statusText = $giftCard->status == 1 ? 'Unblocked' : 'Blocked';
 
         return response()->json([
             'success' => true,
             'status' => $giftCard->status,
-            'message' => "Gift Card has been {$statusText} Successfully!"
+            'message' => "Gift Card Category {$statusText} Successfully!"
         ]);
     }
 
@@ -90,7 +90,7 @@ class GiftCardController extends Controller
 
         $giftCard->save();
 
-        return response()->json(['success' => true, 'message' => 'Gift Card added successfully!']);
+        return response()->json(['success' => true, 'message' => 'Gift Card Category Added Successfully!']);
     }
 
     public function updateGiftCard(Request $request, $id)
@@ -125,7 +125,7 @@ class GiftCardController extends Controller
 
         $giftCard->save();
 
-        return response()->json(['success' => true, 'message' => 'Gift Card updated successfully!']);
+        return response()->json(['success' => true, 'message' => 'Gift Card Category Updated Successfully!']);
     }
 
 

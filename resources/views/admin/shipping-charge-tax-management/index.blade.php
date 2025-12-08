@@ -16,7 +16,7 @@
                 <div class="mt-4">
 
                     <div class="table-responsive w-100">
-                        <table class="table w-100">
+                        <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
                                     <th scope="col">SR No.</th>
