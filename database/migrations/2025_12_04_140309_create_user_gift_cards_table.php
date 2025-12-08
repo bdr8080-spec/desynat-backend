@@ -31,7 +31,7 @@ return new class extends Migration
             $table->enum('payment_status',['0','1','2'])->default('0')->comment('0 pending 1 paid 2 cancel');
             $table->longText('transaction_id')->nullable();
 
-            $table->enum('giftCardUse',['0'])->default('0')->comment('0 Not Used 1 used');
+            $table->enum('giftCardUse',['0','1'])->default('0')->comment('0 Not Used 1 used');
             
             $table->timestamps();
         });

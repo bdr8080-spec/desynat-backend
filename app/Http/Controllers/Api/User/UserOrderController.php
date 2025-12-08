@@ -156,6 +156,7 @@ class UserOrderController extends Controller
             'shipping_fees'=>$request->shipping_fees,
             "tax"=>$request->tax,
             "total_amount"=>$request->total_amount,
+            'giftcard_id'=>$request->giftcard_id??null,
             'giftcard_amount'=>$request->giftcard_amount??null,
             'Payment_method'=>$request->Payment_method
            ];

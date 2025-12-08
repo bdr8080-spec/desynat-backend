@@ -29,6 +29,8 @@ return new class extends Migration
 
             $table->string('tax')->nullable();
             $table->string('shipping_fees')->nullable();
+            
+            $table->string('giftcard_id')->nullable();
             $table->string('giftcard_amount')->nullable();
             $table->string('total_amount');
 
