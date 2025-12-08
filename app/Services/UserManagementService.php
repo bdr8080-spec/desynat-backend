@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\{User,userAddress};
 use App\Models\UserWallet;
 use App\Models\all_countrie;
 use Illuminate\Http\Request;
