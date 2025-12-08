@@ -130,7 +130,7 @@ class UserGiftCardService
     try{
 
    
-$checkGiftCard = UserGiftCards::where(function($q) use ($request) {
+$checkGiftCard = UserGiftCards::with('gift_details')->where(function($q) use ($request) {
     $q->where('receiver_id', $request->user_id)
       ->orWhere('receiver_email', $request->email);
 })
