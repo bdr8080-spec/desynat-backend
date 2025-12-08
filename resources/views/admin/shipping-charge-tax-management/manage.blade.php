@@ -22,7 +22,7 @@
                 <div class="col-lg-6 col-md-4 col-12">
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                            <span>Add Shipping Fee</span>
+                            <span>Add Delivery Charges</span>
                         </a>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                                 <tr>
                                     <th scope="col">SR No.</th>
                                     <th scope="col">Range From to To (KM)</th>
-                                    <th scope="col">Shipping Fee</th>
+                                    <th scope="col">Shipping Price</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -110,7 +110,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Add Shipping Fee</h2>
+                <h2 class="h2">Add Delivery Charges</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -149,8 +149,8 @@
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label">Shipping Fee</label>
-                                <input type="text" name="shipping_fee" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control" placeholder="Enter shipping fee" />
+                                <label class="form-label">Shipping Price</label>
+                                <input type="text" name="shipping_fee" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control" placeholder="Enter Shipping price" />
                                 <span id="shippingFeeError" class="text-danger" style="display:none"></span>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
         <div class="modal-content">
 
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Shipping Fee</h2>
+                <h2 class="h2">Edit Delivery Charges</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -221,10 +221,10 @@
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <label class="form-label">Shipping Fee</label>
+                                <label class="form-label">Shipping Price</label>
                                 <input type="text" id="edit_shipping_fee"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
-                                    class="form-control" placeholder="Enter shipping fee">
+                                    class="form-control" placeholder="Enter Shipping price">
 
                                 <span id="editShippingFeeError" class="text-danger" style="display:none"></span>
                             </div>

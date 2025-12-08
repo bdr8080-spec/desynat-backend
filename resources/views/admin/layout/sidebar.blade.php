@@ -57,7 +57,7 @@
     <li class="nav-item {{ Request::routeIs('admin.shippingManagement') || Request::routeIs('admin.manageShippingCharges') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.shippingManagement') }}">
             <span><img src="{{ asset('admin/image/category.svg') }}" alt="Shipping Management" /></span>
-            Shipping Charge & Tax Management
+            Delivery Charges & Tax Management
         </a>
     </li>
     <li class="nav-item {{ Request::routeIs('admin.giftCardManagement') ? 'active' : '' }}">

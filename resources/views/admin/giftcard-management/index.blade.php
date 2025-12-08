@@ -70,7 +70,7 @@
                       <tr>
                         <th scope="col">SR No.</th>
                         <th scope="col">Image</th>
-                        <th scope="col">Brand name(English)</th>
+                        <th scope="col">Gift Card Category Name(English)</th>
                         <!-- <th scope="col">Brand name(Arabic)</th> -->
                         <!-- <th scope="col">Status</th> -->
                         <th scope="col">Action</th>
@@ -177,8 +177,8 @@
                                   <!-- Category Name English -->
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
-                                          <label class="form-label">Add Category Name (English)</label>
-                                          <input type="text" name="name_english" class="form-control" placeholder="Enter Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
+                                          <label class="form-label">Gift Card Category Name (English)</label>
+                                          <input type="text" name="name_english" class="form-control" placeholder="Enter Gift Card Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                           <div class="text-danger" id="nameEnError"></div>
                                       </div>
                                   </div>
@@ -186,8 +186,8 @@
                                   <!-- Category Name Arabic -->
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
-                                          <label class="form-label">Add Category Name (Arabic)</label>
-                                          <input type="text" name="name_arabic" class="form-control" placeholder="Enter Category Name in Arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
+                                          <label class="form-label">Gift Card Category Name (Arabic)</label>
+                                          <input type="text" name="name_arabic" class="form-control" placeholder="Enter Gift Card Category Name in Arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
                                           <div class="text-danger" id="nameArError"></div>
                                       </div>
                                   </div>
@@ -235,8 +235,8 @@
                                     <!-- Category Name English -->
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
-                                            <label class="form-label">Category Name (English)</label>
-                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Enter Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"  />
+                                            <label class="form-label">Gift Card Category Name (English)</label>
+                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Enter Gift Card Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"  />
                                             <div class="text-danger" id="editNameEnError"></div>
                                         </div>
                                     </div>
@@ -244,8 +244,8 @@
                                     <!-- Category Name Arabic -->
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
-                                            <label class="form-label">Category Name (Arabic)</label>
-                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Enter Category Name in Arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                            <label class="form-label">Gift Card Category Name (Arabic)</label>
+                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Enter Gift Card Category Name in Arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                             <div class="text-danger" id="editNameArError"></div>
                                         </div>
                                     </div>
@@ -408,11 +408,11 @@ document.addEventListener('DOMContentLoaded', function() {
             hasError = true;
         }
         if(!formData.get('name_english').trim()){
-            document.getElementById('nameEnError').innerText = 'Please Enter Category Name in English';
+            document.getElementById('nameEnError').innerText = 'Please Enter Gift Card Category Name in English';
             hasError = true;
         }
         if(!formData.get('name_arabic').trim()){
-            document.getElementById('nameArError').innerText = 'Please Enter Category Name in Arabic';
+            document.getElementById('nameArError').innerText = 'Please Enter Gift Card Category Name in Arabic';
             hasError = true;
         }
         if(hasError) return;
@@ -494,11 +494,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let hasError = false;
         if(!formData.get('name_english').trim()){
-            document.getElementById('editNameEnError').innerText = 'Please Enter Category Name in English';
+            document.getElementById('editNameEnError').innerText = 'Please Enter Gift Card Category Name in English';
             hasError = true;
         }
         if(!formData.get('name_arabic').trim()){
-            document.getElementById('editNameArError').innerText = 'Please Enter Category Name in Arabic';
+            document.getElementById('editNameArError').innerText = 'Please Enter Gift Card Category Name in Arabic';
             hasError = true;
         }
         if(hasError) return;
