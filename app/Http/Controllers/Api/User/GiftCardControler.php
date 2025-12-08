@@ -47,7 +47,7 @@ class GiftCardControler extends Controller
             'receiver_name' => 'required',
             'receiver_email' => 'required|email',
             'sender_name' => 'required',
-            'sender_email' => 'required|email',
+            // 'sender_email' => 'required|email',
             'wish_message' => 'required',
             'notes' => 'required',
         ]);
@@ -66,7 +66,7 @@ class GiftCardControler extends Controller
         'receiver_name' => $request->receiver_name  ,
         'receiver_email' => $request->receiver_email  ,
         'sender_name' => $request->sender_name,  
-        'sender_email' => $request->sender_email,
+        'sender_email' => $request->sender_email??null,
         'wish_message' => $request->wish_message,
         'notes' =>$request->notes  
        ];
