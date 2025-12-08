@@ -2,7 +2,7 @@
 
 
 <!-- Vendor JS Files -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ asset('dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 <script src="{{ asset('dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 <!--Main JS File -->

@@ -91,24 +91,27 @@
                             class="rounded-circle">
                         <!-- <span class="d-none d-md-block dropdown-toggle ps-2">Seller</span> -->
                     </a>
+
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                        <!-- <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-person"></i>
-                                <span>My Profile</span>
-                            </a>
-                        </li> -->
                         <li>
-                            <hr class="dropdown-divider">
+                            <div class="seller-profile">
+                                <div class="p-grid1 d-flex gap-3">
+                                    <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                                    <div>
+                                        <h6>Vijay</h6>
+                                        <div class="h-email">vijay@gmail.com</div>
+                                    </div>
+                                </div>
+                                <a class="drop-profile" href="{{ url('/view-profile') }}" >
+                                    <span>View Profile</span>
+                                </a>
+                            </div>
                         </li>
+
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ url('/view-profile') }}" >
-                                <i class="bi bi-box-arrow"></i>
-                                <span>View Profile</span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('seller.logout') }}">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Sign Out</span>
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="{{ route('seller.logout') }}">
+                                <img src="{{ asset('dealer') }}/assets/img/logout.svg">
+                                <span class="text-red">Sign Out</span>
                             </a>
                         </li>
                     </ul>

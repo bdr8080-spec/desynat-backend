@@ -148,6 +148,41 @@ label {
   width: 60%;
 } */
 
+.seller-profile {
+  display: flex;
+  justify-content: space-between;
+  background: #FFF7EA;
+  padding: 20px 10px;
+  gap: 10px;
+}
+.seller-profile h6 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+.drop-profile {
+  border: 1px solid #8D6744;
+  color: #8D6744;
+  background: #fff;
+  border-radius: 12px;
+  width: max-content;
+  padding: 6px;
+  font-size: 14px;
+}
+.text-red{
+  color: #D53B36;
+}
+
+.h-email{
+  font-size: 12px;
+}
+
+.p-grid1 img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50px;
+}
+
 .planheight {
   background: var(--bg-multiple);
   height: 290px;
