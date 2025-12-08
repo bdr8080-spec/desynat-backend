@@ -105,7 +105,7 @@ class ShippingTaxService
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'Same range already existed',
+                    'message' => 'Same distance range already existed',
                     'data' => (object)[]
                 ];
             }
@@ -134,60 +134,58 @@ class ShippingTaxService
 
 
     public function updateShippingFee(Request $request)
-{
-    try {
-        $id = $request->shipping_charge_id;
-        $fee = ShippingCharge::find($id);
+    {
+        try {
+            $id = $request->shipping_charge_id;
+            $fee = ShippingCharge::find($id);
 
-        if (!$fee) {
+            if (!$fee) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Shipping Charge not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $countryId = $request->country_id ?? $fee->country_id;
+
+            $exists = ShippingCharge::where('country_id', $countryId)
+                ->where('id', '!=', $id)
+                ->where(function ($q) use ($request) {
+                    $q->where('range_from', '<=', $request->range_to)
+                    ->where('range_to', '>=', $request->range_from);
+                })
+                ->exists();
+
+            if ($exists) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Same distance range already existed',
+                    'data' => (object)[]
+                ];
+            }
+
+            // Update
+            $fee->update([
+                'range_from'   => $request->range_from,
+                'range_to'     => $request->range_to,
+                'shipping_fee' => $request->shipping_fee,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Shipping Charge updated successfully',
+                'data' => $fee
+            ];
+
+        } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Shipping Charge not found',
+                'message' => 'Failed to update shipping charge',
                 'data' => (object)[]
             ];
         }
-
-        // Ensure country_id comes from DB if not sent from client
-        $countryId = $request->country_id ?? $fee->country_id;
-
-        // Check overlapping ranges + exact duplicates except itself
-        $exists = ShippingCharge::where('country_id', $countryId)
-            ->where('id', '!=', $id)
-            ->where(function ($q) use ($request) {
-                $q->where('range_from', '<=', $request->range_to)
-                  ->where('range_to', '>=', $request->range_from);
-            })
-            ->exists();
-
-        if ($exists) {
-            return [
-                'status' => 'error',
-                'message' => 'Same range already existed',
-                'data' => (object)[]
-            ];
-        }
-
-        // Update
-        $fee->update([
-            'range_from'   => $request->range_from,
-            'range_to'     => $request->range_to,
-            'shipping_fee' => $request->shipping_fee,
-        ]);
-
-        return [
-            'status' => 'success',
-            'message' => 'Shipping Charge updated successfully',
-            'data' => $fee
-        ];
-
-    } catch (\Exception $e) {
-        return [
-            'status' => 'error',
-            'message' => 'Failed to update shipping charge',
-            'data' => (object)[]
-        ];
     }
-}
 
 
 
