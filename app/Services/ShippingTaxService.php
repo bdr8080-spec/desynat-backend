@@ -38,6 +38,34 @@ class ShippingTaxService
         }
     }
 
+    public function getShippingChargesByCountryId($id)
+    {
+        try {
+            $countries = country::with('tax_info','shipping_info')->where('id',$id)->orderBy('name', 'asc')->get();
+
+            if ($countries->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No countries found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Country details fetched successfully',
+                'data' => $countries
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch countries: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
     public function addTax(Request $request)
     {
 
