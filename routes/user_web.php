@@ -66,9 +66,9 @@ use App\Http\Controllers\User\UserGiftCardController;
    Route::get('address/set-default',[AddressController::class, 'addressSetDefault'])->name('user.address_set_default');
 
 
-//    Route::get('gift-cards',[UserGiftCardController::class, 'gift_cards'])->name('user.gift-cards');
-
-//    Route::get('add-gift-cards',[UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift-cards');
+   Route::get('gift-cards',[UserGiftCardController::class, 'gift_cards'])->name('user.gift_cards');
+   Route::get('view-gift-cards',[UserGiftCardController::class, 'view_gift_card'])->name('user.view_gift_card');
+   Route::get('add-gift-cards',[UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift_cards');
 
 
    });
@@ -90,22 +90,6 @@ Route::match(['get', 'post'], '/saved-address', function () {
      return view('user.profile.saved-address');
 });
 
-Route::match(['get', 'post'], '/gift-cards', function () {
-
-     return view('user.giftcard.all_giftcard');
-
-})->name('user.gift-cards');
-
-
-Route::match(['get', 'post'], '/add-gift-cards', function () {
-
-     return view('user.giftcard.add_giftcard');
-})->name('user.add-gift-cards');
-
-Route::match(['get', 'post'], '/view-gift-cards', function () {
-
-     return view('user.giftcard.view_giftcard');
-})->name('user.view-gift-cards');
 
 Route::match(['get', 'post'], '/view-cart', function () {
 
