@@ -4,7 +4,7 @@
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
-        <a href="{{route('user.gift-cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
+        <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
         <h3>Add Gift Card</h3>
     </div>
 
@@ -73,14 +73,17 @@
             <div class="paycard">
                 <div class="payment-option mb-3">
                     <label class="custom-radio">
-                        <input type="radio" name="payment" checked>
+                        <input type="radio" name="payment" id="onlinePayment" value="online" checked>
                         <span class="radio-mark"></span>
                         <div class="label-content">
                             <div class="title">Online Payment</div>
                         </div>
                     </label>
                 </div>
-                <div class="payment-option mb-3">
+                <div id="myfatoorah-box" style="display:none;">
+                    <div id="myfatoorah-container"></div> 
+                </div>
+                <!-- <div class="payment-option mb-3">
                     <label class="custom-radio">
                         <input type="radio" name="payment" >
                         <span class="radio-mark"></span>
@@ -99,7 +102,7 @@
                             <div class="title">Cash On Delivery</div>
                         </div>
                     </label>
-                </div>
+                </div> -->
             </div>
 
             <div class="cmn-btn mt-4">
@@ -144,6 +147,8 @@
     });
 
 </script>
+
+
 
 
 @endsection
