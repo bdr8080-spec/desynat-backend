@@ -17,7 +17,7 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> Add New Product demo page
+            <i class="bi bi-chevron-left"></i> Add New Product
         </a>
     </div>
 
