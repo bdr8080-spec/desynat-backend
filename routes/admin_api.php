@@ -116,6 +116,7 @@ Route::group(['prefix' => 'admin'], function () {
      //tax and shipping management
      Route::post('/add_tax',[ShippingTaxController::class,'add_tax']);
      Route::get('/countries_with_tax_shipping',[ShippingTaxController::class,'countries_with_tax_shipping']);
+     Route::get('/shipping_charges_by_countryId',[ShippingTaxController::class,'shipping_charges_by_countryId']);
      Route::post('/add_shipping_charge',[ShippingTaxController::class,'add_shipping_charge']);
      Route::post('/update_shipping_charge',[ShippingTaxController::class,'update_shipping_charge']);
      Route::post('/blobk_unblock_shippingFee',[ShippingTaxController::class,'blobk_unblock_shippingFee']);
