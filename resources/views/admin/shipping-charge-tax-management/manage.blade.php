@@ -45,8 +45,12 @@
                                 @forelse ($shippingCharges as $key => $charge)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{$charge['range_from']}}Km to {{$charge['range_to']}}Km</td>
-                                    <td>{{$charge['shipping_fee']}} KD</td>
+                                    <td>{{ rtrim(rtrim(number_format($charge['range_from'], 2, '.', ''), '0'), '.') }}Km 
+                                        to 
+                                        {{ rtrim(rtrim(number_format($charge['range_to'], 2, '.', ''), '0'), '.') }}Km
+                                    </td>
+
+                                    <td>{{ rtrim(rtrim(number_format($charge['shipping_fee'], 2, '.', ''), '0'), '.') }} KD</td>
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
                                             <a class="table-button editShippingBtn"

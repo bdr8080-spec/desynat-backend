@@ -125,6 +125,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://portal.myfatoorah.com/cardview/v2/cardview.js"></script>
 <script>
     $(document).on("click", ".occasion-btn", function () {
         $(".occasion-btn").removeClass("active");

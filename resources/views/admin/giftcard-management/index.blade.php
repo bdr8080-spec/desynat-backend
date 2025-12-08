@@ -178,7 +178,7 @@
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
                                           <label class="form-label">Add Category Name (English)</label>
-                                          <input type="text" name="name_english" class="form-control" placeholder="Enter Brand Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" />
+                                          <input type="text" name="name_english" class="form-control" placeholder="Enter Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                           <div class="text-danger" id="nameEnError"></div>
                                       </div>
                                   </div>
@@ -187,7 +187,7 @@
                                   <div class="col-lg-12 col-md-12 col-12">
                                       <div class="form-group">
                                           <label class="form-label">Add Category Name (Arabic)</label>
-                                          <input type="text" name="name_arabic" class="form-control" placeholder="Enter Brand Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
+                                          <input type="text" name="name_arabic" class="form-control" placeholder="Enter Category Name in Arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
                                           <div class="text-danger" id="nameArError"></div>
                                       </div>
                                   </div>
@@ -236,7 +236,7 @@
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
                                             <label class="form-label">Category Name (English)</label>
-                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Enter Brand Name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"  />
+                                            <input type="text" name="name_english" class="form-control" id="editNameEnglish" placeholder="Enter Category Name in English" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"  />
                                             <div class="text-danger" id="editNameEnError"></div>
                                         </div>
                                     </div>
@@ -245,7 +245,7 @@
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <div class="form-group">
                                             <label class="form-label">Category Name (Arabic)</label>
-                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Enter Brand Name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                            <input type="text" name="name_arabic" class="form-control" id="editNameArabic" placeholder="Enter Category Name in Arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                             <div class="text-danger" id="editNameArError"></div>
                                         </div>
                                     </div>
