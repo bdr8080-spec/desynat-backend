@@ -486,7 +486,7 @@
                                             <a class="nav-link" href="#">Live</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="{{route('user.gift-cards')}}">Gift Card</a>
+                                            <a class="nav-link active" aria-current="page" href="{{route('user.gift_cards')}}">Gift Card</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('user.category_wise_store')}}">Stores</a>

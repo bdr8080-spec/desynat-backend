@@ -9,14 +9,14 @@
             <input type="search" class="form-control giftcontrol" placeholder="Search">
             <button class="btn btnsearch">Search</button>
         </div>
-        <a href="{{route('user.add-gift-cards')}}" class="add-icon">
+        <a href="{{route('user.add_gift_cards')}}" class="add-icon">
             <img src="{{asset('user/assets/images/add-icon.svg')}}" alt="gift image" class="img-fluid">
         </a>
     </div>
 
     <div class="row">
         <div class="col-lg-4 col-md-6">
-            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+            <a href="{{route('user.view_gift_card')}}" class="gift_hover">
                 <div class="giftcard">
                     <figure>
                         <img src="{{asset('user/assets/images/gift/gift1.svg')}}" alt="gift image" class="img-fluid">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="col-lg-4 col-md-6">
-            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+            <a href="{{route('user.view_gift_card')}}" class="gift_hover">
                 <div class="giftcard">
                     <figure>
                         <img src="{{asset('user/assets/images/gift/gift2.svg')}}" alt="gift image" class="img-fluid">
@@ -56,7 +56,7 @@
         </div>
 
         <div class="col-lg-4 col-md-6">
-            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+            <a href="{{route('user.view_gift_card')}}" class="gift_hover">
                 <div class="giftcard">
                     <figure>
                         <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
@@ -75,7 +75,7 @@
             </a>
         </div>
         <div class="col-lg-4 col-md-6">
-            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+            <a href="{{route('user.view_gift_card')}}" class="gift_hover">
                 <div class="giftcard">
                     <figure>
                         <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
@@ -94,7 +94,7 @@
             </a>
         </div>
         <div class="col-lg-4 col-md-6">
-            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+            <a href="{{route('user.view_gift_card')}}" class="gift_hover">
                 <div class="giftcard">
                     <figure>
                         <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
@@ -113,7 +113,7 @@
             </a>    
         </div>
         <div class="col-lg-4 col-md-6">
-            <a href="{{route('user.view-gift-cards')}}" class="gift_hover">
+            <a href="{{route('user.view_gift_card')}}" class="gift_hover">
                 <div class="giftcard">
                     <figure>
                         <img src="{{asset('user/assets/images/gift/gift3.svg')}}" alt="gift image" class="img-fluid">
