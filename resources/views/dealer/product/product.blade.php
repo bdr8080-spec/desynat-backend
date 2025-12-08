@@ -491,7 +491,7 @@
 
 
 
-@include('dealer.layout.footer');
+@include('dealer.layout.footer')
 
 {{-- datatable show code --}}
 @include('dealer.product.ajax.datatablejs'); 
