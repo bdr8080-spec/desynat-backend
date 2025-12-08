@@ -45,8 +45,8 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/Inventory-Management',[SellerProductController::class,'Inventory_Management'])->name('seller.Inventory_Management');
     route::Match(['get','post'],'/Affilate-Commission',[SellerProductController::class,'Affilate_Commission'])->name('seller.Affilate_Commission');
 
-    route::get('/Add-product',[SellerProductController::class,'Add_product'])->name('seller.Add_product');
-    Route::post('add-product',[SellerProductController::class, 'Add_product_code'])->name('seller.Add_product_code');
+    route::get('/Add-product',[SellerProductController::class,'Add_product1'])->name('seller.Add_product');
+    Route::post('add-product',[SellerProductController::class, 'Add_product_code1'])->name('seller.Add_product_code');
 
     route::Match(['get','post'],'/view-product/{id}',[SellerProductController::class,'view_product'])->name('seller.view_product');
 
@@ -62,11 +62,11 @@ Route::group(['prefix' => 'seller'], function () {
 
      
 
-    route::Match(['get','post'],'/edit-product/{id}',[SellerProductController::class,'edit_product'])->name('seller.edit-product');
+    route::Match(['get','post'],'/edit-product/{id}',[SellerProductController::class,'edit_product1'])->name('seller.edit-product');
     // route::Match(['get','post'],'/view-profile',[SellerProductController::class,'view_profile'])->name('seller.view_profile');
     // M3 Milestone Work
 
-     Route::post('Update-product/{id}',[SellerProductController::class, 'edit_product_code'])->name('seller.edit_product_code');
+     Route::post('Update-product/{id}',[SellerProductController::class, 'edit_product_code1'])->name('seller.edit_product_code');
 
     
     route::Match(['get','post'],'/web_store_on_off',[WebSellerDashboard::class,'web_store_on_off'])->name('seller.web_store_on_off');
@@ -76,14 +76,14 @@ Route::group(['prefix' => 'seller'], function () {
     
     // add product new demo Apis
 
-    Route::get('/Add-product1',[SellerProductController::class,'Add_product1'])->name('seller.Add_product1');
-    Route::post('add-product1',[SellerProductController::class, 'Add_product_code1'])->name('seller.Add_product_code1');
+    // Route::get('/Add-product1',[SellerProductController::class,'Add_product1'])->name('seller.Add_product1');
+    // Route::post('add-product1',[SellerProductController::class, 'Add_product_code1'])->name('seller.Add_product_code1');
 
-     route::Match(['get','post'],'/edit-product1/{id}',[SellerProductController::class,'edit_product1'])->name('seller.edit-product1');
+    //  route::Match(['get','post'],'/edit-product1/{id}',[SellerProductController::class,'edit_product1'])->name('seller.edit-product1');
     // route::Match(['get','post'],'/view-profile',[SellerProductController::class,'view_profile'])->name('seller.view_profile');
     // M3 Milestone Work
 
-     Route::post('Update-product1/{id}',[SellerProductController::class, 'edit_product_code1'])->name('seller.edit_product_code1');
+    //  Route::post('Update-product1/{id}',[SellerProductController::class, 'edit_product_code1'])->name('seller.edit_product_code1');
 
     route::Match(['get','post'],'/view-inventory/{id}',[SellerProductController::class,'view_inventory'])->name('seller.view_inventory');
 

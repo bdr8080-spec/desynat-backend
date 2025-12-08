@@ -21,7 +21,7 @@
         </a>
     </div>
 
-    <form id="addproduct" action="{{ route('seller.Add_product_code1') }}" method="post">
+    <form id="addproduct" action="{{ route('seller.Add_product_code') }}" method="post">
         @csrf
         <div class="pt-3">
             <div class="title24">Select Category</div>

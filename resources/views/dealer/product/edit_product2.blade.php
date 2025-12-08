@@ -68,11 +68,11 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> Add edit page
+            <i class="bi bi-chevron-left"></i>  Edit Product
         </a>
     </div>
 
-    <form id="editproduct" action="{{ route('seller.edit_product_code1', request()->id) }}" method="post">
+    <form id="editproduct" action="{{ route('seller.edit_product_code', request()->id) }}" method="post">
 
         @csrf
         <div class="pt-3">
