@@ -106,7 +106,7 @@ class ShippingTaxService
                 return [
                     'status' => 'error',
                     'message' => 'Delivery charges already Existed',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
@@ -127,7 +127,7 @@ class ShippingTaxService
             return [
                 'status' => 'error',
                 'message' => 'Failed to create shipping charge',
-                'data' => []
+                'data' => (object)[]
             ];
         }
     }
@@ -143,7 +143,7 @@ class ShippingTaxService
                 return [
                     'status' => 'error',
                     'message' => 'Shipping Charge not found',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
@@ -161,7 +161,7 @@ class ShippingTaxService
                 return [
                     'status' => 'error',
                     'message' => 'Delivery charges already Existed',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
@@ -182,7 +182,7 @@ class ShippingTaxService
             return [
                 'status' => 'error',
                 'message' => 'Failed to update shipping charge',
-                'data' => []
+                'data' => (object)[]
             ];
         }
     }
