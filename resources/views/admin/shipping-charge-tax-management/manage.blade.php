@@ -114,7 +114,7 @@
                         <input type="hidden" id="country_id" name="country_id" value="{{ $country->id }}">
 
                         <!-- Range Section -->
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <!-- <div class="col-lg-12 col-md-12 col-12">
                             <label class="form-label  mb-4">Range</label>
                             <div class="form-group">
                                 <div class="row">
@@ -127,14 +127,14 @@
                                                     oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
                                                     class="form-control" placeholder="Enter range from" />
                                                 <span style="
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6c757d;
-            pointer-events: none;
-            font-weight: 500;
-        ">
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
                                                     KM
                                                 </span>
 
@@ -151,14 +151,14 @@
                                                     oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
                                                     class="form-control" placeholder="Enter range to" />
                                                 <span style="
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6c757d;
-        pointer-events: none;
-        font-weight: 500;
-    ">
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
                                                     KM
                                                 </span>
 
@@ -169,7 +169,63 @@
 
                                 </div>
                             </div>
+                        </div> -->
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <label class="form-label mb-3">Range</label>
+
+                            <div class="d-flex align-items-center gap-4 flex-wrap">
+
+                                <!-- From -->
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">From</label>
+                                    <div style="position: relative; width: 145px;">
+                                        <input type="text" name="range_from"
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
+                                            class="form-control" placeholder="Enter From " />
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeFromError" class="text-danger" style="display:none"></span>
+
+                                </div>
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">To</label>
+                                    <div style="position: relative; width: 145px;">
+                                        <input type="text" name="range_to"
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                            class="form-control" placeholder="Enter To " />
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeToError" class="text-danger" style="display:none"></span>
+
+
+                                </div>
+                            </div>
+
                         </div>
+
 
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
@@ -215,7 +271,7 @@
                         <input type="hidden" id="edit_country_id" value="{{ $country->id }}">
 
                         <!-- Range -->
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <!-- <div class="col-lg-12 col-md-12 col-12">
                             <label class="form-label mb-4">Range</label>
                             <div class="form-group">
 
@@ -229,14 +285,14 @@
                                                     oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
                                                     class="form-control" placeholder="Enter range from">
                                                 <span style="
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6c757d;
-        pointer-events: none;
-        font-weight: 500;
-    ">
+                                                            position: absolute;
+                                                            right: 12px;
+                                                            top: 50%;
+                                                            transform: translateY(-50%);
+                                                            color: #6c757d;
+                                                            pointer-events: none;
+                                                            font-weight: 500;
+                                                        ">
                                                     KM
                                                 </span>
                                             </div>
@@ -254,14 +310,14 @@
                                                     class="form-control" placeholder="Enter range to">
 
                                                 <span style="
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6c757d;
-        pointer-events: none;
-        font-weight: 500;
-    ">
+                                                                position: absolute;
+                                                                right: 12px;
+                                                                top: 50%;
+                                                                transform: translateY(-50%);
+                                                                color: #6c757d;
+                                                                pointer-events: none;
+                                                                font-weight: 500;
+                                                            ">
                                                     KM
                                                 </span>
                                             </div>
@@ -271,6 +327,62 @@
 
                                 </div>
                             </div>
+                        </div> -->
+
+
+                            <div class="col-lg-12 col-md-12 col-12">
+                            <label class="form-label mb-3">Range</label>
+
+                            <div class="d-flex align-items-center gap-4 flex-wrap">
+
+                                <!-- From -->
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">From</label>
+                                    <div style="position: relative; width: 145px;">
+                                         <input type="text" id="edit_range_to"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter From">
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeFromError" class="text-danger" style="display:none"></span>
+
+                                </div>
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">To</label>
+                                    <div style="position: relative; width: 145px;">
+                                      <input type="text" id="edit_range_to"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter  to">
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeToError" class="text-danger" style="display:none"></span>
+
+
+                                </div>
+                            </div>
+
                         </div>
 
                         <!-- Shipping Fee -->

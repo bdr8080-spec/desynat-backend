@@ -281,7 +281,7 @@
                                                 <h5>$ 200</h5>
                                             </div>
                                              <div class=" text-center col-lg-3">
-                                                <p>By Subscription Plan</p>
+                                                <p>By Affilate Orders</p>
                                                 <h5>$ 200</h5>
                                             </div>
                                             <div class=" text-center col-lg-3">
