@@ -187,10 +187,15 @@ hr {
 
 .form-group label.form-label,
 .form-check-label {
-    font-size: 20px;
+    /* font-size: 20px; */
     line-height: 30px;
     /* font-weight: 600; */
     text-align: start;
+}
+label.form-label {
+    margin-bottom: 2px;
+    font-size: 15px;
+    color: #000;
 }
 
 .form-group input.form-control,
