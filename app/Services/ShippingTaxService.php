@@ -106,7 +106,7 @@ class ShippingTaxService
                 return [
                     'status' => 'error',
                     'message' => 'Delivery charges already Existed',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -127,7 +127,7 @@ class ShippingTaxService
             return [
                 'status' => 'error',
                 'message' => 'Failed to create shipping charge',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
