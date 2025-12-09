@@ -130,6 +130,7 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/add_promocode', [PromoCodeController::class, 'add_promocode'])->name('admin.add_promocode');
         Route::post('/update_promocode', [PromoCodeController::class, 'update_promocode'])->name('admin.update_promocode');
         Route::get('/add-promocode', [PromoCodeController::class, 'addPromocode'])->name('admin.addPromocode');
+        Route::get('/edit-promocode/{id}', [PromoCodeController::class, 'editPromocode'])->name('admin.editPromocode');
         
 
     });
