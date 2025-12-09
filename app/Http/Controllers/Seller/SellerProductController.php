@@ -1145,6 +1145,8 @@ public function Add_product1(){
 
 public function Add_product_code1(Request $request){
 
+
+    $categoryId = $request->category_id;
     
     $seller_details=Auth::guard('seller')->user();
     $seller_id=$seller_details->id;
@@ -1217,29 +1219,29 @@ public function Add_product_code1(Request $request){
           'cash_on_delivery'=>'required|in:0,1', // // 0 not 1 yes
           'upload_size_chart'=>'required',
 
-            // Body Measurements arrays (required only for category 2)
-        'bust'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'waist'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'hip'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'shoulder'      => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'sleeve_length' => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'length'        => [Rule::requiredIf($request->category_id == 2), 'array'],
-    
-        // Inner-level Arrays (color index)
-        'bust.*'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'waist.*'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'hip.*'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'shoulder.*'      => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'sleeve_length.*' => [Rule::requiredIf($request->category_id == 2), 'array'],
-        'length.*'        => [Rule::requiredIf($request->category_id == 2), 'array'],
-    
-        // Actual input values (size-level)
-        'bust.*.*'          => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'waist.*.*'         => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'hip.*.*'           => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'shoulder.*.*'      => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'sleeve_length.*.*' => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-        'length.*.*'        => [Rule::requiredIf($request->category_id == 2), 'numeric'],
+      // Body Measurements arrays (required only for category 2)
+    'bust'          => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'waist'         => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'hip'           => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'shoulder'      => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'sleeve_length' => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'length'        => $categoryId == 2 ? 'required|array' : 'nullable|array',
+
+    // Color-level array
+    'bust.*'          => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'waist.*'         => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'hip.*'           => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'shoulder.*'      => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'sleeve_length.*' => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'length.*'        => $categoryId == 2 ? 'required|array' : 'nullable|array',
+
+    // Size-level numeric values
+    'bust.*.*'          => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'waist.*.*'         => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'hip.*.*'           => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'shoulder.*.*'      => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'sleeve_length.*.*' => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'length.*.*'        => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
 
 
         
@@ -1579,6 +1581,10 @@ public function edit_product1($id){
 
 public function edit_product_code1(Request $request, $id){
 
+
+    $categoryId = $request->category_id;
+
+
     $seller_details=Auth::guard('seller')->user();
     $seller_id=$seller_details->id;
 
@@ -1661,29 +1667,32 @@ public function edit_product_code1(Request $request, $id){
            'old_upload_size_chart' => 'required_without:upload_size_chart',
 
        // Body Measurements arrays (required only for category 2)
-           'bust'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'waist'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'hip'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'shoulder'      => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'sleeve_length' => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'length'        => [Rule::requiredIf($request->category_id == 2), 'array'],
        
-           // Inner-level Arrays (color index)
-           'bust.*'          => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'waist.*'         => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'hip.*'           => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'shoulder.*'      => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'sleeve_length.*' => [Rule::requiredIf($request->category_id == 2), 'array'],
-           'length.*'        => [Rule::requiredIf($request->category_id == 2), 'array'],
-       
-           // Actual input values (size-level)
-           'bust.*.*'          => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-           'waist.*.*'         => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-           'hip.*.*'           => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-           'shoulder.*.*'      => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-           'sleeve_length.*.*' => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-           'length.*.*'        => [Rule::requiredIf($request->category_id == 2), 'numeric'],
-            
+      // Body Measurements arrays (required only for category 2)
+    'bust'          => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'waist'         => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'hip'           => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'shoulder'      => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'sleeve_length' => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'length'        => $categoryId == 2 ? 'required|array' : 'nullable|array',
+
+    // Color-level array
+    'bust.*'          => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'waist.*'         => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'hip.*'           => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'shoulder.*'      => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'sleeve_length.*' => $categoryId == 2 ? 'required|array' : 'nullable|array',
+    'length.*'        => $categoryId == 2 ? 'required|array' : 'nullable|array',
+
+    // Size-level numeric values
+    'bust.*.*'          => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'waist.*.*'         => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'hip.*.*'           => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'shoulder.*.*'      => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'sleeve_length.*.*' => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+    'length.*.*'        => $categoryId == 2 ? 'required|numeric' : 'nullable|numeric',
+
+
             
       ],[
     

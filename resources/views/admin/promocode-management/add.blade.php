@@ -26,7 +26,7 @@
                         <!-- Country Select -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group mb-3">
-                                <label>Select Country-</label>
+                                <label class="form-label">Select Country-</label>
                                 <select name="country_id" id="country_id1" class="form-select">
                                     <option value="">Select Country</option>
                                     @foreach($countries as $country)
@@ -60,7 +60,7 @@
                         </div>
 
                         <!-- Description English -->
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <div class="col-lg-6 col-md-12 col-12">
                             <div class="mb-3">
                                 <label for="descriptionEnglish" class="form-label">Description (English)</label>
                                 <textarea id="descriptionEnglish" name="description_english"
@@ -71,7 +71,7 @@
                         </div>
 
                         <!-- Description Arabic -->
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <div class="col-lg-6 col-md-12 col-12">
                             <div class="mb-3">
                                 <label for="descriptionArabic" class="form-label">Description (Arabic)</label>
                                 <textarea id="descriptionArabic" name="description_arabic"
@@ -80,14 +80,12 @@
                                 <div id="descriptionArabicError" class="text-danger small" style="display:none;"></div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <hr>
-                        </div>
+                    
 
                         <!-- Applicable for -->
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <div class="col-lg-6 col-md-12 col-12">
                             <div class="form-group mb-3">
-                                <label>Applicable for-</label>
+                                <label class="form-label">Applicable for-</label>
                                 <select id="applicableFor" name="applicable_for" class="form-select">
                                     <option value="">Select Applicable</option>
                                     <option value="1">First Order</option>
@@ -122,7 +120,7 @@
                         </div>
 
                         <!-- Upto Discount -->
-                        <div class="col-lg-12 ">
+                        <div class="col-lg-6 ">
                             <div class="form-group mb-3">
                                 <label class="form-label">Upto Discount</label>
                                 <input type="text"
