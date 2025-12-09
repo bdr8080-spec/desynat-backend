@@ -102,7 +102,7 @@ class ShippingTaxController extends Controller
             $result = $this->ShippingTaxService->addShippingFee($request);
 
             if ($result['status'] === 'error') {
-                return ApiResponse::generateResponse('error', $result['message'], [], 200);
+                return ApiResponse::generateResponse('error', $result['message'], (object)[], 200);
             }
 
             return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
@@ -129,7 +129,7 @@ class ShippingTaxController extends Controller
             $result = $this->ShippingTaxService->updateShippingFee($request);
 
             if ($result['status'] === 'error') {
-                return ApiResponse::generateResponse('error', $result['message'], [], 200);
+                return ApiResponse::generateResponse('error', $result['message'], (object)[], 200);
             }
 
             return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
