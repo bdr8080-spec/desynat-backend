@@ -485,9 +485,11 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="#">Live</a>
                                         </li>
+                                        @if (Auth::guard('web')->check())
                                         <li class="nav-item">
                                             <a class="nav-link active" aria-current="page" href="{{route('user.gift_cards')}}">Gift Card</a>
                                         </li>
+                                        @endif
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{route('user.category_wise_store')}}">Stores</a>
                                         </li>
@@ -529,9 +531,9 @@
                     </div>
 
                     <div class="mt-3">
-                        <div id="useCurrentLocation" class="use-lc">
+                        <!-- <div id="useCurrentLocation" class="use-lc">
                             <i class="bi bi-crosshair"></i> Use Current Location
-                        </div>
+                        </div> -->
 
                         <h5>Location</h5>
                         <p id="locationUpdate"></p>

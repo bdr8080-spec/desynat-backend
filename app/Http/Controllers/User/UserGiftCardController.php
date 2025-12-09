@@ -16,11 +16,21 @@ class UserGiftCardController extends Controller
         $this->UserGiftCardService = $UserGiftCardService;
     }
     
-    public function gift_cards(){
+    public function gift_cards(Request $request) {
+        $user = auth()->user();        
+        $data = (object)[
+            'user_id' => $user->id,
+            'email' => $user->email ?? null,
+            'search' => $request->search ?? null
+        ];
 
-        return view('user.giftcard.all_giftcard');
+        $giftCards = $this->UserGiftCardService->User_view_giftCard_details($data)['data'];
+        
+        //dd($giftCards);
 
+        return view('user.giftcard.all_giftcard', compact('giftCards'));
     }
+
 
 
     public function add_gift_cards(Request $request)
@@ -52,10 +62,11 @@ class UserGiftCardController extends Controller
         return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory'));
     }
 
-    public function view_gift_card(Request $request){
-
-        return view('user.giftcard.view_giftcard');
-
+    public function view_gift_card($id) {
+       // dd($id);
+        $giftCard = $this->UserGiftCardService->single_view_giftCard_by_id($id)['data'];
+        //dd($giftCard);
+        return view('user.giftcard.view_giftcard', compact('giftCard'));
     }
 
     public function buyGiftCard(Request $request)

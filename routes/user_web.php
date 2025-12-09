@@ -68,7 +68,7 @@ use App\Http\Controllers\User\CartController;
 
 
    Route::get('gift-cards',[UserGiftCardController::class, 'gift_cards'])->name('user.gift_cards');
-   Route::get('view-gift-cards',[UserGiftCardController::class, 'view_gift_card'])->name('user.view_gift_card');
+   Route::get('view-gift-cards/{id}',[UserGiftCardController::class, 'view_gift_card'])->name('user.view_gift_card');
    Route::get('add-gift-cards',[UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift_cards');
    Route::post('buyGiftCard',[UserGiftCardController::class, 'buyGiftCard'])->name('user.buyGiftCard');
 
