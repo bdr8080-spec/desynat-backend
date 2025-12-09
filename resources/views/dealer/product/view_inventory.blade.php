@@ -133,7 +133,7 @@ p, span{
 </style>
 
 <section class="section dashboard">
-    <div class="page-wapper dashboard-pnl d-flex justify-content-between">
+    <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
         <div class="title24"> <a href="{{route('seller.products')}}" style="color:rgb(57, 55, 55)"><i class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
        </a> </div>
         <div class="form-check form-switch">
@@ -150,13 +150,10 @@ p, span{
 
     <div class="col-lg-7 col-xxl-7">
             <div style="float-right justify-content-end" class=" float-end justify-content-end">
-                <a href="{{ route('seller.edit-product',$product->id) }}">
-                    <img src="{{ asset('dealer/assets/img/edit2.png') }}" height="33px" width="33px"></a>
-        
-                <a href="#" class="text-brown fw-semibold text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteProduct">
-        <img src="{{ asset('dealer/assets/img/delete2.png') }}" height="35px" width="35px">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#editModals">
+                    <img src="{{ asset('dealer/assets/img/edit2.png') }}" height="40px" width="40px">
                 </a>
-
+        
             </div>
             <h6 class="fw-semibold">
             @if (strtolower($product->brand->name_english) ==  'other')
@@ -212,122 +209,7 @@ p, span{
     </div>
 
     </div>
-    <div class="row">
-        <div class="col-lg-5 col-xxl-5">
-
-            <div class="my-3">
-                <div class="desc-box p-4 rounded-4">
-                    <h6 class="fw-semibold">Description</h6>
-                    <p class="mt-3 text-muted">
-                        {{ $product->description_en }}
-                    </p>
-                    <h6 class="fw-semibold mt-4">Specification</h6>
-                    <ul class="mt-3 spec-list">
-
-                    @foreach ($product->product_specifications as $item)
-
-                        <li>{{$item->name_en}} - {{$item->feature_en}}</li>
-                        
-                        @endforeach
-
-                        </ul>
-                </div>
-            </div>
-            <div class="p-4 rounded-4 shadow-sm desc-box">
-                <div class="row mb-2">
-                    <div class="col-6">Return allowed ?
-                    </div>
-                    <div class="col-6 text-end">@if($product->product_return==1) {{$product->return_days}} days  @else No @endif </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Exchange allowed ?
-                    </div>
-                    <div class="col-6 text-end">@if($product->product_exchangable==1) {{$product->exchangable_days}} days @else No @endif </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Review & ratings allowed ?
-                    </div>
-                <div class="col-6 text-end">@if($product->review_rating==1) Yes @else No @endif </div>
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Is it an Affiliated Product?
-                    </div>
-                <div class="col-6 text-end">@if($product->affiliated_product==1) Yes @else No @endif </div>
-             
-                </div>
-                <div class="row mb-2">
-                    <div class="col-6">Is this a Customized product?
-                    </div>
-                <div class="col-6 text-end">@if($product->customized_product==1) Yes @else No @endif </div>
-             
-                </div>
-                <div class="row">
-                    <div class="col-6">Ready to ship?
-                    </div>
-                       <div class="col-6 text-end">@if($product->ready_to_ship==1) Yes @else No @endif </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">Cash on delivery allowed?
-
-                    </div>
-                       <div class="col-6 text-end">@if($product->cash_on_delivery==1) Yes @else No @endif </div>
-             
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-7 col-xxl-7">
-            <div class="container my-3">
-                <div class="review-box p-4 rounded-4 desc-box">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center gap-3">
-                            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                                class="profile-img img-fluid" width="60" />
-                            <div>
-                                <h6 class="fw-semibold mb-1">Gimhana</h6>
-                                <span class="text-warning fs-5">★★★★☆</span>
-                            </div>
-                        </div>
-                        <span class="text-muted">11 Nov 2025</span>
-                    </div>
-                    <p class="mt-3 text-muted">
-                        lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
-                    </p>
-                    <div class="d-flex gap-3 mt-3">
-                        <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                        <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                    </div>
-                </div>
-
-                <div class="review-box p-4 rounded-4 desc-box my-3">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center gap-3">
-                            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                                class="profile-img img-fluid" width="60" />
-                            <div>
-                                <h6 class="fw-semibold mb-1">Gimhana</h6>
-                                <span class="text-warning fs-5">★★★★☆</span>
-                            </div>
-                        </div>
-                        <span class="text-muted">11 Nov 2025</span>
-                    </div>
-                    <p class="mt-3 text-muted">
-                        lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                        ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
-                    </p>
-                    <div class="d-flex gap-3 mt-3">
-                        <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                        <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
+   
     </div>
     </div>
 
@@ -351,21 +233,49 @@ p, span{
   </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteProduct" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+<!-- Edits Modal -->
+
+<div class="modal fade" id="editModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteConfirmLabel">Confirm Delete</h5>
+        <h5 class="modal-title">Edit Inventory</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete this item?
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Total Stocks</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.1230">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>SKU</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="20019">
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Total Stocks</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Eg.12305">
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-button mt-4">
+            <button type="submit" class="btn add-fillbtn w-100">Save Changes</button>
+        </div>
+
       </div>
-      <div class="modal-footer d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary px-5" data-bs-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger" id="confirmDeleteBtn" data-id="{{$product->id}}">Yes, Delete</button>
-      </div>
+      
     </div>
   </div>
 </div>
