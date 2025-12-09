@@ -64,7 +64,7 @@
                                         <img src="{{asset('user/assets/images/like_dislike.svg')}}" class=img-fluid />
                                     </span>
                                 </a>
-                                <a href="">
+                                <a href="{{route('user.view_cart')}}">
                                     <span>
                                         <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
                                     </span>
