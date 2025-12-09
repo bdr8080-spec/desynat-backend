@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Services\PromocodeService;
 use App\Services\CountryService;
+use App\Models\Promocode;
 
  
 class PromoCodeController extends Controller
@@ -161,6 +162,13 @@ class PromoCodeController extends Controller
     public function addPromocode(Request $request){
          $countries = $this->CountryService->getCountries()['data'];
         return view('admin.promocode-management.add',compact('countries'));
+
+    }
+
+    public function editPromocode(Request $request, $id){
+         $countries = $this->CountryService->getCountries()['data'];
+          $promoCode = PromoCode::findOrFail($id);
+        return view('admin.promocode-management.edit',compact('countries','promoCode'));
 
     }
 

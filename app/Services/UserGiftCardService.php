@@ -139,6 +139,7 @@ $checkGiftCard = UserGiftCards::with('gift_details')->where(function($q) use ($r
 if($request->search){
     $checkGiftCard = $checkGiftCard->where('order_id','like','%'.$request->search.'%')
     ->Orwhere('sender_email','like','%'.$request->search.'%')
+    ->Orwhere('sender_name','like','%'.$request->search.'%')
             ->Orwhere('receiver_email','like','%'.$request->search.'%');
       
 }
@@ -159,6 +160,36 @@ $checkGiftCard = $checkGiftCard->get();
     }
 
     
+    }
+
+
+    public function single_view_giftCard_by_id($id) {
+        try {
+            $giftCard = UserGiftCards::with('gift_details')
+                ->where('id', $id)
+                ->first(); 
+
+            if (!$giftCard) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Gift Card not found',
+                    'data' => null
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Gift Card fetched successfully',
+                'data' => $giftCard
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch gift card: ' . $e->getMessage(),
+                'data' => null
+            ];
+        }
     }
 
 

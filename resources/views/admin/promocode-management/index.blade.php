@@ -147,9 +147,10 @@
                             </td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-center mb-1">
-                                    <!-- <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a> -->
-                                        <a class="table-button editPromocodeBtn mb-1"
+                                    <a class="table-button" href="{{ route('admin.editPromocode', $pc['id']) }}" type="button">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                        <!-- <a class="table-button editPromocodeBtn mb-1"
                                             href="javascript:void(0);"
                                             data-id="{{ $pc->id }}"
                                             data-country="{{ $pc->country_id }}"
@@ -167,7 +168,7 @@
                                             data-bs-target="#updatePromocodeModal">
 
                                             <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                        </a> -->
 
 
                                       <!-- Delete button  -->
@@ -601,199 +602,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const countrySelect = document.getElementById("country_id1");
-    const nameEnglishInput = document.getElementById("nameEnglish");
-    const nameArabicInput = document.getElementById("nameArabic");
-    const descriptionEnglishInput = document.getElementById("descriptionEnglish");
-    const descriptionArabicInput = document.getElementById("descriptionArabic");
-    const applicableForSelect = document.getElementById("applicableFor");
-    const discountPercentInput = document.getElementById("discountPercent");
-    const minOrderValueInput = document.getElementById("minOrderValue");
-    const uptoDiscountInput = document.getElementById("uptoDiscount");
-    const startDateInput = document.getElementById("startDate");
-    const endDateInput = document.getElementById("endDate");
-
-    const countryError = document.getElementById("countryError");
-    const nameEnglishError = document.getElementById("nameEnglishError");
-    const nameArabicError = document.getElementById("nameArabicError");
-    const descriptionEnglishError = document.getElementById("descriptionEnglishError");
-    const descriptionArabicError = document.getElementById("descriptionArabicError");
-    const applicableForError = document.getElementById("applicableForError");
-    const discountPercentError = document.getElementById("discountPercentError");
-    const minOrderValueError = document.getElementById("minOrderValueError");
-    const uptoDiscountError = document.getElementById("uptoDiscountError");
-    const startDateError = document.getElementById("startDateError");
-    const endDateError = document.getElementById("endDateError");
-
-    const submitBtn = document.getElementById("submitBrandBtn");
-
-    countrySelect.addEventListener("change", function() {
-        if(this.value !== "") countryError.style.display = "none";
-    });
-    nameEnglishInput.addEventListener("input", () => nameEnglishError.style.display = "none");
-    nameArabicInput.addEventListener("input", () => nameArabicError.style.display = "none");
-    descriptionEnglishInput.addEventListener("input", () => descriptionEnglishError.style.display = "none");
-    descriptionArabicInput.addEventListener("input", () => descriptionArabicError.style.display = "none");
-    applicableForSelect.addEventListener("change", function() {
-        if(this.value !== "") applicableForError.style.display = "none";
-    });
-    discountPercentInput.addEventListener("input", () => discountPercentError.style.display = "none");
-    minOrderValueInput.addEventListener("input", () => minOrderValueError.style.display = "none");
-    uptoDiscountInput.addEventListener("input", () => uptoDiscountError.style.display = "none");
-    startDateInput.addEventListener("change", () => startDateError.style.display = "none");
-    endDateInput.addEventListener("change", () => endDateError.style.display = "none");
-
-    submitBtn.addEventListener("click", function(e) {
-        e.preventDefault();
-
-        let hasError = false;
-
-        if(countrySelect.value === "") {
-            countryError.innerText = "Please select a country";
-            countryError.style.display = "block";
-            hasError = true;
-        }
-
-        if(nameEnglishInput.value.trim() === "") {
-            nameEnglishError.innerText = "Please enter promocode name in English";
-            nameEnglishError.style.display = "block";
-            hasError = true;
-        }
-
-        if(nameArabicInput.value.trim() === "") {
-            nameArabicError.innerText = "Please enter promocode name in Arabic";
-            nameArabicError.style.display = "block";
-            hasError = true;
-        }
-
-        if(descriptionEnglishInput.value.trim() === "") {
-            descriptionEnglishError.innerText = "Please enter description in English";
-            descriptionEnglishError.style.display = "block";
-            hasError = true;
-        }
-
-        if(descriptionArabicInput.value.trim() === "") {
-            descriptionArabicError.innerText = "Please enter description in Arabic";
-            descriptionArabicError.style.display = "block";
-            hasError = true;
-        }
-
-        if(applicableForSelect.value === "") {
-            applicableForError.innerText = "Please select applicable for";
-            applicableForError.style.display = "block";
-            hasError = true;
-        }
-
-        if(discountPercentInput.value.trim() === "") {
-            discountPercentError.innerText = "Please enter discount percent";
-            discountPercentError.style.display = "block";
-            hasError = true;
-        } else if (isNaN(discountPercentInput.value.trim())) {
-            discountPercentError.innerText = "Discount percent must be a number";
-            discountPercentError.style.display = "block";
-            hasError = true;
-        }
-
-        if(minOrderValueInput.value.trim() === "") {
-            minOrderValueError.innerText = "Please enter minimum order value";
-            minOrderValueError.style.display = "block";
-            hasError = true;
-        } else if (isNaN(minOrderValueInput.value.trim())) {
-            minOrderValueError.innerText = "Minimum order value must be a number";
-            minOrderValueError.style.display = "block";
-            hasError = true;
-        }
-
-        if(uptoDiscountInput.value.trim() === "") {
-            uptoDiscountError.innerText = "Please enter upto discount";
-            uptoDiscountError.style.display = "block";
-            hasError = true;
-        } else if (isNaN(uptoDiscountInput.value.trim())) {
-            uptoDiscountError.innerText = "Upto discount must be a number";
-            uptoDiscountError.style.display = "block";
-            hasError = true;
-        }
-
-        if(startDateInput.value === "") {
-            startDateError.innerText = "Please select start date";
-            startDateError.style.display = "block";
-            hasError = true;
-        }
-
-        if(endDateInput.value === "") {
-            endDateError.innerText = "Please select end date";
-            endDateError.style.display = "block";
-            hasError = true;
-        }
-
-        if(startDateInput.value !== "" && endDateInput.value !== "") {
-            if(new Date(endDateInput.value) <= new Date(startDateInput.value)) {
-                endDateError.innerText = "End date must be greater than start date";
-                endDateError.style.display = "block";
-                hasError = true;
-            }
-        }
-
-        if(hasError) return;
-
-        const dataToSend = {
-            country_id: countrySelect.value,
-            name_english: nameEnglishInput.value.trim(),
-            name_arabic: nameArabicInput.value.trim(),
-            description_english: descriptionEnglishInput.value.trim(),
-            description_arabic: descriptionArabicInput.value.trim(),
-            applicable_for: applicableForSelect.value,
-            discount_percent: discountPercentInput.value.trim(),
-            min_order_value: minOrderValueInput.value.trim(),
-            upto_discount: uptoDiscountInput.value.trim(),
-            start_date: startDateInput.value,
-            end_date: endDateInput.value
-        };
-
-        fetch("/admin/add_promocode", {  
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify(dataToSend)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === "success") {
-                toastr.success(data.message);
-                const modal = bootstrap.Modal.getInstance(document.getElementById("sentModal2"));
-                modal.hide();
-                // Reset form fields
-                countrySelect.value = "";
-                nameEnglishInput.value = "";
-                nameArabicInput.value = "";
-                descriptionEnglishInput.value = "";
-                descriptionArabicInput.value = "";
-                applicableForSelect.value = "";
-                discountPercentInput.value = "";
-                minOrderValueInput.value = "";
-                uptoDiscountInput.value = "";
-                startDateInput.value = "";
-                endDateInput.value = "";
-                setTimeout(() => location.reload(), 2000);
-            } else {
-                toastr.error(data.message || "Failed to add promocode");
-            }
-        })
-        .catch(err => {
-           // console.error(err);
-            toastr.error("Something went wrong while adding promocode");
-        });
-    });
-});
-</script>
 
 <!-- update -->
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".editPromocodeBtn").forEach(btn => {
         btn.addEventListener("click", function () {
@@ -923,16 +734,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
-</script>
+</script> -->
 
-<script>
+<!-- <script>
 document.addEventListener('DOMContentLoaded', function () {
     var modal = document.getElementById('sentModal2');
     modal.addEventListener('hidden.bs.modal', function () {
         location.reload(); 
     });
 });
-</script>
+</script> -->
 
 <script>
     function updateToDate() {
@@ -949,43 +760,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 </script>
 
-<script>
-    function updateToDate1() {
-        const fromDate = document.getElementById('startDate').value;
-        const toDateInput = document.getElementById('endDate');
-        
-        if (fromDate) {
-            const minDate = new Date(fromDate);
-            minDate.setDate(minDate.getDate() + 1); 
-            toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate1(); 
-        document.getElementById('startDate').addEventListener('input', updateToDate1);
-    });
-</script>
-
-
-<script>
-    function updateToDate2() {
-        const fromDate = document.getElementById('update_startDate').value;
-        const toDateInput = document.getElementById('update_endDate');
-        
-        if (fromDate) {
-            const minDate = new Date(fromDate);
-            minDate.setDate(minDate.getDate() + 1); 
-            toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate2(); 
-        document.getElementById('update_startDate').addEventListener('input', updateToDate2);
-    });
-</script>
 
 @endsection
