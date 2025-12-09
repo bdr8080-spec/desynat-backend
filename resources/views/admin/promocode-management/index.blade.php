@@ -29,9 +29,9 @@
     <div class="userManagecontent">
         <div class="mt-4">
             <form method="GET" action="{{ route('admin.promoCodeManagement') }}" id="filterForm">
-                <div class="row">
+                <div class="row align-items-end">
                     <!-- From Date Filter -->
-                    <div class="col-lg-3 col-md-4 col-12">
+                    <div class="col-lg-2 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
@@ -41,7 +41,7 @@
                     </div>
 
                     <!-- To Date Filter -->
-                    <div class="col-lg-3 col-md-4 col-12">
+                    <div class="col-lg-2 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
@@ -78,7 +78,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3 ">
+                    <div class="col-lg-2 col-md-4 col-12 ">
                     <div class="d-flex gap-3 justify-content-end" >
                         <a href="{{route('admin.promoCodeManagement')}}" class="btn btn-dark customBtn"
                             style="margin-top: 60px">
@@ -89,7 +89,7 @@
                 </div>
             </form>
 
-            <div class="table-responsive w-100">
+            <div class="table-responsive w-100 mt-4">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
