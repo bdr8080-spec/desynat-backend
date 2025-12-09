@@ -158,6 +158,10 @@ class PromoCodeController extends Controller
         }
     }
 
+    public function addPromocode(Request $request){
+        return view('admin.promocode-management.add');
+    }
+
 
 
 
