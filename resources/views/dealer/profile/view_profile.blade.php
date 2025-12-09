@@ -112,22 +112,22 @@
 
 <div>
     <div class="container position-relative">
-    <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
-        <div class="title24">
-            <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)">
-                <i class="bi bi-chevron-left"></i> Profile
-            </a> 
+        <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
+            <div class="title24">
+                <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)">
+                    <i class="bi bi-chevron-left"></i> Profile
+                </a>
+            </div>
+
+            <a href="{{route('seller.edit_profile')}}" class="pencil-btn">
+                <i class="bi bi-pencil"></i>
+            </a>
+
         </div>
-        
-        <a href="{{route('seller.edit_profile')}}" class="pencil-btn">
-            <i class="bi bi-pencil"></i>
-        </a> 
-       
-    </div>
 
 
         <div class="brand-banner">
-            <img src="{{asset('dealer/assets/img/imagebnr.png')}}" alt="Profile">
+            <img src="{{ $seller_details->store_info->store_image }}" alt="Profile">
         </div>
         <div class="profile-card">
             <div class="row align-items-center">
@@ -135,9 +135,10 @@
                     <img src="{{asset('dealer/assets/img/story.svg')}}" class="profile-img">
                 </div>
                 <div class="col-md-8 col-7">
-                    <h5 class="mb-0">Atif Aslam</h5>
-                    <small class="text-muted">+948225555</small><br>
-                    <small class="text-muted">atif32@gmail.com</small>
+                    <h5 class="mb-0">{{ $seller_details->first_name }} {{ $seller_details->last_name }}</h5>
+                    <small class="text-muted">{{ $seller_details->country_code }}
+                        {{ $seller_details->mobile }}</small><br>
+                    <small class="text-muted">{{ $seller_details->email }}</small>
 
                     <div class="star-rating mt-1">
                         ⭐⭐⭐⭐⭐ (123)
@@ -152,12 +153,14 @@
 
             <hr>
 
-            <h6 class="fw-bold">Puma</h6>
-            <small class="text-muted">+948225555</small><br>
-            <small class="text-muted">atif32@gmail.com</small>
+            <h6 class="fw-bold">{{ $seller_details->store_info->store_name }}</h6>
+            <small class="text-muted">{{ $seller_details->store_info->country_code }}
+                {{ $seller_details->store_info->store_phone }}</small><br>
+            <small class="text-muted">{{ $seller_details->store_info->store_mail_id }}</small>
 
             <p class="mt-2 mb-0">
-                C 19, Sector 63, Blue diamond road, Kuwait.
+                {{ $seller_details->store_info->store_address }} {{ $seller_details->store_info->address_line1 }}
+                {{ $seller_details->store_info->address_line2 }}
             </p>
 
         </div>
@@ -265,11 +268,11 @@
                                 <div class="reel-card">
                                     <img src="{{asset('dealer/assets/img/reel-2.svg')}}" alt="image" class="img-fluid">
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
-                   
+
                 </div>
 
             </div>
@@ -278,17 +281,24 @@
                 <div class="bank-show-panel">
                     <div class="title24">Owner's Documents</div>
                     <div class="row">
+
+                        @foreach($seller_details->owner_document as $key=>$val)
+
                         <div class="col-lg-6 col-md-6">
                             <div class="document-view">
                                 <div class="doc-views">
-                                    <img src="{{asset('dealer/assets/img/doc.svg')}}" alt="image" class="img-fluid">
+                                    <img src="{{$val->document_path}}" alt="image" class="img-fluid">
                                 </div>
                             </div>
                             <div class="text-center mt-2">
-                                <h6>Documents 01</h6>
+                                <h6>Documents {{$key +1}}</h6>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
+
+                        @endforeach
+
+
+                        <!-- <div class="col-lg-6 col-md-6">
                             <div class="document-view">
                                 <div class="doc-views">
                                     <img src="{{asset('dealer/assets/img/doc.svg')}}" alt="image" class="img-fluid">
@@ -297,24 +307,30 @@
                             <div class="text-center mt-2">
                                 <h6>Documents 02</h6>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
                 <div class="bank-show-panel">
                     <div class="title24">Store Documents</div>
                     <div class="row">
+
+                        @foreach($seller_details->store_document as $key=>$val)
+
                         <div class="col-lg-6 col-md-6">
                             <div class="document-view">
                                 <div class="doc-views">
-                                    <img src="{{asset('dealer/assets/img/doc.svg')}}" alt="image" class="img-fluid">
+                                    <img src="{{$val->document_path}}" alt="image" class="img-fluid">
                                 </div>
                             </div>
                             <div class="text-center mt-2">
-                                <h6>Documents 01</h6>
+                                <h6>Documents {{$key +1}}</h6>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6">
+
+                        @endforeach
+
+                        <!-- <div class="col-lg-6 col-md-6">
                             <div class="document-view">
                                 <div class="doc-views">
                                     <img src="{{asset('dealer/assets/img/doc.svg')}}" alt="image" class="img-fluid">
@@ -323,7 +339,8 @@
                             <div class="text-center mt-2">
                                 <h6>Documents 02</h6>
                             </div>
-                        </div>
+                        </div> -->
+
                     </div>
                 </div>
 
@@ -332,29 +349,32 @@
                     <div class="bank-lists">
                         <div class="personal-list-2">
                             <div class="lightName">Account Type</div>
-                            <div class="title_black">Personal</div>
+                            <div class="title_black">@if(@$seller_details->seller_bank_details->account_type=='0')
+                                Personal @else business @endif </div>
                         </div>
                         <div class="personal-list-2">
                             <div class="lightName">IBAN</div>
-                            <div class="title_black">KW855855</div>
+                            <div class="title_black">{{ @$seller_details->seller_bank_details->iban }}</div>
                         </div>
                         <div class="personal-list-2">
                             <div class="lightName">SWIFT/BIC</div>
-                            <div class="title_black">7654654765</div>
+                            <div class="title_black">{{ @$seller_details->seller_bank_details->swift }}</div>
                         </div>
                         <div class="personal-list-2">
                             <div class="lightName">Bank Name</div>
-                            <div class="title_black">SBI Bank</div>
+                            <div class="title_black">{{ @$seller_details->seller_bank_details->bank_name }}</div>
                         </div>
                         <div class="personal-list-2">
                             <div class="lightName">Account holder name</div>
-                            <div class="title_black">Atif Salam</div>
+                            <div class="title_black">{{ @$seller_details->seller_bank_details->account_holder_name }}
+                            </div>
                         </div>
                         <div class="personal-list-2">
                             <div class="lightName">Proof Of Documents</div>
                         </div>
                         <div class="doc-views2">
-                            <img src="{{asset('dealer/assets/img/doc.svg')}}" alt="image" class="img-fluid">
+                            <img src="{{ @$seller_details->seller_bank_details->upload_proof }}" alt="image"
+                                class="img-fluid">
                         </div>
 
 
