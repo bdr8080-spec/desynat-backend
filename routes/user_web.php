@@ -7,6 +7,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserStoreController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\UserGiftCardController;
+use App\Http\Controllers\User\CartController;
 
 
 
@@ -69,6 +70,10 @@ use App\Http\Controllers\User\UserGiftCardController;
    Route::get('gift-cards',[UserGiftCardController::class, 'gift_cards'])->name('user.gift_cards');
    Route::get('view-gift-cards',[UserGiftCardController::class, 'view_gift_card'])->name('user.view_gift_card');
    Route::get('add-gift-cards',[UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift_cards');
+   Route::post('buyGiftCard',[UserGiftCardController::class, 'buyGiftCard'])->name('user.buyGiftCard');
+
+
+   Route::get('view-cart',[CartController::class, 'view_cart'])->name('user.view_cart');
 
 
    });
@@ -91,10 +96,10 @@ Route::match(['get', 'post'], '/saved-address', function () {
 });
 
 
-Route::match(['get', 'post'], '/view-cart', function () {
+// Route::match(['get', 'post'], '/view-cart', function () {
 
-     return view('user.carts.cartlist');
-})->name('user.view-cart');
+//      return view('user.carts.cartlist');
+// })->name('user.view-cart');
 
 
 // Route::match(['get', 'post'], '/wishlist', function () {

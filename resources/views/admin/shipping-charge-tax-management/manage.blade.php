@@ -45,43 +45,36 @@
                                 @forelse ($shippingCharges as $key => $charge)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ rtrim(rtrim(number_format($charge['range_from'], 2, '.', ''), '0'), '.') }}Km 
-                                        to 
+                                    <td>{{ rtrim(rtrim(number_format($charge['range_from'], 2, '.', ''), '0'), '.') }}Km
+                                        to
                                         {{ rtrim(rtrim(number_format($charge['range_to'], 2, '.', ''), '0'), '.') }}Km
                                     </td>
 
-                                    <td>{{ rtrim(rtrim(number_format($charge['shipping_fee'], 2, '.', ''), '0'), '.') }} KD</td>
+                                    <td>{{ rtrim(rtrim(number_format($charge['shipping_fee'], 2, '.', ''), '0'), '.') }}
+                                        KD</td>
                                     <td>
                                         <div class="d-flex gap-3 justify-content-center">
-                                            <a class="table-button editShippingBtn"
-                                            data-id="{{ $charge['id'] }}"
-                                            data-from="{{ $charge['range_from'] }}"
-                                            data-to="{{ $charge['range_to'] }}"
-                                            data-fee="{{ $charge['shipping_fee'] }}"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#sentModal3">
+                                            <a class="table-button editShippingBtn" data-id="{{ $charge['id'] }}"
+                                                data-from="{{ $charge['range_from'] }}"
+                                                data-to="{{ $charge['range_to'] }}"
+                                                data-fee="{{ $charge['shipping_fee'] }}" data-bs-toggle="modal"
+                                                data-bs-target="#sentModal3">
 
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <!-- Delete button  -->
-                                            <a
-                                                href="javascript:void(0);"
+                                            <a href="javascript:void(0);"
                                                 class="table-button text-danger deleteShippingCharge"
-                                                data-id="{{ $charge->id }}"
-                                            >
+                                                data-id="{{ $charge->id }}">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
 
                                             <!-- Toggle switch -->
                                             <div class="form-check form-switch">
-                                                <input
-                                                    class="form-check-input toggleStatus"
-                                                    type="checkbox"
-                                                    role="switch"
-                                                    id="switch{{ $charge->id }}"
+                                                <input class="form-check-input toggleStatus" type="checkbox"
+                                                    role="switch" id="switch{{ $charge->id }}"
                                                     data-id="{{ $charge->id }}"
-                                                    {{ $charge->status == 1 ? 'checked' : '' }}
-                                                />
+                                                    {{ $charge->status == 1 ? 'checked' : '' }} />
                                             </div>
                                         </div>
 
@@ -89,9 +82,9 @@
 
                                 </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted">No Data found</td>
-                                    </tr>
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No Data found</td>
+                                </tr>
                                 @endforelse
 
                             </tbody>
@@ -121,15 +114,31 @@
                         <input type="hidden" id="country_id" name="country_id" value="{{ $country->id }}">
 
                         <!-- Range Section -->
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <!-- <div class="col-lg-12 col-md-12 col-12">
+                            <label class="form-label  mb-4">Range</label>
                             <div class="form-group">
-                                <label class="form-label">Range</label>
                                 <div class="row">
 
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">From</label>
-                                            <input type="text" name="range_from" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')" class="form-control" placeholder="Enter range from" />
+                                            <div style="position: relative;">
+                                                <input type="text" name="range_from"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter range from" />
+                                                <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                                    KM
+                                                </span>
+
+                                            </div>
                                             <span id="rangeFromError" class="text-danger" style="display:none"></span>
                                         </div>
                                     </div>
@@ -137,20 +146,94 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">To</label>
-                                            <input type="text" name="range_to" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')" class="form-control" placeholder="Enter range to" />
+                                            <div style="position: relative;">
+                                                <input type="text" name="range_to"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter range to" />
+                                                <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                                    KM
+                                                </span>
+
+                                            </div>
                                             <span id="rangeToError" class="text-danger" style="display:none"></span>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
+                        </div> -->
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <label class="form-label mb-3">Range</label>
+
+                            <div class="d-flex align-items-center gap-4 flex-wrap">
+
+                                <!-- From -->
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">From</label>
+                                    <div style="position: relative; width: 145px;">
+                                        <input type="text" name="range_from"
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
+                                            class="form-control" placeholder="Enter From " />
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeFromError" class="text-danger" style="display:none"></span>
+
+                                </div>
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">To</label>
+                                    <div style="position: relative; width: 145px;">
+                                        <input type="text" name="range_to"
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                            class="form-control" placeholder="Enter To " />
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeToError" class="text-danger" style="display:none"></span>
+
+
+                                </div>
+                            </div>
+
                         </div>
+
 
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group">
+                            <div class="form-group mt-2">
                                 <label class="form-label">Shipping Price</label>
-                                <input type="text" name="shipping_fee" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control" placeholder="Enter Shipping price" />
+                                <input type="text" name="shipping_fee"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
+                                    class="form-control" placeholder="Enter Shipping price" />
                                 <span id="shippingFeeError" class="text-danger" style="display:none"></span>
                             </div>
                         </div>
@@ -188,39 +271,123 @@
                         <input type="hidden" id="edit_country_id" value="{{ $country->id }}">
 
                         <!-- Range -->
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <!-- <div class="col-lg-12 col-md-12 col-12">
+                            <label class="form-label mb-4">Range</label>
                             <div class="form-group">
-                                <label class="form-label">Range</label>
 
                                 <div class="row">
 
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">From</label>
-                                            <input type="text" id="edit_range_from"
-                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
-                                                class="form-control" placeholder="Enter range from">
-                                            <span id="editRangeFromError" class="text-danger" style="display:none"></span>
+                                            <div style="position: relative;">
+                                                <input type="text" id="edit_range_from"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter range from">
+                                                <span style="
+                                                            position: absolute;
+                                                            right: 12px;
+                                                            top: 50%;
+                                                            transform: translateY(-50%);
+                                                            color: #6c757d;
+                                                            pointer-events: none;
+                                                            font-weight: 500;
+                                                        ">
+                                                    KM
+                                                </span>
+                                            </div>
+                                            <span id="editRangeFromError" class="text-danger"
+                                                style="display:none"></span>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">To</label>
-                                            <input type="text" id="edit_range_to"
-                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
-                                                class="form-control" placeholder="Enter range to">
+                                            <div style="position: relative;">
+                                                <input type="text" id="edit_range_to"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter range to">
+
+                                                <span style="
+                                                                position: absolute;
+                                                                right: 12px;
+                                                                top: 50%;
+                                                                transform: translateY(-50%);
+                                                                color: #6c757d;
+                                                                pointer-events: none;
+                                                                font-weight: 500;
+                                                            ">
+                                                    KM
+                                                </span>
+                                            </div>
                                             <span id="editRangeToError" class="text-danger" style="display:none"></span>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
+                        </div> -->
+
+
+                            <div class="col-lg-12 col-md-12 col-12">
+                            <label class="form-label mb-3">Range</label>
+
+                            <div class="d-flex align-items-center gap-4 flex-wrap">
+
+                                <!-- From -->
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">From</label>
+                                    <div style="position: relative; width: 145px;">
+                                         <input type="text" id="edit_range_to"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter From">
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeFromError" class="text-danger" style="display:none"></span>
+
+                                </div>
+                                <div class="d-flex align-items-center" style="gap: 10px;">
+                                    <label class="form-label mb-0">To</label>
+                                    <div style="position: relative; width: 145px;">
+                                      <input type="text" id="edit_range_to"
+                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                                    class="form-control" placeholder="Enter  to">
+                                        <span style="
+                                                        position: absolute;
+                                                        right: 12px;
+                                                        top: 50%;
+                                                        transform: translateY(-50%);
+                                                        color: #6c757d;
+                                                        pointer-events: none;
+                                                        font-weight: 500;
+                                                    ">
+                                            KM
+                                        </span>
+
+                                    </div>
+                                    <span id="rangeToError" class="text-danger" style="display:none"></span>
+
+
+                                </div>
+                            </div>
+
                         </div>
 
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group">
+                            <div class="form-group mt-2">
                                 <label class="form-label">Shipping Price</label>
                                 <input type="text" id="edit_shipping_fee"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
@@ -246,9 +413,9 @@
 
 <!-- Delete -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.deleteShippingCharge').forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             let shippingId = this.getAttribute('data-id');
 
             Swal.fire({
@@ -262,27 +429,27 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(`/admin/deleteShippingCharge/${shippingId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.status == "success"){
-                            toastr.success(data.message);
-                            setTimeout(() => {
-                                location.reload();
-                            }, 2000);
-                        } else {
-                            toastr.error(data.message);
-                        }
-                    })
-                    .catch(() => {
-                        toastr.error('Something went wrong.');
-                    });
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status == "success") {
+                                toastr.success(data.message);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2000);
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
                 }
             });
         });
@@ -292,39 +459,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <!-- Update Status -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.toggleStatus').forEach(toggle => {
-        toggle.addEventListener('change', function () {
+        toggle.addEventListener('change', function() {
             let shippingId = this.getAttribute('data-id');
 
             fetch(`/admin/updateShippingChargeStatus/${shippingId}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // toastr.success(data.message);
-                     if(data.status == 1){
-                        toastr.success(data.message); // Green for active
-                    } else {
-                        toastr.error(data.message);   // Red for deactivated
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     }
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                } else {
-                    toastr.error(data.message);
-                }
-            })
-            .catch(error => {
-                //console.error(error);
-                toastr.error('Something went wrong while updating status.');
-            });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // toastr.success(data.message);
+                        if (data.status == 1) {
+                            toastr.success(data.message); // Green for active
+                        } else {
+                            toastr.error(data.message); // Red for deactivated
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    //console.error(error);
+                    toastr.error('Something went wrong while updating status.');
+                });
         });
     });
 });
@@ -359,14 +526,14 @@ document.addEventListener("DOMContentLoaded", function() {
             rangeFromError.innerText = "Please enter range from";
             rangeFromError.style.display = "block";
             hasError = true;
-        } 
+        }
 
         // Validate Range To
         if (rangeTo.value.trim() === "") {
             rangeToError.innerText = "Please enter range to";
             rangeToError.style.display = "block";
             hasError = true;
-        } 
+        }
 
         // Compare Ranges
         if (rangeFrom.value && rangeTo.value && Number(rangeTo.value) <= Number(rangeFrom.value)) {
@@ -398,37 +565,38 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // AJAX Request
         fetch("/admin/add_shipping_fee", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify(dataToSend)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === "success") {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify(dataToSend)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
 
-                toastr.success(data.message);
+                    toastr.success(data.message);
 
-                const modal = bootstrap.Modal.getInstance(document.getElementById("sentModal2"));
-                modal.hide();
+                    const modal = bootstrap.Modal.getInstance(document.getElementById(
+                        "sentModal2"));
+                    modal.hide();
 
-                // Reset form
-                rangeFrom.value = "";
-                rangeTo.value = "";
-                shippingFee.value = "";
+                    // Reset form
+                    rangeFrom.value = "";
+                    rangeTo.value = "";
+                    shippingFee.value = "";
 
-                setTimeout(() => location.reload(), 1500);
+                    setTimeout(() => location.reload(), 1500);
 
-            } else {
-                toastr.error(data.message || "Failed to add shipping fee");
-            }
-        })
-        .catch(() => {
-            toastr.error("Something went wrong");
-        });
+                } else {
+                    toastr.error(data.message || "Failed to add shipping fee");
+                }
+            })
+            .catch(() => {
+                toastr.error("Something went wrong");
+            });
     });
 
 });
@@ -437,35 +605,35 @@ document.addEventListener("DOMContentLoaded", function() {
 <!-- update -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const rangeFrom   = document.getElementById("edit_range_from");
-    const rangeTo     = document.getElementById("edit_range_to");
+    const rangeFrom = document.getElementById("edit_range_from");
+    const rangeTo = document.getElementById("edit_range_to");
     const shippingFee = document.getElementById("edit_shipping_fee");
 
-    const idField     = document.getElementById("edit_charge_id");
-    const countryId   = document.getElementById("edit_country_id");
+    const idField = document.getElementById("edit_charge_id");
+    const countryId = document.getElementById("edit_country_id");
 
     rangeFrom.addEventListener("input", function() {
-        this.value = this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1');
+        this.value = this.value.replace(/[^0-9]/g, '').replace(/^(\d{7}).*/, '$1');
     });
 
     rangeTo.addEventListener("input", function() {
-        this.value = this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1');
+        this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '').replace(/^(\d{7}).*/, '$1');
     });
 
     shippingFee.addEventListener("input", function() {
         this.value = this.value
-            .replace(/[^0-9.]/g,'')
-            .replace(/^0+([1-9])/,'$1')
-            .replace(/^0+$/,'')
-            .replace(/(\..*?)\..*/,'$1')
-            .replace(/(\.\d{2}).*/,'$1')
-            .replace(/^(\d{7})\d*/,'$1')
-            .replace(/^(\d{7}\.\d{2})\d*/,'$1');
+            .replace(/[^0-9.]/g, '')
+            .replace(/^0+([1-9])/, '$1')
+            .replace(/^0+$/, '')
+            .replace(/(\..*?)\..*/, '$1')
+            .replace(/(\.\d{2}).*/, '$1')
+            .replace(/^(\d{7})\d*/, '$1')
+            .replace(/^(\d{7}\.\d{2})\d*/, '$1');
     });
 
     const errFrom = document.getElementById("editRangeFromError");
-    const errTo   = document.getElementById("editRangeToError");
-    const errFee  = document.getElementById("editShippingFeeError");
+    const errTo = document.getElementById("editRangeToError");
+    const errFee = document.getElementById("editShippingFeeError");
 
     const updateBtn = document.getElementById("updateShippingBtn");
 
@@ -475,7 +643,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         return value
             .toString()
-            .replace(/\.00$/, "");  // remove .00 at end
+            .replace(/\.00$/, ""); // remove .00 at end
     }
 
     document.querySelectorAll(".editShippingBtn").forEach(button => {
@@ -484,19 +652,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             idField.value = this.dataset.id;
 
-            rangeFrom.value   = cleanNumber(this.dataset.from);
-            rangeTo.value     = cleanNumber(this.dataset.to);
+            rangeFrom.value = cleanNumber(this.dataset.from);
+            rangeTo.value = cleanNumber(this.dataset.to);
             shippingFee.value = cleanNumber(this.dataset.fee);
 
             // remove error messages
             errFrom.style.display = "none";
-            errTo.style.display   = "none";
-            errFee.style.display  = "none";
+            errTo.style.display = "none";
+            errFee.style.display = "none";
         });
     });
 
-    rangeFrom.oninput   = () => errFrom.style.display = "none";
-    rangeTo.oninput     = () => errTo.style.display = "none";
+    rangeFrom.oninput = () => errFrom.style.display = "none";
+    rangeTo.oninput = () => errTo.style.display = "none";
     shippingFee.oninput = () => errFee.style.display = "none";
 
     updateBtn.addEventListener("click", function(e) {
@@ -543,36 +711,35 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         fetch("/admin/update_shipping_fee", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(data => {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
 
-            if (data.status === "success") {
+                if (data.status === "success") {
 
-                toastr.success(data.message);
+                    toastr.success(data.message);
 
-                const modal = bootstrap.Modal.getInstance(
-                    document.getElementById("sentModal3")
-                );
+                    const modal = bootstrap.Modal.getInstance(
+                        document.getElementById("sentModal3")
+                    );
 
-                modal.hide();
+                    modal.hide();
 
-                setTimeout(() => location.reload(), 1500);
-            }
-            else {
-                toastr.error(data.message || "Failed to update shipping fee");
-            }
-        })
-        .catch(() => {
-            toastr.error("Something went wrong");
-        });
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    toastr.error(data.message || "Failed to update shipping fee");
+                }
+            })
+            .catch(() => {
+                toastr.error("Something went wrong");
+            });
 
     });
 
@@ -580,10 +747,10 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('sentModal2');
-    modal.addEventListener('hidden.bs.modal', function () {
-        location.reload(); 
+    modal.addEventListener('hidden.bs.modal', function() {
+        location.reload();
     });
 });
 </script>

@@ -158,6 +158,12 @@ class PromoCodeController extends Controller
         }
     }
 
+    public function addPromocode(Request $request){
+         $countries = $this->CountryService->getCountries()['data'];
+        return view('admin.promocode-management.add',compact('countries'));
+
+    }
+
 
 
 

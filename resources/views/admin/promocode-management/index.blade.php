@@ -17,21 +17,29 @@
             <h2 class="h2">Promocode Management</h2>
         </div>
 
-        <div class="col-lg-3 col-md-4 col-12">
+        <!-- <div class="col-lg-3 col-md-4 col-12">
             <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
                     <span>Add New Promocode</span>
                 </a>
             </div>
+        </div> -->
+        <div class="col-lg-3 col-md-4 col-12">
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-dark customBtn" href="{{route('admin.addPromocode')}}" >
+                    <span>Add New Promocode</span>
+                </a>
+            </div>
         </div>
+
     </div>
 
     <div class="userManagecontent">
         <div class="mt-4">
             <form method="GET" action="{{ route('admin.promoCodeManagement') }}" id="filterForm">
-                <div class="row">
+                <div class="row align-items-end">
                     <!-- From Date Filter -->
-                    <div class="col-lg-3 col-md-4 col-12">
+                    <div class="col-lg-2 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
@@ -41,7 +49,7 @@
                     </div>
 
                     <!-- To Date Filter -->
-                    <div class="col-lg-3 col-md-4 col-12">
+                    <div class="col-lg-2 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
@@ -78,7 +86,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-3 ">
+                    <div class="col-lg-2 col-md-4 col-12 ">
                     <div class="d-flex gap-3 justify-content-end" >
                         <a href="{{route('admin.promoCodeManagement')}}" class="btn btn-dark customBtn"
                             style="margin-top: 60px">
@@ -89,7 +97,7 @@
                 </div>
             </form>
 
-            <div class="table-responsive w-100">
+            <div class="table-responsive w-100 mt-4">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
@@ -138,10 +146,10 @@
                                 @endif
                             </td>
                             <td>
-                                <div class="d-flex gap-3 justify-content-center">
+                                <div class="d-flex gap-3 justify-content-center mb-1">
                                     <!-- <a class="table-button" type="button" data-bs-toggle="modal"
                                         data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a> -->
-                                        <a class="table-button editPromocodeBtn"
+                                        <a class="table-button editPromocodeBtn mb-1"
                                             href="javascript:void(0);"
                                             data-id="{{ $pc->id }}"
                                             data-country="{{ $pc->country_id }}"
@@ -165,14 +173,14 @@
                                       <!-- Delete button  -->
                                      <a
                                           href="javascript:void(0);"
-                                          class="table-button text-danger deletePromoCode"
+                                          class="table-button text-danger deletePromoCode mb-1"
                                           data-id="{{ $pc->id }}"
                                       >
                                           <i class="bi bi-trash3-fill"></i>
                                       </a>
 
                                       <!-- Toggle switch -->
-                                      <div class="form-check form-switch">
+                                      <div class="form-check form-switch mb-1">
                                           <input
                                               class="form-check-input toggleStatus"
                                               type="checkbox"
