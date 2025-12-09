@@ -68,7 +68,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex gap-3 justify-content-center">
-                                                <a href="javascript:void(0);" class="table-button text-danger deleteCity"
+                                                <a href="javascript:void(0);" class="table-button text-danger deleteCity mb-1 mt-1"
                                                     data-id="{{ $city->id }}">
                                                     <i class="bi bi-trash3-fill"></i>
                                                 </a>

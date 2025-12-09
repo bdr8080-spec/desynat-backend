@@ -76,7 +76,7 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
-                                        <a href="javascript:void(0);" class="table-button text-danger deleteReason"
+                                        <a href="javascript:void(0);" class="table-button text-danger deleteReason mb-1 mt-1"
                                             data-id="{{ $reason->id }}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>

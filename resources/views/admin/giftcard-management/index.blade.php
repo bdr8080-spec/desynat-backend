@@ -110,7 +110,7 @@
                                       <!-- Delete button  -->
                                      <a
                                           href="javascript:void(0);"
-                                          class="table-button text-danger deleteGiftCard"
+                                          class="table-button text-danger deleteGiftCard mt-1 mb-1"
                                           data-id="{{ $gc->id }}"
                                       >
                                           <i class="bi bi-trash3-fill"></i>

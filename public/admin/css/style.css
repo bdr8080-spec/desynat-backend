@@ -2194,3 +2194,7 @@ a.btn.btn-dark.customBtn.button {
   text-transform: inherit;
   padding: 10px 10px;
 }
+.d-flex.gap-3.justify-content-center {
+    align-items: center !important;   
+}
+

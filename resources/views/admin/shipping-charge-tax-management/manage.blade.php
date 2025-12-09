@@ -64,7 +64,7 @@
                                             </a>
                                             <!-- Delete button  -->
                                             <a href="javascript:void(0);"
-                                                class="table-button text-danger deleteShippingCharge"
+                                                class="table-button text-danger deleteShippingCharge mt-1 mb-1"
                                                 data-id="{{ $charge->id }}">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
@@ -172,56 +172,59 @@
                         </div> -->
 
                         <div class="col-lg-12 col-md-12 col-12">
-                            <label class="form-label mb-3">Range</label>
-
-                            <div class="d-flex align-items-center gap-4 flex-wrap">
-
-                                <!-- From -->
-                                <div class="d-flex align-items-center" style="gap: 10px;">
-                                    <label class="form-label mb-0">From</label>
-                                    <div style="position: relative; width: 145px;">
-                                        <input type="text" name="range_from"
-                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
-                                            class="form-control" placeholder="Enter From " />
-                                        <span style="
-                                                        position: absolute;
-                                                        right: 12px;
-                                                        top: 50%;
-                                                        transform: translateY(-50%);
-                                                        color: #6c757d;
-                                                        pointer-events: none;
-                                                        font-weight: 500;
-                                                    ">
-                                            KM
-                                        </span>
-
+                            <div class="form-group">
+                                <h5 class="form-label ">Range-</h5>
+    
+                                <div class="d-flex align-items-center gap-4 flex-wrap">
+    
+                                    <!-- From -->
+                                    <div class="d-flex align-items-center" style="gap: 10px;">
+                                        <label class="form-label mb-0">From</label>
+                                        <div style="position: relative; width: 145px;">
+                                            <input type="text" name="range_from"
+                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
+                                                class="form-control" placeholder="Enter From " />
+                                            <span style="
+                                                            position: absolute;
+                                                            right: 12px;
+                                                            top: 50%;
+                                                            transform: translateY(-50%);
+                                                            color: #6c757d;
+                                                            pointer-events: none;
+                                                            font-weight: 500;
+                                                        ">
+                                                KM
+                                            </span>
+    
+                                        </div>
+                                        <span id="rangeFromError" class="text-danger" style="display:none"></span>
+    
                                     </div>
-                                    <span id="rangeFromError" class="text-danger" style="display:none"></span>
-
-                                </div>
-                                <div class="d-flex align-items-center" style="gap: 10px;">
-                                    <label class="form-label mb-0">To</label>
-                                    <div style="position: relative; width: 145px;">
-                                        <input type="text" name="range_to"
-                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
-                                            class="form-control" placeholder="Enter To " />
-                                        <span style="
-                                                        position: absolute;
-                                                        right: 12px;
-                                                        top: 50%;
-                                                        transform: translateY(-50%);
-                                                        color: #6c757d;
-                                                        pointer-events: none;
-                                                        font-weight: 500;
-                                                    ">
-                                            KM
-                                        </span>
-
+                                    <div class="d-flex align-items-center" style="gap: 10px;">
+                                        <label class="form-label mb-0">To</label>
+                                        <div style="position: relative; width: 145px;">
+                                            <input type="text" name="range_to"
+                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                                class="form-control" placeholder="Enter To " />
+                                            <span style="
+                                                            position: absolute;
+                                                            right: 12px;
+                                                            top: 50%;
+                                                            transform: translateY(-50%);
+                                                            color: #6c757d;
+                                                            pointer-events: none;
+                                                            font-weight: 500;
+                                                        ">
+                                                KM
+                                            </span>
+    
+                                        </div>
+                                        <span id="rangeToError" class="text-danger" style="display:none"></span>
+    
+    
                                     </div>
-                                    <span id="rangeToError" class="text-danger" style="display:none"></span>
-
-
                                 </div>
+
                             </div>
 
                         </div>
@@ -230,10 +233,10 @@
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group mt-2">
-                                <label class="form-label">Shipping Price</label>
+                                <label class="form-label">Delivery Price </label>
                                 <input type="text" name="shipping_fee"
                                     oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
-                                    class="form-control" placeholder="Enter Shipping price" />
+                                    class="form-control" placeholder="Enter Delivery price" />
                                 <span id="shippingFeeError" class="text-danger" style="display:none"></span>
                             </div>
                         </div>
