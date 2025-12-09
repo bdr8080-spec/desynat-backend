@@ -47,7 +47,7 @@ class ShippingTaxService
                 return [
                     'status' => 'success',
                     'message' => 'No shipping charge found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
