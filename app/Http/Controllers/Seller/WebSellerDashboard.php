@@ -421,8 +421,61 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
        public function update_commison(REQUEST $request){
 
-          return view('dealer.commission.commission');
+$seller_id=Auth::guard('seller')->user()->id;
+
+        if($request->isMethod('get')){
+
+          
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        ];
+
+      $seller_details=  $this->SellerProductService->View_seller_profile($request_data);
+      $seller_details=$seller_details['data'];
+      
+    return view('dealer.commission.commission',compact('seller_details'));
+    
+        }
+
+        if($request->isMethod('post')){
+
+
+      $validate = Validator::make($request->all(), [               
+        'affilate_commission'=>'required|numeric|min:0|max:100'        
+     ],[
+        
+        'affilate_commission.required' => 'Affiliate commission is required.',
+        'affilate_commission.numeric' => 'Affiliate commission must be a number.',
+        'affilate_commission.min' => 'Affiliate commission cannot be less than 0%.',
+        'affilate_commission.max' => 'Affiliate commission cannot be more than 100%.',
+
+     ]);
+    
+    if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+    
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    'affilate_commission'=>$request->affilate_commission
+    ];
+    
+      $data=  $this->SellerProductService->Update_affilate_commission_Inventory($request_data);
+    
+      if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
       }
+    
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+     
+
+
+        }
+      
+      
+        }
 
       
 
