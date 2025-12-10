@@ -162,6 +162,9 @@
                 {{ $seller_details->store_info->store_address }} {{ $seller_details->store_info->address_line1 }}
                 {{ $seller_details->store_info->address_line2 }}
             </p>
+            <p class="mt-2 mb-0">
+                {{ $seller_details->store_info->bio }}
+            </p>
 
         </div>
     </div>
