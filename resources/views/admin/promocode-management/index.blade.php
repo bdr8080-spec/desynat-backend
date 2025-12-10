@@ -146,7 +146,7 @@
                                 @endif
                             </td>
                             <td>
-                                <div class="d-flex gap-3 justify-content-center mb-1">
+                                <div class="d-flex gap-3 justify-content-center ">
                                     <a class="table-button" href="{{ route('admin.editPromocode', $pc['id']) }}" type="button">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
@@ -174,14 +174,14 @@
                                       <!-- Delete button  -->
                                      <a
                                           href="javascript:void(0);"
-                                          class="table-button text-danger deletePromoCode mb-1"
+                                          class="table-button text-danger deletePromoCode mb-1 mt-1"
                                           data-id="{{ $pc->id }}"
                                       >
                                           <i class="bi bi-trash3-fill"></i>
                                       </a>
 
                                       <!-- Toggle switch -->
-                                      <div class="form-check form-switch mb-1">
+                                      <div class="form-check form-switch">
                                           <input
                                               class="form-check-input toggleStatus"
                                               type="checkbox"

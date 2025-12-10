@@ -124,7 +124,7 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
 
-                                            <a href="javascript:void(0);" class="table-button text-danger deletePlan"
+                                            <a href="javascript:void(0);" class="table-button text-danger deletePlan mb-1 mt-1"
                                                 data-id="{{ $plan->id }}">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>

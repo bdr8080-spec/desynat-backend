@@ -20,6 +20,8 @@ body {
     --mt-5: 30px;
       --bg-login:linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
   --bg-multiple:linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%);
+  --bg-color:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);
+ 
 
 }
 
@@ -64,7 +66,7 @@ th {
 }
 li.nav-item.active {
     background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
-    border-radius: 10px;
+    border-radius: 5px;
     margin-top: 0px;
 }
 .sidebar-dark .nav-item .nav-link {
@@ -1223,21 +1225,27 @@ td {
 
 a.btn.btn-dark.customBtn {
     border: 1px solid rgba(168, 130, 79, 1);
-    background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
+   /* background:var(--bg-color); */
+       background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+
     color: #fff;
     /* line-height: 18px; */
     font-size: 20px;
 }
 a.btn.btn-dark.customBtns {
     border: 1px solid rgba(168, 130, 79, 1);
-    background:linear-gradient(to bottom left, #F9DBAB, #7D532F);
+    /* background:var(--bg-color); */
+        background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+
     color: #fff;
     /* line-height: 18px; */
     font-size: 20px;
 }
 button.btn.btn-dark.customBtn {
     border: 1px solid rgba(168, 130, 79, 1);
-    background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
+    /* background:var(--bg-color); */
+        background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+
     color: #fff;
     /* line-height: 18px; */
     font-size: 20px;
@@ -1279,7 +1287,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
-background: linear-gradient(179deg, #DFBF8F -53.71%, #6E4527 400.28%);
+    background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
     color: #fff;
     height: 100%;
 }
@@ -1290,9 +1298,11 @@ background: linear-gradient(179deg, #DFBF8F -53.71%, #6E4527 400.28%);
     border-radius: 13px !important;
     overflow: hidden;
     border: 2px solid #e8c783;
-    height: 86%;
+       margin-bottom: 30px;
 }
-
+.dashboard-pnl h5 {
+    margin-bottom: 0px !important;
+}
 .total-sale p {
     font-size: 20px;
     color: #7f9ca6;
@@ -1636,7 +1646,7 @@ button[type="submit"] {
 }
 
 .custom-topbar {
- background: linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%) !important;
+ background: var(--bg-color) !important;
     height: 74px;
     /* border-radius: 6px; */
     padding: 0 25px;
@@ -2194,3 +2204,7 @@ a.btn.btn-dark.customBtn.button {
   text-transform: inherit;
   padding: 10px 10px;
 }
+.d-flex.gap-3.justify-content-center {
+    align-items: center !important;   
+}
+
