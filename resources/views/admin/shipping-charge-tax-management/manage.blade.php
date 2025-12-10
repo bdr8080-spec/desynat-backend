@@ -565,7 +565,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Validate Shipping Fee
         if (shippingFee.value.trim() === "") {
-            shippingFeeError.innerText = "Please enter shipping fee";
+            shippingFeeError.innerText = "Please enter delivery price";
             shippingFeeError.style.display = "block";
             hasError = true;
         } else if (isNaN(shippingFee.value.trim())) {
@@ -716,7 +716,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Validate shipping fee
         if (shippingFee.value.trim() === "") {
-            errFee.innerText = "Please enter shipping fee";
+            errFee.innerText = "Please enter delivery price";
             errFee.style.display = "block";
             hasError = true;
         }
