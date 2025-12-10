@@ -2232,3 +2232,29 @@ width: fit-content;
     color: #714829;
     text-decoration: none;
 }
+.red-color{
+    color: #D72E04;
+}
+.gift-cupon-list {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 11px;
+}
+.gift-cupon-list p {
+    font-size: 14px !important;
+    line-height: 22px !important;
+}
+.btn-outline {
+    border: 1px solid #714829;
+    color: #714829;
+    font-weight: 500;
+    padding: 2px 12px;
+}
+.btn-outline:hover{
+    border: 1px solid #714829;
+    color: #fff;
+    background: #714829;
+}
+.modal-body .white-btn{
+    color: #fff !important;
+}

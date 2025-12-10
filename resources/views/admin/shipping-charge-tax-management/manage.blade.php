@@ -171,12 +171,16 @@
                             </div>
                         </div> -->
 
+                        <div class="col-lg-6">
+
+                        </div>
+
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
                                 <h5 class="form-label ">Range-</h5>
-    
+
                                 <div class="d-flex align-items-center gap-4 ">
-    
+
                                     <!-- From -->
                                     <div class="d-flex align-items-center" style="gap: 10px;">
                                         <label class="form-label mb-0">From</label>
@@ -195,10 +199,10 @@
                                                         ">
                                                 KM
                                             </span>
-    
+
                                         </div>
-                                        <span id="rangeFromError" class="text-danger" style="display:none"></span>
-    
+                                        <!-- <span id="rangeFromError" class="text-danger" style="display:none"></span> -->
+
                                     </div>
                                     <div class="d-flex align-items-center" style="gap: 10px;">
                                         <label class="form-label mb-0">To</label>
@@ -217,12 +221,19 @@
                                                         ">
                                                 KM
                                             </span>
-    
+
                                         </div>
-                                        <span id="rangeToError" class="text-danger" style="display:none"></span>
-    
-    
+                                        <!-- <span id="rangeToError" class="text-danger" style="display:none"></span> -->
+
+
                                     </div>
+                                </div>
+                                <div class="d-flex align-items-center " style="justify-content: space-between;">
+                                    <span id="rangeFromError" class="text-danger" style="display:none"></span>
+
+
+                                    <span id="rangeToError" class="text-danger" style="display:none"></span>
+
                                 </div>
 
                             </div>
@@ -333,7 +344,7 @@
                         </div> -->
 
 
-                            <div class="col-lg-12 col-md-12 col-12">
+                        <div class="col-lg-12 col-md-12 col-12">
                             <label class="form-label mb-3">Range</label>
 
                             <div class="d-flex align-items-center gap-4 flex-wrap">
@@ -342,9 +353,9 @@
                                 <div class="d-flex align-items-center" style="gap: 10px;">
                                     <label class="form-label mb-0">From</label>
                                     <div style="position: relative; width: 145px;">
-                                         <input type="text" id="edit_range_to"
-                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
-                                                    class="form-control" placeholder="Enter From">
+                                        <input type="text" id="edit_range_to"
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                            class="form-control" placeholder="Enter From">
                                         <span style="
                                                         position: absolute;
                                                         right: 12px;
@@ -364,9 +375,9 @@
                                 <div class="d-flex align-items-center" style="gap: 10px;">
                                     <label class="form-label mb-0">To</label>
                                     <div style="position: relative; width: 145px;">
-                                      <input type="text" id="edit_range_to"
-                                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
-                                                    class="form-control" placeholder="Enter  to">
+                                        <input type="text" id="edit_range_to"
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
+                                            class="form-control" placeholder="Enter  to">
                                         <span style="
                                                         position: absolute;
                                                         right: 12px;
