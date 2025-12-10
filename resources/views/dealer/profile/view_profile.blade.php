@@ -120,7 +120,7 @@
                                 <small class="text-muted">{{ $seller_details->email }}</small>
 
                                 <div class="star-rating mt-1">
-                                    ⭐⭐⭐⭐⭐ (123)
+                                    ⭐⭐⭐⭐⭐ (123K)
                                 </div>
                             </div>
                         </div>
