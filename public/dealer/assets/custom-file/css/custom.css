@@ -303,15 +303,16 @@ table.dataTable {
     object-fit: cover;
 }
 .store-img {
-    height: 60px;
-    width: 150px;
+    height: 65px;
+    width: 135px;
     border: 1px solid #ddd;
     border-radius: 6px;
+    overflow: hidden;
 }
 .store-img img{
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 .img_changes {
     border: 1px solid #6E4527;
@@ -369,6 +370,21 @@ table.dataTable {
     transform: translate(-10px, 17px);
     font-size: 22px;
     background: #fff;
+}
+.profile_wapper {
+    margin-top: -60px !important;
+    max-width: 90%;
+    width: 100%;
+    margin: 0 auto;
+}
+.profile-card{
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    z-index: 2;
+    position: relative;
+    margin-bottom: 2rem;
 }
 
 

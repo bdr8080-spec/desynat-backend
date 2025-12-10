@@ -14,23 +14,9 @@
     border-radius: 12px;
 }
 
-.profile-card {
-    margin-top: -60px;
-    background: #fff;
-    border-radius: 12px;
-    width: 83%;
-    padding: 25px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    z-index: 2;
-    position: relative;
-    margin-left: 3rem;
-    margin-bottom: 3rem;
-}
-
 .profile-img {
     width: 70px;
     height: 84px;
-
 }
 
 .star-rating i,
@@ -43,17 +29,6 @@
 }
 
 /* ---- Products Row ---- */
-.product-row {
-
-    background: #fff;
-    border-radius: 12px;
-    padding: 26px 21px;
-    width: 73%;
-    margin-left: 7rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
-}
-
 .product-item {
     width: 85px;
     text-align: center;
@@ -129,75 +104,79 @@
         <div class="brand-banner">
             <img src="{{ $seller_details->store_info->store_image }}" alt="Profile">
         </div>
-        <div class="profile-card">
-            <div class="row align-items-center">
-                <div class="col-md-1 col-2">
-                    <img src="{{asset('dealer/assets/img/story.svg')}}" class="profile-img">
-                </div>
-                <div class="col-md-8 col-7">
-                    <h5 class="mb-0">{{ $seller_details->first_name }} {{ $seller_details->last_name }}</h5>
-                    <small class="text-muted">{{ $seller_details->country_code }}
-                        {{ $seller_details->mobile }}</small><br>
-                    <small class="text-muted">{{ $seller_details->email }}</small>
 
-                    <div class="star-rating mt-1">
-                        ⭐⭐⭐⭐⭐ (123)
+        <div class="profile_wapper">
+            <div class="profile-card">
+                <div class="row align-items-center">
+                    <div class="col-md-1 col-2">
+                        <img src="{{asset('dealer/assets/img/story.svg')}}" class="profile-img">
+                    </div>
+                    <div class="col-md-8 col-7">
+                        <h5 class="mb-0">{{ $seller_details->first_name }} {{ $seller_details->last_name }}</h5>
+                        <small class="text-muted">{{ $seller_details->country_code }}
+                            {{ $seller_details->mobile }}</small><br>
+                        <small class="text-muted">{{ $seller_details->email }}</small>
+
+                        <div class="star-rating mt-1">
+                            ⭐⭐⭐⭐⭐ (123)
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-3 text-end qr-box">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://example.com">
+                        <div class="mt-1 small">Share <i class="bi bi-share-fill"></i></div>
                     </div>
                 </div>
 
-                <div class="col-md-3 col-3 text-end qr-box">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://example.com">
-                    <div class="mt-1 small">Share <i class="bi bi-share-fill"></i></div>
-                </div>
+                <hr>
+
+                <h6 class="fw-bold">{{ $seller_details->store_info->store_name }}</h6>
+                <small class="text-muted">{{ $seller_details->store_info->country_code }}
+                    {{ $seller_details->store_info->store_phone }}</small><br>
+                <small class="text-muted">{{ $seller_details->store_info->store_mail_id }}</small>
+
+                <p class="mt-2 mb-0">
+                    {{ $seller_details->store_info->store_address }} {{ $seller_details->store_info->address_line1 }}
+                    {{ $seller_details->store_info->address_line2 }}
+                </p>
             </div>
 
-            <hr>
+            <div class="product-row d-flex align-items-center gap-4 profile-card">
+            <div class="product-item">
+                <img src="{{asset('dealer/assets/img/hightlights-add.svg')}}" class="product-circle">
+            </div>
 
-            <h6 class="fw-bold">{{ $seller_details->store_info->store_name }}</h6>
-            <small class="text-muted">{{ $seller_details->store_info->country_code }}
-                {{ $seller_details->store_info->store_phone }}</small><br>
-            <small class="text-muted">{{ $seller_details->store_info->store_mail_id }}</small>
+            <div class="product-item">
+                <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
+                <small>T Shirt</small>
+            </div>
 
-            <p class="mt-2 mb-0">
-                {{ $seller_details->store_info->store_address }} {{ $seller_details->store_info->address_line1 }}
-                {{ $seller_details->store_info->address_line2 }}
-            </p>
+            <div class="product-item">
+                <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
+                <small>T Shirt</small>
+            </div>
 
-        </div>
-    </div>
+            <div class="product-item">
+                <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
+                <small>T Shirt</small>
+            </div>
 
-    <div class="product-row d-flex align-items-center gap-4">
-        <div class="product-item">
-            <img src="{{asset('dealer/assets/img/hightlights-add.svg')}}" class="product-circle">
-        </div>
+            <div class="product-item">
+                <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
+                <small>T Shirt</small>
+            </div>
 
-        <div class="product-item">
-            <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-            <small>T Shirt</small>
-        </div>
-
-        <div class="product-item">
-            <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-            <small>T Shirt</small>
-        </div>
-
-        <div class="product-item">
-            <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-            <small>T Shirt</small>
-        </div>
-
-        <div class="product-item">
-            <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-            <small>T Shirt</small>
-        </div>
-
-        <div class="product-item">
-            <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-            <small>T Shirt</small>
+            <div class="product-item">
+                <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
+                <small>T Shirt</small>
+            </div>
         </div>
     </div>
 
 
+    </div>
+
+   
     <div class="product_reels customContainer">
         <ul class="nav nav-tabs customNavTabs mb-4" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -291,7 +270,7 @@
                                 </div>
                             </div>
                             <div class="text-center mt-2">
-                                <h6>Documents {{$key +1}}</h6>
+                                <h6>Front {{$key +1}}</h6>
                             </div>
                         </div>
 

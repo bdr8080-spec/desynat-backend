@@ -173,6 +173,9 @@ label {
 .drop-profile:hover{
   color: #8D6744;
 }
+.pencil-btn:hover{
+  color: #8D6744;
+}
 .text-red{
   color: #D53B36;
 }
@@ -1602,12 +1605,14 @@ storeClient_profile_img{
   padding: 20px;
 }
 .doc-views{
-  height: 200px;
+  height: 300px;
+  width: 430px;
+  margin: auto;
 }
 .doc-views img{
   height: 100%;
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 .personal-list-2 {
   display: flex;
