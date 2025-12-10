@@ -219,7 +219,7 @@
 
 
                                 <div class="col-lg-6 col-md-6">
-                                    <div class="sub-form">
+                                    <!-- <div class="sub-form">
                                         <div class="label-flex">
                                             <label>Store Phone Number</label>
                                         </div>
@@ -235,7 +235,62 @@
                                         <input type="text" class="form-control notapplyspace" placeholder="Phone number"
                                             name="store_phone" value="{{$seller_details->store_info->store_phone}}">
                                         <p class="text-danger" id="error-store_phone"></p>
+                                    </div> -->
+                                    <div class="label-flex">
+                                            <label>Store Phone Number</label>
+                                        </div>
+                                        
+                                    <div class="form-group d-flex gap-2 w-100">
+                                            <div class="dropdown">
+                                                <button
+                                                    class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                                    type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+
+                                                    <span id="selected-flag">
+                                                        <img src="{{$seller_details->store_info->country_info->flag1}}"
+                                                            alt="flag" width="25" height="16">
+                                                    </span>
+                                                   
+                                                    <span id="selected-code" class="ms-2">
+                                                        {{$seller_details->store_info->country_code }}
+                                                    </span>
+                                                </button>
+                                                <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
+                                                    @foreach ($all_country as $index => $item)
+                                                        <li>
+                                                            <label
+                                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                style="cursor: pointer;">
+                                                                <input type="radio" name="country_code"
+                                                                    value="{{ $item->dial_code }}"
+                                                                    data-flag="{{ $item->flag }}"
+                                                                    data-name="{{ $item->name }}"
+                                                                    class="country-radio"
+                                                                    {{ $seller_details->store_info->country_code == $item->dial_code ? 'checked' : '' }}
+                                                                    hidden>
+                                                            
+                                                                    <div width="25" height="16">
+                                                                        <span>{{ $item->flag }} {{ $item->dial_code }}
+                                                                            ({{ $item->name }})
+                                                                        </span>
+                                                                    </div>
+                                                            </label>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+
+                                            <div class="w-100">
+                                                <input class="form-control notapplyspace" type="number"
+                                                    id="phone" placeholder="Enter mobile Number" name="store_phone" value="{{$seller_details->store_info->store_phone}}"
+                                                    value="{{ old('mobile') }}"
+                                                    oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+                                                    <p class="text-danger" id="error-store_phone"></p>
+                                            </div>
+                                           
                                     </div>
+
                                 </div>
 
                                 <div class="col-lg-6 col-md-6">
@@ -949,4 +1004,27 @@ $(document).on('submit', 'form#editbankdetails', function(event) {
 
     return false;
 });
+
+</script>
+
+<script>
+    $(document).ready(function() {
+        // When a user selects a country (clicks a label)
+        $(document).on('click', '.country-option', function() {
+            let radio = $(this).find('.country-radio');
+            let flag = radio.data('flag');
+            let code = radio.val();
+            let name = radio.data('name');
+
+            // Update the flag and code shown on the button
+            $('#selected-flag').html(flag);
+            $('#selected-code').text(code);
+
+            // Set the radio input as checked
+            radio.prop('checked', true);
+
+            // Close the dropdown (Bootstrap 5)
+            $('#countryDropdown').dropdown('hide');
+        });
+    });
 </script>
