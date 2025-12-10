@@ -1598,7 +1598,7 @@ public function Update_Product_Inventory($request){
             'total_stock'=> $request->stock_quantity,  
         ];
 
-        if($request->sku){
+        if($request->sku!==''){
             $data['sku']= $request->sku;
         }
 

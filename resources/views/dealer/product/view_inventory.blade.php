@@ -265,8 +265,8 @@ span {
                                     <div class="label-flex">
                                         <label>Total Stocks</label>
                                     </div>
-                                    <input type="number" class="form-control" placeholder="" id="Inventory_stock"
-                                        name="stock_quantity">
+                                    <input type="text" class="form-control" placeholder="" id="Inventory_stock"
+                                        name="stock_quantity" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                     <p class="text-danger" id="error-stock_quantity"></p>
                                 </div>
                             </div>
@@ -275,8 +275,8 @@ span {
                                     <div class="label-flex">
                                         <label>SKU</label>
                                     </div>
-                                    <input type="number" class="form-control" placeholder="" id="Inventory_sku"
-                                        name="sku">
+                                    <input type="text" class="form-control" placeholder="" id="Inventory_sku" name="sku"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');">
 
                                     <p class="text-danger" id="error-sku"></p>
                                 </div>
