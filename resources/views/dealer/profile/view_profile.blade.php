@@ -110,7 +110,7 @@
 </style>
 
 
-<div>
+<div class="onepage">
     <div class="container position-relative">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">

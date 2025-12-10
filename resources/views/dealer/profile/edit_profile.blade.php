@@ -1,6 +1,7 @@
 @include('dealer.layout.header')
 
-<section class="section dashboard">
+<div class="onepage mb-5">
+<section class="section dashboard container">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)" class="title24">
             <i class="bi bi-chevron-left"></i> Edit
@@ -148,8 +149,13 @@
                                     <div class="label-flex">
                                         <label>Store Address</label>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Enter store address"
+                                    <div class=" position-relative">
+                                        <input type="text" class="form-control" placeholder="Enter store address"
                                         name="store_address" value="{{$seller_details->store_info->store_address}}">
+                                        <div class="gpsmap1" data-bs-toggle="offcanvas" data-bs-target="#gpspanel" aria-controls="offcanvasExample">
+                                            <i class="bi bi-crosshair"></i>
+                                        </div>
+                                    </div>
                                 </div>
                                 <p class="text-danger" id="error-store_address"></p>
                             </div>
@@ -360,14 +366,307 @@
     </div>
 
 </section>
+</div>
 
+<div class="offcanvas offcanvas-end" tabindex="-1" id="gpspanel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Set Location</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="gps-wapper">
+
+            <div class="setup-maps mb-0 position-relative">
+
+
+                <input id="searchBox" type="text" placeholder="Search your address"
+                    class="form-control position-absolute"
+                    style="top:10px;left:10px;width:300px;z-index:9999;padding:6px 10px;border-radius:4px;">
+
+                <div id="googleMap" style="width: 100%; height: 500px;"></div>
+
+                <div id="useCurrentLocation" class="mt-3">
+                    <i class="bi bi-crosshair"></i> Use Current Location
+                </div>
+            </div>
+
+            <div class="find-location d-flex gap-3 py-4">
+                <div><i class="bi bi-geo-alt-fill"></i></div>
+                <p class="mb-0" id="selectedAddress"> </p>
+            </div>
+
+            <!-- Hidden inputs -->
+            <input type="hidden" id="lat" name="lat">
+            <input type="hidden" id="lng" name="lng">
+
+            <!-- Done button -->
+            <div class="setup-done">
+                <button type="button" class="btn btn-success w-100" data-bs-dismiss="offcanvas">Done</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @include('dealer.layout.custom_code');
 
 @include('dealer.layout.footer');
 
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
+</script>
 
+<script>
+    let map, marker, circle, autocomplete;
+    let mapInitialized = false;
+
+    // IDs of input fields
+    const address1Id = "address_line1";
+    const address2Id = "address_line2";
+    // const cityId = "city";
+    // const pincodeId = "pincode";
+    // const countryId = "country";
+    const searchBoxId = "searchBox";
+    const latId = "lat";
+    const lngId = "lng";
+    const selectedAddressId = "selectedAddress";
+    const selectedAddressStore_address = "store_address";
+
+    // selectedAddress
+
+    function initMap() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const currentLocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    loadMap(currentLocation);
+                },
+                () => loadMap({
+                    lat: 0,
+                    lng: 0
+                }), {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        } else {
+            loadMap({
+                lat: 0,
+                lng: 0
+            });
+        }
+    }
+
+    function loadMap(loc) {
+        map = new google.maps.Map(document.getElementById("googleMap"), {
+            center: loc,
+            zoom: 13
+        });
+
+        marker = new google.maps.Marker({
+            position: loc,
+            map,
+            draggable: true
+        });
+
+        circle = new google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.3,
+            map,
+            center: loc,
+            radius: 300
+        });
+
+        const input = document.getElementById(searchBoxId);
+
+        // Clear input fields on map load
+        // cityId, pincodeId, countryId
+        [latId, lngId, address1Id, address2Id].forEach(id => {
+            document.getElementById(id).value = "";
+        });
+        input.value = "";
+        document.getElementById(selectedAddressId).textContent = "";
+
+        // Autocomplete setup
+        autocomplete = new google.maps.places.Autocomplete(input, {
+            fields: ["geometry", "name", "formatted_address", "address_components"]
+        });
+        autocomplete.bindTo("bounds", map);
+
+        autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            if (!place.geometry || !place.geometry.location) return;
+            updateLocation(place.geometry.location, place);
+        });
+
+        // Manual address input on blur
+        input.addEventListener("blur", () => {
+            const address = input.value.trim();
+            if (!address) return;
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                address
+            }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    updateLocation(results[0].geometry.location, results[0]);
+                } else {
+                    alert("Address not found!");
+                }
+            });
+        });
+
+        // Marker drag event
+        marker.addListener("dragend", () => {
+            updateLocation(marker.getPosition());
+        });
+
+        // Current location button
+        document.getElementById("useCurrentLocation").addEventListener("click", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        updateLocation({
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        });
+                    },
+                    () => alert("Failed to retrieve your location."), {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported.");
+            }
+        });
+    }
+
+    function updateLocation(loc, placeData = null) {
+        map.setCenter(loc);
+        map.setZoom(15);
+        marker.setPosition(loc);
+        circle.setCenter(loc);
+
+        const lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
+        const lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
+
+        document.getElementById(latId).value = lat;
+        document.getElementById(lngId).value = lng;
+
+        const geocoder = new google.maps.Geocoder();
+
+        if (placeData && placeData.address_components) {
+            populateAddressFields(placeData);
+        } else {
+            // Reverse geocode
+            geocoder.geocode({
+                location: {
+                    lat,
+                    lng
+                }
+            }, (results, status) => {
+                if (status === "OK" && results[0]) {
+                    populateAddressFields(results[0]);
+                } else {
+                    alert("Failed to retrieve address for this location.");
+                }
+            });
+        }
+    }
+
+    function populateAddressFields(place) {
+        const addr = place.formatted_address || "";
+        document.getElementById(searchBoxId).value = addr;
+
+        let city = "",
+            state = "",
+            zip = "",
+            country = "";
+
+        place.address_components.forEach(c => {
+
+            // console.log(c);
+            // if (c.types.includes("locality")) city = c.long_name;
+            // if (c.types.includes("administrative_area_level_1")) state = c.long_name;
+            // if (c.types.includes("postal_code")) zip = c.long_name;
+            // if (c.types.includes("country")) country = c.long_name;
+        });
+
+        const addrParts = addr.split(",");
+
+        console.log(addrParts);
+
+        // // Remove city, state, zip, country from line 2
+        // let addrLine2Parts = addrParts.slice(2).map(part => part.trim());
+        // addrLine2Parts = addrLine2Parts.filter(part => {
+        //     part = part.trim().toLowerCase();
+        //     return part &&
+        //         (!city || !part.includes(city.toLowerCase())) &&
+        //         (!state || !part.includes(state.toLowerCase())) &&
+        //         (!zip || !part.includes(zip.toLowerCase())) &&
+        //         (!country || !part.includes(country.toLowerCase())) &&
+        //         !part.includes("usa");
+        // });
+
+        document.getElementById(address1Id).value = addrParts.slice(0, 2).join(",").trim();
+        document.getElementById(address2Id).value = addrParts.slice(2, 5).join(",").trim();
+
+        document.getElementById(selectedAddressStore_address).value = addrParts;
+
+
+
+        // document.getElementById(cityId).value = city;
+        // document.getElementById(pincodeId).value = zip;
+        // document.getElementById(countryId).value = country;
+
+        // Optional: display full address somewhere
+        document.getElementById(selectedAddressId).textContent = addr;
+    }
+
+    // Initialize map when offcanvas opens
+    document.addEventListener("DOMContentLoaded", () => {
+        const gpsPanel = document.getElementById("gpspanel");
+        const openMapBtn = document.querySelector('[data-bs-target="#gpspanel"]');
+
+        if (gpsPanel && openMapBtn) {
+            gpsPanel.addEventListener("shown.bs.offcanvas", () => {
+                if (!mapInitialized) {
+                    setTimeout(() => {
+                        initMap();
+                        mapInitialized = true;
+                    }, 300);
+                } else {
+                    setTimeout(() => {
+                        google.maps.event.trigger(map, "resize");
+                        map.setCenter(marker.getPosition());
+                    }, 300);
+                }
+            });
+        }
+    });
+
+
+
+    $(document).ready(function() {
+        // When user types in any input or textarea
+        $(document).on('input', '.form-control, .form-check-input', function() {
+            // Check if input has a value (not empty)
+            if ($(this).val().trim() !== '') {
+                // Remove the nearby error message
+                $(this).closest('.form-group').find('.text-danger').fadeOut(200, function() {
+                    $(this).remove();
+                });
+            }
+        });
+    });
+</script>
 
 <script>
 $("#uploadImage").change(function(event) {
