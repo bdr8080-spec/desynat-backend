@@ -2217,7 +2217,11 @@ width: fit-content;
 }
 .card-left{
     display: flex;
-    gap: 20px;
+    gap: 5px;
+}
+.price-old {
+    text-decoration: line-through;
+    color: #00000080;
 }
 .cart-panel {
     border: 1px solid #ddd;
