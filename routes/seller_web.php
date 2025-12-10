@@ -89,6 +89,14 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/view-inventory/{id}',[SellerProductController::class,'view_inventory'])->name('seller.view_inventory');
 
+    
+    Route::get('/get-color-size-according-details', [SellerProductController::class, 'getcolorsizeaccordingdetails'])->name('get.getcolorsizeaccordingdetails');
+
+
+    route::Match(['get','post'],'/update-inventory-stock',[SellerProductController::class,'update_inventory_stock'])->name('seller.update_inventory_stock');
+
+
+
     route::Match(['get','post'],'/view-profile',[WebSellerDashboard::class,'view_profile'])->name('seller.view_profile');
 
     route::Match(['get','post'],'/edit-profile',[WebSellerDashboard::class,'edit_profile'])->name('seller.edit_profile');

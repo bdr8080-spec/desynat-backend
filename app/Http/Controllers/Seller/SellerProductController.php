@@ -2085,6 +2085,66 @@ public function view_inventory(Request $request , $id){
         return view('dealer.product.view_inventory',compact('product'));
         
     }
+
+
+
+
+public function getcolorsizeaccordingdetails(Request $request)
+{
+
+    $data= ProductVariant::with('size')->where('product_id', $request->product_id)
+    ->where('color_id',$request->color)
+    ->where('size_id',$request->size)
+    ->first();
+
+    // dd($product_data);
+
+    return response()->json(['data'=>$data]);
+
+}
+
+
+  public function update_inventory_stock(Request $request){
+
+     $validate = Validator::make($request->all(), [               
+        'inventory_product_id'=>'required|exists:products,id',
+        'variation_id'=>'required|exists:product_variants,id' ,
+        // 'stock_quantity'=>'required',
+        // 'sku' =>'nullable'
+
+        'stock_quantity' => 'required|integer',
+        'sku' => 'nullable|integer|lte:stock_quantity',        
+     ],[
+         'sku.lte' => 'SKU cannot be greater than stock quantity.',
+     ]);
+    
+    if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+    $seller_details=Auth::guard('seller')->user();
+    $seller_id=$seller_details->id;
+    
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    'product_id'=>$request->inventory_product_id,
+    'variation_id'=>$request->variation_id,
+    'stock_quantity'=>$request->stock_quantity,
+    'sku'=>$request->sku??null
+    ];
+    
+
+      $data=  $this->SellerProductService->Update_Product_Inventory($request_data);
+    
+      if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+      }
+    
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+      
+
+
+  }
     
     
 
