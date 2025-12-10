@@ -19,7 +19,7 @@ class ShippingTaxService
                 return [
                     'status' => 'success',
                     'message' => 'No countries found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -86,7 +86,7 @@ class ShippingTaxService
             return [
                 'status' => 'error',
                 'message' => 'Failed to update tax',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
@@ -106,7 +106,7 @@ class ShippingTaxService
                 return [
                     'status' => 'error',
                     'message' => 'Delivery charges already Existed',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -127,7 +127,7 @@ class ShippingTaxService
             return [
                 'status' => 'error',
                 'message' => 'Failed to create shipping charge',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
@@ -198,7 +198,7 @@ class ShippingTaxService
                 return [
                     'status' => 'error',
                     'message' => 'Delivery Charges not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -233,7 +233,7 @@ class ShippingTaxService
                 return [
                     'status' => 'error',
                     'message' => 'Delivery Charges not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
             $data->delete();
@@ -241,14 +241,14 @@ class ShippingTaxService
             return [
                 'status' => 'success',
                 'message' => 'Delivery Charges delete succesfully ',
-                'data' => null
+                'data' => []
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete Delivery Charges',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
@@ -271,7 +271,7 @@ class ShippingTaxService
             return [
                 'status' => 'error',
                 'message' => 'Failed to update tax: ' . $e->getMessage(),
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }

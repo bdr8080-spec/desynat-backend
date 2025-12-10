@@ -69,7 +69,7 @@ class BannerService
                 return [
                     'status' => 'success',
                     'message' => 'No Banner found',
-                    'data' => (object) []
+                    'data' =>  []
                 ];
             }
 
@@ -83,7 +83,7 @@ class BannerService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch banner: ' . $e->getMessage(),
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
@@ -111,7 +111,7 @@ class BannerService
             return [
                 'status' => 'error',
                 'message' => 'Failed to update banner',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
@@ -125,7 +125,7 @@ class BannerService
                 return [
                     'status' => 'error',
                     'message' => 'Banner not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -143,7 +143,7 @@ class BannerService
             return [
                 'status' => 'error',
                 'message' => 'Failed to update banner',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }

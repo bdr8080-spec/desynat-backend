@@ -30,7 +30,7 @@ class GiftCardService
                 return [
                     'status' => 'success',
                     'message' => 'No Gift Card found',
-                    'data' => (object) []
+                    'data' =>  []
                 ];
             }
 
