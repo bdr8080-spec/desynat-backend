@@ -45,7 +45,7 @@ class PromocodeService
                 return [
                     'status' => 'success',
                     'message' => 'No Promocode found',
-                    'data' => (object) []
+                    'data' =>  []
                 ];
             }
 
@@ -76,7 +76,7 @@ class PromocodeService
                 return [
                     'status' => 'error',
                     'message' => 'Promocode not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -130,7 +130,7 @@ class PromocodeService
             return [
                 'status' => 'error',
                 'message' => 'Failed to add promocode',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
@@ -144,7 +144,7 @@ class PromocodeService
             return [
                 'status' => 'error',
                 'message' => 'Promocode not found',
-                'data' => (object)[]
+                'data' => []
             ];
         }
 
@@ -173,7 +173,7 @@ class PromocodeService
             return [
                 'status' => 'error',
                 'message' => 'Failed to update promocode',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
@@ -187,7 +187,7 @@ class PromocodeService
                 return [
                     'status' => 'error',
                     'message' => 'Promocode not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
             $data->delete();
@@ -195,14 +195,14 @@ class PromocodeService
             return [
                 'status' => 'success',
                 'message' => 'Promocode deleted successfully',
-                'data' => null
+                'data' => []
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete promocode',
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
