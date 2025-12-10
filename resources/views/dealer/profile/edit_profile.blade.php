@@ -109,7 +109,7 @@
                                             <label>Mobile No.</label>
                                         </div>
                                         <input type="text" class="form-control" placeholder="Mobile number" readonly
-                                            value="{{$seller_details->mobile}}">
+                                            value="{{$seller_details->country_code}} {{$seller_details->mobile}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
