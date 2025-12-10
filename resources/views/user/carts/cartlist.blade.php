@@ -54,7 +54,7 @@
 
                                     <div class="product-info">
 
-                                        <h5 class="product-title">{{ $item->product->name }}</h5>
+                                        <h5 class="product-title">{{ $item->product->product_name_en}}</h5>
 
                                         <div class="psize d-flex gap-4">
                                             <span>Size: {{ $item->product_variants->size->name ?? '-' }}</span>
@@ -466,5 +466,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 @endif
+
 
 
