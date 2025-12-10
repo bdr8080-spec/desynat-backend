@@ -42,11 +42,12 @@
                             <div class="card-left mb-2 d-flex">
 
                                 {{-- Product Image --}}
+                                <div>
                                 <div class="cart-products me-3">
                                     <img src="{{ $item->product_variants->variant_image[0] }}"
                                         alt="Product" class="img-fluid">
                                 </div>
-
+                                </div>
                                 {{-- Product Details --}}
                                 <div class="card-right d-flex w-100 justify-content-between">
 
