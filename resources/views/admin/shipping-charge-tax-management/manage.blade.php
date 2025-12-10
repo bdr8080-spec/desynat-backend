@@ -175,12 +175,12 @@
                             <div class="form-group">
                                 <h5 class="form-label ">Range-</h5>
     
-                                <div class="d-flex align-items-center gap-4 flex-wrap">
+                                <div class="d-flex align-items-center gap-4 ">
     
                                     <!-- From -->
                                     <div class="d-flex align-items-center" style="gap: 10px;">
                                         <label class="form-label mb-0">From</label>
-                                        <div style="position: relative; width: 145px;">
+                                        <div style="position: relative; ">
                                             <input type="text" name="range_from"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^(\d{7}).*/,'$1')"
                                                 class="form-control" placeholder="Enter From " />
@@ -202,7 +202,7 @@
                                     </div>
                                     <div class="d-flex align-items-center" style="gap: 10px;">
                                         <label class="form-label mb-0">To</label>
-                                        <div style="position: relative; width: 145px;">
+                                        <div style="position: relative;">
                                             <input type="text" name="range_to"
                                                 oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
                                                 class="form-control" placeholder="Enter To " />

@@ -244,9 +244,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <input type="hidden" id="editBannerId" name="banner_id">
-                            <div class="form-group w-100 m-auto">
+                            <div class="form-group w-50 m-auto">
                                 <label for="from" class="form-label"> Price</label>
-                                <input type="text" class="w-50" id="perDayPrice" name="per_day_price" placeholder="Enter Per Day Charge" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control"
+                                <input type="text" class="w-100" id="perDayPrice" name="per_day_price" placeholder="Enter Per Day Charge" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" class="form-control"
                                     aria-describedby="passwordHelpInline" />
                                 <div id="editPerDayPriceError" class="text-danger small" style="display:none;"></div>
                             </div>
