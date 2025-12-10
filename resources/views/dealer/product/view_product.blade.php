@@ -101,9 +101,9 @@
     border: 1px solid #DFBF8F;
     box-shadow: 0 0 0 3px #fff inset;
 }
-p, span{
+/* p, span{
     font-size:14px;
-}
+} */
 .main-img-container{
     height:60vh;
     background: #f7f7f7;

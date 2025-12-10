@@ -28,7 +28,7 @@
 <div class="onepage mb-5">
     <section class="section dashboard container">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-            <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)" class="title24">
+            <a href="{{route('seller.view_profile')}}" style="color:rgb(57, 55, 55)" class="title24">
                 <i class="bi bi-chevron-left"></i> Edit
             </a>
 
@@ -85,8 +85,9 @@
                                         <div class="label-flex">
                                             <label>First Name</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter name"
-                                            name="first_name" value="{{$seller_details->first_name}}">
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter First Name" name="first_name"
+                                            value="{{$seller_details->first_name}}">
 
                                         <p class="text-danger" id="error-first_name"></p>
                                     </div>
@@ -96,8 +97,9 @@
                                         <div class="label-flex">
                                             <label>Last Name</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Last Name"
-                                            name="last_name" value="{{$seller_details->last_name}}">
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Last Name" name="last_name"
+                                            value="{{$seller_details->last_name}}">
                                         <p class="text-danger" id="error-last_name"></p>
                                     </div>
                                 </div>
@@ -107,7 +109,7 @@
                                             <label>Mobile No.</label>
                                         </div>
                                         <input type="text" class="form-control" placeholder="Mobile number" readonly
-                                            value="{{$seller_details->mobile}}">
+                                            value="{{$seller_details->country_code}} {{$seller_details->mobile}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
@@ -144,7 +146,8 @@
                                         <div class="label-flex">
                                             <label>Store name</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter store name"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter store name"
                                             value="{{ $seller_details->store_info->store_name }}" name="store_name">
                                         <p class="text-danger" id="error-store_name"></p>
                                     </div>
@@ -179,8 +182,8 @@
                                             <label>Store Address</label>
                                         </div>
                                         <div class=" position-relative">
-                                            <input type="text" class="form-control" placeholder="Enter store address"
-                                                name="store_address"
+                                            <input type="text" class="form-control blockFirstTime"
+                                                placeholder="Enter store address" name="store_address"
                                                 value="{{$seller_details->store_info->store_address}}"
                                                 id="store_address">
                                             <div class="gpsmap1" data-bs-toggle="offcanvas" data-bs-target="#gpspanel"
@@ -196,9 +199,9 @@
                                         <div class="label-flex">
                                             <label>Address line 1</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter address line 1"
-                                            name="address_line1" value="{{$seller_details->store_info->address_line1}}"
-                                            id="address_line1">
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter address line 1" name="address_line1"
+                                            value="{{$seller_details->store_info->address_line1}}" id="address_line1">
                                         <p class="text-danger" id="error-address_line1"></p>
                                     </div>
                                 </div>
@@ -207,9 +210,9 @@
                                         <div class="label-flex">
                                             <label>Address line 2</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter address line 2"
-                                            name="address_line2" value="{{$seller_details->store_info->address_line2}}"
-                                            id="address_line2">
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter address line 2" name="address_line2"
+                                            value="{{$seller_details->store_info->address_line2}}" id="address_line2">
                                         <p class="text-danger" id="error-address_line2"></p>
                                     </div>
                                 </div>
@@ -229,7 +232,7 @@
                                             @endforeach
                                         </select>
 
-                                        <input type="text" class="form-control" placeholder="Phone number"
+                                        <input type="text" class="form-control notapplyspace" placeholder="Phone number"
                                             name="store_phone" value="{{$seller_details->store_info->store_phone}}">
                                         <p class="text-danger" id="error-store_phone"></p>
                                     </div>
@@ -240,8 +243,9 @@
                                         <div class="label-flex">
                                             <label>Store mail id </label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="store email"
-                                            name="store_mail_id" value="{{$seller_details->store_info->store_mail_id}}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter Store Email id " name="store_mail_id"
+                                            value="{{$seller_details->store_info->store_mail_id}}">
 
                                         <p class="text-danger" id="error-store_mail_id"></p>
                                     </div>
@@ -318,8 +322,8 @@
                                         <div class="label-flex">
                                             <label>IBAN</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter IBAN" name="iban"
-                                            value="{{ @$seller_details->seller_bank_details->iban }}">
+                                        <input type="text" class="form-control notapplyspace" placeholder="Enter IBAN"
+                                            name="iban" value="{{ @$seller_details->seller_bank_details->iban }}">
                                         <p class="text-danger" id="error-iban"></p>
                                     </div>
                                 </div>
@@ -328,8 +332,9 @@
                                         <div class="label-flex">
                                             <label>SWIFT/BIC</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter SWIFT/BIC"
-                                            name="swift" value="{{ @$seller_details->seller_bank_details->swift }}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter SWIFT/BIC" name="swift"
+                                            value="{{ @$seller_details->seller_bank_details->swift }}">
                                         <p class="text-danger" id="error-iban"></p>
                                     </div>
                                 </div>
@@ -338,8 +343,8 @@
                                         <div class="label-flex">
                                             <label>Bank Name</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Bank Name"
-                                            name="bank_name"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Bank Name" name="bank_name"
                                             value="{{ @$seller_details->seller_bank_details->bank_name }}">
                                         <p class="text-danger" id="error-bank_name"></p>
                                     </div>
@@ -349,8 +354,8 @@
                                         <div class="label-flex">
                                             <label>Account holder Name</label>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Enter Account holder name"
-                                            name="account_holder_name"
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter Account holder name" name="account_holder_name"
                                             value="{{ @$seller_details->seller_bank_details->account_holder_name }}">
                                         <p class="text-danger" id="error-account_holder_name"></p>
                                     </div>
@@ -364,7 +369,7 @@
                                                 style="cursor:pointer;text-align:center;display:block;">
                                                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                                                     style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
-                                                <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
+                                                <div class="py-2" style="color:#875C3A">Upload proof of account </div>
                                                 <input type="file" accept="image/*" multiple id="edit_uploadChart"
                                                     style="opacity:0;" name="upload_proof">
                                             </label>

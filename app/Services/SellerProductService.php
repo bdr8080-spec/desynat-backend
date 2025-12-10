@@ -1762,7 +1762,7 @@ public function View_seller_profile($request){
   
         // seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
         
-        return ['status'=>'success','message'=>"Store information Save succesfully",'data'=>$store_information];            
+        return ['status'=>'success','message'=>"Profile details updated succesfully",'data'=>$store_information];            
   
           }else{
             return ['status'=>'error','message'=>"Otp is invalid",'data'=>(object)[]];                

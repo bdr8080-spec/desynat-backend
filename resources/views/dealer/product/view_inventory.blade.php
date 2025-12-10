@@ -104,10 +104,10 @@ a:hover {
     box-shadow: 0 0 0 3px #fff inset;
 }
 
-p,
+/* p,
 span {
     font-size: 14px;
-}
+} */
 
 .main-img-container {
     height: 60vh;
@@ -141,7 +141,7 @@ span {
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
-        <div class="title24"> <a href="{{route('seller.products')}}" style="color:rgb(57, 55, 55)"><i
+        <div class="title24"> <a href="{{route('seller.Inventory_Management')}}" style="color:rgb(57, 55, 55)"><i
                     class="bi bi-chevron-left"></i> Product code- {{ $product->id }}
             </a> </div>
         <div class="form-check form-switch">
