@@ -359,6 +359,17 @@ table.dataTable {
     width: 100%;
     object-fit: cover;
 }
+.onepage{
+    padding-top: 120px;
+}
+.gpsmap1 {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    transform: translate(-10px, 17px);
+    font-size: 22px;
+    background: #fff;
+}
 
 
 @media (min-width: 1140px) and (max-width: 1440px) {

@@ -110,7 +110,7 @@
 </style>
 
 
-<div>
+<div class="onepage">
     <div class="container position-relative">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">
@@ -161,6 +161,9 @@
             <p class="mt-2 mb-0">
                 {{ $seller_details->store_info->store_address }} {{ $seller_details->store_info->address_line1 }}
                 {{ $seller_details->store_info->address_line2 }}
+            </p>
+            <p class="mt-2 mb-0">
+                {{ $seller_details->store_info->bio }}
             </p>
 
         </div>

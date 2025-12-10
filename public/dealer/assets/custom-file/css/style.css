@@ -164,10 +164,14 @@ label {
   border: 1px solid #8D6744;
   color: #8D6744;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 9px;
   width: max-content;
   padding: 6px;
   font-size: 14px;
+  font-weight: 500;
+}
+.drop-profile:hover{
+  color: #8D6744;
 }
 .text-red{
   color: #D53B36;
@@ -808,7 +812,8 @@ label {
 }
 
 .header-nav .nav-profile img {
-  max-height: 30px;
+  height: 35px;
+  width: 35px;
 }
 
 .header-nav .nav-profile span {

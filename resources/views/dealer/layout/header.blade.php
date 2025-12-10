@@ -178,6 +178,7 @@
 
     @if(Request()->Path()!=='seller/view-profile' && Request()->Path()!=='seller/edit-profile' )
     @include('dealer.layout.sideBar')
+    <main id="main" class="main">
     @endif
 
-    <main id="main" class="main">
+    
