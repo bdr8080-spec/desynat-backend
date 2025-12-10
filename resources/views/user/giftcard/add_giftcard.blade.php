@@ -2,6 +2,13 @@
 
 @section('content')
 
+<style>
+#myfatoorah-box {
+    width: 100%;
+    height: 400px;
+}
+</style>
+
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
@@ -187,7 +194,7 @@
 
 </script>
 
-<script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script>
+<!-- <script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -195,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const mfBox = document.getElementById("myfatoorah-box");
 
     if (onlineRadio.checked) {
+    //console.log(123);
         loadMF();
     }
 
@@ -204,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function loadMF() {
+         //console.log(456);
         mfBox.style.display = "block";
 
         // Ensure the session ID is being passed correctly
@@ -229,7 +238,78 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+</script> -->
+
+<script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const onlineRadio = document.getElementById("onlinePayment");
+    const mfBox = document.getElementById("myfatoorah-box");
+    const mfContainer = document.getElementById("myfatoorah-container");
+
+    // Check if the radio button is checked on page load
+    if (onlineRadio.checked) {
+        console.log("Radio button is already checked, loading MyFatoorah...");
+        loadMF();
+    }
+
+    // Add event listener to the radio button to show/hide the payment form
+    onlineRadio.addEventListener("change", function () {
+        if (this.checked) {
+            console.log("Radio button checked, showing MyFatoorah...");
+            loadMF();
+        } else {
+            console.log("Radio button unchecked, hiding MyFatoorah...");
+            mfBox.style.display = "none"; // Hide MyFatoorah box when unchecked
+        }
+    });
+
+    // Function to load MyFatoorah payment form
+    function loadMF() {
+        console.log("Loading MyFatoorah...");
+
+        // Show the payment box when MyFatoorah is loaded
+        mfBox.style.display = "block";
+
+        // Ensure the session ID is being passed correctly
+        let sessionId = "{{ $sessionId }}"; 
+        console.log("Loaded Session ID:", sessionId);
+
+        if (!sessionId) {
+            console.error("ERROR: MyFatoorah session ID is missing!");
+            return;
+        }
+
+        // Check if the container has the correct styles to display the card view
+        if (!mfContainer) {
+            console.error("ERROR: MyFatoorah container not found!");
+            return;
+        }
+
+        // Ensure the container has a valid size (width/height) for MyFatoorah to render
+        mfContainer.style.width = "100%";
+        mfContainer.style.height = "400px"; // Set height for visibility
+        console.log("MyFatoorah container size set to 100% width and 400px height.");
+
+        // Initialize MyFatoorah with the provided session ID and other configurations
+        MyFatoorah.init({
+            sessionId: sessionId,
+            countryCode: "KW",
+            cardViewId: "myfatoorah-container", 
+            onPaymentRequest: function () {
+                console.log("Submitting payment...");
+            },
+            onError: function (error) {
+                console.error("MyFatoorah Error:", error);
+            }
+        });
+
+        console.log("MyFatoorah initialized.");
+    }
+});
 </script>
+
 
 <!-- buy guft card -->
 <script>
