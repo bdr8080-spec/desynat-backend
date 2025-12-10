@@ -21,7 +21,7 @@
 
 .star-rating i,
 .star-rating {
-    color: #f6b100;
+    color: #FFA41B;
 }
 
 .qr-box img {
@@ -110,9 +110,15 @@
                 <div class="row align-items-center">
                     <div class="col-md-8">
                         <div class="user_view">
-                            <div class="addprofile">
-                                <img src="{{$seller_details->profile_pic}}" class="img-fluid">
+                            <div class="position-relative">
+                                <div class="addprofile">
+                                    <img src="{{$seller_details->profile_pic}}" class="img-fluid">
+                                </div>
+                                <a href="#" class="addic">
+                                    <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid">
+                                </a>
                             </div>
+
                             <div class="user_content">
                                 <h5 class="mb-0">{{ $seller_details->first_name }} {{ $seller_details->last_name }}</h5>
                                 <small class="text-muted">{{ $seller_details->country_code }}
@@ -120,7 +126,12 @@
                                 <small class="text-muted">{{ $seller_details->email }}</small>
 
                                 <div class="star-rating mt-1">
-                                    ⭐⭐⭐⭐⭐ (123K)
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-half"></i>
+                                    <span class="text-black">(123K)</span>
                                 </div>
                             </div>
                         </div>
