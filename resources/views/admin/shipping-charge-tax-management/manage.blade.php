@@ -353,7 +353,7 @@
                                 <div class="d-flex align-items-center" style="gap: 10px;">
                                     <label class="form-label mb-0">From</label>
                                     <div style="position: relative; width: 145px;">
-                                        <input type="text" id="edit_range_to"
+                                        <input type="text" id="edit_range_from"
                                             oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'').replace(/^(\d{7}).*/,'$1')"
                                             class="form-control" placeholder="Enter From">
                                         <span style="
@@ -369,7 +369,7 @@
                                         </span>
 
                                     </div>
-                                    <span id="rangeFromError" class="text-danger" style="display:none"></span>
+                                    <!-- <span id="editRangeFromError" class="text-danger" style="display:none"></span> -->
 
                                 </div>
                                 <div class="d-flex align-items-center" style="gap: 10px;">
@@ -391,11 +391,18 @@
                                         </span>
 
                                     </div>
-                                    <span id="rangeToError" class="text-danger" style="display:none"></span>
+                                    <!-- <span id="editRangeToError" class="text-danger" style="display:none"></span> -->
 
 
                                 </div>
                             </div>
+                            <div class="d-flex align-items-center " style="justify-content: space-between;">
+                                    <span id="editRangeFromError" class="text-danger" style="display:none"></span>
+
+
+                                    <span id="editRangeToError" class="text-danger" style="display:none"></span>
+
+                                </div>
 
                         </div>
 
