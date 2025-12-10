@@ -111,7 +111,7 @@
                     <div class="col-md-8">
                         <div class="user_view">
                             <div class="addprofile">
-                                <img src="{{asset('dealer/assets/img/reel-1.svg')}}" class="img-fluid">
+                                <img src="{{$seller_details->profile_pic}}" class="img-fluid">
                             </div>
                             <div class="user_content">
                                 <h5 class="mb-0">{{ $seller_details->first_name }} {{ $seller_details->last_name }}</h5>
@@ -133,18 +133,19 @@
                 </div>
 
                 <div class="mt-4">
-                <h6 class="fw-bold">{{ $seller_details->store_info->store_name }}</h6>
-                <small class="text-muted">{{ $seller_details->store_info->country_code }}
-                    {{ $seller_details->store_info->store_phone }}</small><br>
-                <small class="text-muted">{{ $seller_details->store_info->store_mail_id }}</small>
+                    <h6 class="fw-bold">{{ $seller_details->store_info->store_name }}</h6>
+                    <small class="text-muted">{{ $seller_details->store_info->country_code }}
+                        {{ $seller_details->store_info->store_phone }}</small><br>
+                    <small class="text-muted">{{ $seller_details->store_info->store_mail_id }}</small>
 
-                <p class="mt-2 mb-0">
-                    {{ $seller_details->store_info->store_address }} {{ $seller_details->store_info->address_line1 }}
-                    {{ $seller_details->store_info->address_line2 }}
-                </p>
-                <p class="mt-2 mb-0">
-                    {{ $seller_details->store_info->bio }}
-                </p>
+                    <p class="mt-2 mb-0">
+                        {{ $seller_details->store_info->store_address }}
+                        {{ $seller_details->store_info->address_line1 }}
+                        {{ $seller_details->store_info->address_line2 }}
+                    </p>
+                    <p class="mt-2 mb-0">
+                        {{ $seller_details->store_info->bio }}
+                    </p>
                 </div>
 
             </div>
@@ -276,7 +277,16 @@
                             </div>
                         </div>
                         <div class="text-center mt-2">
-                            <h6>Front {{$key +1}}</h6>
+                            <h6>
+
+                                @if($key==0)
+                                Front
+                                @else
+                                Back
+                                @endif
+
+
+                            </h6>
                         </div>
                     </div>
 
@@ -309,7 +319,14 @@
                             </div>
                         </div>
                         <div class="text-center mt-2">
-                            <h6>Documents {{$key +1}}</h6>
+                            <h6>
+                                @if($key==0)
+                                Front
+                                @else
+                                Back
+                                @endif
+
+                            </h6>
                         </div>
                     </div>
 
