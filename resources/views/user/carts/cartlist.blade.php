@@ -278,7 +278,7 @@
             <div class="modal-body">
                 <div class="gift-panel-list">
 
-                    @if(isset($promoCodes) && $promoCodes->isNotEmpty())
+                    @if(isset($promoCodes) && count($promoCodes) > 0)
 
                         <!-- <div class="giftsearch py-0 d-flex w-100 gap-0">
                             <div class="form-group w-100 d-flex">
