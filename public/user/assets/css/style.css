@@ -2258,3 +2258,8 @@ width: fit-content;
 .modal-body .white-btn{
     color: #fff !important;
 }
+.colorbox{
+    height: 13px;
+    width: 13px;
+    margin-left: 10px;
+}
