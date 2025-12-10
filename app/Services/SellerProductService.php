@@ -1602,6 +1602,7 @@ public function Update_Product_Inventory($request){
             $data['sku']= $request->sku;
         }
 
+
     $update_inventory=  ProductVariant::where($match)->first();
     
     if($update_inventory){
