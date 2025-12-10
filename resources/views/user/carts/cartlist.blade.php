@@ -29,7 +29,7 @@
                                     <h5 class="product-title">Mooei 3 Pcs set</h5>
                                     <div class="psize d-flex gap-4">
                                         <span>Size: M</span>
-                                        <span>Color:</span>
+                                        <span class="d-flex g-3 align-items-center">Color:<div class="colorbox bg-dark"></div></span>
                                         <span>Qnt:1</span>
                                     </div>
                                     <div class="price">
