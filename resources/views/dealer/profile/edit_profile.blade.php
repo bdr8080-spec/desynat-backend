@@ -85,8 +85,9 @@
                                         <div class="label-flex">
                                             <label>First Name</label>
                                         </div>
-                                        <input type="text" class="form-control blockFirstTime" placeholder="Enter name"
-                                            name="first_name" value="{{$seller_details->first_name}}">
+                                        <input type="text" class="form-control blockFirstTime"
+                                            placeholder="Enter First Name" name="first_name"
+                                            value="{{$seller_details->first_name}}">
 
                                         <p class="text-danger" id="error-first_name"></p>
                                     </div>
