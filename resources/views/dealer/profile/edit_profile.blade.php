@@ -28,7 +28,7 @@
 <div class="onepage mb-5">
     <section class="section dashboard container">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-            <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)" class="title24">
+            <a href="{{route('seller.view_profile')}}" style="color:rgb(57, 55, 55)" class="title24">
                 <i class="bi bi-chevron-left"></i> Edit
             </a>
 
@@ -242,8 +242,9 @@
                                         <div class="label-flex">
                                             <label>Store mail id </label>
                                         </div>
-                                        <input type="text" class="form-control notapplyspace" placeholder="store email"
-                                            name="store_mail_id" value="{{$seller_details->store_info->store_mail_id}}">
+                                        <input type="text" class="form-control notapplyspace"
+                                            placeholder="Enter Store Email id " name="store_mail_id"
+                                            value="{{$seller_details->store_info->store_mail_id}}">
 
                                         <p class="text-danger" id="error-store_mail_id"></p>
                                     </div>
@@ -367,7 +368,7 @@
                                                 style="cursor:pointer;text-align:center;display:block;">
                                                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                                                     style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
-                                                <div class="py-2" style="color:#875C3A">Upload Size Chart</div>
+                                                <div class="py-2" style="color:#875C3A">Upload proof of account </div>
                                                 <input type="file" accept="image/*" multiple id="edit_uploadChart"
                                                     style="opacity:0;" name="upload_proof">
                                             </label>
