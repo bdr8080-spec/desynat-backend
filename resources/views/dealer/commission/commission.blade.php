@@ -15,8 +15,10 @@
                         <div class="label-flex">
                             <label>Set Commission % for affiliated customer</label>
                         </div>
-                        <input type="number" class="form-control" placeholder="Eg. 5%"
-                            value="{{$seller_details->affilate_commission}}" name="affilate_commission">
+                        <input type="text" class="form-control" placeholder="Eg. 5%"
+                            value="{{$seller_details->affilate_commission}}" name="affilate_commission" min="0"
+                            max="100" oninput="this.value = this.value.replace(/[^0-9]/g, ''); 
+                if(this.value > 100) this.value = 100;">
                         <p class="text-danger" id="error-affilate_commission"></p>
                     </div>
                 </div>
