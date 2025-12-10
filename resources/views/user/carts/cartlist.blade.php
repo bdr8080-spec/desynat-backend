@@ -464,5 +464,19 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 @endif
 
+<script>
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Reload the page if it's loaded from the back/forward cache
+        window.location.reload(true);
+    }
+});
+
+// Optional: for older browsers
+if (performance.navigation.type === 2) {
+    window.location.reload(true);
+}
+</script>
+
 
 
