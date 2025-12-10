@@ -808,7 +808,8 @@ label {
 }
 
 .header-nav .nav-profile img {
-  max-height: 30px;
+  height: 35px;
+  width: 35px;
 }
 
 .header-nav .nav-profile span {
