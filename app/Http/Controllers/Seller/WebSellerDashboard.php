@@ -303,6 +303,23 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
             // 'let'=>'required',
             // 'long'=>'required'
             
+            ],[
+                'profile_pic.required_without'     => 'Please upload a profile picture.',
+    'old_profile_pic.required_without' => 'Previous profile picture missing.',
+
+    'store_image.required_without'     => 'Please upload a store image.',
+    'old_store_image.required_without' => 'Previous store image missing.',
+
+    // Basic fields
+    'first_name.required'     => 'Please Enter First name',
+    'last_name.required'      => 'Please Enter Last name ',
+    'store_name.required'     => 'Please Enter Store name ',
+    'country.required'        => 'Country is required.',
+    'store_address.required'  => 'Please Enter Store address.',
+    'store_phone.required'    => 'Please Enter Store phone number ',
+    'store_mail_id.required'  => 'Please Enter Store email.',
+    'bio.required'            => 'Please Enter Bio.',
+    
             ]);
         
        if($validate->fails()){
@@ -377,6 +394,20 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
             'upload_proof' => 'required_without:old_upload_proof',
             'old_upload_proof' => 'required_without:upload_proof',
+
+            ],[
+
+            'account_type.required' => 'Account type is required.',
+            'account_type.in'       => 'Invalid account type selected.',
+
+            'iban.required'                => 'IBAN number is required.',
+            'swift.required'               => 'SWIFT code is required.',
+            'bank_name.required'           => 'Bank name is required.',
+            'account_holder_name.required' => 'Account holder name is required.',
+
+            // Proof upload messages
+            'upload_proof.required_without'     => 'Please upload proof document.',
+            'old_upload_proof.required_without' => 'Previous proof document is missing.',
 
             ]);
             
