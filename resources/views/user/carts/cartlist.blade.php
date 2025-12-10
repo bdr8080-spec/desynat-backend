@@ -36,11 +36,9 @@
 
                 {{-- LEFT SIDE CART --}}
                 <div class="col-lg-8">
+                    @foreach($cartData['cart_data'] as $item)
                     <div class="cart-panel">
-
-                        @foreach($cartData['cart_data'] as $item)
-                        <div class="cart-card mb-4">
-
+                        <div class="cart-card">
                             <div class="card-left mb-2 d-flex">
 
                                 {{-- Product Image --}}
@@ -123,9 +121,8 @@
                             </div>
 
                         </div>
-                        @endforeach
-
                     </div>
+                    @endforeach
 
                     {{-- DELIVERY ADDRESS --}}
                     <div class="gift-pnl mt-4">
