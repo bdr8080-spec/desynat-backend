@@ -74,6 +74,7 @@ use App\Http\Controllers\User\CartController;
 
 
    Route::get('view-cart',[CartController::class, 'view_cart'])->name('user.view_cart');
+   Route::post('apply_promocode',[CartController::class, 'apply_promocode'])->name('user.apply_promocode');
 
 
    });

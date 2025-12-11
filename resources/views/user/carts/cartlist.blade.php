@@ -152,15 +152,20 @@
                             <div class="giftinfo">
                                 <div>
                                     <img src="{{ asset('user/assets/images/ticket-01.svg') }}" class="img-fluid">
-                                    Apply PromoCode
+                                    <span id="applyPromoText">Apply PromoCode</span>
                                 </div>
 
                                 <a href="javascript:void(0)"
                                 data-bs-toggle="modal"
                                 data-bs-target="#promoModal"
-                                class="moreshop">
+                                class="moreshop"
+                                id="promoApplyLink">
                                     Apply <i class="bi bi-arrow-right"></i>
                                 </a>
+
+                                <div id="cancelPromoSection" class="d-none">
+                                    <a href="javascript:void(0)" class="btn btn-outline cancelPromoBtn">Cancel</a> <!-- Same styling as Apply button -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,7 +183,7 @@
                         </div>
                     </div>
 
-                    <p class="return-text mb-2">
+                    <p id="promoSavingsText" class="return-text mb-2">
                         You will save {{ $cartData['discount_on_mrp'] }} KD on this
                     </p>
                 </div>
@@ -222,50 +227,6 @@
 </div>
 
 
-<!-- Modal -->
-<!-- <div class="modal fade" id="promoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title fs-5" id="exampleModalLabel">Promocode</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-            <div class="gift-panel-list">
-                <div class="giftsearch py-0 d-flex w-100 gap-0">
-                    <div class="form-group w-100 d-flex">
-                        <div class="searchicon"><i class="bi bi-search"></i></div>
-                        <input type="search" name="search" class="form-control giftcontrol" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btnsearch">Search</button>
-                </div>
-
-                <div class="gift-cupon-list my-3">
-                    <div class="gift-cupon-content d-flex justify-content-between  align-items-center"> 
-                        <div class="title-flat">
-                            <h6>FLAT20</h6>
-                            <p>Flat 20% off on minimum order 299 KD</p>
-                        </div>
-                        <button type="button" class="btn btn-outline">Apply</button>
-                    </div>
-                    <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-                </div>
-                <div class="gift-cupon-list my-3">
-                    <div class="gift-cupon-content d-flex justify-content-between  align-items-center"> 
-                        <div class="title-flat">
-                            <h6>FLAT20</h6>
-                            <p>Flat 20% off on minimum order 299 KD</p>
-                        </div>
-                        <button type="button" class="btn btn-outline">Apply</button>
-                    </div>
-                    <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-                </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
 <div class="modal fade" id="promoModal" tabindex="-1" aria-labelledby="promoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -301,7 +262,8 @@
                                                 @endif
                                             </p>
                                         </div>
-                                        <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}">Apply</button>
+                                        <!-- <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}">Apply</button> -->
+                                         <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}" data-name="{{ $promo->name_english }}">Apply</button>
                                     </div>
                                     <p class="mb-0">{{ $promo->description_english }}</p>
                                 </div>
@@ -353,6 +315,8 @@
 
 
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -478,6 +442,131 @@ if (performance.navigation.type === 2) {
     window.location.reload(true);
 }
 </script>
+
+
+<script>
+    $(document).ready(function () {
+        var appliedPromoId = null;
+
+        $(document).on('click', '.applyPromoBtn', function () {
+            var promoId = $(this).data('id');
+            var totalAmountText = document.querySelectorAll('.giftinfo')[7].querySelectorAll('div')[1].textContent;
+            var amount = parseFloat(totalAmountText.replace(' KD', '').trim());
+
+            $.ajax({
+                url: '/user/apply_promocode',
+                method: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                data: {
+                    promo_id: promoId,
+                    amount: amount
+                },
+                success: function (response) {
+                    if (response.status === 'success' && response.data) {
+                        var promoData = response.data.data ? response.data.data : response.data;
+                        if (promoData && promoData.discount_code) {
+                            $('#promoModal').modal('hide'); 
+                            $('#applyPromoText').text(promoData.discount_code + ' applied');
+                            $('#promoApplyLink').hide();
+                            $('#cancelPromoSection').removeClass('d-none'); 
+
+                            $('.giftinfo').each(function() {
+                                var title = $(this).find('div').first().text().trim();
+                                if (title === 'Coupon Discount') {
+                                    $(this).find('div').last().text(promoData.Apply_discount_value + ' KD');
+                                }
+                                if (title === 'Total Amount') {
+                                    $(this).find('div').last().text(promoData.final_amount + ' KD');
+                                }
+                            });
+
+                            var previousSavingsText = $('#promoSavingsText').text().trim(); 
+                            var previousSavingsMatch = previousSavingsText.match(/(\d+(\.\d+)?)(?=\s*KD)/); 
+                            var previousSavings = previousSavingsMatch ? parseFloat(previousSavingsMatch[0]) : 0;
+                            var totalSavings = previousSavings + parseFloat(promoData.Apply_discount_value); 
+
+                            $('#promoSavingsText').text("You will save " + totalSavings + " KD on this");
+
+                            localStorage.setItem('appliedPromo', JSON.stringify({
+                                promoCode: promoData.discount_code,
+                                discountValue: promoData.Apply_discount_value,
+                                finalAmount: promoData.final_amount,
+                                promoId: promoData.promo_id
+                            }));
+
+                            appliedPromoId = promoData.promo_id;
+                            toastr.success(response.message || "Promo code applied successfully!");
+                        } else {
+                            toastr.error("Discount code is not available in response.");
+                        }
+                    } else {
+                        
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (response) {
+                    //console.log(response)
+                    toastr.error(response.responseJSON.message);
+                }
+            });
+        });
+
+        var savedPromoData = localStorage.getItem('appliedPromo');
+        if (savedPromoData) {
+            savedPromoData = JSON.parse(savedPromoData); 
+            $('#applyPromoText').text(savedPromoData.promoCode + ' applied');
+            $('#promoApplyLink').hide();
+            $('#cancelPromoSection').removeClass('d-none');
+            $('.giftinfo').each(function() {
+                var title = $(this).find('div').first().text().trim();
+                if (title === 'Coupon Discount') {
+                    $(this).find('div').last().text(savedPromoData.discountValue + ' KD');
+                }
+                if (title === 'Total Amount') {
+                    $(this).find('div').last().text(savedPromoData.finalAmount + ' KD');
+                }
+            });
+            var previousSavingsText = $('#promoSavingsText').text().trim();
+            var previousSavingsMatch = previousSavingsText.match(/(\d+(\.\d+)?)(?=\s*KD)/);
+            var previousSavings = previousSavingsMatch ? parseFloat(previousSavingsMatch[0]) : 0;
+            var totalSavings = previousSavings + savedPromoData.discountValue;
+            $('#promoSavingsText').text("You will save " + totalSavings + " KD on this");
+        }
+
+        $(document).on('click', '.cancelPromoBtn', function () {
+            toastr.error("Promo code removed.");
+            localStorage.removeItem('appliedPromo');
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
