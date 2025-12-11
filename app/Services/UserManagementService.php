@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Models\{User,userAddress};
+use App\Models\{User,userAddress,country,Tax,ShippingCharge};
 use App\Models\UserWallet;
 use App\Models\all_countrie;
 use Illuminate\Http\Request;
@@ -753,6 +753,22 @@ public function product_view_cart_details($request)
 
        $user_address= userAddress::where('user_id',$request->user_id)->where('set_as_default','1')->first();
 
+       if($user_address){
+
+        $country_dataId= country::where('dial_code',$user_address->country_code)->first();
+
+        if($country_dataId){
+            $userCountry_id= $country_dataId->id;
+        }else{
+            $userCountry_id=0;
+        }
+
+       }
+
+    //    country,Tax,ShippingCharge}
+  
+
+
         $total_mrp=0;
         $discount_on_mrp=0;
         $discount_coupon=0;
@@ -788,7 +804,22 @@ public function product_view_cart_details($request)
         }
 
 
+
         $response['total_mrp']=$total_mrp;
+
+        $Tax_calculate= Tax::where('country_id',$userCountry_id)->where('status','1')->first();
+
+        if($Tax_calculate){
+
+            $tax=$total_mrp*$Tax_calculate->tax/100; 
+
+            $total_amount=$total_amount+$tax;
+
+        }else{
+            $tax=0;
+        }
+
+
         $response['discount_on_mrp']=$discount_on_mrp;
         $response['discount_coupon']=$discount_coupon;
         $response['shipping_fees']=$shipping_fees;

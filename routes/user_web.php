@@ -79,6 +79,11 @@ use App\Http\Controllers\User\CartController;
    });
 
 
+
+Route::get('Payment-Callback',[CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
+
+
+
  Route::match(['get', 'post'], '/route1', function () {
      return view('user.category.index');
 });
