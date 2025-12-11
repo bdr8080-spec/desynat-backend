@@ -35,10 +35,11 @@
 
         <div class="gift-pnl mt-4 mb-4">
             <h6>Items will be delivered to</h6>
-            <div class="border-1">
+            <div class="border-1 d-flex gap-3">
+                <img src="{{asset('user')}}/assets/images/gps-icon.svg" class="img-fluid" />
                 <div class="giftinfo">
                     <div> Innofied Solution 
-                        <p>Saleem Raza- 142 Block D, Noida</p>
+                        <p class="mb-0">Saleem Raza- 142 Block D, Noida</p>
                     </div>
                 </div>
             </div>
@@ -47,6 +48,10 @@
         <div class="bag-topbar-full d-flex justify-content-between align-items-center">
             <div>Track your Order</div>
             <i class="bi bi-arrow-right arrow-icon"></i>
+        </div>
+
+        <div class="my-profile mt-5">
+            <a href="#" class="customBtn2"> Continue Shopping</a>
         </div>
     
     </div>  
