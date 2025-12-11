@@ -947,7 +947,7 @@ h3.mid-headng{
 }
 
 .text-danger{
-    display: block !important;
+    display: block;
     text-align: start !important;
 }
 
