@@ -65,7 +65,7 @@ th {
     text-align: -webkit-match-parent;
 }
 li.nav-item.active {
-    background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+    background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
     border-radius: 5px;
     margin-top: 0px;
 }
@@ -1226,7 +1226,7 @@ td {
 a.btn.btn-dark.customBtn {
     border: 1px solid rgba(168, 130, 79, 1);
    /* background:var(--bg-color); */
-       background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+       background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
 
     color: #fff;
     /* line-height: 18px; */
@@ -1235,7 +1235,7 @@ a.btn.btn-dark.customBtn {
 a.btn.btn-dark.customBtns {
     border: 1px solid rgba(168, 130, 79, 1);
     /* background:var(--bg-color); */
-        background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+        background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
 
     color: #fff;
     /* line-height: 18px; */
@@ -1244,7 +1244,7 @@ a.btn.btn-dark.customBtns {
 button.btn.btn-dark.customBtn {
     border: 1px solid rgba(168, 130, 79, 1);
     /* background:var(--bg-color); */
-        background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+        background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
 
     color: #fff;
     /* line-height: 18px; */
@@ -1287,7 +1287,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(180.99deg, #dfbf8f -53.71%, #6e4527 154.28%);
+    background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
     color: #fff;
     height: 100%;
 }
