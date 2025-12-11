@@ -38,5 +38,44 @@ class CartController extends Controller
 
     }
 
+    public function apply_promocode(Request $request)
+    {
+        $request->validate([
+            'promo_id' => 'required|exists:promocodes,id',
+            'amount'   => 'required|numeric',
+        ]);
+
+        try {
+            $promoId = $request->promo_id;
+            $amount = (int) $request->amount; 
+
+            $data = $this->UserOrderService->User_Apply_PromoCode($request);
+            //dd($data);
+            
+            if ($data['status'] === 'success') {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $data['message'],
+                    'data' => $data
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $data['message'],
+                    'data' => (object)[]
+                ], 422); 
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to apply promo code',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
 
 }
