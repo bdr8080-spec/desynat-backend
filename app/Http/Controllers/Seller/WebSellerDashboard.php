@@ -188,12 +188,11 @@ class WebSellerDashboard extends Controller
         return redirect()->back()->with('error',$data['message']);
     }
 
-
     $data=$data['data'];
     
     if($request->payment_method=='Myfatoorah'){
 
-        return redirect()->to('/myfatoorah/' . $data->transaction_id); // send To Payment Gateway
+        return redirect()->to('/myfatoorah/' . $data->transaction_id.'?type=subcription'); // send To Payment Gateway
     }
 
 
