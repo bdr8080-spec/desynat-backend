@@ -37,29 +37,34 @@ class UserGiftCardController extends Controller
     {
         $token      = config('myfatoorah.api_key');
         $isTest     = config('myfatoorah.test_mode');
-        $countryIso = config('myfatoorah.country_iso');  
+        // $countryIso = config('myfatoorah.country_iso');  
+        $countryIso = "ARE";  
+
 
         $baseUrl = $isTest
             ? 'https://apitest.myfatoorah.com'
             : 'https://api.myfatoorah.com';
 
+            // dd($baseUrl);
+
         $response = Http::withHeaders([
             'Authorization' => "Bearer $token",
             'Content-Type'  => 'application/json',
         ])->post("$baseUrl/v2/InitiateSession", [
-            "CustomerIdentifier" => auth()->id(),
+            "CustomerIdentifier" => "cust_".Now(),
             "CountryCode"        => $countryIso,
         ]);
 
         if ($response->failed()) {
-            //dd("MyFatoorah ERROR", $response->status(), $response->body());
+            dd("MyFatoorah ERROR", $response->status(), $response->body());
         }
 
         $sessionId = $response->json()['Data']['SessionId'];
-        //dd($sessionId);
+        // dd($sessionId);
+
         $giftCardCategory = $this->UserGiftCardService->giftCard($request)['data'];
        // dd($giftCardCategory);
-        return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory'));
+        return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory','baseUrl'));
     }
 
     public function view_gift_card($id) {

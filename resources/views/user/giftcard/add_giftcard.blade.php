@@ -11,7 +11,8 @@
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
-        <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
+        <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
+                class="img-fluid"></a>
         <h3>Add Gift Card</h3>
     </div>
 
@@ -23,12 +24,10 @@
                         <h6>Select Occasion Type</h6>
                         <div class="occasion-buttons">
                             @foreach($giftCardCategory as $index => $category)
-                                <button 
-                                    class="occasion-btn {{ $index === 0 ? 'active' : '' }}" 
-                                    data-img="{{ $category['image'] }}"
-                                    data-id="{{ $category['id'] }}">
-                                    {{ $category['name_english'] }}
-                                </button>
+                            <button class="occasion-btn {{ $index === 0 ? 'active' : '' }}"
+                                data-img="{{ $category['image'] }}" data-id="{{ $category['id'] }}">
+                                {{ $category['name_english'] }}
+                            </button>
                             @endforeach
                         </div>
                     </div>
@@ -56,44 +55,48 @@
 
                 <form id="giftCardForm">
                     @csrf
-                <div class="gift-pnl mt-4">
-                    <input type="hidden" name="amount" id="amount" value="50">
-                    <input type="hidden" name="gift_card_id" id="gift_card_id" value="{{ $giftCardCategory[0]['id'] }}">
-                    <input type="hidden" name="notes" id="notes">
-                    <input type="hidden" name="user_id" id="user_id" value="{{ auth()->id() }}">
-                    <h6>Recipient Details</h6>
                     <div class="gift-pnl mt-4">
-                    <h6>Recipient Details</h6>
-                    <div class="form-group w-100 py-2">
-                        <label>Name</label>
-                        <input type="text" name="receiver_name" class="form-control pline-10" placeholder="Name">
-                        <span class="text-danger error-text receiver_name_error"></span>
+                        <input type="hidden" name="amount" id="amount" value="50">
+                        <input type="hidden" name="gift_card_id" id="gift_card_id"
+                            value="{{ $giftCardCategory[0]['id'] }}">
+                        <input type="hidden" name="notes" id="notes">
+                        <input type="hidden" name="user_id" id="user_id" value="{{ auth()->id() }}">
+                        <h6>Recipient Details</h6>
+                        <div class="gift-pnl mt-4">
+                            <h6>Recipient Details</h6>
+                            <div class="form-group w-100 py-2">
+                                <label>Name</label>
+                                <input type="text" name="receiver_name" class="form-control pline-10"
+                                    placeholder="Name">
+                                <span class="text-danger error-text receiver_name_error"></span>
+                            </div>
+                            <div class="form-group w-100 py-2">
+                                <label>Email ID</label>
+                                <input type="text" name="receiver_email" class="form-control pline-10"
+                                    placeholder="Email ID">
+                                <span class="text-danger error-text receiver_email_error"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group w-100 py-2">
-                        <label>Email ID</label>
-                        <input type="text" name="receiver_email" class="form-control pline-10" placeholder="Email ID">
-                        <span class="text-danger error-text receiver_email_error"></span>
+                    <div class="gift-pnl">
+                        <h6>From</h6>
+                        <div class="form-group w-100 py-2">
+                            <label>Name</label>
+                            <input type="text" name="sender_name" class="form-control pline-10" placeholder="Name">
+                            <span class="text-danger error-text sender_name_error"></span>
+                        </div>
+                        <div class="form-group w-100 py-2">
+                            <label>Email ID</label>
+                            <input type="text" name="sender_email" class="form-control pline-10" placeholder="Email ID">
+                            <span class="text-danger error-text sender_email_error"></span>
+                        </div>
+                        <div class="form-group w-100 py-2">
+                            <label>Wish Message</label>
+                            <textarea name="wish_message" rows="3" class="form-control pline-10"
+                                placeholder="Write here"></textarea>
+                            <span class="text-danger error-text wish_message_error"></span>
+                        </div>
                     </div>
-                </div>
-                </div>
-                <div class="gift-pnl">
-                    <h6>From</h6>
-                    <div class="form-group w-100 py-2">
-                        <label>Name</label>
-                        <input type="text" name="sender_name" class="form-control pline-10" placeholder="Name">
-                        <span class="text-danger error-text sender_name_error"></span>
-                    </div>
-                    <div class="form-group w-100 py-2">
-                        <label>Email ID</label>
-                        <input type="text" name="sender_email" class="form-control pline-10" placeholder="Email ID">
-                        <span class="text-danger error-text sender_email_error"></span>
-                    </div>
-                    <div class="form-group w-100 py-2">
-                        <label>Wish Message</label>
-                        <textarea name="wish_message" rows="3" class="form-control pline-10" placeholder="Write here"></textarea>
-                        <span class="text-danger error-text wish_message_error"></span>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -110,7 +113,7 @@
                     </label>
                 </div>
                 <div id="myfatoorah-box" style="display:none;">
-                    <div id="myfatoorah-container"></div> 
+                    <div id="myfatoorah-container"></div>
                 </div>
                 <!-- <div class="payment-option mb-3">
                     <label class="custom-radio">
@@ -142,13 +145,15 @@
             <div class="gift-pnl mt-4">
                 <h6>Note</h6>
                 <div class="note-bg">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto vero sint, odit neque placeat natus voluptates assumenda, molestiae incidunt quos deserunt illum sequi. Laborum culpa quaerat officia debitis labore! Facere.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto vero sint, odit neque
+                        placeat natus voluptates assumenda, molestiae incidunt quos deserunt illum sequi. Laborum culpa
+                        quaerat officia debitis labore! Facere.</p>
                 </div>
             </div>
 
         </div>
 
-       
+
 
     </div>
 
@@ -156,42 +161,40 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).on("click", ".occasion-btn", function () {
-        $(".occasion-btn").removeClass("active");
+$(document).on("click", ".occasion-btn", function() {
+    $(".occasion-btn").removeClass("active");
+    $(this).addClass("active");
+    let newImg = $(this).data("img");
+    $("#occasionImage").attr("src", newImg);
+    let giftCardId = $(this).data("id");
+    $("#gift_card_id").val(giftCardId);
+});
+
+
+$(document).ready(function() {
+    $(".amount-btn").click(function() {
+        $(".amount-btn").removeClass("active");
         $(this).addClass("active");
-        let newImg = $(this).data("img");
-        $("#occasionImage").attr("src", newImg);
-        let giftCardId = $(this).data("id");
-        $("#gift_card_id").val(giftCardId);
+        let btnText = $(this).text().trim();
+        if (btnText === "Enter Amount") {
+            $(".amountpnl").show();
+            $("#customAmount").val("");
+            $("#amount").val("");
+        } else {
+            $(".amountpnl").hide();
+            let value = btnText.split(" ")[0];
+            $("#amount").val(value);
+        }
     });
-
-
-    $(document).ready(function () {
-        $(".amount-btn").click(function () {
-            $(".amount-btn").removeClass("active"); 
-            $(this).addClass("active"); 
-            let btnText = $(this).text().trim();
-            if (btnText === "Enter Amount") {
-                $(".amountpnl").show();
-                $("#customAmount").val("");
-                $("#amount").val(""); 
-            } else {
-                $(".amountpnl").hide();
-                let value = btnText.split(" ")[0]; 
-                $("#amount").val(value); 
-            }
-        });
-        $(document).on("input", "#customAmount", function () {
-            $("#amount").val($(this).val());
-        });
+    $(document).on("input", "#customAmount", function() {
+        $("#amount").val($(this).val());
     });
-    
-    $(document).ready(function () {
-        let noteText = $(".note-bg p").text().trim();
-        $("#notes").val(noteText);
-    });
+});
 
-
+$(document).ready(function() {
+    let noteText = $(".note-bg p").text().trim();
+    $("#notes").val(noteText);
+});
 </script>
 
 <!-- <script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script>
@@ -241,13 +244,13 @@ document.addEventListener("DOMContentLoaded", function () {
 </script> -->
 
 <!-- <script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script> -->
-   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
 <script src="https://portal.myfatoorah.com/payment/v1/session.js"></script>
 <script src="https://portal.myfatoorah.com/cardview/v2/cardview.js"></script>
- 
+
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const onlineRadio = document.getElementById("onlinePayment");
     const mfBox = document.getElementById("myfatoorah-box");
     const mfContainer = document.getElementById("myfatoorah-container");
@@ -259,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Add event listener to the radio button to show/hide the payment form
-    onlineRadio.addEventListener("change", function () {
+    onlineRadio.addEventListener("change", function() {
         if (this.checked) {
             console.log("Radio button checked, showing MyFatoorah...");
             loadMF();
@@ -277,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mfBox.style.display = "block";
 
         // Ensure the session ID is being passed correctly
-        let sessionId = "{{ $sessionId }}"; 
+        let sessionId = "{{ $sessionId }}";
         console.log("Loaded Session ID:", sessionId);
 
         if (!sessionId) {
@@ -300,11 +303,11 @@ document.addEventListener("DOMContentLoaded", function () {
         MyFatoorah.init({
             sessionId: sessionId,
             countryCode: "KW",
-            cardViewId: "myfatoorah-container", 
-            onPaymentRequest: function () {
+            cardViewId: "myfatoorah-container",
+            onPaymentRequest: function() {
                 console.log("Submitting payment...");
             },
-            onError: function (error) {
+            onError: function(error) {
                 console.error("MyFatoorah Error:", error);
             }
         });
@@ -317,13 +320,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- buy guft card -->
 <script>
-$(document).ready(function () {
+$(document).ready(function() {
     $("#notes").val($(".note-bg p").text().trim());
-    $(document).on("input", ".form-control, textarea", function () {
+    $(document).on("input", ".form-control, textarea", function() {
         $(this).siblings(".error-text").text("");
     });
 
-    $(document).on("click", ".amount-btn", function () {
+    $(document).on("click", ".amount-btn", function() {
         $(".amount-btn").removeClass("active");
         $(this).addClass("active");
 
@@ -340,11 +343,11 @@ $(document).ready(function () {
         }
     });
 
-    $("#customAmount").on("input", function () {
+    $("#customAmount").on("input", function() {
         $(".amount-error").text("");
     });
 
-    $("#giftCardForm").on("submit", function (e) {
+    $("#giftCardForm").on("submit", function(e) {
         e.preventDefault();
 
         $(".error-text").text("");
@@ -377,7 +380,8 @@ $(document).ready(function () {
             hasError = true;
         }
         if (receiver_email === "" || !emailRegex.test(receiver_email)) {
-            $("input[name='receiver_email']").siblings(".error-text").text("Please enter valid Receiver Email");
+            $("input[name='receiver_email']").siblings(".error-text").text(
+                "Please enter valid Receiver Email");
             hasError = true;
         }
         if (sender_name === "") {
@@ -385,11 +389,13 @@ $(document).ready(function () {
             hasError = true;
         }
         if (sender_email === "" || !emailRegex.test(sender_email)) {
-            $("input[name='sender_email']").siblings(".error-text").text("Please enter valid Sender Email");
+            $("input[name='sender_email']").siblings(".error-text").text(
+                "Please enter valid Sender Email");
             hasError = true;
         }
         if (wish_message === "") {
-            $("textarea[name='wish_message']").siblings(".error-text").text("Please enter Wish Message");
+            $("textarea[name='wish_message']").siblings(".error-text").text(
+                "Please enter Wish Message");
             hasError = true;
         }
 
@@ -404,19 +410,19 @@ $(document).ready(function () {
             // beforeSend: function () {
             //     $(".paybtn-common").prop("disabled", true).text("Processing...");
             // },
-            success: function (response) {
+            success: function(response) {
                 // $(".paybtn-common").prop("disabled", false).text("Pay Now");
 
                 if (response.status === "success") {
                     toastr.success(response.message);
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.href = "{{ route('user.gift_cards') }}";
                     }, 2000);
                 } else {
                     toastr.error(response.message);
                 }
             },
-            error: function () {
+            error: function() {
                 $(".paybtn-common").prop("disabled", false).text("Pay Now");
                 toastr.error("Something went wrong. Please try again!");
             }
@@ -430,4 +436,3 @@ $(document).ready(function () {
 
 
 @endsection
-

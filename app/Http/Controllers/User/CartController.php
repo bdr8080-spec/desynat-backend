@@ -115,4 +115,12 @@ class CartController extends Controller
 
 
 
+
+    public function Payment_Callback(Request $request){
+
+        dd($request->all());
+
+    }
+
+
 }

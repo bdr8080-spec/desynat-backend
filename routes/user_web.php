@@ -77,8 +77,12 @@ use App\Http\Controllers\User\CartController;
    Route::post('apply_promocode',[CartController::class, 'apply_promocode'])->name('user.apply_promocode');
    Route::post('apply_giftcard',[CartController::class, 'apply_giftcard'])->name('user.apply_giftcard');
 
+});
 
-   });
+
+
+Route::get('Payment-Callback',[CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
+
 
 
  Route::match(['get', 'post'], '/route1', function () {
@@ -97,6 +101,11 @@ Route::match(['get', 'post'], '/saved-address', function () {
      return view('user.profile.saved-address');
 });
 
+
+Route::match(['get', 'post'], '/order-place', function () {
+     return view('user.carts.orderplace');
+
+})->name('user.order-place');
 
 // Route::match(['get', 'post'], '/view-cart', function () {
 

@@ -76,6 +76,7 @@ class MyFatoorahController extends Controller {
 
             $mfObj   = new MyFatoorahPayment($this->mfConfig);
 
+
             $payment = $mfObj->getInvoiceURL($curlData, $paymentId, $orderId, $sessionId);
             
 
