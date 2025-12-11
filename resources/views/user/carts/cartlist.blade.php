@@ -197,14 +197,18 @@
                             <div class="giftinfo">
                                 <div>
                                     <img src="{{ asset('user/assets/images/gift-ic.svg') }}" class="img-fluid">
-                                    Have a Gift Card
+                                    <span id="applyGiftCardText">Have a Gift Card</span>
                                 </div>
 
                                 <a href="javascript:void(0)" 
                                 data-bs-toggle="modal"
                                 data-bs-target="#giftModal"
-                                class="moreshop">
+                                class="moreshop" id="applyGiftCardBtn">
                                     Apply Gift Card <i class="bi bi-arrow-right"></i>
+                                </a>
+                                <a href="javascript:void(0)" 
+                                    class="moreshop d-none" id="cancelGiftCardBtn">
+                                    Cancel Gift Card <i class="bi bi-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -284,34 +288,38 @@
 </div>
 
 <!-- gift card Modal -->
+
 <div class="modal fade" id="giftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title fs-5" id="exampleModalLabel">Gift Card</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-            <div class="gift-panel-list">
-                <div class="form-group w-100 py-2">
-                    <label>16 Digit Gift Card Number</label>
-                    <input type="text" class="form-control pline-10" placeholder="16 Digit Gift Card Number">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fs-5" id="exampleModalLabel">Gift Card</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="gift-panel-list">
+                    <div class="form-group w-100 py-2">
+                        <label>16 Digit Gift Card Number</label>
+                        <input type="text" id="giftCardNumber" class="form-control pline-10" placeholder="16 Digit Gift Card Number">
+                        <div id="giftCardNumberError" class="text-danger text-center" style="display: none;"></div>
+                    </div>
+                    <div class="form-group w-100 py-2">
+                        <label>Enter PIN</label>
+                        <input type="text" id="giftCardPin" class="form-control pline-10" placeholder="Enter PIN">
+                        <div id="giftCardPinError" class="text-danger text-center" style="display: none;"></div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="button" id="redeemGiftCardBtn" class="customBtn mb-3 white-btn">Redeem</button>
+                    </div>
                 </div>
-                <div class="form-group w-100 py-2">
-                    <label>Enter PIN</label>
-                    <input type="text" class="form-control pline-10" placeholder="Enter PIN">
-                </div>
-                
-                <div class="mt-4">
-                    <button type="submit" class="customBtn mb-3 white-btn">Redeem </button>
-                </div>
-                
             </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
+
+
+
+
 
 
 @endsection
@@ -544,6 +552,176 @@ if (performance.navigation.type === 2) {
         });
     });
 </script>
+
+<!-- gift card apply -->
+
+
+<script>
+    $(document).ready(function () {
+
+    $(document).on('click', '#redeemGiftCardBtn', function () {
+        var giftCardNumber = $('#giftCardNumber').val().trim();
+        var giftCardPin = $('#giftCardPin').val().trim();
+        var isValid = true;
+
+        $('#giftCardNumberError').text(''); 
+        $('#giftCardPinError').text('');  
+
+        if (giftCardNumber === '' || giftCardNumber.length !== 16 || !/^\d{16}$/.test(giftCardNumber)) {
+            $('#giftCardNumberError').text('Please enter 16 digit gift card number').css('display', 'block');
+            isValid = false;
+        }
+
+        if (giftCardPin === '' || giftCardPin.length !== 4 || !/^\d{4}$/.test(giftCardPin)) {
+            $('#giftCardPinError').text('Please enter 4 digit pin').css('display', 'block');
+            isValid = false;
+        }
+
+        if (isValid) {
+            $.ajax({
+                url: '/user/apply_giftcard',
+                method: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}" 
+                },
+                data: {
+                    giftCardNo: giftCardNumber,
+                    giftCardPin: giftCardPin
+                },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        var giftCardData = response.data.data ? response.data.data : response.data;
+                        console.log(giftCardData);
+                        $('#giftModal').modal('hide');
+                        
+                        $('#applyGiftCardBtn').hide(); 
+                        $('#cancelGiftCardBtn').removeClass('d-none');
+                        $('#applyGiftCardText').text('Gift Card Applied'); 
+                        
+                        var giftCardAmount = parseFloat(giftCardData.GiftCardAmount); 
+                        var totalAmount = parseFloat($('.giftinfo').filter(function() {
+                            return $(this).find('div').first().text().trim() === 'Total Amount';
+                        }).find('div').last().text().replace(' KD', '').trim()); 
+
+                        var updatedTotalAmount = totalAmount - giftCardAmount;
+                        
+                        $('.giftinfo').each(function() {
+                            var title = $(this).find('div').first().text().trim();
+                            if (title === 'Total Amount') {
+                                $(this).find('div').last().text(updatedTotalAmount % 1 === 0 ? updatedTotalAmount.toFixed(0) + ' KD' : updatedTotalAmount.toFixed(2) + ' KD');
+                            }
+                        });
+                        var previousSavingsText = $('#promoSavingsText').text().trim();
+                        var previousSavingsMatch = previousSavingsText.match(/(\d+(\.\d+)?)(?=\s*KD)/);
+                        var previousSavings = previousSavingsMatch ? parseFloat(previousSavingsMatch[0]) : 0;
+                        var totalSavings = previousSavings + giftCardAmount; // Add gift card amount to total savings
+
+                        $('#promoSavingsText').text("You will save " + (totalSavings % 1 === 0 ? totalSavings.toFixed(0) : totalSavings.toFixed(2)) + " KD on this");
+
+                        // Add Gift Card Discount under Coupon Discount
+                        $('.giftinfo').each(function() {
+                            var title = $(this).find('div').first().text().trim();
+                            if (title === 'Coupon Discount') {
+                                $(this).after(`
+                                    <div class="giftinfo">
+                                        <div>Gift Card Discount</div>
+                                        <div class="red-color">${giftCardAmount % 1 === 0 ? giftCardAmount.toFixed(0) : giftCardAmount.toFixed(2)} KD</div>
+                                    </div>
+                                `); 
+                            }
+                        });
+
+                        // Store gift card and total savings data in localStorage (not removing promo code data)
+                        var savedPromoData = JSON.parse(localStorage.getItem('appliedPromo')) || {};
+                        var appliedGiftCardData = {
+                            giftCardNumber: giftCardNumber,
+                            giftCardPin: giftCardPin,
+                            finalAmount: updatedTotalAmount,
+                            totalSavings: totalSavings // Store total savings in localStorage
+                        };
+                        localStorage.setItem('appliedGiftCard', JSON.stringify(appliedGiftCardData));
+                        localStorage.setItem('appliedPromo', JSON.stringify(savedPromoData));
+
+                        // Show success message
+                        toastr.success("Gift Card applied successfully!");
+                    } else {
+                        toastr.error(response.message || "Failed to apply gift card.");
+                    }
+                },
+                error: function () {
+                    toastr.error("An error occurred while applying the gift card.");
+                }
+            });
+        }
+    });
+
+    // Handle cancel gift card action
+    $(document).on('click', '#cancelGiftCardBtn', function () {
+        toastr.error("Gift card removed.");
+        localStorage.removeItem('appliedGiftCard');
+        // Reset button and text
+        $('#applyGiftCardBtn').show();  // Show the Apply Gift Card button
+        $('#cancelGiftCardBtn').addClass('d-none');  // Hide the Cancel Gift Card button
+        $('#applyGiftCardText').text('Have a Gift Card'); // Reset text
+        
+        // Optionally reset other UI elements (e.g., Total Amount) to original values
+        setTimeout(function() {
+            location.reload(); // Reload the page after closing modal to revert any changes
+        }, 1500);  // Delay to show the toast message
+    });
+
+    // Handle removing error message dynamically while typing in the Gift Card Number field
+    $('#giftCardNumber').on('input', function () {
+        $('#giftCardNumberError').css('display', 'none');
+    });
+
+    // Handle removing error message dynamically while typing in the Gift Card PIN field
+    $('#giftCardPin').on('input', function () {
+        $('#giftCardPinError').css('display', 'none');
+    });
+
+    // Load saved gift card data from localStorage and update UI on page refresh
+    var savedGiftCardData = localStorage.getItem('appliedGiftCard');
+    if (savedGiftCardData) {
+        savedGiftCardData = JSON.parse(savedGiftCardData);
+        
+        // Update text outside modal
+        $('#applyGiftCardText').text('Gift Card Applied');
+        $('#applyGiftCardBtn').text('Cancel');
+        $('#applyGiftCardBtn').attr('id', 'cancelGiftCardBtn');
+
+        // Update Total Amount and "You will save" text
+        $('.giftinfo').each(function() {
+            var title = $(this).find('div').first().text().trim();
+            if (title === 'Total Amount') {
+                $(this).find('div').last().text(savedGiftCardData.finalAmount.toFixed(2) + ' KD');
+            }
+        });
+
+        var totalSavings = savedGiftCardData.totalSavings;
+        $('#promoSavingsText').text("You will save " + totalSavings.toFixed(2) + " KD on this");
+    }
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

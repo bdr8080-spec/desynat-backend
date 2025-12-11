@@ -75,6 +75,43 @@ class CartController extends Controller
         }
     }
 
+    public function apply_giftcard(Request $request)
+    {
+        $request->validate([
+            'giftCardNo' => 'required|numeric',
+            'giftCardPin'   => 'required|numeric',
+        ]);
+
+        try {
+            // $promoId = $request->promo_id;
+            // $amount = (int) $request->amount; 
+
+            $data = $this->UserOrderService->User_Apply_giftCardInOrder($request);
+            //dd($data);
+            
+            if ($data['status'] === 'success') {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $data['message'],
+                    'data' => $data
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $data['message'],
+                    'data' => (object)[]
+                ], 422); 
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to apply promo code',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
 
