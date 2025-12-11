@@ -175,25 +175,26 @@
 
                                         <div class="dropdown">
                                             <button
-                                                class="btn btn-light border dropdown-toggle d-flex align-items-center w-100 form-control"
+                                                class="btn btn-light border dropdown-toggle d-flex  w-100 form-control justify-content-between align-items-center"
                                                 type="button" id="countryDropdown1" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
+                                                <div>
+                                                    <span id="selected-flag1">
+                                                        <img src="{{$seller_details->store_info->country_info->flag1}}"
+                                                            alt="flag" width="25" height="16">
+                                                        {{$seller_details->store_info->country_info->name }}
+                                                    </span>
 
-                                                <span id="selected-flag1">
-                                                    <img src="{{$seller_details->store_info->country_info->flag1}}"
-                                                        alt="flag" width="25" height="16">
-                                                    {{$seller_details->store_info->country_info->name }}
-                                                </span>
+                                                    <span id="selected-code1" class="ms-2">
 
-                                                <span id="selected-code1" class="ms-2">
-
-                                                </span>
+                                                    </span>
+                                                </div>
                                             </button>
                                             <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
                                                 @foreach ($all_country as $index => $item)
-                                                <li>
+                                                <li class="py-1">
                                                     <label
-                                                        class="dropdown-item d-flex align-items-center gap-2 country-option1"
+                                                        class="dropdown-item d-flex align-items-center gap-3 country-option1"
                                                         style="cursor: pointer;">
                                                         <input type="radio" name="country" value="{{ $item->name }}"
                                                             data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
@@ -201,7 +202,7 @@
                                                             {{ $seller_details->store_info->country_code == $item->id ? 'checked' : '' }}
                                                             hidden>
                                                         <div width="25" height="16">
-                                                            <span>{{ $item->flag . $item->name }}
+                                                            <span>{{ $item->flag.' '.' '. $item->name }}
                                                             </span>
                                                         </div>
                                                     </label>
@@ -279,7 +280,7 @@
                                         <label>Store Phone Number</label>
                                     </div>
 
-                                    <div class="form-group d-flex gap-2 w-100">
+                                    <div class="form-group d-flex gap-0 w-100">
                                         <div class="dropdown">
                                             <button
                                                 class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
@@ -289,6 +290,7 @@
                                                 <span id="selected-flag">
                                                     <img src="{{$seller_details->store_info->country_info->flag1}}"
                                                         alt="flag" width="25" height="16">
+                                                    {{$seller_details->store_info->country_info->dial_code}}
                                                 </span>
 
                                                 <span id="selected-code" class="ms-2">
@@ -1073,7 +1075,7 @@ $(document).ready(function() {
 
         // Update the flag and code shown on the button
         $('#selected-flag1').html('');
-        $('#selected-code1').text(flag + ' ' + code);
+        $('#selected-code1').text(flag + ' ' + ' ' + code);
 
         // Set the radio input as checked
         radio.prop('checked', true);
