@@ -1,5 +1,6 @@
-@extends('user.layout.header')
+@extends('user.layout.app')
 
+@section('content')
 
 <style>
 #myfatoorah-box {
@@ -111,32 +112,8 @@
                         </div>
                     </label>
                 </div>
-                <div id="" style="">
-                    <div id="embedded-payment"></div>
-
-                    <div id="unified-session"></div>
-
-                    <div style="width:400px; margin: auto;">
-                        <div id="apple-pay"></div>
-                        <!-- This is the custom button for Apple Pay. -->
-                        <!-- <button onclick="startApplePay()" style="display: block; margin: 0 auto; width: 400px; height: 30px; cursor: pointer; background-color: #000000; border: none; color: white; font-size: 16px; border-radius: 8px">Apple Pay</button> -->
-                    </div>
-
-                    <!-- This is a div element can be used as a container for Google Pay -->
-                    <div style="width: 400px; margin: 0;">
-                        <div id="google-pay"></div>
-                    </div>
-
-                    <!-- This is a div element can be used as a container for STC Pay -->
-                    <div style="width: 400px; margin: 0;">
-                        <div id="stc-pay"></div>
-                    </div>
-
-                    <div style="width: 400px; margin: 0;">
-                        <div id="Card"></div>
-                    </div>
-
-
+                <div id="myfatoorah-box" style="display:none;">
+                    <div id="myfatoorah-container"></div>
                 </div>
                 <!-- <div class="payment-option mb-3">
                     <label class="custom-radio">
@@ -179,237 +156,283 @@
 
 
     </div>
+
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).on("click", ".occasion-btn", function() {
+    $(".occasion-btn").removeClass("active");
+    $(this).addClass("active");
+    let newImg = $(this).data("img");
+    $("#occasionImage").attr("src", newImg);
+    let giftCardId = $(this).data("id");
+    $("#gift_card_id").val(giftCardId);
+});
+
+
+$(document).ready(function() {
+    $(".amount-btn").click(function() {
+        $(".amount-btn").removeClass("active");
+        $(this).addClass("active");
+        let btnText = $(this).text().trim();
+        if (btnText === "Enter Amount") {
+            $(".amountpnl").show();
+            $("#customAmount").val("");
+            $("#amount").val("");
+        } else {
+            $(".amountpnl").hide();
+            let value = btnText.split(" ")[0];
+            $("#amount").val(value);
+        }
+    });
+    $(document).on("input", "#customAmount", function() {
+        $("#amount").val($(this).val());
+    });
+});
+
+$(document).ready(function() {
+    let noteText = $(".note-bg p").text().trim();
+    $("#notes").val(noteText);
+});
+</script>
+
+<!-- <script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const onlineRadio = document.getElementById("onlinePayment");
+    const mfBox = document.getElementById("myfatoorah-box");
+
+    if (onlineRadio.checked) {
+    //console.log(123);
+        loadMF();
+    }
+
+    onlineRadio.addEventListener("change", function () {
+        if (this.checked) loadMF();
+        else mfBox.style.display = "none";
+    });
+
+    function loadMF() {
+         //console.log(456);
+        mfBox.style.display = "block";
+
+        // Ensure the session ID is being passed correctly
+        let sessionId = "{{ $sessionId }}";
+        console.log("Loaded Session ID:", sessionId);
+
+        if (!sessionId) {
+            console.error("ERROR: MyFatoorah session ID missing");
+            return;
+        }
+
+        // Load the card view UI
+        MyFatoorah.init({
+            sessionId: sessionId,
+            countryCode: "KW",
+            cardViewId: "myfatoorah-container",
+            onPaymentRequest: function () {
+                console.log("Submitting payment...");
+            },
+            onError: function (error) {
+                console.error("MyFatoorah Error:", error);
+            }
+        });
+    }
+});
+</script> -->
+
+<!-- <script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
 <script src="https://portal.myfatoorah.com/payment/v1/session.js"></script>
+<script src="https://portal.myfatoorah.com/cardview/v2/cardview.js"></script>
+
 
 <script>
-var sessionId = "{{$sessionId}}";
-var countryCode = "ARE";
-var currencyCode = "AED";
-var amount = "0.25";
+document.addEventListener("DOMContentLoaded", function() {
+    const onlineRadio = document.getElementById("onlinePayment");
+    const mfBox = document.getElementById("myfatoorah-box");
+    const mfContainer = document.getElementById("myfatoorah-container");
 
-var payment = "http://127.0.0.1:8000/Payment-Callback";
+    // Check if the radio button is checked on page load
+    if (onlineRadio.checked) {
+        console.log("Radio button is already checked, loading MyFatoorah...");
+        loadMF();
+    }
 
+    // Add event listener to the radio button to show/hide the payment form
+    onlineRadio.addEventListener("change", function() {
+        if (this.checked) {
+            console.log("Radio button checked, showing MyFatoorah...");
+            loadMF();
+        } else {
+            console.log("Radio button unchecked, hiding MyFatoorah...");
+            mfBox.style.display = "none"; // Hide MyFatoorah box when unchecked
+        }
+    });
 
+    // Function to load MyFatoorah payment form
+    function loadMF() {
+        console.log("Loading MyFatoorah...");
 
-// Define a callback function to handle the payment response
-function paymentCallback(response) {
-    // You can handle the response and send it to your server or perform any other action
-    console.log(response);
+        // Show the payment box when MyFatoorah is loaded
+        mfBox.style.display = "block";
 
-    // For example, send the response to your server using fetch
-    fetch(paymentUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
+        // Ensure the session ID is being passed correctly
+        let sessionId = "{{ $sessionId }}";
+        console.log("Loaded Session ID:", sessionId);
+
+        if (!sessionId) {
+            console.error("ERROR: MyFatoorah session ID is missing!");
+            return;
+        }
+
+        // Check if the container has the correct styles to display the card view
+        if (!mfContainer) {
+            console.error("ERROR: MyFatoorah container not found!");
+            return;
+        }
+
+        // Ensure the container has a valid size (width/height) for MyFatoorah to render
+        mfContainer.style.width = "100%";
+        mfContainer.style.height = "400px"; // Set height for visibility
+        console.log("MyFatoorah container size set to 100% width and 400px height.");
+
+        // Initialize MyFatoorah with the provided session ID and other configurations
+        MyFatoorah.init({
+            sessionId: sessionId,
+            countryCode: "KW",
+            cardViewId: "myfatoorah-container",
+            onPaymentRequest: function() {
+                console.log("Submitting payment...");
             },
-            body: JSON.stringify(response) // Send the payment response to your server
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Server response:", data);
-        })
-        .catch(error => {
-            console.error("Error while sending data to server:", error);
+            onError: function(error) {
+                console.error("MyFatoorah Error:", error);
+            }
         });
-}
 
-// debugger
-var config = {
-    sessionId: sessionId,
-    countryCode: countryCode,
-    currencyCode: currencyCode,
-    amount: amount,
-    callback: payment,
-    containerId: "unified-session",
-    paymentOptions: ["Card"], //["GooglePay", "ApplePay", "Card"]
-    supportedNetworks: ["visa", "masterCard"], //["visa", "masterCard", "mada", "amex"]
-    language: "en",
-    settings: {
-        card: {
-            onCardBinChanged: handleCardBinChanged,
-            style: {
-                hideNetworkIcons: false,
-                cardHeight: "200px",
-                tokenHeight: "230px",
-                input: {
-                    color: "black",
-                    fontSize: "15px",
-                    fontFamily: "courier",
-                    inputHeight: "32px",
-                    inputMargin: "3px",
-                    borderColor: "black",
-                    backgroundColor: "green",
-                    borderWidth: "1px",
-                    borderRadius: "30px",
-                    outerRadius: "10px",
-                    //boxShadow: "0 0 10px 5px purple, 0 0 15px 10px lightblue",
-                    placeHolder: {
-                        holderName: "Name On Card",
-                        cardNumber: "Number",
-                        expiryDate: "MM/YY",
-                        securityCode: "CVV",
-                    }
-                },
-                text: {
-                    saveCard: "Save card info for future payments",
-                    addCard: "Use another Card!",
-                    deleteAlert: {
-                        title: "Delete",
-                        message: "Are you sure?",
-                        confirm: "YES",
-                        cancel: "NO"
-                    }
-                },
-                label: {
-                    display: true,
-                    color: "black",
-                    fontSize: "13px",
-                    fontWeight: "bold",
-                    fontFamily: "Times",
-                    text: {
-                        holderName: "Card Holder Name",
-                        cardNumber: "Card Number",
-                        expiryDate: "Expiry Date",
-                        securityCode: "Security Code",
-                    },
-                },
-                error: {
-                    borderColor: "red",
-                    borderRadius: "8px",
-                    //boxShadow: "0 0 10px 5px purple, 0 0 15px 10px lightblue",
-                },
-                button: {
-                    useCustomButton: false,
-                    //onButtonClicked: submit,
-                    textContent: "Pay",
-                    fontSize: "16px",
-                    fontFamily: "Times",
-                    color: "white",
-                    backgroundColor: "#4daee0",
-                    height: "30px",
-                    borderRadius: "8px",
-                    width: "70%",
-                    margin: "0 auto",
-                    cursor: "pointer"
-                },
-                separator: {
-                    useCustomSeparator: false,
-                    textContent: "Enter your card",
-                    fontSize: "20px",
-                    color: "#4daee0",
-                    fontFamily: "sans-serif",
-                    textSpacing: "2px",
-                    lineStyle: "dashed",
-                    lineColor: "black",
-                    lineThickness: "3px"
-                }
+        console.log("MyFatoorah initialized.");
+    }
+});
+</script>
+
+
+<!-- buy guft card -->
+<script>
+$(document).ready(function() {
+    $("#notes").val($(".note-bg p").text().trim());
+    $(document).on("input", ".form-control, textarea", function() {
+        $(this).siblings(".error-text").text("");
+    });
+
+    $(document).on("click", ".amount-btn", function() {
+        $(".amount-btn").removeClass("active");
+        $(this).addClass("active");
+
+        let value = $(this).data("value");
+
+        if (value === "") {
+            $(".amountpnl").show();
+            $("#amount").val(""); // clear hidden input
+        } else {
+            $(".amountpnl").hide();
+            $("#customAmount").val(""); // clear custom input
+            $("#amount").val(value); // set hidden input
+            $(".amount-error").text(""); // clear error
+        }
+    });
+
+    $("#customAmount").on("input", function() {
+        $(".amount-error").text("");
+    });
+
+    $("#giftCardForm").on("submit", function(e) {
+        e.preventDefault();
+
+        $(".error-text").text("");
+
+        let hasError = false;
+
+        let activeBtn = $(".amount-btn.active");
+        let amount = activeBtn.data("value");
+
+        if (amount === "") {
+            let customAmount = $("#customAmount").val().trim();
+            if (customAmount === "" || isNaN(customAmount) || Number(customAmount) <= 0) {
+                $(".amount-error").text("Please Enter Amount");
+                hasError = true;
+            } else {
+                $("#amount").val(customAmount); // set hidden input
             }
         }
-    }
-};
 
-myfatoorah.init(config);
-// myfatoorah.submitStcOtp("1234");
+        let receiver_name = $("input[name='receiver_name']").val().trim();
+        let receiver_email = $("input[name='receiver_email']").val().trim();
+        let sender_name = $("input[name='sender_name']").val().trim();
+        let sender_email = $("input[name='sender_email']").val().trim();
+        let wish_message = $("textarea[name='wish_message']").val().trim();
 
-//Embedded Functions
-function callback(response) {
-    //Pass session id to your backend here
-    if (response.isSuccess) {
-        switch (response.paymentType) {
-            case "ApplePay":
-                console.log("Apple Pay Response>>\n" + JSON.stringify(response));
-                break;
-            case "GooglePay":
-                console.log("Google Pay response >>\n" + JSON.stringify(response));
-                break;
-            case "Card":
-                console.log("Card Response >>\n" + JSON.stringify(response));
-                break;
-            case "StcPay":
-                console.log("STC Pay response >>\n" + JSON.stringify(response));
-                break;
-            default:
-                console.log("Unknown payment type >>\n" + JSON.stringify(response));
-                break;
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (receiver_name === "") {
+            $("input[name='receiver_name']").siblings(".error-text").text("Please enter Receiver Name");
+            hasError = true;
         }
-    } else {
-        console.log("error", response);
-    }
-}
+        if (receiver_email === "" || !emailRegex.test(receiver_email)) {
+            $("input[name='receiver_email']").siblings(".error-text").text(
+                "Please enter valid Receiver Email");
+            hasError = true;
+        }
+        if (sender_name === "") {
+            $("input[name='sender_name']").siblings(".error-text").text("Please enter Sender Name");
+            hasError = true;
+        }
+        if (sender_email === "" || !emailRegex.test(sender_email)) {
+            $("input[name='sender_email']").siblings(".error-text").text(
+                "Please enter valid Sender Email");
+            hasError = true;
+        }
+        if (wish_message === "") {
+            $("textarea[name='wish_message']").siblings(".error-text").text(
+                "Please enter Wish Message");
+            hasError = true;
+        }
 
-// #region STC Pay
-function stcSessionStarted(data) {
-    console.log("STC Session Started\n" + JSON.stringify(data));
-}
+        if (hasError) return;
 
-function paymentSTC(response) {
-    //Here you need to pass session id to you backend here
-    var sessionId = response.sessionId;
-    var STCMobileNumber = response.mobileNumber;
+        let formData = $(this).serialize();
 
-    console.log("SessionID via STC >> ", sessionId);
-    console.log("Mobile Number via STC >> ", STCMobileNumber);
-    console.log("response via STC >> ", response);
-}
+        $.ajax({
+            url: "{{ route('user.buyGiftCard') }}",
+            method: "POST",
+            data: formData,
+            // beforeSend: function () {
+            //     $(".paybtn-common").prop("disabled", true).text("Processing...");
+            // },
+            success: function(response) {
+                // $(".paybtn-common").prop("disabled", false).text("Pay Now");
 
-// #endregion
+                if (response.status === "success") {
+                    toastr.success(response.message);
+                    setTimeout(function() {
+                        window.location.href = "{{ route('user.gift_cards') }}";
+                    }, 2000);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function() {
+                $(".paybtn-common").prop("disabled", false).text("Pay Now");
+                toastr.error("Something went wrong. Please try again!");
+            }
+        });
 
-function sessionCanceled() {
-    console.log("Failed");
-}
+    });
 
-function sessionStarted() {
-    console.log("Start");
-}
-
-//This function enables you to update the amount displayed on Apple Pay and Google Pay after the initiation of the config.
-function updateAmount(amount) {
-    myfatoorah.updateAmount(amount);
-}
-
-//You need to implement here the handling of the callback for Apple Pay
-function paymentAP(response) {
-    //Here you need to pass session id to you backend here
-    var sessionId = response.sessionId;
-    var cardBrandAP = response.card.brand;
-
-    console.log("SessionID via AP >> ", sessionId);
-    console.log("cardBrand via AP >> ", cardBrandAP);
-    console.log("response via AP >> ", response);
-}
-
-//You need to implement here the handling of the callback for Google Pay
-function paymentGP(response) {
-    //Here you need to pass session id to you backend here
-    var sessionId = response.sessionId;
-    var cardBrandGP = response.card.brand;
-
-    console.log("SessionID via GP >> ", sessionId);
-    console.log("cardBrand via GP >> ", cardBrandGP);
-    console.log("response via GP >> ", response);
-}
-
-//Here you implement the function of clicking on the payment button using your own function
-function submit() {
-    console.log("Submit");
-    myfatoorah.submitCardPayment(); //It is mandatory to call this function
-}
-
-//Here you implement the function of clicking on your custom payment button
-function customSubmit() {
-    console.log("Custom Submit");
-    myfatoorah.submitCardPayment(); //It is mandatory to call this function
-}
-
-function handleCardBinChanged(response) {
-    console.log(response);
-}
-
-//Here you specify the actions you need to do when customer clicks on your custom Apple Pay button
-function startApplePay() {
-    console.log("using custom button");
-    myfatoorah.initApplePayPayment(); //It is mandatory to call this function
-}
+});
 </script>
+
+
+
+@endsection
