@@ -2,12 +2,13 @@
 
 @section('content')
 
+<div class="address-tops">
 <div class="my-profile customContainer">
     <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
-        <a class="text-black" href="{{route('dashboard')}}" style="text-decoration: none;"><i class="fa-solid fa-chevron-left"></i>My Saved Address</a>
+        <a class="text-black" href="{{route('dashboard')}}" style="text-decoration: none;"><i class="fa-solid fa-chevron-left"></i> My Saved Address</a>
     </div>
 
-    <div class="saved-address-contenar">
+    <div class="saved-address-contenar mt-3">
         @forelse ($address as $item)
         <div class="saved_address_content">
             <div class="d-flex align-items-center justify-content-between">
@@ -38,27 +39,26 @@
         <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address mb-45" >+ Add New Address</a>
     </div>
 </div>
+</div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-        $(document).on('click', '.setAsdefault', function () {
-            let id = $(this).data('id');
+    $(document).on('click', '.setAsdefault', function () {
+        let id = $(this).data('id');
 
-                $.ajax({
-                    url: "{{ route('user.address_set_default') }}?address_id=" + id,
-                    type: "GET",
-                    success: function (resp) {
-                            toastr.success(resp.message);
-                        setTimeout(() => {
-                           location.reload();
-                        }, 1000);
-                      
-                    }
-                });
+            $.ajax({
+                url: "{{ route('user.address_set_default') }}?address_id=" + id,
+                type: "GET",
+                success: function (resp) {
+                        toastr.success(resp.message);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                    
+                }
+            });
 
-        });
-
+    });
 
 </script>

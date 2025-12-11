@@ -9,9 +9,11 @@ body{
   display: flex;
   flex-direction: column; 
 }
+
 .mid-content{
-    flex: 1; /* this pushes the footer down */
+    flex: 1;
 }
+
 .header-main{
     position: fixed;
     top: 0;
@@ -1741,7 +1743,7 @@ h3.mid-headng{
     margin-top: 10px;
 }
 .setAsdefault{
-    padding: 3px;
+    padding: 3px 7px;
     color: var(--secondry2-color);
 }
 .saved_address_content h6{
@@ -2266,4 +2268,7 @@ width: fit-content;
     height: 13px;
     width: 13px;
     margin-left: 10px;
+}
+.address-tops{
+    padding-top: 150px;
 }
