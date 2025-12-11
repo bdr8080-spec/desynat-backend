@@ -196,7 +196,7 @@
                                                     <label
                                                         class="dropdown-item d-flex align-items-center gap-3 country-option1"
                                                         style="cursor: pointer;">
-                                                        <input type="radio" name="country" value="{{ $item->name }}"
+                                                        <input type="radio" name="country" value="{{ $item->id }}"
                                                             data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
                                                             class="country-radio1"
                                                             {{ $seller_details->store_info->country_code == $item->id ? 'checked' : '' }}
@@ -1075,7 +1075,7 @@ $(document).ready(function() {
 
         // Update the flag and code shown on the button
         $('#selected-flag1').html('');
-        $('#selected-code1').text(flag + ' ' + ' ' + code);
+        $('#selected-code1').text(flag + ' ' + ' ' + name);
 
         // Set the radio input as checked
         radio.prop('checked', true);
