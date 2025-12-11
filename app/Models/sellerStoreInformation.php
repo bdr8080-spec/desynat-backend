@@ -14,7 +14,11 @@ class sellerStoreInformation extends Model
         return $this->belongsTo(country::class, 'country', 'id');
     }
 
-    
+    public function dialer_info()
+    {
+        return $this->belongsTo(country::class, 'country_code', 'dial_code');
+    }
+        
 
     public function seller_information()
     {

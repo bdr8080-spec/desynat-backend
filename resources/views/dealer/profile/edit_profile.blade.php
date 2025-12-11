@@ -199,7 +199,7 @@
                                                         <input type="radio" name="country" value="{{ $item->id }}"
                                                             data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
                                                             class="country-radio1"
-                                                            {{ $seller_details->store_info->country_code == $item->id ? 'checked' : '' }}
+                                                            {{ $seller_details->store_info->country == $item->id ? 'checked' : '' }}
                                                             hidden>
                                                         <div width="25" height="16">
                                                             <span>{{ $item->flag.' '.' '. $item->name }}
@@ -288,13 +288,12 @@
                                                 aria-expanded="false">
 
                                                 <span id="selected-flag">
-                                                    <img src="{{$seller_details->store_info->country_info->flag1}}"
+                                                    <img src="{{$seller_details->store_info->dialer_info->flag1}}"
                                                         alt="flag" width="25" height="16">
-                                                    {{$seller_details->store_info->country_info->dial_code}}
+                                                    {{$seller_details->store_info->country_code}}
                                                 </span>
 
                                                 <span id="selected-code" class="ms-2">
-                                                    {{$seller_details->store_info->country_code }}
                                                 </span>
                                             </button>
                                             <ul class="dropdown-menu p-2" aria-labelledby="countryDropdown">
@@ -310,8 +309,8 @@
                                                             hidden>
 
                                                         <div width="25" height="16">
-                                                            <span>{{ $item->flag }} {{ $item->dial_code }}
-                                                                ({{ $item->name }})
+                                                            <span>{{ $item->flag }}
+                                                                {{ $item->dial_code }} {{ $item->name }}
                                                             </span>
                                                         </div>
                                                     </label>

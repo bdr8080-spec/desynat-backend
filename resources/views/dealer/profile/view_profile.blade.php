@@ -86,7 +86,7 @@
 
 
 <div class="onepage">
-    <div class="container position-relative">
+    <div class="customContainer position-relative">
         <div class="page-wapper dashboard-pnl d-flex justify-content-between mb-4">
             <div class="title24">
                 <a href="{{route('seller.dashboard')}}" style="color:rgb(57, 55, 55)">
