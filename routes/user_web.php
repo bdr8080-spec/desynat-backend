@@ -74,9 +74,9 @@ use App\Http\Controllers\User\CartController;
 
 
    Route::get('view-cart',[CartController::class, 'view_cart'])->name('user.view_cart');
+   Route::post('apply_promocode',[CartController::class, 'apply_promocode'])->name('user.apply_promocode');
 
-
-   });
+});
 
 
 
@@ -100,6 +100,11 @@ Route::match(['get', 'post'], '/saved-address', function () {
      return view('user.profile.saved-address');
 });
 
+
+Route::match(['get', 'post'], '/order-place', function () {
+     return view('user.carts.orderplace');
+
+})->name('user.order-place');
 
 // Route::match(['get', 'post'], '/view-cart', function () {
 

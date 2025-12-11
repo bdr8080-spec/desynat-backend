@@ -9,9 +9,11 @@ body{
   display: flex;
   flex-direction: column; 
 }
+
 .mid-content{
-    flex: 1; /* this pushes the footer down */
+    flex: 1;
 }
+
 .header-main{
     position: fixed;
     top: 0;
@@ -1741,7 +1743,7 @@ h3.mid-headng{
     margin-top: 10px;
 }
 .setAsdefault{
-    padding: 3px;
+    padding: 3px 7px;
     color: var(--secondry2-color);
 }
 .saved_address_content h6{
@@ -2217,7 +2219,11 @@ width: fit-content;
 }
 .card-left{
     display: flex;
-    gap: 20px;
+    gap: 5px;
+}
+.price-old {
+    text-decoration: line-through;
+    color: #00000080;
 }
 .cart-panel {
     border: 1px solid #ddd;
@@ -2263,3 +2269,7 @@ width: fit-content;
     width: 13px;
     margin-left: 10px;
 }
+.address-tops{
+    padding-top: 150px;
+}
+

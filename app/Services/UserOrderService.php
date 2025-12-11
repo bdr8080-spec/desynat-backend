@@ -149,7 +149,7 @@ class UserOrderService
     } catch (\Exception $e) {
         return [
             'status' => 'error',
-            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'message' => 'Failed to apply promo code: ' . $e->getMessage(),
             'data' => []
         ];
     }

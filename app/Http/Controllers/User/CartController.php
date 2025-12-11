@@ -27,7 +27,7 @@ class CartController extends Controller
         $cartData = $this->UserManagementService->product_view_cart_details($data)['data'];
 
         $userAddressId = userAddress::where('user_id',$user->id)->where('set_as_default','1')->value('id');
-        //dd($userAddressId);
+        //dd($cartData);
         $data1 = (object)[
             'delivery_address' => $userAddressId,
             'user_id' => $user->id,
@@ -37,6 +37,45 @@ class CartController extends Controller
         return view('user.carts.cartlist',compact('cartData','promoCodes'));
 
     }
+
+    public function apply_promocode(Request $request)
+    {
+        $request->validate([
+            'promo_id' => 'required|exists:promocodes,id',
+            'amount'   => 'required|numeric',
+        ]);
+
+        try {
+            $promoId = $request->promo_id;
+            $amount = (int) $request->amount; 
+
+            $data = $this->UserOrderService->User_Apply_PromoCode($request);
+            //dd($data);
+            
+            if ($data['status'] === 'success') {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $data['message'],
+                    'data' => $data
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $data['message'],
+                    'data' => (object)[]
+                ], 422); 
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to apply promo code',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
 
 
 
