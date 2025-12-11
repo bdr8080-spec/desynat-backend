@@ -222,7 +222,7 @@
                                         </div>
                                         <div class=" position-relative">
                                             <input type="text" class="form-control blockFirstTime"
-                                                placeholder="Enter store address" name="store_address"
+                                                placeholder="Enter Store Email id " name="store_address"
                                                 value="{{$seller_details->store_info->store_address}}"
                                                 id="store_address">
                                             <div class="gpsmap1" data-bs-toggle="offcanvas" data-bs-target="#gpspanel"
