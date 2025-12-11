@@ -1256,7 +1256,7 @@ button.btn.btn-dark.customBtn {
 .userManagecontent table thead tr th {
     min-width: 134px;
     vertical-align: middle;
-    color: #000;
+      color: #000000a6;
     /* background: transparent linear-gradient(164deg, #013b5100 0%, #c7a15c 100%) 0% 0% no-repeat; */
     /* line-height: 2.1; */
     background: rgba(242, 242, 242, 1);
