@@ -76,16 +76,18 @@ class UserOrderService
 
      $amount=$request->amount;
 
-    // if($request->search){
+    if($request->search){
 
-    // $get_promo_codes=Promocode::where('id',$request->promo_id)->first();
+    $get_promo_codes=Promocode::where('name_english',$request->search)->first();
 
 
-    // }else{
+    }else{
 
         $get_promo_codes=Promocode::where('id',$request->promo_id)->first();
 
-    // }
+    }
+
+    dd($get_promo_codes);
 
 
 
