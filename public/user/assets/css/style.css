@@ -2166,6 +2166,9 @@ width: fit-content;
     color: #fff;
     font-size: 19px;
 }
+.paybtn-common:hover{
+    color: #fff;
+}
 .note-bg{
     background-color: #FFF7EA;
     padding: 10px;
@@ -2205,6 +2208,16 @@ width: fit-content;
 }
 
 /* cart page */
+.red-badge {
+    position: absolute;
+    right: -9px;
+    top: -4px;
+    height: 18px;
+    width: 18px;
+    font-size: 10px;
+    background: #F44336 !important;
+}
+
 .cart-products {
     width: 120px;
     height: 120px;
