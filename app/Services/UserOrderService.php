@@ -76,7 +76,18 @@ class UserOrderService
 
      $amount=$request->amount;
 
-    $get_promo_codes=Promocode::where('id',$request->promo_id)->first();
+    // if($request->search){
+
+    // $get_promo_codes=Promocode::where('id',$request->promo_id)->first();
+
+
+    // }else{
+
+        $get_promo_codes=Promocode::where('id',$request->promo_id)->first();
+
+    // }
+
+
 
        if(!$get_promo_codes){
 
@@ -338,7 +349,6 @@ return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$r
 
  try{
 
-DB::beginTransaction();
 
 $checkOrder=Order::where('order_id', $request->order_id)->first();
 
@@ -359,16 +369,22 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
  // when i Received Payment in Cod
     if($checkOrder->payment_method=='3'){
 
+
+    DB::beginTransaction();
+
         $checkOrder->update(['delivery_status'=>'2']);
 
         $this->AddtocartRemoveData($checkOrder->id);
 
+        DB::commit();
 
         return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
     }
 
     if($checkOrder->payment_method=='2'){ // wallet Payment Code 
    
+         DB::beginTransaction();
+
        $request_data=(object)[
             'user_id'=>$userid,
             ];
@@ -397,6 +413,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
 
     if($checkOrder->payment_method=='1'){
+
+         DB::beginTransaction();
 
         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
