@@ -401,6 +401,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
        //    Cut Amount From The Wallet Amount 
          $this->UserBalancePayOrder($userid,$OrderPayAmount);
 
+          $this->AddtocartRemoveData($checkOrder->id);
+
        $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
 
         DB::commit();
