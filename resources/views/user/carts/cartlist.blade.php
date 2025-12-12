@@ -277,7 +277,7 @@
                                 <div class="label-content d-flex gap-3">
                                     <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
                                     <div class="title">
-                                            In -App Wallet
+                                        In -App Wallet
                                         <div class="small-14">Available Balance : ( {{$walletBalance}} )</div>
                                     </div>
                                 </div>
@@ -805,10 +805,13 @@ $(document).ready(function() {
             var wallet_Amount = $('#WalletBalance').val();
             var PayAmount = cartSummary.totalAmount;
             if (wallet_Amount < PayAmount) {
+                console.log("Wallet Amount is Low Please Choose Another Method");
                 toastr.error('Wallet Amount is Low Please Choose Another Method');
+
+                return false;
             }
 
-            return false;
+
 
         }
 
