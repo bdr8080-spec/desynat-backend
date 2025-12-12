@@ -527,9 +527,9 @@ if($checkOrder->payment_status!=='0' ){
     $userBalance=UserWallet::where('user_id',$request->user_id)->first();
 
     if($userBalance){
-        $response['balance']=$userBalance->amount;
+        $response['balance']=round($userBalance->amount);
     }else{
-         $response['balance']="0";
+         $response['balance']=0;
     }
 
     return ['status'=>'success','message'=>"User Wallet Balance fetch Successfully",'data'=>$response];
