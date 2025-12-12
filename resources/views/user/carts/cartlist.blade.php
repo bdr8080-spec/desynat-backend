@@ -27,7 +27,7 @@
 
         {{-- EMPTY CART MESSAGE --}}
         <div class="text-center py-5">
-            <h4>No product in Cart</h4>
+            <h4>There is nothing in your bag.Let's add some items</h4>
         </div>
 
         @else
@@ -87,7 +87,10 @@
                                 <div class="qty-box d-flex gap-4" data-product-id="{{ $item->product_id }}"
                                     data-variant-id="{{ $item->variants_id }}">
 
-                                    <button class="qty-btn minus">−</button>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="delivery-label mb-2">Delivery by</p>
+                                        <p class="delivery-date mb-2">3-5 Working Days</p>
+                                    </div>
 
                                     <span class="qty-number">
                                         {{ $item->quantity < 10 ? '0'.$item->quantity : $item->quantity }}

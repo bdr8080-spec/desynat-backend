@@ -67,13 +67,13 @@
                             <div class="form-group w-100 py-2">
                                 <label>Name</label>
                                 <input type="text" name="receiver_name" class="form-control pline-10"
-                                    placeholder="Name">
+                                    placeholder="Enter Name" oninput="this.value = this.value.replace(/^\s+/,'');">
                                 <span class="text-danger error-text receiver_name_error"></span>
                             </div>
                             <div class="form-group w-100 py-2">
                                 <label>Email ID</label>
-                                <input type="text" name="receiver_email" class="form-control pline-10"
-                                    placeholder="Email ID">
+                                <input type="text" name="receiver_email" oninput="this.value = this.value.replace(/\s+/g, '');" class="form-control pline-10"
+                                    placeholder="Enter Email ID">
                                 <span class="text-danger error-text receiver_email_error"></span>
                             </div>
                         </div>
@@ -82,17 +82,17 @@
                         <h6>From</h6>
                         <div class="form-group w-100 py-2">
                             <label>Name</label>
-                            <input type="text" name="sender_name" class="form-control pline-10" placeholder="Name">
+                            <input type="text" name="sender_name" oninput="this.value = this.value.replace(/^\s+/,'');" class="form-control pline-10" placeholder="Enter Name">
                             <span class="text-danger error-text sender_name_error"></span>
                         </div>
                         <div class="form-group w-100 py-2">
                             <label>Email ID</label>
-                            <input type="text" name="sender_email" class="form-control pline-10" placeholder="Email ID">
+                            <input type="text" name="sender_email" oninput="this.value = this.value.replace(/\s+/g, '');" class="form-control pline-10" placeholder="Enter Email ID">
                             <span class="text-danger error-text sender_email_error"></span>
                         </div>
                         <div class="form-group w-100 py-2">
                             <label>Wish Message</label>
-                            <textarea name="wish_message" rows="3" class="form-control pline-10"
+                            <textarea name="wish_message" oninput="this.value = this.value.replace(/^\s+/,'');" rows="3" class="form-control pline-10"
                                 placeholder="Write here"></textarea>
                             <span class="text-danger error-text wish_message_error"></span>
                         </div>
@@ -341,7 +341,7 @@ $(document).ready(function() {
         }
         if (receiver_email === "" || !emailRegex.test(receiver_email)) {
             $("input[name='receiver_email']").siblings(".error-text").text(
-                "Please enter valid Receiver Email");
+                "Please Enter Valid Email Id ");
             hasError = true;
         }
         if (sender_name === "") {
@@ -350,7 +350,7 @@ $(document).ready(function() {
         }
         if (sender_email === "" || !emailRegex.test(sender_email)) {
             $("input[name='sender_email']").siblings(".error-text").text(
-                "Please enter valid Sender Email");
+                "Please Enter Valid Email Id ");
             hasError = true;
         }
         if (wish_message === "") {
