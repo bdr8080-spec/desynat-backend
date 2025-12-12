@@ -448,6 +448,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         toastr.success(data.message); // Show backend message
                     } else {
                         toastr.error(data.message);
+                        setTimeout(() => {
+                            location.reload(); // Reload page
+                        }, 1000);
                     }
                     // After quantity change, refresh discounts UI
                     setTimeout(refreshDiscountUI, 500);

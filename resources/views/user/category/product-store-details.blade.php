@@ -810,11 +810,14 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             if (data.status === "error") {
                 toastr.error(data.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
             } else {
                 toastr.success(data.message);
                 setTimeout(() => {
                     location.reload();
-                }, 2000);
+                }, 1000);
             }
         })
         .catch(() => {
