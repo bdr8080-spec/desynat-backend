@@ -335,7 +335,7 @@ return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$r
  // User productOrderComplete
  public function productOrderComplete($request){
 
-    try{
+ try{
 
 DB::beginTransaction();
 
@@ -349,6 +349,11 @@ if($checkOrder->payment_status!=='0' ){
     ];
 }
 
+
+$userid=$checkOrder->user_id; // User Id
+
+$OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
+
  // when i Received Payment in Cod
     if($checkOrder->payment_method=='3'){
 
@@ -360,13 +365,38 @@ if($checkOrder->payment_status!=='0' ){
         return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
     }
 
-    if($checkOrder->payment_method=='2'){
+    if($checkOrder->payment_method=='2'){ // wallet Payment Code 
+    //     return [
+    //         'status' => 'error',
+    //         'message' => "Wallet Service Is Not Availble Now",
+    //         'data' => []
+    // ];
+
+
+       $request_data=(object)[
+            'user_id'=>$userid,
+            ];
+
+        // Get User Wallet Balance 
+       $userBalance= $this->userBalanceget($request_data);
+
+       if($userBalance['data']['balance'] < round($OrderPayAmount)){
+        // check Wallet AMount 
         return [
             'status' => 'error',
-            'message' => "Wallet Service Is Not Availble Now",
+            'message' => "Wallet Amount Is Low Please recharge Your Wallet",
             'data' => []
-    ];
-        // return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
+        ];
+       }
+
+       //    Cut Amount From The Wallet Amount 
+         $this->UserBalancePayOrder($userid,$OrderPayAmount);
+
+       $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
+
+        DB::commit();
+
+       return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
     }
 
 
@@ -518,8 +548,8 @@ if($checkOrder->payment_status!=='0' ){
     }
 
 
+ // User Wallet Wallet
 
- // User singleOrderDetails
  public function userBalanceget($request){
 
     try{
@@ -534,6 +564,32 @@ if($checkOrder->payment_status!=='0' ){
 
     return ['status'=>'success','message'=>"User Wallet Balance fetch Successfully",'data'=>$response];
 
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+ public function UserBalancePayOrder($user_id,$amount=null){
+
+    try{
+
+    $userBalance=UserWallet::where('user_id',$user_id)->first();
+
+    if($userBalance){
+        $balance=round($userBalance->amount)->$amount;
+        
+        $userBalance->update(['amount'=>$balance]);
+        
+    }
     
     } catch (\Exception $e) {
         return [
