@@ -122,7 +122,8 @@ class UserOrderService
     //    calculate percentage of Amount 
 
     $discount_percentage=$get_promo_codes->discount_percent;
-    $discount_Value=$amount/$discount_percentage;
+    $discount_Value=$amount* $discount_percentage/100;
+  
     $original_discount=$discount_Value;
    
     // if The discount Value Greater Then backend discount Value  
