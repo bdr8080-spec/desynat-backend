@@ -164,6 +164,18 @@ class CartController extends Controller
         }
     }
 
+    public function orderDetails(Request $request,$id){
+        $orderId = $id;
+        //dd($orderId);
+        $data = (object)[
+            'order_id' => $orderId,
+        ];
+        $orderData = $this->UserOrderService->singleOrderDetails($data);
+        //dd($orderData);
+        return view('user.carts.orderplace',compact('orderData'));
+
+    }
+
 
 
 
