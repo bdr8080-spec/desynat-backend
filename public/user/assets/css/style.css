@@ -2290,4 +2290,6 @@ width: fit-content;
 .address-tops{
     padding-top: 150px;
 }
-
+.order-place-grid img {
+    height: 150px;
+}
