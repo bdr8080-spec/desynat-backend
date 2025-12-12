@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\UserGiftCardService;
 
+use Illuminate\Support\Facades\Session;
+
 
 class UserGiftCardController extends Controller
 {
@@ -24,9 +26,28 @@ class UserGiftCardController extends Controller
             'search' => $request->search ?? null
         ];
 
+
         $giftCards = $this->UserGiftCardService->User_view_giftCard_details($data)['data'];
         
-        //dd($giftCards);
+        // when i get data from Paymwnt gateway
+        if($request->payment=='yes'){
+        $msg="Payment Paid Successfully";
+        $status='success';
+
+        Session::flash('message', $msg);
+        Session::flash('status', $status);
+         return redirect()->route('user.gift_cards');
+
+        }elseif($request->payment=='no'){
+
+        $msg="Payment Cancalled";
+        $status='error';
+
+        Session::flash('message', $msg);
+        Session::flash('status', $status);
+         return redirect()->route('user.gift_cards');
+
+        }
 
         return view('user.giftcard.all_giftcard', compact('giftCards'));
     }
@@ -38,7 +59,7 @@ class UserGiftCardController extends Controller
         $token      = config('myfatoorah.api_key');
         $isTest     = config('myfatoorah.test_mode');
         // $countryIso = config('myfatoorah.country_iso');  
-        $countryIso = "ARE";  
+        $countryIso = "KWD";  
 
 
         $baseUrl = $isTest
@@ -91,6 +112,7 @@ class UserGiftCardController extends Controller
         try {
 
             $data = $this->UserGiftCardService->AddgiftCard($request);
+            
             $message = $data['message'];
 
             return response()->json([

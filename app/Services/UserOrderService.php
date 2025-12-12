@@ -4,7 +4,7 @@ use App\Helpers\ApiResponse;
 use App\Models\User;
 
 
-use App\Models\{UserGiftCards,GiftCard};
+use App\Models\{UserGiftCards,GiftCard,UserWallet};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
@@ -493,7 +493,6 @@ if($checkOrder->payment_status!=='0' ){
 
     try{
 
-    DB::beginTransaction();
 
     $checkOrder=Order::with(
         'delivery_details',
@@ -505,6 +504,35 @@ if($checkOrder->payment_status!=='0' ){
     ->where('order_id', $request->order_id)->first();
 
     return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
+
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+ // User singleOrderDetails
+ public function userBalanceget($request){
+
+    try{
+
+    $userBalance=UserWallet::where('user_id',$request->user_id)->first();
+
+    if($userBalance){
+        $response['balance']=round($userBalance->amount);
+    }else{
+         $response['balance']=0;
+    }
+
+    return ['status'=>'success','message'=>"User Wallet Balance fetch Successfully",'data'=>$response];
 
     
     } catch (\Exception $e) {

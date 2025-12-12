@@ -561,6 +561,17 @@ class UserManagementService
                 
             }
 
+            // add to cart total count
+              $addtocartcount = Addtocart::where('user_id', $request->user_id)
+             ->count();
+
+            if($addtocartcount){
+                $product_details->addtocartTotalProduct = $addtocartcount;
+            }else{
+                $product_details->addtocartTotalProduct = 0;
+                
+            }
+
            
             return [
                 'status'  => 'success',
@@ -776,9 +787,7 @@ public function product_view_cart_details($request)
         $tax=0;
         $total_amount=0;
 
-        $add_to_cart= Addtocart::with('product.seller_details','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
-
-
+        $add_to_cart= Addtocart::with('product.seller_details','product.store','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
 
         if($add_to_cart->isEmpty()){
             return [
@@ -801,8 +810,42 @@ public function product_view_cart_details($request)
             // $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
             $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
             $total_mrp=$total_amount+$discount_on_mrp;
+
+
+            // discount Amount Code Apply 
+
+        if($val->product->store){
+            
+        if($user_address && $userCountry_id!==0){
+            
+            $user_let=$user_address->latitude;
+            $user_long=$user_address->longitude;
+
+            $store_let=$val->product->store->let;
+            $store_long=$val->product->store->long;
+
+            // Calculate the distance
+            $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
+
+            $shipping_charges= ShippingCharge::where('country_id',$userCountry_id)
+            ->where('range_from','<=',$distance)
+            ->where('range_to','>=',$distance)
+            ->where('status','1')->first();
+
+            if($shipping_charges){
+                $shipping_fees+=$shipping_charges->shipping_fee *$val->quantity ;
+            }else{
+                $shipping_fees+=100 *$val->quantity;    
+            }
+
+            }else{
+                $shipping_fees+=100 *$val->quantity;
+            }
+            }
+            
         }
 
+        // Tax calucltor Code  start
 
 
         $response['total_mrp']=$total_mrp;
@@ -810,21 +853,17 @@ public function product_view_cart_details($request)
         $Tax_calculate= Tax::where('country_id',$userCountry_id)->where('status','1')->first();
 
         if($Tax_calculate){
-
-            $tax=$total_mrp*$Tax_calculate->tax/100; 
-
+            $tax= $total_mrp*$Tax_calculate->tax/100; 
             $total_amount=$total_amount+$tax;
-
         }else{
             $tax=0;
         }
 
-
         $response['discount_on_mrp']=$discount_on_mrp;
         $response['discount_coupon']=$discount_coupon;
         $response['shipping_fees']=$shipping_fees;
-        $response['tax']=$tax;
-        $response['total_amount']=$total_amount;
+        $response['tax']=round($tax);
+        $response['total_amount']=$total_amount+$shipping_fees;
 
         $response['user_address']=$user_address;
         

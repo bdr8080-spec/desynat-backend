@@ -131,8 +131,8 @@ class UserGiftCardService
 
    
 $checkGiftCard = UserGiftCards::with('gift_details')->where(function($q) use ($request) {
-    $q->where('receiver_id', $request->user_id)
-      ->orWhere('receiver_email', $request->email);
+    $q->where('user_id', $request->user_id);
+    //   ->orWhere('receiver_email', $request->email);
 })
 ->where('payment_status', '1');
 

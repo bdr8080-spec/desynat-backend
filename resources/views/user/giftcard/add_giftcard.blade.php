@@ -245,8 +245,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- <script src="https://demo.myfatoorah.com/cardview/v3/cardview.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> -->
-<script src="https://portal.myfatoorah.com/payment/v1/session.js"></script>
-<script src="https://portal.myfatoorah.com/cardview/v2/cardview.js"></script>
+<!-- <script src="https://portal.myfatoorah.com/payment/v1/session.js"></script> -->
+<!-- <script src="https://portal.myfatoorah.com/cardview/v2/cardview.js"></script> -->
+
+<script src="https://demo.myfatoorah.com/payment/v1/session.js"></script>
 
 
 <script>
@@ -272,48 +274,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Function to load MyFatoorah payment form
-    function loadMF() {
-        console.log("Loading MyFatoorah...");
-
-        // Show the payment box when MyFatoorah is loaded
-        mfBox.style.display = "block";
-
-        // Ensure the session ID is being passed correctly
-        let sessionId = "{{ $sessionId }}";
-        console.log("Loaded Session ID:", sessionId);
-
-        if (!sessionId) {
-            console.error("ERROR: MyFatoorah session ID is missing!");
-            return;
-        }
-
-        // Check if the container has the correct styles to display the card view
-        if (!mfContainer) {
-            console.error("ERROR: MyFatoorah container not found!");
-            return;
-        }
-
-        // Ensure the container has a valid size (width/height) for MyFatoorah to render
-        mfContainer.style.width = "100%";
-        mfContainer.style.height = "400px"; // Set height for visibility
-        console.log("MyFatoorah container size set to 100% width and 400px height.");
-
-        // Initialize MyFatoorah with the provided session ID and other configurations
-        MyFatoorah.init({
-            sessionId: sessionId,
-            countryCode: "KW",
-            cardViewId: "myfatoorah-container",
-            onPaymentRequest: function() {
-                console.log("Submitting payment...");
-            },
-            onError: function(error) {
-                console.error("MyFatoorah Error:", error);
-            }
-        });
-
-        console.log("MyFatoorah initialized.");
-    }
 });
 </script>
 
@@ -414,10 +374,19 @@ $(document).ready(function() {
                 // $(".paybtn-common").prop("disabled", false).text("Pay Now");
 
                 if (response.status === "success") {
-                    toastr.success(response.message);
+                    // toastr.success(response.message);
+
+                    var orderid = response.data.data.order_id;
+
+                    var url = "/myfatoorah/" + orderid + "?type=giftCard";
+
                     setTimeout(function() {
-                        window.location.href = "{{ route('user.gift_cards') }}";
+                        window.location.href = url;
                     }, 2000);
+
+
+
+
                 } else {
                     toastr.error(response.message);
                 }

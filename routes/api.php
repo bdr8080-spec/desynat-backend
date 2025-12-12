@@ -110,6 +110,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/All-order', [UserOrderController::class,'All_order']);
   Route::post('/single-order-summary', [UserOrderController::class,'single_order_summary']);
 
+  Route::get('/waller-balance',[UserOrderController::class, 'waller_balance']);
+
+
+
 });
 
 
