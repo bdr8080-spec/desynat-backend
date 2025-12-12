@@ -138,6 +138,7 @@
                                     {{ $cartData['user_address']->state }},
                                     {{ $cartData['user_address']->country_name }}
                                 </div>
+                                <input type="hidden" id="deliveryAddressId" value="{{ $cartData['user_address']->id }}">
 
                                 <a href="{{ route('user.view_address') }}" class="moreshop">
                                     Change <i class="bi bi-arrow-right"></i>
@@ -177,6 +178,7 @@
                             <div class="giftinfo"><div>Total MRP</div><div>{{ $cartData['total_mrp'] }} KD</div></div>
                             <div class="giftinfo"><div>Discount on MRP</div><div class="red-color">{{ $cartData['discount_on_mrp'] }} KD</div></div>
                             <div class="giftinfo"><div>Coupon Discount</div><div class="red-color">{{ $cartData['discount_coupon'] }} KD</div></div>
+                            <div class="giftinfo"><div>Gift Card Discount</div><div class="red-color" id="giftCardDiscountAmount">0 KD</div></div>
                             <div class="giftinfo"><div>Shipping Fee</div><div>{{ $cartData['shipping_fees'] }} KD</div></div>
                             <div class="giftinfo"><div>TAX (if any)</div><div>{{ $cartData['tax'] }} KD</div></div>
                             <div class="giftinfo"><div>Total Amount</div><div>{{ $cartData['total_amount'] }} KD</div></div>
@@ -190,6 +192,22 @@
 
                 {{-- RIGHT SIDE --}}
                 <div class="col-lg-4">
+                    
+                    <div class="gift-pnl mt-4">
+                        <div class="border-1">
+                            <div id="paymentMethodSection">
+                                <label>
+                                    <input type="radio" name="payment_method" value="1" checked> Online
+                                </label>
+                                <label>
+                                    <input type="radio" name="payment_method" value="2"> Wallet
+                                </label>
+                                <label>
+                                    <input type="radio" name="payment_method" value="3"> COD
+                                </label>
+                            </div>
+                        </div>
+                    </div>    
 
                     {{-- Gift Card --}}
                     <div class="gift-pnl mt-4">
@@ -215,7 +233,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <button type="submit" class="customBtn mb-3">
+                        <button type="submit" id="placeOrderBtn" class="customBtn mb-3">
                             Place Order
                         </button>
                     </div>
@@ -326,9 +344,24 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+<script>
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Reload the page if it's loaded from the back/forward cache
+        window.location.reload(true);
+    }
+});
+
+// Optional: for older browsers
+if (performance.navigation.type === 2) {
+    window.location.reload(true);
+}
+</script>
+
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-
     document.querySelectorAll(".qty-box").forEach(box => {
 
         const productId = box.dataset.productId;
@@ -348,359 +381,331 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify({
                     product_id: productId,
                     variant_id: variantId,
-                    quantity: qty   // allow 0 → remove from cart
+                    quantity: qty
                 })
             })
             .then(res => res.json())
             .then(data => {
-
                 if (data.status === "success") {
-                    toastr.success(data.message || "Updated");
-
-                    setTimeout(() => location.reload(), 1000);
-
+                    setTimeout(() => {
+                        location.reload();  // Reload page
+                    }, 1000);
+                    toastr.success(data.message); // Show backend message
                 } else {
-                    toastr.error(data.message || "Something went wrong");
-
-                    // If item removed, still reload page
-                    setTimeout(() => location.reload(), 1000);
+                    toastr.error(data.message);
                 }
+                // After quantity change, refresh discounts UI
+                setTimeout(refreshDiscountUI, 500);
             })
-            .catch(() => {
-                toastr.error("Request failed");
+            .catch((err) => {
+                toastr.error(err.message || "Request failed");
             });
         }
 
         plusBtn.addEventListener("click", function () {
             let qty = parseInt(qtyText.innerText);
             qty++;
-
             qtyText.innerText = qty < 10 ? "0" + qty : qty;
             updateQuantity(qty);
         });
 
         minusBtn.addEventListener("click", function () {
             let qty = parseInt(qtyText.innerText);
-
-            qty--; 
-
+            qty--;
             qtyText.innerText = qty < 10 ? "0" + qty : qty;
-
             updateQuantity(qty);
         });
 
     });
-
 });
 </script>
 
-<!-- promocode modal -->
-@if(isset($promocodes) && $promocodes->isNotEmpty())
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.getElementById('promoSearch');
-    const searchBtn = document.getElementById('promoSearchBtn');
-    const promoList = document.getElementById('promoList');
+$(document).ready(function () {
+    var appliedPromoId = null;
 
-    if(searchBtn){
-        searchBtn.addEventListener('click', function() {
-            const query = searchInput.value.toLowerCase().trim();
-            let found = false;
+    $(document).on('click', '.applyPromoBtn', function () {
+        var promoId = $(this).data('id');
+        var totalAmountText = $('.giftinfo').filter(function() {
+            return $(this).find('div').first().text().trim() === 'Total Amount';
+        }).find('div').last().text().replace(' KD', '').trim();
+        var amount = parseFloat(totalAmountText);
 
-            promoList.querySelectorAll('.gift-cupon-list').forEach(item => {
-                const title = item.querySelector('h6').innerText.toLowerCase();
-                const desc = item.querySelector('p').innerText.toLowerCase();
-                if(title.includes(query) || desc.includes(query)){
-                    item.style.display = 'block';
-                    found = true;
+        $.ajax({
+            url: '/user/apply_promocode',
+            method: 'POST',
+            headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
+            data: {promo_id: promoId, amount: amount},
+            success: function(response) {
+                if(response.status === 'success' && response.data){
+                    var promoData = response.data.data ? response.data.data : response.data;
+                    if(promoData && promoData.discount_code){
+                        $('#promoModal').modal('hide');
+                        $('#applyPromoText').text(promoData.discount_code + ' applied');
+                        $('#promoApplyLink').hide();
+                        $('#cancelPromoSection').removeClass('d-none');
+
+                        // Save in localStorage
+                        localStorage.setItem('appliedPromo', JSON.stringify({
+                            promoCode: promoData.discount_code,
+                            discountValue: promoData.Apply_discount_value,
+                            finalAmount: promoData.final_amount,
+                            promoId: promoId
+                        }));
+
+                        toastr.success(response.message);
+                        setTimeout(() => {
+                            location.reload();  // Reload page
+                        }, 1000);
+                        // refreshDiscountUI();
+                    } else {
+                        toastr.error("Discount code not in response");
+                    }
                 } else {
-                    item.style.display = 'none';
+                    toastr.error(response.message);
                 }
-            });
-
-            // Show message if no match found
-            if(!found){
-                if(!document.getElementById('noPromoSearch')){
-                    const p = document.createElement('p');
-                    p.id = 'noPromoSearch';
-                    p.className = 'text-center py-3';
-                    p.innerText = 'No promocode found.';
-                    promoList.appendChild(p);
-                }
-            } else {
-                const msg = document.getElementById('noPromoSearch');
-                if(msg) msg.remove();
+            },
+            error: function(response) {
+                toastr.error(response.responseJSON?.message || "Failed");
             }
         });
-    }
-});
-</script>
-@endif
-
-<script>
-window.addEventListener('pageshow', function(event) {
-    if (event.persisted) {
-        // Reload the page if it's loaded from the back/forward cache
-        window.location.reload(true);
-    }
-});
-
-// Optional: for older browsers
-if (performance.navigation.type === 2) {
-    window.location.reload(true);
-}
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        var appliedPromoId = null;
-
-        $(document).on('click', '.applyPromoBtn', function () {
-            var promoId = $(this).data('id');
-            var totalAmountText = document.querySelectorAll('.giftinfo')[7].querySelectorAll('div')[1].textContent;
-            var amount = parseFloat(totalAmountText.replace(' KD', '').trim());
-
-            $.ajax({
-                url: '/user/apply_promocode',
-                method: 'POST',
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                data: {
-                    promo_id: promoId,
-                    amount: amount
-                },
-                success: function (response) {
-                    if (response.status === 'success' && response.data) {
-                        var promoData = response.data.data ? response.data.data : response.data;
-                        if (promoData && promoData.discount_code) {
-                            $('#promoModal').modal('hide'); 
-                            $('#applyPromoText').text(promoData.discount_code + ' applied');
-                            $('#promoApplyLink').hide();
-                            $('#cancelPromoSection').removeClass('d-none'); 
-
-                            $('.giftinfo').each(function() {
-                                var title = $(this).find('div').first().text().trim();
-                                if (title === 'Coupon Discount') {
-                                    $(this).find('div').last().text(promoData.Apply_discount_value + ' KD');
-                                }
-                                if (title === 'Total Amount') {
-                                    $(this).find('div').last().text(promoData.final_amount + ' KD');
-                                }
-                            });
-
-                            var previousSavingsText = $('#promoSavingsText').text().trim(); 
-                            var previousSavingsMatch = previousSavingsText.match(/(\d+(\.\d+)?)(?=\s*KD)/); 
-                            var previousSavings = previousSavingsMatch ? parseFloat(previousSavingsMatch[0]) : 0;
-                            var totalSavings = previousSavings + parseFloat(promoData.Apply_discount_value); 
-
-                            $('#promoSavingsText').text("You will save " + totalSavings + " KD on this");
-
-                            localStorage.setItem('appliedPromo', JSON.stringify({
-                                promoCode: promoData.discount_code,
-                                discountValue: promoData.Apply_discount_value,
-                                finalAmount: promoData.final_amount,
-                                promoId: promoData.promo_id
-                            }));
-
-                            appliedPromoId = promoData.promo_id;
-                            toastr.success(response.message || "Promo code applied successfully!");
-                        } else {
-                            toastr.error("Discount code is not available in response.");
-                        }
-                    } else {
-                        
-                        toastr.error(response.message);
-                    }
-                },
-                error: function (response) {
-                    //console.log(response)
-                    toastr.error(response.responseJSON.message);
-                }
-            });
-        });
-
-        var savedPromoData = localStorage.getItem('appliedPromo');
-        if (savedPromoData) {
-            savedPromoData = JSON.parse(savedPromoData); 
-            $('#applyPromoText').text(savedPromoData.promoCode + ' applied');
-            $('#promoApplyLink').hide();
-            $('#cancelPromoSection').removeClass('d-none');
-            $('.giftinfo').each(function() {
-                var title = $(this).find('div').first().text().trim();
-                if (title === 'Coupon Discount') {
-                    $(this).find('div').last().text(savedPromoData.discountValue + ' KD');
-                }
-                if (title === 'Total Amount') {
-                    $(this).find('div').last().text(savedPromoData.finalAmount + ' KD');
-                }
-            });
-            var previousSavingsText = $('#promoSavingsText').text().trim();
-            var previousSavingsMatch = previousSavingsText.match(/(\d+(\.\d+)?)(?=\s*KD)/);
-            var previousSavings = previousSavingsMatch ? parseFloat(previousSavingsMatch[0]) : 0;
-            var totalSavings = previousSavings + savedPromoData.discountValue;
-            $('#promoSavingsText').text("You will save " + totalSavings + " KD on this");
-        }
-
-        $(document).on('click', '.cancelPromoBtn', function () {
-            toastr.error("Promo code removed.");
-            localStorage.removeItem('appliedPromo');
-            setTimeout(function() {
-                location.reload();
-            }, 1000);
-        });
     });
-</script>
 
-<!-- gift card apply -->
+    $(document).on('click', '.cancelPromoBtn', function() {
+        toastr.error("Promo code removed.");
+        localStorage.removeItem('appliedPromo');
+        refreshDiscountUI();
+        setTimeout(() => {
+                        location.reload();  // Reload page
+                    }, 1000);
+    });
+
+    // On page load, refresh promo UI
+    refreshDiscountUI();
+});
+</script>
 
 
 <script>
-    $(document).ready(function () {
+$(document).ready(function () {
 
     $(document).on('click', '#redeemGiftCardBtn', function () {
         var giftCardNumber = $('#giftCardNumber').val().trim();
         var giftCardPin = $('#giftCardPin').val().trim();
         var isValid = true;
 
-        $('#giftCardNumberError').text(''); 
-        $('#giftCardPinError').text('');  
+        $('#giftCardNumberError, #giftCardPinError').text('');
 
-        if (giftCardNumber === '' || giftCardNumber.length !== 16 || !/^\d{16}$/.test(giftCardNumber)) {
-            $('#giftCardNumberError').text('Please enter 16 digit gift card number').css('display', 'block');
+        if(!/^\d{16}$/.test(giftCardNumber)){
+            $('#giftCardNumberError').text('Please enter 16 digit gift card number').show();
+            isValid = false;
+        }
+        if(!/^\d{4}$/.test(giftCardPin)){
+            $('#giftCardPinError').text('Please enter 4 digit pin').show();
             isValid = false;
         }
 
-        if (giftCardPin === '' || giftCardPin.length !== 4 || !/^\d{4}$/.test(giftCardPin)) {
-            $('#giftCardPinError').text('Please enter 4 digit pin').css('display', 'block');
-            isValid = false;
-        }
-
-        if (isValid) {
+        if(isValid){
             $.ajax({
                 url: '/user/apply_giftcard',
                 method: 'POST',
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}" 
-                },
-                data: {
-                    giftCardNo: giftCardNumber,
-                    giftCardPin: giftCardPin
-                },
-                success: function (response) {
-                    if (response.status === 'success') {
+                headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
+                data: {giftCardNo: giftCardNumber, giftCardPin: giftCardPin},
+                success: function(response){
+                    if(response.status === 'success'){
                         var giftCardData = response.data.data ? response.data.data : response.data;
-                        console.log(giftCardData);
                         $('#giftModal').modal('hide');
-                        
-                        $('#applyGiftCardBtn').hide(); 
-                        $('#cancelGiftCardBtn').removeClass('d-none');
-                        $('#applyGiftCardText').text('Gift Card Applied'); 
-                        
-                        var giftCardAmount = parseFloat(giftCardData.GiftCardAmount); 
-                        var totalAmount = parseFloat($('.giftinfo').filter(function() {
-                            return $(this).find('div').first().text().trim() === 'Total Amount';
-                        }).find('div').last().text().replace(' KD', '').trim()); 
 
-                        var updatedTotalAmount = totalAmount - giftCardAmount;
-                        
-                        $('.giftinfo').each(function() {
-                            var title = $(this).find('div').first().text().trim();
-                            if (title === 'Total Amount') {
-                                $(this).find('div').last().text(updatedTotalAmount % 1 === 0 ? updatedTotalAmount.toFixed(0) + ' KD' : updatedTotalAmount.toFixed(2) + ' KD');
-                            }
-                        });
-                        var previousSavingsText = $('#promoSavingsText').text().trim();
-                        var previousSavingsMatch = previousSavingsText.match(/(\d+(\.\d+)?)(?=\s*KD)/);
-                        var previousSavings = previousSavingsMatch ? parseFloat(previousSavingsMatch[0]) : 0;
-                        var totalSavings = previousSavings + giftCardAmount; // Add gift card amount to total savings
-
-                        $('#promoSavingsText').text("You will save " + (totalSavings % 1 === 0 ? totalSavings.toFixed(0) : totalSavings.toFixed(2)) + " KD on this");
-
-                        // Add Gift Card Discount under Coupon Discount
-                        $('.giftinfo').each(function() {
-                            var title = $(this).find('div').first().text().trim();
-                            if (title === 'Coupon Discount') {
-                                $(this).after(`
-                                    <div class="giftinfo">
-                                        <div>Gift Card Discount</div>
-                                        <div class="red-color">${giftCardAmount % 1 === 0 ? giftCardAmount.toFixed(0) : giftCardAmount.toFixed(2)} KD</div>
-                                    </div>
-                                `); 
-                            }
-                        });
-
-                        // Store gift card and total savings data in localStorage (not removing promo code data)
-                        var savedPromoData = JSON.parse(localStorage.getItem('appliedPromo')) || {};
-                        var appliedGiftCardData = {
+                        // Save in localStorage
+                        localStorage.setItem('appliedGiftCard', JSON.stringify({
                             giftCardNumber: giftCardNumber,
                             giftCardPin: giftCardPin,
-                            finalAmount: updatedTotalAmount,
-                            totalSavings: totalSavings // Store total savings in localStorage
-                        };
-                        localStorage.setItem('appliedGiftCard', JSON.stringify(appliedGiftCardData));
-                        localStorage.setItem('appliedPromo', JSON.stringify(savedPromoData));
+                            giftCardAmount: parseFloat(giftCardData.GiftCardAmount),
+                            giftCardId:giftCardData.id
+                        }));
 
-                        // Show success message
-                        toastr.success("Gift Card applied successfully!");
+                        toastr.success(response.message);
+                        // refreshDiscountUI();
+                        setTimeout(() => {
+                            location.reload();  // Reload page
+                        }, 1000);
                     } else {
-                        toastr.error(response.message || "Failed to apply gift card.");
+                        toastr.error(response.message);
                     }
                 },
-                error: function () {
-                    toastr.error("An error occurred while applying the gift card.");
+                error: function(){
+                    toastr.error("Failed to apply gift card");
                 }
             });
         }
     });
 
-    // Handle cancel gift card action
     $(document).on('click', '#cancelGiftCardBtn', function () {
         toastr.error("Gift card removed.");
         localStorage.removeItem('appliedGiftCard');
-        // Reset button and text
-        $('#applyGiftCardBtn').show();  // Show the Apply Gift Card button
-        $('#cancelGiftCardBtn').addClass('d-none');  // Hide the Cancel Gift Card button
-        $('#applyGiftCardText').text('Have a Gift Card'); // Reset text
-        
-        // Optionally reset other UI elements (e.g., Total Amount) to original values
-        setTimeout(function() {
-            location.reload(); // Reload the page after closing modal to revert any changes
-        }, 1500);  // Delay to show the toast message
+        refreshDiscountUI();
+        setTimeout(() => {
+                        location.reload();  // Reload page
+                    }, 1000);
     });
 
-    // Handle removing error message dynamically while typing in the Gift Card Number field
-    $('#giftCardNumber').on('input', function () {
-        $('#giftCardNumberError').css('display', 'none');
+    // Remove error messages dynamically
+    $('#giftCardNumber, #giftCardPin').on('input', function() {
+        $(this).next().hide();
     });
 
-    // Handle removing error message dynamically while typing in the Gift Card PIN field
-    $('#giftCardPin').on('input', function () {
-        $('#giftCardPinError').css('display', 'none');
-    });
+    refreshDiscountUI();
+});
+</script>
 
-    // Load saved gift card data from localStorage and update UI on page refresh
-    var savedGiftCardData = localStorage.getItem('appliedGiftCard');
-    if (savedGiftCardData) {
-        savedGiftCardData = JSON.parse(savedGiftCardData);
-        
-        // Update text outside modal
+
+<script>
+function refreshDiscountUI() {
+    var savedPromo = JSON.parse(localStorage.getItem('appliedPromo') || 'null');
+    var savedGiftCard = JSON.parse(localStorage.getItem('appliedGiftCard') || 'null');
+
+    // Update Promo
+    if(savedPromo){
+        $('#applyPromoText').text(savedPromo.promoCode + ' applied');
+        $('#promoApplyLink').hide();
+        $('#cancelPromoSection').removeClass('d-none');
+        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Coupon Discount'; })
+            .find('div').last().text(savedPromo.discountValue + ' KD');
+    } else {
+        $('#applyPromoText').text('');
+        $('#promoApplyLink').show();
+        $('#cancelPromoSection').addClass('d-none');
+        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Coupon Discount'; })
+            .find('div').last().text('0 KD');
+    }
+
+    // Update Gift Card
+    if(savedGiftCard){
         $('#applyGiftCardText').text('Gift Card Applied');
-        $('#applyGiftCardBtn').text('Cancel');
-        $('#applyGiftCardBtn').attr('id', 'cancelGiftCardBtn');
+        $('#applyGiftCardBtn').hide();
+        $('#cancelGiftCardBtn').removeClass('d-none');
+        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Gift Card Discount'; })
+            .find('div').last().text(savedGiftCard.giftCardAmount.toFixed(2) + ' KD');
+    } else {
+        $('#applyGiftCardText').text('Have a Gift Card');
+        $('#applyGiftCardBtn').show();
+        $('#cancelGiftCardBtn').addClass('d-none');
+        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Gift Card Discount'; })
+            .find('div').last().text('0 KD');
+    }
 
-        // Update Total Amount and "You will save" text
-        $('.giftinfo').each(function() {
+    // Recalculate Total Amount
+    var baseTotal = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Total MRP'; }).find('div').last().text().replace(' KD','')) || 0;
+    var discountOnMRP = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Discount on MRP'; }).find('div').last().text().replace(' KD','')) || 0;
+    var shippingFee = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Shipping Fee'; }).find('div').last().text().replace(' KD','')) || 0;
+    var tax = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'TAX (if any)'; }).find('div').last().text().replace(' KD','')) || 0;
+
+    var promoDiscount = savedPromo ? savedPromo.discountValue : 0;
+    var giftCardDiscount = savedGiftCard ? savedGiftCard.giftCardAmount : 0;
+
+    var finalTotal = baseTotal - discountOnMRP - promoDiscount - giftCardDiscount + shippingFee + tax;
+    $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Total Amount'; })
+        .find('div').last().text(finalTotal.toFixed(2) + ' KD');
+
+    // Total Savings
+    var totalSavings = discountOnMRP + promoDiscount + giftCardDiscount;
+    $('#promoSavingsText').text("You will save " + totalSavings.toFixed(2) + " KD on this");
+}
+</script>
+
+
+<script>
+$(document).ready(function () {
+
+    $('#placeOrderBtn').on('click', function (e) {
+        e.preventDefault(); // Prevent default form submission
+         
+        var paymentMethod = $('input[name="payment_method"]:checked').val();
+        var deliveryAddressId = document.getElementById('deliveryAddressId').value;
+        // Get localStorage data
+        var promoData = JSON.parse(localStorage.getItem('appliedPromo') || '{}');
+        var giftCardData = JSON.parse(localStorage.getItem('appliedGiftCard') || '{}');
+
+        // Optional: set to null if empty object
+        promoData = Object.keys(promoData).length ? promoData : null;
+        giftCardData = Object.keys(giftCardData).length ? giftCardData : null;
+
+        // Fetch cart summary values from UI
+        var cartSummary = {};
+        $('.giftinfo').each(function () {
             var title = $(this).find('div').first().text().trim();
-            if (title === 'Total Amount') {
-                $(this).find('div').last().text(savedGiftCardData.finalAmount.toFixed(2) + ' KD');
+            var valueText = $(this).find('div').last().text().replace(' KD', '').trim();
+            var value = parseFloat(valueText) || 0;
+
+            switch(title) {
+                case 'Total MRP':
+                    cartSummary.totalMRP = value;
+                    break;
+                case 'Discount on MRP':
+                    cartSummary.discountOnMRP = value;
+                    break;
+                case 'Coupon Discount':
+                    cartSummary.couponDiscount = value;
+                    break;
+                case 'Gift Card Discount':
+                    cartSummary.giftCardDiscount = value;
+                    break;
+                case 'Shipping Fee':
+                    cartSummary.shippingFee = value;
+                    break;
+                case 'TAX (if any)':
+                    cartSummary.tax = value;
+                    break;
+                case 'Total Amount':
+                    cartSummary.totalAmount = value;
+                    break;
             }
         });
 
-        var totalSavings = savedGiftCardData.totalSavings;
-        $('#promoSavingsText').text("You will save " + totalSavings.toFixed(2) + " KD on this");
-    }
-});
+        // Prepare request payload
+        var requestData = {
+            promo: promoData,
+            giftCard: giftCardData,
+            cartSummary: cartSummary,
+            Payment_method: paymentMethod,
+            deliveryAddressId: deliveryAddressId
+        };
 
+        // Send AJAX request
+        $.ajax({
+            url: '/user/create_order',
+            method: 'POST',
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            data: requestData,
+            success: function(response) {
+                if(response.status === 'success') {
+                    toastr.success(response.message || "Order placed successfully!");
+                    // Clear localStorage promo/gift card
+                    localStorage.removeItem('appliedPromo');
+                    localStorage.removeItem('appliedGiftCard');
+                    // Redirect if provided
+                    if(response.redirect_url) {
+                        window.location.href = response.redirect_url;
+                    }
+                } else {
+                    toastr.error(response.message || "Failed to place order.");
+                }
+            },
+            error: function(xhr) {
+                var errMsg = xhr.responseJSON && xhr.responseJSON.message 
+                             ? xhr.responseJSON.message 
+                             : "An error occurred while placing order.";
+                toastr.error(errMsg);
+            }
+        });
+    });
+
+});
 </script>
+
+
+
+

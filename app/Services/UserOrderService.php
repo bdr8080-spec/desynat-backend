@@ -253,7 +253,7 @@ return ['status'=>'success','message'=>"Order Create Successfully",'data'=>$crea
     } catch (\Exception $e) {
         return [
             'status' => 'error',
-            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'message' => 'Failed to create order: ' . $e->getMessage(),
             'data' => []
         ];
     }
