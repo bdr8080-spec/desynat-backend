@@ -144,6 +144,20 @@
                 <div id="myfatoorah-box" style="display:none;">
                     <div id="myfatoorah-container"></div>
                 </div>
+
+                <div class="payment-option mb-3">
+                    <label class="custom-radio mb-3">
+                        <input type="radio" name="payment_method" value="2">
+                        <span class="radio-mark"></span>
+                        <div class="label-content d-flex gap-3">
+                            <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
+                            <div class="title">
+                                    In -App Wallet
+                                <div class="small-14">Available Balance : 349 KD</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
                 <!-- <div class="payment-option mb-3">
                     <label class="custom-radio">
                         <input type="radio" name="payment" >

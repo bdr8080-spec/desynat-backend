@@ -2277,7 +2277,7 @@ width: fit-content;
 .btn-outline:hover{
     border: 1px solid #714829;
     color: #fff;
-    background: #714829;
+    background: var(--gradient-color3);
 }
 .modal-body .white-btn{
     color: #fff !important;
@@ -2292,4 +2292,7 @@ width: fit-content;
 }
 .order-place-grid img {
     height: 150px;
+}
+.small-14{
+    font-size: 12px;
 }

@@ -262,8 +262,12 @@
                             <label class="custom-radio mb-3">
                                 <input type="radio" name="payment_method" value="2">
                                 <span class="radio-mark"></span>
-                                <div class="label-content">
-                                    <div class="title">Wallet</div>
+                                <div class="label-content d-flex gap-3">
+                                    <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
+                                    <div class="title">
+                                         In -App Wallet
+                                        <div class="small-14">Available Balance : 349 KD</div>
+                                    </div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
