@@ -92,6 +92,8 @@
                                         <p class="delivery-date mb-2">3-5 Working Days</p>
                                     </div>
 
+                                    <button class="qty-btn minus">−</button>
+
                                     <span class="qty-number">
                                         {{ $item->quantity < 10 ? '0'.$item->quantity : $item->quantity }}
                                     </span>
@@ -102,7 +104,11 @@
                             </div>
                         </div>
 
-                        <p class="return-text mb-2">14 days return available</p>
+                        @if($item->product->product_return == 1)
+                            <p class="return-text mb-2">{{ $item->product->return_days }} days return available</p>
+                        @else
+                            <p class="return-text mb-2">Non Returnable</p>
+                        @endif
 
                         <div class="d-flex justify-content-between">
                             <p class="delivery-label mb-2">Delivery by</p>
@@ -569,8 +575,8 @@ $(document).ready(function() {
                         toastr.error(response.message);
                     }
                 },
-                error: function() {
-                    toastr.error("Failed to apply gift card");
+                error: function(response) {
+                    toastr.error(response.responseJSON?.message || "Failed");
                 }
             });
         }
