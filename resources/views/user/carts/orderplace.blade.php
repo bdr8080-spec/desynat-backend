@@ -26,7 +26,7 @@
         <div class="order-place">
             <div class="order-place-grid">
                 <img src="{{asset('user')}}/assets/images/success.svg" class="img-fluid mb-4" />
-                <h3>Order Place Successfully !</h3>
+                <h3>Order Placed Successfully !</h3>
             </div>
             <div class="place-footer">
                 <div>{{ number_format($orderData['data']->total_amount, 2) }} KD <span>Amount Paid</span></div>
