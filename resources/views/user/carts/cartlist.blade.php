@@ -87,10 +87,7 @@
                                 <div class="qty-box d-flex gap-4" data-product-id="{{ $item->product_id }}"
                                     data-variant-id="{{ $item->variants_id }}">
 
-                                    <div class="d-flex justify-content-between">
-                                        <p class="delivery-label mb-2">Delivery by</p>
-                                        <p class="delivery-date mb-2">3-5 Working Days</p>
-                                    </div>
+                                    
 
                                     <button class="qty-btn minus">−</button>
 
@@ -112,7 +109,7 @@
 
                         <div class="d-flex justify-content-between">
                             <p class="delivery-label mb-2">Delivery by</p>
-                            <p class="delivery-date mb-2">{{ now()->addDays(4)->format('d/m/Y') }}</p>
+                            <p class="delivery-date mb-2">3-5 Working Days</p>
                         </div>
 
                         <div class="d-flex justify-content-between">
