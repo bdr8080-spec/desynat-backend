@@ -1,6 +1,9 @@
 <?php
 
 
+use App\Models\{UserGiftCards,UserWallet};
+
+
 // Function to calculate the distance using the Haversine formula
 function calculateDistance($lat1, $lon1, $lat2, $lon2) {
     // Radius of the Earth in kilometers
@@ -27,3 +30,60 @@ function calculateDistance($lat1, $lon1, $lat2, $lon2) {
 
     return $distance; // Distance in kilometers
 }
+
+
+
+  function userBalanceget($request){
+
+    try{
+
+
+    $userBalance=UserWallet::where('user_id',$request->user_id)->first();
+
+    if($userBalance){
+        $response['balance']=round($userBalance->amount);
+    }else{
+         $response['balance']=0;
+    }
+
+    return ['status'=>'success','message'=>"User Wallet Balance fetch Successfully",'data'=>$response];
+
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+
+function UserBalancePayOrder($user_id,$amount=null){
+
+    try{
+
+    $userBalance=UserWallet::where('user_id',$user_id)->first();
+
+
+    if($userBalance){
+        $balance=round($userBalance->amount)-$amount;
+        
+        $userBalance->update(['amount'=>$balance]);
+        
+    }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
