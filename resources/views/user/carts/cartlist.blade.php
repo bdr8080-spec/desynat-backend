@@ -52,7 +52,7 @@
 
         {{-- EMPTY CART MESSAGE --}}
         <div class="text-center py-5">
-            <h4>There is nothing in your bag.Let's add some items</h4>
+            <h4 class="moreshop">There is nothing in your bag.Let's add some items</h4>
         </div>
 
         @else
@@ -104,6 +104,7 @@
                                             {{ $item->product_variants->actual_price }} KD
                                         </span>
                                         @endif
+                                        <span class="discount ms-2"> 10% Off</span>
                                     </div>
 
                                 </div>
@@ -242,9 +243,33 @@
 
                 <input type="hidden" id="WalletBalance" value="{{$walletBalance}}">
 
-                <div class="gift-pnl mt-4">
+                <div class="gift-pnl mt-0">
                     <div class="border-1">
-                        <div id="paymentMethodSection">
+                        <div class="payment-option" id="paymentMethodSection">
+                            <label class="custom-radio mb-3">
+                                <input type="radio" name="payment_method" value="1" checked>
+                                <span class="radio-mark"></span>
+                                <div class="label-content">
+                                    <div class="title">Online</div>
+                                </div>
+                            </label>
+                            <label class="custom-radio mb-3">
+                                <input type="radio" name="payment_method" value="2">
+                                <span class="radio-mark"></span>
+                                <div class="label-content">
+                                    <div class="title">Wallet</div>
+                                </div>
+                            </label>
+                            <label class="custom-radio mb-3">
+                                <input type="radio" name="payment_method" value="3">
+                                <span class="radio-mark"></span>
+                                <div class="label-content">
+                                    <div class="title"><span class="code-title">COD</span> Cash On Delivery</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- <div id="paymentMethodSection">
                             <label>
                                 <input type="radio" name="payment_method" value="1" checked> Online
                             </label>
@@ -254,7 +279,7 @@
                             <label>
                                 <input type="radio" name="payment_method" value="3"> COD
                             </label>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

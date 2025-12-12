@@ -25,7 +25,7 @@
     <div class="main-content">
         <div class="order-place">
             <div class="order-place-grid">
-                <img src="{{asset('user')}}/assets/images/success.svg" class="img-fluid mb-4" />
+                <img src="{{asset('user')}}/assets/images/success_check_tick.gif" class="img-fluid mb-4" />
                 <h3>Order Placed Successfully !</h3>
             </div>
             <div class="place-footer">
