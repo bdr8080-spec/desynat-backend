@@ -52,7 +52,7 @@
 
         {{-- EMPTY CART MESSAGE --}}
         <div class="text-center py-5">
-            <h4>There is nothing in your bag.Let's add some items</h4>
+            <h4 class="moreshop">There is nothing in your bag.Let's add some items</h4>
         </div>
 
         @else
