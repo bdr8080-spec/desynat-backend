@@ -315,7 +315,7 @@ return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$r
  }else{
     return [
         'status' => 'error',
-        'message' => "Gift Card is already used or expired",
+        'message' => "Gift card is not valid",
         'data' => []
     ];
  }
@@ -400,6 +400,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
        //    Cut Amount From The Wallet Amount 
          $this->UserBalancePayOrder($userid,$OrderPayAmount);
+
+          $this->AddtocartRemoveData($checkOrder->id);
 
        $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
 
