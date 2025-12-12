@@ -26,15 +26,19 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
-        <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
-                class="img-fluid"></a>
+        <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
         <h3>Home</h3>
     </div>
 
@@ -103,12 +107,12 @@
                                         <span class="price-old">
                                             {{ $item->product_variants->actual_price }} KD
                                         </span>
-                                        @endif                                       
+                                        @endif
                                         <span class="discount ms-2">
                                             @if($item->product_variants->discount_type == 1)
-                                                {{ $item->product_variants->discount_value }}% Off
+                                            {{ $item->product_variants->discount_value }}% Off
                                             @elseif($item->product_variants->discount_type == 2)
-                                                {{ $item->product_variants->discount_value }} KD Off
+                                            {{ $item->product_variants->discount_value }} KD Off
                                             @endif
                                         </span>
                                     </div>
@@ -119,7 +123,7 @@
                                 <div class="qty-box d-flex gap-4" data-product-id="{{ $item->product_id }}"
                                     data-variant-id="{{ $item->variants_id }}">
 
-                                    
+
 
                                     <button class="qty-btn minus">−</button>
 
@@ -134,9 +138,9 @@
                         </div>
 
                         @if($item->product->product_return == 1)
-                            <p class="return-text mb-2">{{ $item->product->return_days }} days return available</p>
+                        <p class="return-text mb-2">{{ $item->product->return_days }} days return available</p>
                         @else
-                            <p class="return-text mb-2">Non Returnable</p>
+                        <p class="return-text mb-2">Non Returnable</p>
                         @endif
 
                         <div class="d-flex justify-content-between">
@@ -259,17 +263,26 @@
                                     <div class="title">Online</div>
                                 </div>
                             </label>
+                            <!-- <label class="custom-radio mb-3">
+                                <input type="radio" name="payment_method" value="2">
+                                <span class="radio-mark"></span>
+                                <div class="label-content">
+                                    <div class="title">Wallet ( {{$walletBalance}} ) </div>
+                                </div>
+                            </label> -->
+
                             <label class="custom-radio mb-3">
                                 <input type="radio" name="payment_method" value="2">
                                 <span class="radio-mark"></span>
                                 <div class="label-content d-flex gap-3">
                                     <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
                                     <div class="title">
-                                         In -App Wallet
-                                        <div class="small-14">Available Balance : 349 KD</div>
+                                            In -App Wallet
+                                        <div class="small-14">Available Balance : ( {{$walletBalance}} )</div>
                                     </div>
                                 </div>
                             </label>
+
                             <label class="custom-radio mb-3">
                                 <input type="radio" name="payment_method" value="3">
                                 <span class="radio-mark"></span>
