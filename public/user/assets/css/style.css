@@ -2217,7 +2217,12 @@ width: fit-content;
     font-size: 10px;
     background: #F44336 !important;
 }
-
+.code-title {
+    border: 1px solid #ddd;
+    font-size: 13px;
+    padding: 2px;
+    border-radius: 2px;
+}
 .cart-products {
     width: 120px;
     height: 120px;
