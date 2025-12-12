@@ -103,8 +103,14 @@
                                         <span class="price-old">
                                             {{ $item->product_variants->actual_price }} KD
                                         </span>
-                                        @endif
-                                        <span class="discount ms-2"> 10% Off</span>
+                                        @endif                                       
+                                        <span class="discount ms-2">
+                                            @if($item->product_variants->discount_type == 1)
+                                                {{ $item->product_variants->discount_value }}% Off
+                                            @elseif($item->product_variants->discount_type == 2)
+                                                {{ $item->product_variants->discount_value }} KD Off
+                                            @endif
+                                        </span>
                                     </div>
 
                                 </div>
