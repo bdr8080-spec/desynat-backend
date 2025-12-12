@@ -8,9 +8,9 @@
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
-        <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
+        <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
                 class="img-fluid"></a>
-        <h3>My Bag</h3>
+        <h3>Home</h3>
     </div>
 
     <div class="main-content">
@@ -140,7 +140,7 @@
                             </div>
                             <input type="hidden" id="deliveryAddressId" value="{{ $cartData['user_address']->id }}">
 
-                            <a href="{{ route('user.view_address') }}" class="moreshop">
+                            <a href="{{ route('user.view_address', ['type' => 'cart']) }}" class="moreshop">
                                 Change <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -162,7 +162,7 @@
                             </a>
 
                             <div id="cancelPromoSection" class="d-none">
-                                <a href="javascript:void(0)" class="btn btn-outline cancelPromoBtn">Cancel</a>
+                                <a href="javascript:void(0)" class="btn btn-outline cancelPromoBtn">Remove</a>
                                 <!-- Same styling as Apply button -->
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                                 Apply Gift Card <i class="bi bi-arrow-right"></i>
                             </a>
                             <a href="javascript:void(0)" class="moreshop d-none" id="cancelGiftCardBtn">
-                                Cancel Gift Card <i class="bi bi-arrow-right"></i>
+                                Remove Gift Card <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
                     </div>

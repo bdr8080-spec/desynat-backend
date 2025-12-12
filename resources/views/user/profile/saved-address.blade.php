@@ -38,6 +38,11 @@
        
         <a href="{{route('user.save_address')}}" class="custom-btn3 add_new_address mb-45" >+ Add New Address</a>
     </div>
+    <div>
+        @if(request('type') === 'cart')
+            <a href="{{ route('user.view_cart') }}" class="custom-btn3 add_new_address mb-45">Proceed</a>
+        @endif
+    </div>
 </div>
 </div>
 
