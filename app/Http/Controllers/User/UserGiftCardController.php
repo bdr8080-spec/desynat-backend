@@ -29,17 +29,14 @@ class UserGiftCardController extends Controller
 
         $giftCards = $this->UserGiftCardService->User_view_giftCard_details($data)['data'];
         
-        //dd($giftCards);
-
+        // when i get data from Paymwnt gateway
         if($request->payment=='yes'){
-
-            $msg="Payment Paid Successfully";
-            $status='success';
-
+        $msg="Payment Paid Successfully";
+        $status='success';
 
         Session::flash('message', $msg);
         Session::flash('status', $status);
-
+         return redirect()->route('user.gift_cards');
 
         }elseif($request->payment=='no'){
 
@@ -48,12 +45,9 @@ class UserGiftCardController extends Controller
 
         Session::flash('message', $msg);
         Session::flash('status', $status);
-
+         return redirect()->route('user.gift_cards');
 
         }
-
-
-
 
         return view('user.giftcard.all_giftcard', compact('giftCards'));
     }
