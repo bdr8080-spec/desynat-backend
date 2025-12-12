@@ -15,7 +15,7 @@ use Exception;
 
 Use Auth;
 use Validator;
-use App\Models\{seller,UserGiftCards};
+use App\Models\{seller,UserGiftCards,Order,Addtocart};
 use Illuminate\Support\Facades\Cache;
 use App\Models\SellerSubcriptionPlanBuy;
 
@@ -50,6 +50,28 @@ class MyFatoorahController extends Controller {
      */
     public function index(request $request,$id) {
         try {
+
+     if($request->type=='order'){
+
+         $checkOrder=Order::with('User_details')->where('order_id', $id)->first();
+
+            //For example: pmid=0 for MyFatoorah invoice or pmid=1 for Knet in test mode
+            $paymentId = request('pmid') ?: 0;
+            $sessionId = request('sid') ?: null;
+            $orderId  = $id ?: 147;
+
+            $order_array=[
+                'amount'=>$checkOrder->total_amount,
+                'CustomerName'       => $checkOrder->user_details->full_name ,
+                'InvoiceValue'       => $checkOrder->total_amount,
+                'CustomerEmail'      => $checkOrder->user_details->email,
+                'MobileCountryCode'  => $checkOrder->user_details->country_code,
+                'CustomerMobile'     => $checkOrder->user_details->mobile,
+                'Language'           => 'en',
+                'CustomerReference'  => $orderId,
+            ];
+            
+        }
 
 
         if($request->type=='giftCard'){
@@ -210,8 +232,6 @@ class MyFatoorahController extends Controller {
 
 
         // check gift Card Payment 
-
-
             $giftCardDetails= UserGiftCards::with('gift_details','user_details')->where('order_id',$transaction_id)->first();
         
             if($giftCardDetails){
@@ -240,17 +260,34 @@ class MyFatoorahController extends Controller {
 
             }
 
+            // Check Order Payment Code 
 
+            $checkOrderStatus=Order::with('User_details')->where('order_id', $transaction_id)->first();
 
+            if($checkOrderStatus){
 
+                if($data->InvoiceStatus=='Paid'){
+                    $checkOrderStatus->update(['payment_status'=>'1','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Order Payment Paid Successfully";
+                    $url="user/order-details/$transaction_id?payment=yes";
 
+                    Addtocart::where('user_id',$checkOrderStatus->user_id)->delete();
 
+                }else{
+                    
+                    $checkOrderStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Order Payment Cancelled Successfully";
+                    $url="user/view-cart?payment=no";
+                }
+                
+                // return  redirect()->to($url);
 
-
-
-
-
-
+                return redirect()->to($url)->with([
+                'message' => $msg,
+                'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
+                ]);
+                
+            }
 
             
 
