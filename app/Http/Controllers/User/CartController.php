@@ -9,6 +9,7 @@ use App\Services\UserManagementService;
 use App\Services\UserOrderService;
 use App\Models\userAddress;
 
+use Validator;
 
 class CartController extends Controller
 {
@@ -34,7 +35,16 @@ class CartController extends Controller
         ];
         $promoCodes = $this->UserOrderService->User_View_Promocode_list($data1)['data'];
         //dd($promoCodes);
-        return view('user.carts.cartlist',compact('cartData','promoCodes'));
+
+        // User Wallet Balance 
+
+        
+        $userBalanceget=$this->UserOrderService->userBalanceget($data);
+
+        $walletBalance=$userBalanceget['data']['balance'];
+
+
+        return view('user.carts.cartlist',compact('cartData','promoCodes','walletBalance'));
 
     }
 
@@ -179,12 +189,51 @@ class CartController extends Controller
 
 
 
+    public function complete_order_Payment(Request $request){
+
+        try{
+      
+        $orderid= $request->orderid;
+
+        
+         $user_id= $request->user()->id;
+
+           $request_data=(object)[
+            'user_id'=>$user_id,
+            'order_id'=>$orderid,
+            'payment_status'=>'1'
+            ];
+
+    
+            $data=$this->UserOrderService->productOrderComplete($request_data);
+    
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+            
+
+            $url="user/order-details/$orderid?payment=yes";
+            return  redirect()->to($url);
+
+    
+            // return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+        
+        }
+
 
     public function Payment_Callback(Request $request){
-
         dd($request->all());
-
     }
+
 
 
 }

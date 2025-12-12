@@ -341,6 +341,7 @@ DB::beginTransaction();
 
 $checkOrder=Order::where('order_id', $request->order_id)->first();
 
+
 if($checkOrder->payment_status!=='0' ){
     return [
             'status' => 'error',
@@ -366,13 +367,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     }
 
     if($checkOrder->payment_method=='2'){ // wallet Payment Code 
-    //     return [
-    //         'status' => 'error',
-    //         'message' => "Wallet Service Is Not Availble Now",
-    //         'data' => []
-    // ];
-
-
+   
        $request_data=(object)[
             'user_id'=>$userid,
             ];

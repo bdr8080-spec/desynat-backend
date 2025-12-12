@@ -20,6 +20,12 @@ class Order extends Model
 
     }
     
+       public function user_details(){
+        
+        return $this->hasOne(User::class,'id','user_id');
+
+    }
+    
 
 
 }

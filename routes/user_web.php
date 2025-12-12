@@ -77,6 +77,13 @@ use App\Http\Controllers\User\CartController;
    Route::post('apply_promocode',[CartController::class, 'apply_promocode'])->name('user.apply_promocode');
    Route::post('apply_giftcard',[CartController::class, 'apply_giftcard'])->name('user.apply_giftcard');
    Route::post('create_order',[CartController::class, 'create_order'])->name('user.create_order');
+
+   Route::post('create_order',[CartController::class, 'create_order'])->name('user.create_order');
+
+
+  Route::get('complete-order-Payment',[CartController::class, 'complete_order_Payment'])->name('user.complete_order_Payment');
+
+
    Route::get('order-details/{id}',[CartController::class, 'orderDetails'])->name('user.orderDetails');
 
 

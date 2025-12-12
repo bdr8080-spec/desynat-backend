@@ -3,7 +3,7 @@
 @section('content')
 
 <style>
-    
+
 </style>
 
 <div class="customContainer common-padding">
@@ -15,232 +15,247 @@
 
     <div class="main-content">
         @php
-            $cartItems = [];
+        $cartItems = [];
 
-            if (is_array($cartData) && isset($cartData['cart_data'])) {
-                $cartItems = $cartData['cart_data'];
-            } elseif (is_object($cartData) && isset($cartData->cart_data)) {
-                $cartItems = $cartData->cart_data;
-            }
+        if (is_array($cartData) && isset($cartData['cart_data'])) {
+        $cartItems = $cartData['cart_data'];
+        } elseif (is_object($cartData) && isset($cartData->cart_data)) {
+        $cartItems = $cartData->cart_data;
+        }
         @endphp
         @if(empty($cartItems) || (is_object($cartItems) && $cartItems->isEmpty()))
 
-            {{-- EMPTY CART MESSAGE --}}
-            <div class="text-center py-5">
-                <h4>No product in Cart</h4>
-            </div>
+        {{-- EMPTY CART MESSAGE --}}
+        <div class="text-center py-5">
+            <h4>No product in Cart</h4>
+        </div>
 
         @else
 
-            <div class="row">
+        <div class="row">
 
-                {{-- LEFT SIDE CART --}}
-                <div class="col-lg-8">
-                    @foreach($cartData['cart_data'] as $item)
-                    <div class="cart-panel">
-                        <div class="cart-card">
-                            <div class="card-left mb-2 d-flex">
+            {{-- LEFT SIDE CART --}}
+            <div class="col-lg-8">
+                @foreach($cartData['cart_data'] as $item)
+                <div class="cart-panel">
+                    <div class="cart-card">
+                        <div class="card-left mb-2 d-flex">
 
-                                {{-- Product Image --}}
-                                <div>
+                            {{-- Product Image --}}
+                            <div>
                                 <div class="cart-products me-3">
-                                    <img src="{{ $item->product_variants->variant_image[0] }}"
-                                        alt="Product" class="img-fluid">
+                                    <img src="{{ $item->product_variants->variant_image[0] }}" alt="Product"
+                                        class="img-fluid">
                                 </div>
-                                </div>
-                                {{-- Product Details --}}
-                                <div class="card-right d-flex w-100 justify-content-between">
+                            </div>
+                            {{-- Product Details --}}
+                            <div class="card-right d-flex w-100 justify-content-between">
 
-                                    <div class="product-info">
+                                <div class="product-info">
 
-                                        <h5 class="product-title">{{ $item->product->product_name_en}}</h5>
+                                    <h5 class="product-title">{{ $item->product->product_name_en}}</h5>
 
-                                        <div class="psize d-flex gap-4">
-                                            <span>Size: {{ $item->product_variants->size->name ?? '-' }}</span>
+                                    <div class="psize d-flex gap-4">
+                                        <span>Size: {{ $item->product_variants->size->name ?? '-' }}</span>
 
-                                            <span class="d-flex align-items-center gap-2">
-                                                Color:
-                                                <div class="colorbox"
-                                                    style="width:15px;height:15px;border-radius:3px;
+                                        <span class="d-flex align-items-center gap-2">
+                                            Color:
+                                            <div class="colorbox" style="width:15px;height:15px;border-radius:3px;
                                                     background: {{ $item->product_variants->color->hex_code }};">
-                                                </div>
-                                            </span>
-
-                                            <span>Qnt: {{ $item->quantity }}</span>
-                                        </div>
-
-                                        {{-- Price --}}
-                                        <div class="price">
-                                            <span class="price-current">
-                                                {{ $item->product_variants->final_price }} KD
-                                            </span>
-
-                                            @if(!empty($item->product_variants->actual_price))
-                                            <span class="price-old">
-                                                {{ $item->product_variants->actual_price }} KD
-                                            </span>
-                                            @endif
-                                        </div>
-
-                                    </div>
-
-                                    {{-- Quantity Buttons --}}
-                                    <div class="qty-box d-flex gap-4"
-                                        data-product-id="{{ $item->product_id }}"
-                                        data-variant-id="{{ $item->variants_id }}">
-
-                                        <button class="qty-btn minus">−</button>
-
-                                        <span class="qty-number">
-                                            {{ $item->quantity < 10 ? '0'.$item->quantity : $item->quantity }}
+                                            </div>
                                         </span>
 
-                                        <button class="qty-btn plus">+</button>
+                                        <span>Qnt: {{ $item->quantity }}</span>
+                                    </div>
+
+                                    {{-- Price --}}
+                                    <div class="price">
+                                        <span class="price-current">
+                                            {{ $item->product_variants->final_price }} KD
+                                        </span>
+
+                                        @if(!empty($item->product_variants->actual_price))
+                                        <span class="price-old">
+                                            {{ $item->product_variants->actual_price }} KD
+                                        </span>
+                                        @endif
                                     </div>
 
                                 </div>
-                            </div>
 
-                            <p class="return-text mb-2">14 days return available</p>
+                                {{-- Quantity Buttons --}}
+                                <div class="qty-box d-flex gap-4" data-product-id="{{ $item->product_id }}"
+                                    data-variant-id="{{ $item->variants_id }}">
 
-                            <div class="d-flex justify-content-between">
-                                <p class="delivery-label mb-2">Delivery by</p>
-                                <p class="delivery-date mb-2">{{ now()->addDays(4)->format('d/m/Y') }}</p>
-                            </div>
+                                    <button class="qty-btn minus">−</button>
 
-                            <div class="d-flex justify-content-between">
-                                <p class="seller d-flex gap-4 mb-2">
-                                    <span>Seller</span> 
-                                    {{ $item->product->seller_details->first_name }} 
-                                    {{ $item->product->seller_details->last_name }}
-                                </p>
+                                    <span class="qty-number">
+                                        {{ $item->quantity < 10 ? '0'.$item->quantity : $item->quantity }}
+                                    </span>
 
-                                <a href="{{ route('user.store_details', $item->product->store_id) }}" 
-                                class="moreshop">
-                                    Shop More <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                    @endforeach
-
-                    {{-- DELIVERY ADDRESS --}}
-                    <div class="gift-pnl mt-4">
-                        <h6>Delivering Address</h6>
-                        <div class="border-1">
-                            <div class="giftinfo">
-                                <div>
-                                    {{ $cartData['user_address']->address }}
-                                    {{ $cartData['user_address']->house_no }},
-                                    {{ $cartData['user_address']->postal_code }},
-                                    {{ $cartData['user_address']->city }},
-                                    {{ $cartData['user_address']->state }},
-                                    {{ $cartData['user_address']->country_name }}
-                                </div>
-                                <input type="hidden" id="deliveryAddressId" value="{{ $cartData['user_address']->id }}">
-
-                                <a href="{{ route('user.view_address') }}" class="moreshop">
-                                    Change <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- PROMO CODE --}}
-                    <div class="gift-pnl mt-4">
-                        <div class="border-1">
-                            <div class="giftinfo">
-                                <div>
-                                    <img src="{{ asset('user/assets/images/ticket-01.svg') }}" class="img-fluid">
-                                    <span id="applyPromoText">Apply PromoCode</span>
+                                    <button class="qty-btn plus">+</button>
                                 </div>
 
-                                <a href="javascript:void(0)"
-                                data-bs-toggle="modal"
-                                data-bs-target="#promoModal"
-                                class="moreshop"
-                                id="promoApplyLink">
-                                    Apply <i class="bi bi-arrow-right"></i>
-                                </a>
-
-                                <div id="cancelPromoSection" class="d-none">
-                                    <a href="javascript:void(0)" class="btn btn-outline cancelPromoBtn">Cancel</a> <!-- Same styling as Apply button -->
-                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    {{-- BILLING DETAILS --}}
-                    <div class="gift-pnl mt-4">
-                        <h6>Billing Details</h6>
-                        <div class="border-1">
-                            <div class="giftinfo"><div>Total MRP</div><div>{{ $cartData['total_mrp'] }} KD</div></div>
-                            <div class="giftinfo"><div>Discount on MRP</div><div class="red-color">{{ $cartData['discount_on_mrp'] }} KD</div></div>
-                            <div class="giftinfo"><div>Coupon Discount</div><div class="red-color">{{ $cartData['discount_coupon'] }} KD</div></div>
-                            <div class="giftinfo"><div>Gift Card Discount</div><div class="red-color" id="giftCardDiscountAmount">0 KD</div></div>
-                            <div class="giftinfo"><div>Shipping Fee</div><div>{{ $cartData['shipping_fees'] }} KD</div></div>
-                            <div class="giftinfo"><div>TAX (if any)</div><div>{{ $cartData['tax'] }} KD</div></div>
-                            <div class="giftinfo"><div>Total Amount</div><div>{{ $cartData['total_amount'] }} KD</div></div>
+                        <p class="return-text mb-2">14 days return available</p>
+
+                        <div class="d-flex justify-content-between">
+                            <p class="delivery-label mb-2">Delivery by</p>
+                            <p class="delivery-date mb-2">{{ now()->addDays(4)->format('d/m/Y') }}</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p class="seller d-flex gap-4 mb-2">
+                                <span>Seller</span>
+                                {{ $item->product->seller_details->first_name }}
+                                {{ $item->product->seller_details->last_name }}
+                            </p>
+
+                            <a href="{{ route('user.store_details', $item->product->store_id) }}" class="moreshop">
+                                Shop More <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                @endforeach
+
+                {{-- DELIVERY ADDRESS --}}
+                <div class="gift-pnl mt-4">
+                    <h6>Delivering Address</h6>
+                    <div class="border-1">
+                        <div class="giftinfo">
+                            <div>
+                                {{ $cartData['user_address']->address }}
+                                {{ $cartData['user_address']->house_no }},
+                                {{ $cartData['user_address']->postal_code }},
+                                {{ $cartData['user_address']->city }},
+                                {{ $cartData['user_address']->state }},
+                                {{ $cartData['user_address']->country_name }}
+                            </div>
+                            <input type="hidden" id="deliveryAddressId" value="{{ $cartData['user_address']->id }}">
+
+                            <a href="{{ route('user.view_address') }}" class="moreshop">
+                                Change <i class="bi bi-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
-
-                    <p id="promoSavingsText" class="return-text mb-2">
-                        You will save {{ $cartData['discount_on_mrp'] }} KD on this
-                    </p>
                 </div>
 
-                {{-- RIGHT SIDE --}}
-                <div class="col-lg-4">
-                    
-                    <div class="gift-pnl mt-4">
-                        <div class="border-1">
-                            <div id="paymentMethodSection">
-                                <label>
-                                    <input type="radio" name="payment_method" value="1" checked> Online
-                                </label>
-                                <label>
-                                    <input type="radio" name="payment_method" value="2"> Wallet
-                                </label>
-                                <label>
-                                    <input type="radio" name="payment_method" value="3"> COD
-                                </label>
+                {{-- PROMO CODE --}}
+                <div class="gift-pnl mt-4">
+                    <div class="border-1">
+                        <div class="giftinfo">
+                            <div>
+                                <img src="{{ asset('user/assets/images/ticket-01.svg') }}" class="img-fluid">
+                                <span id="applyPromoText">Apply PromoCode</span>
+                            </div>
+
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#promoModal"
+                                class="moreshop" id="promoApplyLink">
+                                Apply <i class="bi bi-arrow-right"></i>
+                            </a>
+
+                            <div id="cancelPromoSection" class="d-none">
+                                <a href="javascript:void(0)" class="btn btn-outline cancelPromoBtn">Cancel</a>
+                                <!-- Same styling as Apply button -->
                             </div>
                         </div>
-                    </div>    
+                    </div>
+                </div>
 
-                    {{-- Gift Card --}}
-                    <div class="gift-pnl mt-4">
-                        <div class="border-1">
-                            <div class="giftinfo">
-                                <div>
-                                    <img src="{{ asset('user/assets/images/gift-ic.svg') }}" class="img-fluid">
-                                    <span id="applyGiftCardText">Have a Gift Card</span>
-                                </div>
+                {{-- BILLING DETAILS --}}
+                <div class="gift-pnl mt-4">
+                    <h6>Billing Details</h6>
+                    <div class="border-1">
+                        <div class="giftinfo">
+                            <div>Total MRP</div>
+                            <div>{{ $cartData['total_mrp'] }} KD</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>Discount on MRP</div>
+                            <div class="red-color">{{ $cartData['discount_on_mrp'] }} KD</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>Coupon Discount</div>
+                            <div class="red-color">{{ $cartData['discount_coupon'] }} KD</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>Gift Card Discount</div>
+                            <div class="red-color" id="giftCardDiscountAmount">0 KD</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>Shipping Fee</div>
+                            <div>{{ $cartData['shipping_fees'] }} KD</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>TAX (if any)</div>
+                            <div>{{ $cartData['tax'] }} KD</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>Total Amount</div>
+                            <div>{{ $cartData['total_amount'] }} KD</div>
+                        </div>
+                    </div>
+                </div>
 
-                                <a href="javascript:void(0)" 
-                                data-bs-toggle="modal"
-                                data-bs-target="#giftModal"
+                <p id="promoSavingsText" class="return-text mb-2">
+                    You will save {{ $cartData['discount_on_mrp'] }} KD on this
+                </p>
+            </div>
+
+            {{-- RIGHT SIDE --}}
+            <div class="col-lg-4">
+
+                <input type="hidden" id="WalletBalance" value="{{$walletBalance}}">
+
+                <div class="gift-pnl mt-4">
+                    <div class="border-1">
+                        <div id="paymentMethodSection">
+                            <label>
+                                <input type="radio" name="payment_method" value="1" checked> Online
+                            </label>
+                            <label>
+                                <input type="radio" name="payment_method" value="2"> Wallet
+                            </label>
+                            <label>
+                                <input type="radio" name="payment_method" value="3"> COD
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Gift Card --}}
+                <div class="gift-pnl mt-4">
+                    <div class="border-1">
+                        <div class="giftinfo">
+                            <div>
+                                <img src="{{ asset('user/assets/images/gift-ic.svg') }}" class="img-fluid">
+                                <span id="applyGiftCardText">Have a Gift Card</span>
+                            </div>
+
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#giftModal"
                                 class="moreshop" id="applyGiftCardBtn">
-                                    Apply Gift Card <i class="bi bi-arrow-right"></i>
-                                </a>
-                                <a href="javascript:void(0)" 
-                                    class="moreshop d-none" id="cancelGiftCardBtn">
-                                    Cancel Gift Card <i class="bi bi-arrow-right"></i>
-                                </a>
-                            </div>
+                                Apply Gift Card <i class="bi bi-arrow-right"></i>
+                            </a>
+                            <a href="javascript:void(0)" class="moreshop d-none" id="cancelGiftCardBtn">
+                                Cancel Gift Card <i class="bi bi-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="mt-4">
-                        <button type="submit" id="placeOrderBtn" class="customBtn mb-3">
-                            Place Order
-                        </button>
-                    </div>
-
+                <div class="mt-4">
+                    <button type="submit" id="placeOrderBtn" class="customBtn mb-3">
+                        Place Order
+                    </button>
                 </div>
 
             </div>
+
+        </div>
 
         @endif
 
@@ -261,7 +276,7 @@
 
                     @if(isset($promoCodes) && count($promoCodes) > 0)
 
-                        <!-- <div class="giftsearch py-0 d-flex w-100 gap-0">
+                    <!-- <div class="giftsearch py-0 d-flex w-100 gap-0">
                             <div class="form-group w-100 d-flex">
                                 <div class="searchicon"><i class="bi bi-search"></i></div>
                                 <input type="search" name="search" class="form-control giftcontrol" placeholder="Search" id="promoSearch">
@@ -269,34 +284,36 @@
                             <button type="button" class="btn btnsearch" id="promoSearchBtn">Search</button>
                         </div> -->
 
-                        {{-- Promo Code List --}}
-                        <div id="promoList">
-                            @foreach($promoCodes as $promo)
-                                <div class="gift-cupon-list my-3">
-                                    <div class="gift-cupon-content d-flex justify-content-between align-items-center"> 
-                                        <div class="title-flat">
-                                            <h6>{{ $promo->name_english }}</h6>
-                                            <p>
-                                                @if($promo->discount_percent)
-                                                    Flat {{ $promo->discount_percent }}% off on minimum order {{ $promo->min_order_value }} KD
-                                                @else
-                                                    Discount details not available
-                                                @endif
-                                            </p>
-                                        </div>
-                                        <!-- <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}">Apply</button> -->
-                                         <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}" data-name="{{ $promo->name_english }}">Apply</button>
-                                    </div>
-                                    <p class="mb-0">{{ $promo->description_english }}</p>
+                    {{-- Promo Code List --}}
+                    <div id="promoList">
+                        @foreach($promoCodes as $promo)
+                        <div class="gift-cupon-list my-3">
+                            <div class="gift-cupon-content d-flex justify-content-between align-items-center">
+                                <div class="title-flat">
+                                    <h6>{{ $promo->name_english }}</h6>
+                                    <p>
+                                        @if($promo->discount_percent)
+                                        Flat {{ $promo->discount_percent }}% off on minimum order
+                                        {{ $promo->min_order_value }} KD
+                                        @else
+                                        Discount details not available
+                                        @endif
+                                    </p>
                                 </div>
-                            @endforeach
+                                <!-- <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}">Apply</button> -->
+                                <button type="button" class="btn btn-outline applyPromoBtn" data-id="{{ $promo->id }}"
+                                    data-name="{{ $promo->name_english }}">Apply</button>
+                            </div>
+                            <p class="mb-0">{{ $promo->description_english }}</p>
                         </div>
+                        @endforeach
+                    </div>
 
                     @else
-                        {{-- No promocode found --}}
-                        <div class="text-center py-3">
-                            <p>No Promo Code Found.</p>
-                        </div>
+                    {{-- No promocode found --}}
+                    <div class="text-center py-3">
+                        <p>No Promo Code Found.</p>
+                    </div>
                     @endif
 
                 </div>
@@ -318,12 +335,15 @@
                 <div class="gift-panel-list">
                     <div class="form-group w-100 py-2">
                         <label>16 Digit Gift Card Number</label>
-                        <input type="text" id="giftCardNumber" oninput="this.value=this.value.replace(/\D/g,'').slice(0,16)" class="form-control pline-10" placeholder="16 Digit Gift Card Number">
+                        <input type="text" id="giftCardNumber"
+                            oninput="this.value=this.value.replace(/\D/g,'').slice(0,16)" class="form-control pline-10"
+                            placeholder="16 Digit Gift Card Number">
                         <div id="giftCardNumberError" class="text-danger text-center" style="display: none;"></div>
                     </div>
                     <div class="form-group w-100 py-2">
                         <label>Enter PIN</label>
-                        <input type="text" id="giftCardPin" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" class="form-control pline-10" placeholder="Enter PIN">
+                        <input type="text" id="giftCardPin" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)"
+                            class="form-control pline-10" placeholder="Enter PIN">
                         <div id="giftCardPinError" class="text-danger text-center" style="display: none;"></div>
                     </div>
                     <div class="mt-4">
@@ -361,55 +381,55 @@ if (performance.navigation.type === 2) {
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll(".qty-box").forEach(box => {
 
         const productId = box.dataset.productId;
         const variantId = box.dataset.variantId;
 
         const minusBtn = box.querySelector(".minus");
-        const plusBtn  = box.querySelector(".plus");
-        const qtyText  = box.querySelector(".qty-number");
+        const plusBtn = box.querySelector(".plus");
+        const qtyText = box.querySelector(".qty-number");
 
         function updateQuantity(qty) {
             fetch("{{ route('user.addToCart') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    product_id: productId,
-                    variant_id: variantId,
-                    quantity: qty
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        product_id: productId,
+                        variant_id: variantId,
+                        quantity: qty
+                    })
                 })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    setTimeout(() => {
-                        location.reload();  // Reload page
-                    }, 1000);
-                    toastr.success(data.message); // Show backend message
-                } else {
-                    toastr.error(data.message);
-                }
-                // After quantity change, refresh discounts UI
-                setTimeout(refreshDiscountUI, 500);
-            })
-            .catch((err) => {
-                toastr.error(err.message || "Request failed");
-            });
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        setTimeout(() => {
+                            location.reload(); // Reload page
+                        }, 1000);
+                        toastr.success(data.message); // Show backend message
+                    } else {
+                        toastr.error(data.message);
+                    }
+                    // After quantity change, refresh discounts UI
+                    setTimeout(refreshDiscountUI, 500);
+                })
+                .catch((err) => {
+                    toastr.error(err.message || "Request failed");
+                });
         }
 
-        plusBtn.addEventListener("click", function () {
+        plusBtn.addEventListener("click", function() {
             let qty = parseInt(qtyText.innerText);
             qty++;
             qtyText.innerText = qty < 10 ? "0" + qty : qty;
             updateQuantity(qty);
         });
 
-        minusBtn.addEventListener("click", function () {
+        minusBtn.addEventListener("click", function() {
             let qty = parseInt(qtyText.innerText);
             qty--;
             qtyText.innerText = qty < 10 ? "0" + qty : qty;
@@ -422,10 +442,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <script>
-$(document).ready(function () {
+$(document).ready(function() {
     var appliedPromoId = null;
 
-    $(document).on('click', '.applyPromoBtn', function () {
+    $(document).on('click', '.applyPromoBtn', function() {
         var promoId = $(this).data('id');
         var totalAmountText = $('.giftinfo').filter(function() {
             return $(this).find('div').first().text().trim() === 'Total Amount';
@@ -435,12 +455,17 @@ $(document).ready(function () {
         $.ajax({
             url: '/user/apply_promocode',
             method: 'POST',
-            headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
-            data: {promo_id: promoId, amount: amount},
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            data: {
+                promo_id: promoId,
+                amount: amount
+            },
             success: function(response) {
-                if(response.status === 'success' && response.data){
+                if (response.status === 'success' && response.data) {
                     var promoData = response.data.data ? response.data.data : response.data;
-                    if(promoData && promoData.discount_code){
+                    if (promoData && promoData.discount_code) {
                         $('#promoModal').modal('hide');
                         $('#applyPromoText').text(promoData.discount_code + ' applied');
                         $('#promoApplyLink').hide();
@@ -456,7 +481,7 @@ $(document).ready(function () {
 
                         toastr.success(response.message);
                         setTimeout(() => {
-                            location.reload();  // Reload page
+                            location.reload(); // Reload page
                         }, 1000);
                         // refreshDiscountUI();
                     } else {
@@ -477,8 +502,8 @@ $(document).ready(function () {
         localStorage.removeItem('appliedPromo');
         refreshDiscountUI();
         setTimeout(() => {
-                        location.reload();  // Reload page
-                    }, 1000);
+            location.reload(); // Reload page
+        }, 1000);
     });
 
     // On page load, refresh promo UI
@@ -488,66 +513,73 @@ $(document).ready(function () {
 
 
 <script>
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $(document).on('click', '#redeemGiftCardBtn', function () {
+    $(document).on('click', '#redeemGiftCardBtn', function() {
         var giftCardNumber = $('#giftCardNumber').val().trim();
         var giftCardPin = $('#giftCardPin').val().trim();
         var isValid = true;
 
         $('#giftCardNumberError, #giftCardPinError').text('');
 
-        if(!/^\d{16}$/.test(giftCardNumber)){
+        if (!/^\d{16}$/.test(giftCardNumber)) {
             $('#giftCardNumberError').text('Please enter 16 digit gift card number').show();
             isValid = false;
         }
-        if(!/^\d{4}$/.test(giftCardPin)){
+        if (!/^\d{4}$/.test(giftCardPin)) {
             $('#giftCardPinError').text('Please enter 4 digit pin').show();
             isValid = false;
         }
 
-        if(isValid){
+        if (isValid) {
             $.ajax({
                 url: '/user/apply_giftcard',
                 method: 'POST',
-                headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}"},
-                data: {giftCardNo: giftCardNumber, giftCardPin: giftCardPin},
-                success: function(response){
-                    if(response.status === 'success'){
-                        var giftCardData = response.data.data ? response.data.data : response.data;
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                data: {
+                    giftCardNo: giftCardNumber,
+                    giftCardPin: giftCardPin
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        var giftCardData = response.data.data ? response.data.data :
+                            response.data;
                         $('#giftModal').modal('hide');
 
                         // Save in localStorage
                         localStorage.setItem('appliedGiftCard', JSON.stringify({
                             giftCardNumber: giftCardNumber,
                             giftCardPin: giftCardPin,
-                            giftCardAmount: parseFloat(giftCardData.GiftCardAmount),
-                            giftCardId:giftCardData.id
+                            giftCardAmount: parseFloat(giftCardData
+                                .GiftCardAmount),
+                            giftCardId: giftCardData.id
                         }));
 
                         toastr.success(response.message);
                         // refreshDiscountUI();
                         setTimeout(() => {
-                            location.reload();  // Reload page
+                            location.reload(); // Reload page
                         }, 1000);
                     } else {
                         toastr.error(response.message);
                     }
                 },
-                error: function(){
+                error: function() {
                     toastr.error("Failed to apply gift card");
                 }
             });
         }
     });
 
-    $(document).on('click', '#cancelGiftCardBtn', function () {
+    $(document).on('click', '#cancelGiftCardBtn', function() {
         toastr.error("Gift card removed.");
         localStorage.removeItem('appliedGiftCard');
         refreshDiscountUI();
         setTimeout(() => {
-                        location.reload();  // Reload page
-                    }, 1000);
+            location.reload(); // Reload page
+        }, 1000);
     });
 
     // Remove error messages dynamically
@@ -566,46 +598,64 @@ function refreshDiscountUI() {
     var savedGiftCard = JSON.parse(localStorage.getItem('appliedGiftCard') || 'null');
 
     // Update Promo
-    if(savedPromo){
+    if (savedPromo) {
         $('#applyPromoText').text(savedPromo.promoCode + ' applied');
         $('#promoApplyLink').hide();
         $('#cancelPromoSection').removeClass('d-none');
-        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Coupon Discount'; })
+        $('.giftinfo').filter(function() {
+                return $(this).find('div').first().text().trim() === 'Coupon Discount';
+            })
             .find('div').last().text(savedPromo.discountValue + ' KD');
     } else {
         $('#applyPromoText').text('Apply PromoCode');
         $('#promoApplyLink').show();
         $('#cancelPromoSection').addClass('d-none');
-        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Coupon Discount'; })
+        $('.giftinfo').filter(function() {
+                return $(this).find('div').first().text().trim() === 'Coupon Discount';
+            })
             .find('div').last().text('0 KD');
     }
 
     // Update Gift Card
-    if(savedGiftCard){
+    if (savedGiftCard) {
         $('#applyGiftCardText').text('Gift Card Applied');
         $('#applyGiftCardBtn').hide();
         $('#cancelGiftCardBtn').removeClass('d-none');
-        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Gift Card Discount'; })
+        $('.giftinfo').filter(function() {
+                return $(this).find('div').first().text().trim() === 'Gift Card Discount';
+            })
             .find('div').last().text(savedGiftCard.giftCardAmount.toFixed(2) + ' KD');
     } else {
         $('#applyGiftCardText').text('Have a Gift Card');
         $('#applyGiftCardBtn').show();
         $('#cancelGiftCardBtn').addClass('d-none');
-        $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Gift Card Discount'; })
+        $('.giftinfo').filter(function() {
+                return $(this).find('div').first().text().trim() === 'Gift Card Discount';
+            })
             .find('div').last().text('0 KD');
     }
 
     // Recalculate Total Amount
-    var baseTotal = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Total MRP'; }).find('div').last().text().replace(' KD','')) || 0;
-    var discountOnMRP = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Discount on MRP'; }).find('div').last().text().replace(' KD','')) || 0;
-    var shippingFee = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Shipping Fee'; }).find('div').last().text().replace(' KD','')) || 0;
-    var tax = parseFloat($('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'TAX (if any)'; }).find('div').last().text().replace(' KD','')) || 0;
+    var baseTotal = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === 'Total MRP';
+    }).find('div').last().text().replace(' KD', '')) || 0;
+    var discountOnMRP = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === 'Discount on MRP';
+    }).find('div').last().text().replace(' KD', '')) || 0;
+    var shippingFee = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === 'Shipping Fee';
+    }).find('div').last().text().replace(' KD', '')) || 0;
+    var tax = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === 'TAX (if any)';
+    }).find('div').last().text().replace(' KD', '')) || 0;
 
     var promoDiscount = savedPromo ? savedPromo.discountValue : 0;
     var giftCardDiscount = savedGiftCard ? savedGiftCard.giftCardAmount : 0;
 
     var finalTotal = baseTotal - discountOnMRP - promoDiscount - giftCardDiscount + shippingFee + tax;
-    $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Total Amount'; })
+    $('.giftinfo').filter(function() {
+            return $(this).find('div').first().text().trim() === 'Total Amount';
+        })
         .find('div').last().text(finalTotal.toFixed(2) + ' KD');
 
     // Total Savings
@@ -616,12 +666,13 @@ function refreshDiscountUI() {
 
 
 <script>
-$(document).ready(function () {
+$(document).ready(function() {
 
-    $('#placeOrderBtn').on('click', function (e) {
+    $('#placeOrderBtn').on('click', function(e) {
         e.preventDefault(); // Prevent default form submission
-         
+
         var paymentMethod = $('input[name="payment_method"]:checked').val();
+
         var deliveryAddressId = document.getElementById('deliveryAddressId').value;
         // Get localStorage data
         var promoData = JSON.parse(localStorage.getItem('appliedPromo') || '{}');
@@ -633,12 +684,12 @@ $(document).ready(function () {
 
         // Fetch cart summary values from UI
         var cartSummary = {};
-        $('.giftinfo').each(function () {
+        $('.giftinfo').each(function() {
             var title = $(this).find('div').first().text().trim();
             var valueText = $(this).find('div').last().text().replace(' KD', '').trim();
             var value = parseFloat(valueText) || 0;
 
-            switch(title) {
+            switch (title) {
                 case 'Total MRP':
                     cartSummary.totalMRP = value;
                     break;
@@ -663,6 +714,18 @@ $(document).ready(function () {
             }
         });
 
+        // check Wallet when Payment is Wallet 
+        if (paymentMethod == 2) {
+            var wallet_Amount = $('#WalletBalance').val();
+            var PayAmount = cartSummary.totalAmount;
+            if (wallet_Amount < PayAmount) {
+                toastr.error('Wallet Amount is Low Please Choose Another Method');
+            }
+
+            return false;
+
+        }
+
         // Prepare request payload
         var requestData = {
             promo: promoData,
@@ -681,25 +744,43 @@ $(document).ready(function () {
             },
             data: requestData,
             success: function(response) {
-                 console.log(response);
-                if(response.status === 'success') {
-                    toastr.success(response.message || "Order placed successfully!");
+                // console.log(response);
+                if (response.status === 'success') {
+                    // toastr.success(response.message || "Order placed successfully!");
                     // Clear localStorage promo/gift card
                     localStorage.removeItem('appliedPromo');
                     localStorage.removeItem('appliedGiftCard');
                     setTimeout(() => {
-                        if(response.data && response.data.data.order_id) {
-                            window.location.href = `/user/order-details/${response.data.data.order_id}`;
+
+                        // Redirect To Online Pyament gateway 
+                        if (response.data && response.data.data.order_id && response
+                            .data.data.Payment_method == '1') {
+
+                            var orderid = response.data.data.order_id;
+                            var url = "/myfatoorah/" + orderid + "?type=order";
+                            window.location.href = url;
+
+                            return false;
                         }
+
+                        if (response.data && response.data.data.order_id) {
+
+                            var orderid = response.data.data.order_id;
+                            var url = "/user/complete-order-Payment?orderid=" +
+                                orderid;
+                            window.location.href = url;
+
+                        }
+
                     }, 1000);
                 } else {
                     toastr.error(response.message || "Failed to place order.");
                 }
             },
             error: function(xhr) {
-                var errMsg = xhr.responseJSON && xhr.responseJSON.message 
-                             ? xhr.responseJSON.message 
-                             : "An error occurred while placing order.";
+                var errMsg = xhr.responseJSON && xhr.responseJSON.message ?
+                    xhr.responseJSON.message :
+                    "An error occurred while placing order.";
                 toastr.error(errMsg);
             }
         });
@@ -707,7 +788,3 @@ $(document).ready(function () {
 
 });
 </script>
-
-
-
-
