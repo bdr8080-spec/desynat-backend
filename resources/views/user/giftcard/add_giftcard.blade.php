@@ -90,7 +90,7 @@
                             value="{{ $giftCardCategory[0]['id'] }}">
                         <input type="hidden" name="notes" id="notes">
                         <input type="hidden" name="user_id" id="user_id" value="{{ auth()->id() }}">
-                        <h6>Recipient Details</h6>
+                        <!-- <h6>Recipient Details</h6> -->
                         <div class="gift-pnl mt-4">
                             <h6>Recipient Details</h6>
                             <div class="form-group w-100 py-2">
