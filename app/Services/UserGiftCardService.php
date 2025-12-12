@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\{UserGiftCards,GiftCard};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
+Use DB;
+
 
 class UserGiftCardService
 {
@@ -85,7 +87,7 @@ class UserGiftCardService
 
         try{
 
-
+            DB::beginTransaction();
             $checkGiftCard = UserGiftCards::where('order_id',$request->order_id)->first();
 
             if($checkGiftCard->payment_status!=='0'){
@@ -96,10 +98,38 @@ class UserGiftCardService
                 ];
             }
 
-            $checkGiftCard->update(['payment_status'=>$request->payment_status,'transaction_id'=>$request->transaction_id]);
-
 
             if($request->payment_status=='1'){
+
+              if($request->Payment_method=='2'){
+
+                $userId=$checkGiftCard->user_id;
+                $amount=round($checkGiftCard->amount);
+               
+
+                  $request_data=(object)[
+                    'user_id'=>$userId,
+                    ];
+
+                    // Get User Wallet Balance 
+                $userBalance= userBalanceget($request_data);
+
+                if($userBalance['data']['balance'] < round($amount)){
+                    // check Wallet AMount 
+                    return [
+                        'status' => 'error',
+                        'message' => "Wallet Amount Is Low Please recharge Your Wallet",
+                        'data' => []
+                    ];
+                }
+
+
+                // cut Payment From Wallet 
+                 $data1= UserBalancePayOrder($userId,round($amount));
+
+                }
+
+
 
                 $msg="Gift Card Purchased Successfully";
 
@@ -108,6 +138,12 @@ class UserGiftCardService
                 $msg="Pyment Failed";
 
             }
+
+            // change status in Db 
+            $checkGiftCard->update(['payment_status'=>$request->payment_status,'transaction_id'=>$request->transaction_id,'payment_method'=>$request->Payment_method]);
+
+
+             DB::commit();
 
             return ['status'=>'success','message'=>$msg,'data'=>$checkGiftCard];
 

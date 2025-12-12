@@ -598,7 +598,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     $userBalance=UserWallet::where('user_id',$user_id)->first();
 
     if($userBalance){
-        $balance=round($userBalance->amount)->$amount;
+        $balance=round($userBalance->amount)-$amount;
         
         $userBalance->update(['amount'=>$balance]);
         

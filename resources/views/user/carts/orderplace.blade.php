@@ -29,7 +29,16 @@
                 <h3>Order Placed Successfully !</h3>
             </div>
             <div class="place-footer">
-                <div>{{ number_format($orderData['data']->total_amount, 2) }} KD <span>Amount Paid</span></div>
+                <div>
+                    {{ number_format($orderData['data']->total_amount, 2) }} KD 
+                    @if($orderData['data']->payment_method == 1)
+                        <span>Paid Online</span>
+                    @elseif($orderData['data']->payment_method == 2)
+                        <span>Paid Using Wallet</span>
+                    @elseif($orderData['data']->payment_method == 3)
+                        <span>Cash on Delivery (COD)</span>
+                    @endif
+                </div>
             </div>
         </div>
 
