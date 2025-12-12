@@ -253,7 +253,7 @@ foreach ($data->product_variants as $item) {
     $cartCount = 0;
     } else {
         $cartCount = Addtocart::where('user_id', $request->user()->id)
-            ->where('product_id', $id)
+            //->where('product_id', $id)
             ->count();
     }
 
@@ -261,12 +261,12 @@ foreach ($data->product_variants as $item) {
     $cartData = [];
     } else {
         $cartData = Addtocart::where('user_id', $request->user()->id)
-            ->where('product_id', $id)
+            //->where('product_id', $id)
             ->get() 
             ->keyBy('variants_id');
     }
 
-    //dd($cartData);
+   // dd($cartData);
 
 
 

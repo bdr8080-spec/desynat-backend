@@ -198,7 +198,7 @@
                     <!-- VIEW MY BAG (ALWAYS FULL WIDTH) -->
                     <div class="bag-topbar-full d-flex justify-content-between align-items-center" id="bagTopbar">
                         <div><strong>({{$cartCount}} Items)</strong> View My Bag</div>
-                        <i class="bi bi-arrow-right arrow-icon"></i>
+                        <a href="{{route('user.view_cart')}}"><i class="bi bi-arrow-right arrow-icon"></i></a>
                     </div>
 
                     <div class="action-row d-flex align-items-center gap-3 mt-2">
