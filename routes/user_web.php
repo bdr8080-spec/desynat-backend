@@ -77,6 +77,12 @@ use App\Http\Controllers\User\CartController;
    Route::post('apply_promocode',[CartController::class, 'apply_promocode'])->name('user.apply_promocode');
    Route::post('apply_giftcard',[CartController::class, 'apply_giftcard'])->name('user.apply_giftcard');
 
+
+
+
+
+
+
 });
 
 
