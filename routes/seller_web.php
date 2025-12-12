@@ -130,7 +130,6 @@ route::Match(['get','post'],'/Add-product-2', function(){
 });
 
 
-
 Route::fallback(function () {
 
     return view('404');
