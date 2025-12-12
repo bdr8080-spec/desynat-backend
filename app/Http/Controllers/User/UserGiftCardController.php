@@ -84,8 +84,17 @@ class UserGiftCardController extends Controller
         // dd($sessionId);
 
         $giftCardCategory = $this->UserGiftCardService->giftCard($request)['data'];
+
+         $request_data = (object)[
+            'user_id' => $request->user()->id,
+        ];
+        
+        $userBalanceget=userBalanceget($request_data);
+
+        $walletBalance=$userBalanceget['data']['balance'];
+
        // dd($giftCardCategory);
-        return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory','baseUrl'));
+        return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory','baseUrl','walletBalance'));
     }
 
     public function view_gift_card($id) {
@@ -129,6 +138,71 @@ class UserGiftCardController extends Controller
             ], 500);
         }
     }
+
+
+
+
+    public function giftcard_complete_Payment(Request $request){
+
+        try{
+    
+        //     $validate = Validator::make($request->all(), [
+        //         // "profile_image"=>"required",
+        //         'order_id' => 'required|exists:user_gift_cards,order_id',
+        //         'payment_status'=>'required|in:1,2',// 1 paid 2 cancel
+        //         'transaction_id'=>'required'
+        //         ]);
+            
+        //    if($validate->fails()){
+        //     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        //    }
+    
+    
+           $user_id= $request->user()->id;
+    
+           $request_data=(object)[
+            'user_id'=>$user_id,
+            'order_id' => $request->order_id,
+            'payment_status' =>"1",
+            'transaction_id'=>"333",
+            "Payment_method"=>"2"??null
+            
+           ];
+               
+    
+            $data=$this->UserGiftCardService->complete_giftCard_Payment($request_data);
+    
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+
+              $url="user/gift-cards?payment=yes&orderid=".$request->order_id;
+
+            $msg="Gift Card Payment Paid Successfully";
+
+
+                return redirect()->to($url)->with([
+                'message' => $msg,
+                'status' => 'success'
+                ]);
+
+    
+
+            return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+           
+    
+    
+        }
+
 
 
 }

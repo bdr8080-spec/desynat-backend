@@ -154,6 +154,8 @@
                     <div id="myfatoorah-container"></div>
                 </div>
 
+                <input type="hidden" id="WalletBalance" value="{{$walletBalance}}">
+
                 <div class="payment-option mb-3">
                     <label class="custom-radio mb-3">
                         <input type="radio" name="payment" value="2">
@@ -162,7 +164,7 @@
                             <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
                             <div class="title">
                                 In -App Wallet
-                                <div class="small-14">Available Balance : 349 KD</div>
+                                <div class="small-14">Available Balance : {{$walletBalance}} KD</div>
                             </div>
                         </div>
                     </label>
@@ -420,6 +422,19 @@ $(document).ready(function() {
 
         var paymentMethod = $('input[name="payment"]:checked').val();
 
+
+
+        if (paymentMethod == 2) {
+            var wallet_Amount = $('#WalletBalance').val();
+            var PayAmount = amount;
+            if (wallet_Amount < PayAmount) {
+                console.log("Wallet Amount is Low Please Choose Another Method");
+                toastr.error('Wallet Amount is Low Please Choose Another Method');
+
+                return false;
+            }
+        }
+
         let formData = $(this).serialize();
 
         $.ajax({
@@ -443,12 +458,25 @@ $(document).ready(function() {
                         var orderid = response.data.data.order_id;
 
                         var url = "/myfatoorah/" + orderid + "?type=giftCard";
+                        setTimeout(function() {
+                            window.location.href = url;
+                        }, 2000);
+                    }
 
+
+                    if (paymentMethod == 2) {
+
+                        var orderid = response.data.data.order_id;
+
+                        var url = "/user/giftcard-complete-Payment/?order_id=" + orderid +
+                            "&type=giftCard";
                         setTimeout(function() {
                             window.location.href = url;
                         }, 2000);
 
                     }
+
+
 
 
 

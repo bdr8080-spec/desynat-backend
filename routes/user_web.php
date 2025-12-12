@@ -86,8 +86,7 @@ use App\Http\Controllers\User\CartController;
   Route::get('order-details/{id}',[CartController::class, 'orderDetails'])->name('user.orderDetails');
 
 
-//   Route::post('/giftcard-complete-Payment', [CartController::class,'giftcard_complete_Payment']);
-
+  Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment']);
 
 
 });
