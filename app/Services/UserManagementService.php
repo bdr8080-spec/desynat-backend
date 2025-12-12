@@ -561,6 +561,17 @@ class UserManagementService
                 
             }
 
+            // add to cart total count
+              $addtocartcount = Addtocart::where('user_id', $request->user_id)
+             ->count();
+
+            if($addtocartcount){
+                $product_details->addtocartTotalProduct = $addtocartcount;
+            }else{
+                $product_details->addtocartTotalProduct = 0;
+                
+            }
+
            
             return [
                 'status'  => 'success',
