@@ -64,9 +64,14 @@
                                         <img src="{{asset('user/assets/images/like_dislike.svg')}}" class=img-fluid />
                                     </span>
                                 </a>
+                                @php
+                                    $cartCount = App\Models\Addtocart::where('user_id', auth()->id())->count();
+                                @endphp
                                 <a href="{{route('user.view_cart')}}" class="position-relative">
                                     <span>
-                                        <span class="badge text-bg-danger red-badge">4</span>
+                                        @if($cartCount > 0)
+                                            <span class="badge text-bg-danger red-badge">{{ $cartCount }}</span>
+                                        @endif
                                         <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
                                     </span>
                                 </a>

@@ -817,7 +817,6 @@ public function product_view_cart_details($request)
         if($val->product->store){
             
         if($user_address && $userCountry_id!==0){
-            
             $user_let=$user_address->latitude;
             $user_long=$user_address->longitude;
 
@@ -825,7 +824,8 @@ public function product_view_cart_details($request)
             $store_long=$val->product->store->long;
 
             // Calculate the distance
-            $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
+            // $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
+            $distance = 10;
 
             $shipping_charges= ShippingCharge::where('country_id',$userCountry_id)
             ->where('range_from','<=',$distance)

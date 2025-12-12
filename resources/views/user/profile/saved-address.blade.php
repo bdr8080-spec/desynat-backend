@@ -40,7 +40,7 @@
     </div>
     <div>
         @if(request('type') === 'cart')
-            <a href="{{ route('user.view_cart') }}" class="custom-btn3 add_new_address mb-45">Proceed</a>
+            <a href="{{ route('user.view_cart') }}" class="btn paybtn-common w-100">Proceed</a>
         @endif
     </div>
 </div>
