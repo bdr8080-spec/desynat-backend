@@ -49,7 +49,7 @@ class GiftCardControler extends Controller
             'sender_name' => 'required',
             // 'sender_email' => 'required|email',
             'wish_message' => 'required',
-            'notes' => 'required',
+            // 'notes' => 'required',
         ]);
         
        if($validate->fails()){
@@ -68,7 +68,7 @@ class GiftCardControler extends Controller
         'sender_name' => $request->sender_name,  
         'sender_email' => $request->sender_email??null,
         'wish_message' => $request->wish_message,
-        'notes' =>$request->notes  
+        'notes' =>$request->notes??null  
        ];
 
 
