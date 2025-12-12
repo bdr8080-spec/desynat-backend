@@ -29,7 +29,7 @@
                 <h3>Order Place Successfully !</h3>
             </div>
             <div class="place-footer">
-                <div>300.00 KD <span>Amount Paid</span></div>
+                <div>{{ number_format($orderData['data']->total_amount, 2) }} KD <span>Amount Paid</span></div>
             </div>
         </div>
 
@@ -38,8 +38,8 @@
             <div class="border-1 d-flex gap-3">
                 <img src="{{asset('user')}}/assets/images/gps-icon.svg" class="img-fluid" />
                 <div class="giftinfo">
-                    <div> Innofied Solution 
-                        <p class="mb-0">Saleem Raza- 142 Block D, Noida</p>
+                    <div> {{ $orderData['data']->delivery_details->name }}
+                        <p class="mb-0">{{ $orderData['data']->delivery_details->address }},{{ $orderData['data']->delivery_details->house_no }},{{ $orderData['data']->delivery_details->postal_code }},{{ $orderData['data']->delivery_details->city }},{{ $orderData['data']->delivery_details->state }},{{ $orderData['data']->delivery_details->country_name }}</p>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="my-profile mt-5">
-            <a href="#" class="customBtn2"> Continue Shopping</a>
+            <a href="{{ route('dashboard') }}" class="customBtn2"> Continue Shopping</a>
         </div>
     
     </div>  

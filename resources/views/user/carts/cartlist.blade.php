@@ -318,12 +318,12 @@
                 <div class="gift-panel-list">
                     <div class="form-group w-100 py-2">
                         <label>16 Digit Gift Card Number</label>
-                        <input type="text" id="giftCardNumber" class="form-control pline-10" placeholder="16 Digit Gift Card Number">
+                        <input type="text" id="giftCardNumber" oninput="this.value=this.value.replace(/\D/g,'').slice(0,16)" class="form-control pline-10" placeholder="16 Digit Gift Card Number">
                         <div id="giftCardNumberError" class="text-danger text-center" style="display: none;"></div>
                     </div>
                     <div class="form-group w-100 py-2">
                         <label>Enter PIN</label>
-                        <input type="text" id="giftCardPin" class="form-control pline-10" placeholder="Enter PIN">
+                        <input type="text" id="giftCardPin" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)" class="form-control pline-10" placeholder="Enter PIN">
                         <div id="giftCardPinError" class="text-danger text-center" style="display: none;"></div>
                     </div>
                     <div class="mt-4">
@@ -573,7 +573,7 @@ function refreshDiscountUI() {
         $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Coupon Discount'; })
             .find('div').last().text(savedPromo.discountValue + ' KD');
     } else {
-        $('#applyPromoText').text('');
+        $('#applyPromoText').text('Apply PromoCode');
         $('#promoApplyLink').show();
         $('#cancelPromoSection').addClass('d-none');
         $('.giftinfo').filter(function(){ return $(this).find('div').first().text().trim() === 'Coupon Discount'; })
@@ -681,15 +681,17 @@ $(document).ready(function () {
             },
             data: requestData,
             success: function(response) {
+                 console.log(response);
                 if(response.status === 'success') {
                     toastr.success(response.message || "Order placed successfully!");
                     // Clear localStorage promo/gift card
                     localStorage.removeItem('appliedPromo');
                     localStorage.removeItem('appliedGiftCard');
-                    // Redirect if provided
-                    if(response.redirect_url) {
-                        window.location.href = response.redirect_url;
-                    }
+                    setTimeout(() => {
+                        if(response.data && response.data.data.order_id) {
+                            window.location.href = `/user/order-details/${response.data.data.order_id}`;
+                        }
+                    }, 1000);
                 } else {
                     toastr.error(response.message || "Failed to place order.");
                 }

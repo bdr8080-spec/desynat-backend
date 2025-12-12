@@ -36,5 +36,8 @@ class product extends Model
          return $this->hasOne(sellerStoreInformation::class,'id','store_id');
     }
 
+   
+
+
 
 }
