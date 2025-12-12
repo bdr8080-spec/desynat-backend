@@ -140,7 +140,7 @@ class UserGiftCardService
             }
 
             // change status in Db 
-            $checkGiftCard->update(['payment_status'=>$request->payment_status,'transaction_id'=>$request->transaction_id]);
+            $checkGiftCard->update(['payment_status'=>$request->payment_status,'transaction_id'=>$request->transaction_id,'payment_method'=>$request->Payment_method]);
 
 
              DB::commit();
