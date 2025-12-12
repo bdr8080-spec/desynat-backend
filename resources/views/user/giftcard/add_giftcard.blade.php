@@ -9,6 +9,35 @@
 }
 </style>
 
+<style>
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #a97c35ff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.gift_cards')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
@@ -157,6 +186,10 @@
 
     </div>
 
+</div>
+
+<div id="loader" style="display:none;">
+    <div class="loader"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -374,6 +407,8 @@ $(document).ready(function() {
                 // $(".paybtn-common").prop("disabled", false).text("Pay Now");
 
                 if (response.status === "success") {
+                    $('#loader').show();
+                    
                     // toastr.success(response.message);
 
                     var orderid = response.data.data.order_id;
@@ -400,6 +435,20 @@ $(document).ready(function() {
     });
 
 });
+</script>
+
+<script>
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        // Reload the page if it's loaded from the back/forward cache
+        window.location.reload(true);
+    }
+});
+
+// Optional: for older browsers
+if (performance.navigation.type === 2) {
+    window.location.reload(true);
+}
 </script>
 
 
