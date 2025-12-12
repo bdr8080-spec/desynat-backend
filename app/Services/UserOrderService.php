@@ -315,7 +315,7 @@ return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$r
  }else{
     return [
         'status' => 'error',
-        'message' => "Gift Card is already used or expired",
+        'message' => "Gift card is not valid",
         'data' => []
     ];
  }
