@@ -101,11 +101,11 @@ class UserGiftCardService
 
             if($request->payment_status=='1'){
 
-                $msg="Gift Card Payment paid successfully";
+                $msg="Gift Card Purchased Successfully";
 
             }else{
 
-                $msg="Gift Card Order Payment Cancelled";
+                $msg="Pyment Failed";
 
             }
 

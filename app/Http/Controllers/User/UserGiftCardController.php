@@ -77,7 +77,7 @@ class UserGiftCardController extends Controller
         ]);
 
         if ($response->failed()) {
-            dd("MyFatoorah ERROR", $response->status(), $response->body());
+           // dd("MyFatoorah ERROR", $response->status(), $response->body());
         }
 
         $sessionId = $response->json()['Data']['SessionId'];
