@@ -156,12 +156,12 @@
 
                 <div class="payment-option mb-3">
                     <label class="custom-radio mb-3">
-                        <input type="radio" name="payment_method" value="2">
+                        <input type="radio" name="payment" value="2">
                         <span class="radio-mark"></span>
                         <div class="label-content d-flex gap-3">
                             <img src="{{ asset('user/assets/images/wallet.svg') }}" class="img-fluid">
                             <div class="title">
-                                    In -App Wallet
+                                In -App Wallet
                                 <div class="small-14">Available Balance : 349 KD</div>
                             </div>
                         </div>
@@ -420,10 +420,6 @@ $(document).ready(function() {
 
         var paymentMethod = $('input[name="payment"]:checked').val();
 
-        alert(paymentMethod);
-
-        return false;
-
         let formData = $(this).serialize();
 
         $.ajax({
@@ -441,13 +437,18 @@ $(document).ready(function() {
 
                     // toastr.success(response.message);
 
-                    var orderid = response.data.data.order_id;
 
-                    var url = "/myfatoorah/" + orderid + "?type=giftCard";
+                    if (paymentMethod == 1) {
 
-                    setTimeout(function() {
-                        window.location.href = url;
-                    }, 2000);
+                        var orderid = response.data.data.order_id;
+
+                        var url = "/myfatoorah/" + orderid + "?type=giftCard";
+
+                        setTimeout(function() {
+                            window.location.href = url;
+                        }, 2000);
+
+                    }
 
 
 
