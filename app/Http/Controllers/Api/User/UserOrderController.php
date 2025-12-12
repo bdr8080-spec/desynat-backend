@@ -76,8 +76,12 @@ class UserOrderController extends Controller
         try{
 
             $validate = Validator::make($request->all(), [
-                'promo_id' => 'required|exists:promocodes,id',
+                // // 'promo_id' => 'required|exists:promocodes,id',
                 "amount"=>"required",
+
+                 'promo_id' => 'required_without:search|exists:promocodes,id',
+                 'search'   => 'required_without:promo_id',
+
                 ]);
             
            if($validate->fails()){
