@@ -143,7 +143,7 @@
             <div class="paycard">
                 <div class="payment-option mb-3">
                     <label class="custom-radio">
-                        <input type="radio" name="payment" id="onlinePayment" value="online" checked>
+                        <input type="radio" name="payment" id="onlinePayment" value="1" checked>
                         <span class="radio-mark"></span>
                         <div class="label-content">
                             <div class="title">Online Payment</div>
@@ -454,6 +454,7 @@ $(document).ready(function() {
 
 
                     if (paymentMethod == 1) {
+                   // console.log('123');
 
                         var orderid = response.data.data.order_id;
 
@@ -468,9 +469,17 @@ $(document).ready(function() {
 
                         var orderid = response.data.data.order_id;
 
-                        var url = "/user/giftcard-complete-Payment/?order_id=" + orderid +
-                            "&type=giftCard";
-                        setTimeout(function() {
+                        // var url = "{{ route('user.giftcard_complete_Payment') }}" +
+                        //              "?order_id=" + orderid + "&type=giftCard";
+                        // setTimeout(function() {
+                        //     window.location.href = url;
+                        // }, 2000);
+                        toastr.success('Payment Paid Successfully');
+
+                        var url = "{{ route('user.giftcard_complete_Payment') }}" +
+                                "?order_id=" + orderid + "&type=giftCard";
+
+                        setTimeout(function () {
                             window.location.href = url;
                         }, 2000);
 
