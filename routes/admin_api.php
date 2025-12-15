@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\Admin\ShippingTaxController;
 use App\Http\Controllers\Api\Admin\GiftCardController;
 use App\Http\Controllers\Api\Admin\BannerController;
 use App\Http\Controllers\Api\Admin\PromocodeController;
+use App\Http\Controllers\Api\Admin\AffiliateCommissionController;
 
 
 // Admin APi M1
@@ -141,6 +142,12 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_promocodes',[PromocodeController::class,'get_promocodes']);
 
      //M4 api ends
+
+     //M5 api starts
+
+     //affiliate commission management
+     Route::post('/update_affiliate_commission',[AffiliateCommissionController::class,'update_affiliate_commission']);
+     Route::get('/countries_with_affiliate_commission',[AffiliateCommissionController::class,'countries_with_affiliate_commission']);
 
 
 

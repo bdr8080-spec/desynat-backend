@@ -1036,6 +1036,70 @@ document.addEventListener("DOMContentLoaded", function () {
         sendToCart(qty);
     });
 
+        // ------------------------------
+    // BUY NOW CLICK
+    // ------------------------------
+    const buyNowBtn = document.getElementById("buyNowBtn");
+
+    buyNowBtn.addEventListener("click", function () {
+        const selectedColor = document.querySelector(".choose-color.active");
+        const selectedSize  = document.querySelector(".size-btn.active");
+
+        errorBox.style.display = "none";
+        errorBox.innerHTML = "";
+
+        if (!selectedColor) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Color.";
+            return;
+        }
+
+        if (!selectedSize) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Please Select a Size.";
+            return;
+        }
+
+        const variantId = selectedSize.dataset.variantId;
+        const productId = selectedSize.dataset.productId;
+
+        //  If already in cart → go to cart
+        if (cartData[variantId]) {
+            window.location.href = "{{ route('user.view_cart') }}";
+            return;
+        }
+
+        // Not in cart → add then redirect
+        fetch("{{ route('user.addToCart') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                variant_id: variantId,
+                quantity: 1
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === "error") {
+                toastr.error(data.message);
+            } else {
+                toastr.success(data.message);
+
+                setTimeout(() => {
+                    window.location.href = "{{ route('user.view_cart') }}";
+                }, 800);
+            }
+        })
+        .catch(() => {
+            toastr.error("Something went wrong.");
+        });
+    });
+
+
 });
 </script>
 
