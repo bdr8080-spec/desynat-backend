@@ -93,7 +93,7 @@
                         <input type="hidden" name="amount" id="amount" value="50">
                         <input type="hidden" name="gift_card_id" id="gift_card_id"
                             value="{{ $giftCardCategory[0]['id'] }}">
-                        <input type="hidden" name="notes" id="notes">
+                        <input type="text" name="notes" id="notes">
                         <input type="hidden" name="user_id" id="user_id" value="{{ auth()->id() }}">
                         <!-- <h6>Recipient Details</h6> -->
                         <div class="gift-pnl mt-4">
@@ -199,9 +199,10 @@
             <div class="gift-pnl mt-4">
                 <h6>Note</h6>
                 <div class="note-bg">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto vero sint, odit neque
+                    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto vero sint, odit neque
                         placeat natus voluptates assumenda, molestiae incidunt quos deserunt illum sequi. Laborum culpa
-                        quaerat officia debitis labore! Facere.</p>
+                        quaerat officia debitis labore! Facere.</p> -->
+                        <textarea rows="4" class="form-control" id="noteTextarea"></textarea>
                 </div>
             </div>
 
@@ -249,9 +250,10 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    let noteText = $(".note-bg p").text().trim();
-    $("#notes").val(noteText);
+$(document).ready(function () {
+    $('#noteTextarea').on('input', function () {
+        $('#notes').val($(this).val());
+    });
 });
 </script>
 
