@@ -4,12 +4,13 @@
 
 <style>
     .order-place-grid {
-    padding: 50px;
+    padding: 60px;
 }
     .order-place {
     background: #218C4E21;
     text-align: center;
     border-radius: 5px;
+    padding: 60px 0px 0px;
 }
 .place-footer {
     background: #17854C;
