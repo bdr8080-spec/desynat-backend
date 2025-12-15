@@ -19,11 +19,13 @@
                 <div class="seller-profile">
                     <div class="p-grid1 d-flex gap-3 align-items-center">
                         <img src="/admin/image/hightlights-1.svg" alt="Profile" class="rounded-circle profile-img">
-
-                        <div>
-                            <h6 class="mb-0">Vijay</h6>
-                            <div class="h-email">vijay@gmail.com</div>
-                        </div>
+                        
+                        @auth('admin')
+                            <div>
+                                <h6 class="mb-0">{{ auth('admin')->user()->full_name }}</h6>
+                                <div class="h-email">{{ auth('admin')->user()->email }}</div>
+                            </div>
+                        @endauth
 
                         <!-- <a class="drop-profile" href="#">
                             View Profile
@@ -37,7 +39,7 @@
             </li>
 
             <li>
-                <a class="dropdown-item d-flex align-items-center gap-3 logout-item" href="#">
+                <a class="dropdown-item d-flex align-items-center gap-3 logout-item" href="{{route('adminLogout')}}">
                     <img src="/admin/image/logout-profile.svg">
                     <span class="text-red">Sign Out</span>
                 </a>
