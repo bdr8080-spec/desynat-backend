@@ -787,6 +787,16 @@ $(document).ready(function() {
         var paymentMethod = $('input[name="payment_method"]:checked').val();
 
         var deliveryAddressId = document.getElementById('deliveryAddressId').value;
+
+        if (deliveryAddressId.length == 0) {
+            console.log("delivery Address check");
+
+            toastr.error("delivery Address is required");
+            return false;
+
+
+        }
+
         // Get localStorage data
         var promoData = JSON.parse(localStorage.getItem('appliedPromo') || '{}');
         var giftCardData = JSON.parse(localStorage.getItem('appliedGiftCard') || '{}');
