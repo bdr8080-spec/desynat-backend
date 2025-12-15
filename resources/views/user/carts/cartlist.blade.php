@@ -220,11 +220,11 @@
                             <div>Discount on MRP</div>
                             <div class="red-color">{{ $cartData['discount_on_mrp'] }} KD</div>
                         </div>
-                        <div class="giftinfo">
+                        <div class="giftinfo d-none" id="couponDiscountRow">
                             <div>Coupon Discount</div>
-                            <div class="red-color">{{ $cartData['discount_coupon'] }} KD</div>
+                            <div class="red-color" id="couponDiscountAmount">{{ $cartData['discount_coupon'] }} KD</div>
                         </div>
-                        <div class="giftinfo">
+                        <div class="giftinfo d-none" id="giftCardDiscountRow">
                             <div>Gift Card Discount</div>
                             <div class="red-color" id="giftCardDiscountAmount">0 KD</div>
                         </div>
@@ -688,18 +688,22 @@ function refreshDiscountUI() {
         $('#applyPromoText').text(savedPromo.promoCode + ' applied');
         $('#promoApplyLink').hide();
         $('#cancelPromoSection').removeClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Coupon Discount';
-            })
-            .find('div').last().text(savedPromo.discountValue + ' KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Coupon Discount';
+        //     })
+        //     .find('div').last().text(savedPromo.discountValue + ' KD');
+        $('#couponDiscountAmount').text(savedPromo.discountValue + ' KD');
+        $('#couponDiscountRow').removeClass('d-none');
     } else {
         $('#applyPromoText').text('Apply PromoCode');
         $('#promoApplyLink').show();
         $('#cancelPromoSection').addClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Coupon Discount';
-            })
-            .find('div').last().text('0 KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Coupon Discount';
+        //     })
+        //     .find('div').last().text('0 KD');
+        $('#couponDiscountRow').addClass('d-none');
+        $('#couponDiscountAmount').text('0 KD');
     }
 
     // Update Gift Card
@@ -707,18 +711,23 @@ function refreshDiscountUI() {
         $('#applyGiftCardText').text('Gift Card Applied');
         $('#applyGiftCardBtn').hide();
         $('#cancelGiftCardBtn').removeClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Gift Card Discount';
-            })
-            .find('div').last().text(savedGiftCard.giftCardAmount.toFixed(2) + ' KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Gift Card Discount';
+        //     })
+        //     .find('div').last().text(savedGiftCard.giftCardAmount.toFixed(2) + ' KD');
+        $('#giftCardDiscountAmount')
+           .text(formatKD(savedGiftCard.giftCardAmount));
+        $('#giftCardDiscountRow').removeClass('d-none');
     } else {
         $('#applyGiftCardText').text('Have a Gift Card');
         $('#applyGiftCardBtn').show();
         $('#cancelGiftCardBtn').addClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Gift Card Discount';
-            })
-            .find('div').last().text('0 KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Gift Card Discount';
+        //     })
+        //     .find('div').last().text('0 KD');
+        $('#giftCardDiscountRow').addClass('d-none');
+        $('#giftCardDiscountAmount').text('0 KD');
     }
 
     // Recalculate Total Amount
@@ -747,6 +756,20 @@ function refreshDiscountUI() {
     // Total Savings
     var totalSavings = discountOnMRP + promoDiscount + giftCardDiscount;
     $('#promoSavingsText').text("You will save " + totalSavings.toFixed(2) + " KD on this");
+}
+</script>
+
+<script>
+    function formatKD(amount) {
+    amount = parseFloat(amount) || 0;
+
+    // If decimal part is .00 → show integer
+    if (amount % 1 === 0) {
+        return amount.toFixed(0) + ' KD';
+    }
+
+    // Otherwise show 2 decimals
+    return amount.toFixed(2) + ' KD';
 }
 </script>
 
