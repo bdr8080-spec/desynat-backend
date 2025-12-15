@@ -48,7 +48,7 @@
                             <div class="col-lg-6 col-md-12 col-12">
                                 <div class="form-group">
                                     <label class="form-label">Promocode Name (English)</label>
-                                    <input type="text" id="update_nameEnglish" name="name_english"
+                                    <input type="text" id="update_nameEnglish" oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" name="name_english"
                                         class="form-control" placeholder="Enter Promocode in English" 
                                         value="{{ old('name_english', $promoCode->name_english) }}" />
                                     <div id="update_nameEnglishError" class="text-danger small" style="display:none;"></div>
@@ -59,7 +59,7 @@
                             <div class="col-lg-6 col-md-12 col-12">
                                 <div class="form-group">
                                     <label class="form-label">Promocode Name (Arabic)</label>
-                                    <input type="text" id="update_nameArabic" name="name_arabic"
+                                    <input type="text" id="update_nameArabic" name="name_arabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                                         class="form-control" placeholder="Enter Promocode in Arabic" 
                                         value="{{ old('name_arabic', $promoCode->name_arabic) }}" />
                                     <div id="update_nameArabicError" class="text-danger small" style="display:none;"></div>
@@ -70,7 +70,7 @@
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="mb-3">
                                     <label for="update_descriptionEnglish" class="form-label">Description (English)</label>
-                                    <textarea id="update_descriptionEnglish" name="description_english" 
+                                    <textarea id="update_descriptionEnglish" oninput="this.value = this.value.replace(/[^A-Za-z0-9 \n]/g,'').replace(/^\s+/,'')" name="description_english" 
                                             class="form-control" rows="3">{{ old('description_english', $promoCode->description_english) }}</textarea>
                                     <div id="update_descriptionEnglishError" class="text-danger small" style="display:none;"></div>
                                 </div>
@@ -80,7 +80,7 @@
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="mb-3">
                                     <label for="update_descriptionArabic" class="form-label">Description (Arabic)</label>
-                                    <textarea id="update_descriptionArabic" name="description_arabic" 
+                                    <textarea id="update_descriptionArabic" oninput="this.value=this.value.replace(/[^0-9\u0600-\u06FF \n]/g,'').replace(/^\s+/,'')" name="description_arabic" 
                                             class="form-control" rows="3">{{ old('description_arabic', $promoCode->description_arabic) }}</textarea>
                                     <div id="update_descriptionArabicError" class="text-danger small" style="display:none;"></div>
                                 </div>
@@ -118,7 +118,7 @@
                             <div class="col-lg-6 ">
                                 <div class="form-group mb-3">
                                     <label class="form-label">Minimum Order Value</label>
-                                    <input type="text" id="update_minOrderValue" name="min_order_value" 
+                                    <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" id="update_minOrderValue" name="min_order_value" 
                                         class="form-control" placeholder="Enter Minimum Order Value"
                                         value="{{ old('min_order_value', $promoCode->min_order_value) }}" />
                                     <div id="update_minOrderValueError" class="text-danger small" style="display:none;"></div>
@@ -129,7 +129,7 @@
                             <div class="col-lg-12 ">
                                 <div class="form-group mb-3">
                                     <label class="form-label">Upto Discount</label>
-                                    <input type="text" id="update_uptoDiscount" name="upto_discount" 
+                                    <input type="text" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')" id="update_uptoDiscount" name="upto_discount" 
                                         class="form-control" placeholder="Enter Upto Discount"
                                         value="{{ old('upto_discount', $promoCode->upto_discount) }}" />
                                     <div id="update_uptoDiscountError" class="text-danger small" style="display:none;"></div>
