@@ -21,7 +21,7 @@
     </div>
 
 
-    @if (session('status') == 'success')
+    <!-- @if (session('status') == 'success')
     <div class="alert alert-success">
         {{ session('message') }}
     </div>
@@ -29,7 +29,7 @@
     <div class="alert alert-danger">
         {{ session('message') }}
     </div>
-    @endif
+    @endif -->
 
     <div class="row">
         @forelse($giftCards as $gift)
