@@ -1204,6 +1204,7 @@ public function AddProduct_web($request){
     'exchangable_days'=> $request->exchangable_days,
     'review_rating'=> $request->review_rating, // 0 not 1 yes
     'affiliated_product'=> $request->affiliated_product, // // 0 not 1 yes
+    'affiliated_commission'=>$request->affiliated_commission,
     'customized_product'=> $request->customized_product, // // 0 not 1 yes
     'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
     'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
@@ -1451,6 +1452,9 @@ public function edit_Product_web($request){
                 'exchangable_days'=> $request->exchangable_days,
                 'review_rating'=> $request->review_rating, // 0 not 1 yes
                 'affiliated_product'=> $request->affiliated_product, // // 0 not 1 yes
+
+                'affiliated_commission'=>$request->affiliated_commission,
+
                 'customized_product'=> $request->customized_product, // // 0 not 1 yes
                 'ready_to_ship'=> $request->ready_to_ship, // // 0 not 1 yes
                 'cash_on_delivery'=> $request->cash_on_delivery, // // 0 not 1 yes
