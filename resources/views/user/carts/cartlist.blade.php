@@ -170,14 +170,18 @@
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>
-                                {{ $cartData['user_address']->address }}
-                                {{ $cartData['user_address']->house_no }},
-                                {{ $cartData['user_address']->postal_code }},
-                                {{ $cartData['user_address']->city }},
-                                {{ $cartData['user_address']->state }},
-                                {{ $cartData['user_address']->country_name }}
+                                @isset($cartData['user_address']->address)
+
+
+                                {{ @$cartData['user_address']->address }}
+                                {{ @$cartData['user_address']->house_no }},
+                                {{ @$cartData['user_address']->postal_code }},
+                                {{ @$cartData['user_address']->city }},
+                                {{ @$cartData['user_address']->state }},
+                                {{ @$cartData['user_address']->country_name }}
+                                @endisset
                             </div>
-                            <input type="hidden" id="deliveryAddressId" value="{{ $cartData['user_address']->id }}">
+                            <input type="hidden" id="deliveryAddressId" value="{{ @$cartData['user_address']->id }}">
 
                             <a href="{{ route('user.view_address', ['type' => 'cart']) }}" class="moreshop">
                                 Change <i class="bi bi-arrow-right"></i>
@@ -716,7 +720,7 @@ function refreshDiscountUI() {
         //     })
         //     .find('div').last().text(savedGiftCard.giftCardAmount.toFixed(2) + ' KD');
         $('#giftCardDiscountAmount')
-           .text(formatKD(savedGiftCard.giftCardAmount));
+            .text(formatKD(savedGiftCard.giftCardAmount));
         $('#giftCardDiscountRow').removeClass('d-none');
     } else {
         $('#applyGiftCardText').text('Have a Gift Card');
@@ -760,7 +764,7 @@ function refreshDiscountUI() {
 </script>
 
 <script>
-    function formatKD(amount) {
+function formatKD(amount) {
     amount = parseFloat(amount) || 0;
 
     // If decimal part is .00 → show integer
@@ -783,6 +787,16 @@ $(document).ready(function() {
         var paymentMethod = $('input[name="payment_method"]:checked').val();
 
         var deliveryAddressId = document.getElementById('deliveryAddressId').value;
+
+        if (deliveryAddressId.length == 0) {
+            console.log("delivery Address check");
+
+            toastr.error("delivery Address is required");
+            return false;
+
+
+        }
+
         // Get localStorage data
         var promoData = JSON.parse(localStorage.getItem('appliedPromo') || '{}');
         var giftCardData = JSON.parse(localStorage.getItem('appliedGiftCard') || '{}');

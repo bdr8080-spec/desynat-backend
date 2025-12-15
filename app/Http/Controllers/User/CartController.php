@@ -22,11 +22,16 @@ class CartController extends Controller
     }
 
     public function view_cart(Request $request){
-        $user = auth()->user();  
+        // $user = auth()->user();  
+
+         $user=  $request->user();
+
         $data = (object)[
             'user_id' => $user->id,
         ];
+
         $cartData = $this->UserManagementService->product_view_cart_details($data)['data'];
+
 
         $userAddressId = userAddress::where('user_id',$user->id)->where('set_as_default','1')->value('id');
         //dd($cartData);
@@ -128,7 +133,7 @@ class CartController extends Controller
         //dd($request->all());
 
         try {
-            $user = auth()->user();
+              $user=  $request->user();
             $userId = $user->id; 
 
             $request_data = (object)[
