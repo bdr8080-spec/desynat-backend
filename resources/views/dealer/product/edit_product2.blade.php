@@ -1,74 +1,74 @@
 @include('dealer.layout.header')
 
 @php
-    $specification_count = 0;
-    $product_Variation_count = 0;
-    $product_Variation_inside_count = 0;
+$specification_count = 0;
+$product_Variation_count = 0;
+$product_Variation_inside_count = 0;
 
 @endphp
 
 <style>
-    .upload-image {
-        position: relative;
-        z-index: 1;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-        /* this prevents overlap */
-    }
+.upload-image {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    /* this prevents overlap */
+}
 
-    #edit_uploadChart_preview {
-        position: absolute;
-        z-index: 0;
-    }
+#edit_uploadChart_preview {
+    position: absolute;
+    z-index: 0;
+}
 
-    .specifications-row {
-        background: #FAFAFA;
-        border: 1px solid #cccccc45;
-    }
+.specifications-row {
+    background: #FAFAFA;
+    border: 1px solid #cccccc45;
+}
 
-    .mltimg img {
-        object-fit: fill !important;
-    }
+.mltimg img {
+    object-fit: fill !important;
+}
 
-    .upload-image1 {
-        position: relative;
-        z-index: 1;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-        /* this prevents overlap */
-    }
+.upload-image1 {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    /* this prevents overlap */
+}
 
-    #edit_uploadChart_preview {
-        /* margin-top: 15px; ensures preview goes below */
-        position: absolute;
-        z-index: 2;
-    }
+#edit_uploadChart_preview {
+    /* margin-top: 15px; ensures preview goes below */
+    position: absolute;
+    z-index: 2;
+}
 
-    #edit_uploadChart_preview img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover
-    }
+#edit_uploadChart_preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover
+}
 
-    .multiple-img1 {
-        height: 125px;
-        width: 270px;
+.multiple-img1 {
+    height: 125px;
+    width: 270px;
 
-    }
+}
 
-    .multiple-img1 img {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
+.multiple-img1 img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 
 
-    }
+}
 </style>
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i>  Edit Product
+            <i class="bi bi-chevron-left"></i> Edit Product
         </a>
     </div>
 
@@ -83,16 +83,16 @@
                         class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 pe-3 justify-content-between">
 
                         @foreach ($category as $key => $item)
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="category_id" value="{{ $item->id }}"
-                                        onclick="catgoryFunction({{ $item->id }})"
-                                        @if ($product_details->category_id == $item->id) checked @endif
-                                        @if ($key == 0) checked @endif>
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">{{ $item->name }}</span>
-                                </label>
-                            </div>
+                        <div class="check_radio">
+                            <label class="radio-group">
+                                <input type="radio" name="category_id" value="{{ $item->id }}"
+                                    onclick="catgoryFunction({{ $item->id }})" @if ($product_details->category_id ==
+                                $item->id) checked @endif
+                                @if ($key == 0) checked @endif>
+                                <span class="custom-radio"></span>
+                                <span class="radio-label">{{ $item->name }}</span>
+                            </label>
+                        </div>
                         @endforeach
 
                     </div>
@@ -124,8 +124,8 @@
                     <option value="">Select Brand</option>
 
                     @foreach ($brand as $item)
-                        <option value="{{ $item->id }}" @if ($product_details->brand_id == $item->id) selected @endif>
-                            {{ $item->name_english }}</option>
+                    <option value="{{ $item->id }}" @if ($product_details->brand_id == $item->id) selected @endif>
+                        {{ $item->name_english }}</option>
                     @endforeach
 
                 </select>
@@ -146,8 +146,7 @@
                     <label>Other</label>
                     <span>In Arabic</span>
                 </div>
-                <input type="text"
-                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                     class="form-control" placeholder="Enter Brand name" name="other_ar"
                     value="{{ $product_details->other_en }}">
 
@@ -169,8 +168,7 @@
                     <label>Product Name</label>
                     <span>In Arabic</span>
                 </div>
-                <input type="text"
-                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                <input type="text" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                     class="form-control" placeholder="Enter Product name" name="product_name_ar"
                     value="{{ $product_details->product_name_ar }}">
 
@@ -182,7 +180,8 @@
                     <label>Description</label>
                     <span>In English</span>
                 </div>
-                <textarea rows="4" placeholder="Write Here" class="form-control" name="description_en"> {{ $product_details->description_en }}</textarea>
+                <textarea rows="4" placeholder="Write Here" class="form-control"
+                    name="description_en"> {{ $product_details->description_en }}</textarea>
 
                 <p class="text-danger" id="error-description_en"></p>
             </div>
@@ -199,7 +198,8 @@
                     <span>In Arabic</span>
                 </div>
                 <textarea rows="4" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                    placeholder="Write Here" class="form-control" name="description_ar"> {{ $product_details->description_ar }} </textarea>
+                    placeholder="Write Here" class="form-control"
+                    name="description_ar"> {{ $product_details->description_ar }} </textarea>
                 <p class="text-danger" id="error-description_ar"></p>
 
             </div>
@@ -217,85 +217,84 @@
             <div class="append-panel">
 
                 @foreach ($product_details['product_specifications'] as $item)
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Name</label>
+                                <span>In English</span>
+                            </div>
+                            <input type="text"
+                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                class="form-control" placeholder="Enter product name" name="product_spe_en[]"
+                                value="{{ $item->name_en }}">
+
+                            <p id="error-product_spe_en_{{ $specification_count }}" class="text-danger"></p>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="append-flex">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Name</label>
-                                    <span>In English</span>
+                                    <span>In Arabic</span>
                                 </div>
                                 <input type="text"
-                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
-                                    class="form-control" placeholder="Enter product name" name="product_spe_en[]"
-                                    value="{{ $item->name_en }}">
-
-                                <p id="error-product_spe_en_{{ $specification_count }}" class="text-danger"></p>
-
-                            </div>
-
-
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="append-flex">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Name</label>
-                                        <span>In Arabic</span>
-                                    </div>
-                                    <input type="text"
-                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                        class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
-                                        value="{{ $item->name_ar }}">
-                                    <p class="text-danger" id="error-product_spe_ar_{{ $specification_count }}"></p>
-
-                                </div>
+                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                    class="form-control" placeholder="Enter product name" name="product_spe_ar[]"
+                                    value="{{ $item->name_ar }}">
+                                <p class="text-danger" id="error-product_spe_ar_{{ $specification_count }}"></p>
 
                             </div>
+
                         </div>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form">
+                            <div class="label-flex">
+                                <label>Feature</label>
+                                <span>In English</span>
+                            </div>
+                            <input type="text"
+                                oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                class="form-control" placeholder="Enter product feature" name="product_spe_feature_en[]"
+                                value="{{ $item->feature_en }}">
+                            <p class="text-danger" id="error-product_spe_feature_en_{{ $specification_count }}">
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <div class="append-flex">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Feature</label>
-                                    <span>In English</span>
+                                    <span>In Arabic</span>
                                 </div>
                                 <input type="text"
-                                    oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
                                     class="form-control" placeholder="Enter product feature"
-                                    name="product_spe_feature_en[]" value="{{ $item->feature_en }}">
-                                <p class="text-danger" id="error-product_spe_feature_en_{{ $specification_count }}">
-                                </p>
+                                    name="product_spe_feature_ar[]" value="{{ $item->feature_ar }}">
+                                <p class="text-danger" id="error-product_spe_feature_ar_{{ $specification_count }}"></p>
 
                             </div>
 
-                        </div>
-
-                        <div class="col-lg-6 col-md-6">
-                            <div class="append-flex">
-                                <div class="sub-form">
-                                    <div class="label-flex">
-                                        <label>Feature</label>
-                                        <span>In Arabic</span>
-                                    </div>
-                                    <input type="text"
-                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
-                                        class="form-control" placeholder="Enter product feature"
-                                        name="product_spe_feature_ar[]" value="{{ $item->feature_ar }}">
-                                    <p class="text-danger"
-                                        id="error-product_spe_feature_ar_{{ $specification_count }}"></p>
-
-                                </div>
-
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    @php
-                        $specification_count++;
-                    @endphp
+                @php
+                $specification_count++;
+                @endphp
                 @endforeach
 
             </div>
@@ -308,362 +307,350 @@
 
 
             @foreach ($product_details->variation_Group as $key => $item)
-                <div class="MainVarient variant-panel-bg ">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="sub-form product-row">
-                                <div class="label-flex">
-                                    <label>Colour</label>
-                                </div>
-
-                                <select class="form-select form-control color-select"
-                                    aria-label="Default select example" name="color_id[]" rel="0">
-                                    <option value="">Select Colour</option>
-                                    @foreach ($color as $item1)
-                                        <option value="{{ $item->id }}"
-                                            @if ($item->color_id == $item1->id) selected @endif>{{ $item1->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <p class="text-danger" id="error-color_id_{{ $product_Variation_count }}"></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="">
-
-                        <div class="product-pnls mt-4" id="variant_image_id{{ $product_Variation_count }}">
-                            <div class="upload-image" style="height:170px;">
-                                <label id="uploadLabel"
-                                    style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
-                                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
-                                    <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
-                                    <input type="file" accept="image/*" multiple id="edit_imageUpload"
-                                        style="opacity:0;" name="variant_image[{{ $product_Variation_count }}][]"
-                                        rel="{{ $product_Variation_count }}">
-                                </label>
-
-                                <p class="text-danger" id="error-variant_image"></p>
-                                <p class="text-danger" id="error-variant_image_{{ $product_Variation_count }}"></p>
-
+            <div class="MainVarient variant-panel-bg ">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="sub-form product-row">
+                            <div class="label-flex">
+                                <label>Colour</label>
                             </div>
 
-                            {{-- database image code --}}
-
-                            @if (!empty($item->variant_image))
-                                @foreach ($item->variant_image as $key0 => $chart)
-                                    <div class="multiple-img position-relative">
-                                        <img src="{{ $chart }}" class="w-100 rounded">
-                                        <span class="remove-ic remove-image"
-                                            style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-
-                                        <input type="text" accept="image/*" multiple id="edit_imageUpload"
-                                            style="opacity:0;"
-                                            name="old_variant_image[{{ $product_Variation_count }}][{{ $key0 }}]"
-                                            value="{{ $chart }}" rel="{{ $product_Variation_count }}">
-
-                                    </div>
+                            <select class="form-select form-control color-select" aria-label="Default select example"
+                                name="color_id[]" rel="0">
+                                <option value="">Select Colour</option>
+                                @foreach ($color as $item1)
+                                <option value="{{ $item1->id }}" @if ($item->color_id == $item1->id) selected
+                                    @endif>{{ $item1->name }}
+                                </option>
                                 @endforeach
-                            @endif
-                            {{-- database image code end Here --}}
+                            </select>
+                            <p class="text-danger" id="error-color_id_{{ $product_Variation_count }}"></p>
+                        </div>
+                    </div>
+                </div>
 
-                            <div class="product-multiple d-flex flex-wrap gap-2"
-                                id="previewContainer{{ $product_Variation_count }}"></div>
+                <div class="">
+
+                    <div class="product-pnls mt-4" id="variant_image_id{{ $product_Variation_count }}">
+                        <div class="upload-image" style="height:170px;">
+                            <label id="uploadLabel"
+                                style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
+                                <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg" style="width:70px">
+                                <div class="mt-3" style="color:#875C3A">Upload Product Images</div>
+                                <input type="file" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
+                                    name="variant_image[{{ $product_Variation_count }}][]"
+                                    rel="{{ $product_Variation_count }}">
+                            </label>
+
+                            <p class="text-danger" id="error-variant_image"></p>
+                            <p class="text-danger" id="error-variant_image_{{ $product_Variation_count }}"></p>
+
                         </div>
 
-                        {{-- Add New Variationc code --}}
-                        <div class="mt-3 d-flex justify-content-between py-3">
-                            <div class="title24">Add Variation FDF </div>
-                            <div class="sep-icon " rel="{{ $product_Variation_count }}">
-                                <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation"
-                                    alt="add" rel="{{ $product_Variation_count }}">
+                        {{-- database image code --}}
+
+                        @if (!empty($item->variant_image))
+                        @foreach ($item->variant_image as $key0 => $chart)
+                        <div class="multiple-img position-relative">
+                            <img src="{{ $chart }}" class="w-100 rounded">
+                            <span class="remove-ic remove-image"
+                                style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+
+                            <input type="text" accept="image/*" multiple id="edit_imageUpload" style="opacity:0;"
+                                name="old_variant_image[{{ $product_Variation_count }}][{{ $key0 }}]"
+                                value="{{ $chart }}" rel="{{ $product_Variation_count }}">
+
+                        </div>
+                        @endforeach
+                        @endif
+                        {{-- database image code end Here --}}
+
+                        <div class="product-multiple d-flex flex-wrap gap-2"
+                            id="previewContainer{{ $product_Variation_count }}"></div>
+                    </div>
+
+                    {{-- Add New Variationc code --}}
+                    <div class="mt-3 d-flex justify-content-between py-3">
+                        <div class="title24">Add Variation FDF </div>
+                        <div class="sep-icon " rel="{{ $product_Variation_count }}">
+                            <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation" alt="add"
+                                rel="{{ $product_Variation_count }}">
+                        </div>
+                    </div>
+                    {{-- Add New Variationc code --}}
+
+
+                    <div class="inside_variation">
+
+                        {{-- Other Variation show start --}}
+                        @foreach ($item->otherVariation as $var => $value)
+                        <div class="Varient_show inside_variation{{ $product_Variation_count }}" @if ($var !==0)
+                            style="background: #fff;border: 1px dashed #0d0606;border-radius: 10px; box-shadow: 0px 2px 4px #ddd;"
+                            @endif>
+                            <div class="wapper-header mt-2">
+                                <div class="row price-block">
+
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Size</label>
+                                            </div>
+
+                                            <select class="form-select form-control" aria-label="Default select example"
+                                                name="size_id[{{ $product_Variation_count }}][]">
+                                                <option value="">Select Size</option>
+                                                @foreach ($size as $item)
+                                                <option value="{{ $item->id }}" @if ($value->size_id == $item->id)
+                                                    selected @endif>
+                                                    {{ $item->name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            <p class="text-danger" id="error-size_id_{{ $product_Variation_count }}">
+                                            </p>
+                                            <p class="text-danger"
+                                                id="error-size_id_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Bust</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.10" name="bust[{{ $product_Variation_count }}][]"
+                                                value="{{ $value->bust }}">
+                                            <p class="text-danger"
+                                                id="error-bust_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Waist</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.12" name="waist[{{ $product_Variation_count }}][]"
+                                                value="{{ $value->waist }}">
+
+                                            <p class="text-danger"
+                                                id="error-waist_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>HIP</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.14" name="hip[{{ $product_Variation_count }}][]"
+                                                value="{{ $value->hip }}">
+                                            <p class="text-danger"
+                                                id="error-hip_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Shoulder</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.16" name="shoulder[{{ $product_Variation_count }}][]"
+                                                value="{{ $value->shoulder }}">
+                                            <p class="text-danger"
+                                                id="error-shoulder_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Sleev Length</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.18"
+                                                name="sleeve_length[{{ $product_Variation_count }}][]"
+                                                value="{{ $value->sleeve_length }}">
+                                            <p class="text-danger"
+                                                id="error-sleeve_length_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 remove_Not_in_women_Category">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Length</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace no-zero"
+                                                placeholder="Eg.20" name="length[{{ $product_Variation_count }}][]"
+                                                value="{{ $value->length }}">
+
+                                            <p class="text-danger"
+                                                id="error-length_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Total Stocks</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace"
+                                                placeholder="Eg.13208"
+                                                name="total_stock[{{ $product_Variation_count }}][]"
+                                                value="{{ $value->total_stock }}">
+
+                                            <p class="text-danger"
+                                                id="error-total_stock_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>SKU Limit</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace" placeholder="20019"
+                                                name="sku[{{ $product_Variation_count }}][]" value="{{ $value->sku }}">
+
+                                            <p class="text-danger" id="error-sku_{{ $product_Variation_count }}">
+                                            </p>
+                                            <p class="text-danger"
+                                                id="error-sku_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-lg-3">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Actual Price</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace"
+                                                placeholder="Eg. 299.00 KD"
+                                                name="actual_price[{{ $product_Variation_count }}][]"
+                                                id="actualprice_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                value="{{ $value->actual_price }}">
+                                            <p class="text-danger"
+                                                id="error-actual_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        {{-- Add New Variationc code --}}
 
 
-                        <div class="inside_variation">
-
-                            {{-- Other Variation show start --}}
-                            @foreach ($item->otherVariation as $var => $value)
-                                <div class="Varient_show inside_variation{{ $product_Variation_count }}"
-                                    @if ($var !== 0) style="background: #fff;border: 1px dashed #0d0606;border-radius: 10px; box-shadow: 0px 2px 4px #ddd;" @endif>
-                                    <div class="wapper-header mt-2">
-                                        <div class="row price-block">
-
-                                            <div class="col-lg-3">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Size</label>
-                                                    </div>
-
-                                                    <select class="form-select form-control"
-                                                        aria-label="Default select example"
-                                                        name="size_id[{{ $product_Variation_count }}][]">
-                                                        <option value="">Select Size</option>
-                                                        @foreach ($size as $item)
-                                                            <option value="{{ $item->id }}"
-                                                                @if ($value->size_id == $item->id) selected @endif>
-                                                                {{ $item->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <p class="text-danger"
-                                                        id="error-size_id_{{ $product_Variation_count }}"></p>
-                                                    <p class="text-danger"
-                                                        id="error-size_id_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-
-                                                </div>
-
+                            <div class="pt-3">
+                                <div class="title24">Discounted Price</div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div
+                                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                                            <div class="check_radio">
+                                                <label class="radio-group">
+                                                    <input type="radio"
+                                                        name="discount_type[{{ $product_Variation_count }}][{{ $product_Variation_inside_count }}]"
+                                                        id="discount_type_percentage_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                        value="1" @if ($value->discount_type == 1) checked @endif>
+                                                    <span class="custom-radio"></span>
+                                                    <span class="radio-label">Percentage</span>
+                                                </label>
+                                            </div>
+                                            <div class="check_radio">
+                                                <label class="radio-group">
+                                                    <input type="radio"
+                                                        name="discount_type[{{ $product_Variation_count }}][{{ $product_Variation_inside_count }}]"
+                                                        id="discount_type_fixed_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                        value="2" @if ($value->discount_type == 2) checked @endif>
+                                                    <span class="custom-radio"></span>
+                                                    <span class="radio-label">Fixed Price</span>
+                                                </label>
                                             </div>
 
-                                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Bust</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace no-zero"
-                                                        placeholder="Eg.10"
-                                                        name="bust[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->bust }}">
-                                                    <p class="text-danger"
-                                                        id="error-bust_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Waist</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace no-zero"
-                                                        placeholder="Eg.12"
-                                                        name="waist[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->waist }}">
-
-                                                    <p class="text-danger"
-                                                        id="error-waist_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>HIP</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace no-zero"
-                                                        placeholder="Eg.14"
-                                                        name="hip[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->hip }}">
-                                                    <p class="text-danger"
-                                                        id="error-hip_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Shoulder</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace no-zero"
-                                                        placeholder="Eg.16"
-                                                        name="shoulder[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->shoulder }}">
-                                                    <p class="text-danger"
-                                                        id="error-shoulder_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Sleev Length</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace no-zero"
-                                                        placeholder="Eg.18"
-                                                        name="sleeve_length[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->sleeve_length }}">
-                                                    <p class="text-danger"
-                                                        id="error-sleeve_length_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-3 remove_Not_in_women_Category">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Length</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace no-zero"
-                                                        placeholder="Eg.20"
-                                                        name="length[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->length }}">
-
-                                                    <p class="text-danger"
-                                                        id="error-length_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Total Stocks</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace"
-                                                        placeholder="Eg.13208"
-                                                        name="total_stock[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->total_stock }}">
-
-                                                    <p class="text-danger"
-                                                        id="error-total_stock_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>SKU Limit</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace"
-                                                        placeholder="20019"
-                                                        name="sku[{{ $product_Variation_count }}][]"
-                                                        value="{{ $value->sku }}">
-
-                                                    <p class="text-danger"
-                                                        id="error-sku_{{ $product_Variation_count }}">
-                                                    </p>
-                                                    <p class="text-danger"
-                                                        id="error-sku_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-                                                </div>
-
-                                            </div>
-
-
-                                            <div class="col-lg-3">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Actual Price</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace"
-                                                        placeholder="Eg. 299.00 KD"
-                                                        name="actual_price[{{ $product_Variation_count }}][]"
-                                                        id="actualprice_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
-                                                        value="{{ $value->actual_price }}">
-                                                    <p class="text-danger"
-                                                        id="error-actual_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-
-                                                </div>
-
-                                            </div>
                                         </div>
                                     </div>
-
-
-                                    <div class="pt-3">
-                                        <div class="title24">Discounted Price</div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div
-                                                    class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                                                    <div class="check_radio">
-                                                        <label class="radio-group">
-                                                            <input type="radio"
-                                                                name="discount_type[{{ $product_Variation_count }}][{{ $product_Variation_inside_count }}]"
-                                                                id="discount_type_percentage_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
-                                                                value="1"
-                                                                @if ($value->discount_type == 1) checked @endif>
-                                                            <span class="custom-radio"></span>
-                                                            <span class="radio-label">Percentage</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="check_radio">
-                                                        <label class="radio-group">
-                                                            <input type="radio"
-                                                                name="discount_type[{{ $product_Variation_count }}][{{ $product_Variation_inside_count }}]"
-                                                                id="discount_type_fixed_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
-                                                                value="2"
-                                                                @if ($value->discount_type == 2) checked @endif>
-                                                            <span class="custom-radio"></span>
-                                                            <span class="radio-label">Fixed Price</span>
-                                                        </label>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-
-
-                                            <div class="col-lg-6 col-md-6">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Percentage</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace"
-                                                        placeholder="Eg.10%"
-                                                        name="discount_value[{{ $product_Variation_count }}][]"
-                                                        id="discount_value_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
-                                                        value="{{ $value->discount_value }}">
-                                                    <p class="text-danger"
-                                                        id="error-discount_value_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-
-                                                </div>
-
-                                            </div>
-                                            <div class="col-lg-6 col-md-6">
-                                                <div class="sub-form">
-                                                    <div class="label-flex">
-                                                        <label>Final Price</label>
-                                                    </div>
-                                                    <input type="number" class="form-control notapplyspace"
-                                                        placeholder="Eg. 299.00 KD"
-                                                        name="final_price[{{ $product_Variation_count }}][]"
-                                                        id="final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
-                                                        value="{{ $value->final_price }}">
-                                                    <p class="text-danger"
-                                                        id="error-final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
 
-                                @php
-                                    $product_Variation_inside_count++;
-                                @endphp
-                            @endforeach
-                            {{-- Other Variation show End Here --}}
+                                <div class="row">
 
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Percentage</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
+                                                name="discount_value[{{ $product_Variation_count }}][]"
+                                                id="discount_value_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                value="{{ $value->discount_value }}">
+                                            <p class="text-danger"
+                                                id="error-discount_value_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="sub-form">
+                                            <div class="label-flex">
+                                                <label>Final Price</label>
+                                            </div>
+                                            <input type="number" class="form-control notapplyspace"
+                                                placeholder="Eg. 299.00 KD"
+                                                name="final_price[{{ $product_Variation_count }}][]"
+                                                id="final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
+                                                value="{{ $value->final_price }}">
+                                            <p class="text-danger"
+                                                id="error-final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
+
+                        @php
+                        $product_Variation_inside_count++;
+                        @endphp
+                        @endforeach
+                        {{-- Other Variation show End Here --}}
+
 
                     </div>
 
-                    @php
-                        $product_Variation_count++;
+                </div>
 
-                        $product_Variation_inside_count = 0;
+                @php
+                $product_Variation_count++;
 
-                    @endphp
+                $product_Variation_inside_count = 0;
 
-                </div> {{-- end first variation code --}}
+                @endphp
+
+            </div> {{-- end first variation code --}}
             @endforeach
 
         </div>
@@ -721,7 +708,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="product_return" value='1'
-                                            @if ($product_details->product_return == 1) checked @endif>
+                                            @if($product_details->product_return == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -729,7 +716,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="product_return" value='0'
-                                            @if ($product_details->product_return == 0) checked @endif>
+                                            @if($product_details->product_return == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -743,8 +730,8 @@
                                 <div class="label-flex">
                                     <label>If Yes,Total days for returning</label>
                                 </div>
-                                <input type="number" class="form-control" placeholder="Eg.KD 299.00"
-                                    name="return_days" value="{{ $product_details->return_days }}">
+                                <input type="number" class="form-control" placeholder="Eg.KD 299.00" name="return_days"
+                                    value="{{ $product_details->return_days }}">
                                 <p class="text-danger" id="error-return_days"></p>
 
                             </div>
@@ -764,7 +751,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="product_exchangable" checked value="1"
-                                            @if ($product_details->product_exchangable == 1) checked @endif>
+                                            @if($product_details->product_exchangable == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -772,7 +759,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="product_exchangable" value="0"
-                                            @if ($product_details->product_exchangable == 0) checked @endif>
+                                            @if($product_details->product_exchangable == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -811,7 +798,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="review_rating" value="1"
-                                            @if ($product_details->review_rating == 1) checked @endif>
+                                            @if($product_details->review_rating == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -819,7 +806,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="review_rating" value="0"
-                                            @if ($product_details->review_rating == 0) checked @endif>
+                                            @if($product_details->review_rating == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -837,7 +824,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="affiliated_product" checked value="1"
-                                            @if ($product_details->affiliated_product == 1) checked @endif>
+                                            @if($product_details->affiliated_product == 1) checked @endif value="10">
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -845,7 +832,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="affiliated_product" value="0"
-                                            @if ($product_details->affiliated_product == 0) checked @endif>
+                                            @if($product_details->affiliated_product == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -853,6 +840,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- <div class="row" id="affiliated_commissionId"
+                        style="@if ($product_details->affiliated_product == 0) display:none; @endif">
+                       -->
+                    <div class="row" id="affiliated_commissionId" style="display:none">
+
+                        <div class="col-lg-12 col-md-12">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Affiliated product commision</label>
+                                </div>
+                                <input type="number" class="form-control" placeholder="Eg.0 to 100"
+                                    name="affiliated_commission" max="100" min="0"
+                                    value="{{ $product_details->affiliated_commission }}">
+                                <p class="text-danger" id="error-affiliated_commission"></p>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="title24">Customized products?</div>
@@ -863,7 +870,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="customized_product" value="1"
-                                            @if ($product_details->customized_product == 1) checked @endif>
+                                            @if($product_details->customized_product == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -871,7 +878,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="customized_product" value="0"
-                                            @if ($product_details->customized_product == 0) checked @endif>
+                                            @if($product_details->customized_product == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -889,7 +896,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="ready_to_ship" value="1"
-                                            @if ($product_details->ready_to_ship == 1) checked @endif>
+                                            @if($product_details->ready_to_ship == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -897,7 +904,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="ready_to_ship" value="0"
-                                            @if ($product_details->ready_to_ship == 0) checked @endif>
+                                            @if($product_details->ready_to_ship == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -915,7 +922,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="cash_on_delivery" value="1"
-                                            @if ($product_details->cash_on_delivery == 1) checked @endif>
+                                            @if($product_details->cash_on_delivery == 1) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -923,7 +930,7 @@
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="cash_on_delivery" value="0"
-                                            @if ($product_details->cash_on_delivery == 0) checked @endif>
+                                            @if($product_details->cash_on_delivery == 0) checked @endif>
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">No</span>
                                     </label>
@@ -950,15 +957,15 @@
 
                 <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview">
                     @if (!empty($product_details->upload_size_chart))
-                        <div class="multiple-img1 position-relative">
-                            <img src="{{ $product_details->upload_size_chart }}">
-                            <span class="remove-ic remove-image"
-                                style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
+                    <div class="multiple-img1 position-relative">
+                        <img src="{{ $product_details->upload_size_chart }}">
+                        <span class="remove-ic remove-image"
+                            style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
 
-                            <input type="hidden" accept="image/*"
-                                value="{{ $product_details->upload_size_chart }}" name="old_upload_size_chart">
+                        <input type="hidden" accept="image/*" value="{{ $product_details->upload_size_chart }}"
+                            name="old_upload_size_chart">
 
-                        </div>
+                    </div>
                     @endif
                 </div>
                 {{-- show image code end here --}}
@@ -1014,41 +1021,57 @@
 @include('dealer.layout.footer');
 
 <script>
-    // When The Page Load Then auto select Category
-    $(document).ready(function() {
-        var checked_category = $("input[name='category_id']:checked").val();
-        if (checked_category) {
-            catgoryFunction(checked_category);
-        }
-    });
+// When The Page Load Then auto select Category
+$(document).ready(function() {
+    var checked_category = $("input[name='category_id']:checked").val();
+    if (checked_category) {
+        catgoryFunction(checked_category);
+    }
+});
 
 
-    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {});
+$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {});
 
 
-    // Store files for each variant input
-    let fileStore = {};
 
-    $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+$(document).on('change', 'input[name="affiliated_product"]', function() {
+    let value = $(this).val();
 
-        let rel = $(this).attr('rel');
+    if (value == "1") {
+        // YES → show return days
+        // $('#affiliated_commissionId').show();
 
-        // Initialize store for this input if not exists
-        if (!fileStore[rel]) {
-            fileStore[rel] = new DataTransfer();
-        }
+    } else {
+        // $('#affiliated_commissionId').hide();
 
-        let dt = fileStore[rel];
-        let files = e.target.files;
+    }
+});
 
-        [...files].forEach(f => {
 
-            // Add file to DataTransfer
-            dt.items.add(f);
 
-            // Create preview
-            let url = URL.createObjectURL(f);
-            let imgBox = $(`
+// Store files for each variant input
+let fileStore = {};
+
+$(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
+
+    let rel = $(this).attr('rel');
+
+    // Initialize store for this input if not exists
+    if (!fileStore[rel]) {
+        fileStore[rel] = new DataTransfer();
+    }
+
+    let dt = fileStore[rel];
+    let files = e.target.files;
+
+    [...files].forEach(f => {
+
+        // Add file to DataTransfer
+        dt.items.add(f);
+
+        // Create preview
+        let url = URL.createObjectURL(f);
+        let imgBox = $(`
           <div class="multiple-img position-relative" data-name="${f.name}">
             <img src="${url}" class="w-100 rounded">
             <span class="remove-ic" 
@@ -1058,66 +1081,66 @@
           </div>
         `);
 
-            // Remove preview + remove file
-            imgBox.find('.remove-ic').click(() => {
+        // Remove preview + remove file
+        imgBox.find('.remove-ic').click(() => {
 
-                let filename = imgBox.data('name');
+            let filename = imgBox.data('name');
 
-                // remove from DataTransfer
-                for (let i = 0; i < dt.items.length; i++) {
-                    if (dt.items[i].getAsFile().name === filename) {
-                        dt.items.remove(i);
-                        break;
-                    }
+            // remove from DataTransfer
+            for (let i = 0; i < dt.items.length; i++) {
+                if (dt.items[i].getAsFile().name === filename) {
+                    dt.items.remove(i);
+                    break;
                 }
+            }
 
-                // update input files
-                document.querySelector(`input[rel="${rel}"]`).files = dt.files;
+            // update input files
+            document.querySelector(`input[rel="${rel}"]`).files = dt.files;
 
-                // remove preview
-                imgBox.remove();
-            });
-
-            $('#previewContainer' + rel).append(imgBox);
-            $('#error-variant_image_' + rel).empty();
-
+            // remove preview
+            imgBox.remove();
         });
 
-        // Assign new accumulated file list to input
-        this.files = dt.files;
+        $('#previewContainer' + rel).append(imgBox);
+        $('#error-variant_image_' + rel).empty();
+
     });
 
-    // Upload Chart Image in footer side
+    // Assign new accumulated file list to input
+    this.files = dt.files;
+});
 
-    $('#edit_uploadChart').on('change', e => {
-        let files = e.target.files;
-        $('#edit_uploadChart_preview').empty(); // clear old previews
-        [...files].forEach(f => {
-            let url = URL.createObjectURL(f);
-            let imgBox = $(`
+// Upload Chart Image in footer side
+
+$('#edit_uploadChart').on('change', e => {
+    let files = e.target.files;
+    $('#edit_uploadChart_preview').empty(); // clear old previews
+    [...files].forEach(f => {
+        let url = URL.createObjectURL(f);
+        let imgBox = $(`
       <div class="position-relative">
         <img src="${url}" class="w-100 rounded">
         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
       </div>
     `);
-            imgBox.find('.remove-ic').click(() => imgBox.remove());
-            $('#edit_uploadChart_preview').append(imgBox);
-            $('#error-upload_size_chart').empty();
+        imgBox.find('.remove-ic').click(() => imgBox.remove());
+        $('#edit_uploadChart_preview').append(imgBox);
+        $('#error-upload_size_chart').empty();
 
-        });
     });
+});
 
-    // Upload Chart Image in footer side
+// Upload Chart Image in footer side
 </script>
 
 <script>
-    // ADD NEW ROW In specification
+// ADD NEW ROW In specification
 
-    var specification_count = {{ $specification_count }};
+var specification_count = "{{$specification_count}}";
 
-    $("#addmore").click(function() {
+$("#addmore").click(function() {
 
-        $(".append-panel").append(`
+    $(".append-panel").append(`
 
        <div class="specifications-row">
         <div class="row">
@@ -1181,24 +1204,24 @@
         </div>
         </div>
        `)
-        specification_count++;
+    specification_count++;
 
-    });
+});
 
-    // REMOVE ROW
-    $(document).on("click", ".remove-btn", function() {
-        $(this).closest(".specifications-row").remove();
-    });
+// REMOVE ROW
+$(document).on("click", ".remove-btn", function() {
+    $(this).closest(".specifications-row").remove();
+});
 </script>
 
 <script>
-    // ADD NEW ROWs In product Variation Section
+// ADD NEW ROWs In product Variation Section
 
-    var product_Variation_count = {{ $product_Variation_count }};
+var product_Variation_count = "{{$product_Variation_count}}";
 
-    // ADD NEW Variant
-    $(".addVariantBtn").click(function() {
-        $(".variant-panel").append(`
+// ADD NEW Variant
+$(".addVariantBtn").click(function() {
+    $(".variant-panel").append(`
         <div class="MainVarient variant-panel-bg">
             <div class="product-pnls mt-4"  id="variant_image_id${product_Variation_count}">
                 <div class="upload-image" style="height:170px;">
@@ -1436,420 +1459,420 @@
         </div>
 
        `)
-        var checked_category = $("input[name='category_id']:checked").val();
-        if (checked_category) {
-            remove_Not_in_women_Category(checked_category);
-        }
-
-        product_Variation_count++; // Update Product Quantity
-
-    });
-
-    // REMOVE ROW
-    $(document).on("click", ".removerow", function() {
-        $(this).closest(".variant-panel-bg").remove();
-    });
-
-    // When User select Again Category Then remove Error Message 
-    function remove_Not_in_women_Category(val) {
-        $('.text-danger').empty();
-        if (val != '2') {
-            $('.remove_Not_in_women_Category').hide();
-        } else {
-            $('.remove_Not_in_women_Category').show();
-        }
-
+    var checked_category = $("input[name='category_id']:checked").val();
+    if (checked_category) {
+        remove_Not_in_women_Category(checked_category);
     }
 
-    //Category Wise Show sub-category data
-    function catgoryFunction(val) {
+    product_Variation_count++; // Update Product Quantity
 
-        remove_Not_in_women_Category(val); // remove extra field in Product
+});
 
-        $.ajax({
-            url: "{{ url('api/seller/sub-category?category_id=') }}" + val,
-            type: "get",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                id: val
-            },
-            dataType: "json",
-            beforeSend: function() {
-                $('#loader').show()
-            },
-            success: function(data) {
+// REMOVE ROW
+$(document).on("click", ".removerow", function() {
+    $(this).closest(".variant-panel-bg").remove();
+});
 
-                if (data.status == "success") {
+// When User select Again Category Then remove Error Message 
+function remove_Not_in_women_Category(val) {
+    $('.text-danger').empty();
+    if (val != '2') {
+        $('.remove_Not_in_women_Category').hide();
+    } else {
+        $('.remove_Not_in_women_Category').show();
+    }
 
-                    var subcatgory_record = data.data;
+}
 
-                    var htmlcontent = ' <option value="">Select Sub Category</option>';
+//Category Wise Show sub-category data
+function catgoryFunction(val) {
 
-                    let selectedCategoryId = "{{ $product_details->subcategory_id }}";
+    remove_Not_in_women_Category(val); // remove extra field in Product
+
+    $.ajax({
+        url: "{{ url('api/seller/sub-category?category_id=') }}" + val,
+        type: "get",
+        data: {
+            "_token": "{{ csrf_token() }}",
+            id: val
+        },
+        dataType: "json",
+        beforeSend: function() {
+            $('#loader').show()
+        },
+        success: function(data) {
+
+            if (data.status == "success") {
+
+                var subcatgory_record = data.data;
+
+                var htmlcontent = ' <option value="">Select Sub Category</option>';
+
+                let selectedCategoryId = "{{ $product_details->subcategory_id }}";
 
 
-                    subcatgory_record.forEach(function(item, val) {
-                        let selected = (item.id == selectedCategoryId) ? "selected" : "";
+                subcatgory_record.forEach(function(item, val) {
+                    let selected = (item.id == selectedCategoryId) ? "selected" : "";
 
-                        htmlcontent +=
-                            `<option value="${item.id}" ${selected}>${item.name_english} </option>`;
-                    })
+                    htmlcontent +=
+                        `<option value="${item.id}" ${selected}>${item.name_english} </option>`;
+                })
 
-                    $('#getSubcategry').empty();
-                    $('#getSubcategry').append(htmlcontent);
+                $('#getSubcategry').empty();
+                $('#getSubcategry').append(htmlcontent);
+
+            } else {
+                toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
+            }
+
+            // setInterval(() => {
+            //     window.location.reload();
+            // }, 1000);
+
+
+        },
+        error: function() {
+            alert("Fail")
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+    })
+}
+
+// When user Submit From submit code Apply
+
+$(document).on('submit', 'form#editproduct', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $("#file-error").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                toastr.success(response.message);
+
+                $('.submit').attr('disabled', true);
+                window.setTimeout(function() {
+                    window.location = "{{ route('seller.products') }}";
+                }, 2000);
+            }
+        },
+        error: function(xhr) {
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
 
                 } else {
-                    toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
-                }
 
-                // setInterval(() => {
-                //     window.location.reload();
-                // }, 1000);
-
-
-            },
-            error: function() {
-                alert("Fail")
-            },
-            complete: function() {
-                // Hide loader (after success or error)
-                $('#loader').hide();
-            }
-
-        })
-    }
-
-    // When user Submit From submit code Apply
-
-    $(document).on('submit', 'form#editproduct', function(event) {
-        event.preventDefault();
-        $('p.error_container').html("");
-        $("#file-error").html("");
-
-        var form = $(this);
-        var data = new FormData($(this)[0]);
-        var url = form.attr("action");
-        var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
-
-        $('.submit').attr('disabled', true);
-        // $('.form-control').attr('readonly', true).addClass('disabled-link');
-        $('.error-control').addClass('disabled-link');
-
-        if ($('.submit').html() !== loadingText) {
-            $('.submit').html(loadingText);
-        }
-
-        $.ajax({
-            type: form.attr('method'),
-            url: url,
-            data: data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            beforeSend: function() {
-                // Show loader
-                $('#loader').show();
-            },
-            success: function(response) {
-                console.log(response);
-
-                window.setTimeout(function() {
-                    $('.customBtn, .form-control').attr('disabled', false).removeClass(
-                        'disabled-link');
-                    $('.submit').html('Upload');
-                }, 2000);
-
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-
-                    $('.submit').attr('disabled', true);
-                    window.setTimeout(function() {
-                        window.location = "{{ route('seller.products') }}";
-                    }, 2000);
-                }
-            },
-            error: function(xhr) {
-                $('.text-danger').empty(); // Clear previous errors
-
-                let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
-
-                $.each(errors, function(field, messages) {
-
-                    // 1️⃣ Handle array fields with index → product_spe_en.0
-                    if (field.includes(".")) {
-
-                        let parts = field.split(".");
-                        let fieldName = parts[0];
-                        let index = parts[1];
-                        let index1 = parts[2];
-
-
-                        // Example → #error-product_spe_en_0
-
-                        let errorId = "#error-" + fieldName + "_" + index;
-
-                        // If second index exists, append it
-                        if (typeof index1 !== "undefined" && index1 !== "") {
-                            errorId += "_" + index1;
-                        }
-                        $(errorId).html(messages[0]);
-
-
-                    } else {
-
-                        // 2️⃣ File special case
-                        if (field === "file") {
-                            $("#file-error").html(messages[0]);
-                        }
-
-                        // 3️⃣ Handle whole array errors (custom rule)
-                        $("#error-" + field).html(messages[0]);
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
                     }
-                });
-            },
-            complete: function() {
-                // Hide loader (after success or error)
-                $('#loader').hide();
-            }
 
-
-        });
-
-        return false;
-    });
-
-
-
-    $(document).on('change', 'input[name="product_return"]', function() {
-        let value = $(this).val();
-
-        if (value == "1") {
-            // YES → show return days
-            $('input[name="return_days"]').closest('.row').show();
-            $('input[name="return_days"]').val('').closest('.row').removeClass('none_main');
-
-        } else {
-            // NO → hide return days & clear value
-            $('input[name="return_days"]').val('').closest('.row').addClass('none_main');
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
         }
+
+
     });
 
+    return false;
+});
 
-    $(document).on('change', 'input[name="product_exchangable"]', function() {
-        let value = $(this).val();
 
-        if (value == "1") {
-            // YES → show return days
-            $('input[name="exchangable_days"]').closest('.row').show();
-            $('input[name="exchangable_days"]').val('').closest('.row').removeClass('none_main');
 
-        } else {
-            // NO → hide return days & clear value
-            $('input[name="exchangable_days"]').val('').closest('.row').addClass('none_main');
+$(document).on('change', 'input[name="product_return"]', function() {
+    let value = $(this).val();
+
+    if (value == "1") {
+        // YES → show return days
+        $('input[name="return_days"]').closest('.row').show();
+        $('input[name="return_days"]').val('').closest('.row').removeClass('none_main');
+
+    } else {
+        // NO → hide return days & clear value
+        $('input[name="return_days"]').val('').closest('.row').addClass('none_main');
+    }
+});
+
+
+$(document).on('change', 'input[name="product_exchangable"]', function() {
+    let value = $(this).val();
+
+    if (value == "1") {
+        // YES → show return days
+        $('input[name="exchangable_days"]').closest('.row').show();
+        $('input[name="exchangable_days"]').val('').closest('.row').removeClass('none_main');
+
+    } else {
+        // NO → hide return days & clear value
+        $('input[name="exchangable_days"]').val('').closest('.row').addClass('none_main');
+    }
+});
+
+
+// dynamic Price show after discount 
+// dynamic Price show after discount 
+// Listen for input changes
+$(document).on("input change",
+    "input[id^='actualprice_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
+    function() {
+
+        debugger;
+
+        let id = $(this).attr("id");
+        // let index = id.split("_").pop();
+
+
+        let parts = id.split("_");
+
+        let index = parts[parts.length - 2]; // second last
+        let index1 = parts[parts.length - 1]; // last
+
+
+        let actualPrice = $("#actualprice_" + index + '_' + index1).val();
+        let discountInput = $("#discount_value_" + index + '_' + index1);
+        let discountValue = parseFloat(discountInput.val());
+        let discountType = $(`input[name='discount_type[${index}][${index1}]']:checked`).val();
+
+
+        // -----------------------------------------
+        // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
+        // -----------------------------------------
+        if (discountType == "1") {
+            if (discountValue > 100) {
+                discountInput.val(100);
+                discountValue = 100;
+            }
+            if (discountValue < 0) {
+                discountInput.val(0);
+                discountValue = 0;
+            }
+
+
+
+
+        } else if (discountType == "2") {
+            // Fixed price → cannot exceed actual price
+            if (discountValue > actualPrice) {
+                discountInput.val(actualPrice);
+                discountValue = actualPrice;
+            }
+            if (discountValue < 0) {
+                discountInput.val(0);
+                discountValue = 0;
+            }
+
+
         }
-    });
+        // Type=2 (Fixed price) → No restriction
+        // -----------------------------------------
 
-
-    // dynamic Price show after discount 
-    // dynamic Price show after discount 
-    // Listen for input changes
-    $(document).on("input change",
-        "input[id^='actualprice_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
-        function() {
-
-            debugger;
-
-            let id = $(this).attr("id");
-            // let index = id.split("_").pop();
-
-
-            let parts = id.split("_");
-
-            let index = parts[parts.length - 2]; // second last
-            let index1 = parts[parts.length - 1]; // last
-
-
-            let actualPrice = $("#actualprice_" + index + '_' + index1).val();
-            let discountInput = $("#discount_value_" + index + '_' + index1);
-            let discountValue = parseFloat(discountInput.val());
-            let discountType = $(`input[name='discount_type[${index}][${index1}]']:checked`).val();
-
-
-            // -----------------------------------------
-            // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
-            // -----------------------------------------
-            if (discountType == "1") {
-                if (discountValue > 100) {
-                    discountInput.val(100);
-                    discountValue = 100;
-                }
-                if (discountValue < 0) {
-                    discountInput.val(0);
-                    discountValue = 0;
-                }
-
-
-
-
-            } else if (discountType == "2") {
-                // Fixed price → cannot exceed actual price
-                if (discountValue > actualPrice) {
-                    discountInput.val(actualPrice);
-                    discountValue = actualPrice;
-                }
-                if (discountValue < 0) {
-                    discountInput.val(0);
-                    discountValue = 0;
-                }
-
-
-            }
-            // Type=2 (Fixed price) → No restriction
-            // -----------------------------------------
-
-            if (!actualPrice || !discountValue) {
-                $("#final_price_" + index + '_' + index1).val("");
-                return;
-            }
-
-
-
-            let finalPrice = 0;
-
-            // Percentage
-            if (discountType == "1") {
-                finalPrice = actualPrice - (actualPrice * (discountValue / 100));
-
-                if (Number.isInteger(finalPrice)) {
-                    finalPrice = finalPrice;
-                } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
-                    finalPrice = finalPrice.toFixed(2);
-                }
-
-
-            }
-
-
-            // Fixed price
-            if (discountType == "2") {
-                finalPrice = actualPrice - discountValue;
-            }
-
-            if (finalPrice < 0) finalPrice = 0;
-
-
-
-            // $("#final_price_" + index).val(finalPrice.toFixed(2));
-            $("#final_price_" + index + '_' + index1).val(finalPrice);
-
-            $("#error-final_price_" + index + '_' + index1).empty();
-
-        });
-
-    // Min value and Max greater then Input Field
-
-    $(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_quantity_']", function() {
-
-        // Get dynamic index from id
-        let id = $(this).attr("id"); // example: min_card_quantity_3
-        let index = id.split("_").pop(); // "3"
-
-        // Get values using dynamic IDs
-        let minQty = parseInt($("#min_card_quantity_" + index).val()) || 0;
-        let maxQty = parseInt($("#max_card_quantity_" + index).val()) || 0;
-
-        // Clear previous errors
-        $("#error-min_card_quantity_" + index).text("");
-        $("#error-max_card_quantity_" + index).text("");
-
-        // Validate only if both have values
-        if (minQty > 0 && maxQty > 0) {
-
-            // ❌ Min cannot be greater than Max
-            if (minQty > maxQty) {
-                $("#error-min_card_quantity_" + index).text(
-                    "Min quantity cannot be greater than max quantity"
-                );
-                $("#min_card_quantity_" + index).val(maxQty); // auto-fix
-            }
-
-            // ❌ Max cannot be less than Min
-            if (maxQty < minQty) {
-                $("#error-max_card_quantity_" + index).text(
-                    "Max quantity cannot be less than min quantity"
-                );
-                $("#max_card_quantity_" + index).val(minQty); // auto-fix
-            }
+        if (!actualPrice || !discountValue) {
+            $("#final_price_" + index + '_' + index1).val("");
+            return;
         }
-    });
 
 
 
-    // document.querySelector('.brand-select').addEventListener('change', function () {
-    document.getElementById('brand_id').addEventListener('change', function() {
-        const otherField = document.querySelector('#other-field0');
-        const otherField1 = document.querySelector('#other-field1');
+        let finalPrice = 0;
 
-        const selectedText = this.options[this.selectedIndex].text.trim().toLowerCase();
+        // Percentage
+        if (discountType == "1") {
+            finalPrice = actualPrice - (actualPrice * (discountValue / 100));
 
-        // console.log(selectedText);
+            if (Number.isInteger(finalPrice)) {
+                finalPrice = finalPrice;
+            } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
+                finalPrice = finalPrice.toFixed(2);
+            }
 
-        if (selectedText === 'other') {
-            otherField.style.display = 'block';
-            otherField1.style.display = 'block';
 
-        } else {
-            otherField.style.display = 'none';
-            otherField1.style.display = 'none';
         }
-    });
 
 
-    // {{-- When User Select Same Color then remove Image Field --}}
+        // Fixed price
+        if (discountType == "2") {
+            finalPrice = actualPrice - discountValue;
+        }
 
-    $(document).ready(function() {
+        if (finalPrice < 0) finalPrice = 0;
 
-        // // Use event delegation for dynamically added rows
-        // $(document).on('change', '.color-select', function() {
 
-        //      let dynamic_id = $(this).attr("rel");
 
-        //     let selectedColors = [];
+        // $("#final_price_" + index).val(finalPrice.toFixed(2));
+        $("#final_price_" + index + '_' + index1).val(finalPrice);
 
-        //     // Collect all selected colors
-        //     $('.color-select').each(function() {
-        //         let val = $(this).val();
-        //         if(val !== "") selectedColors.push(val);
-
-        //         // debugger;
-        //     });
-
-        //     // Loop through each row to hide/show image upload
-        //     $('.product-row').each(function() {
-        //         let rowColor = $(this).find('.color-select').val();
-
-        //         // debugger;
-        //         if(rowColor === "") return; // skip empty
-
-        //         // Count occurrences of this color
-        //         let occurrences = selectedColors.filter(c => c === rowColor).length;
-
-        //         if(occurrences > 1){
-
-        //         // debugger;
-
-        //             $('#variant_image_id'+dynamic_id).hide();
-        //         } else {
-
-        //         // debugger;
-        //              $('#variant_image_id'+dynamic_id).show();
-        //         }
-
-        //     });
-
-        // });
+        $("#error-final_price_" + index + '_' + index1).empty();
 
     });
+
+// Min value and Max greater then Input Field
+
+$(document).on("input", "input[id^='min_card_quantity_'], input[id^='max_card_quantity_']", function() {
+
+    // Get dynamic index from id
+    let id = $(this).attr("id"); // example: min_card_quantity_3
+    let index = id.split("_").pop(); // "3"
+
+    // Get values using dynamic IDs
+    let minQty = parseInt($("#min_card_quantity_" + index).val()) || 0;
+    let maxQty = parseInt($("#max_card_quantity_" + index).val()) || 0;
+
+    // Clear previous errors
+    $("#error-min_card_quantity_" + index).text("");
+    $("#error-max_card_quantity_" + index).text("");
+
+    // Validate only if both have values
+    if (minQty > 0 && maxQty > 0) {
+
+        // ❌ Min cannot be greater than Max
+        if (minQty > maxQty) {
+            $("#error-min_card_quantity_" + index).text(
+                "Min quantity cannot be greater than max quantity"
+            );
+            $("#min_card_quantity_" + index).val(maxQty); // auto-fix
+        }
+
+        // ❌ Max cannot be less than Min
+        if (maxQty < minQty) {
+            $("#error-max_card_quantity_" + index).text(
+                "Max quantity cannot be less than min quantity"
+            );
+            $("#max_card_quantity_" + index).val(minQty); // auto-fix
+        }
+    }
+});
+
+
+
+// document.querySelector('.brand-select').addEventListener('change', function () {
+document.getElementById('brand_id').addEventListener('change', function() {
+    const otherField = document.querySelector('#other-field0');
+    const otherField1 = document.querySelector('#other-field1');
+
+    const selectedText = this.options[this.selectedIndex].text.trim().toLowerCase();
+
+    // console.log(selectedText);
+
+    if (selectedText === 'other') {
+        otherField.style.display = 'block';
+        otherField1.style.display = 'block';
+
+    } else {
+        otherField.style.display = 'none';
+        otherField1.style.display = 'none';
+    }
+});
+
+
+// {{-- When User Select Same Color then remove Image Field --}}
+
+$(document).ready(function() {
+
+    // // Use event delegation for dynamically added rows
+    // $(document).on('change', '.color-select', function() {
+
+    //      let dynamic_id = $(this).attr("rel");
+
+    //     let selectedColors = [];
+
+    //     // Collect all selected colors
+    //     $('.color-select').each(function() {
+    //         let val = $(this).val();
+    //         if(val !== "") selectedColors.push(val);
+
+    //         // debugger;
+    //     });
+
+    //     // Loop through each row to hide/show image upload
+    //     $('.product-row').each(function() {
+    //         let rowColor = $(this).find('.color-select').val();
+
+    //         // debugger;
+    //         if(rowColor === "") return; // skip empty
+
+    //         // Count occurrences of this color
+    //         let occurrences = selectedColors.filter(c => c === rowColor).length;
+
+    //         if(occurrences > 1){
+
+    //         // debugger;
+
+    //             $('#variant_image_id'+dynamic_id).hide();
+    //         } else {
+
+    //         // debugger;
+    //              $('#variant_image_id'+dynamic_id).show();
+    //         }
+
+    //     });
+
+    // });
+
+});
 </script>
 
 {{-- // common j s --}}
