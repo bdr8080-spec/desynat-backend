@@ -373,6 +373,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
         $this->AddtocartRemoveData($checkOrder->id);
 
+        OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
+
         DB::commit();
 
         return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
@@ -403,6 +405,9 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
           $this->AddtocartRemoveData($checkOrder->id);
 
+           OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
+
+
        $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
 
         DB::commit();
@@ -421,6 +426,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         $msg="Order Payment Paid Successfully";
 
         $this->AddtocartRemoveData($checkOrder->id);
+
+         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
         }else{
             $msg="Order Payment Cancelled";        
@@ -614,8 +621,6 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     
     }
-
-
 
 
 

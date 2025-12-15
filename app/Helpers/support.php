@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Models\{UserGiftCards,UserWallet};
+use App\Models\{UserGiftCards,UserWallet,Order};
 
 
 // Function to calculate the distance using the Haversine formula
@@ -86,4 +86,33 @@ function UserBalancePayOrder($user_id,$amount=null){
     }
 
     
+    }
+
+
+
+function OrderGiftCardConditionCheck($orderid,$amount=null){
+
+    try{
+
+    $userOrder=Order::where('id',$orderid)->first();
+
+    if($userOrder){
+
+        if($userOrder->giftcard_id!==''){
+        $userGiftCard=UserGiftCards::where('id',$userOrder->giftcard_id)->first();
+        if($userGiftCard){
+            $userGiftCard->update(['giftCardUse'=>'1']);
+        }
+        }
+        
+    }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
     }

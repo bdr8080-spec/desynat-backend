@@ -154,7 +154,7 @@ section{
     font-weight: var(--p-font-weight);
 }
 .customBtn5{
-    background: var(--gradient-color6) !important;
+    background: var(--gradient-color3) !important;
 }
 .inner-header{
     background: var(--gradient-color5);
