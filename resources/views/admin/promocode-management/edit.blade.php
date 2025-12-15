@@ -107,9 +107,9 @@
                             <div class="col-lg-6 ">
                                 <div class="form-group mb-3">
                                     <label class="form-label">Discount %</label>
-                                    <input type="text" id="update_discountPercent" name="discount_percent" 
+                                    <input type="text" oninput="this.value = this.value.replace(/\D/g, '').replace(/^0+/, '').slice(0, 3); if (this.value > 100) this.value = 100;" id="update_discountPercent" name="discount_percent" 
                                         class="form-control" placeholder="Enter Discount %" 
-                                        value="{{ old('discount_percent', $promoCode->discount_percent) }}" />
+                                        value="{{ old('discount_percent', fmod($promoCode->discount_percent, 1) == 0 ? (int)$promoCode->discount_percent : number_format($promoCode->discount_percent, 2)) }}" />
                                     <div id="update_discountPercentError" class="text-danger small" style="display:none;"></div>
                                 </div>
                             </div>

@@ -121,7 +121,7 @@ class PromoCodeController extends Controller
             'description_english' => 'required|string',
             'description_arabic' => 'required|string',
             'applicable_for' => 'required|in:1,2', // 1-first order, 2-all order
-            'discount_percent' => 'required|integer',
+            'discount_percent' => 'required',
             'min_order_value' => 'required|integer',
             'upto_discount' => 'required|integer',
             'start_date' => 'required|date',
