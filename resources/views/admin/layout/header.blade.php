@@ -1,5 +1,3 @@
-
-
 <!-- resources/views/layouts/header.blade.php -->
 <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
     <div class="left-section d-flex align-items-center">
@@ -8,54 +6,56 @@
 
     <div class="header-divider"></div>
 
-   <div class="right-section">
+    <div class="right-section">
 
- 
-  <!-- <div class="profile-trigger">
-    <img src="assets/img/user.png" class="header-profile-img" id="profileToggle">
-  </div>
 
-  
-  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
-      id="profileDropdown">
-
- 
-    <li>
-      <div class="seller-profile">
-        <div class="p-grid1 d-flex gap-3 align-items-center">
-          <img src="assets/img/user.png" alt="Profile" class="rounded-circle profile-img">
-
-          <div>
-            <h6 class="mb-0">Vijay</h6>
-            <div class="h-email">vijay@gmail.com</div>
-          </div>
-
-          <a class="drop-profile" href="#">
-            View Profile
-          </a>
+      <div class="dropdown">
+         <div class="profile-trigger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="/admin/image/hightlights-1.svg" class="header-profile-img" id="profileToggle">
         </div>
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li>
+                <div class="seller-profile">
+                    <div class="p-grid1 d-flex gap-3 align-items-center">
+                        <img src="/admin/image/hightlights-1.svg" alt="Profile" class="rounded-circle profile-img">
+
+                        <div>
+                            <h6 class="mb-0">Vijay</h6>
+                            <div class="h-email">vijay@gmail.com</div>
+                        </div>
+
+                        <!-- <a class="drop-profile" href="#">
+                            View Profile
+                        </a> -->
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+
+            <li>
+                <a class="dropdown-item d-flex align-items-center gap-3 logout-item" href="#">
+                    <img src="/admin/image/logout-profile.svg">
+                    <span class="text-red">Sign Out</span>
+                </a>
+            </li>
+        </ul>
       </div>
-    </li>
 
-    <li><hr class="dropdown-divider"></li>
 
-    <li>
-      <a class="dropdown-item d-flex align-items-center gap-3 logout-item" href="#">
-        <img src="assets/img/logout.svg">
-        <span class="text-red">Sign Out</span>
-      </a>
-    </li>
-  </ul> -->
 
-  <!-- LANGUAGE DROPDOWN -->
-  <div class="language-dropdown" id="languageDropdown">
-    <button class="lang-btn">
-      <i class="fas fa-globe"></i> EN
-      <i class="fas fa-chevron-down"></i>
-    </button>
-  </div>
+        <!-- LANGUAGE DROPDOWN -->
+        <div class="language-dropdown" id="languageDropdown">
+            <button class="lang-btn">
+                <i class="fas fa-globe"></i> EN
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
 
-</div>
+    </div>
 
 
 </nav>
@@ -77,7 +77,8 @@ document.addEventListener("click", (e) => {
     }
 });
 </script>
-<script>
+
+<!-- <script>
   const toggle = document.getElementById("profileToggle");
   const dropdown = document.getElementById("profileDropdown");
 
@@ -89,4 +90,4 @@ document.addEventListener("click", (e) => {
   document.addEventListener("click", function () {
     dropdown.classList.remove("open");
   });
-</script>
+</script> -->
