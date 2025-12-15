@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/Inventory-Management') || Request::is('seller/view-inventory/*') ? 'sidebar-active' : '' }}"
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/inventory-Management') || Request::is('seller/view-inventory/*') ? 'sidebar-active' : '' }}"
                     href="{{ route('seller.Inventory_Management') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/inventory.svg" alt="icon" class="asideicon">
                     <span>Inventory Management</span>
