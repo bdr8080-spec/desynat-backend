@@ -163,10 +163,7 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="fw-semibold">Select Size</h6>
-                    <h6 class="cd-size"
-                        id="sizeGuideBtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#sizechart"
+                    <h6 class="cd-size" id="sizeGuideBtn" data-bs-toggle="modal" data-bs-target="#sizechart"
                         data-size-chart="{{ $data->upload_size_chart }}">
                         Size Guide
                     </h6>
@@ -178,7 +175,8 @@
                     @foreach ($firstVariant['sizes'] as $size)
                     <!-- <button class="size-btn">{{ $size }}</button> -->
                     <button class="size-btn" data-size="{{ $size }}" data-variant-id="{{ $firstVariant['variant_id'] }}"
-                        data-product-id="{{ $firstVariant['product_id'] }}">{{ $size }}</button>
+                        data-product-id="{{ $firstVariant['product_id'] }}"
+                        data-Stock-id="{{$firstVariant['total_stock']}}">{{ $size }}</button>
                     @endforeach
                 </div>
                 <input type="hidden" id="variantId" name="variant_id">
@@ -226,7 +224,7 @@
                     </div>
 
                 </div>
-            <!-- end -->
+                <!-- end -->
 
                 <div class="my-4">
                     <div class="desc-box p-4 rounded-4">
@@ -704,21 +702,20 @@
 
 
 
-  <div class="modal fade sizechart" id="sizechart" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Size Chart</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+<div class="modal fade sizechart" id="sizechart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Size Chart</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-                <div class="modal-body" id="sizeChartBody">
+            <div class="modal-body" id="sizeChartBody">
 
-                    </div>
             </div>
         </div>
     </div>
+</div>
 
 
 @php
@@ -748,25 +745,25 @@ $wishlistBlock = trim(preg_replace('/\s+/', ' ', ob_get_clean()));
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
     // ------------------------------
     // VARIABLES
     // ------------------------------
-    const productVariantsByColor = @json($product_variants);   // grouped by color
-    const productVariantsById    = @json($productVariantsById); // flat lookup by variant_id
-    const cartData               = @json($cartData);          // keyed by variants_id
-    const wishlistHTML           = `{!! $wishlistBlock !!}`;
+    const productVariantsByColor = @json($product_variants); // grouped by color
+    const productVariantsById = @json($productVariantsById); // flat lookup by variant_id
+    const cartData = @json($cartData); // keyed by variants_id
+    const wishlistHTML = `{!! $wishlistBlock !!}`;
 
-    let firstClick               = true;
+    let firstClick = true;
 
-    let quantityBox      = document.querySelector(".quantity-box");
-    let qtyDisplay       = document.getElementById("qtyNumber");
-    let plusBtn          = document.getElementById("plusBtn");
-    let minusBtn         = document.getElementById("minusBtn");
-    let addToBagBtn      = document.getElementById("addToBagBtn");
-    let errorBox         = document.getElementById("optionError");
-    let viewMyBagDiv     = document.getElementById("bagTopbar");
+    let quantityBox = document.querySelector(".quantity-box");
+    let qtyDisplay = document.getElementById("qtyNumber");
+    let plusBtn = document.getElementById("plusBtn");
+    let minusBtn = document.getElementById("minusBtn");
+    let addToBagBtn = document.getElementById("addToBagBtn");
+    let errorBox = document.getElementById("optionError");
+    let viewMyBagDiv = document.getElementById("bagTopbar");
 
     // ------------------------------
     // INITIAL UI STATE
@@ -795,34 +792,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         fetch("{{ route('user.addToCart') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify({
-                product_id: product_id,
-                variant_id: variant_id,
-                quantity: qty
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    product_id: product_id,
+                    variant_id: variant_id,
+                    quantity: qty
+                })
             })
-        })
-        .then(r => r.json())
-        .then(data => {
-            if (data.status === "error") {
-                toastr.error(data.message);
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            } else {
-                toastr.success(data.message);
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            }
-        })
-        .catch(() => {
-            toastr.error("Something went wrong.");
-        });
+            .then(r => r.json())
+            .then(data => {
+                if (data.status === "error") {
+                    toastr.error(data.message);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                }
+            })
+            .catch(() => {
+                toastr.error("Something went wrong.");
+            });
     }
 
     function updateCartUIForVariant(variantId) {
@@ -852,27 +849,29 @@ document.addEventListener("DOMContentLoaded", function () {
     minusBtn.replaceWith(minusBtn.cloneNode(true));
     addToBagBtn.replaceWith(addToBagBtn.cloneNode(true));
 
-    plusBtn     = document.getElementById("plusBtn");
-    minusBtn    = document.getElementById("minusBtn");
+    plusBtn = document.getElementById("plusBtn");
+    minusBtn = document.getElementById("minusBtn");
     addToBagBtn = document.getElementById("addToBagBtn");
 
     // ------------------------------
     // COLOR CLICK HANDLER
     // ------------------------------
     document.querySelectorAll(".choose-color").forEach((colorBox, index) => {
-        colorBox.addEventListener("click", function () {
+        colorBox.addEventListener("click", function() {
             const colorHex = this.dataset.color;
 
             // Highlight active color
-            document.querySelectorAll(".choose-color").forEach(c => c.classList.remove("active"));
+            document.querySelectorAll(".choose-color").forEach(c => c.classList.remove(
+                "active"));
             this.classList.add("active");
 
-            const variant = Object.values(productVariantsByColor).find(v => v.color_hex === colorHex);
+            const variant = Object.values(productVariantsByColor).find(v => v.color_hex ===
+                colorHex);
             if (!variant) return;
 
             // Update price using first variant for this color
             document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
-            document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
+            document.getElementById("finalPrice").innerText = variant.final_price + " KD";
 
             // Update sizes
             const sizeContainer = document.getElementById("sizeContainer");
@@ -880,12 +879,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             variant.sizes.forEach(size => {
                 // Find the correct variant_id for this color & size
-                const variantForSize = Object.values(productVariantsById).find(v => v.color_hex === colorHex && v.size === size);
+                const variantForSize = Object.values(productVariantsById).find(v => v
+                    .color_hex === colorHex && v.size === size);
                 sizeContainer.innerHTML += `
                     <button class="size-btn"
                         data-size="${size}"
                         data-variant-id="${variantForSize.variant_id}"
-                        data-product-id="${variantForSize.product_id}">
+                        data-product-id="${variantForSize.product_id}"
+                        data-stock-id="${variantForSize.total_stock}"
+                        >
                         ${size}
                     </button>
                 `;
@@ -896,10 +898,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // Update images
             const images = variant.variant_image;
             const carouselIndicators = document.querySelector(".carousel-indicators");
-            const carouselInner      = document.querySelector(".carousel-inner");
+            const carouselInner = document.querySelector(".carousel-inner");
 
             carouselIndicators.innerHTML = "";
-            carouselInner.innerHTML      = "";
+            carouselInner.innerHTML = "";
 
             images.forEach((img, idx) => {
                 carouselIndicators.innerHTML += `
@@ -940,7 +942,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const hiddenInputProduct = document.getElementById("productId");
 
         sizeButtons.forEach(button => {
-            button.addEventListener("click", function () {
+            button.addEventListener("click", function() {
                 sizeButtons.forEach(btn => {
                     btn.classList.remove("active");
                     btn.style.background = "";
@@ -953,13 +955,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 const variant = productVariantsById[variantId];
 
                 hiddenInputVariant.value = variant.variant_id;
-                hiddenInputProduct.value  = variant.product_id;
+                hiddenInputProduct.value = variant.product_id;
 
                 // Update price correctly for selected size
                 document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
-                document.getElementById("finalPrice").innerText  = variant.final_price + " KD";
+                document.getElementById("finalPrice").innerText = variant.final_price + " KD";
 
                 updateCartUIForVariant(variantId);
+
+                AddAndBuyButtonHideAndShowCode() // Add to Cart and size Button
+
             });
         });
     }
@@ -967,9 +972,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // ------------------------------
     // ADD TO BAG CLICK
     // ------------------------------
-    addToBagBtn.addEventListener("click", function () {
+    addToBagBtn.addEventListener("click", function() {
         const selectedColor = document.querySelector(".choose-color.active");
-        const selectedSize  = document.querySelector(".size-btn.active");
+        const selectedSize = document.querySelector(".size-btn.active");
 
         errorBox.style.display = "none";
         errorBox.innerHTML = "";
@@ -1036,14 +1041,14 @@ document.addEventListener("DOMContentLoaded", function () {
         sendToCart(qty);
     });
 
-        // ------------------------------
+    // ------------------------------
     // BUY NOW CLICK
     // ------------------------------
     const buyNowBtn = document.getElementById("buyNowBtn");
 
-    buyNowBtn.addEventListener("click", function () {
+    buyNowBtn.addEventListener("click", function() {
         const selectedColor = document.querySelector(".choose-color.active");
-        const selectedSize  = document.querySelector(".size-btn.active");
+        const selectedSize = document.querySelector(".size-btn.active");
 
         errorBox.style.display = "none";
         errorBox.innerHTML = "";
@@ -1071,32 +1076,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Not in cart → add then redirect
         fetch("{{ route('user.addToCart') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify({
-                product_id: productId,
-                variant_id: variantId,
-                quantity: 1
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    variant_id: variantId,
+                    quantity: 1
+                })
             })
-        })
-        .then(r => r.json())
-        .then(data => {
-            if (data.status === "error") {
-                toastr.error(data.message);
-            } else {
-                toastr.success(data.message);
+            .then(r => r.json())
+            .then(data => {
+                if (data.status === "error") {
+                    toastr.error(data.message);
+                } else {
+                    toastr.success(data.message);
 
-                setTimeout(() => {
-                    window.location.href = "{{ route('user.view_cart') }}";
-                }, 800);
-            }
-        })
-        .catch(() => {
-            toastr.error("Something went wrong.");
-        });
+                    setTimeout(() => {
+                        window.location.href = "{{ route('user.view_cart') }}";
+                    }, 800);
+                }
+            })
+            .catch(() => {
+                toastr.error("Something went wrong.");
+            });
     });
 
 
@@ -1116,7 +1121,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const sizeChartImage = this.dataset.sizeChart;
 
         if (sizeChartImage) {
-            sizeChartBody.innerHTML = `<img src="${sizeChartImage}" class="img-fluid" alt="Size Chart" style="max-width: 100%; height: 400px; object-fit: contain;">`;
+            sizeChartBody.innerHTML =
+                `<img src="${sizeChartImage}" class="img-fluid" alt="Size Chart" style="max-width: 100%; height: 400px; object-fit: contain;">`;
         } else {
             sizeChartBody.innerHTML = `<p class="text-center">No size chart available.</p>`;
         }
@@ -1124,11 +1130,43 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Clear modal content on close to avoid duplicates
     const sizeChartModal = document.getElementById("sizechart");
-    sizeChartModal.addEventListener("hidden.bs.modal", function () {
+    sizeChartModal.addEventListener("hidden.bs.modal", function() {
         sizeChartBody.innerHTML = "";
     });
 
 });
+
+
+// get Active size Button Value
+
+// Get the active button
+function AddAndBuyButtonHideAndShowCode() {
+
+    const activeBtn = document.querySelector('.size-btn.active');
+
+    if (activeBtn) {
+        // Access data attributes
+        const size = activeBtn.getAttribute('data-size');
+        const stock = activeBtn.getAttribute('data-stock-id');
+        console.log("Active size:", size, "Stock:", stock);
+
+        if (stock <= 0) {
+
+            $('#addToBagBtn').hide();
+            $('#buyNowBtn').hide();
+        } else {
+            $('#addToBagBtn').show();
+            $('#buyNowBtn').show();
+
+        }
+
+
+
+    } else {
+        console.log("No size selected yet");
+    }
+
+}
 </script>
 
 
