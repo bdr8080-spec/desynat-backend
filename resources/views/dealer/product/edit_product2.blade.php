@@ -824,7 +824,7 @@ $product_Variation_inside_count = 0;
                                 <div class="check_radio">
                                     <label class="radio-group">
                                         <input type="radio" name="affiliated_product" checked value="1"
-                                            @if($product_details->affiliated_product == 1) checked @endif>
+                                            @if($product_details->affiliated_product == 1) checked @endif value="10">
                                         <span class="custom-radio"></span>
                                         <span class="radio-label">Yes</span>
                                     </label>
@@ -841,8 +841,11 @@ $product_Variation_inside_count = 0;
                         </div>
                     </div>
 
-                    <div class="row" id="affiliated_commissionId"
+                    <!-- <div class="row" id="affiliated_commissionId"
                         style="@if ($product_details->affiliated_product == 0) display:none; @endif">
+                       -->
+                    <div class="row" id="affiliated_commissionId" style="display:none">
+
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
@@ -1036,10 +1039,10 @@ $(document).on('change', 'input[name="affiliated_product"]', function() {
 
     if (value == "1") {
         // YES → show return days
-        $('#affiliated_commissionId').show();
+        // $('#affiliated_commissionId').show();
 
     } else {
-        $('#affiliated_commissionId').hide();
+        // $('#affiliated_commissionId').hide();
 
     }
 });

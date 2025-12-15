@@ -694,14 +694,14 @@
                         </div>
                     </div>
 
-                    <div class="row" id="affiliated_commissionId">
+                    <div class="row" id="affiliated_commissionId" style="display:none">
                         <div class="col-lg-12 col-md-12">
                             <div class="sub-form">
                                 <div class="label-flex">
                                     <label>Affiliated product commision</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.0 to 100"
-                                    name="affiliated_commission" max="100" min="0">
+                                    name="affiliated_commission" max="100" min="0" value="10">
                                 <p class="text-danger" id="error-affiliated_commission"></p>
 
                             </div>
@@ -1485,10 +1485,10 @@ $(document).on('change', 'input[name="affiliated_product"]', function() {
 
     if (value == "1") {
         // YES → show return days
-        $('#affiliated_commissionId').show();
+        // $('#affiliated_commissionId').show();
 
     } else {
-        $('#affiliated_commissionId').hide();
+        // $('#affiliated_commissionId').hide();
 
     }
 });
