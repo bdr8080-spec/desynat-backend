@@ -15,6 +15,7 @@
   --bg-login:linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
   --h1: 24px;
   --h1-line-height: 35px;
+  --all-btn-bg:linear-gradient(to bottom left, #F9DBAB, #7D532F);
 
   --h2: 22px;
   --h2-line-height: 25px;
@@ -314,7 +315,7 @@ label {
 
 .btn-success {
   line-height: 32px;
-  background: var(--btn-gradient);
+  background: var(--all-btn-bg);
   font-size: var(--btn-font);
   padding: 9px;
   border-radius: 4px;
@@ -713,7 +714,7 @@ label {
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
   padding-left: 20px;
   padding-right: 20px;
-  background: linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%);
+  background:var(--bg-multiple) ;
 }
 
 .header .toggle-sidebar-btn {

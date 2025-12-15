@@ -1063,7 +1063,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const variantId = selectedSize.dataset.variantId;
         const productId = selectedSize.dataset.productId;
 
-        //  If already in cart → go to cart
+        // ✅ If already in cart → go to cart
         if (cartData[variantId]) {
             window.location.href = "{{ route('user.view_cart') }}";
             return;
