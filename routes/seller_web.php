@@ -11,7 +11,7 @@ use App\Http\Controllers\Seller\SellerProductController;
 Route::group(['prefix' => 'seller'], function () {
 
 
-    Route::middleware(['is_seller','prevent-back-history'])->group(function(){
+    Route::middleware(['is_seller','prevent-back-history','LowerUrl'])->group(function(){
         
     route::Match(['get','post'],'/login',[LoginController::class,'login'])->name('seller.login');
     route::Match(['get','post'],'/register',[LoginController::class,'register'])->name('seller.register');
@@ -22,7 +22,7 @@ Route::group(['prefix' => 'seller'], function () {
  
 
 
-    Route::middleware(['seller_login','prevent-back-history'])->group(function(){
+    Route::middleware(['seller_login','prevent-back-history','LowerUrl'])->group(function(){
     
     route::Match(['get','post'],'/store_information/{id}',[LoginController::class,'store_information'])->name('seller.store_information');
     route::Match(['get','post'],'/upload_document/{id}',[LoginController::class,'upload_document'])->name('seller.upload_document');
