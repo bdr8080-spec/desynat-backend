@@ -127,7 +127,7 @@ label {
 }
 
 .sidebar-active {
-  background: var(--tab-active-bg);
+  background: var(--all-btn-bg);
   color: #fff !important;
   box-shadow: 0px 4px 4px 0px #FF4F9A1F;
 }
@@ -1136,10 +1136,10 @@ label {
   position: relative;
   height: 130px;
 }
-.upload-image label {
+/* .upload-image label {
   position: relative;
   z-index: 111 !important;
-}
+} */
 
 .imgshow img {
   height: 100%;
