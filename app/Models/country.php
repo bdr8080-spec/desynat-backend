@@ -17,4 +17,9 @@ class country extends Model
     {
         return $this->hasMany(ShippingCharge::class, 'country_id', 'id');
     }
+
+    public function affiliate_commission_info()
+    {
+        return $this->hasOne(AffiliateCommission::class, 'country_id', 'id');
+    }
 }
