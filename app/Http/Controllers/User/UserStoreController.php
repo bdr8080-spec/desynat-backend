@@ -227,7 +227,8 @@ class UserStoreController extends Controller
             'actual_price'   => $item->actual_price,
             'final_price'    => $item->final_price,
             'discount_value' => $item->discount_value,
-            'discount_type'  => $item->discount_type
+            'discount_type'  => $item->discount_type,
+            'total_stock'  => $item->total_stock
         ];
     }
 }
@@ -244,6 +245,7 @@ foreach ($data->product_variants as $item) {
         'discount_value' => $item->discount_value,
         'discount_type' => $item->discount_type,
         'variant_image' => is_array($item->variant_image) ? $item->variant_image : [],
+        'total_stock' => $item->total_stock,
     ];
 }
 

@@ -95,6 +95,14 @@ class AddressController extends Controller
         ];
 
 
+      $checkUserAddress=  UserAddress::where('user_id',$request->id)->get();
+
+      if(count($checkUserAddress)==0){
+        $request_data['set_as_default']='1';
+      }
+
+
+
         $data = UserAddress::updateOrCreate(
             ['id' => $request->id],
             $request_data

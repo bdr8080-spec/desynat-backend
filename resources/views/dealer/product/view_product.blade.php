@@ -262,8 +262,7 @@ a:hover {
                 <div class="row mb-2">
                     <div class="col-6">Is it an Affiliated Product?
                     </div>
-                    <div class="col-6 text-end">@if($product->affiliated_product==1) {{$product->affiliated_commission}}
-                        %
+                    <div class="col-6 text-end">@if($product->affiliated_product==1) Yes
                         @else No @endif </div>
 
                 </div>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Seller\LoginController;
 use App\Http\Controllers\Seller\WebSellerDashboard;
@@ -11,7 +12,7 @@ use App\Http\Controllers\Seller\SellerProductController;
 Route::group(['prefix' => 'seller'], function () {
 
 
-    Route::middleware(['is_seller','prevent-back-history'])->group(function(){
+    Route::middleware(['is_seller','prevent-back-history','LowerUrl'])->group(function(){
         
     route::Match(['get','post'],'/login',[LoginController::class,'login'])->name('seller.login');
     route::Match(['get','post'],'/register',[LoginController::class,'register'])->name('seller.register');
@@ -42,7 +43,7 @@ Route::group(['prefix' => 'seller'], function () {
   
 
     route::Match(['get','post'],'/products',[SellerProductController::class,'products'])->name('seller.products');
-    route::Match(['get','post'],'/Inventory-Management',[SellerProductController::class,'Inventory_Management'])->name('seller.Inventory_Management');
+    route::Match(['get','post'],'/inventory-Management',[SellerProductController::class,'Inventory_Management'])->name('seller.Inventory_Management');
     route::Match(['get','post'],'/Affilate-Commission',[SellerProductController::class,'Affilate_Commission'])->name('seller.Affilate_Commission');
 
     route::get('/Add-product',[SellerProductController::class,'Add_product1'])->name('seller.Add_product');
@@ -133,4 +134,14 @@ route::Match(['get','post'],'/Add-product-2', function(){
 Route::fallback(function () {
 
     return view('404');
+});
+
+Route::fallback(function (Request $request) {
+    $uri = $request->getRequestUri();
+
+    if (str_starts_with($uri, '/Seller') || preg_match('/\/[A-Z]/', $uri)) {
+        return redirect(strtolower($uri), 301);
+    }
+
+    abort(404);
 });

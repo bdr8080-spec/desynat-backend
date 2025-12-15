@@ -850,6 +850,8 @@ public function product_view_cart_details($request)
 
         $response['total_mrp']=$total_mrp;
 
+        if(isset($userCountry_id)){
+
         $Tax_calculate= Tax::where('country_id',$userCountry_id)->where('status','1')->first();
 
         if($Tax_calculate){
@@ -858,6 +860,9 @@ public function product_view_cart_details($request)
         }else{
             $tax=0;
         }
+          }else{
+           $tax=0;
+         }
 
         $response['discount_on_mrp']=$discount_on_mrp;
         $response['discount_coupon']=$discount_coupon;
@@ -918,6 +923,7 @@ public function product_view_cart_details($request)
         ];
 
     } catch (\Exception $e) {
+
 
         return [
             'status'  => 'error',

@@ -170,14 +170,18 @@
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>
-                                {{ $cartData['user_address']->address }}
-                                {{ $cartData['user_address']->house_no }},
-                                {{ $cartData['user_address']->postal_code }},
-                                {{ $cartData['user_address']->city }},
-                                {{ $cartData['user_address']->state }},
-                                {{ $cartData['user_address']->country_name }}
+                                @isset($cartData['user_address']->address)
+
+
+                                {{ @$cartData['user_address']->address }}
+                                {{ @$cartData['user_address']->house_no }},
+                                {{ @$cartData['user_address']->postal_code }},
+                                {{ @$cartData['user_address']->city }},
+                                {{ @$cartData['user_address']->state }},
+                                {{ @$cartData['user_address']->country_name }}
+                                @endisset
                             </div>
-                            <input type="hidden" id="deliveryAddressId" value="{{ $cartData['user_address']->id }}">
+                            <input type="hidden" id="deliveryAddressId" value="{{ @$cartData['user_address']->id }}">
 
                             <a href="{{ route('user.view_address', ['type' => 'cart']) }}" class="moreshop">
                                 Change <i class="bi bi-arrow-right"></i>
@@ -220,11 +224,11 @@
                             <div>Discount on MRP</div>
                             <div class="red-color">{{ $cartData['discount_on_mrp'] }} KD</div>
                         </div>
-                        <div class="giftinfo">
+                        <div class="giftinfo d-none" id="couponDiscountRow">
                             <div>Coupon Discount</div>
-                            <div class="red-color">{{ $cartData['discount_coupon'] }} KD</div>
+                            <div class="red-color" id="couponDiscountAmount">{{ $cartData['discount_coupon'] }} KD</div>
                         </div>
-                        <div class="giftinfo">
+                        <div class="giftinfo d-none" id="giftCardDiscountRow">
                             <div>Gift Card Discount</div>
                             <div class="red-color" id="giftCardDiscountAmount">0 KD</div>
                         </div>
@@ -688,18 +692,22 @@ function refreshDiscountUI() {
         $('#applyPromoText').text(savedPromo.promoCode + ' applied');
         $('#promoApplyLink').hide();
         $('#cancelPromoSection').removeClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Coupon Discount';
-            })
-            .find('div').last().text(savedPromo.discountValue + ' KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Coupon Discount';
+        //     })
+        //     .find('div').last().text(savedPromo.discountValue + ' KD');
+        $('#couponDiscountAmount').text(savedPromo.discountValue + ' KD');
+        $('#couponDiscountRow').removeClass('d-none');
     } else {
         $('#applyPromoText').text('Apply PromoCode');
         $('#promoApplyLink').show();
         $('#cancelPromoSection').addClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Coupon Discount';
-            })
-            .find('div').last().text('0 KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Coupon Discount';
+        //     })
+        //     .find('div').last().text('0 KD');
+        $('#couponDiscountRow').addClass('d-none');
+        $('#couponDiscountAmount').text('0 KD');
     }
 
     // Update Gift Card
@@ -707,18 +715,23 @@ function refreshDiscountUI() {
         $('#applyGiftCardText').text('Gift Card Applied');
         $('#applyGiftCardBtn').hide();
         $('#cancelGiftCardBtn').removeClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Gift Card Discount';
-            })
-            .find('div').last().text(savedGiftCard.giftCardAmount.toFixed(2) + ' KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Gift Card Discount';
+        //     })
+        //     .find('div').last().text(savedGiftCard.giftCardAmount.toFixed(2) + ' KD');
+        $('#giftCardDiscountAmount')
+            .text(formatKD(savedGiftCard.giftCardAmount));
+        $('#giftCardDiscountRow').removeClass('d-none');
     } else {
         $('#applyGiftCardText').text('Have a Gift Card');
         $('#applyGiftCardBtn').show();
         $('#cancelGiftCardBtn').addClass('d-none');
-        $('.giftinfo').filter(function() {
-                return $(this).find('div').first().text().trim() === 'Gift Card Discount';
-            })
-            .find('div').last().text('0 KD');
+        // $('.giftinfo').filter(function() {
+        //         return $(this).find('div').first().text().trim() === 'Gift Card Discount';
+        //     })
+        //     .find('div').last().text('0 KD');
+        $('#giftCardDiscountRow').addClass('d-none');
+        $('#giftCardDiscountAmount').text('0 KD');
     }
 
     // Recalculate Total Amount
@@ -750,6 +763,20 @@ function refreshDiscountUI() {
 }
 </script>
 
+<script>
+function formatKD(amount) {
+    amount = parseFloat(amount) || 0;
+
+    // If decimal part is .00 → show integer
+    if (amount % 1 === 0) {
+        return amount.toFixed(0) + ' KD';
+    }
+
+    // Otherwise show 2 decimals
+    return amount.toFixed(2) + ' KD';
+}
+</script>
+
 
 <script>
 $(document).ready(function() {
@@ -760,6 +787,16 @@ $(document).ready(function() {
         var paymentMethod = $('input[name="payment_method"]:checked').val();
 
         var deliveryAddressId = document.getElementById('deliveryAddressId').value;
+
+        if (deliveryAddressId.length == 0) {
+            console.log("delivery Address check");
+
+            toastr.error("delivery Address is required");
+            return false;
+
+
+        }
+
         // Get localStorage data
         var promoData = JSON.parse(localStorage.getItem('appliedPromo') || '{}');
         var giftCardData = JSON.parse(localStorage.getItem('appliedGiftCard') || '{}');

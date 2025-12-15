@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Admin\DashboardController;
@@ -135,4 +136,14 @@ Route::group(['prefix'=>'admin'], function(){
 
     });
 
+});
+
+Route::fallback(function (Request $request) {
+    $uri = $request->getRequestUri();
+
+    if (str_starts_with($uri, '/Admin') || preg_match('/\/[A-Z]/', $uri)) {
+        return redirect(strtolower($uri), 301);
+    }
+
+    abort(404);
 });
