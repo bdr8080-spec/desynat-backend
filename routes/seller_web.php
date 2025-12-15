@@ -139,7 +139,7 @@ Route::fallback(function () {
 Route::fallback(function (Request $request) {
     $uri = $request->getRequestUri();
 
-    if (str_starts_with($uri, '/Admin') || preg_match('/\/[A-Z]/', $uri)) {
+    if (str_starts_with($uri, '/Seller') || preg_match('/\/[A-Z]/', $uri)) {
         return redirect(strtolower($uri), 301);
     }
 
