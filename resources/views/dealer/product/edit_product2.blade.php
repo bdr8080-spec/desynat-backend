@@ -852,8 +852,7 @@ $product_Variation_inside_count = 0;
                                     <label>Affiliated product commision</label>
                                 </div>
                                 <input type="number" class="form-control" placeholder="Eg.0 to 100"
-                                    name="affiliated_commission" max="100" min="0"
-                                    value="{{ $product_details->affiliated_commission }}">
+                                    name="affiliated_commission" max="100" min="0" value="10">
                                 <p class="text-danger" id="error-affiliated_commission"></p>
 
                             </div>
