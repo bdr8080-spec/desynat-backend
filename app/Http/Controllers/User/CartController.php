@@ -22,7 +22,10 @@ class CartController extends Controller
     }
 
     public function view_cart(Request $request){
-        $user = auth()->user();  
+        // $user = auth()->user();  
+
+         $user=  $request->user();
+
         $data = (object)[
             'user_id' => $user->id,
         ];
@@ -128,7 +131,7 @@ class CartController extends Controller
         //dd($request->all());
 
         try {
-            $user = auth()->user();
+              $user=  $request->user();
             $userId = $user->id; 
 
             $request_data = (object)[
