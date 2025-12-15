@@ -14,7 +14,7 @@
     background: linear-gradient(180.99deg, #dfbf8fa8 -53.71%, #cba97c61 154.28%);
 }
 .add-fillbtn{
-    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+    background: var(--all-btn-bg);
     line-height: 35px;
     color: #fff;
 }
@@ -186,7 +186,8 @@
 
 .tabs-panel .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-    background: var(--tab-active-bg);
+    /* background: var(--tab-active-bg); */
+    background: var(--all-btn-bg);
 }
 
 .dt-column-title {
