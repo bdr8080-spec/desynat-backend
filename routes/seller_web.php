@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Seller\LoginController;
 use App\Http\Controllers\Seller\WebSellerDashboard;
@@ -133,4 +134,14 @@ route::Match(['get','post'],'/Add-product-2', function(){
 Route::fallback(function () {
 
     return view('404');
+});
+
+Route::fallback(function (Request $request) {
+    $uri = $request->getRequestUri();
+
+    if (str_starts_with($uri, '/Admin') || preg_match('/\/[A-Z]/', $uri)) {
+        return redirect(strtolower($uri), 301);
+    }
+
+    abort(404);
 });

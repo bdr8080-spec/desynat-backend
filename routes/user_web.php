@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserStoreController;
@@ -143,3 +144,13 @@ Route::match(['get', 'post'], '/order-place', function () {
 //  Route::match(['get', 'post'], '/route6', function () {
 //      return view('user.profile.profileChangeEmailOtp');
 // });
+
+Route::fallback(function (Request $request) {
+    $uri = $request->getRequestUri();
+
+    if (str_starts_with($uri, '/Admin') || preg_match('/\/[A-Z]/', $uri)) {
+        return redirect(strtolower($uri), 301);
+    }
+
+    abort(404);
+});
