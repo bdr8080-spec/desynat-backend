@@ -205,7 +205,7 @@
                         <div class="left-action w-50">
 
                             <!-- ADD TO BAG -->
-                            <button class="customBtn2 w-100" id="addToBagBtn">Add to Bag</button>
+                            <button class="customBtn2 w-100 addToBagBtnRemove" id="addToBagBtn">Add to Bag</button>
 
                             <!-- QUANTITY BOX -->
                             <div class="quantity-box">
@@ -831,6 +831,9 @@ document.addEventListener("DOMContentLoaded", function() {
             addToBagBtn.style.display = "none";
 
             setQty(cartItem.quantity);
+
+            console.log(cartItem);
+
             firstClick = false;
         } else {
             quantityBox.style.setProperty("display", "none", "important");
@@ -965,8 +968,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 AddAndBuyButtonHideAndShowCode() // Add to Cart and size Button
 
+
+
             });
+
+
         });
+
+
+
     }
 
     // ------------------------------
@@ -1152,10 +1162,10 @@ function AddAndBuyButtonHideAndShowCode() {
 
         if (stock <= 0) {
 
-            $('#addToBagBtn').hide();
+            $('.addToBagBtnRemove').hide();
             $('#buyNowBtn').hide();
         } else {
-            $('#addToBagBtn').show();
+            // $('.addToBagBtnRemove').show();
             $('#buyNowBtn').show();
 
         }
