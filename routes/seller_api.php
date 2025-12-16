@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Seller\AuthController;
 use App\Http\Controllers\Api\Seller\SellerDashboardController;
 
 use App\Http\Controllers\Api\Seller\SellerProductController;
+use App\Http\Controllers\Api\Seller\SellerBannerController;
 
 
 use App\Http\Controllers\CommonController;
@@ -82,6 +83,17 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     
     Route::post('/update-store-information', [SellerProductController::class,'update_store_information']);
     Route::post('/update-store-bank-details', [SellerProductController::class,'update_store_bank_details']);
+
+
+    // M5 Apis
+
+    Route::post('/add-banner', [SellerBannerController::class,'Add_Banner']);
+
+    Route::post('/complete-banner-payment', [SellerBannerController::class,'complete_banner_payment']);
+
+    Route::post('/all-banners', [SellerBannerController::class,'all_banners']);
+
+
     
 });
 
