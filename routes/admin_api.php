@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\Admin\GiftCardController;
 use App\Http\Controllers\Api\Admin\BannerController;
 use App\Http\Controllers\Api\Admin\PromocodeController;
 use App\Http\Controllers\Api\Admin\AffiliateCommissionController;
+use App\Http\Controllers\Api\Admin\OrderManagementController;
 
 
 // Admin APi M1
@@ -148,6 +149,13 @@ Route::group(['prefix' => 'admin'], function () {
      //affiliate commission management
      Route::post('/update_affiliate_commission',[AffiliateCommissionController::class,'update_affiliate_commission']);
      Route::get('/countries_with_affiliate_commission',[AffiliateCommissionController::class,'countries_with_affiliate_commission']);
+
+     //order management
+     Route::get('/active_orders',[OrderManagementController::class,'active_orders']);
+     Route::get('/return_orders',[OrderManagementController::class,'return_orders']);
+     Route::get('/completed_orders',[OrderManagementController::class,'completed_orders']);
+     Route::get('/cancelled_orders',[OrderManagementController::class,'cancelled_orders']);
+     Route::get('/single_order_detail',[OrderManagementController::class,'single_order_detail']);
 
 
 
