@@ -120,6 +120,12 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
+Route::match(['get', 'post'], '/myorder', function () {
+     return view('user.orders.my-order');
+
+})->name('user.myorder');
+
+
 // Route::match(['get', 'post'], '/view-cart', function () {
 
 //      return view('user.carts.cartlist');

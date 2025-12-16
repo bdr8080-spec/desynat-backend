@@ -130,6 +130,11 @@ route::Match(['get','post'],'/Add-product-2', function(){
     return view('dealer.product.Add_product_2');
 });
 
+route::Match(['get','post'],'/banner-management', function(){
+    return view('dealer.bannermgt.banner');
+});
+
+
 
 Route::fallback(function () {
 
