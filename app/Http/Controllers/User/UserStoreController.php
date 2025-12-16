@@ -198,19 +198,23 @@ class UserStoreController extends Controller
 
         $product_variants = [];
 
- foreach ($data->product_variants as $item) {
+ foreach ($data->product_variants as $key=>$item) {
 
     $colorKey = $item->color->name;
     $colorHex = $item->color->hex_code;
 
     if (isset($product_variants[$colorHex])) {  // <-- FIXED HERE
-
-        if (is_array($item->variant_image)) {
-            $product_variants[$colorHex]['variant_image'] = array_merge(
+           
+        if($key==0){
+    
+        if (is_array($item->variant_image)) {      
+            $product_variants[$colorHex]['variant_image'] =
+             array_merge(
                 $product_variants[$colorHex]['variant_image'],
                 $item->variant_image
             );
         }
+    }
 
         if (!in_array($item->size->name, $product_variants[$colorHex]['sizes'])) {
             $product_variants[$colorHex]['sizes'][] = $item->size->name;
@@ -232,6 +236,8 @@ class UserStoreController extends Controller
         ];
     }
 }
+
+
 
 $productVariantsById = [];
 foreach ($data->product_variants as $item) {
@@ -267,8 +273,6 @@ foreach ($data->product_variants as $item) {
             ->get() 
             ->keyBy('variants_id');
     }
-
-   // dd($cartData);
 
 
 
