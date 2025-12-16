@@ -2296,3 +2296,38 @@ width: fit-content;
 .small-14{
     font-size: 12px;
 }
+
+/* order tabs */
+
+.tabs-panel #pills-tab {
+    border: 1px solid #ac875e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.tabs-panel .nav-link {
+    line-height: 38px;
+    border-right: 1px solid #b9946b;
+    color: #000;
+    border-radius: 0px;
+    font-size: 20px;
+}
+.tabs-panel .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background: var(--gradient-color3);
+}
+.order-images{
+    height: 160px;
+    width: 160px;
+}
+.expert-date {
+    background: #16B3641A;
+    color: #17854C;
+    text-align: center;
+    padding: 7px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+.bottom-pd{
+    padding-bottom: 30px;
+}

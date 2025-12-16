@@ -125,6 +125,11 @@ Route::match(['get', 'post'], '/myorder', function () {
 
 })->name('user.myorder');
 
+Route::match(['get', 'post'], '/order_details', function () {
+     return view('user.orders.order-details');
+
+})->name('user.order_details');
+
 
 // Route::match(['get', 'post'], '/view-cart', function () {
 
