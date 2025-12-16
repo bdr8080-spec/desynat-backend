@@ -545,6 +545,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
 
     $checkOrder=Order::with(
+        'promocode_details',
+        'giftCard_details',
         'delivery_details',
         'order_details.product_details.brand',
         'order_details.product_details.category',
