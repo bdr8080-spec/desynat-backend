@@ -88,9 +88,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     // M5 Apis
 
     Route::post('/add-banner', [SellerBannerController::class,'Add_Banner']);
-
     Route::post('/complete-banner-payment', [SellerBannerController::class,'complete_banner_payment']);
-
     Route::post('/all-banners', [SellerBannerController::class,'all_banners']);
 
 
