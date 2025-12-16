@@ -41,7 +41,7 @@
             <li>
                 <a class="dropdown-item d-flex align-items-center gap-3 logout-item" href="{{route('adminLogout')}}">
                     <img src="/admin/image/logout-profile.svg">
-                    <span class="text-red">Sign Out</span>
+                    <span class="text-red">LogOut</span>
                 </a>
             </li>
         </ul>

@@ -78,11 +78,11 @@
             Promo Code Management
         </a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
             <span><img src="{{ asset('admin/image/logout.svg') }}" alt="Logout" /></span>
             Logout
         </a>
-    </li>
+    </li> -->
 </ul>
 

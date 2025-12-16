@@ -2306,3 +2306,8 @@ header,
   right: 0;
   z-index: 9999;
 }
+
+.dropdown-menu {
+ 
+--bs-dropdown-link-active-bg: #eef0f3 !important;
+} 
