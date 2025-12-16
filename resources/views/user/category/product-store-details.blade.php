@@ -859,20 +859,29 @@ document.addEventListener("DOMContentLoaded", function() {
     // ------------------------------
     // COLOR CLICK HANDLER
     // ------------------------------
-    document.querySelectorAll(".choose-color").forEach((colorBox, index) => {
+
+    const activeProduct = JSON.parse(localStorage.getItem("activeSingleProduct"));
+    const savedColor = activeProduct?.ColorCode || null;
+    const savedSize = activeProduct?.SizeCode || null;
+
+    const colorBoxes = document.querySelectorAll(".choose-color");
+
+    colorBoxes.forEach((colorBox, index) => {
+
         colorBox.addEventListener("click", function() {
             const colorHex = this.dataset.color;
 
-            // Highlight active color
-            document.querySelectorAll(".choose-color").forEach(c => c.classList.remove(
-                "active"));
+            // Remove active from all
+            colorBoxes.forEach(c => c.classList.remove("active"));
+
+            // Add active to clicked
             this.classList.add("active");
 
-            const variant = Object.values(productVariantsByColor).find(v => v.color_hex ===
-                colorHex);
+            const variant = Object.values(productVariantsByColor)
+                .find(v => v.color_hex === colorHex);
             if (!variant) return;
 
-            // Update price using first variant for this color
+            // Update prices
             document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
             document.getElementById("finalPrice").innerText = variant.final_price + " KD";
 
@@ -881,25 +890,27 @@ document.addEventListener("DOMContentLoaded", function() {
             sizeContainer.innerHTML = "";
 
             variant.sizes.forEach(size => {
-                // Find the correct variant_id for this color & size
-                const variantForSize = Object.values(productVariantsById).find(v => v
-                    .color_hex === colorHex && v.size === size);
+                const variantForSize = Object.values(productVariantsById)
+                    .find(v => v.color_hex === colorHex && v.size === size);
+
                 sizeContainer.innerHTML += `
-                    <button class="size-btn"
-                        data-size="${size}"
-                        data-variant-id="${variantForSize.variant_id}"
-                        data-product-id="${variantForSize.product_id}"
-                        data-stock-id="${variantForSize.total_stock}"
-                        >
-                        ${size}
-                    </button>
-                `;
+                <button class="size-btn"
+                    data-size="${size}"
+                    data-variant-id="${variantForSize.variant_id}"
+                    data-product-id="${variantForSize.product_id}"
+                    data-stock-id="${variantForSize.total_stock}">
+                    ${size}
+                </button>
+            `;
             });
 
-            attachSizeClickEvents(); // attach event to newly created size buttons
+            attachSizeClickEvents();
 
             // Update images
             const images = variant.variant_image;
+
+            console.log(images);
+
             const carouselIndicators = document.querySelector(".carousel-indicators");
             const carouselInner = document.querySelector(".carousel-inner");
 
@@ -908,76 +919,160 @@ document.addEventListener("DOMContentLoaded", function() {
 
             images.forEach((img, idx) => {
                 carouselIndicators.innerHTML += `
-                    <button type="button"
-                        data-bs-target="#carouselExampleCaptions"
-                        data-bs-slide-to="${idx}"
-                        class="${idx === 0 ? 'active' : ''}">
-                        <div class="product_slide_img">
-                            <img src="${img}" class="img-fluid"/>
-                        </div>
-                    </button>
-                `;
+                <button type="button"
+                    data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide-to="${idx}"
+                    class="${idx === 0 ? 'active' : ''}">
+                    <div class="product_slide_img">
+                        <img src="${img}" class="img-fluid"/>
+                    </div>
+                </button>
+            `;
 
                 carouselInner.innerHTML += `
-                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
-                        ${idx === 0 ? wishlistHTML : ''}
-                        <div class="carousel_item_img">
-                            <img src="${img}" class="img-fluid">
-                        </div>
+                <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                    ${idx === 0 ? wishlistHTML : ''}
+                    <div class="carousel_item_img">
+                        <img src="${img}" class="img-fluid">
                     </div>
-                `;
+                </div>
+            `;
             });
 
             // Auto-select first size
-            const firstSizeButton = document.querySelector(".size-btn");
-            if (firstSizeButton) firstSizeButton.click();
+            document.querySelector(".size-btn")?.click();
         });
 
-        if (index === 0) colorBox.click(); // auto-click first color
+        // 🔥 AUTO-SELECT COLOR FROM LOCALSTORAGE
+        if (savedColor && colorBox.dataset.color === savedColor) {
+            colorBox.click();
+        }
     });
+
+    // Fallback: click first color if no saved color
+    if (!savedColor && colorBoxes.length) {
+        colorBoxes[0].click();
+    }
+
+
 
     // ------------------------------
     // SIZE CLICK HANDLER
     // ------------------------------
+    // function attachSizeClickEvents() {
+    //     const sizeButtons = document.querySelectorAll(".size-btn");
+    //     const hiddenInputVariant = document.getElementById("variantId");
+    //     const hiddenInputProduct = document.getElementById("productId");
+
+    //     var single_Active_product = JSON.parse(localStorage.getItem('activeSingleProduct'));
+
+    //     sizeButtons.forEach(button => {
+
+
+    //         button.addEventListener("click", function() {
+    //             sizeButtons.forEach(btn => {
+    //                 btn.classList.remove("active");
+    //                 btn.style.background = "";
+    //             });
+
+
+    //             this.classList.add("active");
+    //             this.style.background = "#FAEBD7";
+
+    //             const variantId = this.dataset.variantId;
+    //             const variant = productVariantsById[variantId];
+
+    //             hiddenInputVariant.value = variant.variant_id;
+    //             hiddenInputProduct.value = variant.product_id;
+
+    //             // Update price correctly for selected size
+    //             document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
+    //             document.getElementById("finalPrice").innerText = variant.final_price + " KD";
+
+    //             updateCartUIForVariant(variantId);
+
+
+    //             // get Saved button data Active Button 
+    //             var getSavedSize = button.getAttribute('data-size');
+
+    //             console.log(getSavedSize)
+
+    //             if (getSavedSize == single_Active_product.SizeCode) {
+
+    //                 console.log(getSavedSize + '-mm---');
+
+    //                 this.classList.add("active");
+    //                 this.style.background = "#FAEBD7";
+    //             }
+
+
+
+    //             AddAndBuyButtonHideAndShowCode() // Add to Cart and size Button
+
+
+    //         });
+
+    //         console.log("33");
+
+    //     });
+
+    // }
+
+
     function attachSizeClickEvents() {
         const sizeButtons = document.querySelectorAll(".size-btn");
         const hiddenInputVariant = document.getElementById("variantId");
         const hiddenInputProduct = document.getElementById("productId");
 
+        var single_Active_product = JSON.parse(localStorage.getItem('activeSingleProduct'));
+        var savedSizeCode = single_Active_product?.SizeCode;
+
+        console.log(savedSizeCode + "save size");
+
         sizeButtons.forEach(button => {
+
+            // 🔹 Click handler
             button.addEventListener("click", function() {
-                sizeButtons.forEach(btn => {
-                    btn.classList.remove("active");
-                    btn.style.background = "";
-                });
-
-                this.classList.add("active");
-                this.style.background = "#FAEBD7";
-
-                const variantId = this.dataset.variantId;
-                const variant = productVariantsById[variantId];
-
-                hiddenInputVariant.value = variant.variant_id;
-                hiddenInputProduct.value = variant.product_id;
-
-                // Update price correctly for selected size
-                document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
-                document.getElementById("finalPrice").innerText = variant.final_price + " KD";
-
-                updateCartUIForVariant(variantId);
-
-                AddAndBuyButtonHideAndShowCode() // Add to Cart and size Button
-
-
-
+                activateSize(this);
             });
+            // 🔹 Auto-activate saved size
+            if (savedSizeCode && button.dataset.size === savedSizeCode) {
+                activateSize(button);
+            }
+
+        });
+    }
 
 
+    function activateSize(button) {
+        const sizeButtons = document.querySelectorAll(".size-btn");
+
+        sizeButtons.forEach(btn => {
+            btn.classList.remove("active");
+            btn.style.background = "";
         });
 
 
+        var single_Active_product = JSON.parse(localStorage.getItem('activeSingleProduct'));
+        var savedSizeCode = single_Active_product?.SizeCode;
 
+
+        button.classList.add("active");
+        button.style.background = "#FAEBD7";
+
+        const variantId = button.dataset.variantId;
+        const variant = productVariantsById[variantId];
+
+        document.getElementById("variantId").value = variant.variant_id;
+        document.getElementById("productId").value = variant.product_id;
+
+        document.getElementById("actualPrice").innerText = variant.actual_price + " KD";
+        document.getElementById("finalPrice").innerText = variant.final_price + " KD";
+
+        updateCartUIForVariant(variantId);
+        AddAndBuyButtonHideAndShowCode();
     }
+
 
     // ------------------------------
     // ADD TO BAG CLICK
@@ -1033,6 +1128,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (quantityBox.style.getPropertyValue("display") !== "block") return;
 
         let qty = getQty();
+
 
         if (qty === 1) {
             quantityBox.style.setProperty("display", "none", "important");
@@ -1152,6 +1248,7 @@ document.addEventListener("DOMContentLoaded", function() {
 // Get the active button
 function AddAndBuyButtonHideAndShowCode() {
 
+    const activeColor = document.querySelector('.color-box.active');
     const activeBtn = document.querySelector('.size-btn.active');
 
     if (activeBtn) {
@@ -1159,6 +1256,20 @@ function AddAndBuyButtonHideAndShowCode() {
         const size = activeBtn.getAttribute('data-size');
         const stock = activeBtn.getAttribute('data-stock-id');
         console.log("Active size:", size, "Stock:", stock);
+
+
+        // // Active Color Code Set Data In LocalStorage 
+        const ColorCode = activeColor.getAttribute('data-color');
+
+        const Singleactiveproduct = {
+            ColorCode: ColorCode,
+            SizeCode: size,
+        };
+
+        localStorage.setItem('activeSingleProduct', JSON.stringify(Singleactiveproduct));
+
+        // Active Color Code Set Data In LocalStorage  Codeend Here 
+
 
         if (stock <= 0) {
 
@@ -1170,11 +1281,127 @@ function AddAndBuyButtonHideAndShowCode() {
 
         }
 
+        // ActiveButtonofLocalStorage();
+
 
 
     } else {
         console.log("No size selected yet");
     }
+
+}
+
+
+// Active Button From LocalStorage Data 
+
+function ActiveButtonofLocalStorage() {
+
+    console.log("ActiveButtonofLocalStorage called");
+
+
+    var single_Active_product = JSON.parse(localStorage.getItem('activeSingleProduct'));
+
+    if (single_Active_product) {
+
+        // get All Color and size Inside product  
+        // var ColorButtons = document.querySelectorAll(".color-box");
+
+        // ColorButtons.forEach(button => {
+        //     // button.addEventListener("click", function() {
+        //     // remove All Size Button Data
+        //     ColorButtons.forEach(btn => {
+        //         btn.classList.remove("active");
+        //         // btn.style.background = "";
+        //     });
+        //     // });
+
+        //     var getColor = button.getAttribute('data-color');
+
+        //     if (getColor == single_Active_product.ColorCode) {
+        //         button.classList.add('active');
+        //     }
+        // });
+
+
+        var sizeButtons = document.querySelectorAll(".size-btn");
+
+        // sizeButtons.forEach(button => {
+        //     button.addEventListener("click", function() {
+        //         // remove All Size Button Data
+        //         sizeButtons.forEach(btn => {
+        //             btn.classList.remove("active");
+        //             btn.style.background = "";
+        //         });
+        //     });
+
+        // //     console.log(single_Active_product.SizeCode + "----");
+
+        //     var getSize = button.getAttribute('data-size');
+
+        //     if (getSize == single_Active_product.SizeCode) {
+        //         button.classList.add('active');
+        //     }
+        // });
+
+        // Store Data in Local Storage 
+
+        var activeColor = document.querySelector('.color-box.active');
+        var activeBtn = document.querySelector('.size-btn.active');
+
+        if (activeBtn) {
+            //     // Access data attributes
+            var size = activeBtn.getAttribute('data-size');
+            var stock = activeBtn.getAttribute('data-stock-id');
+            console.log("Active size:", size, "Stock:", stock);
+
+            //     // Active Color Code Set Data In LocalStorage 
+            const ColorCode = activeColor.getAttribute('data-color');
+
+            const Singleactiveproduct = {
+                ColorCode: ColorCode,
+                SizeCode: size,
+            };
+
+            localStorage.setItem('activeSingleProduct', JSON.stringify(Singleactiveproduct));
+
+        }
+
+        // store data in Local Store end here 
+
+
+
+
+        // get All size and color End here 
+
+    } else {
+
+
+        var activeColor = document.querySelector('.color-box.active');
+        var activeBtn = document.querySelector('.size-btn.active');
+
+        if (activeBtn) {
+            //     // Access data attributes
+            var size = activeBtn.getAttribute('data-size');
+            var stock = activeBtn.getAttribute('data-stock-id');
+            console.log("Active size:", size, "Stock:", stock);
+
+            //     // Active Color Code Set Data In LocalStorage 
+            const ColorCode = activeColor.getAttribute('data-color');
+
+            const Singleactiveproduct = {
+                ColorCode: ColorCode,
+                SizeCode: size,
+            };
+
+            localStorage.setItem('activeSingleProduct', JSON.stringify(Singleactiveproduct));
+
+        }
+
+
+    }
+
+
+
 
 }
 </script>
