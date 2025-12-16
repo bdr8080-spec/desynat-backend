@@ -134,6 +134,10 @@ route::Match(['get','post'],'/banner-management', function(){
     return view('dealer.bannermgt.banner');
 });
 
+route::Match(['get','post'],'/banner-details', function(){
+    return view('dealer.bannermgt.banner-details');
+});
+
 
 
 Route::fallback(function () {
