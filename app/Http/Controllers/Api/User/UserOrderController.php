@@ -378,6 +378,40 @@ class UserOrderController extends Controller
 
         }
 
+        
+
+
+
+
+public function cancelled_single_product(Request $request){
+
+    $user_id= $request->user()->id;
+
+    $validate = Validator::make($request->all(), [
+        'order_id'=>'required|exists:orders,id',
+              
+        ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $request_data=(object) [
+    'user_id'=>$user_id,
+    "order_id"=>$request->order_id
+    ];
+
+    $data=$this->UserOrderService->cancelledSingleProduct($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
+}
+
 
 
 
@@ -408,10 +442,42 @@ public function get_reject_reason(Request $request){
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
 
-
-
 }
 
+
+public function return_product_after_delivered(Request $request){
+
+    $user_id= $request->user()->id;
+
+    $validate = Validator::make($request->all(), [
+        'order_id'=>'required|exists:orders,id',
+        'orderdetails_id'=>'required|exists:orderdetails,id',
+        "return_reason" =>"required"
+              
+        ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    $request_data=(object) [
+    'user_id'=>$user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+    "return_reason"=>$request->return_reason,
+    "return_image"=>$request->return_image??null    
+    ];
+
+    $data=$this->UserOrderService->returnProductAfterdelivery($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
+}
 
 
 

@@ -11,6 +11,8 @@ use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
 
 use DB;
 
+use Carbon\Carbon;
+
 class UserOrderService
 {
 
@@ -624,6 +626,50 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     }
 
+    
+
+
+
+ public function cancelledSingleProduct($request){
+
+    try{
+
+    $checkOrder=Order::where('id',$request->order_id)->first();
+
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order id Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+
+    // check delivery status
+    if($checkOrder->delivery_status!=='1'){
+       return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
+    }
+
+    // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
+    if($checkOrder->payment_method=='3'){
+    $checkOrder->update(['payment_method'=>'2']);    
+    }else{
+    $checkOrder->update(['payment_method'=>'3']);
+    }
+    
+
+    return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
 
     
 
@@ -649,6 +695,76 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     
     }
+
+
+
+ public function returnProductAfterdelivery($request){
+
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+    // check order is Alredy in return and exchange state 
+
+     if($checkOrder->return_type!=='0'){
+       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+     }
+     
+    
+    // check delivery status
+    if($checkOrder->order_details->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+    
+    if($checkOrder->product_details->product_return=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product Return days Availbility
+
+    if($checkOrder->product_details->product_return=='1'){
+    
+    $return_days= intVal($checkOrder->product_details->return_days);
+
+    $productOrderDate = $checkOrder->product_details->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product return Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'1','return_reason'=> $request->return_reason,'return_image'=>$request->return_image]);    
+
+    return ['status'=>'success','message'=>"Product return Request Send Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
 
 
 

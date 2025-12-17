@@ -114,8 +114,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/get-reject-reason', [UserOrderController::class,'get_reject_reason']);
 
+  // cancelled full order 
+  Route::post('/cancelled-single-product', [UserOrderController::class,'cancelled_single_product']);
 
-
+  Route::post('/return-product-after-delivered', [UserOrderController::class,'return_product_after_delivered']);
 
 
 });
