@@ -4,7 +4,7 @@ use App\Helpers\ApiResponse;
 use App\Models\User;
 
 
-use App\Models\{UserGiftCards,GiftCard,UserWallet};
+use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
@@ -612,6 +612,32 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         $userBalance->update(['amount'=>$balance]);
         
     }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+    
+
+ public function getRejectReasonDetails($request){
+
+    try{
+
+    $checkReason=Reason::where('type',$request->type)->get();
+
+    if($checkReason->isEmpty()){
+        return ['status'=>'error','message'=>"No Reason Found",'data'=>[]];
+    }
+
+    return ['status'=>'success','message'=>"reason fetch Successfully",'data'=>$checkReason];
     
     } catch (\Exception $e) {
         return [

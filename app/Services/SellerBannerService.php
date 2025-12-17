@@ -154,18 +154,17 @@ try{
 
     }
 
-$checkBanner=Banner::where('type',$request->type)->where('country_id',$country_id)->get();
-if($checkBanner->isEmpty()){
-    return ['status'=>'error','message'=>"No Price Found",'data'=>[]];
+    $checkBanner=Banner::where('type',$request->type)->where('country_id',$country_id)->get();
+    if($checkBanner->isEmpty()){
+        return ['status'=>'error','message'=>"No Price Found",'data'=>[]];
 
-}
+    }
 
  return [
             'status'  => 'success',
             'message' => "All Banner Price fetch Successfully",
             'data'    => $checkBanner
         ];
-
 
 
 }catch (\Exception $e) {

@@ -381,6 +381,39 @@ class UserOrderController extends Controller
 
 
 
+public function get_reject_reason(Request $request){
+
+    $user_id= $request->user()->id;
+
+    $validate = Validator::make($request->all(), [
+            'type' =>'required|in:1,2,3' // 	1 - exchange, 2 - return, 3 - cancel	
+            ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $request_data=(object) [
+    'user_id'=>$user_id,
+    "type"=>$request->type
+    ];
+
+
+    $data=$this->UserOrderService->getRejectReasonDetails($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
+
+
+}
+
+
+
 
 
 }
