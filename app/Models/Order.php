@@ -26,6 +26,19 @@ class Order extends Model
 
     }
     
+       public function promocode_details(){
+        
+        return $this->hasOne(Promocode::class,'id','promocode_id');
+
+    }
+     public function giftCard_details(){
+        
+        return $this->hasOne(UserGiftCards::class,'id','giftcard_id');
+
+    }
+    
+
+
 
 
 }

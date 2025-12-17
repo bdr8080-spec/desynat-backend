@@ -16,8 +16,5 @@ class sellerBanner extends Model
        public function subcategory_details(){
        return $this->hasOne(SubCategory::class,'id','subcatgory');
        }
-
-
-       
        
 }
