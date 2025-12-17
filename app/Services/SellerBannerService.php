@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{User,sellerBanner};
+use App\Models\{User,sellerBanner,Banner,sellerStoreInformation};
 
 
 class SellerBannerService
@@ -127,6 +127,42 @@ $checkBanner=$checkBanner->get();
  return [
             'status'  => 'success',
             'message' => "All Bannner fetch Successfully",
+            'data'    => $checkBanner
+        ];
+
+
+
+}catch (\Exception $e) {
+    return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+    }
+}
+
+
+
+
+public function BannerPriceDetails($request){
+
+try{
+
+
+   $store_details= sellerStoreInformation::where('seller_id',$request->seller_id)->first();
+
+    if($store_details){
+        $country_id=$store_details->country;
+    }else{
+        return ['status'=>'error','message'=>"Seller Store information Not Found",'data'=>[]];
+
+    }
+
+$checkBanner=Banner::where('type',$request->type)->where('country_id',$country_id)->get();
+if($checkBanner->isEmpty()){
+    return ['status'=>'error','message'=>"No Price Found",'data'=>[]];
+
+}
+
+ return [
+            'status'  => 'success',
+            'message' => "All Banner Price fetch Successfully",
             'data'    => $checkBanner
         ];
 

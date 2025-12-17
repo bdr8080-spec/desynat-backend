@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\sellerBanner;
+use App\Models\{sellerBanner,Banner};
 
 use App\Helpers\ApiResponse;
 
@@ -115,6 +115,40 @@ public function all_banners(Request $request){
     
 
      }
+
+
+public function seller_banner_price(Request $request){
+
+      $seller_details=$request->user()->id;
+
+    $validate = Validator::make($request->all(), [
+            // 'country_id'=>"required|exists:countries,id", // 0 Personal 1 Busness
+            'type' =>'required|in:1,2,3'
+            ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $request_data=(object) [
+    'seller_id'=>$seller_details,
+    'country_id'=>$request->country_id??null,
+    "type"=>$request->type
+    ];
+
+
+    $data=$this->SellerBannerService->BannerPriceDetails($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
+
+
+}
 
 
 
