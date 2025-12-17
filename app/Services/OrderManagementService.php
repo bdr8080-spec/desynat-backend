@@ -29,7 +29,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->whereIn('delivery_status', ['1', '2'])
             ->where(function ($query) {
@@ -89,7 +90,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('delivery_status', '5')
             ->where(function ($query) {
@@ -148,7 +150,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('delivery_status', '3')
             ->where(function ($query) {
@@ -207,7 +210,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('delivery_status', '4')
             ->where(function ($query) {
@@ -265,7 +269,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('id', $request->id)->get();
 

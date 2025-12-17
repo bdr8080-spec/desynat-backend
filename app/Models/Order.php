@@ -36,6 +36,12 @@ class Order extends Model
         return $this->hasOne(UserGiftCards::class,'id','giftcard_id');
 
     }
+
+    public function driver_details(){
+        
+        return $this->hasOne(DeliveryBoy::class,'id','delivery_boy_id');
+
+    }
     
 
 
