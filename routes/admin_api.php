@@ -157,6 +157,9 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/cancelled_orders',[OrderManagementController::class,'cancelled_orders']);
      Route::get('/single_order_detail',[OrderManagementController::class,'single_order_detail']);
 
+     Route::get('/get_drivers_to_assign',[OrderManagementController::class,'get_drivers_to_assign']);
+     Route::post('/assign_driver',[OrderManagementController::class,'assign_driver']);
+
 
 
 
