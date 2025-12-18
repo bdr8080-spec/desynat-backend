@@ -15,7 +15,7 @@
                                 <i class="fas fa-angle-left"></i>
                             </a>
                         </div>
-                        <h6 class="m-0">SUBSCRIPTION PLAN </h6> 
+                        <h6 class="m-0">SUBSCRIPTION PLAN </h6>
                     </div>
                 </div>
 
@@ -105,8 +105,7 @@
                                                 <i class="bi bi-pencil-square"></i>
                                             </a> -->
                                             <a class="table-button" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#editModal"
-                                                data-plan-id="{{ $plan->id }}"
+                                                data-bs-target="#editModal" data-plan-id="{{ $plan->id }}"
                                                 data-english-name="{{ $plan->plan_name_english }}"
                                                 data-arabic-name="{{ $plan->plan_name_arabic }}"
                                                 data-duration="{{ $plan->duration }}"
@@ -122,10 +121,10 @@
                                                 data-stories="{{ $plan->stories }}"
                                                 data-commission="{{ $plan->commission }}"
                                                 data-commission-percentage="{{ $plan->commission_percentage }}">
-                                                    <i class="bi bi-pencil-square"></i>
+                                                <i class="bi bi-pencil-square"></i>
                                             </a>
 
-                                            <a href="javascript:void(0);" class="table-button text-danger deletePlan"
+                                            <a href="javascript:void(0);" class="table-button text-danger deletePlan mb-1 mt-1"
                                                 data-id="{{ $plan->id }}">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
@@ -166,12 +165,14 @@
                 <div class="appointment-container">
                     <form id="addPlanForm">
                         <div class="row">
-                            <input type="hidden" name="country_id" value="{{ request()->segment(3) }}" >
+                            <input type="hidden" name="country_id" value="{{ request()->segment(3) }}">
                             <!-- Plan Name English -->
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>Plan Name (English)</label>
-                                    <input type="text" name="plan_name_english" placeholder="Enter plan name in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control">
+                                    <input type="text" name="plan_name_english" placeholder="Enter plan name in English"
+                                        oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control">
                                     <span class="text-danger error-text plan_name_english_err"></span>
                                 </div>
                             </div>
@@ -180,7 +181,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>Plan Name (Arabic)</label>
-                                    <input type="text" name="plan_name_arabic" placeholder="Enter plan name in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control">
+                                    <input type="text" name="plan_name_arabic" placeholder="Enter plan name in Arabic"
+                                        oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
                                 </div>
                             </div>
@@ -191,7 +194,9 @@
                                     <label>Duration</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="duration" placeholder="Set duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
+                                            <input type="text" name="duration" placeholder="Set duration"
+                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                                maxlength="2" class="form-control">
                                             <span class="text-danger error-text duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
@@ -209,7 +214,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>No. of Videos</label>
-                                    <input type="text" name="no_of_videos" placeholder="Enter number of videos" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="3" class="form-control">
+                                    <input type="text" name="no_of_videos" placeholder="Enter number of videos"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_videos_err"></span>
                                 </div>
                             </div>
@@ -218,7 +225,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>No. of Products</label>
-                                    <input type="text" name="no_of_products" placeholder="Enter number of products" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="4" class="form-control">
+                                    <input type="text" name="no_of_products" placeholder="Enter number of products"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_products_err"></span>
                                 </div>
                             </div>
@@ -227,7 +236,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>No. of Highlights</label>
-                                    <input type="text" name="no_of_highlights" placeholder="Enter number of highlights" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="3" class="form-control">
+                                    <input type="text" name="no_of_highlights" placeholder="Enter number of highlights"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        maxlength="3" class="form-control">
                                     <span class="text-danger error-text no_of_highlights_err"></span>
                                 </div>
                             </div>
@@ -236,7 +247,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>No. of Employees</label>
-                                    <input type="text" name="no_of_employee" placeholder="Enter number of employees" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="4" class="form-control">
+                                    <input type="text" name="no_of_employee" placeholder="Enter number of employees"
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        maxlength="4" class="form-control">
                                     <span class="text-danger error-text no_of_employee_err"></span>
                                 </div>
                             </div>
@@ -245,7 +258,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>Plan Price</label>
-                                    <input type="text" name="price" placeholder="Enter Plan Price" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
+                                    <input type="text" name="price" placeholder="Enter Plan Price"
+                                        oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')"
+                                        class="form-control">
                                     <span class="text-danger error-text price_err"></span>
                                 </div>
                             </div>
@@ -256,11 +271,13 @@
                                     <label>Stories</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
-                                            <input type="radio" id="storiesYes" name="stories" value="yes" class="form-check-input me-2" checked>
+                                            <input type="radio" id="storiesYes" name="stories" value="yes"
+                                                class="form-check-input me-2" checked>
                                             <label for="storiesYes" class="form-check-label">Yes</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="storiesNo" name="stories" value="no" class="form-check-input me-2">
+                                            <input type="radio" id="storiesNo" name="stories" value="no"
+                                                class="form-check-input me-2">
                                             <label for="storiesNo" class="form-check-label">No</label>
                                         </div>
                                     </div>
@@ -274,11 +291,13 @@
                                     <label>Commission</label>
                                     <div class="row">
                                         <div class="col-lg-4 d-flex align-items-center">
-                                            <input type="radio" id="commissionYes" name="commission" value="yes" class="form-check-input me-2">
+                                            <input type="radio" id="commissionYes" name="commission" value="yes"
+                                                class="form-check-input me-2">
                                             <label for="commissionYes" class="form-check-label">Yes</label>
                                         </div>
                                         <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="commissionNo" name="commission" value="no" class="form-check-input me-2" checked>
+                                            <input type="radio" id="commissionNo" name="commission" value="no"
+                                                class="form-check-input me-2" checked>
                                             <label for="commissionNo" class="form-check-label">No</label>
                                         </div>
                                     </div>
@@ -287,9 +306,11 @@
                                     <!-- Commission Percentage -->
                                     <div id="commissionInput" style="display:none; margin-top:10px;">
                                         <div class="input-with-percent">
-                                        <input type="text" name="commission_percentage" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
-                          <span class="percent-symbol">%</span>
-                     </div>
+                                            <input type="text" name="commission_percentage"
+                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';"
+                                                placeholder="Enter commission percentage" class="form-control w-50">
+                                            <span class="percent-symbol">%</span>
+                                        </div>
 
                                         <span class="text-danger error-text commission_percentage_err"></span>
                                     </div>
@@ -328,7 +349,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>Plan Name (English)</label>
-                                    <input type="text" name="plan_name_english" value="" oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control">
+                                    <input type="text" name="plan_name_english" value=""
+                                        oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control">
                                     <span class="text-danger error-text plan_name_english_err"></span>
                                 </div>
                             </div>
@@ -337,7 +360,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group mb-3">
                                     <label>Plan Name (Arabic)</label>
-                                    <input type="text" name="plan_name_arabic" value="" oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control">
+                                    <input type="text" name="plan_name_arabic" value=""
+                                        oninput="this.value=this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"
+                                        class="form-control">
                                     <span class="text-danger error-text plan_name_arabic_err"></span>
                                 </div>
                             </div>
@@ -348,14 +373,16 @@
                                     <label>Duration</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="duration" value="" placeholder="Enter duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
+                                            <input type="text" name="duration" value="" placeholder="Enter duration"
+                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                                maxlength="2" class="form-control">
                                             <span class="text-danger error-text duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="duration_type" class="form-select">
                                                 <option value="">Select Duration</option>
-                                                <option value="1" >Months</option>
-                                                <option value="2" >Years</option>
+                                                <option value="1">Months</option>
+                                                <option value="2">Years</option>
                                             </select>
                                             <span class="text-danger error-text duration_type_err"></span>
                                         </div>
@@ -368,14 +395,17 @@
                                     <label>New Duration</label>
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            <input type="text" name="new_duration" value="" placeholder="Enter new duration" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" maxlength="2" class="form-control">
+                                            <input type="text" name="new_duration" value=""
+                                                placeholder="Enter new duration"
+                                                oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                                maxlength="2" class="form-control">
                                             <span class="text-danger error-text new_duration_err"></span>
                                         </div>
                                         <div class="col-lg-6">
                                             <select name="new_duration_type" class="form-select">
                                                 <option value="">Select New Duration</option>
-                                                <option value="1" >Months</option>
-                                                <option value="2" >Years</option>
+                                                <option value="1">Months</option>
+                                                <option value="2">Years</option>
                                             </select>
                                             <span class="text-danger error-text duration_type_err"></span>
                                         </div>
@@ -385,54 +415,66 @@
 
                             <!-- Numeric Fields -->
                             <div class="col-lg-6">
-                                 <div class="form-group mb-3">
-                                <label>No. of Videos</label>
-                                <input type="text" name="no_of_videos" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
-                                <span class="text-danger error-text no_of_videos_err"></span>
+                                <div class="form-group mb-3">
+                                    <label>No. of Videos</label>
+                                    <input type="text" name="no_of_videos" value=""
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        class="form-control">
+                                    <span class="text-danger error-text no_of_videos_err"></span>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
-                                 <div class="form-group mb-3">
-                                <label>No. of Products</label>
-                                <input type="text" name="no_of_products" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
-                                <span class="text-danger error-text no_of_products_err"></span>
-                                  </div>
-                          
+                                <div class="form-group mb-3">
+                                    <label>No. of Products</label>
+                                    <input type="text" name="no_of_products" value=""
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        class="form-control">
+                                    <span class="text-danger error-text no_of_products_err"></span>
+                                </div>
+
                             </div>
 
-                            
+
                             <div class="col-lg-6">
-                                 <div class="form-group mb-3">
-                                <label>No. of Highlights</label>
-                                <input type="text" name="no_of_highlights" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
-                                <span class="text-danger error-text no_of_highlights_err"></span>
-                               </div>
+                                <div class="form-group mb-3">
+                                    <label>No. of Highlights</label>
+                                    <input type="text" name="no_of_highlights" value=""
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        class="form-control">
+                                    <span class="text-danger error-text no_of_highlights_err"></span>
+                                </div>
                             </div>
 
                             <div class="col-lg-6">
-                                 <div class="form-group mb-3">
-                                <label>No. of Employees</label>
-                                <input type="text" name="no_of_employee" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')" class="form-control">
-                                <span class="text-danger error-text no_of_employee_err"></span>
-                            </div>
-                            
+                                <div class="form-group mb-3">
+                                    <label>No. of Employees</label>
+                                    <input type="text" name="no_of_employee" value=""
+                                        oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'')"
+                                        class="form-control">
+                                    <span class="text-danger error-text no_of_employee_err"></span>
+                                </div>
+
                             </div>
 
                             <!-- Charges -->
                             <div class="col-lg-6">
-                                 <div class="form-group mb-3">
-                                <label>Plan Price</label>
-                                <input type="text" name="price" value="" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
-                                <span class="text-danger error-text price_err"></span>
-                               </div>
+                                <div class="form-group mb-3">
+                                    <label>Plan Price</label>
+                                    <input type="text" name="price" value=""
+                                        oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')"
+                                        class="form-control">
+                                    <span class="text-danger error-text price_err"></span>
+                                </div>
                             </div>
                             <div class="col-lg-6">
-                                 <div class="form-group mb-3">
-                                <label>New Plan Price</label>
-                                <input type="text" name="discounted_price" value="" oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')" class="form-control">
-                                <span class="text-danger error-text price_err"></span>
-                               </div>
+                                <div class="form-group mb-3">
+                                    <label>New Plan Price</label>
+                                    <input type="text" name="discounted_price" value=""
+                                        oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1')"
+                                        class="form-control">
+                                    <span class="text-danger error-text price_err"></span>
+                                </div>
                             </div>
 
                             <!-- Stories -->
@@ -441,13 +483,11 @@
                                 <div class="row">
                                     <div class="col-lg-4 d-flex align-items-center">
                                         <input type="radio" name="stories" value="yes" style="
-    margin: 7px;"
- > Yes
+    margin: 7px;"> Yes
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
                                         <input type="radio" name="stories" value="no" style="
-    margin: 7px;"
-> No
+    margin: 7px;"> No
                                     </div>
                                 </div>
                                 <span class="text-danger error-text stories_err"></span>
@@ -458,23 +498,23 @@
                                 <label>Commission</label>
                                 <div class="row">
                                     <div class="col-lg-4 d-flex align-items-center">
-                                        <input type="radio" class="commissionRadio" name="commission" value="yes"style="
-    margin: 7px;"
- > Yes
+                                        <input type="radio" class="commissionRadio" name="commission" value="yes" style="
+    margin: 7px;"> Yes
                                     </div>
                                     <div class="col-lg-6 d-flex align-items-center">
                                         <input type="radio" class="commissionRadio" name="commission" value="no" style="
-    margin: 7px;"
-> No
+    margin: 7px;"> No
                                     </div>
                                 </div>
                                 <span class="text-danger error-text commission_err"></span>
 
                                 <div class="commissionInput" style="margin-top:10px;">
-                                <div class="input-with-percent">
-                                    <input type="text" name="commission_percentage" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';" placeholder="Enter commission percentage" class="form-control w-50">
-  <span class="percent-symbol">%</span>
-</div>
+                                    <div class="input-with-percent">
+                                        <input type="text" name="commission_percentage" value=""
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^0+/,'');if(parseInt(this.value)>100)this.value='100';"
+                                            placeholder="Enter commission percentage" class="form-control w-50">
+                                        <span class="percent-symbol">%</span>
+                                    </div>
 
                                     <span class="text-danger error-text commission_percentage_err"></span>
                                 </div>
@@ -588,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function() {
 $(document).ready(function() {
 
     $('input[name="commission"]').change(function() {
-        if($(this).val() === 'yes'){
+        if ($(this).val() === 'yes') {
             $('#commissionInput').show();
         } else {
             $('#commissionInput').hide();
@@ -602,9 +642,9 @@ $(document).ready(function() {
         $('.' + name + '_err').text('');
     });
 
-    $('#addPlanForm').submit(function(e){
+    $('#addPlanForm').submit(function(e) {
         e.preventDefault();
-        $('.error-text').text(''); 
+        $('.error-text').text('');
 
         let plan_name_english = $('input[name="plan_name_english"]').val().trim();
         let plan_name_arabic = $('input[name="plan_name_arabic"]').val().trim();
@@ -619,42 +659,91 @@ $(document).ready(function() {
         let commission = $('input[name="commission"]:checked').val();
         let commission_percentage = $('input[name="commission_percentage"]').val().trim();
         let country_id = $('input[name="country_id"]').val().trim();
- 
+
 
         let valid = true;
 
-        if(!plan_name_english){ $('.plan_name_english_err').text('Please Enter Plan Name (English)'); valid=false; }
-        if(!plan_name_arabic){ $('.plan_name_arabic_err').text('Please Enter Plan Name (Arabic)'); valid=false; }
-        if(!duration){ $('.duration_err').text('Please Enter Duration'); valid=false; }
-        if(!duration_type){ $('.duration_type_err').text('Please Select Duration Type'); valid=false; }
-        if(!no_of_videos){ $('.no_of_videos_err').text('Please Enter Number Of Videos'); valid=false; }
-        if(!no_of_products){ $('.no_of_products_err').text('Please Enter Number Of Products'); valid=false; }
-        if(!no_of_highlights){ $('.no_of_highlights_err').text('Please Enter Number Of Highlights'); valid=false; }
-        if(!no_of_employee){ $('.no_of_employee_err').text('Please Enter Number Of Employees'); valid=false; }
-        if(!stories){ $('.stories_err').text('Please Select Stories'); valid=false; }
-        if(!price){ $('.price_err').text('Please Enter Charges'); valid=false; }
-        if(!commission){ $('.commission_err').text('Please Select Commission'); valid=false; }
-        if(commission === 'yes' && !commission_percentage){ $('.commission_percentage_err').text('Please Enter Commission Percentage'); valid=false; }
+        if (!plan_name_english) {
+            $('.plan_name_english_err').text('Please Enter Plan Name (English)');
+            valid = false;
+        }
+        if (!plan_name_arabic) {
+            $('.plan_name_arabic_err').text('Please Enter Plan Name (Arabic)');
+            valid = false;
+        }
+        if (!duration) {
+            $('.duration_err').text('Please Enter Duration');
+            valid = false;
+        }
+        if (!duration_type) {
+            $('.duration_type_err').text('Please Select Duration Type');
+            valid = false;
+        }
+        if (!no_of_videos) {
+            $('.no_of_videos_err').text('Please Enter Number Of Videos');
+            valid = false;
+        }
+        if (!no_of_products) {
+            $('.no_of_products_err').text('Please Enter Number Of Products');
+            valid = false;
+        }
+        if (!no_of_highlights) {
+            $('.no_of_highlights_err').text('Please Enter Number Of Highlights');
+            valid = false;
+        }
+        if (!no_of_employee) {
+            $('.no_of_employee_err').text('Please Enter Number Of Employees');
+            valid = false;
+        }
+        if (!stories) {
+            $('.stories_err').text('Please Select Stories');
+            valid = false;
+        }
+        if (!price) {
+            $('.price_err').text('Please Enter Charges');
+            valid = false;
+        }
+        if (!commission) {
+            $('.commission_err').text('Please Select Commission');
+            valid = false;
+        }
+        if (commission === 'yes' && !commission_percentage) {
+            $('.commission_percentage_err').text('Please Enter Commission Percentage');
+            valid = false;
+        }
 
-        if(duration_type === '1' && parseInt(duration) > 12){
+        if (duration_type === '1' && parseInt(duration) > 12) {
             $('.duration_err').text('Duration cannot be more than 12 months');
             valid = false;
         }
 
-        if(!valid) return;
+        if (!valid) return;
 
         let formData = {
-            plan_name_english, plan_name_arabic, duration, duration_type, no_of_videos, 
-            no_of_products, no_of_highlights, no_of_employee, stories, price, commission, commission_percentage,country_id
+            plan_name_english,
+            plan_name_arabic,
+            duration,
+            duration_type,
+            no_of_videos,
+            no_of_products,
+            no_of_highlights,
+            no_of_employee,
+            stories,
+            price,
+            commission,
+            commission_percentage,
+            country_id
         };
 
         $.ajax({
             url: "{{ route('admin.add_plan') }}",
             method: 'POST',
             data: formData,
-            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
-            success: function(response){
-                if(response.status === 'success'){
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
                     toastr.success(response.message);
                     setTimeout(() => {
                         $('#sentModal2').modal('hide');
@@ -664,7 +753,7 @@ $(document).ready(function() {
                     toastr.error(response.message || 'Something went wrong', 'Error');
                 }
             },
-            error: function(xhr){
+            error: function(xhr) {
                 toastr.error('Something went wrong! Please try again.', 'Error');
                 console.log(xhr.responseText);
             }
@@ -677,14 +766,14 @@ $(document).ready(function() {
 
 <!-- page refresh while closing add modal -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('sentModal2');
-    modal.addEventListener('hidden.bs.modal', function () {
-        location.reload(); 
+    modal.addEventListener('hidden.bs.modal', function() {
+        location.reload();
     });
     var modal = document.getElementById('editModal');
-    modal.addEventListener('hidden.bs.modal', function () {
-        location.reload(); 
+    modal.addEventListener('hidden.bs.modal', function() {
+        location.reload();
     });
 });
 </script>
@@ -694,7 +783,7 @@ document.addEventListener('DOMContentLoaded', function () {
 $(document).ready(function() {
 
     $(document).on('click', '[data-bs-target="#editModal"]', function() {
-        var button = $(this); 
+        var button = $(this);
 
         var plan_id = button.data('plan-id');
         var english_name = button.data('english-name');
@@ -727,11 +816,13 @@ $(document).ready(function() {
         $('#editModal').find('input[name="price"]').val(price);
         $('#editModal').find('input[name="discounted_price"]').val(discount_price);
         $('#editModal').find('input[name="stories"]').prop('checked', false);
-    $('#editModal').find('input[name="stories"][value="' + (stories == 1 ? 'yes' : 'no') + '"]').prop('checked', true);
+        $('#editModal').find('input[name="stories"][value="' + (stories == 1 ? 'yes' : 'no') + '"]')
+            .prop('checked', true);
 
-    // Reset and set Commission radio
-    $('#editModal').find('input[name="commission"]').prop('checked', false);
-    $('#editModal').find('input[name="commission"][value="' + (commission == 1 ? 'yes' : 'no') + '"]').prop('checked', true);
+        // Reset and set Commission radio
+        $('#editModal').find('input[name="commission"]').prop('checked', false);
+        $('#editModal').find('input[name="commission"][value="' + (commission == 1 ? 'yes' : 'no') +
+            '"]').prop('checked', true);
 
         if (commission == '1') {
             $('#editModal').find('.commissionInput').show();
@@ -744,21 +835,21 @@ $(document).ready(function() {
     $(document).on('change', '.commissionRadio', function() {
         let parent = $(this).closest('.modal');
         if ($(this).val() === 'yes') {
-            parent.find('.commissionInput').show(); 
+            parent.find('.commissionInput').show();
         } else {
-            parent.find('.commissionInput').hide(); 
-            parent.find('input[name="commission_percentage"]').val(''); 
+            parent.find('.commissionInput').hide();
+            parent.find('input[name="commission_percentage"]').val('');
         }
     });
 
     $(document).on('submit', '.editPlanForm', function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
 
-        let form = $(this); 
-        let modal = form.closest('.modal');  
-        let valid = true; 
+        let form = $(this);
+        let modal = form.closest('.modal');
+        let valid = true;
 
-        modal.find('.error-text').text(''); 
+        modal.find('.error-text').text('');
 
         let formData = form.serializeArray().reduce((obj, item) => {
             obj[item.name] = item.value.trim();
@@ -827,28 +918,29 @@ $(document).ready(function() {
         if (!valid) return;
 
         $.ajax({
-            url: "{{ route('admin.update_plan') }}", 
-            method: "POST", 
-            data: formData, 
-            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            url: "{{ route('admin.update_plan') }}",
+            method: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
             success: function(response) {
                 if (response.status === 'success') {
                     toastr.success(response.message);
                     setTimeout(() => {
-                        modal.modal('hide'); 
-                        location.reload(); 
+                        modal.modal('hide');
+                        location.reload();
                     }, 2000);
                 } else {
-                    toastr.error(response.message || 'Failed to update plan'); 
+                    toastr.error(response.message || 'Failed to update plan');
                 }
             },
             error: function(xhr) {
-                toastr.error('Something went wrong! Please try again.');  
-               // console.log(xhr.responseText);  
+                toastr.error('Something went wrong! Please try again.');
+                // console.log(xhr.responseText);  
             }
         });
     });
 
 });
-
 </script>

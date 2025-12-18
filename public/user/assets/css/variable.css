@@ -9,10 +9,12 @@
     --gradient-color: linear-gradient(188deg, #F9DBAB, #7D532F);
     --gradient-color2: linear-gradient(to right, #7D532F, #F9DBAB);
     --gradient-color3: linear-gradient(to bottom left, #F9DBAB, #7D532F);
-    --gradient-color5: linear-gradient(171deg, #F9DBAB, #7D532F);
+    --gradient-color5: linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);
     --gradient-color6: linear-gradient(180deg, #DFBF8F -29%, #6E4527 100%);
 
     --border-gradient-color4: linear-gradient(to bottom, #DFBF8F, #6E4527);
+    --login-bg:linear-gradient(344.09deg, #7d532fde 0%, #F9DBAB 94%);
+    --footer-bg:linear-gradient(73.47deg, #7D532F 0%, #F9DBAB 93.99%);
 
     --p-font-size:16px;
     --p-font-height:26px;

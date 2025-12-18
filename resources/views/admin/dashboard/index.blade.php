@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-md-2 col-lg-3 col-12 mt-5">
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 30px">
+                            <a class="btn btn-dark customBtns w-100" style="margin-top: 30px">
                                 <span>Export in Excel or PDF</span></a>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                                                 <h5>$ 200</h5>
                                             </div>
                                              <div class=" text-center col-lg-3">
-                                                <p>By Subscription Plan</p>
+                                                <p>By Affilate Orders</p>
                                                 <h5>$ 200</h5>
                                             </div>
                                             <div class=" text-center col-lg-3">

@@ -72,7 +72,7 @@
                         </td>
                         <td>{{ $category->status == 1 ? 'Active' : 'Inactive' }}</td>
                         <td>
-                          <div class="form-check form-switch">
+                          <div class="form-check form-switch" style="justify-content: center;">
                               <input
                                   class="form-check-input toggleStatus"
                                   type="checkbox"

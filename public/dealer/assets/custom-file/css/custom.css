@@ -14,7 +14,7 @@
     background: linear-gradient(180.99deg, #dfbf8fa8 -53.71%, #cba97c61 154.28%);
 }
 .add-fillbtn{
-    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+    background: var(--all-btn-bg);
     line-height: 35px;
     color: #fff;
 }
@@ -181,11 +181,13 @@
     border-right: 1px solid #b9946b;
     color: #000;
     border-radius: 0px;
+    font-size: 20px;
 }
 
 .tabs-panel .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-    background: var(--tab-active-bg);
+    /* background: var(--tab-active-bg); */
+    background: var(--all-btn-bg);
 }
 
 .dt-column-title {
@@ -212,6 +214,7 @@ table.dataTable>tbody>tr>td {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 25px;
 }
 
 .search-filter {
@@ -300,7 +303,112 @@ table.dataTable {
     width: 100%;
     object-fit: cover;
 }
-
+.store-img {
+    height: 65px;
+    width: 135px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.store-img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.img_changes {
+    border: 1px solid #6E4527;
+    border-radius: 10px;
+    color: #6E4527;
+    padding: 14px;
+    text-align: center;
+    width: 160px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img_changes input {
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    opacity: 0;
+}
+.img_changes h6 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+}
+.showcircle{
+    height: 80px;
+    width: 80px;
+    overflow: hidden;
+    border-radius: 50px;
+}
+.showcircle img{
+    height: 100%;
+    width: 100%;
+}
+.upload-passbook{
+    height: 175px;
+    width: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-left: 20px;
+    border: 1px solid #ddd;
+}
+.upload-passbook img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.onepage{
+    padding-top: 120px;
+}
+.gpsmap1 {
+    position: absolute;
+    right: 0;
+    bottom: 50%;
+    transform: translate(-10px, 17px);
+    font-size: 22px;
+    background: #fff;
+}
+.profile_wapper {
+    margin-top: -60px !important;
+    max-width: 90%;
+    width: 100%;
+    margin: 0 auto;
+}
+.profile-card{
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    z-index: 2;
+    position: relative;
+    margin-bottom: 2rem;
+}
+.user_view{
+    display: flex;
+    gap: 20px;
+}
+.addprofile {
+    height: 120px;
+    width: 120px;
+    background: #333;
+    border-radius: 50%;
+    overflow: hidden;
+    outline: 2px solid #a7825b;
+}
+.addprofile img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.addic {
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+}
 
 @media (min-width: 1140px) and (max-width: 1440px) {
     .dash-circle {
@@ -336,5 +444,10 @@ table.dataTable {
     .planheight {
         height: 270px !important;
     }
+   
 
+}
+
+@media (max-width:767px){
+    
 }

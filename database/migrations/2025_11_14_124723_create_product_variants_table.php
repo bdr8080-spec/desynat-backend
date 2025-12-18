@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('product_id');
             $table->longText('variant_image')->nullable();
+            $table->sting('parent_child')->default('0')->comment('0 parent and  Child id ');
             $table->string('color_id');
             $table->string('size_id');
             $table->string('bust')->nullable();
@@ -26,7 +27,6 @@ return new class extends Migration
             $table->string('total_stock')->nullable();
             $table->string('sku')->nullable();
             $table->string('sku_threshold_value')->nullable();
-            
             $table->string('actual_price');
           
             $table->enum('discount_type',['1','2'])->default('1')->comment('1 percentage 2 fixed Price');

@@ -174,7 +174,7 @@
                                 <div class="d-flex gap-3 justify-content-center">
                                     <a class="table-button" href="{{ route('admin.edit_deliveryboy_step1', ['id' => $deliveryBoy['id']]) }}"><i  class="bi bi-pencil-square"></i></a>
 
-                                    <a href="javascript:void(0);" class="table-button text-danger deleteDeliveryBoy"
+                                    <a href="javascript:void(0);" class="table-button text-danger deleteDeliveryBoy mb-1 mt-1"
                                         data-id="{{ $deliveryBoy['id']  }}">
                                         <i class="bi bi-trash3-fill"></i>
                                     </a>

@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\{User,userAddress,country,Tax,ShippingCharge};
 use App\Models\UserWallet;
 use App\Models\all_countrie;
 use Illuminate\Http\Request;
@@ -380,6 +380,7 @@ class UserManagementService
                             $q->whereIn('color_id', $colorIds);
                         }
 
+                        
                         // Price filter
                         if (isset($data->price_min)) {
                             $q->where('final_price', '>=', $data->price_min);
@@ -410,7 +411,7 @@ class UserManagementService
             }
 
             //  Filter by variants for product existence
-            if (!empty($data->size_id) || !empty($data->color_id) || isset($data->price_min) || isset($data->price_max)) {
+            if (!empty($data->size_id) || !empty($data->color_id) || !empty($data->price_min) || !empty($data->price_max) || isset($data->discount)  ) {
                 $products->whereHas('product_variants', function ($q) use ($data) {
                     if (!empty($data->size_id) && is_array($data->size_id)) {
                         $sizeIds = array_map('intval', $data->size_id);
@@ -422,12 +423,18 @@ class UserManagementService
                         $q->whereIn('color_id', $colorIds);
                     }
 
-                    if (isset($data->price_min)) {
+                    if (!empty($data->price_min)) {
                         $q->where('final_price', '>=', $data->price_min);
                     }
-                    if (isset($data->price_max)) {
+                    if (!empty($data->price_max)) {
                         $q->where('final_price', '<=', $data->price_max);
                     }
+
+                    
+                    if (!empty($data->discount)) {
+                        $q->where('discount_value', '<=', $data->discount);
+                    }
+
                 });
             }
 
@@ -509,6 +516,8 @@ class UserManagementService
 
 
 
+
+
     public function singleproductView($request)
     {
         try {
@@ -549,6 +558,17 @@ class UserManagementService
                 $product_details->addtocart = $addtocart;
             }else{
                 $product_details->addtocart = (object)[];
+                
+            }
+
+            // add to cart total count
+              $addtocartcount = Addtocart::where('user_id', $request->user_id)
+             ->count();
+
+            if($addtocartcount){
+                $product_details->addtocartTotalProduct = $addtocartcount;
+            }else{
+                $product_details->addtocartTotalProduct = 0;
                 
             }
 
@@ -742,6 +762,23 @@ public function product_view_cart_details($request)
 {
     try {
 
+       $user_address= userAddress::where('user_id',$request->user_id)->where('set_as_default','1')->first();
+
+       if($user_address){
+
+        $country_dataId= country::where('dial_code',$user_address->country_code)->first();
+
+        if($country_dataId){
+            $userCountry_id= $country_dataId->id;
+        }else{
+            $userCountry_id=0;
+        }
+
+       }
+
+    //    country,Tax,ShippingCharge}
+  
+
 
         $total_mrp=0;
         $discount_on_mrp=0;
@@ -750,8 +787,7 @@ public function product_view_cart_details($request)
         $tax=0;
         $total_amount=0;
 
-        $add_to_cart= Addtocart::with('product.seller_details','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
-
+        $add_to_cart= Addtocart::with('product.seller_details','product.store','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
 
         if($add_to_cart->isEmpty()){
             return [
@@ -771,17 +807,70 @@ public function product_view_cart_details($request)
             }
 
             $total_amount+=$val->product_variants->final_price * $val->quantity ;
-            $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
+            // $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
+            $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
             $total_mrp=$total_amount+$discount_on_mrp;
+
+
+            // discount Amount Code Apply 
+
+        if($val->product->store){
+            
+        if($user_address && $userCountry_id!==0){
+            $user_let=$user_address->latitude;
+            $user_long=$user_address->longitude;
+
+            $store_let=$val->product->store->let;
+            $store_long=$val->product->store->long;
+
+            // Calculate the distance
+            // $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
+            $distance = 10;
+
+            $shipping_charges= ShippingCharge::where('country_id',$userCountry_id)
+            ->where('range_from','<=',$distance)
+            ->where('range_to','>=',$distance)
+            ->where('status','1')->first();
+
+            if($shipping_charges){
+                $shipping_fees+=$shipping_charges->shipping_fee *$val->quantity ;
+            }else{
+                $shipping_fees+=100 *$val->quantity;    
+            }
+
+            }else{
+                $shipping_fees+=100 *$val->quantity;
+            }
+            }
+            
         }
+
+        // Tax calucltor Code  start
 
 
         $response['total_mrp']=$total_mrp;
+
+        if(isset($userCountry_id)){
+
+        $Tax_calculate= Tax::where('country_id',$userCountry_id)->where('status','1')->first();
+
+        if($Tax_calculate){
+            $tax= $total_mrp*$Tax_calculate->tax/100; 
+            $total_amount=$total_amount+$tax;
+        }else{
+            $tax=0;
+        }
+          }else{
+           $tax=0;
+         }
+
         $response['discount_on_mrp']=$discount_on_mrp;
         $response['discount_coupon']=$discount_coupon;
         $response['shipping_fees']=$shipping_fees;
-        $response['tax']=$tax;
-        $response['total_amount']=$total_amount;
+        $response['tax']=round($tax);
+        $response['total_amount']=$total_amount+$shipping_fees;
+
+        $response['user_address']=$user_address;
         
         $response['cart_data']=$add_to_cart;
         
@@ -834,6 +923,7 @@ public function product_view_cart_details($request)
         ];
 
     } catch (\Exception $e) {
+
 
         return [
             'status'  => 'error',
@@ -1018,6 +1108,170 @@ public function addtoCart_Increment_decrement($request)
             ];
         }
     }
+
+    // public function product_add_to_cart_without_quantity_increment($request)
+    // {
+    //     try {
+    //         // Match existing cart item for the user, product, and variant
+    //         $match = [
+    //             'user_id'     => $request->user_id,
+    //             'product_id'  => $request->product_id,
+    //             'variants_id' => $request->variants_id,
+    //         ];
+
+    //         // Prepare data to insert if not exists
+    //         $data = [
+    //             'user_id'     => $request->user_id,
+    //             'product_id'  => $request->product_id,
+    //             'quantity'    => $request->quantity,
+    //             'variants_id' => $request->variants_id,
+    //         ];
+
+    //         // Get variant stock and price
+    //         $variant = ProductVariant::find($request->variants_id);
+    //         if (!$variant) {
+    //             return [
+    //                 'status'  => 'error',
+    //                 'message' => 'Product variant not found.',
+    //                 'data'    => (object)[]
+    //             ];
+    //         }
+
+    //         // Check stock
+    //         if (intval($variant->total_stock) < $request->quantity) {
+    //             return [
+    //                 'status'  => 'error',
+    //                 'message' => 'Product stock is too low.',
+    //                 'data'    => (object)[]
+    //             ];
+    //         }
+
+    //         $product_amount = $variant->final_price;
+
+    //         // Find existing cart entry
+    //         $cartItem = Addtocart::where($match)->first();
+
+    //         if ($cartItem) {
+    //             // FIXED: SET EXACT QUANTITY (do NOT add)
+    //             $cartItem->quantity = $request->quantity;
+    //             $cartItem->amount = $product_amount * $request->quantity;
+    //             $cartItem->save();
+
+    //             $msg = "Cart updated successfully";
+    //         } else {
+    //             // Create new cart entry
+    //             $data['amount'] = $product_amount * $request->quantity;
+    //             $cartItem = Addtocart::create($data);
+    //             $msg = "Added to cart successfully";
+    //         }
+
+    //         return [
+    //             'status'  => 'success',
+    //             'message' => $msg,
+    //             'data'    => $cartItem
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status'  => 'error',
+    //             'message' => 'Failed: ' . $e->getMessage(),
+    //             'data'    => (object)[]
+    //         ];
+    //     }
+    // }
+
+    public function product_add_to_cart_without_quantity_increment($request)
+    {
+        try {
+            // Match existing cart item for the user, product, and variant
+            $match = [
+                'user_id'     => $request->user_id,
+                'product_id'  => $request->product_id,
+                'variants_id' => $request->variants_id,
+            ];
+
+            // Prepare data to insert if not exists
+            $data = [
+                'user_id'     => $request->user_id,
+                'product_id'  => $request->product_id,
+                'quantity'    => $request->quantity,
+                'variants_id' => $request->variants_id,
+            ];
+
+            // Get variant stock and price
+            $variant = ProductVariant::find($request->variants_id);
+            if (!$variant) {
+                return [
+                    'status'  => 'error',
+                    'message' => 'Product variant not found.',
+                    'data'    => (object)[]
+                ];
+            }
+
+            // Check stock only if quantity is greater than 0
+            if ($request->quantity > 0) {
+                if (intval($variant->total_stock) < $request->quantity) {
+                    return [
+                        'status'  => 'error',
+                        'message' => 'Product stock is too low.',
+                        'data'    => (object)[]
+                    ];
+                }
+            }
+
+            $product_amount = $variant->final_price;
+
+            // Find existing cart entry
+            $cartItem = Addtocart::where($match)->first();
+
+            if ($request->quantity == 0) {
+                // If quantity is 0, remove the item from the cart
+                if ($cartItem) {
+                    $cartItem->delete();
+                    return [
+                        'status'  => 'error',
+                        'message' => 'Item removed from cart successfully.',
+                        'data'    => (object)[]
+                    ];
+                } else {
+                    return [
+                        'status'  => 'error',
+                        'message' => 'Item not found in cart.',
+                        'data'    => (object)[]
+                    ];
+                }
+            }
+
+            if ($cartItem) {
+                // Update the existing cart item if the quantity is non-zero
+                $cartItem->quantity = $request->quantity;
+                $cartItem->amount = $product_amount * $request->quantity;
+                $cartItem->save();
+
+                $msg = "Cart updated successfully";
+            } else {
+                // Create new cart entry if it doesn't exist
+                $data['amount'] = $product_amount * $request->quantity;
+                $cartItem = Addtocart::create($data);
+                $msg = "Added to cart successfully";
+            }
+
+            return [
+                'status'  => 'success',
+                'message' => $msg,
+                'data'    => $cartItem
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
 
 
 

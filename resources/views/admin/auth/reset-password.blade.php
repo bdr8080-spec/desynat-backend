@@ -12,141 +12,42 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 </head>
 
-<body style="background-color: rgba(227, 194, 149, 0.75) !important;">
+<body>
 
-    <style>
-    /* .auth-wrapper {
-        display: flex;
-        height: 100vh;
-        width: 100%;
-            max-width: 900px;
-    margin: 10% auto;
-      } */
-
-    .auth-left {
-        flex: 1;
-        background: url("image/background-image.svg") no-repeat center center/cover;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .brand-header {
-        position: absolute;
-        top: 30px;
-        left: 30px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .brand-logo {
-        width: 45px;
-        height: 45px;
-    }
-
-    .brand-name {
-        font-size: 38px;
-        font-weight: 600;
-        font-family: "Georgia", serif;
-        color: #000;
-    }
-
-    .auth-rights {
-        flex: 1;
-        background: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 17px;
-        border: 1px solid #ddd;
-        border-radius: 0px 20px 20px 0px;
-    }
-
-
-    .auth-form-wrapper {
-        width: 350px;
-    }
-
-    .loginBackgroundeffect {
-        max-width: 576px;
-    }
-
-    .custom-topbar {
-       background: linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%) !important;
-        height: 74px;
-        border-radius: 6px;
-        padding: 0 25px;
-        display: flex;
-        align-items: center;
-    }
-
-    .header-logo {
-        width: 110px;
-        height: 66px;
-        border-radius: 50%;
-        object-fit: contain;
-    }
-
-    .brand-name {
-        font-size: 22px;
-        font-weight: 600;
-        font-family: 'Georgia', serif;
-        margin-left: 12px;
-        color: #000;
-    }
-
-    .header-divider {
-        flex: 1;
-        /* border-bottom: 1.5px dotted rgba(0, 0, 0, 0.5); */
-        margin: 0 25px;
-    }
-
-    .lang-btn {
-        background: transparent;
-        border: 1px solid rgba(0, 0, 0, 0.7);
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-size: 14px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    </style>
-    <nav class="navbar navbar-expand navbar-light custom-topbar mb-0 static-top shadow fixed-top">
-
-
-        <div class="left-section d-flex align-items-center">
-            <img src="{{asset('admin/image/favicon.svg')}}" class="header-logo" />
-            <img src="{{asset('admin/image/Desynat Logo_Final 1.svg')}}" class="header-logo" />
-
-        </div>
-
-        <div class="header-divider"></div>
-
-        <div class="right-section">
-            <button class="lang-btn">
-                <i class="fas fa-globe"></i> EN
-                <i class="fas fa-chevron-down"></i>
-            </button>
-        </div>
-    </nav>
-
-    <div class="auth-wrapper ">
-
-        <!-- LEFT SIDE -->
-        <div class="auth-left">
-            <div class="brand-header">
-                <!-- logo aa jayega baad me -->
+  
+        <div class="login-header">
+            <div class="des-logo">
+                <a href="#"><img src="{{asset('admin/image/logo.svg')}}" class="img-fluid" /> </a>
+            </div>
+            <div class="des-language">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="/admin/image/global.svg" class="img-fluid" /> EN
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
+                        <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
+    <div class="container-fluid p-0">
+        <div class="login-grid-bg">
 
-        <!-- RIGHT SIDE -->
-        <div class="auth-rights">
-            <div class="login-container-div">
-                <div class="login">
+            <div class="row g-0">
+                <div class="col-lg-6 bg-logo-wapper">
+                    <div class="login-img">
+                        <img src="/admin/image/Desynat-logo-2.svg" alt="image" class="img-fluid logo-login">
+                    </div>
+                    <img src="/admin/image/Vector-left.svg" alt="image" class="vector-left">
+                    <img src="/admin/image/Vector-right.svg" alt="image" class="vector-right">
+                </div>
+                <div class="col-lg-6">
+                    <!-- RIGHT SIDE -->
+                    <div class="login-content pt-40">
+                        <div class="login-grid-2">
+                               <div class="login">
                     <div class="loginBackgroundeffect text">
                         <div class="row">
 
@@ -164,7 +65,7 @@
 
                             <div class="col-lg-12 mt-3">
                                 <div class="form-group">
-                                    <label for="newPassword" class="form-label">Create New Password</label>
+                                    <label for="newPassword" >Create New Password</label>
                                     <input type="password" class="form-control" id="newPassword"
                                         placeholder="Enter New Password" required>
                                     <i toggle="#newPassword" class="fas fa-eye toggle-password"></i>
@@ -174,7 +75,7 @@
 
                             <div class="col-lg-12 mt-3">
                                 <div class="form-group">
-                                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                    <label for="confirmPassword" >Confirm Password</label>
                                     <input type="password" id="confirmPassword" class="form-control"
                                         placeholder="Enter Confirm Password" required>
                                     <i toggle="#confirmPassword" class="fas fa-eye toggle-password"></i>
@@ -192,10 +93,11 @@
                         </div>
                     </div>
                 </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
- 
-    </div>
 
     </div>
 

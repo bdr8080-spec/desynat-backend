@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Admin\DashboardController;
@@ -12,6 +13,10 @@ use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DeliveryBoyController;
 use App\Http\Controllers\Admin\ReasonController;
+use App\Http\Controllers\Admin\ShippingController;
+use App\Http\Controllers\Admin\GiftCardController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\PromoCodeController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -97,8 +102,48 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/deleteReason/{id}', [ReasonController::class, 'deleteReason'])->name('admin.deleteReason');
         Route::post('/add_reason', [ReasonController::class, 'add_reason'])->name('admin.add_reason');
         Route::post('/update_reason', [ReasonController::class, 'update_reason'])->name('admin.update_reason');
+
+        //shipping charge and tax management
+        Route::get('/shipping-management', [ShippingController::class, 'shippingManagement'])->name('admin.shippingManagement');
+        Route::get('/manage-shipping-charge/{id}', [ShippingController::class, 'manageShippingCharges'])->name('admin.manageShippingCharges');
+        Route::post('/update_tax', [ShippingController::class, 'update_tax'])->name('admin.update_tax');
+        Route::post('/deleteShippingCharge/{id}', [ShippingController::class, 'deleteShippingCharge'])->name('admin.deleteShippingCharge');
+        Route::post('/updateShippingChargeStatus/{id}', [ShippingController::class, 'updateShippingChargeStatus'])->name('admin.updateShippingChargeStatus');
+        Route::post('/add_shipping_fee', [ShippingController::class, 'add_shipping_fee'])->name('admin.add_shipping_fee');
+        Route::post('/update_shipping_fee', [ShippingController::class, 'update_shipping_fee'])->name('admin.update_shipping_fee');
+
+
+        //gift card category management
+        Route::get('/giftcard-management', [GiftCardController::class, 'giftCardManagement'])->name('admin.giftCardManagement');
+        Route::post('/addGiftCard', [GiftCardController::class, 'addGiftCard'])->name('admin.addGiftCard');
+        Route::post('/updateGiftCard/{id}', [GiftCardController::class, 'updateGiftCard'])->name('admin.updateGiftCard');
+        Route::post('/deleteGiftCard/{id}', [GiftCardController::class, 'deleteGiftCard'])->name('admin.deleteGiftCard');
+        Route::post('/updateGiftCardStatus/{id}', [GiftCardController::class, 'updateGiftCardStatus'])->name('admin.updateGiftCardStatus');
+
+        //banner per day price management
+        Route::get('/banner-management', [BannerController::class, 'bannerManagement'])->name('admin.bannerManagement');
+        Route::post('/update_banner', [BannerController::class, 'update_banner'])->name('admin.update_banner');
+
+        //promocode management
+        Route::get('/promocode-management', [PromoCodeController::class, 'promoCodeManagement'])->name('admin.promoCodeManagement');
+        Route::post('/deletePromocode/{id}', [PromoCodeController::class, 'deletePromocode'])->name('admin.deletePromocode');
+        Route::post('/updatePromoCodeStatus/{id}', [PromoCodeController::class, 'updatePromoCodeStatus'])->name('admin.updatePromoCodeStatus');
+        Route::post('/add_promocode', [PromoCodeController::class, 'add_promocode'])->name('admin.add_promocode');
+        Route::post('/update_promocode', [PromoCodeController::class, 'update_promocode'])->name('admin.update_promocode');
+        Route::get('/add-promocode', [PromoCodeController::class, 'addPromocode'])->name('admin.addPromocode');
+        Route::get('/edit-promocode/{id}', [PromoCodeController::class, 'editPromocode'])->name('admin.editPromocode');
         
 
     });
 
+});
+
+Route::fallback(function (Request $request) {
+    $uri = $request->getRequestUri();
+
+    if (str_starts_with($uri, '/Admin') || preg_match('/\/[A-Z]/', $uri)) {
+        return redirect(strtolower($uri), 301);
+    }
+
+    abort(404);
 });

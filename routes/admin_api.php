@@ -12,6 +12,11 @@ use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\ReasonController;
 use App\Http\Controllers\Api\Admin\DeliveryBoyController;
 use App\Http\Controllers\Api\Admin\ShippingTaxController;
+use App\Http\Controllers\Api\Admin\GiftCardController;
+use App\Http\Controllers\Api\Admin\BannerController;
+use App\Http\Controllers\Api\Admin\PromocodeController;
+use App\Http\Controllers\Api\Admin\AffiliateCommissionController;
+use App\Http\Controllers\Api\Admin\OrderManagementController;
 
 
 // Admin APi M1
@@ -113,10 +118,53 @@ Route::group(['prefix' => 'admin'], function () {
      //tax and shipping management
      Route::post('/add_tax',[ShippingTaxController::class,'add_tax']);
      Route::get('/countries_with_tax_shipping',[ShippingTaxController::class,'countries_with_tax_shipping']);
+     Route::get('/shipping_charges_by_countryId',[ShippingTaxController::class,'shipping_charges_by_countryId']);
      Route::post('/add_shipping_charge',[ShippingTaxController::class,'add_shipping_charge']);
      Route::post('/update_shipping_charge',[ShippingTaxController::class,'update_shipping_charge']);
      Route::post('/blobk_unblock_shippingFee',[ShippingTaxController::class,'blobk_unblock_shippingFee']);
      Route::post('/delete_shipping_fee',[ShippingTaxController::class,'delete_shipping_fee']);
+
+     //gift card management
+     Route::post('/add_giftCard',[GiftCardController::class,'add_giftCard']);
+     Route::post('/update_giftCard',[GiftCardController::class,'update_giftCard']);
+     Route::post('/delete_gift_card',[GiftCardController::class,'delete_gift_card']);
+     Route::post('/block_unblock_giftCard',[GiftCardController::class,'block_unblock_giftCard']);
+     Route::get('/get_giftCards',[GiftCardController::class,'get_giftCards']);
+
+     //banner per day price management
+     Route::post('/add_update_banner',[BannerController::class,'add_update_banner']);
+     Route::get('/get_banners',[BannerController::class,'get_banners']);
+
+     //promocode management
+     Route::post('/add_promocode',[PromocodeController::class,'add_promocode']);
+     Route::post('/update_promocode',[PromocodeController::class,'update_promocode']);
+     Route::post('/delete_promocode',[PromocodeController::class,'delete_promocode']);
+     Route::post('/block_unblock_promocode',[PromocodeController::class,'block_unblock_promocode']);
+     Route::get('/get_promocodes',[PromocodeController::class,'get_promocodes']);
+
+     //M4 api ends
+
+     //M5 api starts
+
+     //affiliate commission management
+     Route::post('/update_affiliate_commission',[AffiliateCommissionController::class,'update_affiliate_commission']);
+     Route::get('/countries_with_affiliate_commission',[AffiliateCommissionController::class,'countries_with_affiliate_commission']);
+
+     //order management
+     Route::get('/active_orders',[OrderManagementController::class,'active_orders']);
+     Route::get('/return_orders',[OrderManagementController::class,'return_orders']);
+     Route::get('/completed_orders',[OrderManagementController::class,'completed_orders']);
+     Route::get('/cancelled_orders',[OrderManagementController::class,'cancelled_orders']);
+     Route::get('/single_order_detail',[OrderManagementController::class,'single_order_detail']);
+
+     Route::get('/get_drivers_to_assign',[OrderManagementController::class,'get_drivers_to_assign']);
+     Route::post('/assign_driver',[OrderManagementController::class,'assign_driver']);
+
+     //Banner request management
+     Route::get('/get_banner_request',[BannerController::class,'get_banner_request']);
+     Route::post('/approve_banner_request',[BannerController::class,'approve_banner_request']);
+     Route::post('/reject_banner_request',[BannerController::class,'reject_banner_request']);
+
 
 
 

@@ -15,7 +15,7 @@ use Exception;
 
 Use Auth;
 use Validator;
-use App\Models\seller;
+use App\Models\{seller,UserGiftCards,Order,Addtocart};
 use Illuminate\Support\Facades\Cache;
 use App\Models\SellerSubcriptionPlanBuy;
 
@@ -48,8 +48,57 @@ class MyFatoorahController extends Controller {
      *
      * @return Response
      */
-    public function index($id) {
+    public function index(request $request,$id) {
         try {
+
+     if($request->type=='order'){
+
+         $checkOrder=Order::with('User_details')->where('order_id', $id)->first();
+
+            //For example: pmid=0 for MyFatoorah invoice or pmid=1 for Knet in test mode
+            $paymentId = request('pmid') ?: 0;
+            $sessionId = request('sid') ?: null;
+            $orderId  = $id ?: 147;
+
+            $order_array=[
+                'amount'=>$checkOrder->total_amount,
+                'CustomerName'       => $checkOrder->user_details->full_name ,
+                'InvoiceValue'       => $checkOrder->total_amount,
+                'CustomerEmail'      => $checkOrder->user_details->email,
+                'MobileCountryCode'  => $checkOrder->user_details->country_code,
+                'CustomerMobile'     => $checkOrder->user_details->mobile,
+                'Language'           => 'en',
+                'CustomerReference'  => $orderId,
+            ];
+            
+        }
+
+
+        if($request->type=='giftCard'){
+                
+    
+            $giftCardDetails= UserGiftCards::with('gift_details','user_details')->where('order_id',$id)->first();
+        
+            //For example: pmid=0 for MyFatoorah invoice or pmid=1 for Knet in test mode
+            $paymentId = request('pmid') ?: 0;
+            $sessionId = request('sid') ?: null;
+            $orderId  = $id ?: 147;
+
+            $order_array=[
+                'amount'=>$giftCardDetails->amount,
+                'CustomerName'       => $giftCardDetails->user_details->full_name ,
+                'InvoiceValue'       => $giftCardDetails->amount,
+                'CustomerEmail'      => $giftCardDetails->user_details->email,
+                'MobileCountryCode'  => $giftCardDetails->user_details->country_code,
+                'CustomerMobile'     => $giftCardDetails->user_details->mobile,
+                'Language'           => 'en',
+                'CustomerReference'  => $orderId,
+            ];
+            
+        }
+
+
+        if($request->type=='subcription'){
                 
         $subcription_order=SellerSubcriptionPlanBuy::with('seller_details')->where('transaction_id',$id)->first();
 
@@ -71,10 +120,13 @@ class MyFatoorahController extends Controller {
                 'CustomerReference'  => $orderId,
             ];
 
+        }
+
 
             $curlData = $this->getPayLoadData($order_array);
 
             $mfObj   = new MyFatoorahPayment($this->mfConfig);
+
 
             $payment = $mfObj->getInvoiceURL($curlData, $paymentId, $orderId, $sessionId);
             
@@ -138,6 +190,18 @@ class MyFatoorahController extends Controller {
             $response = ['IsSuccess' => true, 'Message' => $message, 'Data' => $data];
 
 
+
+
+            // Check Order Table Data 
+
+            $transaction_id=$data->CustomerReference;
+            $onlineReturnTransaction_id=$data->InvoiceReference;
+
+
+            $subcription_order=SellerSubcriptionPlanBuy::with('seller_details')->where('transaction_id',$transaction_id)->first();
+
+            if($subcription_order){
+
             if($data->InvoiceStatus=='Paid'){
                 
               $transaction_id=$data->CustomerReference;
@@ -162,6 +226,67 @@ class MyFatoorahController extends Controller {
                 return  redirect()->to($url);
 
                 // return redirect()->route('seller.all_plans')->with('error','Your Payment is Failed');
+            }
+
+        }
+
+
+        // check gift Card Payment 
+            $giftCardDetails= UserGiftCards::with('gift_details','user_details')->where('order_id',$transaction_id)->first();
+        
+            if($giftCardDetails){
+
+                if($data->InvoiceStatus=='Paid'){
+                    $giftCardDetails->update(['payment_status'=>'1','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Gift Card Payment Paid Successfully";
+                    $url="user/gift-cards?payment=yes&orderid=".$transaction_id;
+
+                }else{
+                    
+                    $giftCardDetails->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Gift Card Payment Cancelled Successfully";
+                    $url="user/gift-cards?payment=no&orderid=".$transaction_id;
+                
+                }
+
+                
+                // return  redirect()->to($url);
+
+                return redirect()->to($url)->with([
+                'message' => $msg,
+                'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
+                ]);
+
+
+            }
+
+            // Check Order Payment Code 
+
+            $checkOrderStatus=Order::with('User_details')->where('order_id', $transaction_id)->first();
+
+            if($checkOrderStatus){
+
+                if($data->InvoiceStatus=='Paid'){
+                    $checkOrderStatus->update(['payment_status'=>'1','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Order Payment Paid Successfully";
+                    $url="user/order-details/$transaction_id?payment=yes";
+
+                    Addtocart::where('user_id',$checkOrderStatus->user_id)->delete();
+
+                }else{
+                    
+                    $checkOrderStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Order Payment Cancelled Successfully";
+                    $url="user/view-cart?payment=no";
+                }
+                
+                // return  redirect()->to($url);
+
+                return redirect()->to($url)->with([
+                'message' => $msg,
+                'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
+                ]);
+                
             }
 
             

@@ -1,28 +1,27 @@
 @include('dealer.layout.header')
 <style>
-
-    .upload-image {
+.upload-image {
     position: relative;
     z-index: 1;
     padding-bottom: 10px;
-    margin-bottom: 15px; /* this prevents overlap */
+    margin-bottom: 15px;
+    /* this prevents overlap */
 }
 
 #edit_uploadChart_preview {
     position: absolute;
     z-index: 0;
 }
-
 </style>
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a href="{{ route('seller.products') }}" class="title24 alink">
-            <i class="bi bi-chevron-left"></i> Add New Product demo page
+            <i class="bi bi-chevron-left"></i> Add New Product
         </a>
     </div>
 
-    <form id="addproduct" action="{{ route('seller.Add_product_code1') }}" method="post">
+    <form id="addproduct" action="{{ route('seller.Add_product_code') }}" method="post">
         @csrf
         <div class="pt-3">
             <div class="title24">Select Category</div>
@@ -251,7 +250,7 @@
         </div>
 
         <div class="variant-panel">
-         
+
             <div class="product-pnls mt-4" id="variant_image_id0">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
@@ -261,6 +260,7 @@
                             name="variant_image[0][]" rel="0">
                     </label>
 
+                    {{-- <p class="text-danger" id="error-variant_image"></p> --}}
                     <p class="text-danger" id="error-variant_image_0"></p>
 
                 </div>
@@ -268,137 +268,139 @@
                 <div class="product-multiple d-flex flex-wrap gap-2" id="previewContainer0"></div>
             </div>
 
-           
             {{-- Add New Variationc code --}}
-             <div class="mt-3 d-flex justify-content-between py-3">
-            <div class="title24">Add Variation FDF </div>
-            <div class="sep-icon addmoreVariation-old" rel="0">
-                <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add" id="varAdd" rel="0">
+            <div class="mt-3 d-flex justify-content-between py-3">
+                <div class="title24">Add Variation FDF </div>
+                <div class="sep-icon " rel="0">
+                    <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation" alt="add" rel="0">
+                </div>
             </div>
-           </div>
             {{-- Add New Variationc code --}}
 
 
             <div class="inside_variation0 subvariant">
 
-            <div class="wapper-header mt-2">
-                <div class="row price-block">
-                    
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Size</label>
-                            </div>
+                <div class="wapper-header mt-2">
+                    <div class="row price-block">
 
-                            <select class="form-select form-control" aria-label="Default select example"
-                                name="size_id[0][]">
-                                <option value="">Select Size</option>
-                                @foreach ($size as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger" id="error-size_id_0"></p>
+                        <div class="col-lg-3">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Size</label>
+                                </div>
+
+                                <select class="form-select form-control" aria-label="Default select example"
+                                    name="size_id[0][]">
+                                    <option value="">Select Size</option>
+                                    @foreach ($size as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                <p class="text-danger" id="error-size_id_0"></p>
+                                <p class="text-danger" id="error-size_id_0_0"></p>
+
+                            </div>
 
                         </div>
 
-                    </div>
+                        <div class="col-lg-3 remove_Not_in_women_Category">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Bust</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10"
+                                    name="bust[0][]">
+                                <p class="text-danger" id="error-bust_0_0"></p>
 
-                    <div class="col-lg-3 remove_Not_in_women_Category">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.10"
-                                name="bust[0][]">
-                            <p class="text-danger" id="error-bust_0"></p>
 
                         </div>
+                        <div class="col-lg-3 remove_Not_in_women_Category">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Waist</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12"
+                                    name="waist[0][]">
 
-                    </div>
-                    <div class="col-lg-3 remove_Not_in_women_Category">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Waist</label>
+                                <p class="text-danger" id="error-waist_0_0"></p>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.12"
-                                name="waist[0][]">
-
-                            <p class="text-danger" id="error-waist_0"></p>
-                        </div>
-
-                    </div>
-                    <div class="col-lg-3 remove_Not_in_women_Category">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>HIP</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
-                                name="hip[0][]">
-                            <p class="text-danger" id="error-hip_0"></p>
 
                         </div>
+                        <div class="col-lg-3 remove_Not_in_women_Category">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>HIP</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.14"
+                                    name="hip[0][]">
+                                <p class="text-danger" id="error-hip_0_0"></p>
 
-                    </div>
-                    <div class="col-lg-3 remove_Not_in_women_Category">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
-                                name="shoulder[0][]">
-                            <p class="text-danger" id="error-shoulder_0"></p>
 
                         </div>
+                        <div class="col-lg-3 remove_Not_in_women_Category">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Shoulder</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.16"
+                                    name="shoulder[0][]">
+                                <p class="text-danger" id="error-shoulder_0_0"></p>
 
-                    </div>
-                    <div class="col-lg-3 remove_Not_in_women_Category">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
-                                name="sleeve_length[0][]">
-                            <p class="text-danger" id="error-sleeve_length_0"></p>
 
                         </div>
+                        <div class="col-lg-3 remove_Not_in_women_Category">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Sleev Length</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.18"
+                                    name="sleeve_length[0][]">
+                                <p class="text-danger" id="error-sleeve_length_0_0"></p>
 
-                    </div>
-                    <div class="col-lg-3 remove_Not_in_women_Category">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Length</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20"
-                                name="length[0][]">
 
-                            <p class="text-danger" id="error-length_0"></p>
                         </div>
+                        <div class="col-lg-3 remove_Not_in_women_Category">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Length</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace no-zero" placeholder="Eg.20"
+                                    name="length[0][]">
 
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Total Stocks</label>
+                                <p class="text-danger" id="error-length_0_0"></p>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208"
-                                name="total_stock[0][]">
 
-                            <p class="text-danger" id="error-total_stock_0"></p>
                         </div>
+                        <div class="col-lg-3">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Total Stocks</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace" placeholder="Eg.13208"
+                                    name="total_stock[0][]">
 
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>SKU Limit</label>
+                                <p class="text-danger" id="error-total_stock_0_0"></p>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[0][]">
 
-                            <p class="text-danger" id="error-sku_0"></p>
                         </div>
+                        <div class="col-lg-3">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>SKU Limit</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace" placeholder="20019"
+                                    name="sku[0][]">
 
-                    </div>
-                    {{-- <div class="col-lg-3">
+                                <p class="text-danger" id="error-sku_0"></p>
+                                <p class="text-danger" id="error-sku_0_0"></p>
+                            </div>
+
+                        </div>
+                        {{-- <div class="col-lg-3">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>SKU Threshold value</label>
@@ -411,77 +413,89 @@
 
                     </div> --}}
 
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Actual Price</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
-                                name="actual_price[0][]" id="actual_price_0">
-                            <p class="text-danger" id="error-actual_price_0"></p>
+                        <div class="col-lg-3">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Actual Price</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
+                                    name="actual_price[0][]" id="actualprice_0_0">
+                                <p class="text-danger" id="error-actual_price_0_0"></p>
 
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-3">
-                <div class="title24">Discounted Price</div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div
-                            class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="discount_type[0][0]" id="discount_type_percentage_0" checked
-                                        value="1">
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">Percentage</span>
-                                </label>
-                            </div>
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="discount_type[0][0]" id="discount_type_fixed_0" value="2">
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">Fixed Price</span>
-                                </label>
                             </div>
 
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="pt-3">
+                    <div class="title24">Discounted Price</div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div
+                                class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                                <div class="check_radio">
+                                    <label class="radio-group">
+                                        <input type="radio" name="discount_type[0][0]" id="discount_type_percentage_0_0"
+                                            checked value="1">
+                                        <span class="custom-radio"></span>
+                                        <span class="radio-label">Percentage</span>
+                                    </label>
+                                </div>
+                                <div class="check_radio">
+                                    <label class="radio-group">
+                                        <input type="radio" name="discount_type[0][0]" id="discount_type_fixed_0_0"
+                                            value="2">
+                                        <span class="custom-radio"></span>
+                                        <span class="radio-label">Fixed Price</span>
+                                    </label>
+                                </div>
 
-
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Percentage</label>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-lg-6 col-md-6">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Percentage</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
+                                    name="discount_value[0][]" id="discount_value_0_0">
+                                <p class="text-danger" id="error-discount_value_0"></p>
+
+                            </div>
+<<<<<<< HEAD
                             <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
                                 name="discount_value[0][]" id="discount_value_0">
                             <p class="text-danger" id="error-discount_value_0"></p>
+=======
+>>>>>>> d54c93643f9a6f032b73c0058fc42bd0d1690ae6
 
                         </div>
-
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Final Price</label>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Final Price</label>
+                                </div>
+                                <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
+                                    name="final_price[0][]" id="final_price_0_0">
+                                <p class="text-danger" id="error-final_price_0_0"></p>
                             </div>
+<<<<<<< HEAD
                             <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
                                 name="final_price[0][0]" id="final_price_0">
                             <p class="text-danger" id="error-final_price_0"></p>
+=======
+>>>>>>> d54c93643f9a6f032b73c0058fc42bd0d1690ae6
                         </div>
                     </div>
                 </div>
-            </div>
 
             </div>
-
 
         </div>
         <!-----End variant panel ------>
@@ -627,6 +641,47 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="col-lg-6 col-md-6">
+                    <div class="title24">Affiliated Product?</div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div
+                                class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
+                                <div class="check_radio">
+                                    <label class="radio-group">
+                                        <input type="radio" name="affiliated_product" checked value="1">
+                                        <span class="custom-radio"></span>
+                                        <span class="radio-label">Yes</span>
+                                    </label>
+                                </div>
+                                <div class="check_radio">
+                                    <label class="radio-group">
+                                        <input type="radio" name="affiliated_product" value="0">
+                                        <span class="custom-radio"></span>
+                                        <span class="radio-label">No</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                     <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Is this product exchangeable?</label>
+                                </div>
+                                <input type="number" class="form-control" placeholder="Eg.15 days"
+                                    name="exchangable_days">
+                                <p class="text-danger" id="error-exchangable_days"></p>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    </div>
+                </div> -->
+
                 <div class="col-lg-6 col-md-6">
                     <div class="title24">Affiliated Product?</div>
                     <div class="row">
@@ -650,7 +705,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row" id="affiliated_commissionId" style="display:none">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="sub-form">
+                                <div class="label-flex">
+                                    <label>Affiliated product commision</label>
+                                </div>
+                                <input type="number" class="form-control" placeholder="Eg.0 to 100"
+                                    name="affiliated_commission" max="100" min="0" value="10">
+                                <p class="text-danger" id="error-affiliated_commission"></p>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="col-lg-6 col-md-6">
                     <div class="title24">Customized products?</div>
                     <div class="row">
@@ -730,7 +800,7 @@
         <div class="product-pnls mt-4">
             <div class="upload-image" style="height:170px;width: 270px;">
                 <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;">
-                    <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"    
+                    <img id="placeholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
 
                     <img id="uploadedImg" src=""
@@ -742,9 +812,9 @@
                     <p class="text-danger" id="error-upload_size_chart"></p>
                 </label>
 
-                 <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
+                <div class="product-multiple d-flex flex-wrap gap-2" id="edit_uploadChart_preview"></div>
             </div>
-            
+
         </div>
 
         <!--
@@ -756,7 +826,7 @@
 
 
               style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
-                    <img id="uploadedImg" src="" 
+                    <img id="uploadedImg" src=""
                         style="display:none; object-fit:cover; border-radius:6px;width:225px;object-fit: fill; height: 125px;padding-top: 12px;">
                     <div class="py-2"  style="color:#875C3A" >Upload Size Chart</div>
                     <input type="file" accept="image/*" multiple id="edit_uploadChart" style="opacity:0;display: none; width:50px;"
@@ -801,28 +871,6 @@ $(document).ready(function() {
 
 $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {});
 
-
-
-
-// // When User select Image vartion Then Show dynamic Image Preview
-// $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e) {
-//     let rel = $(this).attr('rel');
-//     let files = e.target.files;
-//     // $('#previewContainer').empty(); // clear old previews
-//     [...files].forEach(f => {
-//         let url = URL.createObjectURL(f);
-//         let imgBox = $(`
-//       <div class="multiple-img position-relative">
-//         <img src="${url}" class="w-100 rounded">
-//         <span class="remove-ic" style="position:absolute;top:0;right:5px;cursor:pointer;font-size:20px;color:red;">&times;</span>
-//       </div>
-//     `);
-//         imgBox.find('.remove-ic').click(() => imgBox.remove());
-//         $('#previewContainer' + rel).append(imgBox);
-//     });
-
-
-// });
 
 // Store files for each variant input
 let fileStore = {};
@@ -877,6 +925,9 @@ $(document).on('change', 'input[type="file"][name^="variant_image"]', function(e
         });
 
         $('#previewContainer' + rel).append(imgBox);
+
+        $('#error-variant_image_' + rel).empty();
+
     });
 
     // Assign new accumulated file list to input
@@ -898,15 +949,17 @@ $('#edit_uploadChart').on('change', e => {
     `);
         imgBox.find('.remove-ic').click(() => imgBox.remove());
         $('#edit_uploadChart_preview').append(imgBox);
+
+        $('#error-upload_size_chart').empty();
+
+
     });
 });
 
 // Upload Chart Image in footer side
-
 </script>
 
 <script>
-
 // ADD NEW ROW In specification
 
 var specification_count = 1;
@@ -1031,8 +1084,8 @@ $(".addVariantBtn").click(function() {
                   {{-- Add New Variationc code --}}
              <div class="mt-3 d-flex justify-content-between py-2 align-items-center">
             <div class="title24">Add Variation </div>
-            <div class="sep-icon addmoreVariation" rel="${product_Variation_count}">
-                <img src="{{ asset('/dealer') }}/assets/img/add.svg" alt="add" id="varAdd2">
+            <div class="sep-icon" rel="${product_Variation_count}">
+                <img src="{{ asset('/dealer') }}/assets/img/add.svg" class="addmoreVariation" alt="add" rel="${product_Variation_count}">
             </div>
            </div>
             {{-- Add New Variationc code --}}
@@ -1048,14 +1101,15 @@ $(".addVariantBtn").click(function() {
                             <label>Size</label>
                         </div>
 
-                        <select class="form-select form-control" aria-label="Default select example" name="size_id[]">
-                               <option value="">Select Colour</option>
+                        <select class="form-select form-control" aria-label="Default select example" name="size_id[${product_Variation_count}][]">
+                               <option value="">Select Size</option>
                            
                             @foreach ($size as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
-                      <p class="text-danger" id="error-size_id_${product_Variation_count}"></p>
+                      <p class="text-danger" id="error-size_id_${product_Variation_count}_0"></p>
+                 <p class="text-danger" id="error-size_id_${product_Variation_count}"></p>
 
                         </div>
                    
@@ -1068,8 +1122,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Bust</label>
                             </div>
-                            <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[]">
-                          <p class="text-danger" id="error-bust_${product_Variation_count}"></p>
+                            <input type="number" class="form-control no-zero" placeholder="Eg.10" name="bust[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-bust_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1079,8 +1133,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Waist</label>
                             </div>
-                            <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[]">
-                          <p class="text-danger" id="error-waist_${product_Variation_count}"></p>
+                            <input type="number" class="form-control no-zero" placeholder="Eg.12" name="waist[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-waist_${product_Variation_count}_0"></p>
 
                    </div>
 
@@ -1090,8 +1144,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>HIP</label>
                             </div>
-                            <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[]">
-                          <p class="text-danger" id="error-hip_${product_Variation_count}"></p>
+                            <input type="number" class="form-control no-zero" placeholder="Eg.14" name="hip[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-hip_${product_Variation_count}_0"></p>
 
                             </div>                        
                     </div>
@@ -1101,8 +1155,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Shoulder</label>
                             </div>
-                            <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[]">
-                          <p class="text-danger" id="error-shoulder_${product_Variation_count}"></p>
+                            <input type="number" class="form-control no-zero" placeholder="Eg.16" name="shoulder[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-shoulder_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1113,8 +1167,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Sleev Length</label>
                             </div>
-                            <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[]">
-                          <p class="text-danger" id="error-sleeve_length_${product_Variation_count}"></p>
+                            <input type="number" class="form-control no-zero" placeholder="Eg.18" name="sleeve_length[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-sleeve_length_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1124,8 +1178,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Length</label>
                             </div>
-                            <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[]" >
-                          <p class="text-danger" id="error-length_${product_Variation_count}"></p>
+                            <input type="number" class="form-control no-zero" placeholder="Eg.20" name="length[${product_Variation_count}][]" >
+                          <p class="text-danger" id="error-length_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1135,8 +1189,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Total Stocks</label>
                             </div>
-                            <input type="number" class="form-control" placeholder="Eg.13208" name="total_stock[]" >
-                          <p class="text-danger" id="error-total_stock_${product_Variation_count}"></p>
+                            <input type="number" class="form-control" placeholder="Eg.13208" name="total_stock[${product_Variation_count}][]" >
+                          <p class="text-danger" id="error-total_stock_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1146,8 +1200,9 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>SKU Limit </label>
                             </div>
-                            <input type="number" class="form-control" placeholder="20019" name="sku[]">
+                            <input type="number" class="form-control" placeholder="20019" name="sku[${product_Variation_count}][]">
                           <p class="text-danger" id="error-sku_${product_Variation_count}"></p>
+                          <p class="text-danger" id="error-sku_${product_Variation_count}_0"></p>
 
                             </div>
 
@@ -1159,15 +1214,14 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number"  id="actual_price_${product_Variation_count}" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[]">
-                          <p class="text-danger" id="error-actual_price_${product_Variation_count}"></p>
+                            <input type="number"  id="actualprice_${product_Variation_count}_0" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-actual_price_${product_Variation_count}_0"></p>
 
                             </div>
-
                         
                     </div>
                 </div>
-         
+
 
             <div class="pt-3">
                 <div class="title24">Discounted Price</div>
@@ -1176,14 +1230,14 @@ $(".addVariantBtn").click(function() {
                         <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" id="discount_type_percentage_${product_Variation_count}" name="discount_type[${product_Variation_count}]" value="1" checked>
+                                    <input type="radio" id="discount_type_percentage_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="1" checked>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Percentage</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" id="discount_type_fixed_${product_Variation_count}" name="discount_type[${product_Variation_count}]" value="2">
+                                    <input type="radio" id="discount_type_fixed_${product_Variation_count}_0" name="discount_type[${product_Variation_count}][0]" value="2">
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Fixed Price</span>
                                 </label>
@@ -1199,8 +1253,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Percentage</label>
                             </div>
-                           <input type="number" id="discount_value_${product_Variation_count}" class="form-control" placeholder="Eg.10%" name="discount_value[]">
-                          <p class="text-danger" id="error-discount_value_${product_Variation_count}"></p>
+                           <input type="number" id="discount_value_${product_Variation_count}_0" class="form-control" placeholder="Eg.10%" name="discount_value[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-discount_value_${product_Variation_count}_0"></p>
 
                            </div>
 
@@ -1210,8 +1264,8 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" id="final_price_${product_Variation_count}" class="form-control" placeholder="Eg.KD 299.00" name="final_price[]">
-                          <p class="text-danger" id="error-final_price_${product_Variation_count}"></p>
+                            <input type="number" id="final_price_${product_Variation_count}_0" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
+                          <p class="text-danger" id="error-final_price_${product_Variation_count}_0"></p>
 
                          </div>
 
@@ -1369,9 +1423,19 @@ $(document).on('submit', 'form#addproduct', function(event) {
                     let parts = field.split(".");
                     let fieldName = parts[0];
                     let index = parts[1];
+                    let index1 = parts[2];
+
 
                     // Example → #error-product_spe_en_0
-                    $("#error-" + fieldName + "_" + index).html(messages[0]);
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
 
                 } else {
 
@@ -1429,20 +1493,44 @@ $(document).on('change', 'input[name="product_exchangable"]', function() {
 });
 
 
+$(document).on('change', 'input[name="affiliated_product"]', function() {
+    let value = $(this).val();
+
+    if (value == "1") {
+        // YES → show return days
+        // $('#affiliated_commissionId').show();
+
+    } else {
+        // $('#affiliated_commissionId').hide();
+
+    }
+});
+
+
 // dynamic Price show after discount 
 // dynamic Price show after discount 
 // Listen for input changes
 $(document).on("input change",
-    "input[id^='actual_price_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
+    "input[id^='actualprice_'], input[id^='discount_value_'], input[type='radio'][name^='discount_type']",
     function() {
 
-        let id = $(this).attr("id");
-        let index = id.split("_").pop();
+        debugger;
 
-        let actualPrice = parseFloat($("#actual_price_" + index).val());
-        let discountInput = $("#discount_value_" + index);
+        let id = $(this).attr("id");
+        // let index = id.split("_").pop();
+
+
+        let parts = id.split("_");
+
+        let index = parts[parts.length - 2]; // second last
+        let index1 = parts[parts.length - 1]; // last
+
+
+        let actualPrice = $("#actualprice_" + index + '_' + index1).val();
+        let discountInput = $("#discount_value_" + index + '_' + index1);
         let discountValue = parseFloat(discountInput.val());
-        let discountType = $(`input[name='discount_type[${index}]']:checked`).val();
+        let discountType = $(`input[name='discount_type[${index}][${index1}]']:checked`).val();
+
 
         // -----------------------------------------
         // 👉 RUN THIS VALIDATION ONLY IF TYPE = 1
@@ -1456,6 +1544,10 @@ $(document).on("input change",
                 discountInput.val(0);
                 discountValue = 0;
             }
+
+
+
+
         } else if (discountType == "2") {
             // Fixed price → cannot exceed actual price
             if (discountValue > actualPrice) {
@@ -1466,14 +1558,18 @@ $(document).on("input change",
                 discountInput.val(0);
                 discountValue = 0;
             }
+
+
         }
         // Type=2 (Fixed price) → No restriction
         // -----------------------------------------
 
         if (!actualPrice || !discountValue) {
-            $("#final_price_" + index).val("");
+            $("#final_price_" + index + '_' + index1).val("");
             return;
         }
+
+
 
         let finalPrice = 0;
 
@@ -1481,14 +1577,15 @@ $(document).on("input change",
         if (discountType == "1") {
             finalPrice = actualPrice - (actualPrice * (discountValue / 100));
 
-         if (Number.isInteger(finalPrice)) {
-            finalPrice=finalPrice;
+            if (Number.isInteger(finalPrice)) {
+                finalPrice = finalPrice;
             } else if (!isNaN(finalPrice) && typeof finalPrice === "number") {
-                finalPrice=finalPrice.toFixed(2);
+                finalPrice = finalPrice.toFixed(2);
             }
 
 
         }
+
 
         // Fixed price
         if (discountType == "2") {
@@ -1497,8 +1594,12 @@ $(document).on("input change",
 
         if (finalPrice < 0) finalPrice = 0;
 
+
+
         // $("#final_price_" + index).val(finalPrice.toFixed(2));
-        $("#final_price_" + index).val(finalPrice);
+        $("#final_price_" + index + '_' + index1).val(finalPrice);
+        $("#error-final_price_" + index + '_' + index1).empty();
+
     });
 
 // Min value and Max greater then Input Field
@@ -1582,7 +1683,7 @@ $(document).ready(function() {
     //     // Loop through each row to hide/show image upload
     //     $('.product-row').each(function() {
     //         let rowColor = $(this).find('.color-select').val();
-            
+
     //         // debugger;
     //         if(rowColor === "") return; // skip empty
 
@@ -1590,7 +1691,7 @@ $(document).ready(function() {
     //         let occurrences = selectedColors.filter(c => c === rowColor).length;
 
     //         if(occurrences > 1){
-                
+
     //         // debugger;
 
     //             $('#variant_image_id'+dynamic_id).hide();
@@ -1605,239 +1706,7 @@ $(document).ready(function() {
     // });
 
 });
-
-
 </script>
-
-<script>
-
-$("#varAdd").click(function(){
-
-    var variation_id=$(this).attr('rel');
-
-    $(".subvariant").append(`
-        <div class="inside_variation0 p-2 mt-4 newvariant" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
-        border-radius: 10px; box-shadow: 0px 2px 4px #ddd;">
-            <div class="wapper-header mt-2">
-                <div class="row price-block">
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Size</label>
-                            </div>
-                            <select class="form-select form-control" aria-label="Default select example" name="size_id[${variation_id}]">
-                                <option value="">Select Size</option>
-                                @foreach ($size as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger" id="error-size_id_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Total Stocks</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208" name="total_stock[${variation_id}]">
-
-                            <p class="text-danger" id="error-total_stock_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>SKU Limit</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[${variation_id}]">
-                            <p class="text-danger" id="error-sku_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Actual Price</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[${variation_id}]" id="actual_price_0">
-                            <p class="text-danger" id="error-actual_price_0"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-3">
-                <div class="title24">Discounted Price</div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="discount_type[${variation_id}][0]" id="discount_type_percentage_0" checked value="1">
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">Percentage</span>
-                                </label>
-                            </div>
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="discount_type[${variation_id}][]" id="discount_type_fixed_0" value="2">
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">Fixed Price</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Percentage</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%" name="discount_value[${variation_id}]" id="discount_value_0">
-                            <p class="text-danger" id="error-discount_value_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Final Price</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[${variation_id}]" id="final_price_0">
-                            <p class="text-danger" id="error-final_price_0"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <div class="remove-btn2 text-danger"><i class="bi bi-x"></i> Remove </div>
-            </div>
-
-        </div>
-
-    `);
- })
-
- // REMOVE ROW
-$(document).on("click", ".remove-btn2", function() {
-    $(this).closest(".newvariant").remove();
-});
-
-
-// Add another sub Variation
-
-$(document).on("click", ".addmoreVariation", function () {
-    let variation_id = $(this).attr("rel");
-
-    $(`#variant_image_id${variation_id}`).closest(".variant-panel-bg").find(".inside_variation").append(`
-        <div class="p-2 mt-4 subpanel" style="background:#fff7ea; background: #fff; border: 1px dashed #0d0606;
-        border-radius: 10px; box-shadow: 0px 2px 4px #ddd;">
-           <div class="wapper-header mt-2">
-                <div class="row price-block">
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Size</label>
-                            </div>
-                            <select class="form-select form-control" aria-label="Default select example" name="size_id[${variation_id}]">
-                                <option value="">Select Size</option>
-                                @foreach ($size as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                            <p class="text-danger" id="error-size_id_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Total Stocks</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.13208" name="total_stock[${variation_id}]">
-
-                            <p class="text-danger" id="error-total_stock_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>SKU Limit</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="20019" name="sku[${variation_id}]">
-                            <p class="text-danger" id="error-sku_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Actual Price</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="actual_price[${variation_id}]" id="actual_price_0">
-                            <p class="text-danger" id="error-actual_price_0"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-3">
-                <div class="title24">Discounted Price</div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 justify-content-between">
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="discount_type[${variation_id}]" id="discount_type_percentage_0" checked value="1">
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">Percentage</span>
-                                </label>
-                            </div>
-                            <div class="check_radio">
-                                <label class="radio-group">
-                                    <input type="radio" name="discount_type[${variation_id}]" id="discount_type_fixed_0" value="2">
-                                    <span class="custom-radio"></span>
-                                    <span class="radio-label">Fixed Price</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Percentage</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%" name="discount_value[${variation_id}]" id="discount_value_0">
-                            <p class="text-danger" id="error-discount_value_0"></p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="sub-form">
-                            <div class="label-flex">
-                                <label>Final Price</label>
-                            </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[${variation_id}]" id="final_price_0">
-                            <p class="text-danger" id="error-final_price_0"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <div class="remove-btn22 text-danger"><i class="bi bi-x"></i> Remove </div>
-            </div>
-
-        </div>
-    `);
-});
-
- // REMOVE ROW
- $(document).on("click", ".remove-btn22", function() {
-    $(this).closest(".subpanel").remove();
-});
-
-
-</script>
-
-
 
 {{-- // common j s --}}
 @include('dealer.product.ajax.product_commonjs');

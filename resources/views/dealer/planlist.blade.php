@@ -81,7 +81,7 @@
 
                         @endphp
 
-                        <div class="col-lg-3 col-md-4 d-flex justify-items-stretch">
+                        <div class="col-lg-3 col-md-4 d-flex justify-items-stretch mb-4">
                             <div class="plan-card plan-shadow w-100 position-relative h-100">
                                 <div class="plan-header  text-center " style="background-color: {{ $color }}">
 

@@ -2,10 +2,15 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\UserStoreController;
 use App\Http\Controllers\User\AddressController;
+use App\Http\Controllers\User\UserGiftCardController;
+use App\Http\Controllers\User\CartController;
+
+
 
 
 
@@ -52,6 +57,8 @@ use App\Http\Controllers\User\AddressController;
    Route::get('view-address', [AddressController::class, 'viewAddress'])->name('user.view_address');
   
    Route::match(['get','post'],'save-address', [AddressController::class, 'saveAddress'])->name('user.save_address');
+
+   Route::post('addToCart',[UserStoreController::class, 'addToCart'])->name('user.addToCart');
  
 
    Route::get('edit-address/{id}', [AddressController::class, 'updateAddress'])->name('user.update_address');
@@ -61,7 +68,34 @@ use App\Http\Controllers\User\AddressController;
    Route::get('address/set-default',[AddressController::class, 'addressSetDefault'])->name('user.address_set_default');
 
 
-   });
+   Route::get('gift-cards',[UserGiftCardController::class, 'gift_cards'])->name('user.gift_cards');
+   Route::get('view-gift-cards/{id}',[UserGiftCardController::class, 'view_gift_card'])->name('user.view_gift_card');
+   Route::get('add-gift-cards',[UserGiftCardController::class, 'add_gift_cards'])->name('user.add_gift_cards');
+   Route::post('buyGiftCard',[UserGiftCardController::class, 'buyGiftCard'])->name('user.buyGiftCard');
+
+
+   Route::get('view-cart',[CartController::class, 'view_cart'])->name('user.view_cart');
+   Route::post('apply_promocode',[CartController::class, 'apply_promocode'])->name('user.apply_promocode');
+   Route::post('apply_giftcard',[CartController::class, 'apply_giftcard'])->name('user.apply_giftcard');
+   Route::post('create_order',[CartController::class, 'create_order'])->name('user.create_order');
+
+   Route::post('create_order',[CartController::class, 'create_order'])->name('user.create_order');
+
+
+  Route::get('complete-order-Payment',[CartController::class, 'complete_order_Payment'])->name('user.complete_order_Payment');
+
+  Route::get('order-details/{id}',[CartController::class, 'orderDetails'])->name('user.orderDetails');
+
+
+  Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');;
+
+
+});
+
+
+
+Route::get('Payment-Callback',[CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
+
 
 
  Route::match(['get', 'post'], '/route1', function () {
@@ -79,6 +113,30 @@ Route::match(['get', 'post'], '/add-new-address', function () {
 Route::match(['get', 'post'], '/saved-address', function () {
      return view('user.profile.saved-address');
 });
+
+
+Route::match(['get', 'post'], '/order-place', function () {
+     return view('user.carts.orderplace');
+
+})->name('user.order-place');
+
+Route::match(['get', 'post'], '/myorder', function () {
+     return view('user.orders.my-order');
+
+})->name('user.myorder');
+
+Route::match(['get', 'post'], '/order_details', function () {
+     return view('user.orders.order-details');
+
+})->name('user.order_details');
+
+
+// Route::match(['get', 'post'], '/view-cart', function () {
+
+//      return view('user.carts.cartlist');
+// })->name('user.view-cart');
+
+
 // Route::match(['get', 'post'], '/wishlist', function () {
 //      return view('user.profile.wishlist');
 // });
@@ -97,3 +155,13 @@ Route::match(['get', 'post'], '/saved-address', function () {
 //  Route::match(['get', 'post'], '/route6', function () {
 //      return view('user.profile.profileChangeEmailOtp');
 // });
+
+Route::fallback(function (Request $request) {
+    $uri = $request->getRequestUri();
+
+    if (str_starts_with($uri, '/User') || preg_match('/\/[A-Z]/', $uri)) {
+        return redirect(strtolower($uri), 301);
+    }
+
+    abort(404);
+});

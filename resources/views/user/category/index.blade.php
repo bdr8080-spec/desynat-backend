@@ -1,14 +1,14 @@
 @extends('user.layout.app')
 
 @section('content')
-    <div class="customContainer">
-        <div class="">
-            <div class="">
-                <img src="{{ asset('user/assets/images/image-sg.svg') }}" class="img-fluid" />
-            </div>
+<div class="customContainer">
+    <div>
+        <div>
+            <img src="{{ $store_details['store']['store_image'] }}" class="store-banner-img" />
         </div>
     </div>
 </div>
+
 
     <div class="storeClient_profile customsmallContainer">
         <div class="row">
@@ -155,17 +155,17 @@
                                     <h3>Filters</h3>
                                     <a href="{{route('user.store_details',[request()->id])}}">Clear</a>
                                 </div>
-                                <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+                                    <form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
                                         <div class="form-group mt-4">
                                             <h5>Category</h5>
                                             @foreach ($category as $key => $item)
                                             <div class="form-check my-4">
                                                 <input class="form-check-input mb-1"
                                                     type="radio"
-                                                    name="category[]"
+                                                    name="category_id[]"
                                                     value="{{ $item->id }}"
                                                     id="category_{{ $key }}"
-                                                    {{ is_array(request()->category) && in_array($item->id, request()->category) ? 'checked' : '' }}>
+                                                    {{ is_array(request()->category_id) && in_array($item->id, request()->category_id) ? 'checked' : '' }}>
                                                 
                                                 <label class="form-check-label" for="category_{{ $key }}">
                                                     {{ $item->name }}
@@ -197,7 +197,6 @@
                                                 </button>
                                             @endif
                                         </div>
-
                                         <div class="form-group mt-4">
                                             <h5>Price</h5>
                                             <div class="slider-wrap" id="priceArea">
@@ -207,24 +206,25 @@
 
                                                     <div class="active-indicator" id="indicator"></div>
 
-                                                    <div class="value-bubble" id="valueBubble">249 KD</div>
+                                                    <div class="value-bubble" id="valueBubble">100000 KD</div>
 
                                                     <input type="range"
                                                         min="99"
-                                                        max="999"
-                                                        value="{{ request()->price ?? 249 }}"
+                                                        max="100000"
+                                                        value="{{ request()->price_max ?? 50000 }}"
                                                         id="priceRange"
-                                                        name="price"
                                                         style="width:100%;">
+                                                    <input type="hidden" name="price_min" id="priceMin" value="{{ request()->price_min ?? 99 }}">
+                                                    <input type="hidden" name="price_max" id="priceMax" value="{{ request()->price_max ?? 50000 }}">
                                                 </div>
 
                                                 <div class="ticks">
                                                     <div class="tick text-start">99 KD</div>
-                                                    <!-- <div class="tick">249 KD</div> -->
-                                                    <div class="tick text-end">999 KD</div>
+                                                    <div class="tick text-end">100000 KD</div>
                                                 </div>
                                             </div>
                                         </div>
+
 
                                         {{-- Color --}}
                                         <div class="form-group mt-4">
@@ -234,10 +234,10 @@
                                                 <div class="form-check my-4 color-item {{ $key >= 10 ? 'd-none extra-color' : '' }}">
                                                     <input class="form-check-input"
                                                         type="checkbox"
-                                                        name="color[]"
+                                                        name="color_id[]"
                                                         value="{{ $item->id }}"
                                                         id="color{{ $item->id }}"
-                                                        {{ request()->color == $item->id ? 'checked' : '' }}>
+                                                        {{ request()->color_id == $item->id ? 'checked' : '' }}>
 
                                                     <label class="form-check-label" for="color{{ $item->id }}">
                                                         {{ $item->name }}
@@ -289,10 +289,10 @@
                                             <div class="form-check my-4">
                                                 <input class="form-check-input"
                                                     type="checkbox"
-                                                    name="size[]"
-                                                    value="{{ $item->name }}"
+                                                    name="size_id[]" 
+                                                    value="{{ $item->id }}" 
                                                     id="size_{{ $key }}"
-                                                    {{ is_array(request()->size) && in_array($item->name, request()->size) ? 'checked' : '' }}>
+                                                    {{ is_array(request()->size_id) && in_array($item->id, request()->size_id) ? 'checked' : '' }}>
                                                 
                                                 <label class="form-check-label" for="size_{{ $key }}">
                                                     {{ $item->name }}
@@ -300,6 +300,7 @@
                                             </div>
                                             @endforeach
                                         </div>
+
 
                                         {{-- Ratings --}}
                                         <div class="form-group mt-4">
@@ -390,7 +391,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- <button class="customBtn customBtn5 mt-5">Apply</button> -->
+                                        <button class="customBtn customBtn5 mt-5">Apply</button>
 
                                     </form>
 
@@ -402,7 +403,7 @@
                                 <div class="row">
 
                                     @foreach ($store_details['All_Product'] as $item)
-                                        <div class="col-lg-4 col-md-4 col-6 my-3">
+                                        <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
                                                 <div class="product-card">
                                                     <div class="product-img">
                                                         @foreach ($item->product_variants[0]->variant_image as $key => $val)
@@ -425,7 +426,7 @@
                                                     </div>
                                                 <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                                                     <div class="product-content">
-                                                            <h5>{{ $item->product_name_en }} ({{ "by " . $store_details['store']['store_name'] }})</h5>
+                                                            <h5 class="black-title">{{ $item->product_name_en }} ({{ "by " . $store_details['store']['store_name'] }})</h5>
                                                             <div class="rating">
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
@@ -434,15 +435,15 @@
                                                                 <span>(1K)</span>
                                                             </div>
                                                             <div class="price">
-                                                                <strong>{{ $item->product_variants[0]->actual_price }}
+                                                                <strong>{{ $item->product_variants[0]->final_price }}
                                                                     KD</strong>
                                                                 <div class="d-block">
-                                                                    <span class="old-price">{{ $item->product_variants[0]->final_price }}
+                                                                    <span class="old-price">{{ $item->product_variants[0]->actual_price }}
                                                                         KD</span>
                                                                     <span class="discount">
 
                                                                         {{ $item->product_variants[0]->discount_value }}
-                                                                        {{ $item->product_variants[0]->discount_type == '1' ? '%' : 'Off' }}
+                                                                        {{ $item->product_variants[0]->discount_type == '1' ? '% Off' : 'Off' }} 
 
                                                                     </span>
                                                                 </div>
@@ -539,67 +540,79 @@
     </div>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="sortMOdal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form action="{{ url('user/store-details/' . request()->id) }}" method="GET">
+    <div class="modal fade" id="sortMOdal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
+
                 <div class="modal-header border-0">
-                    <h3 class="modal-title fs-5" id="exampleModalLabel">Sort By</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="modal-title fs-5">Sort By</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+
                 <div class="modal-body">
+
                     <div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                            <label class="form-check-label" for="radioDefault1">
-                                Recommended
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort1" value="1"
+                                {{ request('sort_filter') == 1 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort1">Recommended</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Price: Low to High
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort2" value="2"
+                                {{ request('sort_filter') == 2 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort2">Price: Low to High</label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Price: High to Low
-                            </label>
-                        </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Newest First
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort3" value="3"
+                                {{ request('sort_filter') == 3 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort3">Price: High to Low</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Customer Ratings
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort4" value="4"
+                                {{ request('sort_filter') == 4 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort4">Newest First</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Best Selling
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort5" value="5"
+                                {{ request('sort_filter') == 5 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort5">Customer Ratings</label>
                         </div>
+
                         <div class="form-check my-3">
-                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                            <label class="form-check-label" for="radioDefault2">
-                                Fastest Delivery
-                            </label>
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort6" value="6"
+                                {{ request('sort_filter') == 6 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort6">Best Selling</label>
                         </div>
+
+                        <div class="form-check my-3">
+                            <input class="form-check-input" type="radio" name="sort_filter" id="sort7" value="7"
+                                {{ request('sort_filter') == 7 ? 'checked' : '' }}>
+                            <label class="form-check-label" for="sort7">Fastest Delivery</label>
+                        </div>
+
                     </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <button type="button" class="custom-btn3">Clear</button>
-                        <button type="button" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">Apply</button>
+
+                    <div class="d-flex align-items-center gap-3 mt-3">
+                        <a href="{{route('user.store_details',[request()->id])}}" id="clearSort" class="custom-btn6 text-center w-100 text-white" style="    text-decoration: auto;">Clear</a>
+                        <button type="submit" class="custom-btn6" style="padding:8px 10px; color:#fff !important;">
+                            Apply
+                        </button>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
+</form>
+
+
 
     <script>
         var images = [
@@ -753,6 +766,30 @@
 
             this.textContent = isHidden ? "See Less" : "See More";
         });
-</script>   
+</script>  
+
+<script>
+const slider = document.getElementById('priceRange');
+const priceMinInput = document.getElementById('priceMin');
+const priceMaxInput = document.getElementById('priceMax');
+const valueBubble = document.getElementById('valueBubble');
+
+slider.addEventListener('input', function() {
+    const value = this.value;
+    valueBubble.innerText = value + ' KD';
+    // Update the hidden input
+    priceMaxInput.value = value;
+});
+
+
+</script>
+
+<script>
+    window.onpageshow = function(event) {
+        if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            window.location.reload();
+        }
+    };
+</script>
 
 @endsection

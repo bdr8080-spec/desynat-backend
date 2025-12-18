@@ -12,6 +12,8 @@ use App\Http\Middleware\LoginCheck;
 use App\Http\Middleware\DisableBackBtn;
 use App\Http\Middleware\SellerAuthenticated;
 
+use App\Http\Middleware\ForceLowercaseUrl;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -27,12 +29,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_seller'=>RedirectIfSellerAuthenticated::class,
             'guest_user'=>LoginCheck::class,
             'prevent-back-history' => DisableBackBtn::class, // Add this line
-            'seller_login' =>SellerAuthenticated::class
-               
+            'seller_login' =>SellerAuthenticated::class,
+            'LowerUrl' => ForceLowercaseUrl::class,
+                           
         ]);
-
-       
-
     })
 
     ->withMiddleware(function (Middleware $middleware) {
@@ -43,6 +43,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
         //
     })
-    ->withExceptions(function (Exceptions $exceptions) {
+    ->withExceptions(function (Exceptions $exceptions) {[
+
+         \App\Http\Middleware\ForceLowercaseUrl::class,
+
+    ];
+         
         //
     })->create();

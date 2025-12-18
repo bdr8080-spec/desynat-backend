@@ -54,11 +54,35 @@
             Reason Management
         </a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item {{ Request::routeIs('admin.shippingManagement') || Request::routeIs('admin.manageShippingCharges') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.shippingManagement') }}">
+            <span><img src="{{ asset('admin/image/category.svg') }}" alt="Shipping Management" /></span>
+            Delivery Charges & Tax Management
+        </a>
+    </li>
+    <li class="nav-item {{ Request::routeIs('admin.giftCardManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.giftCardManagement') }}">
+            <span><img src="{{ asset('admin/image/DDDDDDDDD/gift.svg') }}" alt="Gift Card Management" /></span>
+            Gift Card Category Management
+        </a>
+    </li>
+    <li class="nav-item {{ Request::routeIs('admin.bannerManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.bannerManagement') }}">
+            <span><img src="{{ asset('admin/image/DDDDDDDDD/banner.svg') }}" alt="Banner Management" /></span>
+            Banner Per day Price Management
+        </a>
+    </li>
+    <li class="nav-item {{ Request::routeIs('admin.promoCodeManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.promoCodeManagement') }}">
+            <span><img src="{{ asset('admin/image/DDDDDDDDD/addvertisement.svg') }}" alt="Promo Code Management" /></span>
+            Promo Code Management
+        </a>
+    </li>
+    <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
             <span><img src="{{ asset('admin/image/logout.svg') }}" alt="Logout" /></span>
             Logout
         </a>
-    </li>
+    </li> -->
 </ul>
 

@@ -29,7 +29,7 @@
     color: #444;
 }
 
-.preview-image {
+.preview-image {Action
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -137,7 +137,7 @@
                                       <!-- Delete button  -->
                                      <a
                                           href="javascript:void(0);"
-                                          class="table-button text-danger deleteBrand"
+                                          class="table-button text-danger deleteBrand mt-1 mb-1"
                                           data-id="{{ $brand->id }}"
                                       >
                                           <i class="bi bi-trash3-fill"></i>

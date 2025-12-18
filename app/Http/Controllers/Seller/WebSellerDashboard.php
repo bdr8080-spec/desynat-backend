@@ -9,9 +9,13 @@ Use Auth;
 use Validator;
 use App\Models\seller;
 
+use App\Models\country;
+
 use Illuminate\Support\Facades\Cache;
 
 use App\Services\SellerAuthService;
+
+use App\Services\SellerProductService;
 
 
 use App\Helpers\ApiResponse;
@@ -21,8 +25,10 @@ use App\Helpers\ApiResponse;
 class WebSellerDashboard extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService){
+    public function __construct(SellerAuthService $SellerAuthService,SellerProductService $SellerProductService){
         $this->SellerAuthService=$SellerAuthService;
+       $this->SellerProductService=$SellerProductService;
+
     }
 
 
@@ -61,7 +67,7 @@ class WebSellerDashboard extends Controller
 
         $plans=$plans['data'];
 
-        Cache::put('plan_page', 'yes', 60);
+        Cache::put('plan_page', 'yes', 10000);
 
         return redirect()->route('seller.all_plans')->with('success','Please purchase a Plan for Better option');
                    
@@ -138,7 +144,7 @@ class WebSellerDashboard extends Controller
 
 
     public function skip_plan(Request $request){
-        Cache::put('plan_page', 'yes', 60);
+        Cache::put('plan_page', 'yes', 10000);
         
         return redirect()->route('seller.dashboard');
 
@@ -182,12 +188,11 @@ class WebSellerDashboard extends Controller
         return redirect()->back()->with('error',$data['message']);
     }
 
-
     $data=$data['data'];
     
     if($request->payment_method=='Myfatoorah'){
 
-        return redirect()->to('/myfatoorah/' . $data->transaction_id); // send To Payment Gateway
+        return redirect()->to('/myfatoorah/' . $data->transaction_id.'?type=subcription'); // send To Payment Gateway
     }
 
 
@@ -236,6 +241,275 @@ return  redirect()->route('seller.dashboard')->with('success','You are successfu
 
 
       }
+
+
+
+  public function view_profile(REQUEST $request){
+
+    $seller_id=Auth::guard('seller')->user()->id;
+
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    ];
+
+      $seller_details=  $this->SellerProductService->View_seller_profile($request_data);
+
+      $seller_details=$seller_details['data'];
+
+      return view('dealer.profile.view_profile',compact('seller_details'));
+      }
+
+
+      public function edit_profile(REQUEST $request){
+
+        $seller_id=Auth::guard('seller')->user()->id;
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        ];
+
+      $seller_details=  $this->SellerProductService->View_seller_profile($request_data);
+      $seller_details=$seller_details['data'];
+
+        $all_country=country::get();
+
+        return view('dealer.profile.edit_profile',compact('seller_details','all_country'));
+      }
+
+                
+    public function update_profile(REQUEST $req){
+
+          $validate = Validator::make($req->all(), [
+
+            'profile_pic' => 'required_without:old_profile_pic',
+            'old_profile_pic' => 'required_without:profile_pic',
+
+            'first_name'=>'required',
+            'last_name'=>'required',            
+            // 'store_image' => 'required',
+
+            'store_image' => 'required_without:old_store_image',
+            'old_store_image' => 'required_without:store_image',
+
+            'store_name' => 'required',
+            'country'=>"required",
+            "store_address"=>"required",
+            // 'address_line1'=>'required',
+            // 'address_line2'=>'required',
+            "store_phone"=>"required",
+            'store_mail_id'=>'required',
+            'bio'=>'required',
+            // 'let'=>'required',
+            // 'long'=>'required'
+            
+            ],[
+                'profile_pic.required_without'     => 'Please upload a profile picture.',
+    'old_profile_pic.required_without' => 'Previous profile picture missing.',
+
+    'store_image.required_without'     => 'Please upload a store image.',
+    'old_store_image.required_without' => 'Previous store image missing.',
+
+    // Basic fields
+    'first_name.required'     => 'Please Enter First name',
+    'last_name.required'      => 'Please Enter Last name ',
+    'store_name.required'     => 'Please Enter Store name ',
+    'country.required'        => 'Country is required.',
+    'store_address.required'  => 'Please Enter Store address.',
+    'store_phone.required'    => 'Please Enter Store phone number ',
+    'store_mail_id.required'  => 'Please Enter Store email.',
+    'bio.required'            => 'Please Enter Bio.',
+    
+            ]);
+        
+       if($validate->fails()){
+
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+     
+       }
+
+        $seller_id=Auth::guard('seller')->user()->id;
+
+        $dir='profile/';
+
+        if($req->profile_pic){
+
+          $profile_pic= image_upload($req->profile_pic,$dir);
+        }else{
+        $profile_pic=$req->old_profile_pic;
+
+        }
+
+         if($req->store_image){
+
+          $store_image= image_upload($req->store_image,$dir);
+        }else{
+        $store_image=$req->old_store_image;
+
+        }
+
+
+       $request_data= (object)[
+        'profile_pic' => $profile_pic??null,
+        'first_name' => $req->first_name??null,
+        'last_name' => $req->last_name??null,
+        'user_id' => $seller_id,
+        'store_image' => $store_image??null ,
+        'store_name' => $req->store_name ,
+        'country'=>$req->country ,
+        "store_address"=>$req->store_address ,
+        'address_line1'=>$req->address_line1 ,
+        'address_line2'=>$req->address_line2 ,
+        'country_code' => $req->country_code,
+        "store_phone"=>$req->store_phone ,
+        'store_mail_id'=>$req->store_mail_id,
+        'bio'=>$req->bio,
+        'let'=>$req->let??null,
+        'long'=>$req->long??null
+       ];
+       
+        $data= $this->SellerProductService->profile_store_information_insert($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+        }
+
+
+    public function editbankdetails(REQUEST $req){
+
+        $seller_id=Auth::guard('seller')->user()->id;
+
+        $validate = Validator::make($req->all(), [
+            'account_type'=>"required|in:0,1", // 0 Personal 1 Busness
+            "iban"=>"required",
+            'swift'=>'required',
+            'bank_name'=>'required',
+            "account_holder_name"=>"required",
+            // 'upload_proof'=>'required',
+
+            'upload_proof' => 'required_without:old_upload_proof',
+            'old_upload_proof' => 'required_without:upload_proof',
+
+            ],[
+
+            'account_type.required' => 'Account type is required.',
+            'account_type.in'       => 'Invalid account type selected.',
+
+            'iban.required'                => 'IBAN number is required.',
+            'swift.required'               => 'SWIFT code is required.',
+            'bank_name.required'           => 'Bank name is required.',
+            'account_holder_name.required' => 'Account holder name is required.',
+
+            // Proof upload messages
+            'upload_proof.required_without'     => 'Please upload proof document.',
+            'old_upload_proof.required_without' => 'Previous proof document is missing.',
+
+            ]);
+            
+         if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+            
+        }
+
+        if($req->upload_proof){
+
+        $dir='profile/';
+        $upload_proof= image_upload($req->upload_proof,$dir);
+       
+        }else{
+        $upload_proof=$req->old_upload_proof;
+
+        }
+
+       $request_data= (object) [
+        'user_id' => $seller_id,
+        'type'=> '1',
+        'account_type' => strVal($req->account_type),
+        'iban' => $req->iban??null ,
+        'swift'=>$req->swift??null ,
+        "bank_name"=>$req->bank_name ,
+        'account_holder_name'=>$req->account_holder_name ,
+        'upload_proof'=>$upload_proof,
+       ];
+
+       
+        $data= $this->SellerProductService->store_bank_details_update($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+                
+        }
+
+        
+
+       public function update_commison(REQUEST $request){
+
+$seller_id=Auth::guard('seller')->user()->id;
+
+        if($request->isMethod('get')){
+
+          
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        ];
+
+      $seller_details=  $this->SellerProductService->View_seller_profile($request_data);
+      $seller_details=$seller_details['data'];
+      
+    return view('dealer.commission.commission',compact('seller_details'));
+    
+        }
+
+        if($request->isMethod('post')){
+
+
+      $validate = Validator::make($request->all(), [               
+        'affilate_commission'=>'required|numeric|min:0|max:100'        
+     ],[
+        
+        'affilate_commission.required' => 'Affiliate commission is required.',
+        'affilate_commission.numeric' => 'Affiliate commission must be a number.',
+        'affilate_commission.min' => 'Affiliate commission cannot be less than 0%.',
+        'affilate_commission.max' => 'Affiliate commission cannot be more than 100%.',
+
+     ]);
+    
+    if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+    
+    $request_data=(object) [
+    'seller_id'=>$seller_id,
+    'affilate_commission'=>$request->affilate_commission
+    ];
+    
+      $data=  $this->SellerProductService->Update_affilate_commission_Inventory($request_data);
+    
+      if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+      }
+    
+      return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+     
+
+
+        }
+      
+      
+        }
+
+      
+
+      
 
       
 

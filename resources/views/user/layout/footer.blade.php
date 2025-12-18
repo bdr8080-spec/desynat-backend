@@ -6,9 +6,10 @@
                          <img src="{{ asset('user/assets/images/logo.svg') }}" class="img-fluid" />
 
                      </div>
-                     <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                     <span class="d-block">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                         tempor
                          incididunt ut labore et dolore magna aliqua. Ut enim ad minim </span>
-                     <button class="customBtn1">Become an Affiliate Customer</button>
+                     <button class="customBtn1 become-ln">Become an Affiliate Customer</button>
                  </div>
                  <div class="col-lg-5 col-md-5 col-12">
                      <div class="footerNavLink ms-20percenter">
@@ -49,11 +50,12 @@
                      <div class="footerNavLink">
                          <div class="footerNavLink_content ms-lg-auto ms-md-auto">
                              <h6>Get the App</h6>
-                             <div class="getTheApp gap-2 d-flex align-items-end">
-                                 <div style="width: 40%;">
-                                     <img src="{{ asset('user/assets/images/play-store.svg') }}" class="img-fluid" />
+                             <div class="getTheApp gap-2 ">
+                                 <div style="width: 80%;">
+                                     <img src="{{ asset('user/assets/images/play-store.svg') }}"
+                                         class="img-fluid mb-2" />
                                  </div>
-                                 <div style="width: 40%;">
+                                 <div style="width: 80%;">
                                      <img src="{{ asset('user/assets/images/ios-app.svg') }}" class="img-fluid" />
                                  </div>
                              </div>
@@ -63,8 +65,7 @@
                                              class="img-fluid" /></a>
                                  </li>
                                  <li>
-                                     <a href=""><img
-                                             src="{{ asset('user/assets/images/Instagram_logo_2016.svg') }}"
+                                     <a href=""><img src="{{ asset('user/assets/images/Instagram_logo_2016.svg') }}"
                                              class="img-fluid" /></a>
                                  </li>
                                  <li>
@@ -72,8 +73,7 @@
                                              class="img-fluid" /></a>
                                  </li>
                                  <li>
-                                     <a href=""><img
-                                             src="{{ asset('user/assets/images/social_x_circle 1.svg') }}"
+                                     <a href=""><img src="{{ asset('user/assets/images/social_x_circle 1.svg') }}"
                                              class="img-fluid" /></a>
                                  </li>
                              </ul>
@@ -81,31 +81,38 @@
                      </div>
                  </div>
              </div>
+
+             <div class="footer-copyright">
+                 <p>Lorem ipsum dolor sit odo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                     cillum dolore eu fugiat nulla pariatur. </p>
+             </div>
+
+
          </div>
      </footer>
 
      <!-- WhatsApp Status Viewer -->
-    <div class="status-viewer" id="statusViewer">
-        
-        <!-- Multiple Progress Bars -->
-        <div id="progressContainer" class="progress-container"></div>
+     <div class="status-viewer" id="statusViewer">
 
-        <span class="status-close" onclick="closeStatus()">&times;</span>
+         <!-- Multiple Progress Bars -->
+         <div id="progressContainer" class="progress-container"></div>
 
-        <img id="statusImage" class="status-img" />
+         <span class="status-close" onclick="closeStatus()">&times;</span>
 
-        <!-- Tap Zones -->
-        <div class="status-left" onclick="showPrev()">
-            <span>
-                <i class="fa-solid fa-chevron-left"></i>
-            </span>
-        </div>
-        <div class="status-right" onclick="showNext()">
-            <span>
-                <i class="fa-solid fa-chevron-right"></i>
-            </span>
-        </div>
-    </div>
+         <img id="statusImage" class="status-img" />
+
+         <!-- Tap Zones -->
+         <div class="status-left" onclick="showPrev()">
+             <span>
+                 <i class="fa-solid fa-chevron-left"></i>
+             </span>
+         </div>
+         <div class="status-right" onclick="showNext()">
+             <span>
+                 <i class="fa-solid fa-chevron-right"></i>
+             </span>
+         </div>
+     </div>
 
 
      <script src="{{ asset('user/assets/js/custom.js') }}"></script>
@@ -124,540 +131,542 @@
      </script>
 
      <script>
-         let map, marker, autocomplete;
-         let mapInitialized = false;
+let map, marker, autocomplete;
+let mapInitialized = false;
 
-         function initMap(currentLoc) {
+function initMap(currentLoc) {
 
-             map = new google.maps.Map(document.getElementById("googleMap"), {
-                 center: currentLoc,
-                 zoom: 15,
-             });
-
-
-             marker = new google.maps.Marker({
-                 position: currentLoc,
-                 map,
-                 draggable: true,
-                 icon: {
-                     url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-                 },
-             });
-
-             const input = document.querySelector('#changeLocation input[type="text"]');
-             const addressDisplay = document.querySelector('#locationUpdate');
+    map = new google.maps.Map(document.getElementById("googleMap"), {
+        center: currentLoc,
+        zoom: 15,
+    });
 
 
-             autocomplete = new google.maps.places.Autocomplete(input, {
-                 fields: ["geometry", "formatted_address"],
-             });
-             autocomplete.bindTo("bounds", map);
+    marker = new google.maps.Marker({
+        position: currentLoc,
+        map,
+        draggable: true,
+        icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+        },
+    });
 
-             autocomplete.addListener("place_changed", () => {
-                 const place = autocomplete.getPlace();
-                 if (!place.geometry || !place.geometry.location) return;
-                 const cityField = document.getElementById('cityField');
-                 cityField.textContent = place.formatted_address;
-                 updateLocation(place.geometry.location, place.formatted_address);
-             });
-
-             marker.addListener("dragend", () => {
-                 const pos = marker.getPosition();
-                 updateLocation(pos);
-             });
-
-             updateLocation(currentLoc);
-         }
-
-         function updateLocation(loc, formattedAddress = null) {
-             const input = document.querySelector('#changeLocation input[type="text"]');
-             const addressDisplay = document.querySelector('#locationUpdate');
-             const latValue = document.getElementById('lat');
-             const lngValue = document.getElementById('lng');
-             const cityField = document.getElementById('cityField');
-
-             map?.setCenter(loc);
-             marker?.setPosition(loc);
-
-             const lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
-             const lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
-
-             latValue.value = lat;
-             lngValue.value = lng;
-
-             const geocoder = new google.maps.Geocoder();
-
-             if (formattedAddress) {
-                 input.value = formattedAddress;
-                 addressDisplay.textContent = formattedAddress;
-                 cityField.textContent = formattedAddress;
-             } else {
-                 geocoder.geocode({
-                     location: {
-                         lat,
-                         lng
-                     }
-                 }, (results, status) => {
-                     if (status === "OK" && results[0]) {
-                         const addr = results[0].formatted_address;
-                         input.value = addr;
-                         addressDisplay.textContent = addr;
-                         cityField.textContent = addr
-                     } else {
-                         addressDisplay.textContent = "Address not found.";
-                     }
-                 });
-             }
-         }
-
-         function loadMapWithCurrentLocation() {
-             const latValue = document.getElementById('lat');
-             const lngValue = document.getElementById('lng');
-             const lat = parseFloat(latValue?.value);
-             const lng = parseFloat(lngValue?.value);
-
-             // ✅ If saved lat/lng exist, use them
-             if (!isNaN(lat) && !isNaN(lng)) {
-                 initMap({
-                     lat,
-                     lng
-                 });
-                 return;
-             }
-
-             // ✅ Else, get current location
-             if (navigator.geolocation) {
-                 navigator.geolocation.getCurrentPosition(
-                     (position) => {
-                         initMap({
-                             lat: position.coords.latitude,
-                             lng: position.coords.longitude,
-                         });
-                     },
-                     () => {
-                         initMap({
-                             lat: 20.5937,
-                             lng: 78.9629
-                         });
-                     }, {
-                         enableHighAccuracy: true,
-                         timeout: 10000,
-                         maximumAge: 0
-                     }
-                 );
-             } else {
-                 initMap({
-                     lat: 20.5937,
-                     lng: 78.9629
-                 });
-             }
-         }
-
-         document.addEventListener("DOMContentLoaded", () => {
-             const modalEl = document.getElementById("changeLocation");
-
-             modalEl.addEventListener("shown.bs.modal", () => {
-                 initMapInModal(modalEl);
-             });
-
-             if (!mapInitialized) {
-                 const imgPlaceholder = modalEl.querySelector("img");
-                 if (imgPlaceholder) {
-                     const mapDiv = document.createElement("div");
-                     mapDiv.id = "googleMap";
-                     mapDiv.style.height = "300px";
-                     mapDiv.style.borderRadius = "10px";
-                     imgPlaceholder.replaceWith(mapDiv);
-                 }
-
-                 setTimeout(() => {
-                     loadMapWithCurrentLocation();
-                     mapInitialized = true;
-                 }, 400);
-             }
-         });
+    const input = document.querySelector('#changeLocation input[type="text"]');
+    const addressDisplay = document.querySelector('#locationUpdate');
 
 
-         $(document).on('click', '.saveCurrentAddress', function(e) {
-             e.preventDefault();
+    autocomplete = new google.maps.places.Autocomplete(input, {
+        fields: ["geometry", "formatted_address"],
+    });
+    autocomplete.bindTo("bounds", map);
 
-             let lat = $('#lat').val();
-             let lng = $('#lng').val();
-             let address = $('#locationUpdate').text();
+    autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry || !place.geometry.location) return;
+        const cityField = document.getElementById('cityField');
+        cityField.textContent = place.formatted_address;
+        updateLocation(place.geometry.location, place.formatted_address);
+    });
 
-             if (!lat || !lng || !address) {
-                 toastr.error('Please select a valid location first!');
-                 return;
-             }
+    marker.addListener("dragend", () => {
+        const pos = marker.getPosition();
+        updateLocation(pos);
+    });
 
-             $.ajax({
-                 url: "{{ route('userSaveCurrentLocation') }}",
-                 type: 'POST',
-                 data: {
-                     latitude: lat,
-                     longitude: lng,
-                     address: address,
-                     _token: "{{ csrf_token() }}"
-                 },
-                 beforeSend: function() {
-                     $('.saveCurrentAddress').prop('disabled', true);
-                 },
-                 success: function(response) {
-                     if (response.status == true) {
-                         toastr.success(response.message);
-                         $('.saveCurrentAddress').prop('disabled', false);
-                         $('#changeLocation').modal('hide');
-                     } else {
-                         $('.saveCurrentAddress').prop('disabled', false);
-                         $('#changeLocation').modal('hide');
-                     }
-                 },
-                 error: function() {
-                     $('.saveCurrentAddress').prop('disabled', false).text('Change Location');
-                 }
-             });
-         });
+    updateLocation(currentLoc);
+}
+
+function updateLocation(loc, formattedAddress = null) {
+    const input = document.querySelector('#changeLocation input[type="text"]');
+    const addressDisplay = document.querySelector('#locationUpdate');
+    const latValue = document.getElementById('lat');
+    const lngValue = document.getElementById('lng');
+    const cityField = document.getElementById('cityField');
+
+    map?.setCenter(loc);
+    marker?.setPosition(loc);
+
+    const lat = typeof loc.lat === "function" ? loc.lat() : loc.lat;
+    const lng = typeof loc.lng === "function" ? loc.lng() : loc.lng;
+
+    latValue.value = lat;
+    lngValue.value = lng;
+
+    const geocoder = new google.maps.Geocoder();
+
+    if (formattedAddress) {
+        input.value = formattedAddress;
+        addressDisplay.textContent = formattedAddress;
+        cityField.textContent = formattedAddress;
+    } else {
+        geocoder.geocode({
+            location: {
+                lat,
+                lng
+            }
+        }, (results, status) => {
+            if (status === "OK" && results[0]) {
+                const addr = results[0].formatted_address;
+                input.value = addr;
+                addressDisplay.textContent = addr;
+                cityField.textContent = addr
+            } else {
+                addressDisplay.textContent = "Address not found.";
+            }
+        });
+    }
+}
+
+function loadMapWithCurrentLocation() {
+    const latValue = document.getElementById('lat');
+    const lngValue = document.getElementById('lng');
+    const lat = parseFloat(latValue?.value);
+    const lng = parseFloat(lngValue?.value);
+
+    // ✅ If saved lat/lng exist, use them
+    if (!isNaN(lat) && !isNaN(lng)) {
+        initMap({
+            lat,
+            lng
+        });
+        return;
+    }
+
+    // ✅ Else, get current location
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                initMap({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+            },
+            () => {
+                initMap({
+                    lat: 20.5937,
+                    lng: 78.9629
+                });
+            }, {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+        );
+    } else {
+        initMap({
+            lat: 20.5937,
+            lng: 78.9629
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modalEl = document.getElementById("changeLocation");
+
+    modalEl.addEventListener("shown.bs.modal", () => {
+        initMapInModal(modalEl);
+    });
+
+    if (!mapInitialized) {
+        const imgPlaceholder = modalEl.querySelector("img");
+        if (imgPlaceholder) {
+            const mapDiv = document.createElement("div");
+            mapDiv.id = "googleMap";
+            mapDiv.style.height = "300px";
+            mapDiv.style.borderRadius = "10px";
+            imgPlaceholder.replaceWith(mapDiv);
+        }
+
+        setTimeout(() => {
+            loadMapWithCurrentLocation();
+            mapInitialized = true;
+        }, 400);
+    }
+});
+
+
+$(document).on('click', '.saveCurrentAddress', function(e) {
+    e.preventDefault();
+
+    let lat = $('#lat').val();
+    let lng = $('#lng').val();
+    let address = $('#locationUpdate').text();
+
+    if (!lat || !lng || !address) {
+        toastr.error('Please select a valid location first!');
+        return;
+    }
+
+    $.ajax({
+        url: "{{ route('userSaveCurrentLocation') }}",
+        type: 'POST',
+        data: {
+            latitude: lat,
+            longitude: lng,
+            address: address,
+            _token: "{{ csrf_token() }}"
+        },
+        beforeSend: function() {
+            $('.saveCurrentAddress').prop('disabled', true);
+        },
+        success: function(response) {
+            if (response.status == true) {
+                toastr.success(response.message);
+                $('.saveCurrentAddress').prop('disabled', false);
+                $('#changeLocation').modal('hide');
+            } else {
+                $('.saveCurrentAddress').prop('disabled', false);
+                $('#changeLocation').modal('hide');
+            }
+        },
+        error: function() {
+            $('.saveCurrentAddress').prop('disabled', false).text('Change Location');
+        }
+    });
+});
      </script>
 
 
      <script>
-         $('.customOwlcarousel').owlCarousel({
-             loop: true,
-             margin: 10,
-             responsiveClass: true,
-             nav: false,
-             dots: true,
-             responsive: {
-                 0: {
-                     items: 1,
-                 },
-                 600: {
-                     items: 1,
-                 },
-                 1000: {
-                     items: 1,
-                     dots: true
-                 }
-             }
-         })
+$('.customOwlcarousel').owlCarousel({
+    loop: true,
+    margin: 10,
+    responsiveClass: true,
+    nav: false,
+    dots: true,
+    responsive: {
+        0: {
+            items: 1,
+        },
+        600: {
+            items: 1,
+        },
+        1000: {
+            items: 1,
+            dots: true
+        }
+    }
+})
      </script>
 
      <script>
-         $('.storeCarousel').owlCarousel({
-             loop: true,
-             margin: 10,
-             nav: false,
-             dots: true,
-             // autoplay: true,
-             // autoplayTimeout: 2000, 
-             autoplayHoverPause: true,
-             slideTransition: 'linear',
-             smartSpeed: 1000, // smooth transition
-             responsive: {
-                 0: {
-                     items: 2
-                 },
-                 600: {
-                     items: 4
-                 },
-                 1000: {
-                     items: 8
-                 }
-             },
-             slideBy: 1 // slides one by one
-         });
+$('.storeCarousel').owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: false,
+    dots: true,
+    // autoplay: true,
+    // autoplayTimeout: 2000, 
+    autoplayHoverPause: true,
+    slideTransition: 'linear',
+    smartSpeed: 1000, // smooth transition
+    responsive: {
+        0: {
+            items: 2
+        },
+        600: {
+            items: 4
+        },
+        1000: {
+            items: 8
+        }
+    },
+    slideBy: 1 // slides one by one
+});
 
-         $('.bestSellingCarousel').owlCarousel({
-             loop: true,
-             margin: 10,
-             nav: false,
-             dots: true,
-             // autoplay: true,
-             // autoplayTimeout: 2000, 
-             autoplayHoverPause: true,
-             slideTransition: 'linear',
-             smartSpeed: 1000, // smooth transition
-             responsive: {
-                 0: {
-                     items: 2
-                 },
-                 600: {
-                     items: 3
-                 },
-                 1000: {
-                     items: 4
-                 }
-             },
-             slideBy: 1 // slides one by one
-         });
+$('.bestSellingCarousel').owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: false,
+    dots: true,
+    // autoplay: true,
+    // autoplayTimeout: 2000, 
+    autoplayHoverPause: true,
+    slideTransition: 'linear',
+    smartSpeed: 1000, // smooth transition
+    responsive: {
+        0: {
+            items: 2
+        },
+        600: {
+            items: 3
+        },
+        1000: {
+            items: 4
+        }
+    },
+    slideBy: 1 // slides one by one
+});
 
-         $('.topRatedCarousel').owlCarousel({
-             loop: true,
-             margin: 10,
-             nav: false,
-             dots: true,
-             // autoplay: true,
-             // autoplayTimeout: 2000, 
-             autoplayHoverPause: true,
-             slideTransition: 'linear',
-             smartSpeed: 1000, // smooth transition
-             responsive: {
-                 0: {
-                     items: 2
-                 },
-                 600: {
-                     items: 3
-                 },
-                 1000: {
-                     items: 4
-                 }
-             },
-             slideBy: 1 // slides one by one
-         });
+$('.topRatedCarousel').owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: false,
+    dots: true,
+    // autoplay: true,
+    // autoplayTimeout: 2000, 
+    autoplayHoverPause: true,
+    slideTransition: 'linear',
+    smartSpeed: 1000, // smooth transition
+    responsive: {
+        0: {
+            items: 2
+        },
+        600: {
+            items: 3
+        },
+        1000: {
+            items: 4
+        }
+    },
+    slideBy: 1 // slides one by one
+});
      </script>
 
      <script>
-         $(document).ready(function() {
-             $("#fileInput").change(function(e) {
-                 const file = e.target.files[0];
-                 if (file) {
-                     const reader = new FileReader();
-                     reader.onload = function(event) {
-                         $("#profileImg").attr("src", event.target.result);
-                     };
-                     reader.readAsDataURL(file);
-                 }
-             });
-         });
-     </script>
-
-
-     <script>
-         document.querySelectorAll('.notapplyspace').forEach(function(input) {
-             input.addEventListener('keydown', function(e) {
-                 if (e.key === ' ') {
-                     e.preventDefault();
-                 }
-             });
-         });
-
-
-
-         $("input, textarea, select").on("input", function() {
-             var field = $(this).attr("name");
-             $("#error-" + field).text("");
-         });
-
-
-
-         @if (session('success'))
-             toastr.success("{{ session('success') }}");
-         @endif
-
-         @if (session('error'))
-             toastr.error("{{ session('error') }}");
-         @endif
-
-         @if (session('warning'))
-             toastr.warning("{{ session('warning') }}");
-         @endif
-
-         @if (session('info'))
-             toastr.info("{{ session('info') }}");
-         @endif
+$(document).ready(function() {
+    $("#fileInput").change(function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                $("#profileImg").attr("src", event.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
      </script>
 
 
      <script>
-         // padding between bottom and mid-content
-         $(document).ready(function() {
-             function adjustContentPadding() {
-                 const $header = $('header');
-                 const $footer = $('footer');
-                 const $content = $('.mid-content');
+document.querySelectorAll('.notapplyspace').forEach(function(input) {
+    input.addEventListener('keydown', function(e) {
+        if (e.key === ' ') {
+            e.preventDefault();
+        }
+    });
+});
 
-                 if (!$content.length) return; // safety check
 
-                 const windowHeight = $(window).height();
-                 const headerHeight = $header.outerHeight() || 0;
-                 const footerHeight = $footer.outerHeight() || 0;
-                 const contentHeight = $content.outerHeight() || 0;
 
-                 // total height excluding padding
-                 const totalHeight = headerHeight + footerHeight + contentHeight;
+$("input, textarea, select").on("input", function() {
+    var field = $(this).attr("name");
+    $("#error-" + field).text("");
+});
 
-                 // remaining space after accounting for header and footer
-                 const remaining = windowHeight - totalHeight;
 
-                 if (remaining > 0) {
-                     // divide remaining height into top & bottom padding
-                     const pad = remaining / 2;
 
-                     // Add padding + adjust for fixed header overlap
-                     $content.css({
-                         'padding-top': (pad + headerHeight) + 'px',
-                         'padding-bottom': pad + 'px'
-                     });
-                 } else {
-                     // fallback when content is tall enough
-                     $content.css({
-                         'padding-top': headerHeight + 20 + 'px',
-                         'padding-bottom': '20px'
-                     });
-                 }
-             }
+@if(session('success'))
+toastr.success("{{ session('success') }}");
+@endif
 
-             // Run on load
-             adjustContentPadding();
+@if(session('error'))
+toastr.error("{{ session('error') }}");
+@endif
 
-             // Run on window resize
-             $(window).on('resize', adjustContentPadding);
-         });
+@if(session('warning'))
+toastr.warning("{{ session('warning') }}");
+@endif
 
-         // scroll on category
-         document.addEventListener('DOMContentLoaded', function() {
-             const scrollContainer = document.querySelector(".scroll-content");
-             const leftArrow = document.querySelector(".scroll-left");
-             const rightArrow = document.querySelector(".scroll-right");
+@if(session('info'))
+toastr.info("{{ session('info') }}");
+@endif
+     </script>
 
-             if (!scrollContainer || !leftArrow || !rightArrow) return;
 
-             // Scroll amount per click (one column width + spacing)
-             const scrollAmount = scrollContainer.children[0] ?
-                 scrollContainer.children[0].offsetWidth + 20 :
-                 300;
+     <script>
+// padding between bottom and mid-content
+$(document).ready(function() {
+    function adjustContentPadding() {
+        const $header = $('header');
+        const $footer = $('footer');
+        const $content = $('.mid-content');
 
-             // Prevent dropdown from closing on click
-             function safeClickHandler(e, callback) {
-                 e.stopPropagation();
-                 e.preventDefault();
-                 if (callback) callback();
-             }
+        if (!$content.length) return; // safety check
 
-             // Scroll right smoothly
-             rightArrow.addEventListener("click", (e) => {
-                 safeClickHandler(e, () => {
-                     scrollContainer.scrollBy({
-                         left: scrollAmount,
-                         behavior: "smooth"
-                     });
-                 });
-             });
+        const windowHeight = $(window).height();
+        const headerHeight = $header.outerHeight() || 0;
+        const footerHeight = $footer.outerHeight() || 0;
+        const contentHeight = $content.outerHeight() || 0;
 
-             // Scroll left smoothly
-             leftArrow.addEventListener("click", (e) => {
-                 safeClickHandler(e, () => {
-                     scrollContainer.scrollBy({
-                         left: -scrollAmount,
-                         behavior: "smooth"
-                     });
-                 });
-             });
+        // total height excluding padding
+        const totalHeight = headerHeight + footerHeight + contentHeight;
 
-             // Prevent closing when clicking inside the scroll container
-             scrollContainer.addEventListener("click", (e) => {
-                 e.stopPropagation();
-             });
+        // remaining space after accounting for header and footer
+        const remaining = windowHeight - totalHeight;
 
-             // Show/hide arrows based on scroll position
-             function updateArrows() {
-                 const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-                 leftArrow.style.display = scrollContainer.scrollLeft > 10 ? 'flex' : 'none';
-                 rightArrow.style.display = scrollContainer.scrollLeft < maxScrollLeft - 10 ? 'flex' : 'none';
-             }
+        if (remaining > 0) {
+            // divide remaining height into top & bottom padding
+            const pad = remaining / 2;
 
-             // Update arrows on scroll
-             scrollContainer.addEventListener("scroll", updateArrows);
-             window.addEventListener("resize", updateArrows);
+            // Add padding + adjust for fixed header overlap
+            $content.css({
+                'padding-top': (pad + headerHeight) + 'px',
+                'padding-bottom': pad + 'px'
+            });
+        } else {
+            // fallback when content is tall enough
+            $content.css({
+                'padding-top': headerHeight + 20 + 'px',
+                'padding-bottom': '20px'
+            });
+        }
+    }
 
-             // Initial check
-             updateArrows();
-         });
+    // Run on load
+    adjustContentPadding();
+
+    // Run on window resize
+    $(window).on('resize', adjustContentPadding);
+});
+
+// scroll on category
+document.addEventListener('DOMContentLoaded', function() {
+    const scrollContainer = document.querySelector(".scroll-content");
+    const leftArrow = document.querySelector(".scroll-left");
+    const rightArrow = document.querySelector(".scroll-right");
+
+    if (!scrollContainer || !leftArrow || !rightArrow) return;
+
+    // Scroll amount per click (one column width + spacing)
+    const scrollAmount = scrollContainer.children[0] ?
+        scrollContainer.children[0].offsetWidth + 20 :
+        300;
+
+    // Prevent dropdown from closing on click
+    function safeClickHandler(e, callback) {
+        e.stopPropagation();
+        e.preventDefault();
+        if (callback) callback();
+    }
+
+    // Scroll right smoothly
+    rightArrow.addEventListener("click", (e) => {
+        safeClickHandler(e, () => {
+            scrollContainer.scrollBy({
+                left: scrollAmount,
+                behavior: "smooth"
+            });
+        });
+    });
+
+    // Scroll left smoothly
+    leftArrow.addEventListener("click", (e) => {
+        safeClickHandler(e, () => {
+            scrollContainer.scrollBy({
+                left: -scrollAmount,
+                behavior: "smooth"
+            });
+        });
+    });
+
+    // Prevent closing when clicking inside the scroll container
+    scrollContainer.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+
+    // Show/hide arrows based on scroll position
+    function updateArrows() {
+        const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+        leftArrow.style.display = scrollContainer.scrollLeft > 10 ? 'flex' : 'none';
+        rightArrow.style.display = scrollContainer.scrollLeft < maxScrollLeft - 10 ? 'flex' : 'none';
+    }
+
+    // Update arrows on scroll
+    scrollContainer.addEventListener("scroll", updateArrows);
+    window.addEventListener("resize", updateArrows);
+
+    // Initial check
+    updateArrows();
+});
      </script>
 
      <script>
-         $(document).ready(function() {
-             $('.nav-item.dropdown').hover(
-                 function() {
-                     $(this).find('.dropdown-menu').addClass('show');
-                 },
-                 function() {
-                     $(this).find('.dropdown-menu').removeClass('show');
-                 }
-             );
-         });
+$(document).ready(function() {
+    $('.nav-item.dropdown').hover(
+        function() {
+            $(this).find('.dropdown-menu').addClass('show');
+        },
+        function() {
+            $(this).find('.dropdown-menu').removeClass('show');
+        }
+    );
+});
      </script>
 
      <script>
-         function addWishListFunctionproduct(val) {
-             var id = val;
+function addWishListFunctionproduct(val) {
+    var id = val;
 
-             $.ajax({
-                 url: "{{ url('user/addOremovewishlist') }}",
-                 type: "get",
-                 dataType: 'json',
-                 data: {
-                     "_token": "{{ csrf_token() }}",
-                     product_id: id,
-                 },
-                 beforeSend: function() {
-                     $('#user_loder').show();
-                 },
-                 success: function(data) {
-                     $('#user_loder').hide();
-                     if (data.status == 'success') {
+    $.ajax({
+        url: "{{ url('user/addOremovewishlist') }}",
+        type: "get",
+        dataType: 'json',
+        data: {
+            "_token": "{{ csrf_token() }}",
+            product_id: id,
+        },
+        beforeSend: function() {
+            $('#user_loder').show();
+        },
+        success: function(data) {
+            $('#user_loder').hide();
+            if (data.status == 'success') {
 
-                         // Show Toastr Notification
-                         if (data.data == 1) {
-                             toastr.success(data.message);
+                // Show Toastr Notification
+                if (data.data == 1) {
+                    toastr.success(data.message);
+                    location.reload();
 
-                         } else {
-                             toastr.error(data.message);
-                         }
+                } else {
+                    toastr.error(data.message);
+                    location.reload();
+                }
 
-                         // $('#wishlistProduct' + id).val();
-                         var icon = $('#wishlistProduct' + id);
+                // $('#wishlistProduct' + id).val();
+                var icon = $('#wishlistProduct' + id);
 
-                         var icon1 = $('#wishlistProduct1' + id);
+                var icon1 = $('#wishlistProduct1' + id);
 
-                         // Toggle between fa-regular and fa-solid
-                         if (icon.hasClass('fa-regular')) {
-                             icon.removeClass('fa-regular').addClass('fa-solid');
-                         } else {
-                             icon.removeClass('fa-solid').addClass('fa-regular');
-                         }
+                // Toggle between fa-regular and fa-solid
+                if (icon.hasClass('fa-regular')) {
+                    icon.removeClass('fa-regular').addClass('fa-solid');
+                } else {
+                    icon.removeClass('fa-solid').addClass('fa-regular');
+                }
 
-                         if (icon1.hasClass('fa-regular')) {
-                             icon1.removeClass('fa-regular').addClass('fa-solid');
-                         } else {
-                             icon1.removeClass('fa-solid').addClass('fa-regular');
-                         }
+                if (icon1.hasClass('fa-regular')) {
+                    icon1.removeClass('fa-regular').addClass('fa-solid');
+                } else {
+                    icon1.removeClass('fa-solid').addClass('fa-regular');
+                }
 
-                         // Reload the page after 2 seconds
-                         // setTimeout(function() {
-                         //     window.location.replace("{{ url('user/dashboard') }}");
-                         // }, 2000);
+                // Reload the page after 2 seconds
+                // setTimeout(function() {
+                //     window.location.replace("{{ url('user/dashboard') }}");
+                // }, 2000);
 
-                        if (data.count <= 0) {
-                            $(`#hideWisListProduct${id}`).text("No WishList Found");
-                        }
+                if (data.count <= 0) {
+                    $(`#hideWisListProduct${id}`).text("No WishList Found");
+                }
 
-                        $(`#hideWisListProduct${id}`).hide();
-                       
-
-                     
-                     } else {
-                         toastr.error("There was a problem deleting the subcategory.");
-                     }
-                 },
-                 error: function(xhr) {
-                     $('#user_loder').hide();
-                     toastr.error("Error occurred: " + xhr.responseText);
-                 }
-             });
+                $(`#hideWisListProduct${id}`).hide();
 
 
-         }
+
+            } else {
+                toastr.error("There was a problem deleting the subcategory.");
+            }
+        },
+        error: function(xhr) {
+            $('#user_loder').hide();
+            toastr.error("Error occurred: " + xhr.responseText);
+        }
+    });
+
+
+}
      </script>
 
      </body>

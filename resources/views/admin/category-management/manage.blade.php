@@ -130,7 +130,7 @@ r>
                                             </a>
 
                                             <!-- Delete button  -->
-                                            <a href="javascript:void(0);" class="table-button text-danger deleteBrand"
+                                            <a href="javascript:void(0);" class="table-button text-danger deleteBrand mt-1 mb-1"
                                                 data-id="{{ $scat->id }}">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>

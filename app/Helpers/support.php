@@ -1,0 +1,170 @@
+<?php
+
+
+use App\Models\{UserGiftCards,UserWallet,Order};
+use App\Models\Zone;
+use App\Models\DeliveryBoy;
+
+
+// Function to calculate the distance using the Haversine formula
+function calculateDistance($lat1, $lon1, $lat2, $lon2) {
+    // Radius of the Earth in kilometers
+    $earthRadius = 6371;
+    
+    // Convert degrees to radians
+    $lat1 = deg2rad($lat1);
+    $lon1 = deg2rad($lon1);
+    $lat2 = deg2rad($lat2);
+    $lon2 = deg2rad($lon2);
+
+    // Difference in coordinates
+    $dLat = $lat2 - $lat1;
+    $dLon = $lon2 - $lon1;
+
+    // Haversine formula
+    $a = sin($dLat / 2) * sin($dLat / 2) +
+         cos($lat1) * cos($lat2) *
+         sin($dLon / 2) * sin($dLon / 2);
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+    // Distance in kilometers
+    $distance = $earthRadius * $c;
+
+    return $distance; // Distance in kilometers
+}
+
+
+
+  function userBalanceget($request){
+
+    try{
+
+
+    $userBalance=UserWallet::where('user_id',$request->user_id)->first();
+
+    if($userBalance){
+        $response['balance']=round($userBalance->amount);
+    }else{
+         $response['balance']=0;
+    }
+
+    return ['status'=>'success','message'=>"User Wallet Balance fetch Successfully",'data'=>$response];
+
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+
+function UserBalancePayOrder($user_id,$amount=null){
+
+    try{
+
+    $userBalance=UserWallet::where('user_id',$user_id)->first();
+
+
+    if($userBalance){
+        $balance=round($userBalance->amount)-$amount;
+        
+        $userBalance->update(['amount'=>$balance]);
+        
+    }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+function OrderGiftCardConditionCheck($orderid,$amount=null){
+
+    try{
+
+    $userOrder=Order::where('id',$orderid)->first();
+
+    if($userOrder){
+
+        if($userOrder->giftcard_id!==''){
+        $userGiftCard=UserGiftCards::where('id',$userOrder->giftcard_id)->first();
+        if($userGiftCard){
+            $userGiftCard->update(['giftCardUse'=>'1']);
+        }
+        }
+        
+    }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    }
+
+    function getregionFromCoordinates($lat, $lng)
+    {
+        //dd(123);
+        // Retrieve regions with markers from the database
+        $zones = Zone::where('status', '1')->get(['id', 'coordinates'])->toArray();
+        //dd($zones);
+ 
+        // Check if the point is in any polygon
+        $foundZoneId = null;
+        foreach ($zones as $zone) {
+            $coordinates = $zone['coordinates']; // Use coordinates directly as array
+            if (isPointInPolygon($lat, $lng, $coordinates)) {
+                $foundZoneId = $zone['id'];
+ 
+                break;
+            }
+        }
+         //dd($foundZoneId);
+ 
+       if ($foundZoneId !== null) {
+            $deliveryBoyIds = DeliveryBoy::whereJsonContains('zone_id', $foundZoneId)
+                ->orderBy('id', 'desc')    
+                ->pluck('id')                
+                ->toArray();               
+
+            return $deliveryBoyIds;       
+        } else {
+            return [];
+        }
+
+    }
+
+    function isPointInPolygon($lat, $lng, $polygon)
+    {
+        $vertices_x = array_column($polygon, 'lat');
+        $vertices_y = array_column($polygon, 'lng');
+        $points_polygon = count($polygon);
+ 
+        $i = $j = $c = 0;
+        for ($i = 0, $j = $points_polygon - 1; $i < $points_polygon; $j = $i++) {
+            if (((($vertices_y[$i] <= $lng) && ($lng < $vertices_y[$j])) || (($vertices_y[$j] <= $lng) && ($lng < $vertices_y[$i]))) &&
+                ($lat < ($vertices_x[$j] - $vertices_x[$i]) * ($lng - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i])
+            ) {
+                $c = !$c;
+            }
+        }
+        return $c;
+    }
+ 

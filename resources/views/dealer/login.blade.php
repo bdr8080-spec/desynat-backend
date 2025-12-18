@@ -100,17 +100,26 @@
                                                                         style="cursor: pointer;">
                                                                         <input type="radio" name="country_code"
                                                                             value="{{ $item->dial_code }}"
-                                                                            data-flag="{{ $item->flag1 }}"
+                                                                            data-flag="{{ $item->flag }}"
                                                                             data-name="{{ $item->name }}"
                                                                             class="country-radio"
                                                                             {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                                             hidden>
-                                                                        <img src="{{ $item->flag1 }}"
+
+                                                                        <!-- <img src="{{ $item->flag1 }}"
                                                                             alt="Flag of {{ $item->name }}"
                                                                             width="25" height="16">
+
                                                                         <span>{{ $item->dial_code }}
                                                                             ({{ $item->name }})
-                                                                        </span>
+                                                                        </span> -->
+
+                                                                        <div width="25" height="16">
+                                                                            <span>{{ $item->flag }} {{ $item->dial_code }}
+                                                                                ({{ $item->name }})
+                                                                            </span>
+                                                                        </div>
+
                                                                     </label>
                                                                 </li>
                                                             @endforeach
@@ -213,7 +222,7 @@
             let name = radio.data('name');
 
             // Update the flag and code shown on the button
-            $('#selected-flag img').attr('src', flag);
+            $('#selected-flag').html(flag);
             $('#selected-code').text(code);
 
             // Set the radio input as checked
@@ -225,6 +234,6 @@
     });
 </script>
 
-@include('dealer.layout.custom_code');
+@include('dealer.layout.custom_code')
 
 </html>

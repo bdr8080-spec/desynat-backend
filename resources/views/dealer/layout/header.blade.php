@@ -29,14 +29,14 @@
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
 
 
 </head>
 
 <body>
 
-    <div id="loader"
-        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+    <div id="loader" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
      background:rgba(255,255,255,0.7); z-index:9999; text-align:center; padding-top:200px;">
         <iframe src="https://lottie.host/embed/7629c0ed-9538-4b83-b7ab-5870d7aae0ab/KLkQkV2bNW.lottie"></iframe>
     </div>
@@ -85,30 +85,70 @@
 
                 <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
-                        data-bs-toggle="dropdown">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+
+                        @php
+
+                        $seller_details=Auth::guard('seller')->user()
+
+                        @endphp
+
+                        @if($seller_details)
+
+                        <img src="{{$seller_details->profile_pic}}" alt="Profile" class="rounded-circle">
+
+
+                        @else
                         <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
                             class="rounded-circle">
+
+
+                        @endif
                         <!-- <span class="d-none d-md-block dropdown-toggle ps-2">Seller</span> -->
                     </a>
+
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                        <!-- <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-person"></i>
-                                <span>My Profile</span>
-                            </a>
-                        </li> -->
                         <li>
-                            <hr class="dropdown-divider">
+                            @if($seller_details)
+
+                            <div class="seller-profile">
+                                <div class="p-grid1 d-flex gap-3">
+                                    <img src="{{$seller_details->profile_pic}}" alt="Profile" class="rounded-circle">
+                                    <div>
+                                        <h6>{{$seller_details->first_name}}</h6>
+                                        <div class="h-email">{{$seller_details->email}} </div>
+                                    </div>
+                                </div>
+                                <a class="drop-profile" href="{{ route('seller.view_profile') }}">
+                                    <span>View Profile</span>
+                                </a>
+                            </div>
+
+                            @else
+                            <div class="seller-profile">
+                                <div class="p-grid1 d-flex gap-3">
+                                    <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
+                                        class="rounded-circle">
+                                    <div>
+                                        <h6>Vijay</h6>
+                                        <div class="h-email">vijay@gmail.com</div>
+                                    </div>
+                                </div>
+                                <a class="drop-profile" href="{{ route('seller.view_profile') }}">
+                                    <span>View Profile</span>
+                                </a>
+                            </div>
+
+
+                            @endif
+
                         </li>
+
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ url('/view-profile') }}" >
-                                <i class="bi bi-box-arrow"></i>
-                                <span>View Profile</span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('seller.logout') }}">
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Sign Out</span>
+                            <a class="dropdown-item d-flex align-items-center gap-3"
+                                href="{{ route('seller.logout') }}">
+                                <img src="{{ asset('dealer') }}/assets/img/logout.svg">
+                                <span class="text-red">Sign Out</span>
                             </a>
                         </li>
                     </ul>
@@ -135,53 +175,10 @@
 
     </header>
 
-    <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-        <ul class="sidebar-nav" id="sidebar-nav">
-            <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20  {{ Request::is('seller/dashboard') ? 'sidebar-active' : '' }}"
-                    href="{{ route('seller.dashboard') }}">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon"
-                        class="asideicon">
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/products') || Request::is('seller/Add-product') ? 'sidebar-active' : '' }}"
-                    href="{{ route('seller.products') }}">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon"
-                        class="asideicon">
-                    <span>Product Management</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/Inventory-Management') ? 'sidebar-active' : '' }}"
-                    href="{{ route('seller.Inventory_Management') }}">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/inventory.svg" alt="icon"
-                        class="asideicon">
-                    <span>Inventory Management</span>
-                </a>
-            </li>
 
-
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Components</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="components-alerts.html">
-                            <i class="bi bi-circle"></i><span>Alerts</span>
-                        </a>
-                    </li>
-                </ul>
-            </li> -->
-
-
-        </ul>
-
-    </aside>
-
-
+    @if(Request()->Path()!=='seller/view-profile' && Request()->Path()!=='seller/edit-profile' )
+    @include('dealer.layout.sideBar')
     <main id="main" class="main">
+    @endif
+
+    

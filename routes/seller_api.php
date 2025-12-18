@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Seller\AuthController;
 use App\Http\Controllers\Api\Seller\SellerDashboardController;
 
 use App\Http\Controllers\Api\Seller\SellerProductController;
+use App\Http\Controllers\Api\Seller\SellerBannerController;
 
 
 use App\Http\Controllers\CommonController;
@@ -55,9 +56,11 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     
     Route::post('add-product',[SellerProductController::class, 'add_product']);
-   
+
     Route::post('edit-product',[SellerProductController::class, 'edit_product']);
-   
+
+    Route::post('add-product1',[SellerProductController::class, 'add_product1']);
+    Route::post('edit-product1',[SellerProductController::class, 'edit_product1']);
 
     Route::post('all-product',[SellerProductController::class, 'all_product']);
 
@@ -67,6 +70,30 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     Route::delete('product-delete',[SellerProductController::class, 'product_delete']);
 
+
+    // M4 Apis
+
+    Route::post('all-Inventory-product',[SellerProductController::class, 'all_Inventory_product']);
+
+    Route::put('update-stock-inventory',[SellerProductController::class, 'update_stock_inventory']);
+
+    Route::put('update-affilate-commission',[SellerProductController::class, 'update_affilate_commission']);
+
+    Route::get('view-profile',[SellerProductController::class, 'view_profile']);
+    
+    Route::post('/update-store-information', [SellerProductController::class,'update_store_information']);
+    Route::post('/update-store-bank-details', [SellerProductController::class,'update_store_bank_details']);
+
+
+    // M5 Apis
+
+    Route::post('/get-seller-banner-price', [SellerBannerController::class,'seller_banner_price']);
+    Route::post('/add-banner', [SellerBannerController::class,'Add_Banner']);
+    Route::post('/complete-banner-payment', [SellerBannerController::class,'complete_banner_payment']);
+    Route::post('/all-banners', [SellerBannerController::class,'all_banners']);
+
+
+    
 });
 
 
