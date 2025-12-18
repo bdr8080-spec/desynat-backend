@@ -58,6 +58,10 @@
                                         <span class="discount ms-2"></span>
                                     </div>
                                 </div>
+                                <div class="return-view">
+                                    <div class="return-green">7 day return policy available</div>
+                                    <button class="btn btn-outline-red w-100">Cancel Order</button>
+                                </div>
 
                             </div>
                         </div>
@@ -143,11 +147,11 @@
                 </div>
                 
 
-                <div class="mt-4">
+                <!-- <div class="mt-4">
                     <button type="submit" id="placeOrderBtn" class="customBtn mb-3">
                         Cancel Order
                     </button>
-                </div>
+                </div> -->
 
             </div>
 

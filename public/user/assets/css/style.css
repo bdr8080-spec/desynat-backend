@@ -2356,3 +2356,20 @@ width: fit-content;
     border-radius: 5px;
     border: 1px solid #FF5F1B;
 }
+.return-green{
+    color: #17854C;
+}
+.btn-outline-red{
+    border:1px solid #D53B36;
+    color: #D53B36;
+}
+.return-view {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    justify-content: space-between;
+}
+.btn-outline-red:hover{
+    border:1px solid #D53B36;
+    color: #D53B36;
+}
