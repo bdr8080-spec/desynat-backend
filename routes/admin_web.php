@@ -138,6 +138,12 @@ Route::group(['prefix'=>'admin'], function(){
 
 });
 
+
+route::Match(['get','post'],'/affiliate-mgt', function(){
+    return view('admin.commission-mgt.affiliate-mgt');
+});
+
+
 Route::fallback(function (Request $request) {
     $uri = $request->getRequestUri();
 
