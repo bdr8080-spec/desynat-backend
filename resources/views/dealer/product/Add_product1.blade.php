@@ -468,12 +468,6 @@
                                 <p class="text-danger" id="error-discount_value_0"></p>
 
                             </div>
-<<<<<<< HEAD
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg.10%"
-                                name="discount_value[0][]" id="discount_value_0">
-                            <p class="text-danger" id="error-discount_value_0"></p>
-=======
->>>>>>> d54c93643f9a6f032b73c0058fc42bd0d1690ae6
 
                         </div>
                         <div class="col-lg-6 col-md-6">
@@ -485,12 +479,6 @@
                                     name="final_price[0][]" id="final_price_0_0">
                                 <p class="text-danger" id="error-final_price_0_0"></p>
                             </div>
-<<<<<<< HEAD
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD"
-                                name="final_price[0][0]" id="final_price_0">
-                            <p class="text-danger" id="error-final_price_0"></p>
-=======
->>>>>>> d54c93643f9a6f032b73c0058fc42bd0d1690ae6
                         </div>
                     </div>
                 </div>
