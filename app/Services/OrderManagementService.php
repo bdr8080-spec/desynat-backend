@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Models\User;
-
+use App\Models\DeliveryBoy;
 use App\Models\{UserGiftCards,GiftCard,UserWallet};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
@@ -29,7 +29,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->whereIn('delivery_status', ['1', '2'])
             ->where(function ($query) {
@@ -89,7 +90,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('delivery_status', '5')
             ->where(function ($query) {
@@ -148,7 +150,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('delivery_status', '3')
             ->where(function ($query) {
@@ -207,7 +210,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('delivery_status', '4')
             ->where(function ($query) {
@@ -265,7 +269,8 @@ class OrderManagementService
                 'order_details.product_details.subcategory',
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
-                'order_details.variation_details.size'
+                'order_details.variation_details.size',
+                'driver_details'
             )
             ->where('id', $request->id)->get();
 
@@ -276,6 +281,127 @@ class OrderManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch order details: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function getDriversListToAssign($request){
+
+        try{
+
+            $checkOrder = Order::with( 'delivery_details')->where('id', $request->order_id)->first();
+
+            if (!$checkOrder) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            $checkDeliveryAddressCountryCode = $checkOrder->delivery_details->country_code;
+            //dd($checkDeliveryAddressCountryCode);
+
+            if ($checkDeliveryAddressCountryCode!== '+965') {
+                return [
+                    'status' => 'error',
+                    'message' => 'Oder Address Is Outside From Kuwait',
+                    'data' => []
+                ];
+            }
+
+            $UserAddressLat = $checkOrder->delivery_details->latitude;
+            $UserAddressLong = $checkOrder->delivery_details->longitude;
+            //dd($UserAddressLong);
+
+            $deliveryBoyIds = getregionFromCoordinates($UserAddressLat, $UserAddressLong);
+            //dd($deliveryBoyIds);
+
+            if (!$deliveryBoyIds) {
+                return [
+                    'status' => 'error',
+                    'message' => 'No Delivery Boy Found For User Address Zone',
+                    'data' => []
+                ];
+            }
+
+            $deliveryBoys = DeliveryBoy::whereIn('id', $deliveryBoyIds)
+                ->orderBy('id', 'desc') 
+                ->get();
+
+            return [
+                'status' => 'success',
+                'message' => "Delivery Boys fetched successfully",
+                'data' => $deliveryBoys
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch delivery boy: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function assignDriver($request){
+
+        try{
+
+            $checkdriver = DeliveryBoy::where('id', $request->driver_id)->first();
+
+            if (!$checkdriver) {
+                return [
+                    'status' => 'error',
+                    'message' => 'No Delivery Boy Found',
+                    'data' => []
+                ];
+            }
+
+             $order = Order::find($request->order_id);
+
+            if (!$order) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            if ($order->assign_status == 1 && $order->delivery_boy_id == $request->driver_id) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Driver already assigned to this order',
+                    'data' => []
+                ];
+            }
+
+            DB::beginTransaction();
+
+            $order->update([
+                'delivery_boy_id' => $checkdriver->id,
+                'assign_status' => 1
+            ]);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Delivery Boy Assigned Successfully',
+                'data' => [
+                    'order_details' => $order,
+                    'driver_details' => $checkdriver
+                ]
+            ];
+
+        
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to assign delivery boy: ' . $e->getMessage(),
                 'data' => []
             ];
         }

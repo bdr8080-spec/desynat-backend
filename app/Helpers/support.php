@@ -2,6 +2,8 @@
 
 
 use App\Models\{UserGiftCards,UserWallet,Order};
+use App\Models\Zone;
+use App\Models\DeliveryBoy;
 
 
 // Function to calculate the distance using the Haversine formula
@@ -116,3 +118,53 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
     }
 
     }
+
+    function getregionFromCoordinates($lat, $lng)
+    {
+        //dd(123);
+        // Retrieve regions with markers from the database
+        $zones = Zone::where('status', '1')->get(['id', 'coordinates'])->toArray();
+        //dd($zones);
+ 
+        // Check if the point is in any polygon
+        $foundZoneId = null;
+        foreach ($zones as $zone) {
+            $coordinates = $zone['coordinates']; // Use coordinates directly as array
+            if (isPointInPolygon($lat, $lng, $coordinates)) {
+                $foundZoneId = $zone['id'];
+ 
+                break;
+            }
+        }
+         //dd($foundZoneId);
+ 
+       if ($foundZoneId !== null) {
+            $deliveryBoyIds = DeliveryBoy::whereJsonContains('zone_id', $foundZoneId)
+                ->orderBy('id', 'desc')    
+                ->pluck('id')                
+                ->toArray();               
+
+            return $deliveryBoyIds;       
+        } else {
+            return [];
+        }
+
+    }
+
+    function isPointInPolygon($lat, $lng, $polygon)
+    {
+        $vertices_x = array_column($polygon, 'lat');
+        $vertices_y = array_column($polygon, 'lng');
+        $points_polygon = count($polygon);
+ 
+        $i = $j = $c = 0;
+        for ($i = 0, $j = $points_polygon - 1; $i < $points_polygon; $j = $i++) {
+            if (((($vertices_y[$i] <= $lng) && ($lng < $vertices_y[$j])) || (($vertices_y[$j] <= $lng) && ($lng < $vertices_y[$i]))) &&
+                ($lat < ($vertices_x[$j] - $vertices_x[$i]) * ($lng - $vertices_y[$i]) / ($vertices_y[$j] - $vertices_y[$i]) + $vertices_x[$i])
+            ) {
+                $c = !$c;
+            }
+        }
+        return $c;
+    }
+ 
