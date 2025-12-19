@@ -20,6 +20,10 @@ class orderdetail extends Model
     }
 
     
+    public function order_details(){
+        return $this->hasOne(Order::class,'id','order_id');
+
+    }
 
 
 }
