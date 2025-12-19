@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="return-view">
                                     <div class="return-green">7 day return policy available</div>
-                                    <button class="btn btn-outline-red w-100">Cancel Order</button>
+                                    <button class="btn btn-outline-red w-100" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Order</button>
                                 </div>
 
                             </div>
@@ -120,11 +120,19 @@
                             <div>8000 KD</div>
                         </div>
                         <div class="giftinfo">
+                            <div>Discount on MRP </div>
+                            <div class="discount">80 KD</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>Coupon Discount (FIR20)</div>
+                            <div class="discount">80 KD</div>
+                        </div>
+                        <div class="giftinfo">
                             <div>Shipping Free </div>
                             <div>80 KD</div>
                         </div>
                         <div class="giftinfo">
-                            <div>Tax</div>
+                            <div>Tax(if any)</div>
                             <div>10.00 KD</div>
                         </div>
                         <div class="giftinfo">
@@ -133,6 +141,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="return-green">You will save 100 KD on this</div>
 
                 
                 <div class="gift-pnl mt-3">
@@ -165,7 +174,52 @@
 
 
 
+<!-- Cancel order -->
 
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fs-5" id="exampleModalLabel">Select Reason</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="gift-panel-list">
+                    <div class="reason-list">
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="filter" value="1" checked>
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">Reason 1</div>
+                            </div>
+                        </label>
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="filter" value="1">
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">Reason 2</div>
+                            </div>
+                        </label>
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="filter" value="1">
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">Other</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="form-group w-100 py-2">
+                        <textarea rows="4" class="form-control pline-10" placeholder="Write here"></textarea>
+                    </div>
+                    <div class="mt-4">
+                        <button type="button" class="customBtn mb-3 white-btn">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection

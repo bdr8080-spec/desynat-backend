@@ -174,6 +174,48 @@
                                 </div>
 
                                 <div class="cart-panel position-relative">
+                                    <a href="order_details" class="link-content">
+                                        <div class="cart-card bottom-pd">
+                                            <div class="card-left mb-2 d-flex">
+                                                <div>
+                                                    <div class="ongoing-title" style="color:#17854C;">Delivered</div>
+                                                    <div class="cart-products order-images me-3">
+                                                        <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
+                                                            class="img-fluid">
+                                                    </div>
+                                                </div>
+
+                                                <div class="w-100">
+                                                    <div class="card-right d-flex w-100 justify-content-between">
+                                                        <div class="product-info">
+                                                            <h5 class="product-title"> Order ID :# <span>123456789</span></h5>
+                                                            <div class="price-current"> Mooei Pcs set</div>
+                                                            <div class="psize d-flex gap-4 mt-2">
+                                                                <span>Size: M</span>
+                                                                <span class="d-flex align-items-center gap-2">
+                                                                    Color:
+                                                                    <div class="colorbox" style="width:15px;height:15px;border-radius:3px;background:#000;">
+                                                                    </div>
+                                                                </span>
+                                                                <span>Qnt: 1</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <h5 class="product-title"> 440 KD</h5>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <p class="delivery-label mb-2">Placed</p>
+                                                        <p class="delivery-date mb-2">7PM | 21-02-2025</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="expert-date">Expected Delivery Date : 12 SEP 25</div>
+                                    </a>
+                                </div>
+
+                                <div class="cart-panel position-relative">
                                     <a href="#" class="link-content">
                                         <div class="cart-card bottom-pd">
                                             <div class="card-left mb-2 d-flex">
