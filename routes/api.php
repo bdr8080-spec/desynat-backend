@@ -123,8 +123,12 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/return-exchange-product-after-delivered', [UserOrderController::class,'return_exchange_product_after_delivered']);
 
   Route::post('/product-rating', [UserOrderController::class,'product_rating']);
-
   Route::post('/home-page-search', [UserDashboardController::class,'home_page_search']);
+  Route::get('/get-recent-search-data', [UserDashboardController::class,'get_recent_search_data']);
+
+
+
+
 
 
 
