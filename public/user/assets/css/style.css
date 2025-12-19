@@ -2443,8 +2443,12 @@ width: fit-content;
   
 .rating-widget .rating {
 	direction: rtl;
-	unicode-bidi: bidi-override;
-	color: #ddd;
+    unicode-bidi: bidi-override;
+    color: #ddd;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+    justify-content: end;
 }
 .rating-widget .rating input {
 	display: none;
