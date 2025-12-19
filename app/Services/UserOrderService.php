@@ -344,13 +344,13 @@ return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$r
     }
 
  // User productOrderComplete
- public function productOrderComplete($request){
+public function productOrderComplete($request){
 
- try{
+try{
 
+DB::beginTransaction();
 
 $checkOrder=Order::where('order_id', $request->order_id)->first();
-
 
 if($checkOrder->payment_status!=='0' ){
     return [
@@ -368,24 +368,17 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
  // when i Received Payment in Cod
     if($checkOrder->payment_method=='3'){
 
-
-    DB::beginTransaction();
-
         $checkOrder->update(['delivery_status'=>'2']);
 
         $this->AddtocartRemoveData($checkOrder->id);
 
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
-        DB::commit();
+         $msg="COD Order Place Successfully";  
 
-        return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
-    }
-
-    if($checkOrder->payment_method=='2'){ // wallet Payment Code 
+        // return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
+    }else if($checkOrder->payment_method=='2'){ // wallet Payment Code 
    
-         DB::beginTransaction();
-
        $request_data=(object)[
             'user_id'=>$userid,
             ];
@@ -403,24 +396,19 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
        }
 
        //    Cut Amount From The Wallet Amount 
-         $this->UserBalancePayOrder($userid,$OrderPayAmount);
+        $this->UserBalancePayOrder($userid,$OrderPayAmount);
 
-          $this->AddtocartRemoveData($checkOrder->id);
+        $this->AddtocartRemoveData($checkOrder->id);
 
-           OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
+        OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
+        $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
 
-       $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
+         $msg="Order Place Successfully";  
 
-        DB::commit();
+    //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
 
-       return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
-    }
-
-
-    if($checkOrder->payment_method=='1'){
-
-         DB::beginTransaction();
+    }else if($checkOrder->payment_method=='1'){
 
         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
@@ -765,8 +753,191 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     }
 
+    // exchnageProductAfterdelivery
 
 
+// product exchange Code 
+
+ public function exchnageProductAfterdelivery($request){
+
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+    // check order is Alredy in return and exchange state 
+
+     if($checkOrder->return_type!=='0'){
+       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+     }
+     
+    
+    // check delivery status
+    if($checkOrder->order_details->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+    
+    if($checkOrder->product_details->product_exchangable=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product product_exchangable days Availbility
+
+    if($checkOrder->product_details->product_exchangable=='1'){
+    
+    $return_days= intVal($checkOrder->product_details->exchangable_days);
+
+    $productOrderDate = $checkOrder->product_details->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product Exchange Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
+
+    return ['status'=>'success','message'=>"Product Exchange Request Send Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+    
+
+
+ public function ReturnAndExchnageProductAfterdelivery($request){
+
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+    // check order is Alredy in return and exchange state 
+
+     if($checkOrder->return_type!=='0'){
+       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+     }
+     
+    
+    // check delivery status
+    if($checkOrder->order_details->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+    
+
+    // check if The Product is return State 
+     if($request->type=='1'){
+
+         if($checkOrder->product_details->product_return=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product Return days Availbility
+
+    if($checkOrder->product_details->product_return=='1'){
+    
+    $return_days= intVal($checkOrder->product_details->return_days);
+
+    $productOrderDate = $checkOrder->product_details->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product return Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'1','return_reason'=> $request->return_reason,'return_image'=>$request->return_image]);    
+
+    $msg="Product return Request Send Successfully";
+
+
+     }
+
+
+    // check Type Code for exchnage 
+    if($request->type=='2'){
+
+    if($checkOrder->product_details->product_exchangable=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product product_exchangable days Availbility
+    if($checkOrder->product_details->product_exchangable=='1'){
+    
+    $return_days= intVal($checkOrder->product_details->exchangable_days);
+
+    $productOrderDate = $checkOrder->product_details->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product Exchange Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
+
+    $msg="Product Exchange Request Send Successfully";
+
+}
+
+    return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
 
 
 

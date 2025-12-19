@@ -452,7 +452,8 @@ public function return_product_after_delivered(Request $request){
     $validate = Validator::make($request->all(), [
         'order_id'=>'required|exists:orders,id',
         'orderdetails_id'=>'required|exists:orderdetails,id',
-        "return_reason" =>"required"
+        "return_reason" =>"required",
+        "type"=>'required:in:1,2' // 1 for return  2 for Exchange 
               
         ]);
             
@@ -476,8 +477,133 @@ public function return_product_after_delivered(Request $request){
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
+}
+
+
+public function exchange_product_after_delivered(Request $request){
+
+    $user_id= $request->user()->id;
+
+    $validate = Validator::make($request->all(), [
+        'order_id'=>'required|exists:orders,id',
+        'orderdetails_id'=>'required|exists:orderdetails,id',
+        "exchange_reason" =>"required",
+        "new_size"=>"required",
+        "type"=>'required:in:1,2' //  1 for return  2 for Exchange 
+        ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    $request_data=(object) [
+    'user_id'=>$user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+    "exchange_reason"=>$request->exchange_reason,
+    "new_size"=>$request->new_size??null    
+    ];
+
+    $data=$this->UserOrderService->exchnageProductAfterdelivery($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
 
 }
+
+
+
+
+
+public function return_exchange_product_after_delivered(Request $request){
+
+    try{
+
+    $user_id= $request->user()->id;
+
+
+      $validate = Validator::make($request->all(), [
+        'order_id'=>'required|exists:orders,id',
+        'orderdetails_id'=>'required|exists:orderdetails,id',
+        "type"=>'required:in:1,2' // 1 for return  2 for Exchange 
+              
+        ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    // if the product is Apply return State
+    if($request->type==1){
+
+        $validate = Validator::make($request->all(), [
+        "return_reason" =>"required",         
+        ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    }
+
+    // if the product is Apply to Exchange State  
+if($request->type==2){
+
+    $validate = Validator::make($request->all(), [
+        "exchange_reason" =>"required",
+        "new_size"=>"required", 
+    ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+}
+
+ $request_data=(object) [
+    'user_id'=>$user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+
+    "return_reason"=>$request->return_reason??null, // return side
+    "return_image"=>$request->return_image??null,  // // return side  
+
+    "exchange_reason"=>$request->exchange_reason??null, // exchange side
+    "new_size"=>$request->new_size??null  ,   // exchange side
+    'type'=>$request->type
+
+    ];
+
+
+
+    $data=$this->UserOrderService->ReturnAndExchnageProductAfterdelivery($request_data);
+
+     if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
+
+
+}
+ catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+
+
+}
+
+
 
 
 
