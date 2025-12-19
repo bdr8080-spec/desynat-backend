@@ -19,6 +19,8 @@
                         </div>
                     </div>
                     <div class="btn-outline1 btn-ongoing">Ongoing</div>
+                    <div class="btn-outline1 btn-outline-red">Cancelled</div>
+                    <div class="btn-outline1 btn-outline-de">Delivered</div>
                 </div>   
 
                 <div class="cart-panel">
@@ -60,13 +62,27 @@
                                 </div>
                                 <div class="return-view">
                                     <div class="return-green">7 day return policy available</div>
-                                    <button class="btn btn-outline-red w-100" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Order</button>
+                                    <div class="d-none">
+                                        <button class="btn btn-outline-red w-100" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Order</button>
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
-
                     </div>
+
+                    <div class="rating-pnl mt-3">
+                        <div class="rate-p">
+                            <h5 class="product-title"> Rate this product</h5>
+                        </div>
+
+                        <div class="d-flex gap-3">
+                            <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#cancelModal" style="width:130px;">Exchange</button>
+                            <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#cancelModal" style="width:130px;background:#D53B36;color:#fff;">Return</button>
+                        </div>
+                    </div>
+
+
                 </div>
                 
                 {{-- BILLING DETAILS --}}
@@ -106,11 +122,93 @@
                     </div>
                 </div>
 
+                {{-- Cancellation Details --}}
+                <div class="gift-pnl mt-4">
+                    <h6>Cancellation details</h6>
+                    <div class="border-1">
+                        <div class="giftinfo">
+                            <div>Cancellation ID</div>
+                            <div>#9876y999</div>
+                        </div>
+                        <div class="giftinfo">
+                            <div>Cancelled on</div>
+                            <div>02/02/2025 at 10:00</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gift-pnl mt-4">
+                    <h6>Reason </h6>
+                    <div class="border-1">
+                        <div class="giftinfo">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, deserunt? Quam unde officiis tenetur officia, accusamus,</p>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Cancellation Details --}}
+
+
+
+
             </div>
 
             {{-- RIGHT SIDE --}}
 
             <div class="col-lg-4">
+                <div class="orderstatus p-3 mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div class="order-t">Order Status</div>
+                        <div class="order-14">Expected Delivery 21/02/25</div>
+                    </div>
+                    <div class="order-view-lists mt-3">
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Confirmed</div>
+                        </div>
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Shipped</div>
+                        </div>
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
+                            </div>
+                            <div>On the Way</div>
+                        </div>
+                        <div class="or-box">
+                            <div class="fill-box" style="background:#fff;">
+                                <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Delivered</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orderstatus p-3 mb-4">
+                    <div class="d-flex justify-content-between">
+                        <div class="order-t">Order Status</div>
+                    </div>
+                    <div class="order-view-lists mt-3">
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Confirmed</div>
+                        </div>
+                       
+                        <div class="or-box">
+                            <div class="fill-box" style="background:#D72E04;">
+                                <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid" style="filter: brightness(26);">
+                            </div>
+                            <div style="color:#D72E04;">Delivered</div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <h6>Billing Details</h6>
                 <div class="gift-pnl mt-0">
@@ -156,11 +254,11 @@
                 </div>
                 
 
-                <!-- <div class="mt-4">
-                    <button type="submit" id="placeOrderBtn" class="customBtn mb-3">
-                        Cancel Order
+                <div class="mt-4">
+                    <button type="submit" class="customBtn mb-3">
+                        Download Invoice
                     </button>
-                </div> -->
+                </div>
 
             </div>
 
