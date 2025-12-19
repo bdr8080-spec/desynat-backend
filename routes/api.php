@@ -124,6 +124,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/product-rating', [UserOrderController::class,'product_rating']);
 
+  Route::post('/home-page-search', [UserDashboardController::class,'home_page_search']);
+
+
 
 });
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Helpers\ApiResponse;
 
+use Validator;
+
 class UserDashboardController extends Controller
 {
     
@@ -28,6 +30,25 @@ class UserDashboardController extends Controller
 
     }
 
+
+public function home_page_search(Request $request){
+
+    $validate = Validator::make($request->all(), [
+        'search' => 'required',
+        ]);
+
+    if($validate->fails()){
+      return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+
+
+
+
+
+
+    }
 
     
 
