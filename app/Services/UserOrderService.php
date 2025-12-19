@@ -368,16 +368,17 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
  // when i Received Payment in Cod
     if($checkOrder->payment_method=='3'){
 
-        $checkOrder->update(['delivery_status'=>'2']);
+        $checkOrder->update(['payment_status'=>'0','delivery_status'=>'2']);
 
         $this->AddtocartRemoveData($checkOrder->id);
 
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
+
          $msg="COD Order Place Successfully";  
 
         // return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
-    }else if($checkOrder->payment_method=='2'){ // wallet Payment Code 
+    }elseif($checkOrder->payment_method=='2'){ // wallet Payment Code 
    
        $request_data=(object)[
             'user_id'=>$userid,
@@ -408,7 +409,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
 
-    }else if($checkOrder->payment_method=='1'){
+    }elseif($checkOrder->payment_method=='1'){
 
         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
@@ -419,15 +420,19 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
          OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
-        }else{
-            $msg="Order Payment Cancelled";        
         }
+        
+    }else{
+
+        $msg="Order Payment Cancelled";        
+        
+
+    }
 
     DB::commit();
 
-    return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
 
-    }
+    return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
 
     
     } catch (\Exception $e) {
@@ -542,6 +547,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         'order_details.product_details.category',
         'order_details.product_details.subcategory',
         'order_details.product_details.seller_details',
+        'order_details.UserRatingReviewProvide',
+
     'order_details.variation_details.color','order_details.variation_details.size')
     ->where('order_id', $request->order_id)->first();
 
