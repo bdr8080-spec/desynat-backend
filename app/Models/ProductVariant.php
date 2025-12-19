@@ -13,16 +13,21 @@ class ProductVariant extends Model
     ];
 
     public function color(){
-        
         return $this->hasOne(color::class,'id','color_id');
-
     }
 
-    public function size(){
-        
+    public function size(){    
         return $this->hasOne(size::class,'id','size_id');
-
     }
+
+
+    
+
+
+
+
+
+
 
 
 

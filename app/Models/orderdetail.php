@@ -26,4 +26,10 @@ class orderdetail extends Model
     }
 
 
+    public function UserRatingReviewProvide(){
+        return $this->hasOne(productRatings::class,'orderdetails_id','id');
+
+    }
+
+
 }
