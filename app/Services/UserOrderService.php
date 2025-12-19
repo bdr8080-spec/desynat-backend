@@ -542,6 +542,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         'order_details.product_details.category',
         'order_details.product_details.subcategory',
         'order_details.product_details.seller_details',
+        'order_details.UserRatingReviewProvide',
+
     'order_details.variation_details.color','order_details.variation_details.size')
     ->where('order_id', $request->order_id)->first();
 
