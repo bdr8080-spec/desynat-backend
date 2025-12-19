@@ -77,12 +77,12 @@
                         <div class="rate-p">
                             <h5 class="product-title"> Rate this product</h5>
                             <div class="order-ratings rating-widget">
-                                <div class="rating">
-                                    <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
-                                    <input id="rating-4" type="radio" name="rating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
-                                    <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
-                                    <input id="rating-2" type="radio" name="rating" value="2" checked/><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
-                                    <input id="rating-1" type="radio" name="rating" value="1"/><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
+                                <div class="rating" data-bs-toggle="modal" data-bs-target="#ratingModal">
+                                    <label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
+                                    <label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
+                                    <label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
+                                    <label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
+                                    <label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
                                 </div>
                             </div>
                         </div>
@@ -275,17 +275,10 @@
                         Download Invoice
                     </button>
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
-
 </div>
-
-
 
 
 <!-- Cancel order -->
@@ -338,7 +331,7 @@
 <!-- Return Modal -->
 
 <div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title fs-5">Return Request</h4>
@@ -383,7 +376,7 @@
 <!-- Exchange Modal -->
 
 <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title fs-5">Exchange Request</h4>
@@ -415,6 +408,22 @@
                     </div>
                     
                     <h6>Select Available Size</h6>
+                    <div class="reason-list">
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="filter" value="1" checked>
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">XS</div>
+                            </div>
+                        </label>
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="filter" value="1">
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">M</div>
+                            </div>
+                        </label>
+                    </div>
 
                     <div class="mt-4">
                         <button type="button" class="customBtn mb-3 white-btn">Submit</button>
@@ -425,6 +434,57 @@
     </div>
 </div>
 
+<!-- Rating section Modal -->
+<div class="modal fade" id="ratingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fs-5">Rate this product</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="gift-panel-list">
+                    <div class="reason-list rating-widget ">
+                        <h6>Rate Nike T-Shirt</h6>
+                        <div class="rating py-2">
+                            <input id="rating-1" type="radio" name="rating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-2" type="radio" name="rating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-4" type="radio" name="rating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group w-100 py-2 mb-3">
+                        <p>Write Review</p>
+                        <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                    </div>
+
+                    <div class="reason-list rating-widget ">
+                        <h6>Rate Store</h6>
+                        <div class="rating py-2">
+                            <input id="rating-1" type="radio" name="rating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-2" type="radio" name="rating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-4" type="radio" name="rating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group w-100 py-2 mb-3">
+                        <p>Write Review</p>
+                        <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                    </div>
+                    
+
+                    <div class="mt-4">
+                        <button type="button" class="customBtn mb-3 white-btn">Submit Review</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection
