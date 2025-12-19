@@ -405,6 +405,12 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
         $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
 
+        $this->Order_detailsPaidStatusChange($checkOrder->id,$request->payment_status); // order details complete order
+
+
+         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
+
+
          $msg="Order Place Successfully";  
 
     //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
@@ -419,6 +425,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         $this->AddtocartRemoveData($checkOrder->id);
 
          OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
+
+        $this->Order_detailsPaidStatusChange($checkOrder->id,$request->payment_status); // order details complete order
 
         }
         
@@ -530,6 +538,12 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         
         }
 
+        
+    }
+
+
+      public function Order_detailsPaidStatusChange($orderid,$paymentstatus){
+        $checkOrder = orderdetail::where('order_id', $orderid)->update(['payment_status'=>$paymentstatus]);
         
     }
 
