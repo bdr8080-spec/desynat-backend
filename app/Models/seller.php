@@ -46,6 +46,11 @@ class seller extends Authenticatable
     public function subcription_plan(){
         return $this->hasmany(SellerSubcriptionPlanBuy::class,'seller_id','id')->where('status','1')->where('payment_status',1);
     }
+
+    public function country_details(){ 
+        return $this->hasOne(country::class,'dial_code','country_code'); 
+    }
+
     
     
     

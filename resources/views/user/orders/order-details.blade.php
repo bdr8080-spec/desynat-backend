@@ -5,21 +5,22 @@
 
 
 <div class="customContainer common-padding">
-    <div class="common-title d-flex gap-3 mb-4">
-        <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
-        <div class="">
-            <h3>#003242</h3>
-            <p>Place on 02/02/2025 at 10:00pm</p>
-        </div>
-    </div>
-
     <div class="main-content">
-      
         <div class="row">
 
             {{-- LEFT SIDE CART --}}
             <div class="col-lg-8">
-               
+                <div class="common-title d-flex justify-content-between align-items-center gap-3 mb-4">
+                    <div class="d-flex gap-3">
+                        <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
+                        <div class="order-subtitle">
+                            <h3>#003242</h3>
+                            <p>Place on 02/02/2025 at 10:00pm</p>
+                        </div>
+                    </div>
+                    <div class="btn-outline1 btn-ongoing">Ongoing</div>
+                </div>   
+
                 <div class="cart-panel">
                     <div class="cart-card">
                         <div class="card-left mb-2 d-flex">
@@ -57,6 +58,10 @@
                                         <span class="discount ms-2"></span>
                                     </div>
                                 </div>
+                                <div class="return-view">
+                                    <div class="return-green">7 day return policy available</div>
+                                    <button class="btn btn-outline-red w-100">Cancel Order</button>
+                                </div>
 
                             </div>
                         </div>
@@ -65,7 +70,7 @@
                 </div>
                 
                 {{-- BILLING DETAILS --}}
-                <div class="gift-pnl mt-4">
+                <!-- <div class="gift-pnl mt-4">
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>Total Quantity</div>
@@ -80,7 +85,7 @@
                             <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 {{-- DELIVERY instruction --}}
                 <div class="gift-pnl mt-4">
@@ -142,11 +147,11 @@
                 </div>
                 
 
-                <div class="mt-4">
+                <!-- <div class="mt-4">
                     <button type="submit" id="placeOrderBtn" class="customBtn mb-3">
                         Cancel Order
                     </button>
-                </div>
+                </div> -->
 
             </div>
 

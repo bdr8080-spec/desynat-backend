@@ -157,6 +157,16 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/cancelled_orders',[OrderManagementController::class,'cancelled_orders']);
      Route::get('/single_order_detail',[OrderManagementController::class,'single_order_detail']);
 
+     Route::get('/get_drivers_to_assign',[OrderManagementController::class,'get_drivers_to_assign']);
+     Route::post('/assign_driver',[OrderManagementController::class,'assign_driver']);
+
+     //Banner request management
+     Route::get('/get_banner_request',[BannerController::class,'get_banner_request']);
+     Route::post('/approve_banner_request',[BannerController::class,'approve_banner_request']);
+     Route::post('/reject_banner_request',[BannerController::class,'reject_banner_request']);
+
+
+
 
 
 

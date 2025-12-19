@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('giftcard_id')->nullable();
             $table->string('giftcard_amount')->nullable();
             $table->string('total_amount');
+            $table->string('admin_commission')->nullable();
 
            
             $table->string('payment_method')->nullable()->comment(' 1 myfatoorah 2 wallet 3 Cod');
@@ -40,6 +41,8 @@ return new class extends Migration
 
             $table->enum('delivery_status',['1','2','3','4','5'])->default('1')->comment(' 1 all 2 onging 3 delivered 4 cancelled 5 return ');
             $table->string('transaction_id')->nullable();
+            $table->string('delivery_boy_id')->nullable();
+            $table->string('assign_status')->default('0')->comment('0 no 1 yes 2');
 
             $table->timestamps();
         });

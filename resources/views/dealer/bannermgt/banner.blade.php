@@ -8,12 +8,11 @@
     max-width: 200px;
     text:truncate;
 }
-
-.eyebtn {
-    color: #333;
-    font-size: 18px;
-    display: block !important;
+table#table1 {
+    text-align: center;
 }
+
+
 </style>
 
 <section class="section dashboard">
