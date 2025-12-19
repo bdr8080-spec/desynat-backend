@@ -97,7 +97,7 @@
     <div class="mb-5">
         <div class="dashboard-button d-flex mt-5 gap-5">
             <button type="button" class="btn total-outline w-100">Total Price <strong>499KD</strong></button>
-            <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+            <button type="submit" class="btn add-fillbtn w-100">Send Request</button>
         </div>
 
 
