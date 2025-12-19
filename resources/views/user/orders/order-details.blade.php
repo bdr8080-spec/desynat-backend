@@ -22,6 +22,7 @@
                     <div class="btn-outline1 btn-ongoing">Ongoing</div>
                     <div class="btn-outline1 btn-outline-red">Cancelled</div>
                     <div class="btn-outline1 btn-outline-de">Delivered</div>
+                    <div class="btn-outline1 btn-ongoing">Return Request</div>
                 </div>
 
                 <div class="cart-panel">
@@ -259,8 +260,10 @@
 
 
                 <div class="gift-pnl mt-3">
-
-                    <h6>Paid by</h6>
+                    <div class="giftinfo">
+                        <h6>Paid by</h6>
+                        <div class="trans" style="color:#714829;font-size:12px;">Transaction Id: 124359526</div>
+                    </div>
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>8000 KD</div>
