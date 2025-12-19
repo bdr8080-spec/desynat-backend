@@ -605,6 +605,49 @@ if($request->type==2){
 
 
 
+public function product_rating(Request $request){
+
+    $user_id= $request->user()->id;
+
+    $validate = Validator::make($request->all(), [
+        'order_id'=>'required|exists:orders,id',
+        'orderdetails_id'=>'required|exists:orderdetails,id',
+        "product_rating"=>'required|numeric|min:0|max:5',
+        "store_rating"=>"required|numeric|min:0|max:5",
+          
+        ]);
+            
+    if($validate->fails()){
+       return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+
+    $request_data=(object) [
+    'user_id'=>$user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+    "product_rating"=>$request->product_rating??null,
+    "product_review"=>$request->product_review??null,
+    "product_image"=>$request->product_image??null,
+    "store_rating"=>$request->store_rating??null,
+    "store_review"=>$request->store_review??null,
+    "store_image"=>$request->store_image??null,
+    ];
+
+    $data=$this->UserOrderService->ProductReviewAndRating($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+}
+
+
+
+
 
 
 

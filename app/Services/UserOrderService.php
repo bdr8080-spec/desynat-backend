@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
-use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
+use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 
 use DB;
 
@@ -927,6 +927,91 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 }
 
     return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+ public function ProductReviewAndRating($request){
+    
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+    // check order is Alredy in return and exchange state 
+
+    //  if($checkOrder->return_type!=='0'){
+    //    return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+    //  }
+     
+    
+    // check delivery status
+    if($checkOrder->order_details->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+
+
+    $product_id=$checkOrder->product_id;
+    $product_details=product::where('id',$product_id)->first();
+    $store_id= $product_details->store_id;
+    
+
+    $match=[
+    'user_id'=>$request->user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+    ];
+
+
+    $check_review=productRatings::where($match)->first();
+
+    if($check_review){
+        return [
+            'status' => 'error',
+            'message' => "This product Already Have review",
+            'data' => (object)[]
+        ];
+
+    }
+
+    $requestData=[
+    'user_id'=>$request->user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+    "product_id"=>$product_id,
+    "product_rating"=>$request->product_rating??null,
+    "product_review"=>$request->product_review??null,
+    "product_image"=>json_encode($request->product_image)??null,
+    "store_id"=>$store_id,
+    "store_rating"=>$request->store_rating??null,
+    "store_review"=>$request->store_review??null,
+    "store_image"=>json_encode($request->store_image)??null,
+    ];
+
+
+
+
+   $create_review=productRatings::UpdateOrCreate($match,$requestData);
+
+    if($create_review){
+        return ['status'=>'success','message'=>"Product Review Save Successfully",'data'=>$create_review];
+    }
+
     
     } catch (\Exception $e) {
         return [
