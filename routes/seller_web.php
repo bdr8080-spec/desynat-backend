@@ -137,6 +137,9 @@ route::Match(['get','post'],'/banner-management', function(){
 route::Match(['get','post'],'/banner-details', function(){
     return view('dealer.bannermgt.banner-details');
 });
+route::Match(['get','post'],'/add-banner', function(){
+    return view('dealer.bannermgt.add-banner');
+});
 
 
 

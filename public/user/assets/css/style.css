@@ -427,7 +427,7 @@ h3.mid-headng{
   gap: 8px;
   cursor: pointer;
   position: relative;
-  font-size: 16px;
+  font-size: 16px !important;
   user-select: none;
 }
 
@@ -2433,5 +2433,29 @@ width: fit-content;
 }
 .rating-pnl{
     display: flex;
+    align-items: center;
     justify-content: space-between;
+}
+
+.rating-widget {
+    max-width: 500px;
+}
+  
+.rating-widget .rating {
+	direction: rtl;
+    unicode-bidi: bidi-override;
+    color: #ddd;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+}
+.rating-widget .rating input {
+	display: none;
+}
+.rating-widget .rating label:hover,
+.rating-widget .rating label:hover ~ label,
+.rating-widget .rating input:checked + label,
+.rating-widget .rating input:checked + label ~ label {
+	color: #ffc107; 
 }
