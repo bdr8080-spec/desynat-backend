@@ -15,8 +15,7 @@
 
                 <!-- Banner Position -->
                 <label class="banner-text">Banner position</label>
-                <div
-                    class="group-radio-btn d-flex gap-4 align-items-center flex-wrap py-3 pe-3 justify-content-between">
+                <div class="group-radio-btn d-flex gap-5 align-items-center flex-wrap py-3 pe-3">
 
                     <div class="check_radio">
                         <label class="radio-group">
@@ -41,9 +40,30 @@
                             <span class="radio-label">Category</span>
                         </label>
                     </div>
-
                 </div>
+
+               
+
             </div>
+             <!-- CATEGORY FIELDS -->
+                <div id="categoryFields" class="row mt-3" style="display: none;">
+                    <div class="col-md-6">
+                        <label>Category name</label>
+                        <select class="form-control">
+                            <option>Women</option>
+                            <option>Men</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Sub-category name</label>
+                        <select class="form-control">
+                            <option>Abhayas</option>
+                            <option>Sarees</option>
+                        </select>
+                    </div>
+                </div>
+
             <div class="col-lg-12">
                 <!-- Duration -->
                 <div class="d-flex justify-content-between mt-4">
@@ -63,32 +83,32 @@
                 </div>
 
             </div>
-<div class="col-lg-12">
-    <div class="product-pnls mt-3">
-        <div class="upload-image" style="height:170px;width:270px;">
-            <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
+            <div class="col-lg-12">
+                <div class="product-pnls mt-3">
+                    <div class="upload-image" style="height:170px;width:270px;">
+                        <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
 
-                <!-- Placeholder -->
-                <img id="bannerPlaceholderImg" src="assets/img/upload-icon.svg"
-                    style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                            <!-- Placeholder -->
+                            <img id="bannerPlaceholderImg" src="assets/img/upload-icon.svg"
+                                style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
 
-                <!-- Uploaded Image -->
-                <img id="bannerUploadedImg" src=""
-                    style="width:100px;display:none;object-fit:cover;border-radius:6px;height:110px;">
+                            <!-- Uploaded Image -->
+                            <img id="bannerUploadedImg" src=""
+                                style="width:100px;display:none;object-fit:cover;border-radius:6px;height:110px;">
 
-                <div class="py-2" style="color:#875C3A">
-                    Upload Banner Image
+                            <div class="py-2" style="color:#875C3A">
+                                Upload Banner Image
+                            </div>
+
+                            <!-- SINGLE IMAGE -->
+                            <input type="file" accept="image/*" id="banner_image_upload" style="opacity:0;"
+                                name="banner_image">
+
+                        </label>
+                    </div>
                 </div>
 
-                <!-- SINGLE IMAGE -->
-                <input type="file" accept="image/*" id="banner_image_upload" style="opacity:0;"
-                    name="banner_image">
-
-            </label>
-        </div>
-    </div>
-
-</div>
+            </div>
 
         </div>
     </div>
@@ -117,6 +137,24 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
     reader.readAsDataURL(file);
 });
 </script>
+
+<script>
+const radios = document.querySelectorAll(
+    'input[name="banner_position"]'
+);
+const categoryFields = document.getElementById('categoryFields');
+
+radios.forEach(radio => {
+    radio.addEventListener('change', function() {
+        if (this.value === 'category') {
+            categoryFields.style.display = 'flex';
+        } else {
+            categoryFields.style.display = 'none';
+        }
+    });
+});
+</script>
+
 
 
 @include('dealer.layout.custom_code');
