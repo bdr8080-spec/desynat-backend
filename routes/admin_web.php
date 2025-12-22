@@ -17,6 +17,9 @@ use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\GiftCardController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\PromoCodeController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\AffiliateCommissionController;
+use App\Http\Controllers\Admin\BannerRequestController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -132,6 +135,16 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/update_promocode', [PromoCodeController::class, 'update_promocode'])->name('admin.update_promocode');
         Route::get('/add-promocode', [PromoCodeController::class, 'addPromocode'])->name('admin.addPromocode');
         Route::get('/edit-promocode/{id}', [PromoCodeController::class, 'editPromocode'])->name('admin.editPromocode');
+
+        //promocode management
+        Route::get('/order-management', [OrderController::class, 'orderManagement'])->name('admin.orderManagement');
+
+        //promocode management
+        Route::get('/affiliate-commission-management', [AffiliateCommissionController::class, 'affiliateCommissionManagement'])->name('admin.affiliateCommissionManagement');
+        Route::post('/update_affiliate_commission', [AffiliateCommissionController::class, 'update_affiliate_commission'])->name('admin.update_affiliate_commission');
+
+        //promocode management
+        Route::get('/banner-request-management', [BannerRequestController::class, 'bannerRequestManagement'])->name('admin.bannerRequestManagement');
         
 
     });
@@ -139,9 +152,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-route::Match(['get','post'],'/affiliate-mgt', function(){
-    return view('admin.commission-mgt.affiliate-mgt');
-});
 
 
 Route::fallback(function (Request $request) {
