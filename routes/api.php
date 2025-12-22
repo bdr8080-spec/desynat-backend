@@ -105,14 +105,28 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/product-order-complete-payment', [UserOrderController::class,'product_order_complete_payment']);
 
-  Route::post('/All-order', [UserOrderController::class,'All_order']);
-  Route::post('/single-order-summary', [UserOrderController::class,'single_order_summary']);
-
   Route::get('/waller-balance',[UserOrderController::class, 'waller_balance']);
-
 
   // M5 APi 
   
+  Route::post('/All-order', [UserOrderController::class,'All_order']);
+  Route::post('/single-order-summary', [UserOrderController::class,'single_order_summary']);
+
+  Route::post('/get-reject-reason', [UserOrderController::class,'get_reject_reason']);
+
+  // cancelled full order 
+  Route::post('/cancelled-single-product', [UserOrderController::class,'cancelled_single_product']);
+
+  Route::post('/return-product-after-delivered', [UserOrderController::class,'return_product_after_delivered']);
+  Route::post('/exchange-product-after-delivered', [UserOrderController::class,'exchange_product_after_delivered']);
+
+  Route::post('/return-exchange-product-after-delivered', [UserOrderController::class,'return_exchange_product_after_delivered']);
+
+  Route::post('/product-rating', [UserOrderController::class,'product_rating']);
+  Route::post('/home-page-search', [UserDashboardController::class,'home_page_search']);
+  Route::get('/get-recent-search-data', [UserDashboardController::class,'get_recent_search_data']);
+
+
 
 
 
