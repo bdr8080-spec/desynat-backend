@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="return-view">
                                     <div class="return-green">7 day return policy available</div>
-                                    <div class="d-none">
+                                    <div class="d-none-1">
                                         <button class="btn btn-outline-red w-100" data-bs-toggle="modal"
                                             data-bs-target="#cancelModal">Cancel Order</button>
                                     </div>
@@ -85,6 +85,8 @@
                                     <label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
                                     <label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
                                 </div>
+
+                                <input type="hidden" id="selectedRating" value="0">
                             </div>
                         </div>
 
@@ -161,8 +163,18 @@
                     </div>
                 </div>
 
-                {{-- Cancellation Details --}}
+                {{-- Uploaded images --}}
 
+                <div class="gift-pnl mt-4">
+                    <h6>Uploaded images </h6>
+                    <div class="border-1">
+                        <div class="giftinfo">
+                           <div class="image-upload">
+                                <img src="{{asset('user/assets/images/simliar6.jpg')}}" class="img-fluid" alt="images">
+                           </div>
+                        </div>
+                    </div>
+                </div>
 
 
 
@@ -450,35 +462,51 @@
                     <div class="reason-list rating-widget ">
                         <h6>Rate Nike T-Shirt</h6>
                         <div class="rating py-2">
-                            <input id="rating-1" type="radio" name="rating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-2" type="radio" name="rating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-4" type="radio" name="rating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-1" type="radio" name="raterating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-2" type="radio" name="raterating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-3" type="radio" name="raterating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-4" type="radio" name="raterating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-5" type="radio" name="raterating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
                         </div>
                     </div>
 
-                    <div class="form-group w-100 py-2 mb-3">
+                    <div class="form-group w-100 py-2 mb-3 position-relative">
                         <p>Write Review</p>
                         <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                        <div class="paperhover">
+                            <label><input type="file" id="images" multiple accept="image/*">
+                            <i class="bi bi-paperclip"></i>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div id="preview" class="preview-box1"></div>
                     </div>
 
-                    <div class="reason-list rating-widget ">
+                    <div class="reason-list rating-widget mt-2">
                         <h6>Rate Store</h6>
                         <div class="rating py-2">
-                            <input id="rating-1" type="radio" name="rating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-2" type="radio" name="rating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-4" type="radio" name="rating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-1" type="radio" name="raterating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-2" type="radio" name="raterating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-3" type="radio" name="raterating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-4" type="radio" name="raterating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="rating-5" type="radio" name="raterating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
                         </div>
                     </div>
 
-                    <div class="form-group w-100 py-2 mb-3">
+                    <div class="form-group w-100 py-2 mb-3 position-relative">
                         <p>Write Review</p>
                         <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                        <div class="paperhover">
+                            <label><input type="file" id="reviewpic" multiple accept="image/*">
+                            <i class="bi bi-paperclip"></i>
+                            </label>
+                        </div>
                     </div>
-                    
+                    <div class="mt-2">
+                        <div id="preview1" class="preview-box1"></div>
+                    </div>
+
 
                     <div class="mt-4">
                         <button type="button" class="customBtn mb-3 white-btn">Submit Review</button>
@@ -493,7 +521,50 @@
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-    
+$(function () {
+  $('#images').on('change', function () {
+    $('#preview').html('');
+    [...this.files].forEach(file => {
+      let reader = new FileReader();
+      reader.onload = e =>
+        $('#preview').append(
+          `<div class="reviewImg">
+             <img src="${e.target.result}">
+             <span>&times;</span>
+           </div>`
+        );
+      reader.readAsDataURL(file);
+    });
+  });
+
+  $('#preview').on('click', 'span', function () {
+    $(this).parent().remove();
+  });
+});
+
+
+$(function () {
+  $('#reviewpic').on('change', function () {
+    $('#preview1').html('');
+    [...this.files].forEach(file => {
+      let reader = new FileReader();
+      reader.onload = e =>
+        $('#preview1').append(
+          `<div class="reviewImg">
+             <img src="${e.target.result}">
+             <span>&times;</span>
+           </div>`
+        );
+      reader.readAsDataURL(file);
+    });
+  });
+
+  $('#preview1').on('click', 'span', function () {
+    $(this).parent().remove();
+  });
+});
+
 </script>
 
