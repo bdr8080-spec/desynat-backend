@@ -2506,3 +2506,15 @@ width: fit-content;
     cursor: pointer;
     opacity: 0;
 }
+#requestimg {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    opacity: 0;
+    line-height: 4;
+}
+.requestbox {
+    cursor: pointer;
+    position: relative;
+}

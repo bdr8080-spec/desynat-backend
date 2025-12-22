@@ -102,7 +102,7 @@
                 </div>
 
                 {{-- BILLING DETAILS --}}
-                <!-- <div class="gift-pnl mt-4">
+                <div class="gift-pnl mt-4">
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>Total Quantity</div>
@@ -117,7 +117,7 @@
                             <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</div>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
                 {{-- DELIVERY instruction --}}
                 <div class="gift-pnl mt-4">
@@ -378,6 +378,21 @@
                     </div>
                     
                     <h6>Upload Image(Optional)</h6>
+                    <div class="border-1 p-3">
+                        <div class="text-center">
+                            <label for="upload" class="requestbox">
+                                <div class="image-upload-2 mb-1">
+                                    <img src="{{asset('user/assets/images/upload-icon.svg')}}" class="img-fluid" alt="images">
+                                </div>
+                                <div style="font-size:13px;color:#7a7979;">Upload Profile Images</div>
+                                <input type="file" id="requestimg" multiple accept="image/*">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <div id="previewRequest" class="preview-box1"></div>
+                    </div>
 
                     <div class="mt-4">
                         <button type="button" class="customBtn mb-3 white-btn">Submit</button>
@@ -507,7 +522,6 @@
                         <div id="preview1" class="preview-box1"></div>
                     </div>
 
-
                     <div class="mt-4">
                         <button type="button" class="customBtn mb-3 white-btn">Submit Review</button>
                     </div>
@@ -562,6 +576,28 @@ $(function () {
   });
 
   $('#preview1').on('click', 'span', function () {
+    $(this).parent().remove();
+  });
+});
+
+//Request image
+$(function () {
+  $('#requestimg').on('change', function () {
+    $('#previewRequest').html('');
+    [...this.files].forEach(file => {
+      let reader = new FileReader();
+      reader.onload = e =>
+        $('#previewRequest').append(
+          `<div class="reviewImg">
+             <img src="${e.target.result}">
+             <span>&times;</span>
+           </div>`
+        );
+      reader.readAsDataURL(file);
+    });
+  });
+
+  $('#previewRequest').on('click', 'span', function () {
     $(this).parent().remove();
   });
 });
