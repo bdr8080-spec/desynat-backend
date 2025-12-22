@@ -10,6 +10,7 @@ use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
 
 use DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 
 class OrderManagementService
@@ -383,7 +384,8 @@ class OrderManagementService
 
             $order->update([
                 'delivery_boy_id' => $checkdriver->id,
-                'assign_status' => 1
+                'assign_status' => 1,
+                'assign_date'     => Carbon::now()
             ]);
 
             DB::commit();

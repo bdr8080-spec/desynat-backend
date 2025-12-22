@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\DeliveryBoy\AuthController;
 
 use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyDashboardController;
 use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyProfileController;
+use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyOrderController;
 
 
 // M1 Milestone 
@@ -28,6 +29,16 @@ Route::group(['prefix' => 'deliveryboy'], function () {
     Route::get('/get_profile_details', [DeliveryBoyProfileController::class,'get_profile_details']);
     Route::post('/update_profile', [DeliveryBoyProfileController::class,'update_profile']);
     Route::post('/duty_on_off', [DeliveryBoyProfileController::class,'duty_on_off']);
+
+    //M5
+    Route::get('/get_all_orders', [DeliveryBoyOrderController::class,'get_all_orders']);
+    Route::get('/get_new_orders', [DeliveryBoyOrderController::class,'get_new_orders']);
+    Route::get('/get_ongoing_orders', [DeliveryBoyOrderController::class,'get_ongoing_orders']);
+    Route::get('/get_completed_orders', [DeliveryBoyOrderController::class,'get_completed_orders']);
+    Route::get('/order_details', [DeliveryBoyOrderController::class,'order_details']);
+    Route::post('/update_delivery_status', [DeliveryBoyOrderController::class,'update_delivery_status']);
+    Route::post('/pick_order', [DeliveryBoyOrderController::class,'pick_order']);
+    Route::get('/get_reasons', [DeliveryBoyOrderController::class,'get_reasons']);
 
 
 

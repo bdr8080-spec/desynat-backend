@@ -1,0 +1,463 @@
+<?php
+namespace App\Services;
+
+use App\Models\User;
+use App\Models\DeliveryBoy;
+use App\Models\Reason;
+use App\Models\{UserGiftCards,GiftCard,UserWallet};
+use App\Models\{Promocode,userAddress,country,all_countrie};
+
+use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
+
+use DB;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
+
+
+class DeliveryBoyOrderService
+{
+   
+
+    public function AllOrders($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $orders = Order::with(
+                'delivery_details',
+                'order_details.product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('order_id', 'like', '%' . $request->search . '%');
+            })
+
+            ->when(!empty($request->filter), function ($q) use ($request) {
+                $q->where('delivery_status', $request->filter);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
+
+            // Calculate distance for each order
+            $orders->getCollection()->transform(function ($order) {
+
+                // User delivery location
+                $userLat  = $order->delivery_details->latitude ?? null;
+                $userLong = $order->delivery_details->longitude ?? null;
+
+                // Default distance
+                $order->distance = null;
+
+                $storeInfo = $order->order_details
+                    ->first()
+                    ?->product_details
+                    ?->seller_details
+                    ?->store_info;
+
+                if ($userLat && $userLong && $storeInfo) {
+
+                    $storeLat  = $storeInfo->let;
+                    $storeLong = $storeInfo->long;
+
+                    // Distance calculation
+                    $order->distance = round(
+                        calculateDistance($userLat, $userLong, $storeLat, $storeLong)
+                    );
+                }
+
+
+                return $order;
+            });
+
+            return [
+                'status'  => 'success',
+                'message' => 'All Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch all orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+
+    public function NewOrders($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $today = Carbon::today()->toDateString();
+
+            $orders = Order::with(
+                'delivery_details',
+                'order_details.product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+            ->when(!empty($request->search), function ($q) use ($request) {
+                $q->where('order_id', 'like', '%' . $request->search . '%');
+            })
+
+            ->whereNotNull('assign_date')
+            ->whereDate('assign_date', $today)
+
+            // ->whereNotIn('delivery_status', ['4', '6', '7', '8'])
+            ->where('delivery_status', '1')
+
+            ->orderBy('assign_date', 'desc')
+            ->paginate($limit);
+
+            $orders->getCollection()->transform(function ($order) {
+
+                $order->distance = null;
+
+                $userLat  = $order->delivery_details->latitude ?? null;
+                $userLong = $order->delivery_details->longitude ?? null;
+
+                $storeInfo = $order->order_details
+                    ->first()
+                    ?->product_details
+                    ?->seller_details
+                    ?->store_info;
+
+                if ($userLat && $userLong && $storeInfo) {
+                    $order->distance = round(
+                        calculateDistance(
+                            $userLat,
+                            $userLong,
+                            $storeInfo->let ?? null,
+                            $storeInfo->long ?? null
+                        )
+                    );
+                }
+
+                return $order;
+            });
+
+            return [
+                'status'  => 'success',
+                'message' => 'New Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch new orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function OngoingOrders($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $orders = Order::with(
+                'delivery_details',
+                'order_details.product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+            ->where('delivery_status', '2')
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('order_id', 'like', '%' . $request->search . '%');
+            })
+
+            // ->when(!empty($request->filter), function ($q) use ($request) {
+            //     $q->where('delivery_status', $request->filter);
+            // })
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
+
+            // Calculate distance for each order
+            $orders->getCollection()->transform(function ($order) {
+
+                // User delivery location
+                $userLat  = $order->delivery_details->latitude ?? null;
+                $userLong = $order->delivery_details->longitude ?? null;
+
+                // Default distance
+                $order->distance = null;
+
+                $storeInfo = $order->order_details
+                    ->first()
+                    ?->product_details
+                    ?->seller_details
+                    ?->store_info;
+
+                if ($userLat && $userLong && $storeInfo) {
+
+                    $storeLat  = $storeInfo->let;
+                    $storeLong = $storeInfo->long;
+
+                    // Distance calculation
+                    $order->distance = round(
+                        calculateDistance($userLat, $userLong, $storeLat, $storeLong)
+                    );
+                }
+
+
+                return $order;
+            });
+
+            return [
+                'status'  => 'success',
+                'message' => 'Ongoing Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch ongoing orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function CompletedOrders($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $orders = Order::with(
+                'delivery_details',
+                'order_details.product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+            ->where('delivery_status', '3')
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('order_id', 'like', '%' . $request->search . '%');
+            })
+
+            // ->when(!empty($request->filter), function ($q) use ($request) {
+            //     $q->where('delivery_status', $request->filter);
+            // })
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
+
+            // Calculate distance for each order
+            $orders->getCollection()->transform(function ($order) {
+
+                // User delivery location
+                $userLat  = $order->delivery_details->latitude ?? null;
+                $userLong = $order->delivery_details->longitude ?? null;
+
+                // Default distance
+                $order->distance = null;
+
+                $storeInfo = $order->order_details
+                    ->first()
+                    ?->product_details
+                    ?->seller_details
+                    ?->store_info;
+
+                if ($userLat && $userLong && $storeInfo) {
+
+                    $storeLat  = $storeInfo->let;
+                    $storeLong = $storeInfo->long;
+
+                    // Distance calculation
+                    $order->distance = round(
+                        calculateDistance($userLat, $userLong, $storeLat, $storeLong)
+                    );
+                }
+
+
+                return $order;
+            });
+
+            return [
+                'status'  => 'success',
+                'message' => 'Completed Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch completed orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function OrderDetails($request)
+    {
+        try {
+
+            $order = Order::with(
+                'promocode_details',
+                'giftCard_details',
+                'delivery_details',
+                'order_details.product_details.brand',
+                'order_details.product_details.category',
+                'order_details.product_details.subcategory',
+                'order_details.product_details.seller_details',
+                'order_details.variation_details.color',
+                'order_details.variation_details.size',
+                'order_details.product_details.seller_details.store_info'
+            )
+            ->where('id', $request->id)
+            ->first();
+
+            if ($order) {
+                // User delivery location
+                $userLat  = $order->delivery_details->latitude ?? null;
+                $userLong = $order->delivery_details->longitude ?? null;
+
+                $order->distance = null;
+
+                $storeInfo = $order->order_details
+                    ->first()
+                    ?->product_details
+                    ?->seller_details
+                    ?->store_info;
+
+                if ($userLat && $userLong && $storeInfo) {
+                    $order->distance = round(
+                        calculateDistance(
+                            (float)$userLat,
+                            (float)$userLong,
+                            (float)$storeInfo->let,
+                            (float)$storeInfo->long
+                        )
+                    );
+                }
+            }
+
+            return [
+                'status'  => 'success',
+                'message' => 'Order Details fetched Successfully',
+                'data'    => $order
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch order details: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function UpdateDeliveryStatus($request)
+    {
+        try {
+            $data = Order::find($request->id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            $data->delivery_status = $request->delivery_status;
+            $data->not_delivered_reason = $request->reason;
+            $data->save();
+
+            switch ($data->delivery_status) {
+                case '3':
+                    $message = 'Delivery Status Updated to Delivered';
+                    break;
+                case '7':
+                    $message = 'Delivery Status Updated to Picked';
+                    break;
+                case '8':
+                    $message = 'Delivery Status Updated to Not Delivered';
+                    break;
+                default:
+                    $message = 'Delivery Status Updated Successfully';
+            }
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function PickOrder($request)
+    {
+        try {
+            $data = Order::find($request->id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            $data->delivery_status = '7';
+            $data->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Order Picked Successfully',
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getReason($request)
+    {
+        try {
+
+            $query = Reason::where('type', $request->type)->where('status',1);
+
+            $query->orderBy('id', 'desc');
+
+            $reason_details = $query->get();
+
+            if ($reason_details->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Reason found',
+                    'data' =>  []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Reasons fetched successfully',
+                'data' => $reason_details
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch brands: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+
+
+
+
+
+
+}
