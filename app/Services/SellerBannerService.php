@@ -121,6 +121,38 @@ if($request->search){
 }
 
 
+
+    if($request->brand_filter){
+
+        switch ($request->brand_filter) {
+            case '1':
+                
+            $checkBanner=  $checkBanner->where('Admin_verify','1')->where('payment_status','1'); // Active
+            
+            break;
+            case '2':
+              $checkBanner=  $checkBanner->where('payment_status','1')->where('payment_status','2'); // condfirmed
+            break;
+            case '3':
+              $checkBanner=  $checkBanner->where('Admin_verify','1')->where('payment_status','0'); // Pending
+
+            break;
+            case '4':
+              $checkBanner=  $checkBanner->where('Admin_verify','1')->where('payment_status','3');  // Expired
+            break;
+            case '5':
+               $checkBanner= $checkBanner->where('Admin_verify','2'); // rejected
+            break;
+                
+            default:
+                # code...
+                break;
+        }
+    }
+
+
+
+
 $checkBanner=$checkBanner->get();
 
 
