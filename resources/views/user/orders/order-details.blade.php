@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="return-view">
                                     <div class="return-green">7 day return policy available</div>
-                                    <div class="d-none">
+                                    <div class="d-none-1">
                                         <button class="btn btn-outline-red w-100" data-bs-toggle="modal"
                                             data-bs-target="#cancelModal">Cancel Order</button>
                                     </div>
@@ -161,8 +161,18 @@
                     </div>
                 </div>
 
-                {{-- Cancellation Details --}}
+                {{-- Uploaded images --}}
 
+                <div class="gift-pnl mt-4">
+                    <h6>Uploaded images </h6>
+                    <div class="border-1">
+                        <div class="giftinfo">
+                           <div class="image-upload">
+                                <img src="{{asset('user/assets/images/simliar6.jpg')}}" class="img-fluid" alt="images">
+                           </div>
+                        </div>
+                    </div>
+                </div>
 
 
 

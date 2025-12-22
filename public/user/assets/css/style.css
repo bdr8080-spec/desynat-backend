@@ -2459,3 +2459,11 @@ width: fit-content;
 .rating-widget .rating input:checked + label ~ label {
 	color: #ffc107; 
 }
+.image-upload{
+    height: 80px;
+    width: 80px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
