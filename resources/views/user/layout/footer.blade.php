@@ -438,6 +438,15 @@ $(document).ready(function() {
 });
      </script>
 
+    <script>
+        $('.search input').on('keyup', function () {
+            if ($(this).val().length > 0) {
+                $('.searchdrop').fadeIn();
+            } else {
+                $('.searchdrop').fadeOut();
+            }
+        });
+    </script>
 
      <script>
 document.querySelectorAll('.notapplyspace').forEach(function(input) {
