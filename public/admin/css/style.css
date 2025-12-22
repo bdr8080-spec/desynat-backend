@@ -2377,3 +2377,60 @@ header,
 .product-info strong {
   font-weight: 600;
 }
+
+
+
+.review-modal {
+  background: #fff;
+  width: 650px;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+
+
+.review-box {
+  border: 1px dashed #bdbdbd;
+  border-radius: 6px;
+  padding: 18px;
+  margin: 15px 0;
+}
+
+.stars {
+  color: #ff9800;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.stars.center {
+  text-align: center;
+}
+
+.review-text {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.product-title {
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.attached {
+  margin-top: 12px;
+}
+
+.attached p {
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.attached img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  opacity: 0.8;
+}
