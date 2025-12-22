@@ -3,41 +3,61 @@
 <section class="section dashboard">
     <!-- <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a class="title24 alink"> <i class="bi bi-chevron-left"></i>Details</a>
-
     </div> -->
+
     <div class="d-flex justify-content-between mt-4">
-        <a class="title24 alink"> <i class="bi bi-chevron-left"></i>Details</a>
-        <span class="upper-text">Confirmed</span>
+        <a class="title24 alink" href="{{route('seller.show_banner')}}"> <i class="bi bi-chevron-left"></i>Details</a>
+
+        @if($single_banner->Admin_verify=='0')
+        <span class="upper-text"> Pending </span>
+        @elseif($single_banner->Admin_verify=='1')
+        <span class="upper-text"> Confirmed </span>
+        @else
+        <span class="upper-text text-danger"> Rejected </span>
+        @endif
+
     </div>
 
     <div class="row mt-4">
         <div class="col-md-6">
             <div class="banner-box mb-4">
-                <img src="dealer/assets/img/banner-box.svg" />
+                <img src="{{$single_banner->upload_banner}}" width="150px">
             </div>
+
             <label class="banner-text">Banner position</label>
+
+            @if($single_banner->banner_position=='1')
+
             <input type="text" class="form-control" value="Homepage - Top" />
+
+            @elseif($single_banner->banner_position=='2')
+            <input type="text" class="form-control" value="Home Banner" />
+            @else
+            <input type="text" class="form-control" value="category" />
+            @endif
 
             <div class="d-flex justify-content-between mt-4">
                 <h6 class="banner-texts">Select Duration</h6>
-                <span class="banner-texts">Total days - 07</span>
+                <span class="banner-texts">Total days - {{$single_banner->total_days}}</span>
             </div>
 
             <div class="row mt-3">
                 <div class="col-md-12">
                     <label class="banner-text">From</label>
-                    <input type="date" class="form-control mb-4" />
+                    <input type="date" class="form-control mb-4" value="{{$single_banner->start_date}}" />
                 </div>
                 <div class="col-md-12">
                     <label class="banner-text">To</label>
-                    <input type="date" class="form-control" />
+                    <input type="date" class="form-control" value="{{$single_banner->end_date}}" />
                 </div>
             </div>
         </div>
+
+
+        @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
         <div class="col-md-6">
             <h6>SELECT PAYMENT METHOD</h6>
             <div class="payment-box">
-
                 <div class="check_radio">
                     <label class="radio-group">
                         <input type="radio" name="category_id">
@@ -46,7 +66,6 @@
                         <span class="radio-label"> Credit / Debit Card</span>
                     </label>
                 </div>
-
 
                 <div class="card-option">
                     <label class="radio-group">
@@ -67,11 +86,22 @@
                 <button class="add-card" id="openAddCard">+ Add new card</button>
             </div>
         </div>
-        <div class="dashboard-button d-flex mt-5 gap-5">
-            <button type="button" class="btn total-outline w-100">Total Price <strong>499KD</strong></button>
-            <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
-        </div>
 
+        @elseif($single_banner->Admin_verify=='1' && $single_banner->payment_status=='1')
+        Payment is Paid
+        @elseif($single_banner->Admin_verify=='1' && $single_banner->payment_status=='2')
+        Payment Is rejected
+        @endif
+
+        <div class="dashboard-button d-flex mt-5 gap-5">
+            <button type="button" class="btn total-outline w-100">Total Price
+                <strong>{{$single_banner->price}}KD</strong></button>
+
+            @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
+            <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+
+            @endif
+        </div>
 
 </section>
 

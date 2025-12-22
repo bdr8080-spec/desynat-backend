@@ -174,4 +174,30 @@ try{
 
 
 
+
+
+public function singleBannerDetails($request){
+
+try{
+
+$checkBanner=sellerBanner::with('category_details','subcategory_details')->where('id',$request->id)->first();
+
+
+ return [
+            'status'  => 'success',
+            'message' => "single Bannner fetch Successfully",
+            'data'    => $checkBanner
+        ];
+
+
+
+}catch (\Exception $e) {
+    return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+    }
+}
+
+
+
+
+
 }

@@ -136,7 +136,6 @@ public function seller_banner_price(Request $request){
     "type"=>$request->type
     ];
 
-
     $data=$this->SellerBannerService->BannerPriceDetails($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
@@ -145,7 +144,6 @@ public function seller_banner_price(Request $request){
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
-
 
 
 }

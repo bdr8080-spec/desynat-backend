@@ -29,6 +29,13 @@
                     <span>Affiliated Commission</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/show-banner') ? 'sidebar-active' : '' }}"
+                    href="{{ route('seller.show_banner') }}">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/affiliated.svg" alt="icon" class="asideicon">
+                    <span>Show Banner</span>
+                </a>
+            </li>
 
 
             <!-- <li class="nav-item">

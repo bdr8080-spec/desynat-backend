@@ -1,24 +1,29 @@
 @include('dealer.layout.header')
 
 <style>
-    td img{
-        width: 65px;height: 65px !important;border-radius: 50%;object-fit: fill;"
-    }
-    td {
-    max-width: 200px;
-    text:truncate;
+td img {
+    width: 65px;
+    height: 65px !important;
+    border-radius: 50%;
+    object-fit: fill;
+    "
+
 }
+
+td {
+    max-width: 200px;
+    text: truncate;
+}
+
 table#table1 {
     text-align: center;
 }
-
-
 </style>
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Banner Management</div>
-        <a href="" class="btn btn-success">Add New Banner</a>
+        <a href="{{route('seller.add_banner')}}" class="btn btn-success">Add New Banner</a>
 
     </div>
     <div class="datatable-wapper mt-4">
@@ -37,14 +42,14 @@ table#table1 {
 
                 <div class="search-filter">
                     <div class="from-group">
-                      <div class="show-date d-flex gap-2  flex-wrap">
-                        <div class="date-form-pnl">
-                            <input type="date" class="form-control">
+                        <div class="show-date d-flex gap-2  flex-wrap">
+                            <div class="date-form-pnl">
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="date-form-pnl">
+                                <input type="date" class="form-control">
+                            </div>
                         </div>
-                        <div class="date-form-pnl">
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
                     </div>
                     <div class="from-group">
                         <select class="form-select form-control width-50" aria-label="Default select example"
@@ -79,23 +84,38 @@ table#table1 {
                 </thead>
                 <tbody>
 
+                    @foreach($banners as $key=>$val)
+
                     <tr>
-                        <td>01</td>
+                        <td>{{$key+1}}</td>
                         <td>
 
-                            <img src="dealer/assets/img/m3-icon/upload-ic.svg" class="img-fluid" alt="image" class="pro-image"
+                            <img src="{{$val->upload_banner}}" class="img-fluid" alt="image" class="pro-image"
                                 style="width: 65px;height: 65px;border-radius: 50%;object-fit: cover;">
 
 
                         </td>
-                        <td> fhewifh</td>
-                        <td>enfhiwofhn</td>
-                        <td> 23KDx</td>
-                        <td>COnfirmed</td>
+                        <td> {{$val->order_id}}</td>
+                        <td>{{$val->created_at}}</td>
+                        <td> {{$val->price}} KD </td>
                         <td>
-                            <a href="" class="eyebtn" ><i class="bi bi-eye"></i></a>
+                            @if($val->Admin_verify=='0')
+                            Pending
+                            @elseif($val->Admin_verify=='1')
+                            COnfirmed
+                            @else
+                            Rejected
+                            @endif
+
+
+                        </td>
+                        <td>
+                            <a href="{{route('seller.show_single_banner',$val->id)}}" class="eyebtn"><i
+                                    class="bi bi-eye"></i></a>
                         </td>
                     </tr>
+
+                    @endforeach
 
 
 
