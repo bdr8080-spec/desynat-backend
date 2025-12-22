@@ -60,13 +60,13 @@
             <div class="payment-box">
                 <div class="check_radio">
                     <label class="radio-group">
-                        <input type="radio" name="category_id">
+                        <input type="radio" name="payment" id="onlinePayment" value="1" checked>
                         <span class="custom-radio"></span>
                         <img src="dealer/assets/img/credit-card.svg">
-                        <span class="radio-label"> Credit / Debit Card</span>
+                        <span class="radio-label"> Online Payment</span>
                     </label>
                 </div>
-
+                <!-- 
                 <div class="card-option">
                     <label class="radio-group">
                         <input type="radio" name="category_id">
@@ -83,8 +83,12 @@
                     </label>
                 </div>
 
-                <button class="add-card" id="openAddCard">+ Add new card</button>
+                <button class="add-card" id="openAddCard">+ Add new card</button> -->
             </div>
+
+
+
+
         </div>
 
         @elseif($single_banner->Admin_verify=='1' && $single_banner->payment_status=='1')
@@ -97,10 +101,17 @@
             <button type="button" class="btn total-outline w-100">Total Price
                 <strong>{{$single_banner->price}}KD</strong></button>
 
-            @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
-            <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+            <form id="bannerBuyForm">
+                @csrf
 
-            @endif
+
+                @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
+                <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+
+                @endif
+            </form>
+
+
         </div>
 
 </section>
@@ -174,6 +185,87 @@ function closeDrawer() {
     drawer.classList.remove("active");
     overlay.classList.remove("active");
 }
+
+
+
+
+
+$("#bannerBuyForm").on("submit", function(e) {
+    e.preventDefault();
+
+    $(".error-text").text("");
+
+    let hasError = false;
+
+
+    var paymentMethod = $('input[name="payment"]:checked').val();
+
+    let formData = $(this).serialize();
+
+    $.ajax({
+        url: "{{ route('user.buyGiftCard') }}",
+        method: "POST",
+        data: formData,
+        // beforeSend: function () {
+        //     $(".paybtn-common").prop("disabled", true).text("Processing...");
+        // },
+        success: function(response) {
+            // $(".paybtn-common").prop("disabled", false).text("Pay Now");
+
+            if (response.status === "success") {
+                $('#loader').show();
+
+                // toastr.success(response.message);
+
+
+                if (paymentMethod == 1) {
+                    // console.log('123');
+
+                    var orderid = response.data.data.order_id;
+
+                    var url = "/myfatoorah/" + orderid + "?type=bannerBuy";
+                    setTimeout(function() {
+                        window.location.href = url;
+                    }, 2000);
+                }
+
+
+                if (paymentMethod == 2) {
+
+                    var orderid = response.data.data.order_id;
+
+                    // var url = "{{ route('user.giftcard_complete_Payment') }}" +
+                    //              "?order_id=" + orderid + "&type=giftCard";
+                    // setTimeout(function() {
+                    //     window.location.href = url;
+                    // }, 2000);
+                    toastr.success('Payment Paid Successfully');
+
+                    var url = "{{ route('user.giftcard_complete_Payment') }}" +
+                        "?order_id=" + orderid + "&type=giftCard";
+
+                    setTimeout(function() {
+                        window.location.href = url;
+                    }, 2000);
+
+                }
+
+
+
+
+
+
+            } else {
+                toastr.error(response.message);
+            }
+        },
+        error: function() {
+            $(".paybtn-common").prop("disabled", false).text("Pay Now");
+            toastr.error("Something went wrong. Please try again!");
+        }
+    });
+
+});
 </script>
 
 
