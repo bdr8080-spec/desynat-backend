@@ -314,7 +314,9 @@ class UserOrderController extends Controller
         try{
 
             $validate = Validator::make($request->all(), [
-                'order_id'=>'required|exists:orders,order_id',
+                'order_id'=>'required|exists:orders,id',
+                "orderdetails_id"=>'required|exists:orderdetails,id'
+
                 ]);
             
            if($validate->fails()){
@@ -326,9 +328,10 @@ class UserOrderController extends Controller
            $request_data=(object)[
             'user_id'=>$user_id,
             'order_id'=>$request->order_id,
+            'orderdetails_id'=>$request->orderdetails_id
             ];
     
-            $data=$this->UserOrderService->singleOrderDetails($request_data);
+            $data=$this->UserOrderService->singleOrderDetailsNew($request_data);
     
             if(isset($data['status']) && $data['status']=='error' ){
                 return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);

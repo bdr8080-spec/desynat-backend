@@ -608,6 +608,56 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     }
 
  // User singleOrderDetails
+ public function singleOrderDetailsNew($request){
+
+    try{
+
+
+         $checkOrder = OrderDetail::with([
+        'order.delivery_details',
+        'order.giftCard_details',
+        'order.promocode_details',
+        
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.seller_details',
+        'variation_details.color',
+        'variation_details.size',
+        'UserRatingReviewProvide'
+    ])
+    
+    // $checkOrder=Order::with(
+    //     'promocode_details',
+    //     'giftCard_details',
+    //     'delivery_details',
+    //     'order_details.product_details.brand',
+    //     'order_details.product_details.category',
+    //     'order_details.product_details.subcategory',
+    //     'order_details.product_details.seller_details',
+    //     'order_details.UserRatingReviewProvide',
+
+    // 'order_details.variation_details.color','order_details.variation_details.size')
+
+    ->where('order_id', $request->order_id)
+    ->where('id',$request->orderdetails_id)
+    ->first();
+
+    return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+ // User singleOrderDetails New
  public function singleOrderDetails($request){
 
     try{
