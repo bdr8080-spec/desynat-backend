@@ -15,7 +15,7 @@ use Exception;
 
 Use Auth;
 use Validator;
-use App\Models\{seller,UserGiftCards,Order,Addtocart};
+use App\Models\{seller,UserGiftCards,Order,Addtocart,sellerBanner};
 use Illuminate\Support\Facades\Cache;
 use App\Models\SellerSubcriptionPlanBuy;
 
@@ -50,6 +50,29 @@ class MyFatoorahController extends Controller {
      */
     public function index(request $request,$id) {
         try {
+
+     if($request->type=='bannerBuy'){
+
+         $checkOrder=sellerBanner::with('seller_details')->where('order_id', $id)->first();
+
+            //For example: pmid=0 for MyFatoorah invoice or pmid=1 for Knet in test mode
+            $paymentId = request('pmid') ?: 0;
+            $sessionId = request('sid') ?: null;
+            $orderId  = $id ?: 147;
+
+            $order_array=[
+                'amount'=>$checkOrder->price,
+                'CustomerName'       => $checkOrder->seller_details->first_name. $checkOrder->seller_details->last_name ,
+                'InvoiceValue'       => $checkOrder->price,
+                'CustomerEmail'      => $checkOrder->seller_details->email,
+                'MobileCountryCode'  => $checkOrder->seller_details->country_code,
+                'CustomerMobile'     => $checkOrder->seller_details->mobile,
+                'Language'           => 'en',
+                'CustomerReference'  => $orderId,
+            ];
+            
+        }
+
 
      if($request->type=='order'){
 
@@ -288,6 +311,36 @@ class MyFatoorahController extends Controller {
                 ]);
                 
             }
+
+            // Buy Seller banner Online 
+
+            $checkBannerOrderStatus=sellerBanner::with('seller_details')->where('order_id', $transaction_id)->first();
+
+
+            if($checkBannerOrderStatus){
+
+                if($data->InvoiceStatus=='Paid'){
+                    $checkBannerOrderStatus->update(['payment_status'=>'1','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Banner Payment Paid Successfully";
+                    $url="Seller/show-banner?payment=yes";
+
+                }else{
+                    
+                    $checkBannerOrderStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Banner Payment Cancelled Successfully";
+                    $url="/Seller/show-banner?payment=no";
+                }
+                
+                // return  redirect()->to($url);
+
+                return redirect()->to($url)->with([
+                'message' => $msg,
+                'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
+                ]);
+                
+            }
+
+
 
             
 

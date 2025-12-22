@@ -44,7 +44,7 @@
                         <div class="form-group mt-4 w-100">
                             <select class="form-select form-select-lg mt-4" aria-label="Large select example">
 
-                                <option selected>Select country</option>
+                                <option selected>Select Status</option>
                                 <option value="1">country One</option>
                                 <option value="2">country Two</option>
                                 <option value="3">country Three</option>
@@ -119,7 +119,8 @@
                                 </td>
                                 <td>Lorem </td>
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a class="btn btn-dark customBtn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#assignModal">
                                         <span>Assign Delivery Boy</span>
                                     </a>
                                 </td>
@@ -149,7 +150,8 @@
                                 </td>
                                 <td>Lorem </td>
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a class="btn btn-dark customBtn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#assignModal">
                                         <span>Assign Delivery Boy</span>
                                     </a>
                                 </td>
@@ -167,7 +169,7 @@
                         <div class="form-group mt-4 w-100">
                             <select class="form-select form-select-lg mt-4" aria-label="Large select example">
 
-                                <option selected>Select country</option>
+                                <option selected>Select Status</option>
                                 <option value="1">country One</option>
                                 <option value="2">country Two</option>
                                 <option value="3">country Three</option>
@@ -204,13 +206,16 @@
                                 <th scope="col">Country</th>
                                 <th scope="col">Product details</th>
                                 <th scope="col">Delivery Address</th>
+
                                 <th scope="col">Order Amount</th>
+
                                 <th scope="col">Admin Commission</th>
                                 <th scope="col">Order Type</th>
-                                <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy/Company Name</th>
+                                <th scope="col">Delivery B</th>
+                                <th scope="col">Delivery Boy/Company</th>
+                                <th scope="col">Exchange or Return</th>
+                                <th scope="col">Reason</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Invoice</th>
                                 <th scope="col">Zone</th>
                                 <th scope="col">Assign Driver</th>
 
@@ -235,14 +240,13 @@
                                 <td>Delivery Boy</td>
                                 <td>Mayank</td>
                                 <td>Pending</td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Download Invoice</span>
-                                    </a>
-                                </td>
+                                <td>efwehgi</td>
                                 <td>Lorem </td>
+                                <td>Lorem </td>
+
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a class="btn btn-dark customBtn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#assignModal">
                                         <span>Assign Delivery Boy</span>
                                     </a>
                                 </td>
@@ -265,14 +269,13 @@
                                 <td>Delivery Boy</td>
                                 <td>Mayank</td>
                                 <td>Pending</td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Download Invoice</span>
-                                    </a>
-                                </td>
+                                <td>qwufbw</td>
                                 <td>Lorem </td>
+                                <td>Lorem </td>
+
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a class="btn btn-dark customBtn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#assignModal">
                                         <span>Assign Delivery Boy</span>
                                     </a>
                                 </td>
@@ -292,7 +295,7 @@
                         <div class="form-group mt-4 w-100">
                             <select class="form-select form-select-lg mt-4" aria-label="Large select example">
 
-                                <option selected>Select country</option>
+                                <option selected>Select Status</option>
                                 <option value="1">country One</option>
                                 <option value="2">country Two</option>
                                 <option value="3">country Three</option>
@@ -334,10 +337,9 @@
                                 <th scope="col">Order Type</th>
                                 <th scope="col">Delivery Boy</th>
                                 <th scope="col">Delivery Boy/Company Name</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">Rating & Review</th>
                                 <th scope="col">Invoice</th>
-                                <th scope="col">Zone</th>
-                                <th scope="col">Assign Driver</th>
+
 
 
                             </tr>
@@ -350,7 +352,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -359,18 +361,15 @@
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>Mayank</td>
-                                <td>Pending</td>
+                                <td data-bs-toggle="modal" data-bs-target="#sentModalrating" style="cursor: pointer;">
+                                    <i class="bi bi-star-fill text-warning"></i> 4.5 Rating
+                                </td>
                                 <td>
                                     <a class="btn btn-dark customBtn">
                                         <span>Download Invoice</span>
                                     </a>
                                 </td>
-                                <td>Lorem </td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Assign Delivery Boy</span>
-                                    </a>
-                                </td>
+
 
                             </tr>
                             <tr>
@@ -380,7 +379,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -389,18 +388,15 @@
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>Mayank</td>
-                                <td>Pending</td>
+                                <td data-bs-toggle="modal" data-bs-target="#sentModalrating" style="cursor: pointer;">
+                                    <i class="bi bi-star-fill text-warning"></i> 4.5 Rating
+                                </td>
                                 <td>
                                     <a class="btn btn-dark customBtn">
                                         <span>Download Invoice</span>
                                     </a>
                                 </td>
-                                <td>Lorem </td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Assign Delivery Boy</span>
-                                    </a>
-                                </td>
+
 
                             </tr>
                         </tbody>
@@ -414,7 +410,7 @@
                         <div class="form-group mt-4 w-100">
                             <select class="form-select form-select-lg mt-4" aria-label="Large select example">
 
-                                <option selected>Select country</option>
+                                <option selected>Select Status</option>
                                 <option value="1">country One</option>
                                 <option value="2">country Two</option>
                                 <option value="3">country Three</option>
@@ -456,10 +452,9 @@
                                 <th scope="col">Order Type</th>
                                 <th scope="col">Delivery Boy</th>
                                 <th scope="col">Delivery Boy/Company Name</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Invoice</th>
-                                <th scope="col">Zone</th>
-                                <th scope="col">Assign Driver</th>
+                                <th scope="col">Reason</th>
+
+
 
 
                             </tr>
@@ -472,7 +467,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -481,18 +476,8 @@
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>Mayank</td>
-                                <td>Pending</td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Download Invoice</span>
-                                    </a>
-                                </td>
-                                <td>Lorem </td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Assign Delivery Boy</span>
-                                    </a>
-                                </td>
+                                <td>lorem</td>
+
 
                             </tr>
                             <tr>
@@ -502,7 +487,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -511,18 +496,8 @@
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>Mayank</td>
-                                <td>Pending</td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Download Invoice</span>
-                                    </a>
-                                </td>
-                                <td>Lorem </td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Assign Delivery Boy</span>
-                                    </a>
-                                </td>
+                                <td>lorem</td>
+
 
                             </tr>
                         </tbody>
@@ -537,151 +512,60 @@
 
 
 <!-- add new model -->
-<div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="sentModalrating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
-                <h2 class="h2">Add Plan</h2>
+                <h2 class="h2">Seller rating & Review</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="appointment-container">
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">Plan Name
-                                            (English)</label>
-                                        <input type="text" placeholder="" class="form-control"
-                                            aria-describedby="passwordHelpInline" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">Plan Name
-                                            (Arabic)</label>
-                                        <input type="text" placeholder="" class="form-control"
-                                            aria-describedby="passwordHelpInline" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">Duration</label>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <input type="text" placeholder="" class="form-control"
-                                                    aria-describedby="passwordHelpInline" />
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <select class="form-select form-select-lg"
-                                                    aria-label="Large select example">
-                                                    <option selected>Select Duration</option>
-                                                    <option value="1">Week</option>
-                                                    <option value="2">Days</option>
-                                                    <option value="3">Months</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">No. of Videos</label>
-                                        <input type="text" placeholder="" class="form-control"
-                                            aria-describedby="passwordHelpInline" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">No. of Products</label>
-                                        <input type="text" placeholder="" class="form-control"
-                                            aria-describedby="passwordHelpInline" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">No. of
-                                            Highlights</label>
-                                        <input type="text" placeholder="" class="form-control"
-                                            aria-describedby="passwordHelpInline" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">No. of Employee</label>
-                                        <input type="text" placeholder="" class="form-control"
-                                            aria-describedby="passwordHelpInline" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">Charges</label>
-                                        <input type="text" placeholder="" class="form-control"
-                                            aria-describedby="passwordHelpInline" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1" class="form-label">Stories</label>
-                                    <div class="row">
-                                        <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="chargesYes" name="charges" value="yes"
-                                                class="form-check-input me-2" />
-                                            <label for="chargesYes" class="form-check-label">Yes</label>
-                                        </div>
-                                        <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="chargesNo" name="charges" value="no"
-                                                class="form-check-input me-2" />
-                                            <label for="chargesNo" class="form-check-label">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="exampleFormControlInput1" class="form-label">Commission</label>
-                                    <div class="row">
-                                        <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="commissionYes" name="commission" value="yes"
-                                                class="form-check-input me-2" />
-                                            <label for="commissionYes" class="form-check-label">Yes</label>
-                                        </div>
-                                        <div class="col-lg-6 d-flex align-items-center">
-                                            <input type="radio" id="commissionNo" name="commission" value="no"
-                                                class="form-check-input me-2" />
-                                            <label for="commissionNo" class="form-check-label">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="overlay">
+                <div class="review-modal">
 
-                            <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                                    style="margin-top: 30px">
-                                    <a class="btn btn-dark customBtn" href=""> Submit</a>
-                                </div>
-                            </div>
+
+                    <!-- Seller Review Box -->
+                    <div class="review-box">
+                        <div class="stars">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
                         </div>
-                    </form>
+                        <p class="review-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                            veniam.
+                        </p>
+                    </div>
+
+                    <h4 class="product-title">Product Name</h4>
+
+                    <!-- Product Review Box -->
+                    <div class="review-box">
+                        <div class="stars center">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="review-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua.
+                        </p>
+
+                        <div class="attached">
+                            <p>Attached Image</p>
+                            <img src="/admin/image/download.jpeg" alt="attached">
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -701,7 +585,7 @@
                         <!-- Product Card -->
                         <div class="product-card">
                             <div class="product-img">
-                                <img src="https://via.placeholder.com/80" alt="product">
+                                <img src="/admin/image/download.jpeg" alt="product">
                             </div>
 
                             <div class="product-info">
@@ -721,7 +605,7 @@
                         <!-- Product Card -->
                         <div class="product-card">
                             <div class="product-img">
-                                <img src="https://via.placeholder.com/80" alt="product">
+                                <img src="/admin/image/download.jpeg" alt="product">
                             </div>
 
                             <div class="product-info">
@@ -742,6 +626,43 @@
                 </div>
 
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+                <h2 class="h2">Assign Delivery Boy</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-auto mb-4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="hidden" id="editBannerId" name="banner_id">
+                        <div class="form-group w-50 m-auto">
+                            <!-- <label for="from" class="form-label"> Assign</label> -->
+                            <select class="form-select form-select-lg mt-4" aria-label="Large select example">
+
+                                <option selected>Select country</option>
+                                <option value="1">country One</option>
+                                <option value="2">country Two</option>
+                                <option value="3">country Three</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                style="margin-top: 30px">
+                                <button type="submit" class="btn btn-dark customBtn">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

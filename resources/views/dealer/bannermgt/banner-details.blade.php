@@ -5,6 +5,8 @@
         <a class="title24 alink"> <i class="bi bi-chevron-left"></i>Details</a>
     </div> -->
 
+
+
     <div class="d-flex justify-content-between mt-4">
         <a class="title24 alink" href="{{route('seller.show_banner')}}"> <i class="bi bi-chevron-left"></i>Details</a>
 
@@ -60,13 +62,13 @@
             <div class="payment-box">
                 <div class="check_radio">
                     <label class="radio-group">
-                        <input type="radio" name="category_id">
+                        <input type="radio" name="payment" id="onlinePayment" value="1" checked>
                         <span class="custom-radio"></span>
                         <img src="dealer/assets/img/credit-card.svg">
-                        <span class="radio-label"> Credit / Debit Card</span>
+                        <span class="radio-label"> Online Payment</span>
                     </label>
                 </div>
-
+                <!-- 
                 <div class="card-option">
                     <label class="radio-group">
                         <input type="radio" name="category_id">
@@ -83,8 +85,12 @@
                     </label>
                 </div>
 
-                <button class="add-card" id="openAddCard">+ Add new card</button>
+                <button class="add-card" id="openAddCard">+ Add new card</button> -->
             </div>
+
+
+
+
         </div>
 
         @elseif($single_banner->Admin_verify=='1' && $single_banner->payment_status=='1')
@@ -97,10 +103,17 @@
             <button type="button" class="btn total-outline w-100">Total Price
                 <strong>{{$single_banner->price}}KD</strong></button>
 
-            @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
-            <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+            <form id="bannerBuyForm">
+                @csrf
 
-            @endif
+
+                @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
+                <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+
+                @endif
+            </form>
+
+
         </div>
 
 </section>
@@ -157,23 +170,45 @@
 
 
 <script>
-const openBtn = document.getElementById("openAddCard");
-const closeBtn = document.getElementById("closeDrawer");
-const drawer = document.getElementById("addCardDrawer");
-const overlay = document.getElementById("overlay");
+// const openBtn = document.getElementById("openAddCard");
+// const closeBtn = document.getElementById("closeDrawer");
+// const drawer = document.getElementById("addCardDrawer");
+// const overlay = document.getElementById("overlay");
 
-openBtn.addEventListener("click", () => {
-    drawer.classList.add("active");
-    overlay.classList.add("active");
+// openBtn.addEventListener("click", () => {
+//     drawer.classList.add("active");
+//     overlay.classList.add("active");
+// });
+
+// closeBtn.addEventListener("click", closeDrawer);
+// overlay.addEventListener("click", closeDrawer);
+
+// function closeDrawer() {
+//     drawer.classList.remove("active");
+//     overlay.classList.remove("active");
+// }
+
+
+
+
+
+$("#bannerBuyForm").on("submit", function(e) {
+    e.preventDefault();
+
+
+    var paymentMethod = $('input[name="payment"]:checked').val();
+
+    let formData = $(this).serialize();
+
+    var orderid = "{{$single_banner->order_id}}";
+
+    var url = "/myfatoorah/" + orderid + "?type=bannerBuy";
+    setTimeout(function() {
+        window.location.href = url;
+    }, 2000);
+
+
 });
-
-closeBtn.addEventListener("click", closeDrawer);
-overlay.addEventListener("click", closeDrawer);
-
-function closeDrawer() {
-    drawer.classList.remove("active");
-    overlay.classList.remove("active");
-}
 </script>
 
 
