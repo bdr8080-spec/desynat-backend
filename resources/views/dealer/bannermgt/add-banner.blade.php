@@ -236,7 +236,7 @@ function calculateDays() {
 
                         var new_Amount = price_amount * diffDays;
 
-                        $('#totalDaysValue').val(new_Amount);
+                        $('#totalDaysValue').val(diffDays);
 
                         $('#amount').val(new_Amount);
                         $('#AmountPrice').text(new_Amount);
