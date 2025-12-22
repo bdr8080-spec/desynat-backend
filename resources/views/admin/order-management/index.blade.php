@@ -102,7 +102,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -132,7 +132,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -225,7 +225,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -255,7 +255,7 @@
                                 <td>lorem</td>
                                 <td>Kuwait</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>142 Loejmw Lorwem</td>
@@ -685,7 +685,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
@@ -694,52 +694,52 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-             <div class="overlay">
-  <div class="product-modal">
- 
+                <div class="overlay">
+                    <div class="product-modal">
 
-    <!-- Product Card -->
-    <div class="product-card">
-      <div class="product-img">
-        <img src="https://via.placeholder.com/80" alt="product">
-      </div>
 
-      <div class="product-info">
-        <div class="left">
-          <p><strong>Name</strong></p>
-          <p>Category</p>
-          <p>Brand</p>
-        </div>
+                        <!-- Product Card -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://via.placeholder.com/80" alt="product">
+                            </div>
 
-        <div class="right">
-          <p><strong>Sub-Category</strong></p>
-          <p>Price</p>
-        </div>
-      </div>
-    </div>
+                            <div class="product-info">
+                                <div class="left">
+                                    <p><strong>Name</strong></p>
+                                    <p>Category</p>
+                                    <p>Brand</p>
+                                </div>
 
-    <!-- Product Card -->
-    <div class="product-card">
-      <div class="product-img">
-        <img src="https://via.placeholder.com/80" alt="product">
-      </div>
+                                <div class="right">
+                                    <p><strong>Sub-Category</strong></p>
+                                    <p>Price</p>
+                                </div>
+                            </div>
+                        </div>
 
-      <div class="product-info">
-        <div class="left">
-          <p><strong>Name</strong></p>
-          <p>Category</p>
-          <p>Brand</p>
-        </div>
+                        <!-- Product Card -->
+                        <div class="product-card">
+                            <div class="product-img">
+                                <img src="https://via.placeholder.com/80" alt="product">
+                            </div>
 
-        <div class="right">
-          <p><strong>Sub-Category</strong></p>
-          <p>Price</p>
-        </div>
-      </div>
-    </div>
+                            <div class="product-info">
+                                <div class="left">
+                                    <p><strong>Name</strong></p>
+                                    <p>Category</p>
+                                    <p>Brand</p>
+                                </div>
 
-  </div>
-</div>
+                                <div class="right">
+                                    <p><strong>Sub-Category</strong></p>
+                                    <p>Price</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
         </div>
