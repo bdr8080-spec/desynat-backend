@@ -63,6 +63,38 @@ class AffiliateCommissionService
         }
     }
 
+    public function updateAffiliateCommissionByID(Request $request)
+    {
+        try {
+            $banner = AffiliateCommission::find($request->commission_id);
+
+            if (!$banner) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Affiliate Commission not found',
+                    'data' => []
+                ];
+            }
+
+            $banner->update([
+                'commission' => $request->commission,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Commission updated successfully',
+                'data' => $banner
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update commission',
+                'data' => []
+            ];
+        }
+    }
+
 
 
 
