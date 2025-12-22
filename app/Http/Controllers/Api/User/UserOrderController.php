@@ -288,7 +288,7 @@ class UserOrderController extends Controller
                 'filter'=>$request->filter,
                 ];
         
-                $data=$this->UserOrderService->AllOrderDetails($request_data);
+                $data=$this->UserOrderService->AllOrderDetailsNew($request_data);
         
                 if(isset($data['status']) && $data['status']=='error' ){
                     return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);

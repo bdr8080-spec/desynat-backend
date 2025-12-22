@@ -242,7 +242,6 @@ function calculateDays() {
                         $('#AmountPrice').text(new_Amount);
 
 
-
                     } else {
                         toastr.error("<?php echo 'Unexpected_response_from_server'; ?>");
                     }
