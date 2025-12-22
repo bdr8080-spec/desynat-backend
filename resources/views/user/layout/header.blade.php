@@ -435,7 +435,34 @@
                                     <input type="text" class="form-control" placeholder="Search Product or Brand" />
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
+
+                                <div class="searchdrop">
+                                    <div class="latestsearch">
+                                        <h6>Latest Search Result</h6>
+                                        <div class="latest-lists">
+                                            <div>
+                                                <a href="#">T-shirt</a>
+                                            </div>
+                                            <div>
+                                                <a href="#">Shoes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="latestsearch">
+                                        <h6>Recommended</h6>
+                                        <div class="latest-lists">
+                                            <div>
+                                                <a href="#">Puma</a>
+                                            </div>
+                                            <div>
+                                                <a href="#">Nike</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+
                             <div class="col-lg-6 col-12">
 
                                 <div class="collapse navbar-collapse customNavbar" id="navbarSupportedContent">
@@ -550,3 +577,5 @@
             </div>
         </div>
     </div>
+
+    
