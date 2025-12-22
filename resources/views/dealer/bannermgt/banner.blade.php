@@ -21,6 +21,18 @@ table#table1 {
 </style>
 
 <section class="section dashboard">
+
+
+    @if (session('status') == 'success')
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+    @elseif (session('status') == 'error')
+    <div class="alert alert-danger">
+        {{ session('message') }}
+    </div>
+    @endif
+
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Banner Management</div>
         <a href="{{route('seller.add_banner')}}" class="btn btn-success">Add New Banner</a>

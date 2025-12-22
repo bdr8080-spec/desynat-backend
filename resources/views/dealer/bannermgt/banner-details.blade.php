@@ -5,6 +5,8 @@
         <a class="title24 alink"> <i class="bi bi-chevron-left"></i>Details</a>
     </div> -->
 
+
+
     <div class="d-flex justify-content-between mt-4">
         <a class="title24 alink" href="{{route('seller.show_banner')}}"> <i class="bi bi-chevron-left"></i>Details</a>
 
@@ -168,23 +170,23 @@
 
 
 <script>
-const openBtn = document.getElementById("openAddCard");
-const closeBtn = document.getElementById("closeDrawer");
-const drawer = document.getElementById("addCardDrawer");
-const overlay = document.getElementById("overlay");
+// const openBtn = document.getElementById("openAddCard");
+// const closeBtn = document.getElementById("closeDrawer");
+// const drawer = document.getElementById("addCardDrawer");
+// const overlay = document.getElementById("overlay");
 
-openBtn.addEventListener("click", () => {
-    drawer.classList.add("active");
-    overlay.classList.add("active");
-});
+// openBtn.addEventListener("click", () => {
+//     drawer.classList.add("active");
+//     overlay.classList.add("active");
+// });
 
-closeBtn.addEventListener("click", closeDrawer);
-overlay.addEventListener("click", closeDrawer);
+// closeBtn.addEventListener("click", closeDrawer);
+// overlay.addEventListener("click", closeDrawer);
 
-function closeDrawer() {
-    drawer.classList.remove("active");
-    overlay.classList.remove("active");
-}
+// function closeDrawer() {
+//     drawer.classList.remove("active");
+//     overlay.classList.remove("active");
+// }
 
 
 
@@ -193,77 +195,18 @@ function closeDrawer() {
 $("#bannerBuyForm").on("submit", function(e) {
     e.preventDefault();
 
-    $(".error-text").text("");
-
-    let hasError = false;
-
 
     var paymentMethod = $('input[name="payment"]:checked').val();
 
     let formData = $(this).serialize();
 
-    $.ajax({
-        url: "{{ route('user.buyGiftCard') }}",
-        method: "POST",
-        data: formData,
-        // beforeSend: function () {
-        //     $(".paybtn-common").prop("disabled", true).text("Processing...");
-        // },
-        success: function(response) {
-            // $(".paybtn-common").prop("disabled", false).text("Pay Now");
+    var orderid = "{{$single_banner->order_id}}";
 
-            if (response.status === "success") {
-                $('#loader').show();
+    var url = "/myfatoorah/" + orderid + "?type=bannerBuy";
+    setTimeout(function() {
+        window.location.href = url;
+    }, 2000);
 
-                // toastr.success(response.message);
-
-
-                if (paymentMethod == 1) {
-                    // console.log('123');
-
-                    var orderid = response.data.data.order_id;
-
-                    var url = "/myfatoorah/" + orderid + "?type=bannerBuy";
-                    setTimeout(function() {
-                        window.location.href = url;
-                    }, 2000);
-                }
-
-
-                if (paymentMethod == 2) {
-
-                    var orderid = response.data.data.order_id;
-
-                    // var url = "{{ route('user.giftcard_complete_Payment') }}" +
-                    //              "?order_id=" + orderid + "&type=giftCard";
-                    // setTimeout(function() {
-                    //     window.location.href = url;
-                    // }, 2000);
-                    toastr.success('Payment Paid Successfully');
-
-                    var url = "{{ route('user.giftcard_complete_Payment') }}" +
-                        "?order_id=" + orderid + "&type=giftCard";
-
-                    setTimeout(function() {
-                        window.location.href = url;
-                    }, 2000);
-
-                }
-
-
-
-
-
-
-            } else {
-                toastr.error(response.message);
-            }
-        },
-        error: function() {
-            $(".paybtn-common").prop("disabled", false).text("Pay Now");
-            toastr.error("Something went wrong. Please try again!");
-        }
-    });
 
 });
 </script>

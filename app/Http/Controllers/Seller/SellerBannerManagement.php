@@ -14,6 +14,7 @@ use App\Helpers\ApiResponse;
 
 use Auth;
 
+use Session;
 use App\Models\Category;
 
 class SellerBannerManagement extends Controller
@@ -35,6 +36,27 @@ class SellerBannerManagement extends Controller
     ];
 
     $data= $this->SellerBannerService->SellerAllbanner($request_data);
+
+
+    // Online Payment received 
+      // when i get data from Paymwnt gateway
+        if($request->payment=='yes'){
+        $msg="Payment Paid Successfully";
+        $status='success';
+
+        Session::flash('message', $msg);
+        Session::flash('status', $status);
+         return redirect()->route('seller.show_banner');
+
+        }elseif($request->payment=='no'){
+
+        $msg="Payment Cancalled";
+        $status='error';
+
+        Session::flash('message', $msg);
+        Session::flash('status', $status);
+         return redirect()->route('seller.show_banner');
+        }
 
     $banners=$data['data'];
 
