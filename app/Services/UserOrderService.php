@@ -520,6 +520,66 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     }
 
+    
+ public function AllOrderDetailsNew($request){
+
+    try{
+   
+    $orders = OrderDetail::with([
+        'order.delivery_details',
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.seller_details',
+        'variation_details.color',
+        'variation_details.size'
+    ])
+    ->whereHas('order', function ($q) use ($request) {
+        $q->where('user_id', $request->user_id);
+
+        if ($request->search) {
+            $q->where('order_id', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filter) {
+            switch ($request->filter) {
+                case '2': // Ongoing
+                    $q->where('payment_status', '1')
+                      ->where('delivery_status', '2');
+                    break;
+
+                case '3': // Delivered
+                    $q->where('payment_status', '1')
+                      ->where('delivery_status', '3');
+                    break;
+
+                case '4': // Cancelled
+                    $q->where('payment_status', '2');
+                    break;
+
+                case '5':
+                    $q->where('payment_status', '3')
+                      ->where('delivery_status', '4');
+                    break;
+            }
+        }
+    })
+    ->get();
+
+
+    return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$orders];
+
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    }
+
 
     // delete Data from Add to cart
     public function AddtocartRemoveData($orderid){
@@ -548,6 +608,56 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     }
 
  // User singleOrderDetails
+ public function singleOrderDetailsNew($request){
+
+    try{
+
+
+         $checkOrder = OrderDetail::with([
+        'order.delivery_details',
+        'order.giftCard_details',
+        'order.promocode_details',
+        
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.seller_details',
+        'variation_details.color',
+        'variation_details.size',
+        'UserRatingReviewProvide'
+    ])
+    
+    // $checkOrder=Order::with(
+    //     'promocode_details',
+    //     'giftCard_details',
+    //     'delivery_details',
+    //     'order_details.product_details.brand',
+    //     'order_details.product_details.category',
+    //     'order_details.product_details.subcategory',
+    //     'order_details.product_details.seller_details',
+    //     'order_details.UserRatingReviewProvide',
+
+    // 'order_details.variation_details.color','order_details.variation_details.size')
+
+    ->where('order_id', $request->order_id)
+    ->where('id',$request->orderdetails_id)
+    ->first();
+
+    return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+ // User singleOrderDetails New
  public function singleOrderDetails($request){
 
     try{
