@@ -145,6 +145,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //promocode management
         Route::get('/banner-request-management', [BannerRequestController::class, 'bannerRequestManagement'])->name('admin.bannerRequestManagement');
+        Route::post('/approveBannerRequest', [BannerRequestController::class, 'approveBannerRequest'])->name('admin.approveBannerRequest');
+        Route::post('/rejectBannerRequest', [BannerRequestController::class, 'rejectBannerRequest'])->name('admin.rejectBannerRequest');
         
 
     });

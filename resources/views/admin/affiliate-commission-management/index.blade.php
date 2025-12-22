@@ -28,7 +28,7 @@
             </div>
 
             <div class="table-responsive mt-5 w-100">
-                <table class="table w-100">
+                <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
                             <th scope="col">SR No.</th>
