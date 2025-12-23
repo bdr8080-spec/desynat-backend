@@ -652,6 +652,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     ->where('order_id', $request->order_id)
     ->where('id',$request->orderdetails_id)
+    
     ->first();
 
     return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
@@ -686,6 +687,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     'order_details.variation_details.color','order_details.variation_details.size')
     ->where('order_id', $request->order_id)->first();
+
 
     return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
 
