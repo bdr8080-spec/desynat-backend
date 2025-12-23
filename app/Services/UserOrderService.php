@@ -535,7 +535,11 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         'variation_details.size'
     ])
     ->whereHas('order', function ($q) use ($request) {
-        $q->where('user_id', $request->user_id);
+        $q->where('user_id', $request->user_id)
+         ->where(function ($query) {
+          $query->where('payment_method', '3')
+                ->orWhere('payment_status', '1');
+      });
 
         if ($request->search) {
             $q->where('order_id', 'like', '%' . $request->search . '%');
@@ -564,6 +568,8 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
             }
         }
     })
+
+
     ->get();
 
 
@@ -771,9 +777,9 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
     if($checkOrder->payment_method=='3'){
-    $checkOrder->update(['payment_status'=>'2']);    
+    $checkOrder->update(['payment_status'=>'2','delivery_status'=>'1']);    
     }else{
-    $checkOrder->update(['payment_status'=>'3']);
+    $checkOrder->update(['payment_status'=>'3','delivery_status'=>'1']);
     }
     
 
