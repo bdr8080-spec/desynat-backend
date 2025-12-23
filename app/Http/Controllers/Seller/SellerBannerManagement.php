@@ -33,10 +33,13 @@ class SellerBannerManagement extends Controller
     $request_data=(object) [
     'seller_id'=>$seller_details,
     'search'=>$request->search??null,
-    'brand_filter'=>$request->brand_filter??null
+    'banner_filter'=>$request->banner_filter??null,
+    'from'=>$request->from??null,
+    'to'=>$request->to??null,
     ];
 
     $data= $this->SellerBannerService->SellerAllbanner($request_data);
+
 
 
     // Online Payment received 

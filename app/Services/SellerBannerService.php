@@ -120,41 +120,64 @@ if($request->search){
   $checkBanner=$checkBanner->where('order_id','Like','%'.$request->search.'%');
 }
 
+if (isset($request->from) && isset($request->to)  ) {
+
+      $checkBanner = $checkBanner
+                ->whereDate('created_at', '>' , $request->from)
+                ->whereDate('created_at', '<' , $request->to);
 
 
-    if($request->brand_filter){
+}
 
-        switch ($request->brand_filter) {
-            case '1':
-                
-            $checkBanner=  $checkBanner->where('Admin_verify','1')->where('payment_status','1'); // Active
-            
-            break;
-            case '2':
-              $checkBanner=  $checkBanner->where('payment_status','1')->where('payment_status','2'); // condfirmed
-            break;
-            case '3':
-              $checkBanner=  $checkBanner->where('Admin_verify','1')->where('payment_status','0'); // Pending
 
+if ($request->banner_filter) {
+    
+    switch ($request->banner_filter) {
+
+        case '1':
+            // Active
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '1')
+                ->where('payment_status', '1');
             break;
-            case '4':
-              $checkBanner=  $checkBanner->where('Admin_verify','1')->where('payment_status','3');  // Expired
+
+        case '2':
+            // Confirmed
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '1')
+                ->where('payment_status', '1');
             break;
-            case '5':
-               $checkBanner= $checkBanner->where('Admin_verify','2'); // rejected
+
+        case '3':
+            // Pending
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '0');
+                // ->where('payment_status', '0');
             break;
-                
-            default:
-                # code...
-                break;
-        }
+
+        case '4':
+            // Expired
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '1')
+                ->where('payment_status', '3');
+            break;
+
+        case '5':
+            // Rejected
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '2');
+            break;
+
+        default:
+            // No filter
+            break;
     }
+}
 
 
 
 
 $checkBanner=$checkBanner->get();
-
 
  return [
             'status'  => 'success',

@@ -54,7 +54,8 @@ table#table1 {
                     <div class="from-group">
                         <div class="show-date d-flex gap-2  flex-wrap">
                             <div class="date-form-pnl">
-                                <input type="date" class="form-control" name="from" value="{{request()->from }}">
+                                <input type="date" class="form-control" name="from" value="{{request()->from }}"
+                                    onchange="this.form.submit()">
                             </div>
                             <div class="date-form-pnl">
                                 <input type="date" class="form-control" name="to" onchange="this.form.submit()"
@@ -116,11 +117,10 @@ table#table1 {
                             @if($val->Admin_verify=='0')
                             Pending
                             @elseif($val->Admin_verify=='1')
-                            COnfirmed
+                            Confirmed
                             @else
                             Rejected
                             @endif
-
 
                         </td>
                         <td>
