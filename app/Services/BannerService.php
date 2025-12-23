@@ -194,7 +194,7 @@ class BannerService
                 return [
                     'status' => 'success',
                     'message' => 'No Banner Request found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
@@ -208,7 +208,7 @@ class BannerService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch banner: ' . $e->getMessage(),
-                'data' => []
+                'data' => (object)[]
             ];
         }
     }
