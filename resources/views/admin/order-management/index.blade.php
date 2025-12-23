@@ -110,10 +110,18 @@
                                 <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
+                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
                                         data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
+                                    </a></td> -->
+                                    <td>
+                                        <a class="table-button view-products"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sentModal1"
+                                        data-products='@json($data["order_details"])'>
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </td>
                                 <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
@@ -141,19 +149,22 @@
                                         <span>Download Invoice</span>
                                     </a>
                                 </td>
-                                <td>Lorem </td>
+                                <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }} </td>
+                                <td>
                                 @if(
                                     ($data['assign_status']) == 0 &&
                                     ($data['delivery_details']['country_name']) === 'Kuwait'
                                 )
-                                    <td>
-                                        <a class="btn btn-dark customBtn" type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#assignModal">
-                                            <span>Assign Delivery Boy</span>
-                                        </a>
-                                    </td>
+                                    <a class="btn btn-dark customBtn assignDriverBtn"
+                                    href="javascript:void(0)"
+                                    data-order-id="{{ $data['id'] }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#assignModal">
+                                        <span>Assign Delivery Boy</span>
+                                    </a>
                                 @endif
+                            </td>
+
 
 
                             </tr>
@@ -243,10 +254,18 @@
                                 <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
+                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
                                         data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
+                                    </a></td> -->
+                                    <td>
+                                        <a class="table-button view-products"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sentModal1"
+                                        data-products='@json($data["order_details"])'>
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </td>
                                 <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
@@ -262,14 +281,13 @@
                                     ($data['assign_status']) == 0 &&
                                     ($data['delivery_details']['country_name']) === 'Kuwait'
                                 )
-                                    <td>
                                         <a class="btn btn-dark customBtn" type="button"
                                         data-bs-toggle="modal"
                                         data-bs-target="#assignModal">
                                             <span>Assign Delivery Boy</span>
                                         </a>
-                                    </td>
                                 @endif
+                                </td>
 
                             </tr>
                             @empty
@@ -356,10 +374,18 @@
                                 <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
+                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
                                         data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
+                                    </a></td> -->
+                                    <td>
+                                        <a class="table-button view-products"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sentModal1"
+                                        data-products='@json($data["order_details"])'>
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </td>
                                 <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
@@ -452,10 +478,18 @@
                                 <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
+                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
                                         data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
+                                    </a></td> -->
+                                    <td>
+                                        <a class="table-button view-products"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sentModal1"
+                                        data-products='@json($data["order_details"])'>
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </td>
                                 <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
@@ -538,71 +572,50 @@
         </div>
     </div>
 </div>
+
+
+<!-- Product Details Modal -->
 <div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
                 <h2 class="h2">Product Details</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="overlay">
-                    <div class="product-modal">
-
-
-                        <!-- Product Card -->
-                        <div class="product-card">
+                    <div class="product-modal" id="productModalBody">
+                        <div class="product-card d-none" id="productCardTemplate">
                             <div class="product-img">
-                                <img src="/admin/image/download.jpeg" alt="product">
+                                <img src="/admin/image/download.jpeg" alt="product" class="product-image">
                             </div>
-
                             <div class="product-info">
                                 <div class="left">
-                                    <p><strong>Name</strong></p>
-                                    <p>Category</p>
-                                    <p>Brand</p>
+                                    <p><strong class="product-name">Name</strong></p>
+                                    <p class="product-category">Category</p>
+                                    <p class="product-brand">Brand</p>
                                 </div>
-
                                 <div class="right">
-                                    <p><strong>Sub-Category</strong></p>
-                                    <p>Price</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Product Card -->
-                        <div class="product-card">
-                            <div class="product-img">
-                                <img src="/admin/image/download.jpeg" alt="product">
-                            </div>
-
-                            <div class="product-info">
-                                <div class="left">
-                                    <p><strong>Name</strong></p>
-                                    <p>Category</p>
-                                    <p>Brand</p>
-                                </div>
-
-                                <div class="right">
-                                    <p><strong>Sub-Category</strong></p>
-                                    <p>Price</p>
+                                    <p class="product-subcategory">Sub-Category</p>
+                                    <p class="product-price">Price</p>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 </div>
-<div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+<!-- <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
                 <h2 class="h2">Assign Delivery Boy</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -611,7 +624,6 @@
                     <div class="col-lg-12">
                         <input type="hidden" id="editBannerId" name="banner_id">
                         <div class="form-group w-50 m-auto">
-                            <!-- <label for="from" class="form-label"> Assign</label> -->
                             <select class="form-select form-select-lg mt-4" aria-label="Large select example">
 
                                 <option selected>Select country</option>
@@ -634,7 +646,45 @@
 
         </div>
     </div>
+</div> -->
+
+<!-- Assign Delivey Boy Modal -->
+<div class="modal fade" id="assignModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header management border-0">
+                <h2 class="h2">Assign Delivery Boy</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body m-auto mb-4">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <!-- ORDER ID -->
+                        <input type="hidden" id="orderId">
+
+                        <div class="form-group w-50 m-auto">
+                            <select class="form-select form-select-lg mt-4" id="driverSelect">
+                                <option value="">Loading...</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-12 d-flex justify-content-center mt-3">
+                            <button type="button" class="btn btn-dark customBtn" id="assignDriverSubmit">
+                                Submit
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -656,5 +706,160 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modalBody = document.getElementById('productModalBody');
+    const templateCard = document.getElementById('productCardTemplate');
+    document.querySelectorAll('.view-products').forEach(button => {
+
+        button.addEventListener('click', function () {
+            modalBody.querySelectorAll('.product-card:not(#productCardTemplate)')
+                .forEach(card => card.remove());
+            let products = [];
+
+            try {
+                products = JSON.parse(this.dataset.products);
+            } catch (error) {
+                console.error('Invalid products data:', error);
+                return;
+            }
+            if (!products || products.length === 0) {
+                return;
+            }
+            products.forEach(item => {
+                const card = templateCard.cloneNode(true);
+                card.classList.remove('d-none');
+                card.removeAttribute('id');
+                const image =
+                    item?.variation_details?.variant_image?.[0]
+                    || '/admin/image/download.jpeg';
+
+                card.querySelector('.product-image').src = image;
+                card.querySelector('.product-name').textContent =
+                    item?.product_details?.product_name_en || 'N/A';
+                card.querySelector('.product-category').textContent =
+                    'Category: ' +
+                    (item?.product_details?.category?.name || 'N/A');
+                card.querySelector('.product-brand').textContent =
+                    'Brand: ' +
+                    (item?.product_details?.brand?.name_english || 'N/A');
+                card.querySelector('.product-subcategory').textContent =
+                    'Sub-Category: ' +
+                    (item?.product_details?.subcategory?.name_english || 'N/A');
+                card.querySelector('.product-price').textContent =
+                    'Price: ' + (item?.amount || '0') + ' KD';
+                modalBody.appendChild(card);
+            });
+        });
+
+    });
+
+});
+</script>
+
+<script>
+document.addEventListener('click', function (e) {
+
+    const button = e.target.closest('.assignDriverBtn');
+    if (!button) return;
+
+    const orderId = button.dataset.orderId;
+    const driverSelect = document.getElementById('driverSelect');
+    const orderIdInput = document.getElementById('orderId');
+
+    orderIdInput.value = orderId;
+    driverSelect.innerHTML = '<option>Loading...</option>';
+
+    fetch(`{{ route('admin.getDriverListToAssign') }}?order_id=${orderId}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(res => res.json())
+    .then(response => {
+
+        if (response.status !== 'success') {
+            driverSelect.innerHTML =
+                `<option>${response.message}</option>`;
+            return;
+        }
+
+        driverSelect.innerHTML =
+            '<option value="">Select Delivery Boy</option>';
+
+        response.data.forEach(driver => {
+            const option = document.createElement('option');
+            option.value = driver.id;
+            option.textContent = driver.full_name_english;
+            driverSelect.appendChild(option);
+        });
+    })
+    .catch(err => {
+        console.error(err);
+        driverSelect.innerHTML =
+            '<option>Error loading drivers</option>';
+    });
+});
+</script>
+
+<!-- assign driver -->
+<script>
+document.getElementById('assignDriverSubmit').addEventListener('click', function () {
+
+    const orderId = document.getElementById('orderId').value;
+    const driverId = document.getElementById('driverSelect').value;
+
+    if (!driverId) {
+        toastr.error('Please select a delivery boy');
+        return;
+    }
+
+    fetch(`{{ route('admin.assignDriver') }}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            order_id: orderId,
+            driver_id: driverId
+        })
+    })
+    .then(res => res.json())
+    .then(response => {
+
+        if (response.status !== 'success') {
+            toastr.error(response.message || 'Failed to assign driver');
+            return;
+        }
+
+        toastr.success(response.message);
+
+        // Close modal
+        const modalEl = document.getElementById('assignModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        modal.hide();
+
+        // Refresh page after 2 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000);
+
+    })
+    .catch(error => {
+        console.error(error);
+        toastr.error('Something went wrong');
+    });
+});
+</script>
+
+
+
+
+
+
 
 @endsection

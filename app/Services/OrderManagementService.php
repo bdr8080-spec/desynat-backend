@@ -31,7 +31,7 @@ class OrderManagementService
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
                 'order_details.variation_details.size',
-                'driver_details'
+                'driver_details.zone_info'
             )
             ->whereIn('delivery_status', ['1', '2'])
             ->where(function ($query) {
@@ -92,7 +92,7 @@ class OrderManagementService
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
                 'order_details.variation_details.size',
-                'driver_details'
+                'driver_details.zone_info'
             )
             ->where('delivery_status', '5')
             ->where(function ($query) {
@@ -152,7 +152,7 @@ class OrderManagementService
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
                 'order_details.variation_details.size',
-                'driver_details'
+                'driver_details.zone_info'
             )
             ->where('delivery_status', '3')
             ->where(function ($query) {
@@ -212,7 +212,7 @@ class OrderManagementService
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
                 'order_details.variation_details.size',
-                'driver_details'
+                'driver_details.zone_info'
             )
             ->where('delivery_status', '4')
             ->where(function ($query) {
@@ -271,9 +271,9 @@ class OrderManagementService
                 'order_details.product_details.seller_details',
                 'order_details.variation_details.color',
                 'order_details.variation_details.size',
-                'driver_details'
+                'driver_details.zone_info'
             )
-            ->where('id', $request->id)->get();
+            ->where('id', $request->id)->first();
 
             return ['status'=>'success','message'=>"Order Details fetched Successfully",'data'=>$checkOrder];
 

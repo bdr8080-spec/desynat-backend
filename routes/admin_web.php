@@ -139,6 +139,8 @@ Route::group(['prefix'=>'admin'], function(){
         //order management
         Route::get('/order-management', [OrderController::class, 'orderManagement'])->name('admin.orderManagement');
         Route::get('/invoice', [OrderController::class, 'invoice'])->name('admin.invoice');
+        Route::get('/getDriverListToAssign', [OrderController::class, 'getDriverListToAssign'])->name('admin.getDriverListToAssign');
+        Route::post('/assignDriver', [OrderController::class, 'assignDriver'])->name('admin.assignDriver');
 
         //affiliate commission management
         Route::get('/affiliate-commission-management', [AffiliateCommissionController::class, 'affiliateCommissionManagement'])->name('admin.affiliateCommissionManagement');
