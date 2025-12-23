@@ -28,7 +28,7 @@ class OrderController extends Controller
 
         // Active Orders
         $activeRequestParams = [];
-        if ($type === 'active' && $country) {
+        if ($type === 'active') {
             $activeRequestParams['country_name'] = $country;
             $activeRequestParams['from_date'] = $fromDate;
             $activeRequestParams['to_date'] = $toDate;
@@ -39,18 +39,24 @@ class OrderController extends Controller
         $returnRequestParams = [];
         if ($type === 'return' && $country) {
             $returnRequestParams['country_name'] = $country;
+            $returnRequestParams['from_date'] = $fromDate;
+            $returnRequestParams['to_date'] = $toDate;
         }
         $returnOrders = $this->OrderManagementService->ReturnExchangeOrders(new Request($returnRequestParams))['data'];
 
         $completeRequestParams = [];
         if ($type === 'complete' && $country) {
             $completeRequestParams['country_name'] = $country;
+            $completeRequestParams['from_date'] = $fromDate;
+            $completeRequestParams['to_date'] = $toDate;
         }
         $completeOrders = $this->OrderManagementService->CompletedOrders(new Request($completeRequestParams))['data'];
 
         $cancelledRequestParams = [];
         if ($type === 'cancelled' && $country) {
             $cancelledRequestParams['country_name'] = $country;
+            $cancelledRequestParams['from_date'] = $fromDate;
+            $cancelledRequestParams['to_date'] = $toDate;
         }
         $cancelledOrders = $this->OrderManagementService->CancelledOrders(new Request($cancelledRequestParams))['data'];
 

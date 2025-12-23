@@ -53,11 +53,11 @@
                             </select>
                         </div>
                     </div> -->
-                    <!-- <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-2 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
-                                value="{{ request()->from_date }}"
+                                value="{{ request('type') == 'active' ? request()->from_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
                     </div>
@@ -66,10 +66,10 @@
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
-                                value="{{ request()->to_date }}"
+                                value="{{ request('type') == 'active' ? request()->to_date : '' }}"
                                 onchange="updateToDate(); document.getElementById('filterForm').submit();" />
                         </div>
-                    </div> -->
+                    </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
@@ -222,6 +222,23 @@
                             </select>
                         </div>
                     </div> -->
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="from" class="form-label">From:</label>
+                            <input type="date" id="from" name="from_date" class="form-control"
+                                value="{{ request('type') == 'return' ? request()->from_date : '' }}"
+                                onchange="updateToDate(); document.getElementById('filterForm1').submit();" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="to" class="form-label">To:</label>
+                            <input type="date" id="to" name="to_date" class="form-control"
+                                value="{{ request('type') == 'return' ? request()->to_date : '' }}"
+                                onchange="updateToDate(); document.getElementById('filterForm1').submit();" />
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
@@ -355,6 +372,23 @@
                             </select>
                         </div>
                     </div> -->
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="from" class="form-label">From:</label>
+                            <input type="date" id="from" name="from_date" class="form-control"
+                                value="{{ request('type') == 'complete' ? request()->from_date : '' }}"
+                                onchange="updateToDate(); document.getElementById('filterForm2').submit();" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="to" class="form-label">To:</label>
+                            <input type="date" id="to" name="to_date" class="form-control"
+                                value="{{ request('type') == 'complete' ? request()->to_date : '' }}"
+                                onchange="updateToDate(); document.getElementById('filterForm2').submit();" />
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
@@ -471,6 +505,23 @@
                             </select>
                         </div>
                     </div> -->
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="from" class="form-label">From:</label>
+                            <input type="date" id="from" name="from_date" class="form-control"
+                                value="{{ request('type') == 'cancelled' ? request()->from_date : '' }}"
+                                onchange="updateToDate(); document.getElementById('filterForm3').submit();" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="to" class="form-label">To:</label>
+                            <input type="date" id="to" name="to_date" class="form-control"
+                                value="{{ request('type') == 'cancelled' ? request()->to_date : '' }}"
+                                onchange="updateToDate(); document.getElementById('filterForm3').submit();" />
+                        </div>
+                    </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
