@@ -322,7 +322,7 @@ class OrderManagementService
 
             if (!$deliveryBoyIds) {
                 return [
-                    'status' => 'error',
+                    'status' => 'success',
                     'message' => 'No Delivery Boy Found For User Address Zone',
                     'data' => []
                 ];
@@ -348,13 +348,74 @@ class OrderManagementService
 
     }
 
-    public function assignDriver($request){
+    // public function assignDriver($request){
 
-        try{
+    //     try{
 
-            $checkdriver = DeliveryBoy::where('id', $request->driver_id)->first();
+    //         $checkdriver = DeliveryBoy::where('id', $request->driver_id)->first();
 
-            if (!$checkdriver) {
+    //         if (!$checkdriver) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'No Delivery Boy Found',
+    //                 'data' => []
+    //             ];
+    //         }
+
+    //          $order = Order::find($request->order_id);
+
+    //         if (!$order) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'Order not found',
+    //                 'data' => []
+    //             ];
+    //         }
+
+    //         if ($order->assign_status == 1 && $order->delivery_boy_id == $request->driver_id) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'Driver already assigned to this order',
+    //                 'data' => []
+    //             ];
+    //         }
+
+    //         DB::beginTransaction();
+
+    //         $order->update([
+    //             'delivery_boy_id' => $checkdriver->id,
+    //             'assign_status' => 1,
+    //             'assign_date'     => Carbon::now()
+    //         ]);
+
+    //         DB::commit();
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Delivery Boy Assigned Successfully',
+    //             'data' => [
+    //                 'order_details' => $order,
+    //                 'driver_details' => $checkdriver
+    //             ]
+    //         ];
+
+        
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to assign delivery boy: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+
+    // }
+
+    public function assignDriver($request)
+    {
+        try {
+            // Find driver
+            $driver = DeliveryBoy::find($request->driver_id);
+            if (!$driver) {
                 return [
                     'status' => 'error',
                     'message' => 'No Delivery Boy Found',
@@ -362,8 +423,8 @@ class OrderManagementService
                 ];
             }
 
-             $order = Order::find($request->order_id);
-
+            // Find order
+            $order = Order::find($request->order_id);
             if (!$order) {
                 return [
                     'status' => 'error',
@@ -372,7 +433,7 @@ class OrderManagementService
                 ];
             }
 
-            if ($order->assign_status == 1 && $order->delivery_boy_id == $request->driver_id) {
+            if ($order->assign_status == 1 && $order->delivery_boy_id == $driver->id) {
                 return [
                     'status' => 'error',
                     'message' => 'Driver already assigned to this order',
@@ -383,8 +444,14 @@ class OrderManagementService
             DB::beginTransaction();
 
             $order->update([
-                'delivery_boy_id' => $checkdriver->id,
-                'assign_status' => 1,
+                'delivery_boy_id' => $driver->id,
+                'assign_status'   => 1,
+                'assign_date'     => Carbon::now()
+            ]);
+
+            $order->order_details()->update([
+                'delivery_boy_id' => $driver->id,
+                'assign_status'   => 1,
                 'assign_date'     => Carbon::now()
             ]);
 
@@ -394,21 +461,23 @@ class OrderManagementService
                 'status' => 'success',
                 'message' => 'Delivery Boy Assigned Successfully',
                 'data' => [
-                    'order_details' => $order,
-                    'driver_details' => $checkdriver
+                    'order'        => $order,
+                    'orderdetails' => $order->order_details, 
+                    'driver'       => $driver
                 ]
             ];
 
-        
         } catch (\Exception $e) {
+            DB::rollBack();
+
             return [
                 'status' => 'error',
                 'message' => 'Failed to assign delivery boy: ' . $e->getMessage(),
                 'data' => []
             ];
         }
-
     }
+
 
 
 

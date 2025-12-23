@@ -53,6 +53,23 @@
                             </select>
                         </div>
                     </div> -->
+                    <!-- <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="from" class="form-label">From:</label>
+                            <input type="date" id="from" name="from_date" class="form-control"
+                                value="{{ request()->from_date }}"
+                                onchange="updateToDate(); document.getElementById('filterForm').submit();" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="to" class="form-label">To:</label>
+                            <input type="date" id="to" name="to_date" class="form-control"
+                                value="{{ request()->to_date }}"
+                                onchange="updateToDate(); document.getElementById('filterForm').submit();" />
+                        </div>
+                    </div> -->
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
@@ -107,7 +124,18 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $data['order_id'] }}</td>
-                                <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
+                                <@php
+                                    $firstOrderDetail = $data['order_details']->first();
+                                @endphp
+
+                                @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
+                                    <td>
+                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
+                                    </td>
+                                @else
+                                    <td>Seller not found</td>
+                                @endif
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
                                 <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
@@ -151,19 +179,19 @@
                                 </td>
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }} </td>
                                 <td>
-                                @if(
-                                    ($data['assign_status']) == 0 &&
-                                    ($data['delivery_details']['country_name']) === 'Kuwait'
-                                )
-                                    <a class="btn btn-dark customBtn assignDriverBtn"
-                                    href="javascript:void(0)"
-                                    data-order-id="{{ $data['id'] }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#assignModal">
-                                        <span>Assign Delivery Boy</span>
-                                    </a>
-                                @endif
-                            </td>
+                                    @if(
+                                        ($data['assign_status']) == 0 &&
+                                        ($data['delivery_details']['country_name']) === 'Kuwait'
+                                    )
+                                        <a class="btn btn-dark customBtn assignDriverBtn"
+                                        href="javascript:void(0)"
+                                        data-order-id="{{ $data['id'] }}"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#assignModal">
+                                            <span>Assign Delivery Boy</span>
+                                        </a>
+                                    @endif
+                                </td>
 
 
 
@@ -251,7 +279,18 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $data['order_id'] }}</td>
-                                <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
+                                @php
+                                    $firstOrderDetail = $data['order_details']->first();
+                                @endphp
+
+                                @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
+                                    <td>
+                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
+                                    </td>
+                                @else
+                                    <td>Seller not found</td>
+                                @endif
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
                                 <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
@@ -275,18 +314,16 @@
                                 <td>Pending</td>
                                 <td>efwehgi</td>
                                 <td>Lorem </td>
-                                <td>Lorem </td>
+                                <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }} </td>
 
-                                @if(
-                                    ($data['assign_status']) == 0 &&
-                                    ($data['delivery_details']['country_name']) === 'Kuwait'
-                                )
-                                        <a class="btn btn-dark customBtn" type="button"
+                                <td>
+                                        <a class="btn btn-dark customBtn assignDriverBtn"
+                                        href="javascript:void(0)"
+                                        data-order-id="{{ $data['id'] }}"
                                         data-bs-toggle="modal"
                                         data-bs-target="#assignModal">
                                             <span>Assign Delivery Boy</span>
                                         </a>
-                                @endif
                                 </td>
 
                             </tr>
@@ -361,9 +398,6 @@
                                 <th scope="col">Delivery Boy/Company Name</th>
                                 <th scope="col">Rating & Review</th>
                                 <th scope="col">Invoice</th>
-
-
-
                             </tr>
                         </thead>
                         <tbody>
@@ -371,7 +405,18 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $data['order_id'] }}</td>
-                                <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
+                                @php
+                                    $firstOrderDetail = $data['order_details']->first();
+                                @endphp
+
+                                @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
+                                    <td>
+                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
+                                    </td>
+                                @else
+                                    <td>Seller not found</td>
+                                @endif
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
                                 <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
@@ -452,7 +497,7 @@
                 </form>
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table id="myTable3" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -475,7 +520,18 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $data['order_id'] }}</td>
-                                <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
+                                @php
+                                    $firstOrderDetail = $data['order_details']->first();
+                                @endphp
+
+                                @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
+                                    <td>
+                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
+                                    </td>
+                                @else
+                                    <td>Seller not found</td>
+                                @endif
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
                                 <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
@@ -610,43 +666,6 @@
     </div>
 </div>
 
-
-
-<!-- <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header management border-0">
-                <h2 class="h2">Assign Delivery Boy</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body m-auto mb-4">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <input type="hidden" id="editBannerId" name="banner_id">
-                        <div class="form-group w-50 m-auto">
-                            <select class="form-select form-select-lg mt-4" aria-label="Large select example">
-
-                                <option selected>Select country</option>
-                                <option value="1">country One</option>
-                                <option value="2">country Two</option>
-                                <option value="3">country Three</option>
-                            </select>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                                style="margin-top: 30px">
-                                <button type="submit" class="btn btn-dark customBtn">
-                                    Submit
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div> -->
 
 <!-- Assign Delivey Boy Modal -->
 <div class="modal fade" id="assignModal" tabindex="-1" aria-hidden="true">
@@ -855,6 +874,22 @@ document.getElementById('assignDriverSubmit').addEventListener('click', function
     });
 });
 </script>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from').value;
+        const toDateInput = document.getElementById('to');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
+</script>
+
 
 
 
