@@ -535,12 +535,17 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         'variation_details.size'
     ])
     ->whereHas('order', function ($q) use ($request) {
-        $q->where('user_id', $request->user_id)
-         ->where(function ($query) {
-          $query->where('payment_method', '3')
-                ->orWhere('payment_status', '1');
-      });
 
+      $q->where('user_id', $request->user_id)
+      ->where(function ($query) {
+          $query
+              ->where('payment_method', '3') // COD (no payment_status check)
+              ->orWhere(function ($sub) {
+                  $sub->whereIn('payment_method', ['1','2'])
+                      ->where('payment_status','!=','0'); // Paid only
+              });
+      });
+      
         if ($request->search) {
             $q->where('order_id', 'like', '%' . $request->search . '%');
         }
