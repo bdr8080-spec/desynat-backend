@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
     <title>DESYNAT Invoice</title>
+
 
     <style>
       * {
@@ -75,7 +77,7 @@
       .table {
         /* width: 100%; */
         border-collapse: collapse;
-        font-size: 20px;
+        font-size: 17px;
       }
 
       /* .table td {
@@ -124,8 +126,8 @@
       }
 
       .inner-table td {
-        padding: 2px 0;
-            font-size: 18px;
+        padding:2px 0px;
+            /* font-size: 18px; */
       }
 
       .text-right {
@@ -152,7 +154,7 @@
       .box-footer td:nth-child(3),
       .box-footer td:nth-child(4) {
         text-align: right;
-        width: 90px;
+        /* width: 90px; */
       }
 
       /* POLICY */
@@ -188,9 +190,7 @@
         border-bottom: 2px dotted #000;
         width: 100%;
       }
-      tr {
-    text-transform: uppercase;
-}
+
     </style>
   </head>
 
@@ -215,15 +215,15 @@
 
       <!-- META -->
       <div class="meta">
-        <div>
+    <div>
           <strong>Invoice Number: </strong> DES-INV-0001<br />
           Order Date: 22 OCT 2025<br />
-          Seller Type: Fashion Designer<br />
+          Order Time: 14:35<br />
           Platform: DESYNAT
         </div>
         <div>
-          Store Name <br />
-          Seller Type:
+        Store Name: Designer Store Name<br />
+         Seller Type: Fashion Designer <br/>
         </div>
       </div>
 
@@ -245,6 +245,10 @@
           <td class="label">Email Address:</td>
           <td class="line"></td>
         </tr>
+            <tr>
+          <td class="label">Delivery Address::</td>
+          <td class="line"></td>
+        </tr>
       </table>
 
       <hr />
@@ -259,30 +263,35 @@
                 <td>Product Name:</td>
                 <td>Dress XZZ</td>
               </tr>
+                               <td>Product Type:</td>
+              <td style="text-transform: uppercase;">Ready-to-Wear / Made-to-Order : ZOMO CODE</td>
+                </tr>
               <tr>
                 <td>Color Type(s):</td>
                 <td>Black</td>
               </tr>
-              <tr>
-                <td>Size Quantity:</td>
-                <td>Quetotal 55,000 KD</td>
-              </tr>
+            
             </table>
           </div>
 
           <div class="box-col right">
-            <div class="box-title">Order Summary</div>
+            <div class="box-title">.</div>
+
             <table class="inner-table">
               <tr>
-                <td></td>
+                <td>Size:</td>
                 <td class="text-right">M</td>
               </tr>
-              <tr>
-                <td></td>
-                <td class="text-right">-5,000 KD</td>
+                <tr>
+                <td>Quantity:</td>
+                <td class="text-right">2</td>
               </tr>
               <tr>
-                <td>SUBTOTAL</td>
+                <td>Price per Item:</td>
+                <td class="text-right">25,000 KD</td>
+              </tr>
+              <tr>
+                <td>Subtotal</td>
                 <td class="text-right">20,000 KD</td>
               </tr>
             </table>
@@ -291,24 +300,32 @@
 
         <!-- SUBTOTAL BOX -->
         <div class="box-footer">
+            <div class="box-title">Order Summary</div>
+
           <table>
             <tr>
               <td><strong>SUBTOTAL</strong></td>
-              <td>Dress XZZ</td>
-              <td>-5,000 KD</td>
-              <td>2,000 KD</td>
+              <td>50.000KD</td>
+          
             </tr>
             <tr>
-              <td>PRODUCT TYPE:</td>
-              <td style="text-transform: uppercase;">Ready-to-Wear / Made-to-Order : ZOMO CODE</td>
-              <td>0.000 KD</td>
-              <td>Paid</td>
+             <td>Discount</td>
+              <td>−5.000 KD</td>
+              <td>Promo Code</td>
+              <td>DESY10</td>
             </tr>
+         
             <tr>
               <td>Delivery Fee</td>
               <td>50,000</td>
-              <td>30.000 KD</td>
               <td>Tax (VAT)</td>
+              <td>30.000 KD</td>
+            </tr>
+            <tr>
+              <td>
+                Total Amount:
+              </td>
+              <td>47,000KD</td>
             </tr>
           </table>
         </div>
@@ -322,15 +339,32 @@
           <td>KNET / VISA / MASTERCARD / WALLET</td>
         </tr>
         <tr>
+          <td>Payment Status</td>
+          <td>Paid</td>
+        </tr>
+      </table>
+
+      <hr />
+        <div class="section-title">Delivery Information</div>
+      <table class="table">
+        <tr>
+          <td>Expected Delivery Date:</td>
+          <td>25 Oct 2025</td>
+        </tr>
+        <tr>
+          <td>Expected Delivery Time:</td>
+          <td>2:00 PM – 6:00 PM</td>
+        </tr>
+         <tr>
           <td>Delivery Managed By:</td>
-          <td>DESYNAT</td>
+          <td>Desynat</td>
         </tr>
       </table>
 
       <hr />
 
       <!-- POLICY -->
-      <div class="section-title">Payment Information</div>
+     
       <div class="section-title">Return & Exchange Policy</div>
       <ul class="policy">
         <li>Exchange & return within 14 days from delivery date.</li>
