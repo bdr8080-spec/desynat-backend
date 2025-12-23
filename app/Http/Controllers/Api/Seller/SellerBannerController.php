@@ -103,7 +103,7 @@ public function all_banners(Request $request){
     $request_data=(object) [
     'seller_id'=>$seller_details,
     'search'=>$request->search??null,
-    "brand_filter"=>$request->brand_filter??null
+    'banner_filter'=>$request->banner_filter??null
     ];
 
     $data= $this->SellerBannerService->SellerAllbanner($request_data);
