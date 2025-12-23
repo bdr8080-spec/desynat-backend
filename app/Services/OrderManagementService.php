@@ -308,7 +308,7 @@ class OrderManagementService
             if ($checkDeliveryAddressCountryCode!== '+965') {
                 return [
                     'status' => 'error',
-                    'message' => 'Oder Address Is Outside From Kuwait',
+                    'message' => 'Order Address Is Outside From Kuwait',
                     'data' => []
                 ];
             }

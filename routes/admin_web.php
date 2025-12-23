@@ -136,14 +136,15 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/add-promocode', [PromoCodeController::class, 'addPromocode'])->name('admin.addPromocode');
         Route::get('/edit-promocode/{id}', [PromoCodeController::class, 'editPromocode'])->name('admin.editPromocode');
 
-        //promocode management
+        //order management
         Route::get('/order-management', [OrderController::class, 'orderManagement'])->name('admin.orderManagement');
+        Route::get('/invoice', [OrderController::class, 'invoice'])->name('admin.invoice');
 
-        //promocode management
+        //affiliate commission management
         Route::get('/affiliate-commission-management', [AffiliateCommissionController::class, 'affiliateCommissionManagement'])->name('admin.affiliateCommissionManagement');
         Route::post('/update_affiliate_commission', [AffiliateCommissionController::class, 'update_affiliate_commission'])->name('admin.update_affiliate_commission');
 
-        //promocode management
+        //banner rtequest management
         Route::get('/banner-request-management', [BannerRequestController::class, 'bannerRequestManagement'])->name('admin.bannerRequestManagement');
         Route::post('/approveBannerRequest', [BannerRequestController::class, 'approveBannerRequest'])->name('admin.approveBannerRequest');
         Route::post('/rejectBannerRequest', [BannerRequestController::class, 'rejectBannerRequest'])->name('admin.rejectBannerRequest');
