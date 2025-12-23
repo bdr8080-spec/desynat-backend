@@ -762,17 +762,18 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
        return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
     }
+    
 
     // check delivery status
-    if($checkOrder->delivery_status!=='1'){
+    if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' ){
        return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
     }
 
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
     if($checkOrder->payment_method=='3'){
-    $checkOrder->update(['payment_method'=>'2']);    
+    $checkOrder->update(['payment_status'=>'2']);    
     }else{
-    $checkOrder->update(['payment_method'=>'3']);
+    $checkOrder->update(['payment_status'=>'3']);
     }
     
 
