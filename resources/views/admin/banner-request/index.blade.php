@@ -9,14 +9,14 @@
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
-                    aria-selected="false">
+                    aria-selected="true">
                     New
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                    aria-selected="true">
+                    aria-selected="false">
                     Approved
                 </button>
             </li>
