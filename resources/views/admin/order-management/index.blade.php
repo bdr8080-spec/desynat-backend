@@ -39,6 +39,8 @@
     <div class="userManagecontent">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
+                <form method="GET" action="{{ route('admin.orderManagement') }}" id="filterForm">
+                    <input type="hidden" name="type" value="active" />
                 <div class="row">
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
@@ -53,12 +55,17 @@
                     </div>
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <select class="form-select form-select-lg mt-4" aria-label="Large select example">
-
-                                <option selected>Select country</option>
-                                <option value="1">country One</option>
-                                <option value="2">country Two</option>
-                                <option value="3">country Three</option>
+                            <label for="to" class="form-label">Select Country</label>
+                            <select name="country_name" id="country_name"
+                                class="form-select form-select-lg"
+                                onchange="document.getElementById('filterForm').submit();">
+                                <option value="">Select country</option>
+                                @foreach($countries as $country)
+                                    <option value="{{ $country['name'] }}"
+                                        {{ request('type') == 'new' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                        {{ $country['name'] }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -69,9 +76,10 @@
                         </div>
                     </div>
                 </div>
+                </form>
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table id="myTable" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -95,19 +103,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse($activeOrders as $index => $data)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
-                                <td>lorem</td>
-                                <td>lorem</td>
-                                <td>Kuwait</td>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>{{ $data['order_id'] }}</td>
+                                <td>{{ $data['order_details'][0]['product_details']['seller_details']['first_name'] }} {{ $data['order_details'][0]['product_details']['seller_details']['last_name'] }}</td>
+                                <td>{{ $data['delivery_details']['name'] }}</td>
+                                <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
                                         data-bs-target="#sentModal1">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
-                                <td>142 Loejmw Lorwem</td>
-                                <td>KD 2000</td>
-                                <td>KD 2000</td>
+                                <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
+                                <td>{{ $data['total_amount'] }} KD</td>
+                                <td>20 KD</td>
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>Mayank</td>
@@ -126,37 +135,11 @@
                                 </td>
 
                             </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
-                                <td>lorem</td>
-                                <td>lorem</td>
-                                <td>Kuwait</td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td>142 Loejmw Lorwem</td>
-                                <td>KD 2000</td>
-                                <td>KD 2000</td>
-                                <td>Normal</td>
-                                <td>Delivery Boy</td>
-                                <td>Mayank</td>
-                                <td>Pending</td>
-                                <td>
-                                    <a class="btn btn-dark customBtn">
-                                        <span>Download Invoice</span>
-                                    </a>
-                                </td>
-                                <td>Lorem </td>
-                                <td>
-                                    <a class="btn btn-dark customBtn" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#assignModal">
-                                        <span>Assign Delivery Boy</span>
-                                    </a>
-                                </td>
-
-                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="12" class="text-center">No data found</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

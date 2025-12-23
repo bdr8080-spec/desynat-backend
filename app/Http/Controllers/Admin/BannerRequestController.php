@@ -18,87 +18,36 @@ class BannerRequestController extends Controller
         $this->CountryService = $CountryService;
     }
 
-    // public function bannerRequestManagement(Request $request){
-    //     $request->merge(['type' => '0']);
-    //     $newRequest = $this->BannerService->getBannersReq($request)['data'];
-    //     //dd($newRequest);
+    public function bannerRequestManagement(Request $request)
+    {
+        $type = $request->get('type'); 
+        $country = $request->get('country_name');
 
-    //     $request->merge(['type' => '1']);
-    //     $approvedRequest = $this->BannerService->getBannersReq($request)['data'];
+        // New Requests
+        $newRequestParams = ['type' => '0'];
+        if ($type === 'new' && $country) {
+            $newRequestParams['country_name'] = $country;
+        }
+        $newRequest = $this->BannerService->getBannersReq(new Request($newRequestParams))['data'];
 
-    //     $request->merge(['type' => '2']);
-    //     $rejectedRequest = $this->BannerService->getBannersReq($request)['data'];
+        // Approved Requests
+        $approvedRequestParams = ['type' => '1'];
+        if ($type === 'approved' && $country) {
+            $approvedRequestParams['country_name'] = $country;
+        }
+        $approvedRequest = $this->BannerService->getBannersReq(new Request($approvedRequestParams))['data'];
 
-    //     $countries = $this->CountryService->getCountries()['data'];
-    //     return view('admin.banner-request.index',compact('newRequest','approvedRequest','rejectedRequest','countries'));
-    // }
+        // Rejected Requests
+        $rejectedRequestParams = ['type' => '2'];
+        if ($type === 'rejected' && $country) {
+            $rejectedRequestParams['country_name'] = $country;
+        }
+        $rejectedRequest = $this->BannerService->getBannersReq(new Request($rejectedRequestParams))['data'];
 
-    // public function bannerRequestManagement(Request $request)
-    // {
-    //     // Get country_name from request if any
-    //     $countryName = $request->input('country_name', null);
+        $countries = $this->CountryService->getCountries()['data'];
 
-    //     // Default: New Requests
-    //     $request->merge(['type' => '0']);
-    //     if ($request->input('type') === 'new' && $countryName) {
-    //         $request->merge(['country_name' => $countryName]);
-    //     }
-    //     $newRequest = $this->BannerService->getBannersReq($request)['data'];
-
-    //     // Approved Requests
-    //     $request->merge(['type' => '1']);
-    //     if ($request->input('type') === 'approved' && $countryName) {
-    //         $request->merge(['country_name' => $countryName]);
-    //     }
-    //     $approvedRequest = $this->BannerService->getBannersReq($request)['data'];
-
-    //     // Rejected Requests
-    //     $request->merge(['type' => '2']);
-    //     if ($request->input('type') === 'rejected' && $countryName) {
-    //         $request->merge(['country_name' => $countryName]);
-    //     }
-    //     $rejectedRequest = $this->BannerService->getBannersReq($request)['data'];
-
-    //     $countries = $this->CountryService->getCountries()['data'];
-
-    //     return view('admin.banner-request.index', compact(
-    //         'newRequest',
-    //         'approvedRequest',
-    //         'rejectedRequest',
-    //         'countries'
-    //     ));
-    // }
-
-public function bannerRequestManagement(Request $request)
-{
-    $type = $request->get('type'); // may be null
-    $country = $request->get('country_name'); // may be null
-
-    // New Requests
-    $newRequestParams = ['type' => '0'];
-    if ($type === 'new' && $country) {
-        $newRequestParams['country_name'] = $country;
+        return view('admin.banner-request.index', compact('newRequest', 'approvedRequest', 'rejectedRequest', 'countries', 'type'));
     }
-    $newRequest = $this->BannerService->getBannersReq(new Request($newRequestParams))['data'];
-
-    // Approved Requests
-    $approvedRequestParams = ['type' => '1'];
-    if ($type === 'approved' && $country) {
-        $approvedRequestParams['country_name'] = $country;
-    }
-    $approvedRequest = $this->BannerService->getBannersReq(new Request($approvedRequestParams))['data'];
-
-    // Rejected Requests
-    $rejectedRequestParams = ['type' => '2'];
-    if ($type === 'rejected' && $country) {
-        $rejectedRequestParams['country_name'] = $country;
-    }
-    $rejectedRequest = $this->BannerService->getBannersReq(new Request($rejectedRequestParams))['data'];
-
-    $countries = $this->CountryService->getCountries()['data'];
-
-    return view('admin.banner-request.index', compact('newRequest', 'approvedRequest', 'rejectedRequest', 'countries', 'type'));
-}
 
 
 
