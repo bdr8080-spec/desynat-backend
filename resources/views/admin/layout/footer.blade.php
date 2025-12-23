@@ -60,6 +60,20 @@
                 }
             }
         });
+         $('#myTable3').DataTable({
+            "paging": true,           // Enable pagination
+            "searching": true,        // Enable searching
+            "ordering": true,         // Enable column sorting
+            "pageLength": 10,         // Set number of rows per page
+            "lengthMenu": [10, 25, 50, 100],  // Pagination options
+            "language": {
+                "search": "Search:", // Customize the search label
+                "paginate": {
+                    "next": "Next",
+                    "previous": "Previous"
+                }
+            }
+        });
     });
 </script>
 </footer>
