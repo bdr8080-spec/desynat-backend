@@ -22,11 +22,16 @@ class OrderController extends Controller
     public function orderManagement(Request $request){
         $type = $request->get('type'); 
         $country = $request->get('country_name');
+        $fromDate = $request->get('from_date');
+       // dd($fromDate);
+        $toDate = $request->get('to_date');
 
         // Active Orders
         $activeRequestParams = [];
         if ($type === 'active' && $country) {
             $activeRequestParams['country_name'] = $country;
+            $activeRequestParams['from_date'] = $fromDate;
+            $activeRequestParams['to_date'] = $toDate;
         }
         $activeOrders = $this->OrderManagementService->ActiveOrders(new Request($activeRequestParams))['data'];
         //dd($activeOrders);

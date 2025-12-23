@@ -53,6 +53,23 @@
                             </select>
                         </div>
                     </div> -->
+                    <!-- <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="from" class="form-label">From:</label>
+                            <input type="date" id="from" name="from_date" class="form-control"
+                                value="{{ request()->from_date }}"
+                                onchange="updateToDate(); document.getElementById('filterForm').submit();" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-12">
+                        <div class="form-group mt-4 w-100">
+                            <label for="to" class="form-label">To:</label>
+                            <input type="date" id="to" name="to_date" class="form-control"
+                                value="{{ request()->to_date }}"
+                                onchange="updateToDate(); document.getElementById('filterForm').submit();" />
+                        </div>
+                    </div> -->
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
@@ -856,6 +873,21 @@ document.getElementById('assignDriverSubmit').addEventListener('click', function
         toastr.error('Something went wrong');
     });
 });
+</script>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('from').value;
+        const toDateInput = document.getElementById('to');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
 </script>
 
 
