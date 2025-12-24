@@ -408,7 +408,8 @@ public function cancelled_single_product(Request $request){
 
      $request_data=(object) [
     'user_id'=>$user_id,
-    "order_id"=>$request->order_id
+    "order_id"=>$request->order_id,
+    "cancel_reason"=>$request->cancel_reason??null
     ];
 
     $data=$this->UserOrderService->cancelledSingleProduct($request_data);

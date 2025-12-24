@@ -782,11 +782,36 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
     if($checkOrder->payment_method=='3'){
-    $checkOrder->update(['payment_status'=>'2','delivery_status'=>'1']);    
+
+        $new_array=[
+        'payment_status'=>'2',
+        'delivery_status'=>'1'];
+        
+        if(isset($request->cancel_reason)){
+            $new_array['cancel_reason']= $request->cancel_reason;
+        }
+    
+        $checkOrder->update($new_array);    
     }else{
-    $checkOrder->update(['payment_status'=>'3','delivery_status'=>'1']);
+
+
+    $new_array=[
+    'payment_status'=>'3',
+    'delivery_status'=>'1'];
+
+    if(isset($request->cancel_reason)){
+        $new_array['cancel_reason']= $request->cancel_reason;
+    
+    }
+
+
+    
+    $checkOrder->update($new_array);
     }
     
+
+
+
 
     return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
     
