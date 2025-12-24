@@ -23,7 +23,7 @@ class OrderInvoiceController extends Controller
                 'driver_details.zone_info'
             )->where('order_id', $id)->first();
 
-            dump($checkOrder);
+            // dump($checkOrder);
             
 
             if($checkOrder){
