@@ -573,8 +573,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         }
     })
 
-
-    ->get();
+    ->orderBy('id','desc')->get();
 
 
     return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$orders];
@@ -783,11 +782,59 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
     if($checkOrder->payment_method=='3'){
-    $checkOrder->update(['payment_status'=>'2','delivery_status'=>'1']);    
+
+        $new_array=[
+        'payment_status'=>'2',
+        'delivery_status'=>'1'];
+        
+        if(isset($request->cancel_reason)){
+            $new_array['cancel_reason']= $request->cancel_reason;
+        }
+
+        $checkOrder->update($new_array);    
+
+         $new_array1=[
+        'payment_status'=>'2',
+         ];
+        
+        if(isset($request->cancel_reason)){
+            $new_array1['cancel_reason']= $request->cancel_reason;
+        }
+
+    orderdetail::where('order_id',$request->order_id)->update($new_array1);
+
     }else{
-    $checkOrder->update(['payment_status'=>'3','delivery_status'=>'1']);
+
+
+    $new_array=[
+    'payment_status'=>'3',
+    'delivery_status'=>'1'];
+
+    if(isset($request->cancel_reason)){
+        $new_array['cancel_reason']= $request->cancel_reason;
     }
     
+    $checkOrder->update($new_array);
+
+         $new_array1=[
+        'payment_status'=>'3',
+         ];
+        
+        if(isset($request->cancel_reason)){
+            $new_array1['cancel_reason']= $request->cancel_reason;
+        }
+
+    orderdetail::where('order_id',$request->order_id)->update($new_array1);
+
+    }
+    
+
+
+
+
+
+
+
 
     return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
     
