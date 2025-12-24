@@ -9,6 +9,7 @@ use App\Http\Controllers\User\UserStoreController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\UserGiftCardController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\OrderController;
 
 
 
@@ -87,7 +88,9 @@ use App\Http\Controllers\User\CartController;
   Route::get('order-details/{id}',[CartController::class, 'orderDetails'])->name('user.orderDetails');
 
 
-  Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');;
+  Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');
+
+  Route::get('/my-orders', [OrderController::class,'myOrders'])->name('user.myOrders');
 
 
 });

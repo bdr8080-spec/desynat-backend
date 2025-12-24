@@ -32,7 +32,7 @@
                                     <a href="#">Apply</a>
                                 </div>
 
-                                <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
+                                <!-- <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
                                     <div class="orderfilter">
                                         <label class="custom-radio mb-3">
                                             <input type="radio" name="filter" value="1" checked>
@@ -72,7 +72,78 @@
                                     </div>
 
                                     <button class="customBtn customBtn5 mt-5">Apply</button>
+                                </form> -->
+                                <form method="GET" action="{{ route('user.myOrders') }}">
+                                    <div class="orderfilter">
+
+                                        {{-- All --}}
+                                        <label class="custom-radio mb-3">
+                                            <input type="radio"
+                                                name="filter"
+                                                value=""
+                                                {{ request('filter') == null ? 'checked' : '' }}>
+                                            <span class="radio-mark"></span>
+                                            <div class="label-content">
+                                                <div class="title">All</div>
+                                            </div>
+                                        </label>
+
+                                        {{-- Ongoing --}}
+                                        <label class="custom-radio mb-3">
+                                            <input type="radio"
+                                                name="filter"
+                                                value="2"
+                                                {{ request('filter') == '2' ? 'checked' : '' }}>
+                                            <span class="radio-mark"></span>
+                                            <div class="label-content">
+                                                <div class="title">Ongoing</div>
+                                            </div>
+                                        </label>
+
+                                        {{-- Delivered --}}
+                                        <label class="custom-radio mb-3">
+                                            <input type="radio"
+                                                name="filter"
+                                                value="3"
+                                                {{ request('filter') == '3' ? 'checked' : '' }}>
+                                            <span class="radio-mark"></span>
+                                            <div class="label-content">
+                                                <div class="title">Delivered</div>
+                                            </div>
+                                        </label>
+
+                                        {{-- Cancelled --}}
+                                        <label class="custom-radio mb-3">
+                                            <input type="radio"
+                                                name="filter"
+                                                value="4"
+                                                {{ request('filter') == '4' ? 'checked' : '' }}>
+                                            <span class="radio-mark"></span>
+                                            <div class="label-content">
+                                                <div class="title">Cancelled</div>
+                                            </div>
+                                        </label>
+
+                                        {{-- Returned --}}
+                                        <label class="custom-radio mb-3">
+                                            <input type="radio"
+                                                name="filter"
+                                                value="5"
+                                                {{ request('filter') == '5' ? 'checked' : '' }}>
+                                            <span class="radio-mark"></span>
+                                            <div class="label-content">
+                                                <div class="title">Return</div>
+                                            </div>
+                                        </label>
+
+                                    </div>
+
+                                    <button type="submit" class="customBtn customBtn5 mt-5">
+                                        Apply
+                                    </button>
                                 </form>
+
+
                             </div>
                         </div>
 
@@ -88,7 +159,7 @@
                                     </div>
                                 </form>
 
-                                <div class="cart-panel position-relative">
+                                <!-- <div class="cart-panel position-relative">
                                     <a href="order_details" class="link-content">
                                         <div class="cart-card bottom-pd">
                                             <div class="card-left mb-2 d-flex">
@@ -128,135 +199,134 @@
                                         </div>
                                         <div class="expert-date">Expected Delivery Date : 12 SEP 25</div>
                                     </a>
-                                </div>
+                                </div> -->
+
+                               @forelse($orderData as $orderDetail)
+
+                                @php
+                                    $order   = $orderDetail->order;
+                                    $product = $orderDetail->product_details;
+                                    $variant = $orderDetail->variation_details;
+                                    $color   = $variant->color ?? null;
+                                    $size    = $variant->size ?? null;
+
+                                    // Handle variant image (array or JSON)
+                                    if (is_array($variant->variant_image)) {
+                                        $images = $variant->variant_image;
+                                    } else {
+                                        $images = json_decode($variant->variant_image ?? '[]', true);
+                                    }
+
+                                    $image = $images[0] ?? asset('user/assets/images/categorie1.png');
+
+                                    // Order status text
+                                        $statusText = match (true) {
+
+                                        // 2 → Ongoing
+                                        $order->payment_status == '1' && $order->delivery_status == '2'
+                                            => 'Ongoing',
+
+                                        // 3 → Delivered
+                                        $order->payment_status == '1' && $order->delivery_status == '3'
+                                            => 'Delivered',
+
+                                        // 4 → Cancelled
+                                        $order->payment_status == '2'
+                                            => 'Cancelled',
+
+                                        // 5 → Returned / Failed
+                                        $order->payment_status == '3' && $order->delivery_status == '4'
+                                            => 'Returned',
+
+                                        // Default
+                                        default => 'On Going',
+                                    };
+
+                                    [$statusColor, $bgColor] = match ($statusText) {
+
+                                        'Delivered' => ['#28a745', '#28a7451A'],
+
+                                        'Cancelled' => ['#E70000', '#E700001A'],
+
+                                        default     => ['#FF5F1B', '#FF5F1B1A'],
+                                    };
+                                @endphp
 
                                 <div class="cart-panel position-relative">
-                                    <a href="#" class="link-content">
+                                    <a href="" class="link-content">
                                         <div class="cart-card bottom-pd">
                                             <div class="card-left mb-2 d-flex">
+
                                                 <div>
-                                                    <div class="ongoing-title" style="color:#E70000;">Cancelled</div>
+                                                    <div class="ongoing-title" style="color:{{ $statusColor }}">
+                                                        {{ $statusText }}
+                                                    </div>
+
                                                     <div class="cart-products order-images me-3">
-                                                        <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                                            class="img-fluid">
+                                                        <img src="{{ $image }}" alt="Product" class="img-fluid">
                                                     </div>
                                                 </div>
 
                                                 <div class="w-100">
                                                     <div class="card-right d-flex w-100 justify-content-between">
                                                         <div class="product-info">
-                                                            <h5 class="product-title"> Order ID :# <span>123456789</span></h5>
-                                                            <div class="price-current"> Mooei Pcs set</div>
-                                                            <div class="psize d-flex gap-4 mt-2">
-                                                                <span>Size: M</span>
-                                                                <span class="d-flex align-items-center gap-2">
-                                                                    Color:
-                                                                    <div class="colorbox" style="width:15px;height:15px;border-radius:3px;">
-                                                                    </div>
-                                                                </span>
-                                                                <span>Qnt: 1</span>
+                                                            <h5 class="product-title">
+                                                                Order ID :# <span>{{ $order->order_id }}</span>
+                                                            </h5>
+
+                                                            <div class="price-current">
+                                                                {{ $product->name ?? 'Product Name' }}
                                                             </div>
-                                                            
+
+                                                            <div class="psize d-flex gap-4 mt-2">
+                                                                @if($size)
+                                                                    <span>Size: {{ $size->name }}</span>
+                                                                @endif
+
+                                                                @if($color)
+                                                                    <span class="d-flex align-items-center gap-2">
+                                                                        Color:
+                                                                        <div class="colorbox"
+                                                                            style="width:15px;height:15px;border-radius:3px;
+                                                                                    background:{{ $color->hex_code }};">
+                                                                        </div>
+                                                                    </span>
+                                                                @endif
+
+                                                                <span>Qnt: {{ $orderDetail->quantity }}</span>
+                                                            </div>
                                                         </div>
-                                                        <h5 class="product-title"> 440 KD</h5>
-                                                    </div>
-                                                    <div class="d-flex justify-content-between">
-                                                        <p class="delivery-label mb-2">Placed</p>
-                                                        <p class="delivery-date mb-2">7PM | 21-02-2025</p>
+
+                                                        <h5 class="product-title">
+                                                            {{ number_format($variant->final_price, 2) }} KD
+                                                        </h5>
                                                     </div>
 
+                                                    <div class="d-flex justify-content-between">
+                                                        <p class="delivery-label mb-2">{{ $statusText }}</p>
+                                                        <p class="delivery-date mb-2">
+                                                            {{ $order->created_at->format('h:i A | d-m-Y') }}
+                                                        </p>
+                                                    </div>
                                                 </div>
+
                                             </div>
                                         </div>
 
-                                        <div class="expert-date" style="background:#E700001A;color:#E70000;">Cancelled  Date : 12 SEP 25</div>
-                                    </a>
-                                </div>
-
-                                <div class="cart-panel position-relative">
-                                    <a href="order_details" class="link-content">
-                                        <div class="cart-card bottom-pd">
-                                            <div class="card-left mb-2 d-flex">
-                                                <div>
-                                                    <div class="ongoing-title" style="color:#17854C;">Delivered</div>
-                                                    <div class="cart-products order-images me-3">
-                                                        <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                                            class="img-fluid">
-                                                    </div>
-                                                </div>
-
-                                                <div class="w-100">
-                                                    <div class="card-right d-flex w-100 justify-content-between">
-                                                        <div class="product-info">
-                                                            <h5 class="product-title"> Order ID :# <span>123456789</span></h5>
-                                                            <div class="price-current"> Mooei Pcs set</div>
-                                                            <div class="psize d-flex gap-4 mt-2">
-                                                                <span>Size: M</span>
-                                                                <span class="d-flex align-items-center gap-2">
-                                                                    Color:
-                                                                    <div class="colorbox" style="width:15px;height:15px;border-radius:3px;background:#000;">
-                                                                    </div>
-                                                                </span>
-                                                                <span>Qnt: 1</span>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                        <h5 class="product-title"> 440 KD</h5>
-                                                    </div>
-                                                    <div class="d-flex justify-content-between">
-                                                        <p class="delivery-label mb-2">Placed</p>
-                                                        <p class="delivery-date mb-2">7PM | 21-02-2025</p>
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                        <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
+                                            Expected Delivery Date : 12 SEP 25
                                         </div>
-                                        <div class="expert-date">Expected Delivery Date : 12 SEP 25</div>
                                     </a>
                                 </div>
 
-                                <div class="cart-panel position-relative">
-                                    <a href="#" class="link-content">
-                                        <div class="cart-card bottom-pd">
-                                            <div class="card-left mb-2 d-flex">
-                                                <div>
-                                                    <div class="ongoing-title" style="color:#FF5F1B;">Return Req..</div>
-                                                    <div class="cart-products order-images me-3">
-                                                        <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                                            class="img-fluid">
-                                                    </div>
-                                                </div>
-
-                                                <div class="w-100">
-                                                    <div class="card-right d-flex w-100 justify-content-between">
-                                                        <div class="product-info">
-                                                            <h5 class="product-title"> Order ID :# <span>123456789</span></h5>
-                                                            <div class="price-current"> Mooei Pcs set</div>
-                                                            <div class="psize d-flex gap-4 mt-2">
-                                                                <span>Size: M</span>
-                                                                <span class="d-flex align-items-center gap-2">
-                                                                    Color:
-                                                                    <div class="colorbox" style="width:15px;height:15px;border-radius:3px;">
-                                                                    </div>
-                                                                </span>
-                                                                <span>Qnt: 1</span>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                        <h5 class="product-title"> 440 KD</h5>
-                                                    </div>
-                                                    <div class="d-flex justify-content-between">
-                                                        <p class="delivery-label mb-2">Placed</p>
-                                                        <p class="delivery-date mb-2">7PM | 21-02-2025</p>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="expert-date" style="background:#FF5F1B1A;color:#FF5F1B;">Pickup Date : 12 SEP 25</div>
-                                    </a>
-                                </div>
+                                @empty
+                                    <div class="text-center py-5">
+                                        <img src="{{ asset('user/assets/images/no-order.png') }}"
+                                            alt="No Orders" width="180">
+                                        <h5 class="mt-3">No Order Found</h5>
+                                        <p class="text-muted">You haven’t placed any orders yet.</p>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                     </div>

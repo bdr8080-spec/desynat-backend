@@ -144,7 +144,7 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
          //dd($foundZoneId);
  
        if ($foundZoneId !== null) {
-            $deliveryBoyIds = DeliveryBoy::whereJsonContains('zone_id', $foundZoneId)
+            $deliveryBoyIds = DeliveryBoy::where('zone_id', $foundZoneId)
                 ->orderBy('id', 'desc')    
                 ->pluck('id')                
                 ->toArray();               
