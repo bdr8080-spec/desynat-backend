@@ -111,7 +111,7 @@
                             <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
 
                                 <!-- Placeholder -->
-                                <img id="bannerPlaceholderImg" src="{{ asset('dealer') }}/assets/img/all-icons/upload-icon.svg"
+                                <img id="bannerPlaceholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
 
                                 <!-- Uploaded Image -->
