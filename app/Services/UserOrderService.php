@@ -801,7 +801,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
             $new_array1['cancel_reason']= $request->cancel_reason;
         }
 
-    $checkOrder=orderdetail::where('order_id',$request->order_id)->update($new_array1);
+    orderdetail::where('order_id',$request->order_id)->update($new_array1);
 
     }else{
 
@@ -824,7 +824,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
             $new_array1['cancel_reason']= $request->cancel_reason;
         }
 
-    $checkOrder=orderdetail::where('order_id',$request->order_id)->update($new_array1);
+    orderdetail::where('order_id',$request->order_id)->update($new_array1);
 
     }
     
