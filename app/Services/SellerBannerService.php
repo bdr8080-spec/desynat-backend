@@ -177,7 +177,7 @@ if ($request->banner_filter) {
 
 
 
-$checkBanner=$checkBanner->get();
+$checkBanner=$checkBanner->orderBy('id','desc')->get();
 
  return [
             'status'  => 'success',
