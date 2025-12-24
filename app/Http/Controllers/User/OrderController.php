@@ -39,12 +39,12 @@ class OrderController extends Controller
 
 
         $data = (object)[
-            'order_id' => $request->id,
+            'order_id' => $id,
              'orderdetails_id' => $request->orderdetails_id
         ];
 
         $orderData = $this->UserOrderService->singleOrderDetailsNew($data)['data'];
-       // dd($orderData);
+       //dd($orderData);
 
         return view('user.orders.order-details',compact('orderData'));
 

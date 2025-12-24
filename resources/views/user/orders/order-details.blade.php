@@ -10,133 +10,122 @@
 
             {{-- LEFT SIDE CART --}}
             <div class="col-lg-8">
-                <div class="common-title d-flex justify-content-between align-items-center gap-3 mb-4">
-                    <div class="d-flex gap-3">
-                        <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
-                                class="img-fluid"></a>
-                        <div class="order-subtitle">
-                            <h3>#{{$orderData['order_id']}}</h3>
-                            <p>Placed on {{ \Carbon\Carbon::parse($orderData['created_at'])->format('d/m/Y \a\t h:ia') }}</p>
+
+
+                    <div class="common-title d-flex justify-content-between align-items-center gap-3 mb-4">
+                        <div class="d-flex gap-3">
+                            <a href="{{ route('user.myOrders') }}">
+                                <img src="{{ asset('user/assets/images/left-ic.svg') }}" class="img-fluid">
+                            </a>
+                            <div class="order-subtitle">
+                                <h3>#{{ $orderData->order->order_id ?? 'N/A' }}</h3>
+                                <p>Placed on {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())->format('d/m/Y \a\t h:ia') }}</p>
+                            </div>
                         </div>
+
+                        @php
+                            $status = $orderData->delivery_status ?? 0;
+                        @endphp
+
+                        @if($status == 2)
+                            <div class="btn-outline1 btn-ongoing">Ongoing</div>
+                        @elseif($status == 4)
+                            <div class="btn-outline1 btn-outline-red">Cancelled</div>
+                        @elseif($status == 3)
+                            <div class="btn-outline1 btn-outline-de">Delivered</div>
+                        @elseif($status == 5)
+                            <div class="btn-outline1 btn-ongoing">Return Request</div>
+                        @endif
                     </div>
-                    @php
-                        $status = $orderData['delivery_status'];
-                    @endphp
 
-                    @if($status == 2)
-                        <div class="btn-outline1 btn-ongoing">Ongoing</div>
-                    @elseif($status == 4)
-                        <div class="btn-outline1 btn-outline-red">Cancelled</div>
-                    @elseif($status == 3)
-                        <div class="btn-outline1 btn-outline-de">Delivered</div>
-                    @elseif($status == 5)
-                        <div class="btn-outline1 btn-ongoing">Return Request</div>
-                    @endif
-
-                </div>
-
-                   @foreach($orderData->order_details as $orderDetail)
                     <div class="cart-panel">
                         <div class="cart-card">
                             <div class="card-left mb-2 d-flex">
                                 <div>
-                                   @php
-                                    // Variant images can be an array or JSON string, so handle both cases
-                                    if (is_array($orderDetail->variation_details->variant_image)) {
-                                        $images = $orderDetail->variation_details->variant_image;
-                                    } else {
-                                        $images = json_decode($orderDetail->variation_details->variant_image ?? '[]', true);
-                                    }
+                                    @php
+                                        // Handle variant images
+                                        $images = is_array($orderData->variation_details->variant_image)
+                                            ? $orderData->variation_details->variant_image
+                                            : json_decode($orderData->variation_details->variant_image ?? '[]', true);
 
-                                    // If no images found, fallback to product image or placeholder
-                                    $image = $images[0] ?? ($orderDetail->product_details->image_url ?? asset('user/assets/images/categorie1.png'));
-                                @endphp
+                                        $image = $images[0] ?? ($orderData->product_details->image_url ?? asset('user/assets/images/categorie1.png'));
+                                    @endphp
 
-                                <div class="cart-products me-3">
-                                    <img src="{{ $image }}" alt="Product" class="img-fluid">
-                                </div>
-
+                                    <div class="cart-products me-3">
+                                        <img src="{{ $image }}" alt="Product" class="img-fluid">
+                                    </div>
                                 </div>
 
                                 <div class="card-right d-flex w-100 justify-content-between">
                                     <div class="product-info">
-                                        <h5 class="product-title">{{ $orderDetail->product_details->product_name_en ?? 'N/A' }}</h5>
+                                        <h5 class="product-title">{{ $orderData->product_details->product_name_en ?? 'N/A' }}</h5>
+
                                         <div class="psize d-flex gap-4">
-                                            <span>Size: {{ $orderDetail->variation_details->size->name ?? 'N/A' }}</span>
+                                            <span>Size: {{ $orderData->variation_details->size->name ?? 'N/A' }}</span>
 
                                             <span class="d-flex align-items-center gap-2">
                                                 Color:
-                                                <div class="colorbox" style="width:15px; height:15px; border-radius:3px; background: {{ $orderDetail->variation_details->color->hex_code ?? '#000' }};">
-                                                </div>
+                                                <div class="colorbox" style="width:15px; height:15px; border-radius:3px; background: {{ $orderData->variation_details->color->hex_code ?? '#000' }};"></div>
                                             </span>
 
-                                            <span>Qnt: {{ $orderDetail->quantity ?? 1 }}</span>
+                                            <span>Qnt: {{ $orderData->quantity ?? 1 }}</span>
                                         </div>
 
                                         {{-- Price --}}
                                         <div class="price">
-                                            <span class="price-current">
-                                                {{ number_format($orderDetail->variation_details->final_price ?? 0, 2) }} KD
-                                            </span>
-                                            @if(isset($orderDetail->variation_details->actual_price) && $orderDetail->variation_details->actual_price > $orderDetail->variation_details->final_price)
-                                                <span class="price-old">
-                                                    {{ number_format($orderDetail->variation_details->actual_price, 2) }} KD
-                                                </span>
+                                            <span class="price-current">{{ number_format($orderData->variation_details->final_price ?? 0, 2) }} KD</span>
+                                            @if(isset($orderData->variation_details->actual_price) && $orderData->variation_details->actual_price > $orderData->variation_details->final_price)
+                                                <span class="price-old">{{ number_format($orderData->variation_details->actual_price, 2) }} KD</span>
                                             @endif
-                                            <span class="discount ms-2"></span>
                                         </div>
                                     </div>
 
                                     <div class="return-view">
-                                        <div class="return-green">7 day return policy available</div>
+                                        <!-- <div class="return-green">7 day return policy available</div> -->
+                                         <div class="return-green">
+                                            @if(isset($orderData->product_details))
+                                                @if($orderData->product_details->product_return == '1')
+                                                    {{ $orderData->product_details->return_days }} day return policy available
+                                                    <br>
+                                                @endif
+
+                                                @if($orderData->product_details->product_exchangable == '1')
+                                                    {{ $orderData->product_details->exchangable_days }} day exchange policy available
+                                                @endif
+                                            @endif
+                                        </div>
+                                        @if($orderData->delivery_status !== '3')
                                         <div class="d-none-1">
                                             <button class="btn btn-outline-red w-100" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Order</button>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        {{-- Rating Section --}}
                         <div class="rating-pnl mt-3">
                             <div class="rate-p">
                                 <h5 class="product-title">Rate this product</h5>
                                 <div class="order-ratings rating-widget">
                                     <div class="rating" data-bs-toggle="modal" data-bs-target="#ratingModal">
                                         @for($i = 1; $i <= 5; $i++)
-                                            <label for="rating-{{$i}}">
-                                                <i class="fas fa-2x fa-star"></i>
-                                            </label>
+                                            <label><i class="fas fa-2x fa-star"></i></label>
                                         @endfor
                                     </div>
                                     <input type="hidden" id="selectedRating" value="0">
                                 </div>
                             </div>
 
-                            @if($orderDetail->variation_details->delivery_status == 3)
+                            @if($orderData->delivery_status == '3')
                             <div class="d-flex gap-3">
-                                <button class="btn btn-outline-red"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#exchangeModal"
-                                    style="width:130px;">
-                                    Exchange
-                                </button>
-
-                                <button class="btn btn-outline-red"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#returnModal"
-                                    style="width:130px; background:#D53B36; color:#fff;">
-                                    Return
-                                </button>
+                                <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#exchangeModal" style="width:130px;">Exchange</button>
+                                <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#returnModal" style="width:130px; background:#D53B36; color:#fff;">Return</button>
                             </div>
-                        @endif
-
+                            @endif
                         </div>
                     </div>
-                    @endforeach
-
-
-
-
                 <!-- </div> -->
 
                 {{-- BILLING DETAILS --}}
@@ -144,21 +133,21 @@
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>Total Quantity</div>
-                            <div>210</div>
+                            <div>{{$orderData->quantity}}</div>
                         </div>
                         <div class="giftinfo">
                             <div>Address </div>
-                            <div>Sectore 63,Bismilla Apartment Kuwait</div>
+                            <div>{{$orderData->order->delivery_details->address}}</div>
                         </div>
-                        <div class="giftinfo">
+                        <!-- <div class="giftinfo">
                             <div>Custom details</div>
                             <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
                 {{-- DELIVERY instruction --}}
-                <div class="gift-pnl mt-4">
+                <!-- <div class="gift-pnl mt-4">
                     <h6>Delivery instruction</h6>
                     <div class="border-1">
                         <div class="giftinfo">
@@ -166,53 +155,90 @@
                                 officiis tenetur officia, accusamus,</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 {{-- Shipping address --}}
                 <div class="gift-pnl mt-4">
                     <h6>Shipping Address</h6>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <p>Sectore 63,Bismilla Apartment Kuwait</p>
+                            <p>{{$orderData->order->delivery_details->address}} {{$orderData->order->delivery_details->house_no}} {{$orderData->order->delivery_details->city}} {{$orderData->order->delivery_details->state}} {{$orderData->order->delivery_details->postal_code}} {{$orderData->order->delivery_details->country_name}}</p>
                         </div>
                     </div>
                 </div>
 
                 {{-- Cancellation Details --}}
-                <div class="gift-pnl mt-4">
-                    <h6>Cancellation details</h6>
-                    <div class="border-1">
-                        <div class="giftinfo">
-                            <div>Cancellation ID</div>
-                            <div>#9876y999</div>
-                        </div>
-                        <div class="giftinfo">
-                            <div>Cancelled on</div>
-                            <div>02/02/2025 at 10:00</div>
+                @if(isset($orderData->return_type) && in_array($orderData->return_type, [1, 2]))
+                    <div class="gift-pnl mt-4">
+                        <h6>
+                            @if($orderData->return_type == 1)
+                                Return Details
+                            @elseif($orderData->return_type == 2)
+                                Cancellation Details
+                            @endif
+                        </h6>
+                        <div class="border-1">
+                            <div class="giftinfo">
+                                <div>
+                                    @if($orderData->return_type == 1)
+                                        Returned on
+                                    @elseif($orderData->return_type == 2)
+                                        Cancelled on
+                                    @endif
+                                </div>
+                                <div>
+                                    {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y \a\t h:i') }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="gift-pnl mt-4">
-                    <h6>Reason </h6>
-                    <div class="border-1">
-                        <div class="giftinfo">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, deserunt? Quam unde
-                                officiis tenetur officia, accusamus,</p>
+                @endif
+
+                @if(isset($orderData->return_type))
+                    @if($orderData->return_type == 1)
+                        <div class="gift-pnl mt-4">
+                            <h6>Return Reason</h6>
+                            <div class="border-1">
+                                <div class="giftinfo">
+                                    <p>{{ $orderData->return_reason ?? 'N/A' }}</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    @elseif($orderData->return_type == 2)
+                        <div class="gift-pnl mt-4">
+                            <h6>Exchange Reason</h6>
+                            <div class="border-1">
+                                <div class="giftinfo">
+                                    <p>{{ $orderData->exchange_reason ?? 'N/A' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endif
+
 
                 {{-- Uploaded images --}}
 
-                <div class="gift-pnl mt-4">
-                    <h6>Uploaded images </h6>
-                    <div class="border-1">
-                        <div class="giftinfo">
-                           <div class="image-upload">
-                                <img src="{{asset('user/assets/images/simliar6.jpg')}}" class="img-fluid" alt="images">
-                           </div>
+                @if(isset($orderData->return_type) && $orderData->return_type == 1)
+                @php
+                    $returnImages = json_decode($orderData->return_image ?? '[]', true);
+                @endphp
+
+                @if(!empty($returnImages))
+                    <div class="gift-pnl mt-4">
+                        <h6>Uploaded images</h6>
+                        <div class="border-1">
+                            <div class="giftinfo d-flex flex-wrap gap-2">
+                                @foreach($returnImages as $img)
+                                    <div class="image-upload">
+                                        <img src="{{ $img }}" class="img-fluid" alt="Return Image">
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
+            @endif
+
 
 
 
@@ -282,42 +308,81 @@
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>Total MRP</div>
-                            <div>8000 KD</div>
+                            <div>{{$orderData->order->total_mrp }} KD</div>
                         </div>
                         <div class="giftinfo">
                             <div>Discount on MRP </div>
-                            <div class="discount">80 KD</div>
+                            <div class="discount">{{$orderData->order->discount_mrp }} KD</div>
                         </div>
-                        <div class="giftinfo">
-                            <div>Coupon Discount (FIR20)</div>
-                            <div class="discount">80 KD</div>
-                        </div>
+                        @if(isset($orderData->order->promocode_value) && $orderData->order->promocode_value != 0)
+                            <div class="giftinfo">
+                                <div>Coupon Discount</div>
+                                <div class="discount">{{ $orderData->order->promocode_value }} KD</div>
+                            </div>
+                        @endif
+
+                        @if(isset($orderData->order->giftcard_amount) && $orderData->order->giftcard_amount != 0)
+                            <div class="giftinfo">
+                                <div>Gift Card Discount</div>
+                                <div class="discount">{{ $orderData->order->giftcard_amount }} KD</div>
+                            </div>
+                        @endif
+
                         <div class="giftinfo">
                             <div>Shipping Free </div>
-                            <div>80 KD</div>
+                            <div>{{$orderData->order->shipping_fees }} KD</div>
                         </div>
                         <div class="giftinfo">
                             <div>Tax(if any)</div>
-                            <div>10.00 KD</div>
+                            <div>{{$orderData->order->tax }} KD</div>
                         </div>
                         <div class="giftinfo">
                             <div>Total Amount</div>
-                            <div>80900 KD</div>
+                            <div>{{$orderData->order->total_amount }} KD</div>
                         </div>
                     </div>
                 </div>
-                <div class="return-green">You will save 100 KD on this</div>
+                @php
+                    $discountMRP = $orderData->order->discount_mrp ?? 0;
+                    $couponDiscount = $orderData->order->promocode_value ?? 0;
+                    $giftcardDiscount = $orderData->order->giftcard_amount ?? 0;
+
+                    $totalDiscount = $discountMRP + $couponDiscount + $giftcardDiscount;
+                @endphp
+                <div class="return-green">You will save {{$totalDiscount }} KD on this</div>
 
 
                 <div class="gift-pnl mt-3">
                     <div class="giftinfo">
                         <h6>Paid by</h6>
-                        <div class="trans" style="color:#714829;font-size:12px;">Transaction Id: 124359526</div>
+                        @if(isset($orderData->order->transaction_id) && $orderData->order->transaction_id != 0)
+                        <div class="trans" style="color:#714829;font-size:12px;">Transaction Id: {{$orderData->order->transaction_id }}</div>
+                        @endif
                     </div>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <div>8000 KD</div>
-                            <div>Paid By Card</div>
+                            <div>{{$orderData->order->total_amount }} KD</div>
+                            <!-- <div>Paid By Card</div> -->
+                             <div>
+                                @php
+                                    $paymentMethod = $orderData->order->payment_method ?? 0;
+                                    $paymentStatus = $orderData->order->payment_status ?? 0;
+                                @endphp
+
+                                @if($paymentMethod == '1')
+                                    Paid By Card
+                                @elseif($paymentMethod == '2')
+                                    Paid By Wallet
+                                @elseif($paymentMethod == '3')
+                                    @if($paymentStatus == '1')
+                                        Cash On Delivery
+                                    @else
+                                        Payment Pending On COD
+                                    @endif
+                                @else
+                                    Payment Info Not Available
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

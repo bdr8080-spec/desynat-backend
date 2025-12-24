@@ -207,7 +207,7 @@
 
                                 <div class="cart-panel position-relative">
                                         <!-- <a href="{{ route('user.order_details', ['id' => $orderDetail->order->order_id]) }}" class="link-content"> -->
-                                            <a href="{{ route('user.order_details', ['id' => $orderDetail->order_id]) }}?orderdetails_id={{ $orderDetail->id }}" class="link-content">
+                                            <a href="{{ route('user.order_details', ['id' => $orderDetail->order->id]) }}?orderdetails_id={{ $orderDetail->id }}" class="link-content">
 
                                         <div class="cart-card bottom-pd">
                                             <div class="card-left mb-2 d-flex">
