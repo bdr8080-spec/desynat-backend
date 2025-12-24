@@ -115,7 +115,7 @@
                                                     <button class="custom-btn3">My wallet</button>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <button class="custom-btn3">My Orders</button>
+                                                    <a href="{{route('user.myOrders')}}" class="custom-btn3">My Orders</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <button class="custom-btn3">My saved Cards</button>
