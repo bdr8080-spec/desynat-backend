@@ -15,91 +15,129 @@
                         <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
                                 class="img-fluid"></a>
                         <div class="order-subtitle">
-                            <h3>#003242</h3>
-                            <p>Place on 02/02/2025 at 10:00pm</p>
+                            <h3>#{{$orderData['order_id']}}</h3>
+                            <p>Placed on {{ \Carbon\Carbon::parse($orderData['created_at'])->format('d/m/Y \a\t h:ia') }}</p>
                         </div>
                     </div>
-                    <div class="btn-outline1 btn-ongoing">Ongoing</div>
-                    <div class="btn-outline1 btn-outline-red">Cancelled</div>
-                    <div class="btn-outline1 btn-outline-de">Delivered</div>
-                    <div class="btn-outline1 btn-ongoing">Return Request</div>
+                    @php
+                        $status = $orderData['delivery_status'];
+                    @endphp
+
+                    @if($status == 2)
+                        <div class="btn-outline1 btn-ongoing">Ongoing</div>
+                    @elseif($status == 4)
+                        <div class="btn-outline1 btn-outline-red">Cancelled</div>
+                    @elseif($status == 3)
+                        <div class="btn-outline1 btn-outline-de">Delivered</div>
+                    @elseif($status == 5)
+                        <div class="btn-outline1 btn-ongoing">Return Request</div>
+                    @endif
+
                 </div>
 
-                <div class="cart-panel">
-                    <div class="cart-card">
-                        <div class="card-left mb-2 d-flex">
-                            <div>
+                   @foreach($orderData->order_details as $orderDetail)
+                    <div class="cart-panel">
+                        <div class="cart-card">
+                            <div class="card-left mb-2 d-flex">
+                                <div>
+                                   @php
+                                    // Variant images can be an array or JSON string, so handle both cases
+                                    if (is_array($orderDetail->variation_details->variant_image)) {
+                                        $images = $orderDetail->variation_details->variant_image;
+                                    } else {
+                                        $images = json_decode($orderDetail->variation_details->variant_image ?? '[]', true);
+                                    }
+
+                                    // If no images found, fallback to product image or placeholder
+                                    $image = $images[0] ?? ($orderDetail->product_details->image_url ?? asset('user/assets/images/categorie1.png'));
+                                @endphp
+
                                 <div class="cart-products me-3">
-                                    <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                        class="img-fluid">
+                                    <img src="{{ $image }}" alt="Product" class="img-fluid">
+                                </div>
+
+                                </div>
+
+                                <div class="card-right d-flex w-100 justify-content-between">
+                                    <div class="product-info">
+                                        <h5 class="product-title">{{ $orderDetail->product_details->product_name_en ?? 'N/A' }}</h5>
+                                        <div class="psize d-flex gap-4">
+                                            <span>Size: {{ $orderDetail->variation_details->size->name ?? 'N/A' }}</span>
+
+                                            <span class="d-flex align-items-center gap-2">
+                                                Color:
+                                                <div class="colorbox" style="width:15px; height:15px; border-radius:3px; background: {{ $orderDetail->variation_details->color->hex_code ?? '#000' }};">
+                                                </div>
+                                            </span>
+
+                                            <span>Qnt: {{ $orderDetail->quantity ?? 1 }}</span>
+                                        </div>
+
+                                        {{-- Price --}}
+                                        <div class="price">
+                                            <span class="price-current">
+                                                {{ number_format($orderDetail->variation_details->final_price ?? 0, 2) }} KD
+                                            </span>
+                                            @if(isset($orderDetail->variation_details->actual_price) && $orderDetail->variation_details->actual_price > $orderDetail->variation_details->final_price)
+                                                <span class="price-old">
+                                                    {{ number_format($orderDetail->variation_details->actual_price, 2) }} KD
+                                                </span>
+                                            @endif
+                                            <span class="discount ms-2"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="return-view">
+                                        <div class="return-green">7 day return policy available</div>
+                                        <div class="d-none-1">
+                                            <button class="btn btn-outline-red w-100" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Order</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rating-pnl mt-3">
+                            <div class="rate-p">
+                                <h5 class="product-title">Rate this product</h5>
+                                <div class="order-ratings rating-widget">
+                                    <div class="rating" data-bs-toggle="modal" data-bs-target="#ratingModal">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <label for="rating-{{$i}}">
+                                                <i class="fas fa-2x fa-star"></i>
+                                            </label>
+                                        @endfor
+                                    </div>
+                                    <input type="hidden" id="selectedRating" value="0">
                                 </div>
                             </div>
 
-                            <div class="card-right d-flex w-100 justify-content-between">
-                                <div class="product-info">
-                                    <h5 class="product-title"> Mooei Pcs set</h5>
-                                    <div class="psize d-flex gap-4">
-                                        <span>Size:M</span>
+                            @if($orderDetail->variation_details->delivery_status == 3)
+                            <div class="d-flex gap-3">
+                                <button class="btn btn-outline-red"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exchangeModal"
+                                    style="width:130px;">
+                                    Exchange
+                                </button>
 
-                                        <span class="d-flex align-items-center gap-2">
-                                            Color:
-                                            <div class="colorbox" style="width:15px;height:15px;border-radius:3px;
-                                                    background: #000;">
-                                            </div>
-                                        </span>
-
-                                        <span>Qnt: 100</span>
-                                    </div>
-
-                                    {{-- Price --}}
-                                    <div class="price">
-                                        <span class="price-current">
-                                            210 KD
-                                        </span>
-                                        <span class="price-old">
-                                            239 KD
-                                        </span>
-                                        <span class="discount ms-2"></span>
-                                    </div>
-                                </div>
-                                <div class="return-view">
-                                    <div class="return-green">7 day return policy available</div>
-                                    <div class="d-none-1">
-                                        <button class="btn btn-outline-red w-100" data-bs-toggle="modal"
-                                            data-bs-target="#cancelModal">Cancel Order</button>
-                                    </div>
-                                </div>
-
+                                <button class="btn btn-outline-red"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#returnModal"
+                                    style="width:130px; background:#D53B36; color:#fff;">
+                                    Return
+                                </button>
                             </div>
+                        @endif
+
                         </div>
                     </div>
-
-                    <div class="rating-pnl mt-3">
-                        <div class="rate-p">
-                            <h5 class="product-title"> Rate this product</h5>
-                            <div class="order-ratings rating-widget">
-                                <div class="rating" data-bs-toggle="modal" data-bs-target="#ratingModal">
-                                    <label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
-                                    <label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
-                                    <label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
-                                    <label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
-                                    <label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
-                                </div>
-
-                                <input type="hidden" id="selectedRating" value="0">
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-3">
-                            <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#exchangeModal"
-                                style="width:130px;">Exchange</button>
-                            <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#returnModal"
-                                style="width:130px;background:#D53B36;color:#fff;">Return</button>
-                        </div>
-                    </div>
+                    @endforeach
 
 
-                </div>
+
+
+                <!-- </div> -->
 
                 {{-- BILLING DETAILS --}}
                 <div class="gift-pnl mt-4">

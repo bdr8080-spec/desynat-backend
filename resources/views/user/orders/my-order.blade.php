@@ -29,54 +29,10 @@
                             <div class="category_filter">
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <h3 class="mb-0">Filter</h3>
-                                    <a href="#">Apply</a>
+                                    <a href="{{route('user.myOrders')}}">Clear</a>
                                 </div>
-
-                                <!-- <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
-                                    <div class="orderfilter">
-                                        <label class="custom-radio mb-3">
-                                            <input type="radio" name="filter" value="1" checked>
-                                            <span class="radio-mark"></span>
-                                            <div class="label-content">
-                                                <div class="title">All</div>
-                                            </div>
-                                        </label>
-                                        <label class="custom-radio mb-3">
-                                            <input type="radio" name="filter" value="1">
-                                            <span class="radio-mark"></span>
-                                            <div class="label-content">
-                                                <div class="title">Ongoing</div>
-                                            </div>
-                                        </label>
-                                        <label class="custom-radio mb-3">
-                                            <input type="radio" name="filter" value="1">
-                                            <span class="radio-mark"></span>
-                                            <div class="label-content">
-                                                <div class="title">Delivered</div>
-                                            </div>
-                                        </label>
-                                        <label class="custom-radio mb-3">
-                                            <input type="radio" name="filter" value="1">
-                                            <span class="radio-mark"></span>
-                                            <div class="label-content">
-                                                <div class="title">Cancelled </div>
-                                            </div>
-                                        </label>
-                                        <label class="custom-radio mb-3">
-                                            <input type="radio" name="filter" value="1">
-                                            <span class="radio-mark"></span>
-                                            <div class="label-content">
-                                                <div class="title">Return </div>
-                                            </div>
-                                        </label>
-                                    </div>
-
-                                    <button class="customBtn customBtn5 mt-5">Apply</button>
-                                </form> -->
                                 <form method="GET" action="{{ route('user.myOrders') }}">
                                     <div class="orderfilter">
-
-                                        {{-- All --}}
                                         <label class="custom-radio mb-3">
                                             <input type="radio"
                                                 name="filter"
@@ -87,8 +43,6 @@
                                                 <div class="title">All</div>
                                             </div>
                                         </label>
-
-                                        {{-- Ongoing --}}
                                         <label class="custom-radio mb-3">
                                             <input type="radio"
                                                 name="filter"
@@ -99,8 +53,6 @@
                                                 <div class="title">Ongoing</div>
                                             </div>
                                         </label>
-
-                                        {{-- Delivered --}}
                                         <label class="custom-radio mb-3">
                                             <input type="radio"
                                                 name="filter"
@@ -111,8 +63,6 @@
                                                 <div class="title">Delivered</div>
                                             </div>
                                         </label>
-
-                                        {{-- Cancelled --}}
                                         <label class="custom-radio mb-3">
                                             <input type="radio"
                                                 name="filter"
@@ -123,8 +73,6 @@
                                                 <div class="title">Cancelled</div>
                                             </div>
                                         </label>
-
-                                        {{-- Returned --}}
                                         <label class="custom-radio mb-3">
                                             <input type="radio"
                                                 name="filter"
@@ -142,22 +90,27 @@
                                         Apply
                                     </button>
                                 </form>
-
-
                             </div>
                         </div>
 
                         <div class="col-lg-8">
                             <div class="categoryDetail_content">
-                                <form action="{{ url('user/category-wise-store/' . request()->id) }}" method="GET">
+                                <form action="{{ route('user.myOrders') }}" method="GET">
                                     <div class="seArch">
                                         <div class="form-group position-relative search">
-                                            <input type="text" class="form-control" placeholder="Search" name="search" value="{{request()->search}}" />
+                                            <input type="text"
+                                                class="form-control"
+                                                placeholder="Search"
+                                                name="search"
+                                                value="{{ request()->search }}" />
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </div>
-                                        <button class="customBtn customBtn5">Search</button>
+                                        <button type="submit" class="customBtn customBtn5">
+                                            Search
+                                        </button>
                                     </div>
                                 </form>
+
 
                                 <!-- <div class="cart-panel position-relative">
                                     <a href="order_details" class="link-content">
@@ -253,7 +206,9 @@
                                 @endphp
 
                                 <div class="cart-panel position-relative">
-                                    <a href="" class="link-content">
+                                        <!-- <a href="{{ route('user.order_details', ['id' => $orderDetail->order->order_id]) }}" class="link-content"> -->
+                                            <a href="{{ route('user.order_details', ['id' => $orderDetail->order_id]) }}?orderdetails_id={{ $orderDetail->id }}" class="link-content">
+
                                         <div class="cart-card bottom-pd">
                                             <div class="card-left mb-2 d-flex">
 
@@ -271,7 +226,7 @@
                                                     <div class="card-right d-flex w-100 justify-content-between">
                                                         <div class="product-info">
                                                             <h5 class="product-title">
-                                                                Order ID :# <span>{{ $order->order_id }}</span>
+                                                                Order ID :# <span>{{ $orderDetail->id }}</span>
                                                             </h5>
 
                                                             <div class="price-current">
@@ -321,10 +276,7 @@
 
                                 @empty
                                     <div class="text-center py-5">
-                                        <img src="{{ asset('user/assets/images/no-order.png') }}"
-                                            alt="No Orders" width="180">
                                         <h5 class="mt-3">No Order Found</h5>
-                                        <p class="text-muted">You haven’t placed any orders yet.</p>
                                     </div>
                                 @endforelse
                             </div>

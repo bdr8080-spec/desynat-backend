@@ -553,8 +553,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         if ($request->filter) {
             switch ($request->filter) {
                 case '2': // Ongoing
-                    $q->where('payment_status', '1')
-                      ->where('delivery_status', '2');
+                    $q->where('delivery_status', '2');
                     break;
 
                 case '3': // Delivered

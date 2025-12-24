@@ -91,6 +91,7 @@ use App\Http\Controllers\User\OrderController;
   Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');
 
   Route::get('/my-orders', [OrderController::class,'myOrders'])->name('user.myOrders');
+  Route::get('/order_details/{id}', [OrderController::class,'order_details'])->name('user.order_details');
 
 
 });
@@ -123,15 +124,15 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/myorder', function () {
-     return view('user.orders.my-order');
+// Route::match(['get', 'post'], '/myorder', function () {
+//      return view('user.orders.my-order');
 
-})->name('user.myorder');
+// })->name('user.myorder');
 
-Route::match(['get', 'post'], '/order_details', function () {
-     return view('user.orders.order-details');
+// Route::match(['get', 'post'], '/order_details', function () {
+//      return view('user.orders.order-details');
 
-})->name('user.order_details');
+// })->name('user.order_details');
 
 
 // Route::match(['get', 'post'], '/view-cart', function () {

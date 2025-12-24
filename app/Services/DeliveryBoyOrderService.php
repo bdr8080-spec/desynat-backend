@@ -105,7 +105,7 @@ class DeliveryBoyOrderService
             ->whereDate('assign_date', $today)
 
             // ->whereNotIn('delivery_status', ['4', '6', '7', '8'])
-            ->where('delivery_status', '1')
+            ->whereIn('delivery_status', ['1',['2']])
 
             ->orderBy('assign_date', 'desc')
             ->paginate($limit);

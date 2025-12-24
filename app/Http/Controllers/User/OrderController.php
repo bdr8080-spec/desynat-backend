@@ -29,9 +29,24 @@ class OrderController extends Controller
         ];
 
         $orderData = $this->UserOrderService->AllOrderDetailsNew($data)['data'];
-        //dd($orderData);
+        //dump($orderData);
 
         return view('user.orders.my-order',compact('orderData'));
+
+    }
+
+    public function order_details(Request $request, $id){ 
+
+
+        $data = (object)[
+            'order_id' => $request->id,
+             'orderdetails_id' => $request->orderdetails_id
+        ];
+
+        $orderData = $this->UserOrderService->singleOrderDetailsNew($data)['data'];
+       // dd($orderData);
+
+        return view('user.orders.order-details',compact('orderData'));
 
     }
 
@@ -89,17 +104,6 @@ class OrderController extends Controller
         }
     }
 
-    public function orderDetails(Request $request,$id){
-        $orderId = $id;
-        //dd($orderId);
-        $data = (object)[
-            'order_id' => $orderId,
-        ];
-        $orderData = $this->UserOrderService->singleOrderDetails($data);
-        //dd($orderData);
-        return view('user.carts.orderplace',compact('orderData'));
-
-    }
 
 
 
