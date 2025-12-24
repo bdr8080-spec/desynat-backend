@@ -102,10 +102,11 @@ class DeliveryBoyOrderService
             })
 
             ->whereNotNull('assign_date')
-            ->whereDate('assign_date', $today)
+            // ->whereDate('assign_date', $today)
 
             // ->whereNotIn('delivery_status', ['4', '6', '7', '8'])
-            ->whereIn('delivery_status', ['1',['2']])
+            ->whereIn('delivery_status', ['1','2'])
+            ->where('is_picked', '0')
 
             ->orderBy('assign_date', 'desc')
             ->paginate($limit);
@@ -163,6 +164,7 @@ class DeliveryBoyOrderService
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->where('delivery_status', '2')
+            ->where('is_picked', 1)
             ->when($request->search, function ($q) use ($request) {
                 $q->where('order_id', 'like', '%' . $request->search . '%');
             })
