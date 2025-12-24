@@ -102,10 +102,11 @@ class DeliveryBoyOrderService
             })
 
             ->whereNotNull('assign_date')
-            ->whereDate('assign_date', $today)
+            // ->whereDate('assign_date', $today)
 
             // ->whereNotIn('delivery_status', ['4', '6', '7', '8'])
-            ->where('delivery_status', '1')
+            ->whereIn('delivery_status', ['1','2'])
+            ->where('is_picked', '0')
 
             ->orderBy('assign_date', 'desc')
             ->paginate($limit);
@@ -163,6 +164,7 @@ class DeliveryBoyOrderService
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->where('delivery_status', '2')
+            ->where('is_picked', 1)
             ->when($request->search, function ($q) use ($request) {
                 $q->where('order_id', 'like', '%' . $request->search . '%');
             })
@@ -345,12 +347,59 @@ class DeliveryBoyOrderService
         }
     }
 
+    // public function UpdateDeliveryStatus($request)
+    // {
+    //     try {
+    //         $data = Order::find($request->id);
+
+    //         if (!$data) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'Order not found',
+    //                 'data' => []
+    //             ];
+    //         }
+
+    //         $data->delivery_status = $request->delivery_status;
+    //         $data->not_delivered_reason = $request->reason;
+    //         $data->save();
+
+    //         switch ($data->delivery_status) {
+    //             case '3':
+    //                 $message = 'Delivery Status Updated to Delivered';
+    //                 break;
+    //             case '7':
+    //                 $message = 'Delivery Status Updated to Picked';
+    //                 break;
+    //             case '8':
+    //                 $message = 'Delivery Status Updated to Not Delivered';
+    //                 break;
+    //             default:
+    //                 $message = 'Delivery Status Updated Successfully';
+    //         }
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => $message,
+    //             'data' => $data
+    //         ];
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to update status: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
     public function UpdateDeliveryStatus($request)
     {
-        try {
-            $data = Order::find($request->id);
+        DB::beginTransaction();
 
-            if (!$data) {
+        try {
+            $order = Order::find($request->id);
+
+            if (!$order) {
                 return [
                     'status' => 'error',
                     'message' => 'Order not found',
@@ -358,11 +407,21 @@ class DeliveryBoyOrderService
                 ];
             }
 
-            $data->delivery_status = $request->delivery_status;
-            $data->not_delivered_reason = $request->reason;
-            $data->save();
+            $status = (string) $request->delivery_status;
 
-            switch ($data->delivery_status) {
+            // Update order
+            $order->delivery_status = $status;
+            $order->not_delivered_reason = $request->reason ?? null;
+            $order->save();
+
+            // Update order details
+            OrderDetail::where('order_id', $order->id)->update([
+                'delivery_status' => $request->delivery_status
+            ]);
+
+            DB::commit();
+
+            switch ($status) {
                 case '3':
                     $message = 'Delivery Status Updated to Delivered';
                     break;
@@ -379,9 +438,12 @@ class DeliveryBoyOrderService
             return [
                 'status' => 'success',
                 'message' => $message,
-                'data' => $data
+                'data' => $order
             ];
+
         } catch (\Exception $e) {
+            DB::rollBack();
+
             return [
                 'status' => 'error',
                 'message' => 'Failed to update status: ' . $e->getMessage(),
@@ -389,6 +451,7 @@ class DeliveryBoyOrderService
             ];
         }
     }
+
 
     public function PickOrder($request)
     {
