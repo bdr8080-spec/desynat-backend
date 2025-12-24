@@ -574,8 +574,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         }
     })
 
-
-    ->get();
+    ->orderBy('id','desc')->get();
 
 
     return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$orders];
