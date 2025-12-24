@@ -95,8 +95,8 @@
                 </div>
                 </form>
 
-                <div class="table-responsive">
-                    <table id="myTable" class="table">
+               <div class="table-responsive mt-4">
+                    <table id="myTable" class="table allTable">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -115,10 +115,106 @@
                                 <th scope="col">Invoice</th>
                                 <th scope="col">Zone</th>
                                 <th scope="col">Assign Driver</th>
-
-
                             </tr>
                         </thead>
+
+                        <tbody>
+                            @forelse($activeOrders as $index => $data)
+                            <tr>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>{{ $data['order_id'] }}</td>
+                                <td>
+                                    @php
+                                        $firstOrderDetail = $data['order_details']->first();
+                                    @endphp
+                                    @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
+                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
+                                    @else
+                                        Seller not found
+                                    @endif
+                                </td>
+                                <td>{{ $data['delivery_details']['name'] }}</td>
+                                <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>
+                                    <a class="table-button view-products"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#sentModal1"
+                                    data-products='@json($data["order_details"])'>
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                </td>
+                                <td>{{ $data['delivery_details']['address'] }}</td>
+                                <td>{{ $data['total_amount'] }} KD</td>
+                                <td>20 KD</td>
+                                <td>Normal</td>
+                                <td>Delivery Boy</td>
+                                <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
+                                @php
+                                    $deliveryStatuses = [
+                                        1 => 'Pending',
+                                        2 => 'On The Way',
+                                        3 => 'Delivered',
+                                        4 => 'Cancelled',
+                                        5 => 'Return',
+                                        6 => 'Confirmed',
+                                        7 => 'Picked',
+                                        8 => 'Not Delivered',
+                                    ];
+                                @endphp
+                                <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td>
+                                <td>
+                                    <a class="btn btn-dark customBtn">
+                                        <span>Download Invoice</span>
+                                    </a>
+                                </td>
+                                <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
+                                <td>
+                                    @if($data['assign_status'] == 0 && $data['delivery_details']['country_name'] === 'Kuwait')
+                                    <a class="btn btn-dark customBtn assignDriverBtn"
+                                    href="javascript:void(0)"
+                                    data-order-id="{{ $data['id'] }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#assignModal">
+                                        <span>Assign Delivery Boy</span>
+                                    </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="12" class="text-center">No data found</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <!-- <div class="table-responsivew mt-4">
+                    <table id="myTable" class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr.No </th>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Seller Name</th>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Product details</th>
+                                <th scope="col">Delivery Address</th>
+                                <th scope="col">Order Amount</th>
+                                <th scope="col">Admin Commission</th>
+                                <th scope="col">Order Type</th>
+                                <th scope="col">Delivery Boy</th>
+                                <th scope="col">Delivery Boy/Company Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Invoice</th>
+                                <th scope="col">Zone</th>
+                                <th scope="col">Assign Driver</th>
+                            </tr>
+                        </thead>
+
                         <tbody>
                             @forelse($activeOrders as $index => $data)
                             <tr>
@@ -138,10 +234,7 @@
                                 @endif
                                 <td>{{ $data['delivery_details']['name'] }}</td>
                                 <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td> -->
+                                
                                     <td>
                                         <a class="table-button view-products"
                                         data-bs-toggle="modal"
@@ -150,7 +243,8 @@
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     </td>
-                                <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
+
+                                <td>{{ $data['delivery_details']['address'] }}</td>                               
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
@@ -203,8 +297,10 @@
                             @endforelse
                         </tbody>
                     </table>
-                </div>
+                </div> -->
             </div>
+
+
             <!-- approved -->
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
@@ -264,8 +360,8 @@
                 </div>
                 </form>
 
-                <div class="table-responsive">
-                    <table id="myTable1" class="table">
+                <div class="table-responsive mt-4">
+                    <table id="myTable1" class="table allTable">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -322,7 +418,7 @@
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     </td>
-                                <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
+                                <td>{{ $data['delivery_details']['address'] }}</td>                               
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
@@ -414,8 +510,8 @@
                 </div>
                 </form>
 
-                <div class="table-responsive">
-                    <table id="myTable2" class="table">
+                <div class="table-responsive mt-4">
+                    <table id="myTable2" class="table allTable">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -465,7 +561,7 @@
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     </td>
-                                <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
+                                <td>{{ $data['delivery_details']['address'] }}</td>                               
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
@@ -547,8 +643,8 @@
                 </div>
                 </form>
 
-                <div class="table-responsive">
-                    <table id="myTable3" class="table">
+                <div class="table-responsive mt-4">
+                    <table id="myTable3" class="table allTable">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -597,7 +693,7 @@
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     </td>
-                                <td>{{ $data['delivery_details']['address'] }}</td>                               </td>
+                                <td>{{ $data['delivery_details']['address'] }}</td>                               
                                 <td>{{ $data['total_amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
@@ -939,6 +1035,10 @@ document.getElementById('assignDriverSubmit').addEventListener('click', function
     document.addEventListener('DOMContentLoaded', function() {
         updateToDate();
     });
+
+//Datatable
+
+
 </script>
 
 
