@@ -1,5 +1,16 @@
 @extends('admin.layout.app')
 @section('content')
+<style>
+    a.btn.btn-dark.customBtn {
+    border: 1px solid rgba(168, 130, 79, 1);
+    /* background: var(--bg-color); */
+    background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
+    color: #fff;
+    /* line-height: 18px; */
+    font-size: 14px !important;
+    padding: 9px !important;
+}
+</style>
 
 
 <div class="inner-content management">
@@ -53,7 +64,7 @@
                             </select>
                         </div>
                     </div> -->
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
@@ -62,7 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
@@ -86,9 +97,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-12 col-12">
+                    <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
                     </div>
@@ -318,7 +329,7 @@
                             </select>
                         </div>
                     </div> -->
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
@@ -327,7 +338,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
@@ -351,9 +362,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-12 col-12">
+                    <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
                     </div>
@@ -468,7 +479,7 @@
                             </select>
                         </div>
                     </div> -->
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
@@ -477,7 +488,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
@@ -501,9 +512,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-12 col-12">
+                    <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
                     </div>
@@ -601,7 +612,7 @@
                             </select>
                         </div>
                     </div> -->
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" name="from_date" class="form-control"
@@ -610,7 +621,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-2 col-md-4 col-12">
+                    <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
                             <input type="date" id="to" name="to_date" class="form-control"
@@ -634,9 +645,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-12 col-12">
+                    <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
+                            <a class="btn btn-dark customBtn w-50" style="margin-top: 63px">
                                 <span>Export</span></a>
                         </div>
                     </div>
@@ -719,7 +730,7 @@
 
 <!-- add new model -->
 <div class="modal fade" id="sentModalrating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
@@ -779,7 +790,7 @@
 
 <!-- Product Details Modal -->
 <div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <h2 class="h2">Product Details</h2>
@@ -831,8 +842,8 @@
                         <!-- ORDER ID -->
                         <input type="hidden" id="orderId">
 
-                        <div class="form-group w-50 m-auto">
-                            <select class="form-select form-select-lg mt-4" id="driverSelect">
+                        <div class="form-group w-100 m-auto">
+                            <select class="form-select form-select-lg mt-4 " id="driverSelect">
                                 <option value="">Loading...</option>
                             </select>
                         </div>
