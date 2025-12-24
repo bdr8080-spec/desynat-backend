@@ -1100,6 +1100,7 @@ td {
 .bi {
     color: #000;
     font-size: 18px;
+        cursor: pointer;
 }
 
 .modal-header h2.h2 {
@@ -2313,8 +2314,8 @@ header,
 } 
 .overlay {
   /* position: fixed; */
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  /* inset: 0; */
+  /* background: rgba(0, 0, 0, 0.5); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2347,12 +2348,14 @@ header,
 }
 
 .product-card {
-  border: 1px dashed #bdbdbd;
-  border-radius: 6px;
-  padding: 16px;
-  display: flex;
-  gap: 20px;
-  margin-bottom: 16px;
+      border: 1px dashed #bdbdbd;
+    border-radius: 6px;
+    padding: 7px;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    margin-top: -50px;
+    width: 611px;
 }
 
 .product-img img {
@@ -2371,7 +2374,7 @@ header,
 .product-info p {
   margin: 6px 0;
   color: #444;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .product-info strong {
