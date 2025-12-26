@@ -80,19 +80,19 @@
     </li>
     <li class="nav-item {{ Request::routeIs('admin.orderManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.orderManagement') }}">
-            <span><img src="{{ asset('admin/image/DDDDDDDDD/addvertisement.svg') }}" alt="Order Management" /></span>
+            <span><img src="{{ asset('admin/image/Icon.svg') }}" alt="Order Management" /></span>
             Order Management
         </a>
     </li>
     <li class="nav-item {{ Request::routeIs('admin.affiliateCommissionManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.affiliateCommissionManagement') }}">
-            <span><img src="{{ asset('admin/image/DDDDDDDDD/addvertisement.svg') }}" alt="Affiliate Commission Management" /></span>
+            <span><img src="{{ asset('admin/image/seller.svg') }}" alt="Affiliate Commission Management" /></span>
             Affiliate Commission Management
         </a>
     </li>
     <li class="nav-item {{ Request::routeIs('admin.bannerRequestManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.bannerRequestManagement') }}">
-            <span><img src="{{ asset('admin/image/DDDDDDDDD/addvertisement.svg') }}" alt="Banner Request Management" /></span>
+            <span><img src="{{ asset('admin/image/image-03.svg') }}" alt="Banner Request Management" /></span>
             Banner Request Management
         </a>
     </li>

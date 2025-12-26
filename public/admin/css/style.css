@@ -2312,14 +2312,14 @@ header,
  
 --bs-dropdown-link-active-bg: #eef0f3 !important;
 } 
-.overlay {
-  /* position: fixed; */
-  /* inset: 0; */
-  /* background: rgba(0, 0, 0, 0.5); */
+/* .overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .product-modal {
   background: #fff;
