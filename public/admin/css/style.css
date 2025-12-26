@@ -2354,7 +2354,7 @@ header,
     display: flex;
     gap: 14px;
     margin-bottom: 16px;
-    margin-top: -50px;
+    /* margin-top: -50px; */
     width: 611px;
 }
 
