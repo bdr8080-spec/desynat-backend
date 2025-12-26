@@ -151,6 +151,24 @@
     </form>
 
 </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="RequestBanner" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-4 text-center">
+                    <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                    <h5 class="mt-3">Request Send Successfully</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <script>
 document.getElementById('banner_image_upload').addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -383,7 +401,9 @@ $(document).on('submit', 'form#addBanner', function(event) {
             }, 2000);
 
             if (response.status === 'success') {
-                toastr.success(response.message);
+                // toastr.success(response.message);
+
+                $('#RequestBanner').modal('show');
 
                 $('.submit').attr('disabled', true);
                 window.setTimeout(function() {

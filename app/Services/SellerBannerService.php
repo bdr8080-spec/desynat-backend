@@ -123,8 +123,8 @@ if($request->search){
 if (isset($request->from) && isset($request->to)  ) {
 
       $checkBanner = $checkBanner
-                ->whereDate('created_at', '>' , $request->from)
-                ->whereDate('created_at', '<' , $request->to);
+                ->whereDate('created_at', '>=' , $request->from)
+                ->whereDate('created_at', '<=' , $request->to);
 
 
 }

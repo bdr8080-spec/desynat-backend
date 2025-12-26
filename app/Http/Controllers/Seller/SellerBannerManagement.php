@@ -79,6 +79,7 @@ class SellerBannerManagement extends Controller
 
     $single_banner=$single_banner['data'];
 
+
     return view('dealer.bannermgt.banner-details',compact("single_banner"));
 
     }
