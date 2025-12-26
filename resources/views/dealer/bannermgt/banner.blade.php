@@ -112,17 +112,32 @@ table#table1 {
                         <td>{{$val->created_at->format('d/m/Y \a\t h:i A') }}</td>
                         <td> {{$val->price}} KD </td>
                         <td>
-                            @if($val->Admin_verify=='0')
+                            @if ($val->Admin_verify == '0')
                             Pending
-                            @elseif($val->Admin_verify=='1')
-                            Confirmed
 
+                            @elseif (
+                            $val->Admin_verify == '1' &&
+                            $val->payment_status == '1' &&
+                            $val->start_date <= now() && $val->end_date >= now()
+                                )
+                                Active
 
+                                @elseif (
+                                $val->Admin_verify == '1' &&
+                                $val->payment_status == '1' &&
+                                $val->end_date < now() ) Expired @elseif ($val->Admin_verify == '1' &&
+                                    $val->payment_status == '1')
+                                    Confirmed
 
-                            @else
-                            Rejected
-                            @endif
+                                    @elseif ($val->Admin_verify == '1' && $val->payment_status == '3' )
+                                    Rejected
 
+                                    @elseif ($val->Admin_verify == '1' && $val->payment_status == '0' )
+                                    Confirmed
+
+                                    @else
+                                    Rejected
+                                    @endif
                         </td>
                         <td>
                             <a href="{{route('seller.show_single_banner',$val->id)}}" class="eyebtn"><i
