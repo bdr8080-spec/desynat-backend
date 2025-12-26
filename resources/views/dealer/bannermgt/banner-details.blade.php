@@ -111,7 +111,7 @@
 
 
                         @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
-                        <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+                        <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal" data-bs-target="#payModal">Pay Now</button>
 
                         @endif
                     </form>
@@ -171,6 +171,22 @@
         <button class="pay-btn">Pay Now</button>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="payModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+            <div class="p-4 text-center">
+                <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                <h5 class="mt-3">Plan Purchased Successfully</h5>
+            </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 
 
 <script>
