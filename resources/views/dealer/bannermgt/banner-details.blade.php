@@ -13,7 +13,7 @@
         @if($single_banner->Admin_verify=='0')
         <span class="upper-text"> Pending </span>
         @elseif($single_banner->Admin_verify=='1')
-        <span class="upper-text"> Confirmed </span>
+        <span class="upper-text" style="color:#48DB8F;"> Confirmed </span>
         @else
         <span class="upper-text text-danger"> Rejected </span>
         @endif

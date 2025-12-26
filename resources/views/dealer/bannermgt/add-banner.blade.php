@@ -6,7 +6,7 @@
  
     </div> -->
     <div class="d-flex justify-content-between mt-4">
-        <a class="title24 alink"> <i class="bi bi-chevron-left"></i>Add New Banner</a>
+        <a href="#" class="title24 alink"> <i class="bi bi-chevron-left"></i>Add New Banner</a>
     </div>
 
     <form id="addBanner" action="{{ route('seller.add_banner') }}" method="post">
@@ -86,7 +86,7 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label class="banner-text">From</label>
-                            <input type="date" id="fromDate" class="form-control mb-4" min="<?= date('Y-m-d');?>"
+                            <input type="date" id="fromDate" class="form-control" min="<?= date('Y-m-d');?>"
                                 name="start_date">
 
                             <p class="text-danger" id="error-start_date"></p>
