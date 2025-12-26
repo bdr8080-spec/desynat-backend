@@ -2359,10 +2359,10 @@ header,
 }
 
 .product-img img {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-  opacity: 0.7;
+    width: 105px;
+    height: 120px;
+    object-fit: contain;
+  /* opacity: 0.7; */
 }
 
 .product-info {
