@@ -30,6 +30,7 @@ class SellerBannerManagement extends Controller
 
     $seller_details=Auth::guard('seller')->user()->id;
 
+
     $request_data=(object) [
     'seller_id'=>$seller_details,
     'search'=>$request->search??null,
@@ -78,6 +79,7 @@ class SellerBannerManagement extends Controller
     $single_banner= $this->SellerBannerService->singleBannerDetails($request_data);
 
     $single_banner=$single_banner['data'];
+
 
     return view('dealer.bannermgt.banner-details',compact("single_banner"));
 

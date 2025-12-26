@@ -10,13 +10,57 @@
     <div class="d-flex justify-content-between mt-4">
         <a class="title24 alink" href="{{route('seller.show_banner')}}"> <i class="bi bi-chevron-left"></i>Details</a>
 
-        @if($single_banner->Admin_verify=='0')
-        <span class="upper-text"> Pending </span>
-        @elseif($single_banner->Admin_verify=='1')
-        <span class="upper-text" style="color:#48DB8F;"> Confirmed </span>
-        @else
-        <span class="upper-text text-danger"> Rejected </span>
-        @endif
+        @if ($single_banner->Admin_verify == '0')
+        <span class="upper-text"> Pending- Admin Wait to Approve </span>
+
+        @elseif ($single_banner->Admin_verify == '2')
+        <span class="upper-text text-danger"> Rejected- Admin rejected </span>
+
+
+        @elseif (
+        $single_banner->Admin_verify == '1' &&
+        $single_banner->payment_status == '1' &&
+        $single_banner->start_date <= now() && $single_banner->end_date >= now()
+            )
+            <span class="upper-text" style="color:#48DB8F;"> Active </span>
+
+
+            @elseif (
+            $single_banner->Admin_verify == '1' &&
+            $single_banner->payment_status == '1' &&
+            $single_banner->end_date < now() ) Expired @elseif ($single_banner->Admin_verify == '1' &&
+                $single_banner->payment_status == '1')
+                <span class="upper-text" style="color:#48DB8F;"> Confirmed </span>
+
+                @elseif ($single_banner->Admin_verify == '1' && $single_banner->payment_status == '3' )
+
+                <span class="upper-text text-danger"> Rejected- Payment rejected </span>
+
+                @elseif ($single_banner->Admin_verify == '1' && $single_banner->payment_status == '0' )
+                <span class="upper-text" style="color:#48DB8F;"> Confirmed </span>
+
+                @elseif ($single_banner->Admin_verify == '1' && $single_banner->payment_status == '2' )
+                <span class="upper-text text-danger"> Rejected - Payment is rejected </span>
+
+                @else
+                <span class="upper-text text-danger"> Rejected </span>
+
+
+
+                @endif
+
+
+
+
+
+
+                <!-- @if($single_banner->Admin_verify=='0')
+                <span class="upper-text"> Pending </span>
+                @elseif($single_banner->Admin_verify=='1')
+                <span class="upper-text" style="color:#48DB8F;"> Confirmed </span>
+                @else
+                <span class="upper-text text-danger"> Rejected </span>
+                @endif -->
 
     </div>
 
@@ -39,7 +83,7 @@
             @endif
 
             <div class="d-flex justify-content-between mt-4">
-                <h6 class="banner-texts">Select Duration</h6>
+                <h6 class="banner-texts"> Duration</h6>
                 <span class="banner-texts">Total days - {{$single_banner->total_days}}</span>
             </div>
 
@@ -89,35 +133,30 @@
             </div>
 
 
-
-
         </div>
 
-        @elseif($single_banner->Admin_verify=='1' && $single_banner->payment_status=='1')
-        Payment is Paid
-        @elseif($single_banner->Admin_verify=='1' && $single_banner->payment_status=='2')
-        Payment Is rejected
         @endif
 
         <div class="dashboard-button mt-5 gap-5">
             <div class="row">
                 <div class="col-lg-6">
                     <button type="button" class="btn total-outline w-100">Total Price
-                    <strong>{{$single_banner->price}}KD</strong></button>
+                        <strong>{{$single_banner->price}}KD</strong></button>
                 </div>
                 <div class="col-lg-6">
-                        <form id="bannerBuyForm">
+                    <form id="bannerBuyForm">
                         @csrf
 
 
                         @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
-                        <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal" data-bs-target="#payModal">Pay Now</button>
+                        <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal"
+                            data-bs-target="#payModal">Pay Now</button>
 
                         @endif
                     </form>
                 </div>
             </div>
-           
+
         </div>
 
 </section>
@@ -174,17 +213,17 @@
 
 <!-- Modal -->
 <div class="modal fade" id="payModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body">
-            <div class="p-4 text-center">
-                <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
-                <h5 class="mt-3">Plan Purchased Successfully</h5>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-4 text-center">
+                    <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                    <h5 class="mt-3">Plan Purchased Successfully</h5>
+                </div>
             </div>
-      </div>
-      
+
+        </div>
     </div>
-  </div>
 </div>
 
 

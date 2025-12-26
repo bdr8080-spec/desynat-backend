@@ -116,6 +116,7 @@ try{
 
 $checkBanner=sellerBanner::with('category_details','subcategory_details')->where('seller_id',$request->seller_id);
 
+
 if($request->search){
   $checkBanner=$checkBanner->where('order_id','Like','%'.$request->search.'%');
 }
@@ -123,8 +124,8 @@ if($request->search){
 if (isset($request->from) && isset($request->to)  ) {
 
       $checkBanner = $checkBanner
-                ->whereDate('created_at', '>' , $request->from)
-                ->whereDate('created_at', '<' , $request->to);
+                ->whereDate('start_date', '>=' , $request->from)
+                ->whereDate('end_date', '<=' , $request->to);
 
 
 }
@@ -146,16 +147,29 @@ if ($request->banner_filter) {
             // Confirmed
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '1')
+            ->whereIn('payment_status', ['0','1'])
+
                 ->where(function ($q) {
-                    $q->where('payment_status', '0') // fully confirmed, ignore dates
-                    ->orWhere(function ($q2) {
-                        $q2->where('payment_status', '1')
-                            ->where(function ($q3) {
-                                $q3->whereDate('start_date', '<=', now())
-                                    ->WhereDate('end_date', '>=', now());
-                            });
-                    });
+                    
+                    $q->where('payment_status', '1')
+
+                     ->where(function ($q3) {
+                                    // $q3->whereDate('start_date', '<=', now())
+                                    $q3->WhereDate('end_date', '>=', now());
+                     });
+
                 });
+
+                // ->where(function ($q) {
+                //     $q->where('payment_status', '0') // fully confirmed, ignore dates
+                //     ->orWhere(function ($q2) {
+                //         $q2->where('payment_status', '1')
+                //             ->where(function ($q3) {
+                //                 $q3->whereDate('start_date', '<=', now())
+                //                     ->WhereDate('end_date', '>=', now());
+                //             });
+                //     });
+                // });
             break;
 
         case '3':
@@ -175,7 +189,7 @@ if ($request->banner_filter) {
         case '5':
             // Rejected
             $checkBanner = $checkBanner
-                ->where('payment_status', '3')
+                ->whereIn('payment_status', ['2','3'])
                 ->orWhere('Admin_verify','2');
             break;
     }

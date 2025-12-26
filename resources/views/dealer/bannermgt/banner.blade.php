@@ -25,7 +25,10 @@ table#table1 {
 
     @if (session('status') == 'success')
     <div class="alert alert-success">
-        {{ session('message') }}
+        <script>
+        $('#payModalSuccess').modal('show');
+        </script>
+        <!-- {{ session('message') }} -->
     </div>
     @elseif (session('status') == 'error')
     <div class="alert alert-danger">
@@ -154,6 +157,25 @@ table#table1 {
             </table>
         </div>
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="payModalSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="p-4 text-center">
+                        <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                        <h5 class="mt-3">Banner Purchased Successfully</h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 </section>

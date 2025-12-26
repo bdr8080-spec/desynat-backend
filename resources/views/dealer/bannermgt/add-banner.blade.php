@@ -151,6 +151,24 @@
     </form>
 
 </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="RequestBanner" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-4 text-center">
+                    <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                    <h5 class="mt-3">Request Send Successfully</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <script>
 document.getElementById('banner_image_upload').addEventListener('change', function(event) {
     const file = event.target.files[0];
@@ -383,7 +401,9 @@ $(document).on('submit', 'form#addBanner', function(event) {
             }, 2000);
 
             if (response.status === 'success') {
-                toastr.success(response.message);
+                // toastr.success(response.message);
+
+                $('#RequestBanner').modal('show');
 
                 $('.submit').attr('disabled', true);
                 window.setTimeout(function() {
@@ -441,6 +461,60 @@ $(document).on('submit', 'form#addBanner', function(event) {
     });
 
     return false;
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+
+    // Get today's date in YYYY-MM-DD
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set minimum date for both inputs
+    fromDate.min = today;
+    toDate.min = today;
+
+    // Start Date Change
+    fromDate.addEventListener('change', function() {
+        const startDate = this.value;
+
+        if (startDate < today) {
+            this.value = '';
+            document.getElementById('error-start_date').innerText =
+                'Start date cannot be earlier than today';
+            return;
+        } else {
+            document.getElementById('error-start_date').innerText = '';
+        }
+
+        // Set min end date = start date
+        toDate.min = startDate;
+
+        // Reset invalid end date
+        if (toDate.value && toDate.value < startDate) {
+            toDate.value = '';
+            document.getElementById('error-end_date').innerText =
+                'End date cannot be earlier than start date';
+        } else {
+            document.getElementById('error-end_date').innerText = '';
+        }
+    });
+
+    // End Date Change
+    toDate.addEventListener('change', function() {
+        if (fromDate.value && this.value < fromDate.value) {
+            this.value = '';
+            document.getElementById('error-end_date').innerText =
+                'End date cannot be earlier than start date';
+        } else {
+            document.getElementById('error-end_date').innerText = '';
+        }
+    });
+
 });
 </script>
 
