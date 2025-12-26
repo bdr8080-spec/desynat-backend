@@ -188,7 +188,7 @@ if ($request->banner_filter) {
         case '5':
             // Rejected
             $checkBanner = $checkBanner
-                ->where('payment_status', '3')
+                ->whereIn('payment_status', ['2','3'])
                 ->orWhere('Admin_verify','2');
             break;
     }
