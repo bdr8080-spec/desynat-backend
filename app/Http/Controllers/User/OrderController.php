@@ -39,12 +39,12 @@ class OrderController extends Controller
 
 
         $data = (object)[
-            'order_id' => $request->id,
+            'order_id' => $id,
              'orderdetails_id' => $request->orderdetails_id
         ];
 
         $orderData = $this->UserOrderService->singleOrderDetailsNew($data)['data'];
-       // dd($orderData);
+       //dd($orderData);
 
         return view('user.orders.order-details',compact('orderData'));
 
@@ -52,33 +52,17 @@ class OrderController extends Controller
 
 
 
-    public function create_order(Request $request)
+    public function cancel_order(Request $request)
     {
         //dd($request->all());
 
         try {
-              $user=  $request->user();
-            $userId = $user->id; 
+              $request_data = (object)[
+                'order_id' => $id,
+                'orderdetails_id' => $request->orderdetails_id
+              ];
 
-            $request_data = (object)[
-                'user_id'           => $userId,
-                'total_mrp'         => $request->cartSummary['totalMRP'] ?? null,
-                'discount_mrp'      => $request->cartSummary['discountOnMRP'] ?? null,
-                'promocode_status' => $request->promo ? 'yes' : 'no',
-                'promocode_id'      => $request->promo['promoId'] ?? null,
-                'promocode_value'   => $request->promo['discountValue'] ?? null,
-                'shipping_fees'     => $request->cartSummary['shippingFee'] ?? 0,
-                'tax'               => $request->cartSummary['tax'] ?? 0,
-                'total_amount'      => $request->cartSummary['totalAmount'] ?? null,
-                'giftcard_id'       => $request->giftCard['giftCardId'] ?? null,
-                'giftcard_amount'   => $request->giftCard['giftCardAmount'] ?? 0,
-                'Payment_method'    => $request->Payment_method,
-                'delivery_address'    => $request->deliveryAddressId,
-            ];
-
-           // dd($request_data);
-
-            $data = $this->UserOrderService->User_Create_Order($request_data);
+            $data = $this->UserOrderService->cancelledSingleProduct($request_data);
             //dd($data);
             
             if ($data['status'] === 'success') {
@@ -98,7 +82,7 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed create order',
+                'message' => 'Failed cancel order',
                 'error' => $e->getMessage()
             ], 500);
         }

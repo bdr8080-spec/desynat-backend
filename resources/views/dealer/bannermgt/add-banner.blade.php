@@ -105,21 +105,20 @@
 
 
                 </div>
-                <div class=" col-lg-12">
-                    <div class="product-pnls mt-3">
-                        <div class="upload-image" style="height:170px;width:270px;">
+                <div class="col-lg-12">
+                    <div class="product-pnls2 mt-3">
+                        <div class="upload-image" style="height:100%;">
                             <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
 
                                 <!-- Placeholder -->
-                                <img id="bannerPlaceholderImg" src="assets/img/upload-icon.svg"
+                                <img id="bannerPlaceholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
 
                                 <!-- Uploaded Image -->
-                                <img id="bannerUploadedImg" src=""
-                                    style="width:100px;display:none;object-fit:cover;border-radius:6px;height:110px;">
+                                <img id="bannerUploadedImg" src="" style="width:100px;display:none;object-fit:cover;border-radius:6px;height:110px; margin:auto;">
 
                                 <div class="py-2" style="color:#875C3A">
-                                    Upload Banner Image
+                                    Upload Banner
                                 </div>
 
                                 <!-- SINGLE IMAGE -->

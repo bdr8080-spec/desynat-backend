@@ -34,7 +34,7 @@ class DeliveryBoyOrderController extends Controller
         ];
 
         try {
-            $data = $this->DeliveryBoyOrderService->AllOrders($data);
+            $data = $this->DeliveryBoyOrderService->AllOrdersNew($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -57,7 +57,7 @@ class DeliveryBoyOrderController extends Controller
         ];
 
         try {
-            $data = $this->DeliveryBoyOrderService->NewOrders($data);
+            $data = $this->DeliveryBoyOrderService->NewOrdersNew($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -80,7 +80,7 @@ class DeliveryBoyOrderController extends Controller
         ];
 
         try {
-            $data = $this->DeliveryBoyOrderService->OngoingOrders($data);
+            $data = $this->DeliveryBoyOrderService->OngoingOrdersNew($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -103,7 +103,7 @@ class DeliveryBoyOrderController extends Controller
         ];
 
         try {
-            $data = $this->DeliveryBoyOrderService->CompletedOrders($data);
+            $data = $this->DeliveryBoyOrderService->CompletedOrdersNew($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -120,7 +120,7 @@ class DeliveryBoyOrderController extends Controller
     {   
         $validate = Validator::make($request->all(), [
 
-            'id' => 'required|exists:orders,id',
+            'id' => 'required|exists:orderdetails,id',
         ]);
 
 
@@ -133,7 +133,7 @@ class DeliveryBoyOrderController extends Controller
         ];
 
         try {
-            $data = $this->DeliveryBoyOrderService->OrderDetails($data);
+            $data = $this->DeliveryBoyOrderService->OrderDetailsNew($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -150,7 +150,7 @@ class DeliveryBoyOrderController extends Controller
     {   
         $validate = Validator::make($request->all(), [
             
-            'id' => 'required|exists:orders,id',
+            'id' => 'required|exists:orderdetails,id',
             'delivery_status' => 'required|in:7,8,3',
             'reason' => 'required_if:delivery_status,8|string',
         ]);
@@ -167,7 +167,7 @@ class DeliveryBoyOrderController extends Controller
         ];
 
         try {
-            $data = $this->DeliveryBoyOrderService->UpdateDeliveryStatus($data);
+            $data = $this->DeliveryBoyOrderService->UpdateDeliveryStatusNew($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -184,7 +184,7 @@ class DeliveryBoyOrderController extends Controller
     {   
         $validate = Validator::make($request->all(), [
             
-            'id' => 'required|exists:orders,id',
+            'id' => 'required|exists:orderdetails,id',
         ]);
 
 
@@ -197,7 +197,7 @@ class DeliveryBoyOrderController extends Controller
         ];
 
         try {
-            $data = $this->DeliveryBoyOrderService->PickOrder($data);
+            $data = $this->DeliveryBoyOrderService->PickOrderNew($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);

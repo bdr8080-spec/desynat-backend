@@ -92,13 +92,21 @@ class DeliveryBoyOrderService
 
             $today = Carbon::today()->toDateString();
 
-            $orders = Order::with(
-                'delivery_details',
-                'order_details.product_details.seller_details.store_info'
+            $orders = orderdetail::with(
+                'order.delivery_details',
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'variation_details.color',
+                'variation_details.size',
+                'product_details.seller_details.store_info'
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
-            ->when(!empty($request->search), function ($q) use ($request) {
-                $q->where('order_id', 'like', '%' . $request->search . '%');
+            ->when($request->search, function ($q) use ($request) {
+                $q->whereHas('order_details', function ($query) use ($request) {
+                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                });
             })
 
             ->whereNotNull('assign_date')
@@ -232,6 +240,7 @@ class DeliveryBoyOrderService
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->where('delivery_status', '3')
+            ->where('is_picked', 1)
             ->when($request->search, function ($q) use ($request) {
                 $q->where('order_id', 'like', '%' . $request->search . '%');
             })
@@ -347,50 +356,6 @@ class DeliveryBoyOrderService
         }
     }
 
-    // public function UpdateDeliveryStatus($request)
-    // {
-    //     try {
-    //         $data = Order::find($request->id);
-
-    //         if (!$data) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'Order not found',
-    //                 'data' => []
-    //             ];
-    //         }
-
-    //         $data->delivery_status = $request->delivery_status;
-    //         $data->not_delivered_reason = $request->reason;
-    //         $data->save();
-
-    //         switch ($data->delivery_status) {
-    //             case '3':
-    //                 $message = 'Delivery Status Updated to Delivered';
-    //                 break;
-    //             case '7':
-    //                 $message = 'Delivery Status Updated to Picked';
-    //                 break;
-    //             case '8':
-    //                 $message = 'Delivery Status Updated to Not Delivered';
-    //                 break;
-    //             default:
-    //                 $message = 'Delivery Status Updated Successfully';
-    //         }
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => $message,
-    //             'data' => $data
-    //         ];
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to update status: ' . $e->getMessage(),
-    //             'data' => []
-    //         ];
-    //     }
-    // }
 
     public function UpdateDeliveryStatus($request)
     {
@@ -511,6 +476,445 @@ class DeliveryBoyOrderService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch brands: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function AllOrdersNew($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $orders = orderdetail::with(
+                'order.delivery_details',
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'variation_details.color',
+                'variation_details.size',
+                'product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+             ->when($request->search, function ($q) use ($request) {
+                $q->whereHas('order_details', function ($query) use ($request) {
+                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            })
+
+            ->when(!empty($request->filter), function ($q) use ($request) {
+                $q->where('delivery_status', $request->filter);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
+
+            // Calculate distance for each order
+            $orders->getCollection()->transform(function ($order) {
+
+            $userLat  = $order->order->delivery_details->latitude ?? null;
+            //dd($userLat);
+            $userLong = $order->order->delivery_details->longitude ?? null;
+
+            $order->distance = null;
+
+            $storeInfo = $order->product_details
+                ?->seller_details
+                ?->store_info;
+
+            if ($userLat && $userLong && $storeInfo) {
+                $order->distance = round(
+                    calculateDistance(
+                        $userLat,
+                        $userLong,
+                        $storeInfo->let,
+                        $storeInfo->long
+                    )
+                );
+            }
+
+            return $order;
+        });
+
+            return [
+                'status'  => 'success',
+                'message' => 'All Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch all orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function NewOrdersNew($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $today = Carbon::today()->toDateString();
+
+            $orders = orderdetail::with(
+                'order.delivery_details',
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'variation_details.color',
+                'variation_details.size',
+                'product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+            ->when($request->search, function ($q) use ($request) {
+                $q->whereHas('order_details', function ($query) use ($request) {
+                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            })
+
+            ->when(!empty($request->filter), function ($q) use ($request) {
+                $q->where('delivery_status', $request->filter);
+            })
+
+            ->whereNotNull('assign_date')
+            // ->whereDate('assign_date', $today)
+
+            // ->whereNotIn('delivery_status', ['4', '6', '7', '8'])
+            ->whereIn('delivery_status', ['1','2'])
+            ->where('is_picked', '0')
+
+            ->orderBy('assign_date', 'desc')
+            ->paginate($limit);
+
+            $orders->getCollection()->transform(function ($order) {
+
+            $userLat  = $order->order->delivery_details->latitude ?? null;
+            //dd($userLat);
+            $userLong = $order->order->delivery_details->longitude ?? null;
+
+            $order->distance = null;
+
+            $storeInfo = $order->product_details
+                ?->seller_details
+                ?->store_info;
+
+            if ($userLat && $userLong && $storeInfo) {
+                $order->distance = round(
+                    calculateDistance(
+                        $userLat,
+                        $userLong,
+                        $storeInfo->let,
+                        $storeInfo->long
+                    )
+                );
+            }
+
+            return $order;
+        });
+
+            return [
+                'status'  => 'success',
+                'message' => 'New Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch new orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function OngoingOrdersNew($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $orders = orderdetail::with(
+                'order.delivery_details',
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'variation_details.color',
+                'variation_details.size',
+                'product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+            ->where('delivery_status', '2')
+            ->where('is_picked', 1)
+            ->when($request->search, function ($q) use ($request) {
+                $q->whereHas('order_details', function ($query) use ($request) {
+                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            })
+
+            ->when(!empty($request->filter), function ($q) use ($request) {
+                $q->where('delivery_status', $request->filter);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
+
+            // Calculate distance for each order
+             $orders->getCollection()->transform(function ($order) {
+
+            $userLat  = $order->order->delivery_details->latitude ?? null;
+            //dd($userLat);
+            $userLong = $order->order->delivery_details->longitude ?? null;
+
+            $order->distance = null;
+
+            $storeInfo = $order->product_details
+                ?->seller_details
+                ?->store_info;
+
+            if ($userLat && $userLong && $storeInfo) {
+                $order->distance = round(
+                    calculateDistance(
+                        $userLat,
+                        $userLong,
+                        $storeInfo->let,
+                        $storeInfo->long
+                    )
+                );
+            }
+
+            return $order;
+        });
+
+            return [
+                'status'  => 'success',
+                'message' => 'Ongoing Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch ongoing orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function CompletedOrdersNew($request)
+    {
+        try {
+            $limit = isset($request->limit) ? (int) $request->limit : 10;
+
+            $orders = orderdetail::with(
+                'order.delivery_details',
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'variation_details.color',
+                'variation_details.size',
+                'product_details.seller_details.store_info'
+            )
+            ->where('delivery_boy_id', $request->delivery_boy_id)
+            ->where('delivery_status', '3')
+            ->where('is_picked', 1)
+            ->when($request->search, function ($q) use ($request) {
+                $q->whereHas('order_details', function ($query) use ($request) {
+                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            })
+
+            ->when(!empty($request->filter), function ($q) use ($request) {
+                $q->where('delivery_status', $request->filter);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate($limit);
+
+            // Calculate distance for each order
+            $orders->getCollection()->transform(function ($order) {
+
+            $userLat  = $order->order->delivery_details->latitude ?? null;
+            //dd($userLat);
+            $userLong = $order->order->delivery_details->longitude ?? null;
+
+            $order->distance = null;
+
+            $storeInfo = $order->product_details
+                ?->seller_details
+                ?->store_info;
+
+            if ($userLat && $userLong && $storeInfo) {
+                $order->distance = round(
+                    calculateDistance(
+                        $userLat,
+                        $userLong,
+                        $storeInfo->let,
+                        $storeInfo->long
+                    )
+                );
+            }
+
+            return $order;
+        });
+
+            return [
+                'status'  => 'success',
+                'message' => 'Completed Orders fetched Successfully',
+                'data'    => $orders
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch completed orders: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function OrderDetailsNew($request)
+    {
+        try {
+
+            $order = orderdetail::with(
+                'order.delivery_details',
+                'order.giftCard_details',
+                'order.promocode_details',
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'variation_details.color',
+                'variation_details.size',
+                'UserRatingReviewProvide'
+            )
+            ->where('id', $request->id)
+            ->first();
+
+            if ($order) {
+                // User delivery location
+                 $userLat  = $order->order->delivery_details->latitude ?? null;
+                //dd($userLat);
+                $userLong = $order->order->delivery_details->longitude ?? null;
+
+                $order->distance = null;
+
+                $storeInfo = $order->product_details
+                    ?->seller_details
+                    ?->store_info;
+
+                if ($userLat && $userLong && $storeInfo) {
+                    $order->distance = round(
+                        calculateDistance(
+                            (float)$userLat,
+                            (float)$userLong,
+                            (float)$storeInfo->let,
+                            (float)$storeInfo->long
+                        )
+                    );
+                }
+            }
+
+            return [
+                'status'  => 'success',
+                'message' => 'Order Details fetched Successfully',
+                'data'    => $order
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch order details: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+
+    public function UpdateDeliveryStatusNew($request)
+    {
+        DB::beginTransaction();
+
+        try {
+            $order = orderdetail::find($request->id);
+
+            if (!$order) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            $status = (string) $request->delivery_status;
+
+            // Update order
+            $order->delivery_status = $status;
+            $order->not_delivered_reason = $request->reason ?? null;
+            $order->save();
+
+            DB::commit();
+
+            switch ($status) {
+                case '3':
+                    $message = 'Delivery Status Updated to Delivered';
+                    break;
+                case '7':
+                    $message = 'Delivery Status Updated to Picked';
+                    break;
+                case '8':
+                    $message = 'Delivery Status Updated to Not Delivered';
+                    break;
+                default:
+                    $message = 'Delivery Status Updated Successfully';
+            }
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $order
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function PickOrderNew($request)
+    {
+        try {
+            $data = orderdetail::find($request->id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            $data->delivery_status = '7';
+            $data->is_picked = '1';
+            $data->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Order Picked Successfully',
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update status: ' . $e->getMessage(),
                 'data' => []
             ];
         }
