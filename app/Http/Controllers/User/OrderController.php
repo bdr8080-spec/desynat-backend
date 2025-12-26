@@ -29,7 +29,7 @@ class OrderController extends Controller
         ];
 
         $orderData = $this->UserOrderService->AllOrderDetailsNew($data)['data'];
-        //dump($orderData);
+        //dd($orderData);
 
         return view('user.orders.my-order',compact('orderData'));
 
@@ -69,6 +69,7 @@ class OrderController extends Controller
         try {
               $request_data = (object)[
                 'order_id' => $request->order_id,
+                'orderdetails_id' => $request->orderdetails_id,
                 'cancel_reason' => $request->cancel_reason,
               ];
 
@@ -105,7 +106,9 @@ class OrderController extends Controller
         try {
               $request_data = (object)[
                 'order_id' => $request->order_id,
+                'orderdetails_id' => $request->orderdetails_id,
                 'exchange_reason' => $request->exchange_reason,
+                'new_size' => $request->new_size,
               ];
 
             $data = $this->UserOrderService->exchnageProductAfterdelivery($request_data);
@@ -133,6 +136,45 @@ class OrderController extends Controller
             ], 500);
         }
     }
+
+    public function getAvailableSize(Request $request)
+    {
+        //dd($request->all());
+
+        try {
+              $request_data = (object)[
+                'product_id' => $request->product_id,
+                'size_id' => $request->size_id,
+                'color_id' => $request->color_id,
+              ];
+
+            $data = $this->UserOrderService->getSizesExceptProvided($request_data);
+            //dd($data);
+            
+            if ($data['status'] === 'success') {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $data['message'],
+                    'data' => $data
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $data['message'],
+                    'data' => (object)[]
+                ], 422); 
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed cancel order',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
 
 
 

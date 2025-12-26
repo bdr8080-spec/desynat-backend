@@ -2,6 +2,9 @@
 namespace App\Services;
 use App\Helpers\ApiResponse;
 use App\Models\User;
+use App\Models\size;
+use App\Models\color;
+use App\Models\ProductVariant;
 
 
 use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
@@ -1009,7 +1012,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->return_days);
 
-    $productOrderDate = $checkOrder->product_details->created_at;
+    $productOrderDate = $checkOrder->order_details->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1081,7 +1084,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->exchangable_days);
 
-    $productOrderDate = $checkOrder->product_details->created_at;
+    $productOrderDate = $checkOrder->order_details->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1155,7 +1158,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->return_days);
 
-    $productOrderDate = $checkOrder->product_details->created_at;
+    $productOrderDate = $checkOrder->order_details->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1191,7 +1194,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->exchangable_days);
 
-    $productOrderDate = $checkOrder->product_details->created_at;
+    $productOrderDate = $checkOrder->order_details->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1310,6 +1313,59 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     
     }
+
+    public function getSizesExceptProvided($request)
+    {
+        try {
+           // dd($request);
+            $productId = $request->product_id;
+            $sizeId    = $request->size_id;
+            $colorId   = $request->color_id; 
+
+            if (!$productId || !$sizeId || !$colorId) {
+                return [
+                    'status'  => 'error',
+                    'message' => 'Product ID, Size ID, and Color ID are required',
+                    'data'    => []
+                ];
+            }
+
+            $sizeIds = ProductVariant::where('product_id', $productId)
+                ->where('color_id', $colorId)
+                ->where('size_id', '!=', $sizeId)
+                ->pluck('size_id')
+                ->unique()
+                ->toArray();
+
+            $sizes = Size::whereIn('id', $sizeIds)
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get();
+
+            if ($sizes->isEmpty()) {
+                return [
+                    'status'  => 'success',
+                    'message' => 'No sizes found',
+                    'data'    => (object)[]
+                ];
+            }
+
+            return [
+                'status'  => 'success',
+                'message' => 'Sizes fetched successfully',
+                'data'    => $sizes
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+
 
 
 

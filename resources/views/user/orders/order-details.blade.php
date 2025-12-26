@@ -23,18 +23,20 @@
                             </div>
                         </div>
 
-                        @php
+                        <!-- @php
                             $status = $orderData->delivery_status ?? 0;
-                        @endphp
+                        @endphp -->
 
-                        @if($status == 2)
+                        @if(in_array($orderData->delivery_status, ['1', '2']) && $orderData->payment_status !== '2')
                             <div class="btn-outline1 btn-ongoing">Ongoing</div>
-                        @elseif($orderData->payment_status = '4')
+                        @elseif($orderData->payment_status == '2')
                             <div class="btn-outline1 btn-outline-red">Cancelled</div>
-                        @elseif($status == 3)
+                        @elseif($orderData->delivery_status == '3' && $orderData->return_type == '0')
                             <div class="btn-outline1 btn-outline-de">Delivered</div>
-                        @elseif($status == 5)
+                        @elseif($orderData->delivery_status == '3' && $orderData->return_type == '2')
                             <div class="btn-outline1 btn-ongoing">Return Request</div>
+                        @elseif($orderData->delivery_status == '3' && $orderData->return_type == '1')
+                            <div class="btn-outline1 btn-ongoing">Exchange Request</div>
                         @endif
                     </div>
 
@@ -100,7 +102,8 @@
                                                 class="btn btn-outline-red w-100 cancelBtn"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#cancelModal"
-                                                data-order-id="{{ $orderData->order_id }}">
+                                                data-order-id="{{ $orderData->order_id }}"
+                                                data-order-details-id="{{ $orderData->id }}">
                                                 Cancel Order
                                             </button>
                                         </div>
@@ -131,13 +134,17 @@
                                 </div>
                             </div>
 
-                            @if($orderData->delivery_status == '3')
+                            @if($orderData->delivery_status !== '3' && !in_array($orderData->return_type, ['1', '2']))
                             <div class="d-flex gap-3">
                                 <button
                                     class="btn btn-outline-red exchangeBtn"
                                     data-bs-toggle="modal"
                                     data-bs-target="#exchangeModal"
                                     data-order-id="{{ $orderData->order_id }}"
+                                    data-order-details-id="{{ $orderData->id }}"
+                                    data-product-id="{{ $orderData->product_id }}"
+                                    data-size-id="{{ $orderData->variation_details->size->id }}"
+                                    data-color-id="{{ $orderData->variation_details->color->id }}"
                                     style="width:130px;">
                                     Exchange
                                 </button>
@@ -663,6 +670,25 @@
                         Please provide the reason for exchange
                     </small>
                 </div>
+                <h6>Select Available Size</h6>
+                    <!-- <div class="reason-list">
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="filter" value="1" checked>
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">XS</div>
+                            </div>
+                        </label>
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="filter" value="1">
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">M</div>
+                            </div>
+                        </label>
+                    </div> -->
+                    <div class="reason-list" id="exchangeSizeWrapper">
+                    </div>
 
                 <div class="mt-4">
                     <button type="button" class="customBtn white-btn" id="submitExchange">
@@ -820,11 +846,14 @@ $(function () {
 document.addEventListener('DOMContentLoaded', function () {
 
     let orderId = null;
+    let orderDetailsId = null;
 
-    // Capture order id
     document.querySelectorAll('.cancelBtn').forEach(btn => {
         btn.addEventListener('click', function () {
             orderId = this.dataset.orderId;
+           // console.log(orderId);
+            orderDetailsId = this.dataset.orderDetailsId;
+           // console.log(orderDetailsId);
         });
     });
 
@@ -833,13 +862,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorMsg     = document.getElementById('otherReasonError');
     const submitBtn    = document.getElementById('submitCancel');
 
-    // SAFETY CHECK (optional but recommended)
     if (!otherWrapper || !otherInput || !submitBtn) {
         console.error('Cancel modal elements not found');
         return;
     }
 
-    // Radio change handler
     document.querySelectorAll('input[name="cancel_reason"]').forEach(radio => {
         radio.addEventListener('change', function () {
             if (this.value === 'other') {
@@ -885,6 +912,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({
                 order_id: orderId,
+                orderdetails_id:orderDetailsId, 
                 cancel_reason: reason
             })
         })
@@ -905,24 +933,39 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <!-- exchange -->
- <script>
+
+
+<script>
 document.addEventListener('DOMContentLoaded', function () {
 
     let exchangeOrderId = null;
-
-    // Capture order id
-    document.querySelectorAll('.exchangeBtn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            exchangeOrderId = this.dataset.orderId;
-        });
-    });
+    let orderDetailsId = null;
+    let productId = null;
+    let currentSizeId = null;
+    let currentColorId = null; // added
 
     const wrapper = document.getElementById('exchangeOtherWrapper');
     const textarea = document.getElementById('exchangeOtherText');
     const error = document.getElementById('exchangeOtherError');
     const submitBtn = document.getElementById('submitExchange');
+    const sizeWrapper = document.getElementById('exchangeSizeWrapper');
 
-    // Toggle textarea
+    // Capture order, product, size, color id
+    document.querySelectorAll('.exchangeBtn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            exchangeOrderId = this.dataset.orderId;
+            productId = this.dataset.productId;
+            currentSizeId = this.dataset.sizeId;
+            currentColorId = this.dataset.colorId;
+            orderDetailsId = this.dataset.orderDetailsId;
+            //console.log(currentColorId);
+
+            // Fetch available sizes
+            fetchAvailableSizes(productId, currentSizeId, currentColorId);
+        });
+    });
+
+    // Toggle textarea for "Other" reason
     document.querySelectorAll('input[name="exchange_reason"]').forEach(radio => {
         radio.addEventListener('change', function () {
             if (this.value === 'other') {
@@ -940,19 +983,27 @@ document.addEventListener('DOMContentLoaded', function () {
         error.classList.add('d-none');
     });
 
-    // Submit
+    // Submit exchange request
     submitBtn.addEventListener('click', function () {
 
-        const selected = document.querySelector('input[name="exchange_reason"]:checked').value;
-        let reason = selected;
+        const selectedReason = document.querySelector('input[name="exchange_reason"]:checked').value;
+        let reason = selectedReason;
 
-        if (selected === 'other') {
+        if (selectedReason === 'other') {
             if (!textarea.value.trim()) {
                 error.classList.remove('d-none');
                 return;
             }
             reason = textarea.value.trim();
         }
+
+        const selectedSize = document.querySelector('input[name="exchange_size"]:checked');
+        if (!selectedSize) {
+            toastr.error('Please select a size');
+            return;
+        }
+
+        const sizeId = selectedSize.value;
 
         fetch("{{ route('user.exchange_order') }}", {
             method: "POST",
@@ -962,24 +1013,80 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({
                 order_id: exchangeOrderId,
-                exchange_reason: reason
+                exchange_reason: reason,
+                orderdetails_id:orderDetailsId,
+                new_size: sizeId 
             })
         })
         .then(res => res.json())
         .then(response => {
-            toastr.success(response.message);
-
-            setTimeout(() => {
-                window.location.href = "{{ route('user.myOrders') }}";
-            }, 1500);
+            if(response.status === 'success') {
+                toastr.success(response.message);
+                setTimeout(() => {
+                    window.location.href = "{{ route('user.myOrders') }}";
+                }, 1500);
+            } else {
+                toastr.error(response.message || 'Something went wrong');
+            }
         })
         .catch(() => {
             toastr.error('Something went wrong');
         });
     });
 
+    // Fetch available sizes function
+    function fetchAvailableSizes(productId, sizeId, colorId) {
+      // Show loading text
+        sizeWrapper.innerHTML = '<p>Loading...</p>';
+
+        fetch("{{ route('user.getAvailableSize') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                size_id: sizeId,
+                color_id: colorId
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            console.log(response);
+
+            // Extract the actual sizes array
+            const sizes = response.data.data || [];
+
+            if (response.status === 'success' && sizes.length > 0) {
+                let html = '';
+                sizes.forEach((size, index) => {
+                    html += `
+                        <label class="custom-radio mb-3">
+                            <input type="radio" name="exchange_size" value="${size.id}" ${index === 0 ? 'checked' : ''}>
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">${size.name}</div>
+                            </div>
+                        </label>
+                    `;
+                });
+                sizeWrapper.innerHTML = html;
+            } else {
+                sizeWrapper.innerHTML = '<p>No available sizes</p>';
+            }
+        })
+        .catch(err => {
+            console.error("Error fetching sizes:", err);
+            sizeWrapper.innerHTML = '<p>Failed to fetch sizes</p>';
+        });
+    }
+
+
 });
 </script>
+
+
 
 
 

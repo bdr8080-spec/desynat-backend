@@ -158,6 +158,7 @@
 
                                 @php
                                     $order   = $orderDetail->order;
+                                    $orderdetail   = $orderDetail;
                                     $product = $orderDetail->product_details;
                                     $variant = $orderDetail->variation_details;
                                     $color   = $variant->color ?? null;
@@ -176,23 +177,27 @@
                                         $statusText = match (true) {
 
                                         // 2 → Ongoing
-                                        $order->payment_status == '1' && $order->delivery_status == '2'
+                                        $orderdetail->delivery_status == '2' && $orderdetail->return_type == '0' && $orderdetail->payment_status !== '2'
                                             => 'Ongoing',
 
                                         // 3 → Delivered
-                                        $order->payment_status == '1' && $order->delivery_status == '3'
+                                        $orderdetail->payment_status == '1' && $orderdetail->delivery_status == '3'
                                             => 'Delivered',
 
                                         // 4 → Cancelled
-                                        $order->payment_status == '2'
+                                        $orderdetail->payment_status == '2'
                                             => 'Cancelled',
 
                                         // 5 → Returned / Failed
-                                        $order->payment_status == '3' && $order->delivery_status == '4'
-                                            => 'Returned',
+                                         $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
+                                            => 'Exchange Request',
+
+                                        // 5 → Exchange / Failed
+                                         $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
+                                            => 'Return Request',
 
                                         // Default
-                                        default => 'On Going',
+                                        default => 'On Goings',
                                     };
 
                                     [$statusColor, $bgColor] = match ($statusText) {
@@ -267,10 +272,23 @@
 
                                             </div>
                                         </div>
-
+                                        @if(in_array($orderdetail->delivery_status, ['1', '2'])  && $orderdetail->payment_status !== '2')
                                         <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                            Expected Delivery Date : 12 SEP 25
+                                            Expected Delivery Date : {{ $orderdetail->updated_at->copy()->addDays(5)->format('d M Y') }}
                                         </div>
+                                        @elseif($orderdetail->payment_status == '2')
+                                        <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
+                                            Cancelled Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        </div>
+                                        @elseif($orderdetail->delivery_status == '3' && $orderdetail->return_type == '2')
+                                        <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
+                                            Exchange Request Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        </div>
+                                        @elseif($orderdetail->delivery_status == '3' && $orderdetail->return_type == '1')
+                                        <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
+                                            Return Request Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        </div>
+                                        @endif
                                     </a>
                                 </div>
 
