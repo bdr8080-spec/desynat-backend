@@ -465,6 +465,60 @@ $(document).on('submit', 'form#addBanner', function(event) {
 </script>
 
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const fromDate = document.getElementById('fromDate');
+    const toDate = document.getElementById('toDate');
+
+    // Get today's date in YYYY-MM-DD
+    const today = new Date().toISOString().split('T')[0];
+
+    // Set minimum date for both inputs
+    fromDate.min = today;
+    toDate.min = today;
+
+    // Start Date Change
+    fromDate.addEventListener('change', function() {
+        const startDate = this.value;
+
+        if (startDate < today) {
+            this.value = '';
+            document.getElementById('error-start_date').innerText =
+                'Start date cannot be earlier than today';
+            return;
+        } else {
+            document.getElementById('error-start_date').innerText = '';
+        }
+
+        // Set min end date = start date
+        toDate.min = startDate;
+
+        // Reset invalid end date
+        if (toDate.value && toDate.value < startDate) {
+            toDate.value = '';
+            document.getElementById('error-end_date').innerText =
+                'End date cannot be earlier than start date';
+        } else {
+            document.getElementById('error-end_date').innerText = '';
+        }
+    });
+
+    // End Date Change
+    toDate.addEventListener('change', function() {
+        if (fromDate.value && this.value < fromDate.value) {
+            this.value = '';
+            document.getElementById('error-end_date').innerText =
+                'End date cannot be earlier than start date';
+        } else {
+            document.getElementById('error-end_date').innerText = '';
+        }
+    });
+
+});
+</script>
+
+
 
 @include('dealer.layout.custom_code');
 @include('dealer.layout.footer');
