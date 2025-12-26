@@ -409,6 +409,18 @@ table.dataTable {
     right: 0;
     bottom: -5px;
 }
+.showb {
+    height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.showb img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
 
 @media (min-width: 1140px) and (max-width: 1440px) {
     .dash-circle {

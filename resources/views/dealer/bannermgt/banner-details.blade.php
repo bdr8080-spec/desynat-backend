@@ -22,8 +22,8 @@
 
     <div class="row mt-4">
         <div class="col-md-6">
-            <div class="banner-box mb-4">
-                <img src="{{$single_banner->upload_banner}}" width="150px">
+            <div class="banner-box showb mb-4">
+                <img src="{{$single_banner->upload_banner}}" alt="image">
             </div>
 
             <label class="banner-text">Banner position</label>
@@ -100,20 +100,24 @@
         @endif
 
         <div class="dashboard-button d-flex mt-5 gap-5">
-            <button type="button" class="btn total-outline w-100">Total Price
-                <strong>{{$single_banner->price}}KD</strong></button>
-
-            <form id="bannerBuyForm">
-                @csrf
-
-
-                @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
-                <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
-
-                @endif
-            </form>
+            <div class="row">
+                <div class="col-lg-6">
+                    <button type="button" class="btn total-outline w-100">Total Price
+                    <strong>{{$single_banner->price}}KD</strong></button>
+                </div>
+                <div class="col-lg-6">
+                        <form id="bannerBuyForm">
+                        @csrf
 
 
+                        @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
+                        <button type="submit" class="btn add-fillbtn w-100">Pay Now</button>
+
+                        @endif
+                    </form>
+                </div>
+            </div>
+           
         </div>
 
 </section>
