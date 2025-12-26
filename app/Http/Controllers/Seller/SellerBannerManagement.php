@@ -135,7 +135,7 @@ public function seller_banner_price(Request $request){
               'start_date.required'=>"Please select start date ",
               'end_date.required'=>"Please select End date",
               'category.required_if'=>"Please Select categrory",
-              'subcatgory.required_if'=>"Please select Subcategory"
+              'subcatgory.required_if'=>"Please select Subcategory",
               
             ]);
             

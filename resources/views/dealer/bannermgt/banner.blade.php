@@ -116,6 +116,9 @@ table#table1 {
                             Pending
                             @elseif($val->Admin_verify=='1')
                             Confirmed
+
+
+
                             @else
                             Rejected
                             @endif
