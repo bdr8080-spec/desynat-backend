@@ -142,14 +142,19 @@ if ($request->banner_filter) {
                 ->whereDate('end_date', '>=', now());
             break;
 
-        case '2':
+            case '2':
             // Confirmed
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '1')
-                ->whereIn('payment_status', ['0', '1'])
                 ->where(function ($q) {
-                    $q->whereDate('start_date', '>=', now())
-                      ->OrWhereDate('end_date', '<=', now());
+                    $q->where('payment_status', '0') // fully confirmed, ignore dates
+                    ->orWhere(function ($q2) {
+                        $q2->where('payment_status', '1')
+                            ->where(function ($q3) {
+                                $q3->whereDate('start_date', '<=', now())
+                                    ->WhereDate('end_date', '>=', now());
+                            });
+                    });
                 });
             break;
 
