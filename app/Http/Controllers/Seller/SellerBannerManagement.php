@@ -30,6 +30,7 @@ class SellerBannerManagement extends Controller
 
     $seller_details=Auth::guard('seller')->user()->id;
 
+
     $request_data=(object) [
     'seller_id'=>$seller_details,
     'search'=>$request->search??null,

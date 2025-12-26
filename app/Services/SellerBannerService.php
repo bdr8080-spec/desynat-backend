@@ -116,6 +116,7 @@ try{
 
 $checkBanner=sellerBanner::with('category_details','subcategory_details')->where('seller_id',$request->seller_id);
 
+
 if($request->search){
   $checkBanner=$checkBanner->where('order_id','Like','%'.$request->search.'%');
 }
