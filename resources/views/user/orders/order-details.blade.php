@@ -33,9 +33,9 @@
                             <div class="btn-outline1 btn-outline-red">Cancelled</div>
                         @elseif($orderData->delivery_status == '3' && $orderData->return_type == '0')
                             <div class="btn-outline1 btn-outline-de">Delivered</div>
-                        @elseif($orderData->delivery_status == '3' && $orderData->return_type == '2')
-                            <div class="btn-outline1 btn-ongoing">Return Request</div>
                         @elseif($orderData->delivery_status == '3' && $orderData->return_type == '1')
+                            <div class="btn-outline1 btn-ongoing">Return Request</div>
+                        @elseif($orderData->delivery_status == '3' && $orderData->return_type == '2')
                             <div class="btn-outline1 btn-ongoing">Exchange Request</div>
                         @endif
                     </div>
@@ -121,8 +121,10 @@
                         </div>
 
                         {{-- Rating Section --}}
+                        
                         <div class="rating-pnl mt-3">
-                            <div class="rate-p">
+                            @if($orderData->delivery_status == '3')
+                            <!-- <div class="rate-p">
                                 <h5 class="product-title">Rate this product</h5>
                                 <div class="order-ratings rating-widget">
                                     <div class="rating" data-bs-toggle="modal" data-bs-target="#ratingModal">
@@ -130,11 +132,30 @@
                                             <label><i class="fas fa-2x fa-star"></i></label>
                                         @endfor
                                     </div>
-                                    <input type="hidden" id="selectedRating" value="0">
+                                </div>
+                            </div> -->
+                            <div class="rate-p">
+                                <h5 class="product-title">Rate this product</h5>
+                                <div class="order-ratings rating-widget">
+                                    <div 
+                                        class="rating" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#ratingModal"
+                                        data-order-id="{{ $orderData->order_id }}"
+                                        data-order-details-id="{{ $orderData->id }}"
+                                        data-product-id="{{ $orderData->product_id }}"
+                                        data-store-id="{{ $orderData->product_details->store->id }}"
+                                    >
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <label><i class="fas fa-2x fa-star"></i></label>
+                                        @endfor
+                                    </div>
                                 </div>
                             </div>
 
-                            @if($orderData->delivery_status !== '3' && !in_array($orderData->return_type, ['1', '2']))
+                            @endif
+
+                            @if($orderData->delivery_status == '3' && !in_array($orderData->return_type, ['1', '2']) && $orderData->payment_status == '1')
                             <div class="d-flex gap-3">
                                 <button
                                     class="btn btn-outline-red exchangeBtn"
@@ -148,7 +169,15 @@
                                     style="width:130px;">
                                     Exchange
                                 </button>
-                                <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#returnModal" style="width:130px; background:#D53B36; color:#fff;">Return</button>
+                                <button
+                                    class="btn btn-outline-red returnBtn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#returnModal"
+                                    data-order-id="{{ $orderData->order_id }}"
+                                    data-order-details-id="{{ $orderData->id }}"
+                                    style="width:130px; background:#D53B36; color:#fff;">
+                                    Return
+                                </button>
                             </div>
                             @endif
                         </div>
@@ -290,7 +319,11 @@
                 <div class="orderstatus p-3 mb-4">
                     <div class="d-flex justify-content-between">
                         <div class="order-t">Order Status</div>
-                        <div class="order-14">Expected Delivery 21/02/25</div>
+                        @if($orderData->payment_status=='2' || $orderData->delivery_status=='4')
+                        <div class="order-14">Cancelled On {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y') }}</div>
+                        @else
+                        <div class="order-14">Expected Delivery {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(5)->format('d/m/Y') }}</div>
+                        @endif
                     </div>
                     <div class="order-view-lists mt-3">
                         <div class="or-box">
@@ -299,28 +332,55 @@
                             </div>
                             <div>Confirmed</div>
                         </div>
+                        @if($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2')
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Shipped</div>
+                        </div>
+                        @else
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
                             </div>
                             <div>Shipped</div>
                         </div>
+                        @endif
+                        @if($orderData->delivery_status=='2.2')
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>On the Way</div>
+                        </div>
+                        @else
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
                             </div>
                             <div>On the Way</div>
                         </div>
+                        @endif
+                        @if(($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' || $orderData->delivery_status=='3') && $orderData->return_type!=='0')
+                        <div class="or-box">
+                            <div class="fill-box" style="background:#fff;">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Delivered</div>
+                        </div>
+                        @else
                         <div class="or-box">
                             <div class="fill-box" style="background:#fff;">
                                 <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid">
                             </div>
                             <div>Delivered</div>
                         </div>
+                        @endif
                     </div>
                 </div>
 
-                <div class="orderstatus p-3 mb-4">
+                <!-- <div class="orderstatus p-3 mb-4">
                     <div class="d-flex justify-content-between">
                         <div class="order-t">Order Status</div>
                     </div>
@@ -340,7 +400,7 @@
                             <div style="color:#D72E04;">Delivered</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
                 <h6>Billing Details</h6>
@@ -501,7 +561,9 @@
 
 <!-- Return Modal -->
 
-<div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<!-- Return Modal -->
+<div class="modal fade" id="returnModal" tabindex="-1" aria-labelledby="returnModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -512,16 +574,18 @@
                 <div class="gift-panel-list">
                     <h6>Select Reason</h6>
 
-                    <div class="reason-list">
+                    <div class="reason-list" id="returnReasonList">
+                        @foreach ($returnReasons as $index => $reason)
                         <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1" checked>
+                            <input type="radio" name="return_reason" value="{{ $reason->reason_english }}" {{ $index === 0 ? 'checked' : '' }}>
                             <span class="radio-mark"></span>
                             <div class="label-content">
-                                <div class="title">Reason 1</div>
+                                <div class="title">{{ $reason->reason_english }}</div>
                             </div>
                         </label>
+                        @endforeach
                         <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1">
+                            <input type="radio" name="return_reason" value="other">
                             <span class="radio-mark"></span>
                             <div class="label-content">
                                 <div class="title">Other</div>
@@ -529,29 +593,30 @@
                         </label>
                     </div>
 
-                    <div class="form-group w-100 py-2 mb-3">
-                        <textarea rows="3" class="form-control pline-10" placeholder="Write here"></textarea>
+                    <div class="form-group w-100 py-2 mb-3 d-none" id="returnOtherWrapper">
+                        <textarea id="returnOtherText" rows="3" class="form-control pline-10" placeholder="Write here"></textarea>
+                        <small class="text-danger d-none" id="returnOtherError">Please provide the reason for return</small>
                     </div>
-                    
-                    <h6>Upload Image(Optional)</h6>
+
+                    <h6>Upload Image (Optional)</h6>
                     <div class="border-1 p-3">
                         <div class="text-center">
-                            <label for="upload" class="requestbox">
+                            <label for="returnImg" class="requestbox">
                                 <div class="image-upload-2 mb-1">
-                                    <img src="{{asset('user/assets/images/upload-icon.svg')}}" class="img-fluid" alt="images">
+                                    <img src="{{ asset('user/assets/images/upload-icon.svg') }}" class="img-fluid" alt="upload">
                                 </div>
-                                <div style="font-size:13px;color:#7a7979;">Upload Profile Images</div>
-                                <input type="file" id="requestimg" multiple accept="image/*">
+                                <div style="font-size:13px;color:#7a7979;">Click to upload images</div>
+                                <input type="file" id="returnImg" multiple accept="image/*" style="display:none;">
                             </label>
                         </div>
                     </div>
 
                     <div class="mt-2">
-                        <div id="previewRequest" class="preview-box1"></div>
+                        <div id="previewReturn" class="preview-box1 d-flex flex-wrap gap-2"></div>
                     </div>
 
                     <div class="mt-4">
-                        <button type="button" class="customBtn mb-3 white-btn">Submit</button>
+                        <button type="button" class="customBtn white-btn" id="submitReturn">Submit</button>
                     </div>
                 </div>
             </div>
@@ -559,66 +624,9 @@
     </div>
 </div>
 
+
 <!-- Exchange Modal -->
 
-<!-- <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title fs-5">Exchange Request</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="gift-panel-list">
-                    <h6>Select Reason</h6>
-
-                    <div class="reason-list">
-                        <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1" checked>
-                            <span class="radio-mark"></span>
-                            <div class="label-content">
-                                <div class="title">Reason 1</div>
-                            </div>
-                        </label>
-                        <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1">
-                            <span class="radio-mark"></span>
-                            <div class="label-content">
-                                <div class="title">Other</div>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="form-group w-100 py-2 mb-3">
-                        <textarea rows="3" class="form-control pline-10" placeholder="Write here"></textarea>
-                    </div>
-                    
-                    <h6>Select Available Size</h6>
-                    <div class="reason-list">
-                        <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1" checked>
-                            <span class="radio-mark"></span>
-                            <div class="label-content">
-                                <div class="title">XS</div>
-                            </div>
-                        </label>
-                        <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1">
-                            <span class="radio-mark"></span>
-                            <div class="label-content">
-                                <div class="title">M</div>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="mt-4">
-                        <button type="button" class="customBtn mb-3 white-btn">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 <div class="modal fade" id="exchangeModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -712,20 +720,29 @@
             </div>
             <div class="modal-body">
                 <div class="gift-panel-list">
+
+                    <!-- Product Rating -->
                     <div class="reason-list rating-widget ">
-                        <h6>Rate Nike T-Shirt</h6>
+                        <h6>Rate Product</h6>
                         <div class="rating py-2">
-                            <input id="rating-1" type="radio" name="raterating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-2" type="radio" name="raterating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-3" type="radio" name="raterating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-4" type="radio" name="raterating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-5" type="radio" name="raterating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="product-rating-1" type="radio" name="raterating" value="1" />
+                            <label for="product-rating-1"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="product-rating-2" type="radio" name="raterating" value="2" />
+                            <label for="product-rating-2"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="product-rating-3" type="radio" name="raterating" value="3"/>
+                            <label for="product-rating-3"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="product-rating-4" type="radio" name="raterating" value="4" />
+                            <label for="product-rating-4"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="product-rating-5" type="radio" name="raterating" value="5" checked/>
+                            <label for="product-rating-5"><i class="fas fa-2x fa-star"></i></label>
                         </div>
                     </div>
 
+                    <!-- Product Review Text & Image -->
                     <div class="form-group w-100 py-2 mb-3 position-relative">
                         <p>Write Review</p>
                         <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                        <small class="text-danger product-error" style="display:none;"></small>
                         <div class="paperhover">
                             <label><input type="file" id="images" multiple accept="image/*">
                             <i class="bi bi-paperclip"></i>
@@ -736,20 +753,28 @@
                         <div id="preview" class="preview-box1"></div>
                     </div>
 
+                    <!-- Store Rating -->
                     <div class="reason-list rating-widget mt-2">
                         <h6>Rate Store</h6>
                         <div class="rating py-2">
-                            <input id="rating-1" type="radio" name="raterating" value="1" checked /><label for="rating-1"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-2" type="radio" name="raterating" value="2" /><label for="rating-2"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-3" type="radio" name="raterating" value="3"/><label for="rating-3"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-4" type="radio" name="raterating" value="4" /><label for="rating-4"><i class="fas fa-2x fa-star"></i></label>
-                            <input id="rating-5" type="radio" name="raterating" value="5"/><label for="rating-5"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="store-rating-1" type="radio" name="storerating" value="1" />
+                            <label for="store-rating-1"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="store-rating-2" type="radio" name="storerating" value="2" />
+                            <label for="store-rating-2"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="store-rating-3" type="radio" name="storerating" value="3"/>
+                            <label for="store-rating-3"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="store-rating-4" type="radio" name="storerating" value="4" />
+                            <label for="store-rating-4"><i class="fas fa-2x fa-star"></i></label>
+                            <input id="store-rating-5" type="radio" name="storerating" value="5" checked/>
+                            <label for="store-rating-5"><i class="fas fa-2x fa-star"></i></label>
                         </div>
                     </div>
 
+                    <!-- Store Review Text & Image -->
                     <div class="form-group w-100 py-2 mb-3 position-relative">
                         <p>Write Review</p>
                         <textarea rows="1" class="form-control pline-10" placeholder="Write here"></textarea>
+                        <small class="text-danger store-error" style="display:none;"></small>
                         <div class="paperhover">
                             <label><input type="file" id="reviewpic" multiple accept="image/*">
                             <i class="bi bi-paperclip"></i>
@@ -760,9 +785,11 @@
                         <div id="preview1" class="preview-box1"></div>
                     </div>
 
+                    <!-- Submit Review Button -->
                     <div class="mt-4">
                         <button type="button" class="customBtn mb-3 white-btn">Submit Review</button>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -770,77 +797,13 @@
 </div>
 
 
+
+
+
+
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-$(function () {
-  $('#images').on('change', function () {
-    $('#preview').html('');
-    [...this.files].forEach(file => {
-      let reader = new FileReader();
-      reader.onload = e =>
-        $('#preview').append(
-          `<div class="reviewImg">
-             <img src="${e.target.result}">
-             <span>&times;</span>
-           </div>`
-        );
-      reader.readAsDataURL(file);
-    });
-  });
-
-  $('#preview').on('click', 'span', function () {
-    $(this).parent().remove();
-  });
-});
-
-
-$(function () {
-  $('#reviewpic').on('change', function () {
-    $('#preview1').html('');
-    [...this.files].forEach(file => {
-      let reader = new FileReader();
-      reader.onload = e =>
-        $('#preview1').append(
-          `<div class="reviewImg">
-             <img src="${e.target.result}">
-             <span>&times;</span>
-           </div>`
-        );
-      reader.readAsDataURL(file);
-    });
-  });
-
-  $('#preview1').on('click', 'span', function () {
-    $(this).parent().remove();
-  });
-});
-
-//Request image
-$(function () {
-  $('#requestimg').on('change', function () {
-    $('#previewRequest').html('');
-    [...this.files].forEach(file => {
-      let reader = new FileReader();
-      reader.onload = e =>
-        $('#previewRequest').append(
-          `<div class="reviewImg">
-             <img src="${e.target.result}">
-             <span>&times;</span>
-           </div>`
-        );
-      reader.readAsDataURL(file);
-    });
-  });
-
-  $('#previewRequest').on('click', 'span', function () {
-    $(this).parent().remove();
-  });
-});
-
-</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -1085,6 +1048,500 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+
+<!-- return -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const fileInput   = document.getElementById('returnImg');
+    const previewBox  = document.getElementById('previewReturn');
+    const submitBtn   = document.getElementById('submitReturn');
+
+    const otherWrapper = document.getElementById('returnOtherWrapper');
+    const otherText    = document.getElementById('returnOtherText');
+    const otherError   = document.getElementById('returnOtherError');
+
+    let selectedFiles = [];
+    let orderId = null;
+    let orderDetailsId = null;
+
+    /* ===============================
+       Capture order data from button
+    =============================== */
+    document.querySelectorAll('.returnBtn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            orderId = this.dataset.orderId;
+            orderDetailsId = this.dataset.orderDetailsId;
+        });
+    });
+
+    /* ===============================
+       Toggle Other textarea
+    =============================== */
+    document.querySelectorAll('input[name="return_reason"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (this.value === 'other') {
+                otherWrapper.classList.remove('d-none');
+            } else {
+                otherWrapper.classList.add('d-none');
+                otherText.value = '';
+                otherError.classList.add('d-none');
+            }
+        });
+    });
+
+    otherText.addEventListener('input', function () {
+        otherError.classList.add('d-none');
+    });
+
+    /* ===============================
+       Image upload (append)
+    =============================== */
+    fileInput.addEventListener('change', function () {
+
+        Array.from(this.files).forEach(file => {
+            if (!file.type.startsWith('image/')) return;
+
+            const exists = selectedFiles.some(
+                f => f.name === file.name && f.size === file.size
+            );
+            if (!exists) selectedFiles.push(file);
+        });
+
+        renderPreviews();
+        fileInput.value = '';
+    });
+
+    function renderPreviews() {
+        previewBox.innerHTML = '';
+
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = e => {
+                previewBox.insertAdjacentHTML('beforeend', `
+                    <div class="reviewImg position-relative" data-index="${index}">
+                        <img src="${e.target.result}">
+                        <span class="remove-img">&times;</span>
+                    </div>
+                `);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    previewBox.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-img')) {
+            const index = e.target.closest('.reviewImg').dataset.index;
+            selectedFiles.splice(index, 1);
+            renderPreviews();
+        }
+    });
+
+    /* ===============================
+       Submit Return
+    =============================== */
+    submitBtn.addEventListener('click', function () {
+
+        const selectedReason = document.querySelector('input[name="return_reason"]:checked');
+
+        if (!selectedReason) {
+            toastr.error('Please select a reason');
+            return;
+        }
+
+        let reason = selectedReason.value;
+
+        if (reason === 'other') {
+            if (!otherText.value.trim()) {
+                otherError.classList.remove('d-none');
+                return;
+            }
+            reason = otherText.value.trim();
+        }
+
+        const formData = new FormData();
+        formData.append('order_id', orderId);
+        formData.append('orderdetails_id', orderDetailsId);
+        formData.append('return_reason', reason);
+
+        selectedFiles.forEach(file => {
+            formData.append('images[]', file);
+        });
+
+        fetch("{{ route('user.return_order') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.status === 'success') {
+                toastr.success(response.message);
+                setTimeout(() => {
+                    window.location.href = "{{ route('user.myOrders') }}";
+                }, 1500);
+            } else if (response.status === 'error') {
+                toastr.error(response.message || 'Something went wrong');
+            }
+        })
+        .catch(error => {
+            toastr.error('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+    // ===== STAR RATING FUNCTION =====
+    function setupRating(ratingName) {
+        const inputs = document.querySelectorAll(`#ratingModal input[name="${ratingName}"]`);
+        inputs.forEach((input, idx) => {
+            input.addEventListener('change', () => {
+                inputs.forEach((i, j) => {
+                    const label = i.nextElementSibling;
+                    if (j <= idx) label.classList.add('selected');
+                    else label.classList.remove('selected');
+                });
+            });
+
+            // Initialize 5-star selection
+            if (input.value === '5') {
+                input.checked = true;
+                input.dispatchEvent(new Event('change'));
+            }
+        });
+    }
+
+    setupRating('raterating'); // Product
+    setupRating('storerating'); // Store
+
+    // ===== IMAGE PREVIEW =====
+    function setupImagePreview(fileInputId, previewId, textarea) {
+        const input = document.getElementById(fileInputId);
+        const preview = document.getElementById(previewId);
+
+        input.addEventListener('change', function () {
+            [...this.files].forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const div = document.createElement('div');
+                    div.className = 'reviewImg position-relative d-inline-block me-2 mb-2';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" style="width:80px; height:80px; object-fit:cover; border-radius:5px;">
+                        <span style="
+                            position:absolute;
+                            top:-5px;
+                            right:-5px;
+                            background:red;
+                            color:white;
+                            width:18px;
+                            height:18px;
+                            text-align:center;
+                            line-height:18px;
+                            border-radius:50%;
+                            cursor:pointer;
+                            font-weight:bold;">&times;</span>`;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            const error = textarea.parentElement.querySelector('.text-danger');
+            if (error) error.classList.add('d-none');
+        });
+
+        preview.addEventListener('click', function (e) {
+            if (e.target.tagName === 'SPAN') e.target.parentElement.remove();
+        });
+
+        textarea.addEventListener('input', () => {
+            const error = textarea.parentElement.querySelector('.text-danger');
+            if (error) error.classList.add('d-none');
+        });
+    }
+
+    const textareas = document.querySelectorAll('#ratingModal .form-group textarea');
+    setupImagePreview('images', 'preview', textareas[0]);
+    setupImagePreview('reviewpic', 'preview1', textareas[1]);
+
+    // ===== SET MODAL DATA ON OPEN =====
+    const ratingTriggers = document.querySelectorAll('.order-ratings .rating');
+    const submitBtn = document.querySelector('#ratingModal .customBtn');
+
+    ratingTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function () {
+            submitBtn.dataset.orderId = this.dataset.orderId;
+            submitBtn.dataset.orderDetailsId = this.dataset.orderDetailsId;
+            submitBtn.dataset.productId = this.dataset.productId;
+            submitBtn.dataset.storeId = this.dataset.storeId;
+
+            // Reset previous form
+            textareas.forEach(t => t.value = '');
+            document.getElementById('preview').innerHTML = '';
+            document.getElementById('preview1').innerHTML = '';
+
+            // Reset stars to 5
+            setupRating('raterating');
+            setupRating('storerating');
+        });
+    });
+
+    // ===== SUBMIT REVIEW =====
+    submitBtn.addEventListener('click', function () {
+        const productTextarea = textareas[0];
+        const storeTextarea = textareas[1];
+        const productImages = document.getElementById('preview').querySelectorAll('img');
+        const storeImages = document.getElementById('preview1').querySelectorAll('img');
+
+        let valid = true;
+        document.querySelectorAll('#ratingModal .text-danger').forEach(e => e.remove());
+
+        if (!productTextarea.value.trim() && productImages.length === 0) {
+            const error = document.createElement('small');
+            error.className = 'text-danger d-block';
+            error.textContent = 'Please enter a product review or upload an image.';
+            productTextarea.parentElement.appendChild(error);
+            valid = false;
+        }
+
+        if (!storeTextarea.value.trim() && storeImages.length === 0) {
+            const error = document.createElement('small');
+            error.className = 'text-danger d-block';
+            error.textContent = 'Please enter a store review or upload an image.';
+            storeTextarea.parentElement.appendChild(error);
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        const productRating = document.querySelector('input[name="raterating"]:checked').value;
+        const storeRating = document.querySelector('input[name="storerating"]:checked').value;
+
+        const formData = new FormData();
+        formData.append('order_id', submitBtn.dataset.orderId);
+        formData.append('orderdetails_id', submitBtn.dataset.orderDetailsId);
+        formData.append('product_id', submitBtn.dataset.productId);
+        formData.append('store_id', submitBtn.dataset.storeId);
+        formData.append('product_rating', productRating);
+        formData.append('store_rating', storeRating);
+        if (productTextarea.value.trim()) formData.append('product_review', productTextarea.value.trim());
+        if (storeTextarea.value.trim()) formData.append('store_review', storeTextarea.value.trim());
+
+        productImages.forEach((img) => formData.append('product_image[]', img.src));
+        storeImages.forEach((img) => formData.append('store_image[]', img.src));
+
+        fetch("{{ route('user.submitRating') }}", {
+            method: 'POST',
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.status === 'success') {
+                toastr.success(response.message);
+                const modal = bootstrap.Modal.getInstance(document.getElementById('ratingModal'));
+                modal.hide();
+            } else {
+                toastr.error(response.message || 'Something went wrong');
+            }
+        })
+        .catch(() => toastr.error('Something went wrong'));
+    });
+});
+
+</script> -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ===== STAR RATING FUNCTION =====
+    function setupRating(ratingName) {
+        const inputs = document.querySelectorAll(`input[name="${ratingName}"]`);
+        inputs.forEach((input, idx) => {
+            input.addEventListener('change', () => {
+                inputs.forEach((i, j) => {
+                    const label = i.nextElementSibling;
+                    if (j <= idx) label.classList.add('selected');
+                    else label.classList.remove('selected');
+                });
+            });
+
+            // Initialize 5-star selection
+            if (input.value === '5') {
+                input.checked = true;
+                input.dispatchEvent(new Event('change'));
+            }
+        });
+    }
+
+    setupRating('raterating'); // Product
+    setupRating('storerating'); // Store
+
+    // ===== IMAGE PREVIEW =====
+    let selectedProductFiles = [];
+    let selectedStoreFiles = [];
+
+    function setupImagePreview(fileInputId, previewId, textarea, isProduct = true) {
+        const input = document.getElementById(fileInputId);
+        const preview = document.getElementById(previewId);
+
+        input.addEventListener('change', function () {
+            const files = [...this.files];
+
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const div = document.createElement('div');
+                    div.className = 'reviewImg position-relative d-inline-block me-2 mb-2';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" style="width:80px; height:80px; object-fit:cover; border-radius:5px;">
+                        <span style="
+                            position:absolute;
+                            top:-5px;
+                            right:-5px;
+                            background:red;
+                            color:white;
+                            width:18px;
+                            height:18px;
+                            text-align:center;
+                            line-height:18px;
+                            border-radius:50%;
+                            cursor:pointer;
+                            font-weight:bold;">&times;</span>`;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Save files
+            if (isProduct) selectedProductFiles.push(...files);
+            else selectedStoreFiles.push(...files);
+
+            // Remove error if exists
+            const error = textarea.parentElement.querySelector('.text-danger');
+            if (error) error.classList.add('d-none');
+        });
+
+        // Remove image on cross click
+        preview.addEventListener('click', function (e) {
+            if (e.target.tagName === 'SPAN') {
+                const imgIndex = Array.from(preview.children).indexOf(e.target.parentElement);
+                if (isProduct) selectedProductFiles.splice(imgIndex, 1);
+                else selectedStoreFiles.splice(imgIndex, 1);
+
+                e.target.parentElement.remove();
+            }
+        });
+
+        // Remove error on typing
+        textarea.addEventListener('input', () => {
+            const error = textarea.parentElement.querySelector('.text-danger');
+            if (error) error.classList.add('d-none');
+        });
+    }
+
+    const textareas = document.querySelectorAll('#ratingModal .form-group textarea');
+    setupImagePreview('images', 'preview', textareas[0], true);   // Product
+    setupImagePreview('reviewpic', 'preview1', textareas[1], false); // Store
+
+    // ===== SUBMIT REVIEW =====
+    const submitBtn = document.querySelector('#ratingModal .customBtn');
+    submitBtn.addEventListener('click', function () {
+        const productTextarea = textareas[0];
+        const storeTextarea = textareas[1];
+
+        const productImages = selectedProductFiles;
+        const storeImages = selectedStoreFiles;
+
+        let valid = true;
+
+        // Remove old errors
+        document.querySelectorAll('#ratingModal .text-danger').forEach(e => e.remove());
+
+        // Product validation
+        if (!productTextarea.value.trim() && productImages.length === 0) {
+            const error = document.createElement('small');
+            error.className = 'text-danger d-block';
+            error.textContent = 'Please enter a product review or upload an image.';
+            productTextarea.parentElement.appendChild(error);
+            valid = false;
+        }
+
+        // Store validation
+        if (!storeTextarea.value.trim() && storeImages.length === 0) {
+            const error = document.createElement('small');
+            error.className = 'text-danger d-block';
+            error.textContent = 'Please enter a store review or upload an image.';
+            storeTextarea.parentElement.appendChild(error);
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        // Prepare form data
+        const productRating = document.querySelector('input[name="raterating"]:checked').value;
+        const storeRating = document.querySelector('input[name="storerating"]:checked').value;
+
+        const formData = new FormData();
+        formData.append('order_id', submitBtn.dataset.orderId || '');
+        formData.append('orderdetails_id', submitBtn.dataset.orderDetailsId || '');
+        formData.append('product_id', submitBtn.dataset.productId || '');
+        formData.append('store_id', submitBtn.dataset.storeId || '');
+        formData.append('product_rating', productRating);
+        formData.append('store_rating', storeRating);
+        if (productTextarea.value.trim()) formData.append('product_review', productTextarea.value.trim());
+        if (storeTextarea.value.trim()) formData.append('store_review', storeTextarea.value.trim());
+
+        productImages.forEach(file => formData.append('product_image[]', file));
+        storeImages.forEach(file => formData.append('store_image[]', file));
+
+        // Send AJAX
+        fetch("{{ route('user.submitRating') }}", {
+            method: 'POST',
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.status === 'success') {
+                toastr.success(response.message);
+                const modal = bootstrap.Modal.getInstance(document.getElementById('ratingModal'));
+                modal.hide();
+                setTimeout(() => {
+                    window.location.href = "{{ route('user.myOrders') }}";
+                }, 1500);
+            } else {
+                toastr.error(response.message || 'Something went wrong');
+            }
+        })
+        .catch(() => toastr.error('Something went wrong'));
+    });
+
+    // ===== PASS DATA TO MODAL FROM CLICK =====
+    document.querySelectorAll('.order-ratings .rating').forEach(el => {
+        el.addEventListener('click', () => {
+            submitBtn.dataset.orderId = el.dataset.orderId;
+            submitBtn.dataset.orderDetailsId = el.dataset.orderDetailsId;
+            submitBtn.dataset.productId = el.dataset.productId;
+            submitBtn.dataset.storeId = el.dataset.storeId;
+        });
+    });
+
+});
+</script>
+
+
+
 
 
 

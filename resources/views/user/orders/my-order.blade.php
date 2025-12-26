@@ -181,7 +181,7 @@
                                             => 'Ongoing',
 
                                         // 3 → Delivered
-                                        $orderdetail->payment_status == '1' && $orderdetail->delivery_status == '3'
+                                        $orderdetail->payment_status == '1' && $orderdetail->delivery_status == '3' && $orderdetail->return_type == '0'
                                             => 'Delivered',
 
                                         // 4 → Cancelled
@@ -197,7 +197,7 @@
                                             => 'Return Request',
 
                                         // Default
-                                        default => 'On Goings',
+                                        default => 'On Going',
                                     };
 
                                     [$statusColor, $bgColor] = match ($statusText) {
@@ -287,6 +287,10 @@
                                         @elseif($orderdetail->delivery_status == '3' && $orderdetail->return_type == '1')
                                         <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
                                             Return Request Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        </div>
+                                        @elseif($orderdetail->delivery_status == '3' && $orderdetail->payment_status == '1' && $orderdetail->return_type == '0')
+                                        <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
+                                            Delivered Date : {{ $orderdetail->updated_at->format('d M Y') }}
                                         </div>
                                         @endif
                                     </a>

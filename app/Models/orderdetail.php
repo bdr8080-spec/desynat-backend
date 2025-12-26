@@ -37,6 +37,11 @@ class orderdetail extends Model
 
     }
 
+    public function store_info(){
+        return $this->hasOne(sellerStoreInformation::class,'id','store_id');
+
+    }
+
 
     
 
