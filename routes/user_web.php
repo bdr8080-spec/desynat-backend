@@ -92,6 +92,7 @@ use App\Http\Controllers\User\OrderController;
 
   Route::get('/my-orders', [OrderController::class,'myOrders'])->name('user.myOrders');
   Route::get('/order_details/{id}', [OrderController::class,'order_details'])->name('user.order_details');
+  Route::post('/cancel_order', [OrderController::class,'cancel_order'])->name('user.cancel_order');
 
 
 });
