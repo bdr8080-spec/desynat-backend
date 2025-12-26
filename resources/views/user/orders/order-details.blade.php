@@ -29,7 +29,7 @@
 
                         @if($status == 2)
                             <div class="btn-outline1 btn-ongoing">Ongoing</div>
-                        @elseif($status == 4)
+                        @elseif($orderData->payment_status = '4')
                             <div class="btn-outline1 btn-outline-red">Cancelled</div>
                         @elseif($status == 3)
                             <div class="btn-outline1 btn-outline-de">Delivered</div>
@@ -94,9 +94,22 @@
                                                 @endif
                                             @endif
                                         </div>
-                                        @if($orderData->delivery_status !== '3')
+                                        @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2')
                                         <div class="d-none-1">
-                                            <button class="btn btn-outline-red w-100" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Order</button>
+                                            <button
+                                                class="btn btn-outline-red w-100 cancelBtn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#cancelModal"
+                                                data-order-id="{{ $orderData->order_id }}">
+                                                Cancel Order
+                                            </button>
+                                        </div>
+                                        @elseif($orderData->payment_status == '2')
+                                        <div class="d-none-1">
+                                            <button
+                                                class="btn btn-outline-red w-100 cancelBtn">
+                                                Cancelled
+                                            </button>
                                         </div>
                                         @endif
                                     </div>
@@ -120,7 +133,14 @@
 
                             @if($orderData->delivery_status == '3')
                             <div class="d-flex gap-3">
-                                <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#exchangeModal" style="width:130px;">Exchange</button>
+                                <button
+                                    class="btn btn-outline-red exchangeBtn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exchangeModal"
+                                    data-order-id="{{ $orderData->order_id }}"
+                                    style="width:130px;">
+                                    Exchange
+                                </button>
                                 <button class="btn btn-outline-red" data-bs-toggle="modal" data-bs-target="#returnModal" style="width:130px; background:#D53B36; color:#fff;">Return</button>
                             </div>
                             @endif
@@ -167,22 +187,26 @@
                 </div>
 
                 {{-- Cancellation Details --}}
-                @if(isset($orderData->return_type) && in_array($orderData->return_type, [1, 2]))
+                @if((isset($orderData->return_type) && in_array($orderData->return_type, ['1','2'])) || $orderData->payment_status === '2')
                     <div class="gift-pnl mt-4">
                         <h6>
-                            @if($orderData->return_type == 1)
+                            @if($orderData->return_type == '1')
                                 Return Details
-                            @elseif($orderData->return_type == 2)
+                            @elseif($orderData->return_type == '2')
+                                Exchange Details
+                            @elseif($orderData->payment_status == '2')
                                 Cancellation Details
                             @endif
                         </h6>
                         <div class="border-1">
                             <div class="giftinfo">
                                 <div>
-                                    @if($orderData->return_type == 1)
+                                    @if($orderData->return_type == '1')
                                         Returned on
-                                    @elseif($orderData->return_type == 2)
-                                        Cancelled on
+                                    @elseif($orderData->return_type == '2')
+                                        Exchange on
+                                    @elseif($orderData->payment_status == '2')
+                                      Cancelled on
                                     @endif
                                 </div>
                                 <div>
@@ -194,7 +218,7 @@
                 @endif
 
                 @if(isset($orderData->return_type))
-                    @if($orderData->return_type == 1)
+                    @if($orderData->return_type == '1')
                         <div class="gift-pnl mt-4">
                             <h6>Return Reason</h6>
                             <div class="border-1">
@@ -203,12 +227,21 @@
                                 </div>
                             </div>
                         </div>
-                    @elseif($orderData->return_type == 2)
+                    @elseif($orderData->return_type == '2')
                         <div class="gift-pnl mt-4">
                             <h6>Exchange Reason</h6>
                             <div class="border-1">
                                 <div class="giftinfo">
                                     <p>{{ $orderData->exchange_reason ?? 'N/A' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @elseif($orderData->payment_status == '2')
+                        <div class="gift-pnl mt-4">
+                            <h6>Cancellation Reason</h6>
+                            <div class="border-1">
+                                <div class="giftinfo">
+                                    <p>{{ $orderData->cancel_reason ?? 'N/A' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -401,50 +434,63 @@
 
 <!-- Cancel order -->
 
-<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="cancelModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title fs-5" id="exampleModalLabel">Select Reason</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">Select Reason</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-                <div class="gift-panel-list">
-                    <div class="reason-list">
-                        <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1" checked>
-                            <span class="radio-mark"></span>
-                            <div class="label-content">
-                                <div class="title">Reason 1</div>
-                            </div>
-                        </label>
-                        <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1">
-                            <span class="radio-mark"></span>
-                            <div class="label-content">
-                                <div class="title">Reason 2</div>
-                            </div>
-                        </label>
-                        <label class="custom-radio mb-3">
-                            <input type="radio" name="filter" value="1">
-                            <span class="radio-mark"></span>
-                            <div class="label-content">
-                                <div class="title">Other</div>
-                            </div>
-                        </label>
-                    </div>
 
-                    <div class="form-group w-100 py-2">
-                        <textarea rows="4" class="form-control pline-10" placeholder="Write here"></textarea>
-                    </div>
-                    <div class="mt-4">
-                        <button type="button" class="customBtn mb-3 white-btn">Submit</button>
-                    </div>
+            <div class="modal-body">
+                <div class="reason-list">
+
+                    @foreach ($cancelReasons as $index => $reason)
+                        <label class="custom-radio mb-3">
+                            <input
+                                type="radio"
+                                name="cancel_reason"
+                                value="{{ $reason->reason_english }}"
+                                {{ $index === 0 ? 'checked' : '' }}>
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">{{ $reason->reason_english }}</div>
+                            </div>
+                        </label>
+                    @endforeach
+
+                    <label class="custom-radio mb-3">
+                        <input type="radio" name="cancel_reason" value="other">
+                        <span class="radio-mark"></span>
+                        <div class="label-content">
+                            <div class="title">Other</div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Textarea -->
+                <div class="form-group mt-2 d-none" id="otherReasonWrapper">
+                    <textarea
+                        id="otherReason"
+                        rows="4"
+                        class="form-control"
+                        placeholder="Write here"></textarea>
+
+                    <small class="text-danger d-none" id="otherReasonError">
+                        Please provide the reason for cancellation
+                    </small>
+                </div>
+
+                <div class="mt-4">
+                    <button type="button" class="customBtn white-btn" id="submitCancel">
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- Return Modal -->
 
@@ -508,7 +554,7 @@
 
 <!-- Exchange Modal -->
 
-<div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -565,7 +611,70 @@
             </div>
         </div>
     </div>
+</div> -->
+<div class="modal fade" id="exchangeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Exchange Request</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <h6>Select Reason</h6>
+
+                <div class="reason-list">
+
+                    @foreach ($exchangeReasons as $index => $reason)
+                        <label class="custom-radio mb-3">
+                            <input
+                                type="radio"
+                                name="exchange_reason"
+                                value="{{ $reason->reason_english }}"
+                                {{ $index === 0 ? 'checked' : '' }}>
+                            <span class="radio-mark"></span>
+                            <div class="label-content">
+                                <div class="title">{{ $reason->reason_english }}</div>
+                            </div>
+                        </label>
+                    @endforeach
+
+                    <!-- Other -->
+                    <label class="custom-radio mb-3">
+                        <input type="radio" name="exchange_reason" value="other">
+                        <span class="radio-mark"></span>
+                        <div class="label-content">
+                            <div class="title">Other</div>
+                        </div>
+                    </label>
+
+                </div>
+
+                <!-- Textarea -->
+                <div class="form-group mb-3 d-none" id="exchangeOtherWrapper">
+                    <textarea
+                        id="exchangeOtherText"
+                        rows="3"
+                        class="form-control"
+                        placeholder="Write here"></textarea>
+
+                    <small class="text-danger d-none" id="exchangeOtherError">
+                        Please provide the reason for exchange
+                    </small>
+                </div>
+
+                <div class="mt-4">
+                    <button type="button" class="customBtn white-btn" id="submitExchange">
+                        Submit
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <!-- Rating section Modal -->
 <div class="modal fade" id="ratingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -706,4 +815,172 @@ $(function () {
 });
 
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    let orderId = null;
+
+    // Capture order id
+    document.querySelectorAll('.cancelBtn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            orderId = this.dataset.orderId;
+        });
+    });
+
+    const otherWrapper = document.getElementById('otherReasonWrapper');
+    const otherInput   = document.getElementById('otherReason');
+    const errorMsg     = document.getElementById('otherReasonError');
+    const submitBtn    = document.getElementById('submitCancel');
+
+    // SAFETY CHECK (optional but recommended)
+    if (!otherWrapper || !otherInput || !submitBtn) {
+        console.error('Cancel modal elements not found');
+        return;
+    }
+
+    // Radio change handler
+    document.querySelectorAll('input[name="cancel_reason"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (this.value === 'other') {
+                otherWrapper.classList.remove('d-none');
+            } else {
+                otherWrapper.classList.add('d-none');
+                otherInput.value = '';
+                errorMsg.classList.add('d-none');
+            }
+        });
+    });
+
+    // Hide error while typing
+    otherInput.addEventListener('input', function () {
+        errorMsg.classList.add('d-none');
+    });
+
+    // Submit
+    submitBtn.addEventListener('click', function () {
+
+        const selectedRadio = document.querySelector('input[name="cancel_reason"]:checked');
+
+        if (!selectedRadio) {
+            toastr.error('Please select a reason');
+            return;
+        }
+
+        let reason = selectedRadio.value;
+
+        if (reason === 'other') {
+            if (!otherInput.value.trim()) {
+                errorMsg.classList.remove('d-none');
+                return;
+            }
+            reason = otherInput.value.trim();
+        }
+
+        fetch("{{ route('user.cancel_order') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                order_id: orderId,
+                cancel_reason: reason
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            toastr.success(response.message);
+
+            setTimeout(() => {
+                window.location.href = "{{ route('user.myOrders') }}";
+            }, 1500);
+        })
+        .catch(() => {
+            toastr.error('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+<!-- exchange -->
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    let exchangeOrderId = null;
+
+    // Capture order id
+    document.querySelectorAll('.exchangeBtn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            exchangeOrderId = this.dataset.orderId;
+        });
+    });
+
+    const wrapper = document.getElementById('exchangeOtherWrapper');
+    const textarea = document.getElementById('exchangeOtherText');
+    const error = document.getElementById('exchangeOtherError');
+    const submitBtn = document.getElementById('submitExchange');
+
+    // Toggle textarea
+    document.querySelectorAll('input[name="exchange_reason"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            if (this.value === 'other') {
+                wrapper.classList.remove('d-none');
+            } else {
+                wrapper.classList.add('d-none');
+                textarea.value = '';
+                error.classList.add('d-none');
+            }
+        });
+    });
+
+    // Hide error while typing
+    textarea.addEventListener('input', function () {
+        error.classList.add('d-none');
+    });
+
+    // Submit
+    submitBtn.addEventListener('click', function () {
+
+        const selected = document.querySelector('input[name="exchange_reason"]:checked').value;
+        let reason = selected;
+
+        if (selected === 'other') {
+            if (!textarea.value.trim()) {
+                error.classList.remove('d-none');
+                return;
+            }
+            reason = textarea.value.trim();
+        }
+
+        fetch("{{ route('user.exchange_order') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                order_id: exchangeOrderId,
+                exchange_reason: reason
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            toastr.success(response.message);
+
+            setTimeout(() => {
+                window.location.href = "{{ route('user.myOrders') }}";
+            }, 1500);
+        })
+        .catch(() => {
+            toastr.error('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+
+
 

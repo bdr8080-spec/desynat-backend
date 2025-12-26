@@ -753,11 +753,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         ];
     }
 
-    
     }
-
-    
-
 
 
  public function cancelledSingleProduct($request){
@@ -773,7 +769,6 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
        return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
     }
-    
 
     // check delivery status
     if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' ){
@@ -801,7 +796,9 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
             $new_array1['cancel_reason']= $request->cancel_reason;
         }
 
-    orderdetail::where('order_id',$request->order_id)->update($new_array1);
+      orderdetail::where('order_id',$request->order_id)->update($new_array1);
+
+
 
     }else{
 
@@ -848,6 +845,105 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     
     }
+
+
+
+ public function cancelledSingleProductNew($request){
+
+    try{
+
+
+    DB::beginTransaction();
+
+    // $checkOrder=Order::where('id',$request->order_id)->first();
+
+    $AllOrderCheck=orderdetail::where('order_id',$request->order_id)->whereIn('payment_status',['0','1'])->count();
+
+    $checkOrder=orderdetail::with('order')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order id Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->order->payment_status!=='1' && $checkOrder->order->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+
+     if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' && $checkOrder->delivery_status!=='2.1' ){
+       return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
+    }
+
+    // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
+    if($checkOrder->order->payment_method=='3'){
+
+        $new_array=[
+        'payment_status'=>'2',
+        'delivery_status'=>'1'];
+        
+        if(isset($request->cancel_reason)){
+            $new_array['cancel_reason']= $request->cancel_reason;
+        }
+
+        $checkOrder->update($new_array);    
+
+    }else{
+
+
+    $new_array=[
+    'payment_status'=>'3',
+    'delivery_status'=>'1'];
+
+    if(isset($request->cancel_reason)){
+        $new_array['cancel_reason']= $request->cancel_reason;
+    }
+    
+    $checkOrder->update($new_array);
+
+    }
+
+    // Cancel Order In Order Table if i have 1 varient
+
+    if($AllOrderCheck ==1){
+
+        $checkOrderTable=Order::where('id',$request->order_id)->first();
+
+          if($checkOrderTable->payment_method=='3'){
+
+        $new_array2=[
+            'payment_status'=>'2',
+            'delivery_status'=>'1'
+
+        ];
+    }else{
+        $new_array2=[
+            'payment_status'=>'3',
+            'delivery_status'=>'1'
+        ];
+    }
+      
+    if(isset($request->cancel_reason)){
+        $new_array2['cancel_reason']= $request->cancel_reason;
+    }
+
+    $checkOrderTable->update($new_array2);    
+    
+    }
+
+    DB::commit();
+
+    return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
 
 
     
