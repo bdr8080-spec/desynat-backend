@@ -109,7 +109,7 @@ table#table1 {
                                 style="width: 105px;height: 65px;border-radius: 5%;object-fit: cover;">
                         </td>
                         <td> {{$val->order_id}}</td>
-                        <td>{{$val->created_at}}</td>
+                        <td>{{$val->created_at->format('d/m/Y \a\t h:i A') }}</td>
                         <td> {{$val->price}} KD </td>
                         <td>
                             @if($val->Admin_verify=='0')

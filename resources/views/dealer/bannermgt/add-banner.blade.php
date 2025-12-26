@@ -115,7 +115,8 @@
                                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
 
                                 <!-- Uploaded Image -->
-                                <img id="bannerUploadedImg" src="" style="width:100px;display:none;object-fit:cover;border-radius:6px;height:110px; margin:auto;">
+                                <img id="bannerUploadedImg" src=""
+                                    style="width:100px;display:none;object-fit:cover;border-radius:6px;height:110px; margin:auto;">
 
                                 <div class="py-2" style="color:#875C3A">
                                     Upload Banner

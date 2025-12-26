@@ -130,7 +130,13 @@ public function seller_banner_price(Request $request){
             'total_days'=>'required|integer',
             "upload_banner"=>"required",
             'price'=>'required'
-
+            
+            ],[
+              'start_date.required'=>"Please select start date ",
+              'end_date.required'=>"Please select End date",
+              'category.required_if'=>"Please Select categrory",
+              'subcatgory.required_if'=>"Please select Subcategory"
+              
             ]);
             
        if($validate->fails()){

@@ -144,8 +144,7 @@ if ($request->banner_filter) {
         case '2':
             // Confirmed
             $checkBanner = $checkBanner
-                ->where('Admin_verify', '1')
-                ->where('payment_status', '1');
+                ->where('Admin_verify', '1');
             break;
 
         case '3':
