@@ -57,7 +57,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  color: #444444;
+  color: #1C1C1C;
   font-size: var(--label);
 
 }
@@ -1852,11 +1852,16 @@ storeClient_profile_img{
   cursor: pointer;
 }
 .total-outline {
-    /* border: 1px solid #6E4527; */
     color: #6E4527;
     line-height: 35px;
     background: rgba(255, 247, 234, 1);
 }
+.total-outline:hover {
+  color: #6E4527;
+  line-height: 35px;
+  background: rgba(255, 247, 234, 1);
+}
+
 
 /* FOOTER */
 .drawer-footer {

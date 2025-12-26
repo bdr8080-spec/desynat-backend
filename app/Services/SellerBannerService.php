@@ -129,51 +129,57 @@ if (isset($request->from) && isset($request->to)  ) {
 
 }
 
-
 if ($request->banner_filter) {
-    
+
     switch ($request->banner_filter) {
 
         case '1':
             // Active
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '1')
-                ->where('payment_status', '1');
+                ->where('payment_status', '1')
+                ->whereDate('start_date', '<=', now())
+                ->whereDate('end_date', '>=', now());
             break;
 
-        case '2':
+            case '2':
             // Confirmed
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '1')
-                ->where('payment_status', '1');
+                ->where(function ($q) {
+                    $q->where('payment_status', '0') // fully confirmed, ignore dates
+                    ->orWhere(function ($q2) {
+                        $q2->where('payment_status', '1')
+                            ->where(function ($q3) {
+                                $q3->whereDate('start_date', '<=', now())
+                                    ->WhereDate('end_date', '>=', now());
+                            });
+                    });
+                });
             break;
 
         case '3':
             // Pending
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '0');
-                // ->where('payment_status', '0');
             break;
 
         case '4':
             // Expired
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '1')
-                ->where('payment_status', '3');
+                ->where('payment_status', '1')
+                ->whereDate('end_date', '<', now());
             break;
 
         case '5':
             // Rejected
             $checkBanner = $checkBanner
-                ->where('Admin_verify', '2');
-            break;
-
-        default:
-            // No filter
+                ->where('payment_status', '3')
+                ->orWhere('Admin_verify','2');
             break;
     }
 }
-
 
 
 
