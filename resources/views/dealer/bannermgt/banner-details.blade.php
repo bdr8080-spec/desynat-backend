@@ -99,7 +99,7 @@
         Payment Is rejected
         @endif
 
-        <div class="dashboard-button d-flex mt-5 gap-5">
+        <div class="dashboard-button mt-5 gap-5">
             <div class="row">
                 <div class="col-lg-6">
                     <button type="button" class="btn total-outline w-100">Total Price
