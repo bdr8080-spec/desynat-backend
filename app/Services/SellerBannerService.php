@@ -129,50 +129,52 @@ if (isset($request->from) && isset($request->to)  ) {
 
 }
 
-
 if ($request->banner_filter) {
-    
+
     switch ($request->banner_filter) {
 
         case '1':
             // Active
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '1')
-                ->where('payment_status', '1');
+                ->where('payment_status', '1')
+                ->whereDate('start_date', '<=', now())
+                ->whereDate('end_date', '>=', now());
             break;
 
         case '2':
             // Confirmed
             $checkBanner = $checkBanner
-                ->where('Admin_verify', '1');
+                ->where('Admin_verify', '1')
+                ->whereIn('payment_status', ['0', '1'])
+                ->where(function ($q) {
+                    $q->whereDate('start_date', '>=', now())
+                      ->OrWhereDate('end_date', '<=', now());
+                });
             break;
 
         case '3':
             // Pending
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '0');
-                // ->where('payment_status', '0');
             break;
 
         case '4':
             // Expired
             $checkBanner = $checkBanner
                 ->where('Admin_verify', '1')
-                ->where('payment_status', '3');
+                ->where('payment_status', '1')
+                ->whereDate('end_date', '<', now());
             break;
 
         case '5':
             // Rejected
             $checkBanner = $checkBanner
-                ->where('Admin_verify', '2');
-            break;
-
-        default:
-            // No filter
+                ->where('payment_status', '3')
+                ->orWhere('Admin_verify','2');
             break;
     }
 }
-
 
 
 
