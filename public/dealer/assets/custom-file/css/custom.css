@@ -420,6 +420,12 @@ table.dataTable {
     width: 100%;
     object-fit: cover;
 }
+.uploadbnr{
+    height: 240px;
+    width: 100%;
+    padding-top:10px;
+    object-fit: contain;
+}
 
 
 @media (min-width: 1140px) and (max-width: 1440px) {

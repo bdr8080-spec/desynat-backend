@@ -46,8 +46,7 @@ table#table1 {
             <div class="search-field">
                 <div class="from-group position-relative">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-                    <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table1">
-
+                    <input type="search" class="dt-input tableSearch form-control" id="customTableSearch" placeholder="Search" aria-controls="table1">
                 </div>
             </div>
 
@@ -86,7 +85,7 @@ table#table1 {
 
 
         <div class="table-responsive">
-            <table class="table  table-bordered " id="table1">
+            <table class="table table-bordered datatable tablesearch" id="table1">
                 <thead>
                     <tr>
                         <th class="no-sort">S.No</th>
@@ -182,7 +181,24 @@ table#table1 {
 
 
 @include('dealer.layout.custom_code');
-
-
-
 @include('dealer.layout.footer');
+
+<script>
+$(document).ready(function () {
+    $('#customTableSearch').on('keyup search', function () {
+        let value = $(this).val().toLowerCase().trim();
+
+        $('.tablesearch tbody tr').each(function () {
+            let rowText = $(this).text().toLowerCase();
+
+            if (value === "") {
+                // input empty → show all rows
+                $(this).show();
+            } else {
+                // match text
+                $(this).toggle(rowText.indexOf(value) > -1);
+            }
+        });
+    });
+});
+</script>
