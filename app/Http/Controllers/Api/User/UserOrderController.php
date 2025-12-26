@@ -399,7 +399,7 @@ public function cancelled_single_product(Request $request){
 
     $validate = Validator::make($request->all(), [
         'order_id'=>'required|exists:orders,id',
-              
+        // "orderdetails_id"=>'required|exists:orderdetails,id'              
         ]);
             
     if($validate->fails()){
@@ -409,10 +409,19 @@ public function cancelled_single_product(Request $request){
      $request_data=(object) [
     'user_id'=>$user_id,
     "order_id"=>$request->order_id,
-    "cancel_reason"=>$request->cancel_reason??null
+    "cancel_reason"=>$request->cancel_reason??null,
+    "orderdetails_id"=>$request->orderdetails_id??null
     ];
 
+    if(isset($request->orderdetails_id)){
+
+     $data=$this->UserOrderService->cancelledSingleProductNew($request_data);
+
+    }else{
+
     $data=$this->UserOrderService->cancelledSingleProduct($request_data);
+
+    }
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);

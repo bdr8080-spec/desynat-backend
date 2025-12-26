@@ -106,9 +106,7 @@ table#table1 {
                         <td>
 
                             <img src="{{$val->upload_banner}}" class="img-fluid" alt="image" class="pro-image"
-                                style="width: 65px;height: 65px;border-radius: 50%;object-fit: cover;">
-
-
+                                style="width: 105px;height: 65px;border-radius: 5%;object-fit: cover;">
                         </td>
                         <td> {{$val->order_id}}</td>
                         <td>{{$val->created_at}}</td>
