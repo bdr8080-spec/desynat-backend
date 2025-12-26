@@ -634,6 +634,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         'product_details.category',
         'product_details.subcategory',
         'product_details.seller_details',
+        'product_details.store',
         'variation_details.color',
         'variation_details.size',
         'UserRatingReviewProvide'
@@ -987,7 +988,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
     }
 
-    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+    if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
        return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
     }
     // check order is Alredy in return and exchange state 
@@ -998,7 +999,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
      
     
     // check delivery status
-    if($checkOrder->order_details->delivery_status!=='3'){
+    if($checkOrder->delivery_status!=='3'){
        return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
     }
     
@@ -1012,7 +1013,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->return_days);
 
-    $productOrderDate = $checkOrder->order_details->created_at;
+    $productOrderDate = $checkOrder->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1059,7 +1060,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
     }
 
-    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+    if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
        return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
     }
     // check order is Alredy in return and exchange state 
@@ -1070,7 +1071,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
      
     
     // check delivery status
-    if($checkOrder->order_details->delivery_status!=='3'){
+    if($checkOrder->delivery_status!=='3'){
        return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
     }
     
@@ -1084,7 +1085,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->exchangable_days);
 
-    $productOrderDate = $checkOrder->order_details->created_at;
+    $productOrderDate = $checkOrder->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1129,7 +1130,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
     }
 
-    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+    if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
        return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
     }
     // check order is Alredy in return and exchange state 
@@ -1140,7 +1141,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
      
     
     // check delivery status
-    if($checkOrder->order_details->delivery_status!=='3'){
+    if($checkOrder->delivery_status!=='3'){
        return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
     }
     
@@ -1158,7 +1159,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->return_days);
 
-    $productOrderDate = $checkOrder->order_details->created_at;
+    $productOrderDate = $checkOrder->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1194,7 +1195,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     $return_days= intVal($checkOrder->product_details->exchangable_days);
 
-    $productOrderDate = $checkOrder->order_details->created_at;
+    $productOrderDate = $checkOrder->product_details->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1240,7 +1241,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
     }
 
-    if($checkOrder->order_details->payment_status!=='1' && $checkOrder->order_details->payment_method!=='3'){
+    if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
        return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
     }
     // check order is Alredy in return and exchange state 
@@ -1251,7 +1252,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
      
     
     // check delivery status
-    if($checkOrder->order_details->delivery_status!=='3'){
+    if($checkOrder->delivery_status!=='3'){
        return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
     }
 
