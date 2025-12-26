@@ -94,6 +94,7 @@ use App\Http\Controllers\User\OrderController;
   Route::get('/order_details/{id}', [OrderController::class,'order_details'])->name('user.order_details');
   Route::post('/cancel_order', [OrderController::class,'cancel_order'])->name('user.cancel_order');
   Route::post('/exchange_order', [OrderController::class,'exchange_order'])->name('user.exchange_order');
+  Route::post('/getAvailableSize', [OrderController::class,'getAvailableSize'])->name('user.getAvailableSize');
 
 
 });
