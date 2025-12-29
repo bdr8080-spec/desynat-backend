@@ -45,13 +45,13 @@
         <h3 class="mid-headng mb-3">Suggested Stores</h3>
         <div class="suggestStore_contenar">
             <div class="owl-carousel storeCarousel">
-                @foreach($brands as $brand)
+                @foreach($stores as $store)
                     <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
-                                <img src="{{ $brand->image }}" class="img-fluid" alt="{{ $brand->name_english }}" />
+                                <img src="{{ $store->store_image }}" class="img-fluid" alt="{{ $store->store_name }}" />
                             </div>
-                            <h5>{{ $brand->name_english }}</h5>
+                            <h5>{{ $store->store_name }}</h5>
                         </div>
                     </div>
                 @endforeach
