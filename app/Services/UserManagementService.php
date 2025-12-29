@@ -538,6 +538,15 @@ class UserManagementService
                 ];
             }
 
+            if (isset($product_details->product_image)) {
+                $product_details->product_image = $this->cleanImageUrl($product_details->product_image);
+            }
+
+            // Clean store image URL
+            if (isset($product_details->store_image)) {
+                $product_details->store_image = $this->cleanImageUrl($product_details->store_image);
+            }
+
             $wishlistIds = wishlist::where('user_id', $request->user_id)
             ->pluck('product_id')
             ->toArray();
