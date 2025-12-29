@@ -88,7 +88,7 @@
                             @forelse($newRequest as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order_id'] }}</td>
+                                <td>#{{ $data['order_id'] }}</td>
 
                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
                                 <td>
@@ -100,7 +100,7 @@
                                     }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['seller_details']['created_at'])->format('jS F Y | h:i A') }}
+                                    {{ \Carbon\Carbon::parse($data['created_at'])->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>
                                     <img src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px" class="square" />
@@ -204,7 +204,7 @@
                             @forelse($approvedRequest as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order_id'] }}</td>
+                                <td>#{{ $data['order_id'] }}</td>
 
                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
                                 <td>
@@ -240,7 +240,17 @@
                                 <td>{{ $data['total_days'] }} days</td>
 
                                 <td>{{ $data['payment_status'] == 1 ? 'Yes' : 'No' }}</td>
-                                <td>{{ $data['payment_status'] == 1 ? $data['price'] . ' KD' : 'N/A' }}</td>
+                                <td>
+                                    @if($data['payment_status'] == 1)
+                                        @php
+                                            $price = (float) $data['price'];
+                                            $formattedPrice = ($price == floor($price)) ? intval($price) : number_format($price, 2, '.', '');
+                                        @endphp
+                                        {{ $formattedPrice }} KD
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
 
                             </tr>
                             @empty
@@ -313,7 +323,7 @@
                             @forelse($rejectedRequest as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order_id'] }}</td>
+                                <td>#{{ $data['order_id'] }}</td>
 
                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
                                 <td>
@@ -348,7 +358,9 @@
 
                                 <td>{{ $data['total_days'] }} days</td>
 
-                                <td>{{ $data['cancelled_reason'] }} </td>
+                                <td style="white-space: pre-wrap; word-break: break-word;">
+                                    {{ $data['cancelled_reason'] ?? 'N/A' }}
+                                </td>
                             </tr>
                             @empty
                                 <tr>

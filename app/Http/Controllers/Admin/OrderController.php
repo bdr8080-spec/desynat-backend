@@ -42,7 +42,7 @@ class OrderController extends Controller
             $returnRequestParams['from_date'] = $fromDate;
             $returnRequestParams['to_date'] = $toDate;
         }
-        $returnOrders = $this->OrderManagementService->ReturnExchangeOrders(new Request($returnRequestParams))['data'];
+        $returnOrders = $this->OrderManagementService->ReturnExchangeOrdersNew(new Request($returnRequestParams))['data'];
 
         $completeRequestParams = [];
         if ($type === 'complete' && $country) {
@@ -50,7 +50,7 @@ class OrderController extends Controller
             $completeRequestParams['from_date'] = $fromDate;
             $completeRequestParams['to_date'] = $toDate;
         }
-        $completeOrders = $this->OrderManagementService->CompletedOrders(new Request($completeRequestParams))['data'];
+        $completeOrders = $this->OrderManagementService->CompletedOrdersNew(new Request($completeRequestParams))['data'];
 
         $cancelledRequestParams = [];
         if ($type === 'cancelled' && $country) {
@@ -58,7 +58,7 @@ class OrderController extends Controller
             $cancelledRequestParams['from_date'] = $fromDate;
             $cancelledRequestParams['to_date'] = $toDate;
         }
-        $cancelledOrders = $this->OrderManagementService->CancelledOrders(new Request($cancelledRequestParams))['data'];
+        $cancelledOrders = $this->OrderManagementService->CancelledOrdersNew(new Request($cancelledRequestParams))['data'];
 
         $countries = $this->CountryService->getUserAllCountries()['data'];
 
@@ -73,7 +73,7 @@ class OrderController extends Controller
     {
 
         $validate = Validator::make($request->all(), [
-            'order_id' => 'required|exists:orders,id',
+            'order_id' => 'required|exists:orderdetails,id',
         ]);
 
         if ($validate->fails()) {
@@ -81,7 +81,7 @@ class OrderController extends Controller
         }
 
         try {
-            $data = $this->OrderManagementService->getDriversListToAssign($request);
+            $data = $this->OrderManagementService->getDriversListToAssignNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -99,7 +99,7 @@ class OrderController extends Controller
 
         $validate = Validator::make($request->all(), [
             'driver_id' => 'required|exists:delivery_boys,id',
-            'order_id' => 'required|exists:orders,id',
+            'order_id' => 'required|exists:orderdetails,id',
         ]);
 
         if ($validate->fails()) {
@@ -107,7 +107,7 @@ class OrderController extends Controller
         }
 
         try {
-            $data = $this->OrderManagementService->assignDriver($request);
+            $data = $this->OrderManagementService->assignDriverNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);

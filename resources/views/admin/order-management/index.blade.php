@@ -151,7 +151,7 @@
                                     <a class="table-button view-products"
                                     data-bs-toggle="modal"
                                     data-bs-target="#sentModal1"
-                                    data-products='@json($data)'>
+                                    data-product='@json($data)'>
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                 </td>
@@ -205,7 +205,7 @@
             </div>
 
 
-            <!-- approved -->
+            <!-- return -->
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.orderManagement') }}" id="filterForm1">
@@ -292,57 +292,76 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($returnOrders as $index => $data)
+                           @forelse($returnOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order_id'] }}</td>
-                                @php
-                                    $firstOrderDetail = $data['order_details']->first();
-                                @endphp
-
-                                @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
-                                    <td>
-                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
-                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
-                                    </td>
-                                @else
-                                    <td>Seller not found</td>
-                                @endif
-                                <td>{{ $data['delivery_details']['name'] }}</td>
-                                <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1">
+                                <td>{{ $data['order']['order_id'] }}</td>
+                                <td>
+                                    @php
+                                        $firstOrderDetail = $data['product_details']->first();
+                                    @endphp
+                                    @if($firstOrderDetail && $firstOrderDetail['seller_details'])
+                                        {{ $firstOrderDetail['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['seller_details']['last_name'] }}
+                                    @else
+                                        Seller not found
+                                    @endif
+                                </td>
+                                <td>{{ $data['order']['delivery_details']['name'] }}</td>
+                                <td>{{ $data['order']['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>
+                                    <a class="table-button view-products"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#sentModal1"
+                                    data-product='@json($data)'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td> -->
-                                    <td>
-                                        <a class="table-button view-products"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1"
-                                        data-products='@json($data["order_details"])'>
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
-                                    </td>
-                                <td>{{ $data['delivery_details']['address'] }}</td>                               
-                                <td>{{ $data['total_amount'] }} KD</td>
+                                    </a>
+                                </td>
+                                <td>{{ $data['order']['delivery_details']['address'] }}</td>
+                                <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
-                                <td>Pending</td>
-                                <td>efwehgi</td>
-                                <td>Lorem </td>
-                                <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }} </td>
-
+                                @php
+                                    $deliveryStatuses = [
+                                        1 => 'Return',
+                                        2 => 'Exchange',
+                                    ];
+                                @endphp
+                                <td>{{ $deliveryStatuses[$data['return_type']] ?? 'Unknown' }}</td>
                                 <td>
-                                        <a class="btn btn-dark customBtn assignDriverBtn"
-                                        href="javascript:void(0)"
-                                        data-order-id="{{ $data['id'] }}"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#assignModal">
-                                            <span>Assign Delivery Boy</span>
-                                        </a>
+                                    @if($data['return_type'] == '1')
+                                    {{ $data['return_reason'] ?? 'N/A' }}
+                                    @elseif($data['return_type'] == '2')
+                                    {{ $data['exchange_reason'] ?? 'N/A' }}
+                                    @endif
                                 </td>
-
+                                @php
+                                    $deliveryStatus = [
+                                        1 => 'Pending',
+                                        2 => 'On The Way',
+                                        3 => 'Delivered',
+                                        4 => 'Cancelled',
+                                        5 => 'Return',
+                                        6 => 'Confirmed',
+                                        7 => 'Picked',
+                                        8 => 'Not Delivered',
+                                    ];
+                                @endphp
+                                <td>{{ $deliveryStatus[$data['delivery_status']] ?? 'Unknown' }}</td>
+                                <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
+                                <td>
+                                    @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_name'] === 'Kuwait')
+                                    <a class="btn btn-dark customBtn assignDriverBtn"
+                                    href="javascript:void(0)"
+                                    data-order-id="{{ $data['id'] }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#assignModal">
+                                        <span>Assign Delivery Boy</span>
+                                    </a>
+                                    @endif
+                                </td>
                             </tr>
                             @empty
                                 <tr>
@@ -354,7 +373,7 @@
                 </div>
             </div>
 
-            <!-- rejected -->
+            <!-- completed -->
 
             <div class="tab-pane fade" id="pills-return" role="tabpanel" aria-labelledby="pills-return-tab"
                 tabindex="0">
@@ -438,41 +457,40 @@
                             @forelse($completeOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order_id'] }}</td>
-                                @php
-                                    $firstOrderDetail = $data['order_details']->first();
-                                @endphp
-
-                                @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
-                                    <td>
-                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
-                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
-                                    </td>
-                                @else
-                                    <td>Seller not found</td>
-                                @endif
-                                <td>{{ $data['delivery_details']['name'] }}</td>
-                                <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1">
+                                <td>{{ $data['order']['order_id'] }}</td>
+                                <td>
+                                    @php
+                                        $firstOrderDetail = $data['product_details']->first();
+                                    @endphp
+                                    @if($firstOrderDetail && $firstOrderDetail['seller_details'])
+                                        {{ $firstOrderDetail['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['seller_details']['last_name'] }}
+                                    @else
+                                        Seller not found
+                                    @endif
+                                </td>
+                                <td>{{ $data['order']['delivery_details']['name'] }}</td>
+                                <td>{{ $data['order']['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>
+                                    <a class="table-button view-products"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#sentModal1"
+                                    data-product='@json($data)'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td> -->
-                                    <td>
-                                        <a class="table-button view-products"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1"
-                                        data-products='@json($data["order_details"])'>
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
-                                    </td>
-                                <td>{{ $data['delivery_details']['address'] }}</td>                               
-                                <td>{{ $data['total_amount'] }} KD</td>
+                                    </a>
+                                </td>
+                                <td>{{ $data['order']['delivery_details']['address'] }}</td>
+                                <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
-                                <td data-bs-toggle="modal" data-bs-target="#sentModalrating" style="cursor: pointer;">
-                                    <i class="bi bi-star-fill text-warning"></i> 4.5 Rating
+                                <td data-bs-toggle="modal" 
+                                    data-bs-target="#sentModalrating" 
+                                    style="cursor: pointer;"
+                                    data-user='@json($data)'>
+                                    <i class="bi bi-star-fill text-warning"></i> 
+                                    <span class="rating-number">{{ $data['user_rating_review_provide']['product_rating'] ?? 'N/A' }} Rating</span>
                                 </td>
                                 <td>
                                     <a class="btn btn-dark customBtn">
@@ -570,40 +588,35 @@
                             @forelse($cancelledOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order_id'] }}</td>
-                                @php
-                                    $firstOrderDetail = $data['order_details']->first();
-                                @endphp
-
-                                @if($firstOrderDetail && $firstOrderDetail['product_details']['seller_details'])
-                                    <td>
-                                        {{ $firstOrderDetail['product_details']['seller_details']['first_name'] }}
-                                        {{ $firstOrderDetail['product_details']['seller_details']['last_name'] }}
-                                    </td>
-                                @else
-                                    <td>Seller not found</td>
-                                @endif
-                                <td>{{ $data['delivery_details']['name'] }}</td>
-                                <td>{{ $data['delivery_details']['country_name'] ?? 'N/A' }}</td>
-                                <!-- <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1">
+                                <td>{{ $data['order']['order_id'] }}</td>
+                                <td>
+                                    @php
+                                        $firstOrderDetail = $data['product_details']->first();
+                                    @endphp
+                                    @if($firstOrderDetail && $firstOrderDetail['seller_details'])
+                                        {{ $firstOrderDetail['seller_details']['first_name'] }}
+                                        {{ $firstOrderDetail['seller_details']['last_name'] }}
+                                    @else
+                                        Seller not found
+                                    @endif
+                                </td>
+                                <td>{{ $data['order']['delivery_details']['name'] }}</td>
+                                <td>{{ $data['order']['delivery_details']['country_name'] ?? 'N/A' }}</td>
+                                <td>
+                                    <a class="table-button view-products"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#sentModal1"
+                                    data-product='@json($data)'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td> -->
-                                    <td>
-                                        <a class="table-button view-products"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#sentModal1"
-                                        data-products='@json($data["order_details"])'>
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
-                                    </td>
-                                <td>{{ $data['delivery_details']['address'] }}</td>                               
-                                <td>{{ $data['total_amount'] }} KD</td>
+                                    </a>
+                                </td>
+                                <td>{{ $data['order']['delivery_details']['address'] }}</td>
+                                <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
                                 <td>Delivery Boy</td>
                                 <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
-                                <td>{{ $data['not_delivered_reason'] ?? 'N/A' }}</td>
+                                <td>{{ $data['cancel_reason'] ?? 'N/A' }}</td>
                             </tr>
                             @empty
                                 <tr>
@@ -621,12 +634,11 @@
 </div>
 
 
-<!-- add new model -->
-<div class="modal fade" id="sentModalrating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- review model -->
+<!-- <div class="modal fade" id="sentModalrating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
                 <h2 class="h2">Seller rating & Review</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -634,7 +646,6 @@
                 <div class="review-modal">
 
 
-                    <!-- Seller Review Box -->
                     <div class="review-box">
                         <div class="stars">
                             <i class="bi bi-star-fill text-warning"></i>
@@ -652,7 +663,6 @@
 
                     <h4 class="product-title">Product Name</h4>
 
-                    <!-- Product Review Box -->
                     <div class="review-box">
                         <div class="stars center">
                             <i class="bi bi-star-fill text-warning"></i>
@@ -678,7 +688,42 @@
 
         </div>
     </div>
+</div> -->
+<div class="modal fade" id="sentModalrating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Seller rating & Review</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="overlay">
+                <div class="review-modal">
+
+                    <!-- Seller Review Box -->
+                    <div class="review-box" id="sellerReviewBox">
+                        <div class="stars" id="sellerStars"></div>
+                        <p class="review-text" id="sellerReviewText"></p>
+
+                        <div class="attached-images" id="sellerImagesContainer" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+                    </div>
+
+                    <h4 class="product-title" id="productTitle">Product Name</h4>
+
+                    <!-- Product Review Box -->
+                    <div class="review-box" id="productReviewBox">
+                        <div class="stars center" id="productStars"></div>
+                        <p class="review-text" id="productReviewText"></p>
+
+                        <div class="attached-images" id="productImagesContainer" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 
 <!-- Product Details Modal -->
@@ -777,113 +822,90 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<!-- <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const modalBody = document.getElementById('productModalBody');
-    const templateCard = document.getElementById('productCardTemplate');
-    document.querySelectorAll('.view-products').forEach(button => {
-
-        button.addEventListener('click', function () {
-            modalBody.querySelectorAll('.product-card:not(#productCardTemplate)')
-                .forEach(card => card.remove());
-            let products = [];
-
-            try {
-                products = JSON.parse(this.dataset.products);
-            } catch (error) {
-                console.error('Invalid products data:', error);
-                return;
-            }
-            if (!products || products.length === 0) {
-                return;
-            }
-            products.forEach(item => {
-                const card = templateCard.cloneNode(true);
-                card.classList.remove('d-none');
-                card.removeAttribute('id');
-                const image =
-                    item?.variation_details?.variant_image?.[0]
-                    || '/admin/image/download.jpeg';
-
-                card.querySelector('.product-image').src = image;
-                card.querySelector('.product-name').textContent =
-                    item?.product_details?.product_name_en || 'N/A';
-                card.querySelector('.product-category').textContent =
-                    'Category: ' +
-                    (item?.product_details?.category?.name || 'N/A');
-                card.querySelector('.product-brand').textContent =
-                    'Brand: ' +
-                    (item?.product_details?.brand?.name_english || 'N/A');
-                card.querySelector('.product-subcategory').textContent =
-                    'Sub-Category: ' +
-                    (item?.product_details?.subcategory?.name_english || 'N/A');
-                card.querySelector('.product-price').textContent =
-                    'Price: ' + (item?.amount || '0') + ' KD';
-                modalBody.appendChild(card);
-            });
-        });
-
-    });
-
-});
-</script> -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
     const modalBody = document.getElementById('productModalBody');
     const templateCard = document.getElementById('productCardTemplate');
 
-    document.querySelectorAll('.view-products').forEach(button => {
+    //console.log('modalBody:', modalBody);
+    //console.log('templateCard:', templateCard);
+
+    if (!modalBody || !templateCard) {
+        //console.error('Modal elements not found. Check IDs.');
+        return;
+    }
+
+    const buttons = document.querySelectorAll('.view-products');
+    //console.log('Found buttons:', buttons.length);
+
+    buttons.forEach(button => {
+
+        //console.log('Button element:', button);
+        //console.log('data-product attribute:', button.dataset.product);
 
         button.addEventListener('click', function () {
+
+            //console.log('Clicked button:', this);
 
             // Clear old cards
             modalBody.querySelectorAll('.product-card:not(#productCardTemplate)')
                 .forEach(card => card.remove());
 
-            let item;
-            try {
-                item = JSON.parse(this.dataset.product);
-            } catch (error) {
-                console.error('Invalid product data:', error);
+            const raw = this.dataset.product; 
+            console.log('Raw data-product:', raw);
+
+            if (!raw) {
+                //console.error('data-product is empty!');
                 return;
             }
 
-            if (!item) return;
+            let item;
+            try {
+                item = JSON.parse(raw);
+               // console.log('Parsed item:', item);
+            } catch (e) {
+                //console.error('JSON parse error:', e, raw);
+                return;
+            }
 
             const card = templateCard.cloneNode(true);
             card.classList.remove('d-none');
             card.removeAttribute('id');
 
-            const image =
-                item?.variation_details?.variant_image?.[0]
+            //console.log('Card cloned:', card);
+
+            card.querySelector('.product-image').src =
+                item.variation_details?.variant_image?.[0]
                 || '/admin/image/download.jpeg';
 
-            card.querySelector('.product-image').src = image;
             card.querySelector('.product-name').textContent =
-                item?.product_details?.product_name_en || 'N/A';
+                item.product_details?.product_name_en ?? 'N/A';
 
             card.querySelector('.product-category').textContent =
-                'Category: ' +
-                (item?.product_details?.category?.name || 'N/A');
+                'Category: ' + (item.product_details?.category?.name ?? 'N/A');
 
             card.querySelector('.product-brand').textContent =
-                'Brand: ' +
-                (item?.product_details?.brand?.name_english || 'N/A');
+                'Brand: ' + (item.product_details?.brand?.name_english ?? 'N/A');
 
             card.querySelector('.product-subcategory').textContent =
                 'Sub-Category: ' +
-                (item?.product_details?.subcategory?.name_english || 'N/A');
+                (item.product_details?.subcategory?.name_english ?? 'N/A');
 
             card.querySelector('.product-price').textContent =
-                'Price: ' + (item?.amount || '0') + ' KD';
+                'Price: ' + (item.amount ?? '0') + ' KD';
 
             modalBody.appendChild(card);
+
+           // console.log('Card appended to modal body');
         });
 
     });
 });
 </script>
+
+
+
 
 
 <script>
@@ -998,10 +1020,116 @@ document.getElementById('assignDriverSubmit').addEventListener('click', function
         updateToDate();
     });
 
-//Datatable
+</script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    function generateStars(rating) {
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= Math.floor(rating)) {
+                starsHtml += '<i class="bi bi-star-fill text-warning"></i>';
+            } else if (i - rating < 1) {
+                starsHtml += '<i class="bi bi-star-half text-warning"></i>';
+            } else {
+                starsHtml += '<i class="bi bi-star text-secondary"></i>';
+            }
+        }
+        return starsHtml;
+    }
+
+    function renderImages(containerId, images) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        if (images && images.length > 0) {
+            images.forEach(imgUrl => {
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.alt = 'Attached';
+                img.style.width = '100px';
+                img.style.height = '100px';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '5px';
+                img.style.marginRight = '5px';
+                container.appendChild(img);
+            });
+            container.style.display = 'flex';
+        } else {
+            container.style.display = 'none';
+        }
+    }
+
+    // Table cell stars dynamically
+    document.querySelectorAll('td[data-bs-target="#sentModalrating"]').forEach(td => {
+        const data = td.dataset.user ? JSON.parse(td.dataset.user) : null;
+        if (!data) return;
+        const rating = parseFloat(data.user_rating_review_provide?.product_rating || 0);
+        td.querySelector('.bi-star-fill').outerHTML = generateStars(rating);
+        td.querySelector('.rating-number').textContent = rating + ' Rating';
+    });
+
+    // Modal dynamic update
+    const ratingModal = document.getElementById('sentModalrating');
+    ratingModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        if (!button.dataset.user) return;
+
+        const data = JSON.parse(button.dataset.user);
+        const reviewData = data.user_rating_review_provide || {};
+
+        // Product data
+        const productRating = parseFloat(reviewData.product_rating || 0);
+        const productReview = reviewData.product_review || "No review provided";
+        const productName = data.product_details?.product_name_en || "N/A";
+        const productImages = reviewData.product_image ? JSON.parse(reviewData.product_image) : [];
+
+        // Seller data
+        const sellerRating = parseFloat(reviewData.store_rating || 0);
+        const sellerReview = reviewData.store_review || "No review provided";
+        const sellerImages = reviewData.store_image ? JSON.parse(reviewData.store_image) : [];
+
+        // Update product modal
+        document.getElementById('productTitle').textContent = productName;
+        document.getElementById('productStars').innerHTML = generateStars(productRating);
+        document.getElementById('productReviewText').textContent = productReview;
+        renderImages('productImagesContainer', productImages);
+
+        // Update seller modal
+        document.getElementById('sellerStars').innerHTML = generateStars(sellerRating);
+        document.getElementById('sellerReviewText').textContent = sellerReview;
+        renderImages('sellerImagesContainer', sellerImages);
+    });
+});
+</script>
+
+
+<script>
+$(document).ready(function() {
+
+    const tableIds = ['#myTable', '#myTable1', '#myTable2', '#myTable3'];
+
+    tableIds.forEach(function(id) {
+        // If already initialized, destroy first
+        if ( $.fn.DataTable.isDataTable(id) ) {
+            $(id).DataTable().clear().destroy();
+        }
+
+        // Initialize DataTable
+        $(id).DataTable({
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            responsive: true
+        });
+    });
+
+});
 
 </script>
+
+
 
 
 
