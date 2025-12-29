@@ -432,7 +432,7 @@
                             </div>
                             <div class="col-lg-4 col-md-6 col-6  d-lg-block d-md-block d-none">
                                 <div class="form-group position-relative search">
-                                    <input type="text" id="headerSearchInput" class="form-control" placeholder="Search Product" />
+                                    <input type="text" id="headerSearchInput" autocomplete="off" class="form-control" placeholder="Search Product" />
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
 
