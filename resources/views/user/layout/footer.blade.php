@@ -439,7 +439,7 @@ $(document).ready(function() {
      </script>
 
     <script>
-        $('.search input').on('keyup', function () {
+        $('#headerSearchInput').on('keyup', function () {
             if ($(this).val().length > 0) {
                 $('.searchdrop').fadeIn();
             } else {
