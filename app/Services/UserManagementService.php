@@ -1278,6 +1278,12 @@ public function addtoCart_Increment_decrement($request)
                 'data'    => (object)[]
             ];
         }
+        
+    }
+
+    private function cleanImageUrl($url)
+    {
+        return preg_replace('/\\\\/', '', $url); 
     }
 
 
