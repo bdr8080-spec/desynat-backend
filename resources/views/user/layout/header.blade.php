@@ -432,11 +432,11 @@
                             </div>
                             <div class="col-lg-4 col-md-6 col-6  d-lg-block d-md-block d-none">
                                 <div class="form-group position-relative search">
-                                    <input type="text" class="form-control" placeholder="Search Product or Brand" />
+                                    <input type="text" id="headerSearchInput" class="form-control" placeholder="Search Product" />
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
 
-                                <div class="searchdrop">
+                                <!-- <div class="searchdrop">
                                     <div class="latestsearch">
                                         <h6>Latest Search Result</h6>
                                         <div class="latest-lists">
@@ -458,6 +458,16 @@
                                                 <a href="#">Nike</a>
                                             </div>
                                         </div>
+                                    </div>
+                                </div> -->
+                                <div class="searchdrop" style="display: none;">
+                                    <div class="latestsearch">
+                                        <h6>Latest Search Result</h6>
+                                        <div class="latest-lists" id="latestSearchResults"></div>
+                                    </div>
+                                    <div class="latestsearch">
+                                        <!-- <h6>Recommended</h6> -->
+                                        <div class="latest-lists" id="recommendedResults"></div>
                                     </div>
                                 </div>
 

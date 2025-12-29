@@ -201,6 +201,51 @@ return [
         }
     }
 
+public function HomePageSearchWeb($data)
+{
+    try {
+        if (!empty($data->search) && !empty($data->user_id)) {
+            RecentSearch::updateOrCreate(
+                ['user_id' => $data->user_id, 'name' => $data->search],
+                ['updated_at' => now()]
+            );
+        }
+
+        $products = product::with([
+            'brand',
+            'category',
+            'subcategory',
+            'product_specifications',
+            'product_variants' => function ($q) {
+                $q->select('id','product_id','final_price'); 
+            },
+            'product_variants.color',
+            'product_variants.size'
+        ]);
+
+        if (!empty($data->search)) {
+            $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
+        }
+
+        // Pagination
+        $products = $products->paginate(10)->appends((array)$data);
+
+        return [
+            'status'  => 'success',
+            'message' => 'Product list',
+            'data'    => $products
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            'status'  => 'error',
+            'message' => 'Failed: ' . $e->getMessage(),
+            'data'    => (object)[]
+        ];
+    }
+}
+
+
 
 
 

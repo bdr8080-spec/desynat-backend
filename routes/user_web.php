@@ -10,6 +10,7 @@ use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\UserGiftCardController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\DashBoardController;
 
 
 
@@ -104,6 +105,9 @@ use App\Http\Controllers\User\OrderController;
 
 
 Route::get('Payment-Callback',[CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
+Route::post('/headerSearch', [DashBoardController::class, 'headerSearch'])->name('user.headerSearch');
+Route::get('/getSearchData', [DashBoardController::class, 'getSearchData'])->name('user.getSearchData');
+
 
 
 

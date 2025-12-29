@@ -678,6 +678,101 @@ function addWishListFunctionproduct(val) {
 }
      </script>
 
+     <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('headerSearchInput');
+
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            fetch("{{ route('user.headerSearch') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ search: query })
+            })
+            .then(res => res.json())
+            .then(data => {
+                //console.log(data);
+
+                // Corrected path to products array
+                const products = data?.data?.data?.data || [];
+
+                if (data.status === 'success' && products.length > 0) {
+                    const storeId = products[0].store_id;
+                    window.location.href = `/user/store-details/${storeId}`;
+                } else {
+                    toastr.error('No products found for your search.');
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    });
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('headerSearchInput');
+    const searchDrop = document.querySelector('.searchdrop');
+    const latestSearchDiv = document.getElementById('latestSearchResults');
+    const recommendedDiv = document.getElementById('recommendedResults');
+
+    // Fetch recent search data if user is logged in
+    function fetchRecentSearch() {
+        fetch("{{ route('user.getSearchData') }}", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data); // debug console
+
+            if (data.status === 'success' && data.data?.data?.length > 0) {
+                latestSearchDiv.innerHTML = ''; // Clear previous results
+
+                data.data.data.forEach(item => {
+                    const div = document.createElement('div');
+                    // Use item.name instead of item.search
+                    div.innerHTML = `<a href="#">${item.name}</a>`;
+                    latestSearchDiv.appendChild(div);
+                });
+
+                searchDrop.style.display = 'block';
+            } else {
+                searchDrop.style.display = 'none';
+            }
+
+            // Recommended section (static example)
+            // recommendedDiv.innerHTML = `
+            //     <div><a href="#">Puma</a></div>
+            //     <div><a href="#">Nike</a></div>
+            // `;
+        })
+        .catch(err => console.error(err));
+    }
+
+    // Show recent searches when input is focused
+    searchInput.addEventListener('focus', function () {
+        fetchRecentSearch();
+    });
+
+    // Optional: hide dropdown on blur after short delay
+    searchInput.addEventListener('blur', function () {
+        setTimeout(() => { searchDrop.style.display = 'none'; }, 200);
+    });
+});
+</script>
+
+
      </body>
 
      </html>
