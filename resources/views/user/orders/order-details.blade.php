@@ -15,13 +15,14 @@
                     <div class="common-title d-flex justify-content-between align-items-center gap-3 mb-4">
                         <div class="d-flex gap-3">
                             <a href="{{ route('user.myOrders') }}">
-                                <img src="{{ asset('user/assets/images/left-ic.svg') }}" class="img-fluid">
+                                <img src="{{ asset('user/assets/images/left-ic.svg') }}" class="img-fluid mt-1">
                             </a>
                             <div class="order-subtitle">
                                 <h3>#{{ $orderData->order->order_id ?? 'N/A' }}</h3>
                                 <p>Placed on {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())->format('d/m/Y \a\t h:ia') }}</p>
                             </div>
                         </div>
+                        
 
                         <!-- @php
                             $status = $orderData->delivery_status ?? 0;

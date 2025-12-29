@@ -49,7 +49,7 @@
                     <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
-                                <img src="{{ $store->store_image }}" class="img-fluid" alt="{{ $store->store_name }}" />
+                                <img src="{{ $store->store_image }}" class="img-fluid circle-image" alt="{{ $store->store_name }}" />
                             </div>
                             <h5>{{ $store->store_name }}</h5>
                         </div>
