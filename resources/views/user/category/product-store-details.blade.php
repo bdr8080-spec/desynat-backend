@@ -363,7 +363,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center gap-3">
                             <!-- User Profile Image -->
-                            <img src="{{ $review->user_details->profile_image }}" class="profile-img img-fluid" width="60" alt="User Profile" />
+                            <img src="{{ $review->user_details->profile_image ?? 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}" class="profile-img img-fluid" width="60" alt="User Profile" />
                             <div>
                                 <h6 class="fw-semibold mb-1">{{ $review->user_details->full_name ?? 'Anonymous' }}</h6>
                                 <!-- Product Rating (stars) -->
