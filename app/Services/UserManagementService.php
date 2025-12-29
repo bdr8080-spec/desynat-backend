@@ -1281,10 +1281,16 @@ public function addtoCart_Increment_decrement($request)
         
     }
 
-    private function cleanImageUrl($url)
+   private function cleanImageUrl($url)
 {
-    $cleanedUrl = stripslashes($url);
-    return filter_var($cleanedUrl, FILTER_SANITIZE_URL); 
+    // Remove any escaped backslashes and forward slashes
+    $cleanedUrl = stripslashes($url);  // Removes escaped characters like \/
+
+    // Clean up any redundant forward slashes
+    $cleanedUrl = preg_replace('/\/+/', '/', $cleanedUrl);
+
+    // Return the sanitized URL
+    return filter_var($cleanedUrl, FILTER_SANITIZE_URL);  // Makes sure the URL is valid
 }
 
 
