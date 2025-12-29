@@ -404,6 +404,7 @@
 
                                     @foreach ($store_details['All_Product'] as $item)
                                         <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
+                                            <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
                                                 <div class="product-card">
                                                     <div class="product-img">
                                                         @foreach ($item->product_variants[0]->variant_image as $key => $val)
@@ -424,7 +425,7 @@
                                                              @endif
                                                      
                                                     </div>
-                                                <a href="{{ route('user.product_details',[$item->id]) }}" style="text-decoration:none;">
+                                                
                                                     <div class="product-content">
                                                             <h5 class="black-title">{{ $item->product_name_en }} ({{ "by " . $store_details['store']['store_name'] }})</h5>
                                                             <div class="rating">
@@ -452,7 +453,7 @@
 
 
                                                     </div>
-                                                </a>
+                                                
                                                 </div>
                                             </a>
                                         </div>
