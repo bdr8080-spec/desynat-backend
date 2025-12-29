@@ -6,7 +6,7 @@
  
     </div> -->
     <div class="d-flex justify-content-between mt-4">
-        <a href="#" class="title24 alink"> <i class="bi bi-chevron-left"></i>Add New Banner</a>
+        <a href="{{route('seller.show_banner')}}" class="title24 alink"> <i class="bi bi-chevron-left"></i>Add New Banner</a>
     </div>
 
     <form id="addBanner" action="{{ route('seller.add_banner') }}" method="post">
@@ -69,7 +69,7 @@
                         <select class="form-control" name="subcatgory" id="getSubcategry">
 
                         </select>
-                        <p class="text-danger" id="error-subcatgory"></p>
+                        <p class="text-danger mb-0" id="error-subcatgory"></p>
 
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         <input type="hidden" name="total_days" id="totalDaysValue" value="">
                         <span class="banner-texts" id="totalDays">Total days - 00</span>
                     </div>
-                    <p class="text-danger" id="error-total_days"></p>
+                    <!-- <p class="text-danger" id="error-total_days"></p> -->
 
                     <div class="row mt-3">
                         <div class="col-md-6">
@@ -107,23 +107,23 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="product-pnls2 mt-3">
-                        <div class="upload-image" style="height:100%;">
+                        <div class="upload-image" style="height:250px;">
                             <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
 
                                 <!-- Placeholder -->
-                                <img id="bannerPlaceholderImg" src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
-                                    style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-
-                                <!-- Uploaded Image -->
-                                <img id="bannerUploadedImg" src=""
-                                    style="width:100px;display:none;object-fit:cover;border-radius:6px;height:110px; margin:auto;">
-
-                                <div class="py-2" style="color:#875C3A">
-                                    Upload Banner
+                                <div id="bannerPlaceholderImg">
+                                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                                        style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                                    <div class="py-2" style="color:#875C3A">
+                                        Upload Banner
+                                    </div>
                                 </div>
 
+                                <!-- Uploaded Image -->
+                                <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
+
                                 <!-- SINGLE IMAGE -->
-                                <input type="file" accept="image/*" id="banner_image_upload" style="opacity:0;"
+                                <input type="file" accept="image/*" id="banner_image_upload" style="opacity:0;position: absolute;"
                                     name="upload_banner">
 
                                 <p class="text-danger" id="error-upload_banner"></p>
