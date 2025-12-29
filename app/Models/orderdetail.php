@@ -42,6 +42,12 @@ class orderdetail extends Model
 
     }
 
+     public function driver_details(){
+        
+        return $this->hasOne(DeliveryBoy::class,'id','delivery_boy_id');
+
+    }
+
 
     
 

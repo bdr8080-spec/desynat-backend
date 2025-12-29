@@ -33,7 +33,7 @@ class OrderController extends Controller
             $activeRequestParams['from_date'] = $fromDate;
             $activeRequestParams['to_date'] = $toDate;
         }
-        $activeOrders = $this->OrderManagementService->ActiveOrders(new Request($activeRequestParams))['data'];
+        $activeOrders = $this->OrderManagementService->ActiveOrdersNew(new Request($activeRequestParams))['data'];
         //dd($activeOrders);
 
         $returnRequestParams = [];

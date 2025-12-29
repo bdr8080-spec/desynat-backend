@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\DeliveryBoy;
+// use App\Models\orderdetail;
 use App\Models\{UserGiftCards,GiftCard,UserWallet};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
@@ -348,68 +349,6 @@ class OrderManagementService
 
     }
 
-    // public function assignDriver($request){
-
-    //     try{
-
-    //         $checkdriver = DeliveryBoy::where('id', $request->driver_id)->first();
-
-    //         if (!$checkdriver) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'No Delivery Boy Found',
-    //                 'data' => []
-    //             ];
-    //         }
-
-    //          $order = Order::find($request->order_id);
-
-    //         if (!$order) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'Order not found',
-    //                 'data' => []
-    //             ];
-    //         }
-
-    //         if ($order->assign_status == 1 && $order->delivery_boy_id == $request->driver_id) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'Driver already assigned to this order',
-    //                 'data' => []
-    //             ];
-    //         }
-
-    //         DB::beginTransaction();
-
-    //         $order->update([
-    //             'delivery_boy_id' => $checkdriver->id,
-    //             'assign_status' => 1,
-    //             'assign_date'     => Carbon::now()
-    //         ]);
-
-    //         DB::commit();
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Delivery Boy Assigned Successfully',
-    //             'data' => [
-    //                 'order_details' => $order,
-    //                 'driver_details' => $checkdriver
-    //             ]
-    //         ];
-
-        
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to assign delivery boy: ' . $e->getMessage(),
-    //             'data' => []
-    //         ];
-    //     }
-
-    // }
-
     public function assignDriver($request)
     {
         try {
@@ -463,6 +402,458 @@ class OrderManagementService
                 'data' => [
                     'order'        => $order,
                     'orderdetails' => $order->order_details, 
+                    'driver'       => $driver
+                ]
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to assign delivery boy: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function ActiveOrdersNew($request){
+
+        try{
+            $limit = (int)($request->input('limit'));
+
+            DB::beginTransaction();
+
+            $checkOrder = orderdetail::with([
+                'order.delivery_details',
+                'order.giftCard_details',
+                'order.promocode_details',
+                
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'product_details.store',
+                'variation_details.color',
+                'variation_details.size',
+                'UserRatingReviewProvide',
+                'driver_details.zone_info'
+            ])
+            ->whereIn('delivery_status', ['1', '2', '2.1','2.2'])
+            ->whereIn('payment_status', ['0', '1']);
+
+            
+            if ($request->search) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            }
+
+            if ($request->country_name) {
+                $checkOrder->whereHas('order.delivery_details', function ($q) use ($request) {
+                    $q->where('country_name', 'like', '%' . $request->country_name . '%');
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereBetween('created_at', [
+                        $request->from_date . ' 00:00:00',
+                        $request->to_date . ' 23:59:59'
+                    ]);
+                });
+
+            } elseif (!empty($request->from_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '>=', $request->from_date);
+                });
+
+            } elseif (!empty($request->to_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '<=', $request->to_date);
+                });
+            }
+
+
+            $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
+
+            return ['status'=>'success','message'=>"Active Orders fetched Successfully",'data'=>$checkOrder];
+
+        
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch active orders: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function ReturnExchangeOrdersNew($request){
+
+        try{
+            $limit = (int)($request->input('limit'));
+
+            DB::beginTransaction();
+
+             $checkOrder = orderdetail::with([
+                'order.delivery_details',
+                'order.giftCard_details',
+                'order.promocode_details',
+                
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'product_details.store',
+                'variation_details.color',
+                'variation_details.size',
+                'UserRatingReviewProvide',
+                'driver_details.zone_info'
+            ])
+            ->where('return_type', '!=', '0');
+            
+            if ($request->search) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            }
+
+            if ($request->country_name) {
+                $checkOrder->whereHas('order.delivery_details', function ($q) use ($request) {
+                    $q->where('country_name', 'like', '%' . $request->country_name . '%');
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereBetween('created_at', [
+                        $request->from_date . ' 00:00:00',
+                        $request->to_date . ' 23:59:59'
+                    ]);
+                });
+
+            } elseif (!empty($request->from_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '>=', $request->from_date);
+                });
+
+            } elseif (!empty($request->to_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '<=', $request->to_date);
+                });
+            }
+
+            $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
+
+            return ['status'=>'success','message'=>"Return Orders fetched Successfully",'data'=>$checkOrder];
+
+        
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch return orders: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function CompletedOrdersNew($request){
+
+        try{
+            $limit = (int)($request->input('limit'));
+
+            DB::beginTransaction();
+
+             $checkOrder = orderdetail::with([
+                'order.delivery_details',
+                'order.giftCard_details',
+                'order.promocode_details',
+                
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'product_details.store',
+                'variation_details.color',
+                'variation_details.size',
+                'UserRatingReviewProvide',
+                'driver_details.zone_info'
+            ])
+            ->where('delivery_status', '3')
+            ->where('return_type', '0')
+            ->where('payment_status', '1');
+            
+            if ($request->search) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            }
+
+            if ($request->country_name) {
+                $checkOrder->whereHas('order.delivery_details', function ($q) use ($request) {
+                    $q->where('country_name', 'like', '%' . $request->country_name . '%');
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereBetween('created_at', [
+                        $request->from_date . ' 00:00:00',
+                        $request->to_date . ' 23:59:59'
+                    ]);
+                });
+
+            } elseif (!empty($request->from_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '>=', $request->from_date);
+                });
+
+            } elseif (!empty($request->to_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '<=', $request->to_date);
+                });
+            }
+
+            $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
+
+            return ['status'=>'success','message'=>"Completed Orders fetched Successfully",'data'=>$checkOrder];
+
+        
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch completed orders: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function CancelledOrdersNew($request){
+
+        try{
+            $limit = (int)($request->input('limit'));
+
+            DB::beginTransaction();
+
+             $checkOrder = orderdetail::with([
+                'order.delivery_details',
+                'order.giftCard_details',
+                'order.promocode_details',
+                
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'product_details.store',
+                'variation_details.color',
+                'variation_details.size',
+                'UserRatingReviewProvide',
+                'driver_details.zone_info'
+            ])
+            ->where('payment_status', '2')
+            ->where('return_type', '0');
+
+            
+            if ($request->search) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                });
+            }
+
+            if ($request->country_name) {
+                $checkOrder->whereHas('order.delivery_details', function ($q) use ($request) {
+                    $q->where('country_name', 'like', '%' . $request->country_name . '%');
+                });
+            }
+
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereBetween('created_at', [
+                        $request->from_date . ' 00:00:00',
+                        $request->to_date . ' 23:59:59'
+                    ]);
+                });
+
+            } elseif (!empty($request->from_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '>=', $request->from_date);
+                });
+
+            } elseif (!empty($request->to_date)) {
+
+                $checkOrder->whereHas('order', function ($q) use ($request) {
+                    $q->whereDate('created_at', '<=', $request->to_date);
+                });
+            }
+
+            $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
+
+            return ['status'=>'success','message'=>"Cancelled Orders fetched Successfully",'data'=>$checkOrder];
+
+        
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch cancelled orders: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function SingleOrderDetailNew($request){
+
+        try{
+
+            DB::beginTransaction();
+
+             $checkOrder = orderdetail::with([
+                'order.delivery_details',
+                'order.giftCard_details',
+                'order.promocode_details',
+                
+                'product_details.brand',
+                'product_details.category',
+                'product_details.subcategory',
+                'product_details.seller_details',
+                'product_details.store',
+                'variation_details.color',
+                'variation_details.size',
+                'UserRatingReviewProvide',
+                'driver_details.zone_info'
+            ])
+            ->where('id', $request->id)->first();
+
+            return ['status'=>'success','message'=>"Order Details fetched Successfully",'data'=>$checkOrder];
+
+        
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch order details: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function getDriversListToAssignNew($request){
+
+        try{
+
+            $checkOrder = orderdetail::with( 'order.delivery_details')->where('id', $request->order_id)->first();
+
+            if (!$checkOrder) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            $checkDeliveryAddressCountryCode = $checkOrder->order->delivery_details->country_code;
+            //dd($checkDeliveryAddressCountryCode);
+
+            if ($checkDeliveryAddressCountryCode!== '+965') {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order Address Is Outside From Kuwait',
+                    'data' => []
+                ];
+            }
+
+            $UserAddressLat = $checkOrder->order->delivery_details->latitude;
+            $UserAddressLong = $checkOrder->order->delivery_details->longitude;
+            //dd($UserAddressLong);
+
+            $deliveryBoyIds = getregionFromCoordinates($UserAddressLat, $UserAddressLong);
+            //dd($deliveryBoyIds);
+
+            if (!$deliveryBoyIds) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Delivery Boy Found For User Address Zone',
+                    'data' => []
+                ];
+            }
+
+            $deliveryBoys = DeliveryBoy::whereIn('id', $deliveryBoyIds)
+                ->orderBy('id', 'desc') 
+                ->get();
+
+            return [
+                'status' => 'success',
+                'message' => "Delivery Boys fetched successfully",
+                'data' => $deliveryBoys
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch delivery boy: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+
+    }
+
+    public function assignDriverNew($request)
+    {
+        try {
+            // Find driver
+            $driver = DeliveryBoy::find($request->driver_id);
+            if (!$driver) {
+                return [
+                    'status' => 'error',
+                    'message' => 'No Delivery Boy Found',
+                    'data' => []
+                ];
+            }
+
+            // Find order
+            $order = orderdetail::find($request->order_id);
+            if (!$order) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            if ($order->assign_status == 1 && $order->delivery_boy_id == $driver->id) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Driver already assigned to this order',
+                    'data' => []
+                ];
+            }
+
+            DB::beginTransaction();
+
+            $order->update([
+                'delivery_boy_id' => $driver->id,
+                'assign_status'   => 1,
+                'assign_date'     => Carbon::now()
+            ]);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Delivery Boy Assigned Successfully',
+                'data' => [
+                    'order'        => $order,
                     'driver'       => $driver
                 ]
             ];
