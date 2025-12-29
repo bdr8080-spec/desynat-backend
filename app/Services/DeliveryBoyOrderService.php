@@ -646,7 +646,7 @@ class DeliveryBoyOrderService
                 'product_details.seller_details.store_info'
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
-            ->where('delivery_status', '2')
+            ->whereIn('delivery_status', ['1','2'])
             ->where('is_picked', 1)
             ->when($request->search, function ($q) use ($request) {
                 $q->whereHas('order_details', function ($query) use ($request) {
