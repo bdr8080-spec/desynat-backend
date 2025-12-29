@@ -439,7 +439,7 @@ class OrderManagementService
                 'UserRatingReviewProvide',
                 'driver_details.zone_info'
             ])
-            ->whereIn('delivery_status', ['1', '2', '2.1','2.2'])
+            ->whereIn('delivery_status', ['1', '2', '2.1','2.2','7'])
             ->whereIn('payment_status', ['0', '1']);
 
             
