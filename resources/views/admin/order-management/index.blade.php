@@ -121,7 +121,7 @@
                                 <th scope="col">Admin Commission</th>
                                 <th scope="col">Order Type</th>
                                 <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy/Company Name</th>
+                                <th scope="col">Delivery Boy Company Name</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Invoice</th>
                                 <th scope="col">Zone</th>
@@ -133,7 +133,7 @@
                             @forelse($activeOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['order']['order_id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -155,12 +155,24 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                 </td>
-                                <td>{{ $data['order']['delivery_details']['address'] }}</td>
+                                <td>{{ $data['order']['delivery_details']['address'] }}
+                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    {{ $data['order']['delivery_details']['postal_code'] }}
+                                    {{ $data['order']['delivery_details']['city'] }}
+                                    {{ $data['order']['delivery_details']['state'] }}
+                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                </td>
                                 <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
-                                <td>Delivery Boy</td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
+                                <td>
+                                    @if(empty($data['driver_details']['full_name_english']))
+                                        Not Assigned
+                                    @else
+                                        Delivery Boy
+                                    @endif
+                                </td>
+                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
                                 @php
                                     $deliveryStatuses = [
                                         1 => 'Pending',
@@ -280,8 +292,8 @@
 
                                 <th scope="col">Admin Commission</th>
                                 <th scope="col">Order Type</th>
-                                <th scope="col">Delivery B</th>
-                                <th scope="col">Delivery Boy/Company</th>
+                                <th scope="col">Delivery Boy</th>
+                                <th scope="col">Delivery Boy Company Name</th>
                                 <th scope="col">Exchange or Return</th>
                                 <th scope="col">Reason</th>
                                 <th scope="col">Status</th>
@@ -295,7 +307,7 @@
                            @forelse($returnOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['order']['order_id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -317,12 +329,24 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                 </td>
-                                <td>{{ $data['order']['delivery_details']['address'] }}</td>
+                                <td>{{ $data['order']['delivery_details']['address'] }}
+                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    {{ $data['order']['delivery_details']['postal_code'] }}
+                                    {{ $data['order']['delivery_details']['city'] }}
+                                    {{ $data['order']['delivery_details']['state'] }}
+                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                </td>
                                 <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
-                                <td>Delivery Boy</td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
+                                <td>
+                                    @if(empty($data['driver_details']['full_name_english']))
+                                        Not Assigned
+                                    @else
+                                        Delivery Boy
+                                    @endif
+                                </td>
+                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
                                 @php
                                     $deliveryStatuses = [
                                         1 => 'Return',
@@ -448,7 +472,7 @@
                                 <th scope="col">Admin Commission</th>
                                 <th scope="col">Order Type</th>
                                 <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy/Company Name</th>
+                                <th scope="col">Delivery Boy Company Name</th>
                                 <th scope="col">Rating & Review</th>
                                 <th scope="col">Invoice</th>
                             </tr>
@@ -457,7 +481,7 @@
                             @forelse($completeOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['order']['order_id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -479,12 +503,24 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                 </td>
-                                <td>{{ $data['order']['delivery_details']['address'] }}</td>
+                                <td>{{ $data['order']['delivery_details']['address'] }}
+                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    {{ $data['order']['delivery_details']['postal_code'] }}
+                                    {{ $data['order']['delivery_details']['city'] }}
+                                    {{ $data['order']['delivery_details']['state'] }}
+                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                </td>
                                 <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
-                                <td>Delivery Boy</td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
+                                <td>
+                                    @if(empty($data['driver_details']['full_name_english']))
+                                        Not Assigned
+                                    @else
+                                        Delivery Boy
+                                    @endif
+                                </td>
+                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
                                 <td data-bs-toggle="modal" 
                                     data-bs-target="#sentModalrating" 
                                     style="cursor: pointer;"
@@ -580,7 +616,7 @@
                                 <th scope="col">Admin Commission</th>
                                 <th scope="col">Order Type</th>
                                 <th scope="col">Delivery Boy</th>
-                                <th scope="col">Delivery Boy/Company Name</th>
+                                <th scope="col">Delivery Boy Company Name</th>
                                 <th scope="col">Reason</th>
                             </tr>
                         </thead>
@@ -588,7 +624,7 @@
                             @forelse($cancelledOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['order']['order_id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -610,12 +646,24 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                 </td>
-                                <td>{{ $data['order']['delivery_details']['address'] }}</td>
+                                <td>{{ $data['order']['delivery_details']['address'] }}
+                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    {{ $data['order']['delivery_details']['postal_code'] }}
+                                    {{ $data['order']['delivery_details']['city'] }}
+                                    {{ $data['order']['delivery_details']['state'] }}
+                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                </td>
                                 <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
                                 <td>Normal</td>
-                                <td>Delivery Boy</td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'N/A' }}</td>
+                                <td>
+                                    @if(empty($data['driver_details']['full_name_english']))
+                                        Not Assigned
+                                    @else
+                                        Delivery Boy
+                                    @endif
+                                </td>
+                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
                                 <td>{{ $data['cancel_reason'] ?? 'N/A' }}</td>
                             </tr>
                             @empty
@@ -635,60 +683,6 @@
 
 
 <!-- review model -->
-<!-- <div class="modal fade" id="sentModalrating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header management border-0">
-                <h2 class="h2">Seller rating & Review</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="overlay">
-                <div class="review-modal">
-
-
-                    <div class="review-box">
-                        <div class="stars">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </div>
-                        <p class="review-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam.
-                        </p>
-                    </div>
-
-                    <h4 class="product-title">Product Name</h4>
-
-                    <div class="review-box">
-                        <div class="stars center">
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-
-                            <i class="bi bi-star-fill text-warning"></i>
-                            <i class="bi bi-star-fill text-warning"></i>
-                        </div>
-                        <p class="review-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-
-                        <div class="attached">
-                            <p>Attached Image</p>
-                            <img src="/admin/image/download.jpeg" alt="attached">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div> -->
 <div class="modal fade" id="sentModalrating" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
