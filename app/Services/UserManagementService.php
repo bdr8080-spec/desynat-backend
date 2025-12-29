@@ -1282,9 +1282,10 @@ public function addtoCart_Increment_decrement($request)
     }
 
     private function cleanImageUrl($url)
-    {
-        return preg_replace('/\\\\/', '', $url); 
-    }
+{
+    $cleanedUrl = stripslashes($url);
+    return filter_var($cleanedUrl, FILTER_SANITIZE_URL); 
+}
 
 
 
