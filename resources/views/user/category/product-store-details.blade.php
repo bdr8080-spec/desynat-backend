@@ -359,36 +359,41 @@
         </div>
         <div class="desc-box p-4 rounded-4">
             @forelse($data->review as $review)
-                <div class="review-box p-4 rounded-4">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center gap-3">
-                            <!-- User Profile Image -->
-                            <img src="{{ $review->user_details->profile_image }}" class="profile-img img-fluid" width="60" alt="User Profile" />
-                            <div>
-                                <h6 class="fw-semibold mb-1">{{ $review->user_details->full_name ?? 'Anonymous' }}</h6>
-                                <!-- Product Rating (stars) -->
-                                <span class="text-warning fs-5">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <i class="bi bi-star{{ $i <= $review->product_rating ? '-fill' : '' }} text-warning"></i>
-                                    @endfor
-                                </span>
-                            </div>
+            <div class="review-box p-4 rounded-4">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- User Profile Image -->
+                        <img src="{{ $review->user_details->profile_image }}" class="profile-img img-fluid" width="60" alt="User Profile" />
+                        <div>
+                            <h6 class="fw-semibold mb-1">{{ $review->user_details->full_name ?? 'Anonymous' }}</h6>
+                            <!-- Product Rating (stars) -->
+                            <span class="text-warning fs-5">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i class="bi bi-star{{ $i <= $review->product_rating ? '-fill' : '' }} text-warning"></i>
+                                @endfor
+                            </span>
                         </div>
-                        <span class="text-muted">{{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }}</span>
                     </div>
-                    <p class="mt-3 text-muted">
-                        {{ $review->product_review ?? 'No review provided' }}
-                    </p>
-                    <div class="d-flex gap-3 mt-3">
-                        <!-- Render Product Images (if any) -->
+                    <span class="text-muted">{{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }}</span>
+                </div>
+                <p class="mt-3 text-muted">
+                    {{ $review->product_review ?? 'No review provided' }}
+                </p>
+                <div class="d-flex gap-3 mt-3">
+                    <!-- Render Product Images (if any) -->
+                    @if($review->product_image && json_decode($review->product_image))
                         @foreach(json_decode($review->product_image) as $image)
                             <img src="{{ $image }}" class="review-img" alt="Review Image" style="width: 100px; height: 100px; object-fit: cover;" />
                         @endforeach
-                    </div>
+                    @else
+                        <p>No images provided for this review.</p>
+                    @endif
                 </div>
-            @empty
-                <p>No reviews yet. Be the first to review this product!</p>
-            @endforelse
+            </div>
+        @empty
+            <p>No reviews yet. Be the first to review this product!</p>
+        @endforelse
+
 
 
         </div>
