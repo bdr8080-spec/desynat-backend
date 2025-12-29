@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Brand;
 use App\Models\country;
 use Illuminate\Support\Facades\Crypt;
 use App\Services\UserProfileService;
@@ -565,6 +566,9 @@ class AuthController extends Controller
             return view('user.dashboard.subCategory', compact('subCategory'))->render();
         }
 
-      return view('user.dashboard.dashboard', compact('subCategory'));
+    $brands = Brand::orderBy('name_english', 'desc')->get();
+    //dd($brands);
+
+      return view('user.dashboard.dashboard', compact('subCategory','brands'));
     }
 }
