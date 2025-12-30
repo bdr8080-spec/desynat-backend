@@ -187,7 +187,7 @@
                                 @endphp
                                 <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td>
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a href="{{ url('Invoice', ['order_id' => $data['order']['order_id']]) }}" class="btn btn-dark customBtn">
                                         <span>Download Invoice</span>
                                     </a>
                                 </td>
@@ -536,7 +536,7 @@
                                     <span class="rating-number">{{ $data['user_rating_review_provide']['product_rating'] ?? 'N/A' }} Rating</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a href="{{ url('Invoice', ['order_id' => $data['order']['order_id']]) }}" class="btn btn-dark customBtn">
                                         <span>Download Invoice</span>
                                     </a>
                                 </td>
