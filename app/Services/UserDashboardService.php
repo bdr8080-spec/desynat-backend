@@ -60,8 +60,13 @@ $products = product::with([
 /**
  * Search filter
  */
+
 if (!empty($data->search)) {
-    $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
+    $products->where(function ($query) use ($data) {
+        $query->where('product_name_en', 'LIKE', '%' . $data->search . '%')
+              ->orWhere('other_en', 'LIKE', '%' . $data->search . '%')
+              ->orWhere('description_en', 'LIKE', '%' . $data->search . '%');
+    });
 }
 
 /**
@@ -223,9 +228,91 @@ public function HomePageSearchWeb($data)
             'product_variants.size'
         ]);
 
-        if (!empty($data->search)) {
-            $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
+    if (!empty($data->search)) {
+       $products->where(function ($query) use ($data) {
+        $query->where('product_name_en', 'LIKE', '%' . $data->search . '%')
+              ->orWhere('other_en', 'LIKE', '%' . $data->search . '%')
+              ->orWhere('description_en', 'LIKE', '%' . $data->search . '%');
+    });
+}
+
+
+
+/**
+ * Brand filter
+ */
+if (!empty($data->brand_id) && is_array($data->brand_id)) {
+    $products->whereIn('brand_id', array_map('intval', $data->brand_id));
+}
+
+/**
+ * Category filter
+ */
+if (!empty($data->category_id) && is_array($data->category_id)) {
+    $products->whereIn('category_id', array_map('intval', $data->category_id));
+}
+
+/**
+ * Variant-based filtering
+ */
+if (
+    !empty($data->size_id) ||
+    !empty($data->color_id) ||
+    !empty($data->price_min) ||
+    !empty($data->price_max) ||
+    !empty($data->discount)
+) {
+    $products->whereHas('product_variants', function ($q) use ($data) {
+
+        if (!empty($data->size_id) && is_array($data->size_id)) {
+            $q->whereIn('size_id', array_map('intval', $data->size_id));
         }
+
+        if (!empty($data->color_id) && is_array($data->color_id)) {
+            $q->whereIn('color_id', array_map('intval', $data->color_id));
+        }
+
+        if (!empty($data->price_min)) {
+            $q->where('final_price', '>=', $data->price_min);
+        }
+
+        if (!empty($data->price_max)) {
+            $q->where('final_price', '<=', $data->price_max);
+        }
+        
+        if (!empty($data->discount)) {
+            $q->where('discount_value', '<=', $data->discount);
+        }
+    });
+}
+
+/**
+ * Sorting
+ */
+if (!empty($data->sort_filter)) {
+    switch ($data->sort_filter) {
+
+        case 2: // Price: Low to High
+            $products->with(['product_variants' => function ($q) {
+                $q->orderBy('final_price', 'asc');
+            }]);
+            break;
+
+        case 3: // Price: High to Low
+            $products->with(['product_variants' => function ($q) {
+                $q->orderBy('final_price', 'desc');
+            }]);
+            break;
+
+        case 4: // Newest
+            $products->orderBy('created_at', 'desc');
+            break;
+
+        case 8: // Oldest
+            $products->orderBy('created_at', 'asc');
+            break;
+    }
+}
 
         // Pagination
         $products = $products->paginate(10)->appends((array)$data);
