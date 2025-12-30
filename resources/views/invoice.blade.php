@@ -306,6 +306,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>Sr.</th>
                             <th>Product Image</th>
                             <th>Product Name</th>
                             <th>Size</th>
@@ -319,6 +320,7 @@
                         @foreach($checkOrder->order_details as $key=>$val)
 
                         <tr>
+                            <td>{{$key+1}}</td>
                             <td><img src="{{$val->variation_details->variant_image[0]}}" width="70px"> </td>
                             <td>{{$val->product_details->product_name_en}}</td>
                             <td>{{$val->variation_details->size->name}}</td>
@@ -377,7 +379,7 @@
                 <td>
 
                     @if($checkOrder->payment_method==1)
-                    KNET / VISA / MASTERCARD / WALLET
+                    VISA / MASTERCARD
                     @elseif($checkOrder->payment_method==2)
                     WALLET
                     @elseif($checkOrder->payment_method==3)
