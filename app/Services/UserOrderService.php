@@ -1134,6 +1134,10 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
     }
 
+    if($checkOrder->payment_status=='2' && $checkOrder->payment_status=='3'){
+       return ['status'=>'error','message'=>"Order is Cancelled or rejected",'data'=>(object)[]];
+    }
+
     if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
        return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
     }
