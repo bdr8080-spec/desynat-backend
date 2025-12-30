@@ -156,11 +156,11 @@
                                     </a>
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['address'] }}
-                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    <!-- {{ $data['order']['delivery_details']['house_no'] }} -->
                                     {{ $data['order']['delivery_details']['postal_code'] }}
-                                    {{ $data['order']['delivery_details']['city'] }}
+                                    <!-- {{ $data['order']['delivery_details']['city'] }} -->
                                     {{ $data['order']['delivery_details']['state'] }}
-                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                    <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
@@ -187,7 +187,7 @@
                                 @endphp
                                 <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td>
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a href="{{ url('Invoice', ['order_id' => $data['order']['order_id']]) }}" target="_blank" class="btn btn-dark customBtn">
                                         <span>Download Invoice</span>
                                     </a>
                                 </td>
@@ -330,11 +330,11 @@
                                     </a>
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['address'] }}
-                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    <!-- {{ $data['order']['delivery_details']['house_no'] }} -->
                                     {{ $data['order']['delivery_details']['postal_code'] }}
-                                    {{ $data['order']['delivery_details']['city'] }}
+                                    <!-- {{ $data['order']['delivery_details']['city'] }} -->
                                     {{ $data['order']['delivery_details']['state'] }}
-                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                    <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>
@@ -504,11 +504,11 @@
                                     </a>
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['address'] }}
-                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    <!-- {{ $data['order']['delivery_details']['house_no'] }} -->
                                     {{ $data['order']['delivery_details']['postal_code'] }}
-                                    {{ $data['order']['delivery_details']['city'] }}
+                                    <!-- {{ $data['order']['delivery_details']['city'] }} -->
                                     {{ $data['order']['delivery_details']['state'] }}
-                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                    <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
                                     @if($data['amount'] == floor($data['amount']))
@@ -536,7 +536,7 @@
                                     <span class="rating-number">{{ $data['user_rating_review_provide']['product_rating'] ?? 'N/A' }} Rating</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-dark customBtn">
+                                    <a href="{{ url('Invoice', ['order_id' => $data['order']['order_id']]) }}" target="_blank" class="btn btn-dark customBtn">
                                         <span>Download Invoice</span>
                                     </a>
                                 </td>
@@ -654,11 +654,11 @@
                                     </a>
                                 </td>
                                 <td>{{ $data['order']['delivery_details']['address'] }}
-                                    {{ $data['order']['delivery_details']['house_no'] }}
+                                    <!-- {{ $data['order']['delivery_details']['house_no'] }} -->
                                     {{ $data['order']['delivery_details']['postal_code'] }}
-                                    {{ $data['order']['delivery_details']['city'] }}
+                                    <!-- {{ $data['order']['delivery_details']['city'] }} -->
                                     {{ $data['order']['delivery_details']['state'] }}
-                                    {{ $data['order']['delivery_details']['country_name'] }}
+                                    <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>{{ $data['amount'] }} KD</td>
                                 <td>20 KD</td>

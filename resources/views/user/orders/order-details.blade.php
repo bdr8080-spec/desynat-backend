@@ -490,9 +490,9 @@
 
 
                 <div class="mt-4">
-                    <button type="submit" class="customBtn mb-3">
+                    <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank" class="customBtn mb-3">
                         Download Invoice
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

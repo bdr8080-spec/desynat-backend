@@ -237,11 +237,11 @@
         <table class="table customer-info">
             <tr>
                 <td class="label">Customer Name:</td>
-                <td class="line"> {{@$checkOrder->user_details->full_name }}</td>
+                <td class="line"> {{@$checkOrder->delivery_details->name }}</td>
             </tr>
             <tr>
                 <td class="label">Mobile Number:</td>
-                <td class="line">{{@$checkOrder->user_details->country_code }} {{@$checkOrder->user_details->mobile }}
+                <td class="line">{{@$checkOrder->delivery_details->country_code }} {{@$checkOrder->delivery_details->mobile }}
                 </td>
             </tr>
             <tr>
