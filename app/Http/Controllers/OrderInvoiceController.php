@@ -13,6 +13,7 @@ class OrderInvoiceController extends Controller
 
          $checkOrder = Order::with(
                 'delivery_details',
+                'promocode_details',
                 'user_details',
                 'order_details.product_details.brand',
                 'order_details.product_details.category',
@@ -23,7 +24,7 @@ class OrderInvoiceController extends Controller
                 'driver_details.zone_info'
             )->where('order_id', $id)->first();
 
-            // dump($checkOrder);
+            dump($checkOrder);
             
 
             if($checkOrder){

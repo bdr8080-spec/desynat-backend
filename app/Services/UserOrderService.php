@@ -639,23 +639,27 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         'variation_details.size',
         'UserRatingReviewProvide'
     ])
-    
-    // $checkOrder=Order::with(
-    //     'promocode_details',
-    //     'giftCard_details',
-    //     'delivery_details',
-    //     'order_details.product_details.brand',
-    //     'order_details.product_details.category',
-    //     'order_details.product_details.subcategory',
-    //     'order_details.product_details.seller_details',
-    //     'order_details.UserRatingReviewProvide',
-
-    // 'order_details.variation_details.color','order_details.variation_details.size')
-
     ->where('order_id', $request->order_id)
     ->where('id',$request->orderdetails_id)
     
     ->first();
+
+    if($checkOrder){
+
+       $checkOrder->allOtherOrderVarient = OrderDetail::with([   
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.store',
+        'variation_details.color',
+        'variation_details.size',
+    ]) 
+     ->where('order_id', $request->order_id)
+     ->whereNOT('id',$request->orderdetails_id)
+    ->get();
+
+    }
+
 
     return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
     

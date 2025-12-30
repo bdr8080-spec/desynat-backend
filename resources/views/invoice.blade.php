@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
-    <title>DESYNAT Invoice</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>DESYNAT Invoice</title>
 
     <style>
     * {
@@ -257,7 +259,7 @@
 
         <!-- PRODUCT + SUMMARY -->
         <div class="box">
-            <div class="box-row">
+            <!-- <div class="box-row">
                 <div class="box-col">
                     <div class="box-title">Product Details</div>
                     <table class="inner-table">
@@ -298,7 +300,41 @@
                         </tr>
                     </table>
                 </div>
+            </div> -->
+
+            <div class="table-container">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Image</th>
+                            <th>Product Name</th>
+                            <th>Size</th>
+                            <th>Color</th>
+                            <th>Quantity</th>
+                            <th>Price per Item</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach($checkOrder->order_details as $key=>$val)
+
+                        <tr>
+                            <td><img src="{{$val->variation_details->variant_image[0]}}" width="70px"> </td>
+                            <td>{{$val->product_details->product_name_en}}</td>
+                            <td>{{$val->variation_details->size->name}}</td>
+                            <td>{{$val->variation_details->color->name}}</td>
+                            <td>{{$val->quantity}}</td>
+                            <td>{{$val->variation_details->actual_price}}</td>
+                        </tr>
+
+                        @endforeach
+
+
+                        <!-- Add more rows -->
+                    </tbody>
+                </table>
             </div>
+
 
             <!-- SUBTOTAL BOX -->
             <div class="box-footer">
@@ -307,27 +343,27 @@
                 <table>
                     <tr>
                         <td><strong>SUBTOTAL</strong></td>
-                        <td>50.000KD</td>
+                        <td>{{$checkOrder->total_mrp}}</td>
 
                     </tr>
                     <tr>
                         <td>Discount</td>
-                        <td>−5.000 KD</td>
+                        <td>{{$checkOrder->discount_mrp}} KD</td>
                         <td>Promo Code</td>
-                        <td>DESY10</td>
+                        <td>{{@$checkOrder->promocode_details->name_english }}</td>
                     </tr>
 
                     <tr>
                         <td>Delivery Fee</td>
-                        <td>50,000</td>
+                        <td>{{$checkOrder->shipping_fees}}</td>
                         <td>Tax (VAT)</td>
-                        <td>30.000 KD</td>
+                        <td>{{$checkOrder->tax}} KD</td>
                     </tr>
                     <tr>
                         <td>
                             Total Amount:
                         </td>
-                        <td>47,000KD</td>
+                        <td>{{$checkOrder->total_amount }} KD</td>
                     </tr>
                 </table>
             </div>
@@ -338,11 +374,30 @@
         <table class="table">
             <tr>
                 <td>Payment Method:</td>
-                <td>KNET / VISA / MASTERCARD / WALLET</td>
+                <td>
+
+                    @if($checkOrder->payment_method==1)
+                    KNET / VISA / MASTERCARD / WALLET
+                    @elseif($checkOrder->payment_method==2)
+                    WALLET
+                    @elseif($checkOrder->payment_method==3)
+                    COD
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Payment Status</td>
-                <td>Paid</td>
+                <td>
+                    @if($checkOrder->payment_status==0)
+                    Pending
+                    @elseif($checkOrder->payment_status==1)
+                    Paid
+                    @elseif($checkOrder->payment_status==2)
+                    Cancelled
+                    @elseif($checkOrder->payment_status==3)
+                    Refund
+                    @endif
+                </td>
             </tr>
         </table>
 
@@ -351,11 +406,11 @@
         <table class="table">
             <tr>
                 <td>Expected Delivery Date:</td>
-                <td>25 Oct 2025</td>
+                <td>{{$checkOrder->created_at->addDays(6)->format('d M Y') }}</td>
             </tr>
             <tr>
                 <td>Expected Delivery Time:</td>
-                <td>2:00 PM – 6:00 PM</td>
+                <td>{{$checkOrder->created_at->addDays(6)->format('h:i:s') }}</td>
             </tr>
             <tr>
                 <td>Delivery Managed By:</td>
@@ -369,7 +424,7 @@
 
         <div class="section-title">Return & Exchange Policy</div>
         <ul class="policy">
-            <li>Exchange & return within 14 days from delivery date.</li>
+            <li>Exchange & return within 7 days from delivery date.</li>
             <li>Non-refundable unless defective.</li>
             <li>Item must be unused and in original packaging.</li>
             <li>Delivery fee is non-refundable.</li>
