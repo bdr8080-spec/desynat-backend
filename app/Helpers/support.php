@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Models\{UserGiftCards,UserWallet,Order};
+use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail};
 use App\Models\Zone;
 use App\Models\DeliveryBoy;
 
@@ -173,3 +173,30 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
         return $c;
     }
  
+
+
+
+    // delete Data from Add to cart
+ function AddtocartRemoveData($orderid){
+
+        $checkOrder = Order::with('order_details.product_details')->where('id', $orderid)->first();
+
+        $userId = $checkOrder->user_id;  // ← correct source of user_id
+        
+        foreach ($checkOrder->order_details as $key => $val) {
+        
+            Addtocart::where([
+                'product_id' => $val->product_id,
+                'variants_id' => $val->variants_id,
+                'user_id'     => $userId
+            ])->delete();
+        
+        }
+
+        
+    }
+
+         function Order_detailsPaidStatusChange($orderid,$paymentstatus){
+        $checkOrder = orderdetail::where('order_id', $orderid)->update(['payment_status'=>$paymentstatus]);
+        
+    }

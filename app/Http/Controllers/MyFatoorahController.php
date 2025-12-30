@@ -294,6 +294,11 @@ class MyFatoorahController extends Controller {
                     $msg="Order Payment Paid Successfully";
                     $url="user/order-details/$transaction_id?payment=yes";
 
+                    AddtocartRemoveData($checkOrderStatus->id);
+                    OrderGiftCardConditionCheck($checkOrderStatus->id); // order inside Giftcard Check 
+
+                    Order_detailsPaidStatusChange($checkOrderStatus->id,'1'); // order details complete order
+
                     Addtocart::where('user_id',$checkOrderStatus->user_id)->delete();
 
                 }else{
