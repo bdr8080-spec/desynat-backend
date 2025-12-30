@@ -231,18 +231,20 @@ class OrderController extends Controller
              $user=  $request->user();
             $productImages = [];
             $storeImages = [];
+            $dir = "product_reviews";
 
             // Handle product images
             if ($request->hasFile('product_image')) {
                 foreach ($request->file('product_image') as $image) {
-                    $productImages[] = doc_upload($image, 'product_reviews');
+                    $productImages[] = doc_upload($image, $dir);
                 }
             }
+            //dd($productImages);
 
             // Handle store images
             if ($request->hasFile('store_image')) {
                 foreach ($request->file('store_image') as $image) {
-                    $storeImages[] = doc_upload($image, 'store_reviews');
+                    $storeImages[] = doc_upload($image, $dir);
                 }
             }
 
@@ -260,7 +262,7 @@ class OrderController extends Controller
                 'store_image'     => $storeImages,
             ];
 
-            //dd($request_data);
+           //dd($request_data);
 
             // Call your service for handling review logic
             $data = $this->UserOrderService->ProductReviewAndRating($request_data);
