@@ -109,12 +109,12 @@
                                             </button>
                                         </div>
                                         @elseif($orderData->payment_status == '2')
-                                        <div class="d-none-1">
+                                        <!-- <div class="d-none-1">
                                             <button
                                                 class="btn btn-outline-red w-100 cancelBtn">
                                                 Cancelled
                                             </button>
-                                        </div>
+                                        </div> -->
                                         @endif
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@
                     <h6>Shipping Address</h6>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <p>{{$orderData->order->delivery_details->address}} {{$orderData->order->delivery_details->house_no}} {{$orderData->order->delivery_details->city}} {{$orderData->order->delivery_details->state}} {{$orderData->order->delivery_details->postal_code}} {{$orderData->order->delivery_details->country_name}}</p>
+                            <p>{{$orderData->order->delivery_details->address}} {{$orderData->order->delivery_details->state}} {{$orderData->order->delivery_details->postal_code}} {{$orderData->order->delivery_details->country_name}}</p>
                         </div>
                     </div>
                 </div>
@@ -478,7 +478,7 @@
                                     @if($paymentStatus == '1')
                                         Cash On Delivery
                                     @else
-                                        Payment Pending On COD
+                                        COD
                                     @endif
                                 @else
                                     Payment Info Not Available

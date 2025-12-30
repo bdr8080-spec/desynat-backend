@@ -231,7 +231,7 @@
                                                     <div class="card-right d-flex w-100 justify-content-between">
                                                         <div class="product-info">
                                                             <h5 class="product-title">
-                                                                Order ID :# <span>{{ $orderDetail->id }}</span>
+                                                                Order ID :# <span>{{ $orderDetail->order->order_id }}</span>
                                                             </h5>
 
                                                             <div class="price-current">
@@ -272,9 +272,10 @@
 
                                             </div>
                                         </div>
-                                        @if(in_array($orderdetail->delivery_status, ['1', '2'])  && $orderdetail->payment_status !== '2')
+                                        @if(in_array($orderdetail->delivery_status, ['1', '2','2.1','2.2','8'])  && $orderdetail->payment_status !== '2')
                                         <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                            Expected Delivery Date : {{ $orderdetail->updated_at->copy()->addDays(5)->format('d M Y') }}
+                                            <!-- Expected Delivery Date : {{ $orderdetail->updated_at->copy()->addDays(5)->format('d M Y') }} -->
+                                             Expected Delivery Date : 3-5 Working Days
                                         </div>
                                         @elseif($orderdetail->payment_status == '2')
                                         <div class="expert-date" style="background:{{ $bgColor }}; color:{{ $statusColor }}">
