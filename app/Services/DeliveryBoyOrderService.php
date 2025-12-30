@@ -853,7 +853,12 @@ class DeliveryBoyOrderService
             // Update order
             $order->delivery_status = $status;
             $order->not_delivered_reason = $request->reason ?? null;
+            if ($status === '3') {
+                $order->payment_status = '1';
+            }
+            
             $order->save();
+
 
             DB::commit();
 
