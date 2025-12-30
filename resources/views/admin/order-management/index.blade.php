@@ -193,7 +193,7 @@
                                 </td>
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
                                 <td>
-                                    @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_name'] === 'Kuwait')
+                                    @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_code'] === '+965')
                                     <a class="btn btn-dark customBtn assignDriverBtn"
                                     href="javascript:void(0)"
                                     data-order-id="{{ $data['id'] }}"
@@ -376,7 +376,7 @@
                                 <td>{{ $deliveryStatus[$data['delivery_status']] ?? 'Unknown' }}</td>
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
                                 <td>
-                                    @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_name'] === 'Kuwait')
+                                    @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_code'] === '+965')
                                     <a class="btn btn-dark customBtn assignDriverBtn"
                                     href="javascript:void(0)"
                                     data-order-id="{{ $data['id'] }}"

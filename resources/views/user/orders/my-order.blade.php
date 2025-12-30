@@ -235,7 +235,7 @@
                                                             </h5>
 
                                                             <div class="price-current">
-                                                                {{ $product->name ?? 'Product Name' }}
+                                                                {{ $product->product_name_en ?? 'N/A' }}
                                                             </div>
 
                                                             <div class="psize d-flex gap-4 mt-2">
