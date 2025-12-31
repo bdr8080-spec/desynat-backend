@@ -290,8 +290,8 @@
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
                                         Expected Delivery Date :
-                                        {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }}
-                                        <!-- Expected Delivery Date : {{ $orderdetail->created_at->format('d M y') }} -->
+                                        <!-- {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }} -->
+                                        Expected Delivery Date : 3-5 Working Days
                                     </div>
                                     @elseif($orderdetail->payment_status == '2' || $orderdetail->payment_status == '3' )
                                     <div class="expert-date"
