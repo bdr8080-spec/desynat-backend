@@ -30,7 +30,7 @@ class OrderController extends Controller
         ];
 
         $orderData = $this->UserOrderService->AllOrderDetailsNew($data)['data'];
-        //dd($orderData);
+        // dump($orderData);
 
         return view('user.orders.my-order',compact('orderData'));
 
@@ -45,7 +45,7 @@ class OrderController extends Controller
         ];
 
         $orderData = $this->UserOrderService->singleOrderDetailsNew($data)['data'];
-       //dd($orderData);
+    //    dump($orderData);
        $data1 = (object)[
             'type' => '3',
         ];

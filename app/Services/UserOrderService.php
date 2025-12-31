@@ -526,9 +526,9 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
  public function AllOrderDetailsNew($request){
 
-    try{
-   
-    $orders = OrderDetail::with([
+try{
+
+     $orders = OrderDetail::with([
         'order.delivery_details',
         'product_details.brand',
         'product_details.category',
@@ -539,44 +539,58 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     ])
     ->whereHas('order', function ($q) use ($request) {
 
-      $q->where('user_id', $request->user_id)
-      ->where(function ($query) {
-          $query
-              ->where('payment_method', '3') // COD (no payment_status check)
-              ->orWhere(function ($sub) {
-                  $sub->whereIn('payment_method', ['1','2'])
-                      ->where('payment_status','!=','0'); // Paid only
-              });
-      });
-      
-        if ($request->search) {
+        // User filter
+        $q->where('user_id', $request->user_id);
+
+        // Payment logic
+        $q->where(function ($query) {
+            $query->where('payment_method', '3') // COD
+                  ->orWhere(function ($sub) {
+                      $sub->whereIn('payment_method', ['1', '2'])
+                          ->where('payment_status', '!=', '0'); // Paid
+                  });
+        });
+
+        // Search filter
+        if (!empty($request->search)) {
             $q->where('order_id', 'like', '%' . $request->search . '%');
         }
+    });
 
-        if ($request->filter) {
-            switch ($request->filter) {
-                case '2': // Ongoing
-                    $q->where('delivery_status', '2');
-                    break;
+/*
+|--------------------------------------------------------------------------
+| OrderDetail status filters
+|--------------------------------------------------------------------------
+*/
+if (!empty($request->filter)) {
+    $orders->where(function ($query) use ($request) {
 
-                case '3': // Delivered
-                    $q->where('payment_status', '1')
-                      ->where('delivery_status', '3');
-                    break;
+        switch ($request->filter) {
 
-                case '4': // Cancelled
-                    $q->where('payment_status', '2');
-                    break;
+            case '2': // Ongoing
+                $query->whereIn('delivery_status', ['1', '2'])
+                ->whereIn('payment_status',['0','1']);
+                break;
 
-                case '5':
-                    $q->where('payment_status', '3')
-                      ->where('delivery_status', '4');
-                    break;
-            }
+            case '3': // Delivered
+                $query->where('delivery_status', '3')
+                ->where('return_type','0');
+
+                break;
+
+            case '4': // Cancelled
+                $query->whereIn('payment_status', ['3','2']); // adjust if needed
+                break;
+
+            case '5': // Returned / Failed
+                $query->where('delivery_status', '3')
+                      ->where('return_type', '1');
+                break;
         }
-    })
+    });
+}
 
-    ->orderBy('id','desc')->get();
+$orders = $orders->orderBy('id', 'desc')->get();
 
 
     return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$orders];
