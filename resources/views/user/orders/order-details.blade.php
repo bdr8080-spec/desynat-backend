@@ -186,6 +186,74 @@
                 </div>
                 <!-- </div> -->
 
+                <!-- relivent product  -->
+
+
+                <h1> Relevant product </h1>
+
+                @foreach($orderData->allOtherOrderVarient as $key=>$val)
+
+                <div class="cart-panel">
+
+                    <div class="card-left mb-2 d-flex">
+                        <div>
+                            @php
+                            // Handle variant images
+                            $images = is_array($val->variation_details->variant_image)
+                            ? $val->variation_details->variant_image
+                            : json_decode($val->variation_details->variant_image ?? '[]', true);
+
+                            $image = $images[0] ?? ($val->product_details->image_url ??
+                            asset('user/assets/images/categorie1.png'));
+                            @endphp
+
+                            <div class="cart-products me-3">
+                                <a href="{{ route('user.order_details', ['id' => $val->order_id]) }}?orderdetails_id={{ $val->id }}"
+                                    class="link-content"> <img src="{{ $image }}" alt="Product" class="img-fluid"> </a>
+                            </div>
+                        </div>
+
+                        <div class="card-right d-flex w-100 justify-content-between">
+                            <div class="product-info">
+                                <h5 class="product-title">
+                                    {{ $val->product_details->product_name_en ?? 'N/A' }}</h5>
+
+                                <div class="psize d-flex gap-4">
+                                    <span>Size: {{ $val->variation_details->size->name ?? 'N/A' }}</span>
+
+                                    <span class="d-flex align-items-center gap-2">
+                                        Color:
+                                        <div class="colorbox"
+                                            style="width:15px; height:15px; border-radius:3px; background: {{ $val->variation_details->color->hex_code ?? '#000' }};">
+                                        </div>
+                                    </span>
+
+                                    <span>Qnt: {{ $val->quantity ?? 1 }}</span>
+                                </div>
+
+                                {{-- Price --}}
+                                <div class="price">
+                                    <span
+                                        class="price-current">{{ number_format($val->variation_details->final_price ?? 0, 2) }}
+                                        KD</span>
+                                    @if(isset($val->variation_details->actual_price) &&
+                                    $val->variation_details->actual_price >
+                                    $val->variation_details->final_price)
+                                    <span
+                                        class="price-old">{{ number_format($val->variation_details->actual_price, 2) }}
+                                        KD</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+
+                <!-- relivent product -->
+
+
+
                 {{-- BILLING DETAILS --}}
                 <div class="gift-pnl mt-4">
                     <div class="border-1">
@@ -330,7 +398,7 @@
                             {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y') }}</div>
                         @else
                         <div class="order-14">Expected Delivery
-                            {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(5)->format('d/m/Y') }}</div>
+                            {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div>
                         @endif
                     </div>
                     <div class="order-view-lists mt-3">
