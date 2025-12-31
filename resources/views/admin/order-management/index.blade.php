@@ -9,6 +9,11 @@
     /* line-height: 18px; */
     font-size: 14px !important;
     padding: 9px !important;
+    white-space: nowrap;
+}
+.table.dataTable thead .sorting {
+   white-space: nowrap;
+    font-size: 13px;
 }
 </style>
 
