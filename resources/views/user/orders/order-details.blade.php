@@ -433,6 +433,9 @@
                         $orderData->delivery_status=='4')
                         <div class="order-14">Cancelled On
                             {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y') }}</div>
+                        @elseif($orderData->return_type!=='0')
+                        <div class="order-14">Expected Picked Date:
+                            3-5 Working Days</div>
                         @else
                         <div class="order-14">Expected Delivery:
                             <!-- {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div> -->
