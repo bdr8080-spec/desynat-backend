@@ -526,14 +526,26 @@ class DeliveryBoyOrderService
                 'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
-             ->when($request->search, function ($q) use ($request) {
-                $q->whereHas('order_details', function ($query) use ($request) {
-                    $query->where('order_id', 'like', '%' . $request->search . '%');
+            ->when($request->search, function ($q) use ($request) {
+                $q->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q2) use ($request) {
+                        $q2->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller name
+                    ->orWhereHas('product_details.seller_details', function ($q3) use ($request) {
+                        $q3->where('first_name', 'like', '%' . $request->search . '%')
+                           ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in store name
+                    ->orWhereHas('product_details.seller_details.store_info', function ($q4) use ($request) {
+                        $q4->where('store_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in user name
+                    ->orWhereHas('order.user_details', function ($q5) use ($request) {
+                        $q5->where('full_name', 'like', '%' . $request->search . '%');
+                    });
                 });
-            })
-
-            ->when(!empty($request->filter), function ($q) use ($request) {
-                $q->where('delivery_status', $request->filter);
             })
             ->orderBy('id', 'desc')
             ->paginate($limit);
@@ -600,8 +612,24 @@ class DeliveryBoyOrderService
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->when($request->search, function ($q) use ($request) {
-                $q->whereHas('order_details', function ($query) use ($request) {
-                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                $q->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q2) use ($request) {
+                        $q2->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller name
+                    ->orWhereHas('product_details.seller_details', function ($q3) use ($request) {
+                        $q3->where('first_name', 'like', '%' . $request->search . '%')
+                           ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in store name
+                    ->orWhereHas('product_details.seller_details.store_info', function ($q4) use ($request) {
+                        $q4->where('store_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in user name
+                    ->orWhereHas('order.user_details', function ($q5) use ($request) {
+                        $q5->where('full_name', 'like', '%' . $request->search . '%');
+                    });
                 });
             })
 
@@ -680,8 +708,24 @@ class DeliveryBoyOrderService
             ->whereIN('delivery_status', ['2','7'])
             ->where('is_picked', 1)
             ->when($request->search, function ($q) use ($request) {
-                $q->whereHas('order_details', function ($query) use ($request) {
-                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                $q->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q2) use ($request) {
+                        $q2->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller name
+                    ->orWhereHas('product_details.seller_details', function ($q3) use ($request) {
+                        $q3->where('first_name', 'like', '%' . $request->search . '%')
+                           ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in store name
+                    ->orWhereHas('product_details.seller_details.store_info', function ($q4) use ($request) {
+                        $q4->where('store_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in user name
+                    ->orWhereHas('order.user_details', function ($q5) use ($request) {
+                        $q5->where('full_name', 'like', '%' . $request->search . '%');
+                    });
                 });
             })
 
@@ -753,8 +797,24 @@ class DeliveryBoyOrderService
             ->where('delivery_status', '3')
             ->where('is_picked', 1)
             ->when($request->search, function ($q) use ($request) {
-                $q->whereHas('order_details', function ($query) use ($request) {
-                    $query->where('order_id', 'like', '%' . $request->search . '%');
+                $q->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q2) use ($request) {
+                        $q2->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller name
+                    ->orWhereHas('product_details.seller_details', function ($q3) use ($request) {
+                        $q3->where('first_name', 'like', '%' . $request->search . '%')
+                           ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in store name
+                    ->orWhereHas('product_details.seller_details.store_info', function ($q4) use ($request) {
+                        $q4->where('store_name', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in user name
+                    ->orWhereHas('order.user_details', function ($q5) use ($request) {
+                        $q5->where('full_name', 'like', '%' . $request->search . '%');
+                    });
                 });
             })
 

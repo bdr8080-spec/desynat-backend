@@ -92,6 +92,7 @@
                                         <span
                                             class="price-old">{{ number_format($orderData->variation_details->actual_price, 2) }}
                                             KD</span>
+                                            <span class="discount ms-2">50% Off</span>
                                         @endif
                                     </div>
                                 </div>

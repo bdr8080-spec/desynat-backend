@@ -153,7 +153,7 @@ class DeliveryBoyOrderController extends Controller
             'id' => 'required|exists:orderdetails,id',
             'delivery_status' => 'required|in:7,8,3',
             'reason' => 'required_if:delivery_status,8|string',
-            'collect_amount' => 'required_if:delivery_status,3|in:1',
+            //'collect_amount' => 'required_if:delivery_status,3|in:1',
         ]);
 
 

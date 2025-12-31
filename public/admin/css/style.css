@@ -2325,7 +2325,7 @@ header,
 .product-modal {
   background: #fff;
   width: 600px;
-  padding: 20px;
+  /* padding: 20px; */
   border-radius: 4px;
   position: relative;
 }
@@ -2334,7 +2334,8 @@ header,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
+  margin-bottom: 5px;
 }
 
 .modal-header h3 {
