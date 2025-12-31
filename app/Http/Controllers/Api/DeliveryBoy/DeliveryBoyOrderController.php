@@ -215,7 +215,7 @@ class DeliveryBoyOrderController extends Controller
     public function get_reasons(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'type' => 'required|integer|in:1,2,3',
+            'type' => 'required|integer|in:1,2,3,4',
         ]);
 
         if ($validate->fails()) {

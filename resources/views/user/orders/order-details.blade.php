@@ -503,6 +503,7 @@
                             <div>On the Way</div>
                         </div>
                         @endif
+
                         @if(($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
                         $orderData->delivery_status=='3') && $orderData->return_type!=='0')
                         <div class="or-box">
@@ -633,9 +634,9 @@
                 </div>
 
 
-                <div class="mt-4">
+                <div class="mt-4 text-center">
                     <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
-                        class="customBtn8  mb-3 text-decoration-none">
+                        class="customBtn8 mb-3 text-decoration-none">
                         Download Invoice
                     </a>
                 </div>
