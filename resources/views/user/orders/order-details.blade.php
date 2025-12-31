@@ -426,7 +426,8 @@
                 <div class="orderstatus p-3 mb-4">
                     <div class="d-flex justify-content-between">
                         <div class="order-t">Order Status</div>
-                        @if($orderData->payment_status=='2' || $orderData->delivery_status=='4')
+                        @if($orderData->payment_status=='2' || $orderData->payment_status=='3' ||
+                        $orderData->delivery_status=='4')
                         <div class="order-14">Cancelled On
                             {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y') }}</div>
                         @else
@@ -434,6 +435,37 @@
                             {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div>
                         @endif
                     </div>
+
+                    <!-- When Order Is cancelled  -->
+
+                    @if($orderData->payment_status=='2' || $orderData->payment_status=='3')
+
+
+                    <div class="orderstatus p-3 mb-4">
+                        <div class="order-view-lists mt-3">
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                </div>
+                                <div>Confirmed</div>
+                            </div>
+
+                            <div class="or-box">
+                                <div class="fill-box" style="background:#D72E04;">
+                                    <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
+                                        style="filter: brightness(26);">
+                                </div>
+                                <div style="color:#D72E04;">Cancelled</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @else
+
+                    <!-- when Order is Not Cancelled -->
+
+
+
                     <div class="order-view-lists mt-3">
                         <div class="or-box">
                             <div class="fill-box">
@@ -488,6 +520,8 @@
                         </div>
                         @endif
                     </div>
+
+                    @endif
                 </div>
 
                 <!-- <div class="orderstatus p-3 mb-4">
@@ -599,9 +633,9 @@
                 </div>
 
 
-                <div class="mt-4">
+                <div class="mt-4 text-center">
                     <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
-                        class="customBtn mb-3">
+                        class="customBtn text-center btn-group">
                         Download Invoice
                     </a>
                 </div>
