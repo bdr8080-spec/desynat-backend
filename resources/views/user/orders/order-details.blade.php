@@ -437,6 +437,7 @@
                         <div class="order-14">Expected Delivery
                             <!-- {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div> -->
                               3-5 Working Days
+                        </div>
                         @endif
                     </div>
 
