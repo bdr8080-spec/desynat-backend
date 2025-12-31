@@ -163,13 +163,32 @@
                             // Order status text
                             $statusText = match (true) {
 
+                            // 1 → Cancelled Order
+                            $orderdetail->payment_status == '2' || $orderdetail->payment_status == '3'
+                            => 'Cancelled',
+
+                            // 2 → confirmed
+                            $orderdetail->delivery_status == '1' &&
+                            $orderdetail->return_type == '0'
+                            => 'Confirmed',
+
                             // 2 → Ongoing
-                            $orderdetail->delivery_status == '2' && $orderdetail->return_type == '0' &&
-                            $orderdetail->payment_status !== '2'
+                            $orderdetail->delivery_status == '2' || $orderdetail->delivery_status == '1' &&
+                            $orderdetail->return_type == '0'
                             => 'Ongoing',
 
+                            // 2.1 → shipped
+                            $orderdetail->delivery_status == '2.1' &&
+                            $orderdetail->return_type == '0'
+                            => 'Shipped',
+
+                            // 2.2 → shipped
+                            $orderdetail->delivery_status == '2.2' &&
+                            $orderdetail->return_type == '0'
+                            => 'On The Way',
+
                             // 3 → Delivered
-                            $orderdetail->payment_status == '1' && $orderdetail->delivery_status == '3' &&
+                            $orderdetail->delivery_status == '3' &&
                             $orderdetail->return_type == '0'
                             => 'Delivered',
 
@@ -221,7 +240,8 @@
                                                 <div class="card-right d-flex w-100 justify-content-between">
                                                     <div class="product-info">
                                                         <h5 class="product-title">
-                                                            Order ID :# <span>{{ $orderDetail->order->order_id }}</span>
+                                                            Order ID :#
+                                                            <span>{{ $orderDetail->order->order_id }}</span>
                                                         </h5>
 
                                                         <div class="price-current">
@@ -266,14 +286,14 @@
                                         </div>
                                     </div>
                                     @if(in_array($orderdetail->delivery_status, ['1', '2','2.1','2.2','8']) &&
-                                    $orderdetail->payment_status !== '2')
+                                    $orderdetail->payment_status !== '2' && $orderdetail->payment_status !== '3' )
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
                                         Expected Delivery Date :
                                         {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }}
                                         <!-- Expected Delivery Date : {{ $orderdetail->created_at->format('d M y') }} -->
                                     </div>
-                                    @elseif($orderdetail->payment_status == '2')
+                                    @elseif($orderdetail->payment_status == '2' || $orderdetail->payment_status == '3' )
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
                                         Cancelled Date : {{ $orderdetail->updated_at->format('d M Y') }}
