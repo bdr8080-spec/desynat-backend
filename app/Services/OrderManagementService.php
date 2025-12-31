@@ -3,7 +3,8 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\DeliveryBoy;
-// use App\Models\orderdetail;
+use App\Models\SellerSubcriptionPlanBuy;
+use App\Models\Plan;
 use App\Models\{UserGiftCards,GiftCard,UserWallet};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
@@ -487,6 +488,25 @@ class OrderManagementService
 
             $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
 
+            $checkOrder->getCollection()->transform(function ($order) {
+
+                $seller_id = $order->product_details->seller_id ?? null;
+                //dd($seller_id);
+                $amount    = $order->amount ?? 0;
+
+                $order->admin_commission = calculateAndSaveCommission(
+                    $order->id,
+                    $seller_id,
+                    $amount
+                );
+
+                $order->seller_id = $seller_id;
+
+                return $order;
+            });
+
+            DB::commit();
+
             return ['status'=>'success','message'=>"Active Orders fetched Successfully",'data'=>$checkOrder];
 
         
@@ -566,6 +586,25 @@ class OrderManagementService
             }
 
             $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
+
+             $checkOrder->getCollection()->transform(function ($order) {
+
+                $seller_id = $order->product_details->seller_id ?? null;
+                //dd($seller_id);
+                $amount    = $order->amount ?? 0;
+
+                $order->admin_commission = calculateAndSaveCommission(
+                    $order->id,
+                    $seller_id,
+                    $amount
+                );
+
+                $order->seller_id = $seller_id;
+
+                return $order;
+            });
+
+            DB::commit();
 
             return ['status'=>'success','message'=>"Return Orders fetched Successfully",'data'=>$checkOrder];
 
@@ -649,6 +688,25 @@ class OrderManagementService
 
             $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
 
+             $checkOrder->getCollection()->transform(function ($order) {
+
+                $seller_id = $order->product_details->seller_id ?? null;
+                //dd($seller_id);
+                $amount    = $order->amount ?? 0;
+
+                $order->admin_commission = calculateAndSaveCommission(
+                    $order->id,
+                    $seller_id,
+                    $amount
+                );
+
+                $order->seller_id = $seller_id;
+
+                return $order;
+            });
+
+            DB::commit();
+
             return ['status'=>'success','message'=>"Completed Orders fetched Successfully",'data'=>$checkOrder];
 
         
@@ -731,6 +789,25 @@ class OrderManagementService
 
             $checkOrder = $checkOrder->orderBy('id', 'desc')->paginate($limit);
 
+             $checkOrder->getCollection()->transform(function ($order) {
+
+                $seller_id = $order->product_details->seller_id ?? null;
+                //dd($seller_id);
+                $amount    = $order->amount ?? 0;
+
+                $order->admin_commission = calculateAndSaveCommission(
+                    $order->id,
+                    $seller_id,
+                    $amount
+                );
+
+                $order->seller_id = $seller_id;
+
+                return $order;
+            });
+
+            DB::commit();
+
             return ['status'=>'success','message'=>"Cancelled Orders fetched Successfully",'data'=>$checkOrder];
 
         
@@ -766,6 +843,19 @@ class OrderManagementService
                 'driver_details.zone_info'
             ])
             ->where('id', $request->id)->first();
+
+            $seller_id = $checkOrder->product_details->seller_id ?? null;
+            $amount    = $checkOrder->amount ?? 0;
+
+            $checkOrder->admin_commission = calculateAndSaveCommission(
+                $checkOrder->id,
+                $seller_id,
+                $amount
+            );
+
+            $checkOrder->seller_id = $seller_id;
+
+            DB::commit();
 
             return ['status'=>'success','message'=>"Order Details fetched Successfully",'data'=>$checkOrder];
 
@@ -900,6 +990,7 @@ class OrderManagementService
             ];
         }
     }
+
 
 
 

@@ -162,8 +162,14 @@
                                     {{ $data['order']['delivery_details']['state'] }}
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
-                                <td>{{ $data['amount'] }} KD</td>
-                                <td>20 KD</td>
+                                <td>
+                                    @if($data['amount'] == floor($data['amount']))
+                                        {{ intval($data['amount']) }} KD
+                                    @else
+                                        {{ number_format($data['amount'], 2) }} KD
+                                    @endif
+                                </td>
+                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
@@ -336,8 +342,14 @@
                                     {{ $data['order']['delivery_details']['state'] }}
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
-                                <td>{{ $data['amount'] }} KD</td>
-                                <td>20 KD</td>
+                                <td>
+                                    @if($data['amount'] == floor($data['amount']))
+                                        {{ intval($data['amount']) }} KD
+                                    @else
+                                        {{ number_format($data['amount'], 2) }} KD
+                                    @endif
+                                </td>
+                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
@@ -518,7 +530,7 @@
                                     @endif
                                 </td>
 
-                                <td>20 KD</td>
+                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
@@ -660,8 +672,14 @@
                                     {{ $data['order']['delivery_details']['state'] }}
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
-                                <td>{{ $data['amount'] }} KD</td>
-                                <td>20 KD</td>
+                                <td>
+                                    @if($data['amount'] == floor($data['amount']))
+                                        {{ intval($data['amount']) }} KD
+                                    @else
+                                        {{ number_format($data['amount'], 2) }} KD
+                                    @endif
+                                </td>
+                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
