@@ -100,7 +100,7 @@
                                     }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['created_at'])->format('jS F Y | h:i A') }}
+                                    {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>
                                     <img src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px" class="square" />
@@ -216,7 +216,7 @@
                                     }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['seller_details']['created_at'])->format('jS F Y | h:i A') }}
+                                    {{{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>
                                     <img src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px" class="square" />
@@ -335,7 +335,7 @@
                                     }}
                                 </td>
                                 <td>
-                                    {{ \Carbon\Carbon::parse($data['seller_details']['created_at'])->format('jS F Y | h:i A') }}
+                                    {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>
                                     <img src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px" class="square" />
