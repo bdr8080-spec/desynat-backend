@@ -175,10 +175,10 @@
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
                                     @else
-                                        Delivery Boy
+                                        {{ $data['driver_details']['full_name_english'] }}
                                     @endif
                                 </td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
+                                <td>N/A</td>
                                 @php
                                     $deliveryStatuses = [
                                         1 => 'Confirmed',
@@ -355,10 +355,10 @@
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
                                     @else
-                                        Delivery Boy
+                                        {{ $data['driver_details']['full_name_english'] }}
                                     @endif
                                 </td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
+                                <td>N/A</td>
                                 @php
                                     $deliveryStatuses = [
                                         1 => 'Return',
@@ -536,10 +536,10 @@
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
                                     @else
-                                        Delivery Boy
+                                        {{ $data['driver_details']['full_name_english'] }}
                                     @endif
                                 </td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
+                                <td>N/A</td>
                                 <td data-bs-toggle="modal" 
                                     data-bs-target="#sentModalrating" 
                                     style="cursor: pointer;"
@@ -685,10 +685,10 @@
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
                                     @else
-                                        Delivery Boy
+                                        {{ $data['driver_details']['full_name_english'] }}
                                     @endif
                                 </td>
-                                <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
+                                <td>N/A</td>
                                 <td>{{ $data['cancel_reason'] ?? 'N/A' }}</td>
                             </tr>
                             @empty
