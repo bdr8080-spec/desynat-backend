@@ -522,7 +522,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
              ->when($request->search, function ($q) use ($request) {
@@ -594,7 +595,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->when($request->search, function ($q) use ($request) {
@@ -671,7 +673,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->whereIN('delivery_status', ['2','7'])
@@ -743,7 +746,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->where('delivery_status', '3')
@@ -816,7 +820,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'UserRatingReviewProvide'
+                'UserRatingReviewProvide',
+                'order.user_details',
             )
             ->where('id', $request->id)
             ->first();
