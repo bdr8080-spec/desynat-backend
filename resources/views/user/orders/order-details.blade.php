@@ -468,7 +468,7 @@
                         </div>
                     </div>
 
-                    @else
+                    @elseif($orderData->return_type!=='0')
 
                     <!-- when Order is Not Cancelled -->
 
@@ -526,6 +526,62 @@
                                 <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}" class="img-fluid">
                             </div>
                             <div>Delivered</div>
+                        </div>
+                        @endif
+                    </div>
+                    @else
+                    <div class="order-view-lists mt-3">
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Confirmed</div>
+                        </div>
+                        @if($orderData->assign_status=='1')
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>In Process</div>
+                        </div>
+                        @else
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
+                            </div>
+                            <div>In Process<</div>
+                        </div>
+                        @endif
+                        @if($orderData->assign_status=='1' && $orderData->is_picked=='1')
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Picked Up</div>
+                        </div>
+                        @else
+                        <div class="or-box">
+                            <div class="fill-box">
+                                <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Picked Up</div>
+                        </div>
+                        @endif
+
+                        @if(($orderData->assign_status=='1' && $orderData->is_picked=='1' &&
+                        $orderData->delivery_status=='3'))
+                        <div class="or-box">
+                            <div class="fill-box" style="background:#fff;">
+                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Completed</div>
+                        </div>
+                        @else
+                        <div class="or-box">
+                            <div class="fill-box" style="background:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);">
+                                <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}" class="img-fluid">
+                            </div>
+                            <div>Completed</div>
                         </div>
                         @endif
                     </div>
