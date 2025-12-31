@@ -306,6 +306,8 @@ class MyFatoorahController extends Controller {
                     $checkOrderStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id]);
                     $msg="Order Payment Cancelled Successfully";
                     $url="user/view-cart?payment=no";
+                    
+                    Order_detailsPaidStatusChange($checkOrderStatus->id,'2'); // order details complete order
                 }
                 
                 // return  redirect()->to($url);

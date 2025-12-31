@@ -245,6 +245,11 @@ if($checkDataInCart->isEmpty()){
     ];
 }
 
+// Add To Card Count product 
+$AddToCardCount= $checkDataInCart->count();
+
+// equal devide promocode  
+
 foreach($checkDataInCart as $key=>$val){
 
     $cart_data=[
@@ -253,11 +258,12 @@ foreach($checkDataInCart as $key=>$val){
         "product_id"=>$val->product_id,
         "variants_id"=>$val->variants_id,
         "quantity"=>$val->quantity,
-        "amount"=>$val->amount
+        "amount"=>$val->amount,
+        "tax"=> $val->tax ,
+        "shipping_fees"=>$val->shipping_fees,
     ];
     orderdetail::create($cart_data);
 }
-
 
 DB::commit();
    
