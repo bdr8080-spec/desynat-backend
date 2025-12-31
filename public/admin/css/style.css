@@ -2437,3 +2437,7 @@ header,
   object-fit: contain;
   opacity: 0.8;
 }
+.table.dataTable thead .sorting {
+   white-space: nowrap;
+    font-size: 13px;
+}
