@@ -87,14 +87,16 @@
                 <span class="banner-texts">Total days - {{$single_banner->total_days}}</span>
             </div>
 
+
+
             <div class="row mt-3">
                 <div class="col-md-12">
                     <label class="banner-text">From</label>
-                    <input type="date" class="form-control mb-4" value="{{$single_banner->start_date}}" />
+                    <input type="date" class="form-control mb-4" value="{{$single_banner->start_date}}" readonly>
                 </div>
                 <div class="col-md-12">
                     <label class="banner-text">To</label>
-                    <input type="date" class="form-control" value="{{$single_banner->end_date}}" />
+                    <input type="date" class="form-control" value="{{$single_banner->end_date}}" readonly>
                 </div>
             </div>
         </div>
@@ -140,8 +142,13 @@
         <div class="dashboard-button mt-5 gap-5">
             <div class="row">
                 <div class="col-lg-6">
-                    <button type="button" class="btn total-outline w-100">Total Price
-                        <strong>{{$single_banner->price}}KD</strong></button>
+                    <button type="button" class="btn total-outline w-100 ">
+
+                        Total Price
+                        @if($single_banner->payment_status==1)
+                        Paid
+                        @endif
+                        <strong>{{$single_banner->price}} KD</strong></button>
                 </div>
                 <div class="col-lg-6">
                     <form id="bannerBuyForm">
@@ -149,8 +156,7 @@
 
 
                         @if($single_banner->Admin_verify=='1' && $single_banner->payment_status=='0')
-                        <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal"
-                            data-bs-target="#payModal">Pay Now</button>
+                        <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal">Pay Now</button>
 
                         @endif
                     </form>
@@ -211,21 +217,6 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="payModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="p-4 text-center">
-                    <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
-                    <h5 class="mt-3">Plan Purchased Successfully</h5>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 
 
 <script>
@@ -269,6 +260,7 @@ $("#bannerBuyForm").on("submit", function(e) {
 
 });
 </script>
+
 
 
 @include('dealer.layout.custom_code');
