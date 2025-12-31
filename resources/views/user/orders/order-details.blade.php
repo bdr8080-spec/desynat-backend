@@ -93,7 +93,7 @@
                                             class="price-old">{{ number_format($orderData->variation_details->actual_price, 2) }}
                                             KD</span>
                                             @if($orderData->variation_details->discount_type == '1')
-                                            <span class="discount ms-2">{{ $orderData->variation_details->discount_value }} Off</span>
+                                            <span class="discount ms-2">{{ $orderData->variation_details->discount_value }}% Off</span>
                                             @endif
                                         @endif
                                     </div>
