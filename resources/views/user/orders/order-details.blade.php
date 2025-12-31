@@ -92,6 +92,7 @@
                                         <span
                                             class="price-old">{{ number_format($orderData->variation_details->actual_price, 2) }}
                                             KD</span>
+                                            <span class="discount ms-2">50% Off</span>
                                         @endif
                                     </div>
                                 </div>
@@ -514,8 +515,8 @@
                         </div>
                         @else
                         <div class="or-box">
-                            <div class="fill-box" style="background:#fff;">
-                                <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid">
+                            <div class="fill-box" style="background:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);">
+                                <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}" class="img-fluid">
                             </div>
                             <div>Delivered</div>
                         </div>
@@ -636,7 +637,7 @@
 
                 <div class="mt-4 text-center">
                     <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
-                        class="customBtn text-center btn-group">
+                        class="customBtn8 mb-3 text-decoration-none">
                         Download Invoice
                     </a>
                 </div>
@@ -1543,8 +1544,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <img src="${e.target.result}" style="width:80px; height:80px; object-fit:cover; border-radius:5px;">
                         <span style="
                             position:absolute;
-                            top:-5px;
-                            right:-5px;
+                            top:0px;
+                            right:0px;
                             background:red;
                             color:white;
                             width:18px;

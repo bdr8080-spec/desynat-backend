@@ -21,6 +21,7 @@ body {
       --bg-login:linear-gradient(344.09deg, #7D532F 0%, #F9DBAB 94%);
   --bg-multiple:linear-gradient(269.87deg, #6E4527 -17.01%, #DFBF8F 99.89%);
   --bg-color:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);
+  
  
 
 }
@@ -2324,7 +2325,7 @@ header,
 .product-modal {
   background: #fff;
   width: 600px;
-  padding: 20px;
+  /* padding: 20px; */
   border-radius: 4px;
   position: relative;
 }
@@ -2333,7 +2334,8 @@ header,
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
+  margin-bottom: 5px;
 }
 
 .modal-header h3 {
@@ -2436,4 +2438,8 @@ header,
   height: 60px;
   object-fit: contain;
   opacity: 0.8;
+}
+.table.dataTable thead .sorting {
+   white-space: nowrap;
+    font-size: 13px;
 }
