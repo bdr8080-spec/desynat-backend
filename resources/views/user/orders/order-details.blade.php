@@ -472,12 +472,14 @@
 
 
                     <div class="order-view-lists mt-3">
+                        @if($orderData->delivery_status=='1')
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                             </div>
                             <div>Confirmed</div>
                         </div>
+                        @endif
                         @if($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2')
                         <div class="or-box">
                             <div class="fill-box">
