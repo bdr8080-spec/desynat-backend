@@ -742,7 +742,7 @@ class OrderManagementService
                 'UserRatingReviewProvide',
                 'driver_details.zone_info'
             ])
-            ->where('payment_status', '2')
+            ->whereIn('payment_status', ['2', '3'])
             ->where('return_type', '0');
 
             
