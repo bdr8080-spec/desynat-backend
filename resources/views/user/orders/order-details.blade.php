@@ -633,9 +633,9 @@
                 </div>
 
 
-                <div class="mt-4">
+                <div class="mt-4 text-center">
                     <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
-                        class="customBtn mb-3">
+                        class="customBtn text-center btn-group">
                         Download Invoice
                     </a>
                 </div>
