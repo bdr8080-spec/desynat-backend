@@ -52,7 +52,7 @@ class CartController extends Controller
         $walletBalance=$userBalanceget['data']['balance'];
 
         if($request->payment=='no'){
-        $msg="Payment Cancelled Or failed";
+        $msg="Payment Cancelled Or Failed";
         $status='error';
         Session::flash('message', $msg);
         Session::flash('status', $status);
