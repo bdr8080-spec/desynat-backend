@@ -770,11 +770,11 @@
 <div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header management border-0">
+            <div class="modal-header management border-0 mb-0">
                 <h2 class="h2">Product Details</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body pt-0">
                 <div class="overlay">
                     <div class="product-modal" id="productModalBody">
                         <div class="product-card d-none" id="productCardTemplate">
@@ -813,7 +813,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body m-auto mb-4">
+            <div class="modal-body mb-4">
                 <div class="row">
                     <div class="col-lg-12">
 
