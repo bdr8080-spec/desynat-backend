@@ -45,8 +45,7 @@ class OrderController extends Controller
         ];
 
       $orderData = $this->UserOrderService->singleOrderDetailsNew($data)['data'];
-      
-        // dump($orderData);
+
       
        $data1 = (object)[
             'type' => '3',
