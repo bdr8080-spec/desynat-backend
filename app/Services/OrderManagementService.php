@@ -444,8 +444,16 @@ class OrderManagementService
 
             
             if ($request->search) {
-                $checkOrder->whereHas('order', function ($q) use ($request) {
-                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                $checkOrder->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q) use ($request) {
+                        $q->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller's first_name or last_name
+                    ->orWhereHas('product_details.seller_details', function ($q) use ($request) {
+                        $q->where('first_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    });
                 });
             }
 
@@ -517,8 +525,16 @@ class OrderManagementService
             ->where('return_type', '!=', '0');
             
             if ($request->search) {
-                $checkOrder->whereHas('order', function ($q) use ($request) {
-                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                $checkOrder->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q) use ($request) {
+                        $q->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller's first_name or last_name
+                    ->orWhereHas('product_details.seller_details', function ($q) use ($request) {
+                        $q->where('first_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    });
                 });
             }
 
@@ -591,8 +607,16 @@ class OrderManagementService
             ->where('payment_status', '1');
             
             if ($request->search) {
-                $checkOrder->whereHas('order', function ($q) use ($request) {
-                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                $checkOrder->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q) use ($request) {
+                        $q->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller's first_name or last_name
+                    ->orWhereHas('product_details.seller_details', function ($q) use ($request) {
+                        $q->where('first_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    });
                 });
             }
 
@@ -665,8 +689,16 @@ class OrderManagementService
 
             
             if ($request->search) {
-                $checkOrder->whereHas('order', function ($q) use ($request) {
-                    $q->where('order_id', 'like', '%' . $request->search . '%');
+                $checkOrder->where(function ($query) use ($request) {
+                    // Search in order_id
+                    $query->whereHas('order', function ($q) use ($request) {
+                        $q->where('order_id', 'like', '%' . $request->search . '%');
+                    })
+                    // Search in seller's first_name or last_name
+                    ->orWhereHas('product_details.seller_details', function ($q) use ($request) {
+                        $q->where('first_name', 'like', '%' . $request->search . '%')
+                        ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                    });
                 });
             }
 

@@ -175,7 +175,7 @@
                                 <td>{{ $data['driver_details']['full_name_english'] ?? 'Not Assigned' }}</td>
                                 @php
                                     $deliveryStatuses = [
-                                        1 => 'Pending',
+                                        1 => 'Confirmed',
                                         2 => 'On The Way',
                                         3 => 'Delivered',
                                         4 => 'Cancelled',
