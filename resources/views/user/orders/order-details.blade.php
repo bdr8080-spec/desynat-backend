@@ -147,7 +147,11 @@
                                     </div>
                                 </div>
                             </div> -->
+
                         <div class="rate-p">
+
+                            @if(!$orderData->UserRatingReviewProvide)
+
                             <h5 class="product-title">Rate this product</h5>
                             <div class="order-ratings rating-widget">
                                 <div class="rating" data-bs-toggle="modal" data-bs-target="#ratingModal"
@@ -159,7 +163,10 @@
                                         @endfor
                                 </div>
                             </div>
+
+                            @endif
                         </div>
+
 
                         @endif
 
@@ -284,7 +291,18 @@
                 </div> -->
                 {{-- Shipping address --}}
                 <div class="gift-pnl mt-4">
+
+                    @if((isset($orderData->return_type) && in_array($orderData->return_type, ['1','2'])))
+
+                    <h6>Pickup Address</h6>
+
+                    @else
                     <h6>Shipping Address</h6>
+
+                    @endif
+
+
+
                     <div class="border-1">
                         <div class="giftinfo">
                             <p>{{$orderData->order->delivery_details->address}}
@@ -297,7 +315,7 @@
 
                 {{-- Cancellation Details --}}
                 @if((isset($orderData->return_type) && in_array($orderData->return_type, ['1','2'])) ||
-                $orderData->payment_status === '2')
+                $orderData->payment_status === '2' )
                 <div class="gift-pnl mt-4">
                     <h6>
                         @if($orderData->return_type == '1')
@@ -317,12 +335,27 @@
                                 Exchange on
                                 @elseif($orderData->payment_status == '2')
                                 Cancelled on
+
+                                </br>
+                                Cancellation Id
+
                                 @endif
                             </div>
+
                             <div>
                                 {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y \a\t h:i') }}
+
+                                @if($orderData->payment_status == '2' || $orderData->payment_status == '3' )
+                                </br />
+                                {{$orderData->order->order_id}}
+                                @endif
+
                             </div>
                         </div>
+
+
+
+
                     </div>
                 </div>
                 @endif
@@ -1537,7 +1570,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('#ratingModal .text-danger').forEach(e => e.remove());
 
         // Product validation
-        if (!productTextarea.value.trim() && productImages.length === 0) {
+        /* if (!productTextarea.value.trim() && productImages.length === 0) {
             const error = document.createElement('small');
             error.className = 'text-danger d-block';
             error.textContent = 'Please enter a product review or upload an image.';
@@ -1553,6 +1586,7 @@ document.addEventListener('DOMContentLoaded', function() {
             storeTextarea.parentElement.appendChild(error);
             valid = false;
         }
+        */
 
         if (!valid) return;
 
