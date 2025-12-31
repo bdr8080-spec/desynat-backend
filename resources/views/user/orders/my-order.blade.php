@@ -214,7 +214,7 @@
 
                             'Cancelled' => ['#E70000', '#E700001A'],
 
-                            default => ['#FF5F1B', '#FF5F1B1A'],
+                            default => ['#2fac54ff', '#79d69d1a'],
                             };
                             @endphp
 
@@ -276,7 +276,7 @@
 
                                                 <div class="d-flex justify-content-between">
                                                     <!-- <p class="delivery-label mb-2">{{ $statusText }}</p> -->
-                                                     <p class="delivery-label mb-2">Placed</p>
+                                                    <p class="delivery-label mb-2">Placed</p>
                                                     <p class="delivery-date mb-2">
                                                         {{ $order->created_at->format('h:i A | d-m-Y') }}
                                                     </p>
@@ -290,8 +290,8 @@
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
                                         Expected Delivery Date :
-                                        {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }}
-                                        <!-- Expected Delivery Date : {{ $orderdetail->created_at->format('d M y') }} -->
+                                        <!-- {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }} -->
+                                        Expected Delivery Date : 3-5 Working Days
                                     </div>
                                     @elseif($orderdetail->payment_status == '2' || $orderdetail->payment_status == '3' )
                                     <div class="expert-date"
