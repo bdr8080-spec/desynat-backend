@@ -36,6 +36,9 @@
 }
 </style>
 
+
+
+
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
@@ -43,6 +46,24 @@
     </div>
 
     <div class="main-content">
+
+
+        @if (session('status') == 'success')
+        <div class="alert alert-success">
+            <script>
+            // $('#payModalSuccess').modal('show');
+            </script>
+            <!-- {{ session('message') }} -->
+        </div>
+        @elseif (session('status') == 'error')
+        <div class="alert alert-danger">
+            {{ session('message') }}
+        </div>
+        @endif
+
+
+
+
         @php
         $cartItems = [];
 
