@@ -169,7 +169,11 @@
                                         {{ number_format($data['amount'], 2) }} KD
                                     @endif
                                 </td>
-                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
+                                <td>
+                                    {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
+                                        ? $data['admin_commission'] . ' KD' 
+                                        : 'N/A' }}
+                                </td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
@@ -349,7 +353,11 @@
                                         {{ number_format($data['amount'], 2) }} KD
                                     @endif
                                 </td>
-                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
+                                <td>
+                                    {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
+                                        ? $data['admin_commission'] . ' KD' 
+                                        : 'N/A' }}
+                                </td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
@@ -530,7 +538,11 @@
                                     @endif
                                 </td>
 
-                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
+                                <td>
+                                    {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
+                                        ? $data['admin_commission'] . ' KD' 
+                                        : 'N/A' }}
+                                </td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
@@ -679,7 +691,11 @@
                                         {{ number_format($data['amount'], 2) }} KD
                                     @endif
                                 </td>
-                                <td>{{ $data['admin_commission'] ?? 'N/A' }} KD</td>
+                                <td>
+                                    {{ isset($data['admin_commission']) && $data['admin_commission'] !== null 
+                                        ? $data['admin_commission'] . ' KD' 
+                                        : 'N/A' }}
+                                </td>
                                 <td>Normal</td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
