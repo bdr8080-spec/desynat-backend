@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail};
+use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail,OrderDeliveryAddress};
 use App\Models\Zone;
 use App\Models\DeliveryBoy;
 use App\Models\SellerSubcriptionPlanBuy;
@@ -67,7 +67,6 @@ function calculateDistance($lat1, $lon1, $lat2, $lon2) {
         ];
     }
 
-    
     }
 
 
@@ -236,4 +235,26 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
         ]);
 
         return $adminCommission;
+    }
+
+
+
+
+    // delete Data from Add to cart
+ function delete_Order_Data($orderid){
+
+    $order = Order::find($orderid);
+    if ($order) {
+
+    // Delete delivery address
+    OrderDeliveryAddress::where('id', $order->delivery_address)->delete();
+
+    // Delete order details
+    OrderDetail::where('order_id', $orderid)->delete();
+
+    // Delete order
+    $order->delete();
+    }
+
+
     }

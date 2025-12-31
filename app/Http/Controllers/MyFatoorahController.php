@@ -307,7 +307,13 @@ class MyFatoorahController extends Controller {
                     $msg="Order Payment Cancelled Successfully";
                     $url="user/view-cart?payment=no";
                     
-                    Order_detailsPaidStatusChange($checkOrderStatus->id,'2'); // order details complete order
+                    // delete order when Payment is failed 
+
+                     delete_Order_Data($checkOrderStatus->id); // Delete order When Payment is failed 
+                     
+                    // Order_detailsPaidStatusChange($checkOrderStatus->id,'2'); // order details complete order
+
+
                 }
                 
                 // return  redirect()->to($url);
