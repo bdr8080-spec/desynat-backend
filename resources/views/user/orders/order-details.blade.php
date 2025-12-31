@@ -1570,7 +1570,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('#ratingModal .text-danger').forEach(e => e.remove());
 
         // Product validation
-        if (!productTextarea.value.trim() && productImages.length === 0) {
+        /* if (!productTextarea.value.trim() && productImages.length === 0) {
             const error = document.createElement('small');
             error.className = 'text-danger d-block';
             error.textContent = 'Please enter a product review or upload an image.';
@@ -1586,6 +1586,7 @@ document.addEventListener('DOMContentLoaded', function() {
             storeTextarea.parentElement.appendChild(error);
             valid = false;
         }
+        */
 
         if (!valid) return;
 
