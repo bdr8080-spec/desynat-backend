@@ -248,7 +248,29 @@ if($checkDataInCart->isEmpty()){
 // Add To Card Count product 
 $AddToCardCount= $checkDataInCart->count();
 
-// equal devide promocode  
+// equal divide GiftCard   
+$giftcard= $request->giftcard_id;
+if($giftcard){
+$giftcard_amount= $request->giftcard_amount;
+$giftCardAmountDivide= number_format($giftcard_amount/$AddToCardCount,2);
+}else{
+$giftCardAmountDivide=null;
+}
+
+// Check promoCode Value 
+$promoCodeId =$request->promocode_id;
+$promoCodevalue =$request->promocode_value;
+// $chekpromoCode= Promocode::where('id',$promoCodeId)->first();
+
+if(isset($promoCodevalue)){
+
+    $promocode_value= $promoCodevalue;
+    $PrmocodeCardAmountDivide= number_format($promocode_value/$AddToCardCount,2);
+}else{
+      $PrmocodeCardAmountDivide=null;
+}
+
+
 
 foreach($checkDataInCart as $key=>$val){
 
@@ -261,6 +283,11 @@ foreach($checkDataInCart as $key=>$val){
         "amount"=>$val->amount,
         "tax"=> $val->tax ,
         "shipping_fees"=>$val->shipping_fees,
+        "giftcard_id"=>$giftcard,
+        "giftcard_amount"=>$giftCardAmountDivide,
+
+        "promocode_id"=>$promoCodeId,
+        "promocode_value"=>$PrmocodeCardAmountDivide,
     ];
     orderdetail::create($cart_data);
 }
