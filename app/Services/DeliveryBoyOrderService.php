@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\User;
 use App\Models\DeliveryBoy;
 use App\Models\Reason;
+use App\Models\OrderRecordDetail;
 use App\Models\{UserGiftCards,GiftCard,UserWallet};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
@@ -357,14 +358,15 @@ class DeliveryBoyOrderService
     }
 
 
-    public function UpdateDeliveryStatus($request)
+
+    public function UpdateDeliveryStatusNew($request)
     {
         DB::beginTransaction();
 
         try {
-            $order = Order::find($request->id);
+            $orderDetail = orderdetail::find($request->id);
 
-            if (!$order) {
+            if (!$orderDetail) {
                 return [
                     'status' => 'error',
                     'message' => 'Order not found',
@@ -372,17 +374,42 @@ class DeliveryBoyOrderService
                 ];
             }
 
-            $status = (string) $request->delivery_status;
+            $status =  $request->delivery_status;
+           // dd($status);
 
-            // Update order
-            $order->delivery_status = $status;
-            $order->not_delivered_reason = $request->reason ?? null;
-            $order->save();
+            $orderDetail->delivery_status = $status;
 
-            // Update order details
-            OrderDetail::where('order_id', $order->id)->update([
-                'delivery_status' => $request->delivery_status
-            ]);
+            if ($status == 3) {
+                $orderDetail->payment_status = '1'; 
+            }
+
+            if ($status == 8) {
+                // $orderDetail->payment_status = '0'; 
+                $orderDetail->not_delivered_reason = $request->reason ?? null;
+            }
+
+            $orderDetail->save();
+
+            if ($status == 3) {
+                $order = Order::find($orderDetail->order_id);
+                //dd($order);
+
+                if ($order) {
+                    $order->delivery_status = '3';
+                    $order->payment_status  = '1';
+                    $order->save();
+                }
+            }
+
+            if ($status == 8) {
+                OrderRecordDetail::create([
+                    'order_id'           => $orderDetail->order_id,
+                    'orderdetails_id'    => $orderDetail->id,
+                    'driver_id'    => $orderDetail->delivery_boy_id,
+                    'not_delivered_date' => now(),
+                    'next_delivery_date' => now()->addDay(),
+                ]);
+            }
 
             DB::commit();
 
@@ -403,7 +430,7 @@ class DeliveryBoyOrderService
             return [
                 'status' => 'success',
                 'message' => $message,
-                'data' => $order
+                'data' => $orderDetail
             ];
 
         } catch (\Exception $e) {
@@ -416,6 +443,7 @@ class DeliveryBoyOrderService
             ];
         }
     }
+
 
 
     public function PickOrder($request)
@@ -494,7 +522,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
              ->when($request->search, function ($q) use ($request) {
@@ -566,7 +595,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->when($request->search, function ($q) use ($request) {
@@ -643,7 +673,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->whereIN('delivery_status', ['2','7'])
@@ -715,7 +746,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'product_details.seller_details.store_info'
+                'product_details.seller_details.store_info',
+                'order.user_details',
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->where('delivery_status', '3')
@@ -788,7 +820,8 @@ class DeliveryBoyOrderService
                 'product_details.seller_details',
                 'variation_details.color',
                 'variation_details.size',
-                'UserRatingReviewProvide'
+                'UserRatingReviewProvide',
+                'order.user_details',
             )
             ->where('id', $request->id)
             ->first();
@@ -832,66 +865,6 @@ class DeliveryBoyOrderService
         }
     }
 
-
-    public function UpdateDeliveryStatusNew($request)
-    {
-        DB::beginTransaction();
-
-        try {
-            $order = orderdetail::find($request->id);
-
-            if (!$order) {
-                return [
-                    'status' => 'error',
-                    'message' => 'Order not found',
-                    'data' => []
-                ];
-            }
-
-            $status = (string) $request->delivery_status;
-
-            // Update order
-            $order->delivery_status = $status;
-            $order->not_delivered_reason = $request->reason ?? null;
-            if ($status === '3') {
-                $order->payment_status = '1';
-            }
-            
-            $order->save();
-
-
-            DB::commit();
-
-            switch ($status) {
-                case '3':
-                    $message = 'Delivery Status Updated to Delivered';
-                    break;
-                case '7':
-                    $message = 'Delivery Status Updated to Picked';
-                    break;
-                case '8':
-                    $message = 'Delivery Status Updated to Not Delivered';
-                    break;
-                default:
-                    $message = 'Delivery Status Updated Successfully';
-            }
-
-            return [
-                'status' => 'success',
-                'message' => $message,
-                'data' => $order
-            ];
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return [
-                'status' => 'error',
-                'message' => 'Failed to update status: ' . $e->getMessage(),
-                'data' => []
-            ];
-        }
-    }
 
 
     public function PickOrderNew($request)

@@ -21,6 +21,14 @@ return new class extends Migration
             $table->string('amount')->nullable();
             $table->enum('status',['0','1'])->default('1')->comment('1 active 0 inactive');            
             $table->timestamps();
+            $table->string('delivery_boy_id')->nullable();
+            $table->string('assign_status',['0','1'])->default('0')->comment('1 yes 0 no'); 
+            $table->string('assign_date')->nullable();
+            $table->string('cancel_reason')->nullable();
+            $table->string('is_picked',['0','1'])->default('0')->comment('1 yes 0 no');
+            $table->string('not_delivered_reason')->nullable();
+            $table->string('seller_id')->nullable();
+            $table->string('admin_commission')->nullable();
         });
     }
 

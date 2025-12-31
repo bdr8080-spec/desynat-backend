@@ -4,6 +4,9 @@
 use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail};
 use App\Models\Zone;
 use App\Models\DeliveryBoy;
+use App\Models\SellerSubcriptionPlanBuy;
+use App\Models\Plan;
+use Carbon\Carbon;
 
 
 // Function to calculate the distance using the Haversine formula
@@ -199,4 +202,38 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
          function Order_detailsPaidStatusChange($orderid,$paymentstatus){
         $checkOrder = orderdetail::where('order_id', $orderid)->update(['payment_status'=>$paymentstatus]);
         
+    }
+
+    function calculateAndSaveCommission($orderDetailId, $seller_id, $amount)
+    {
+        $adminCommission = null;
+
+        $subscription = SellerSubcriptionPlanBuy::where('seller_id', $seller_id)
+            ->where('status', '1')
+            ->where('payment_status', '1')
+            ->whereDate('plan_end_date', '>=', Carbon::today())
+            ->first();
+         
+        //dd($subscription);
+
+        if ($subscription) {
+            $plan = Plan::where('id', $subscription->plan_id)
+                ->where('status', '1')
+                ->where('commission', '1')
+                ->first();
+
+            if ($plan && $plan->commission_percentage) {
+                $adminCommission = round(
+                    ($amount * $plan->commission_percentage) / 100,
+                    2
+                );
+            }
+        }
+
+        orderdetail::where('id', $orderDetailId)->update([
+            'seller_id' => $seller_id,
+            'admin_commission' => $adminCommission
+        ]);
+
+        return $adminCommission;
     }

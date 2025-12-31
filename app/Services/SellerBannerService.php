@@ -11,7 +11,8 @@ public function SellerAddBanner($request){
 
     try{
 
-    $order_id="Bann".time().Rand(0000000000,999999999999);
+    // $order_id="Bann".time().Rand(0000000000,999999999999);
+    $order_id = substr(time() . rand(100, 999), 0, 9);
     
      $request_data=[
         'order_id'=>$order_id,

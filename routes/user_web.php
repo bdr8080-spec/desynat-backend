@@ -150,6 +150,7 @@ Route::match(['get', 'post'], '/order-place', function () {
 // })->name('user.view-cart');
 
 
+
 // Route::match(['get', 'post'], '/wishlist', function () {
 //      return view('user.profile.wishlist');
 // });

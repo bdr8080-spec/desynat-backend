@@ -153,6 +153,7 @@ class DeliveryBoyOrderController extends Controller
             'id' => 'required|exists:orderdetails,id',
             'delivery_status' => 'required|in:7,8,3',
             'reason' => 'required_if:delivery_status,8|string',
+            'collect_amount' => 'required_if:delivery_status,3|in:1',
         ]);
 
 
@@ -163,7 +164,8 @@ class DeliveryBoyOrderController extends Controller
         $data = (object)[
             'id' => $request->id,
             'delivery_status' => $request->delivery_status,
-            'reason' => $request->reason
+            'reason' => $request->reason,
+            'collect_amount' => $request->collect_amount
         ];
 
         try {
