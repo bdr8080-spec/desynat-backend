@@ -170,7 +170,7 @@
                             // 2 → confirmed
                             $orderdetail->delivery_status == '1' &&
                             $orderdetail->return_type == '0'
-                            => 'Confirmed',
+                            => 'Ongoing',
 
                             // 2 → Ongoing
                             $orderdetail->delivery_status == '2' || $orderdetail->delivery_status == '1' &&

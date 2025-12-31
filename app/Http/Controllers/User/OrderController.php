@@ -45,6 +45,7 @@ class OrderController extends Controller
         ];
 
       $orderData = $this->UserOrderService->singleOrderDetailsNew($data)['data'];
+      //dd($orderData);
 
       
        $data1 = (object)[
