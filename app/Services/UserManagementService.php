@@ -640,14 +640,14 @@ public function product_view_cart_details($request)
                 $val->check_stock='Stock_Availble';
             }
 
-            $total_amount+=$val->product_variants->final_price * $val->quantity ;
+            $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
+            $total_amount+=$ItemAmounttotal;
             // $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
             $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
             $total_mrp=$total_amount+$discount_on_mrp;
 
 
-            // discount Amount Code Apply 
-
+         // discount Amount Code Apply 
         if($val->product->store){
             
         if($user_address && $userCountry_id!==0){
@@ -658,8 +658,10 @@ public function product_view_cart_details($request)
             $store_long=$val->product->store->long;
 
             // Calculate the distance
-            // $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
-            $distance = 10;
+            $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
+           
+        //    dd($distance);
+            // $distance = 10;
 
             $shipping_charges= ShippingCharge::where('country_id',$userCountry_id)
             ->where('range_from','<=',$distance)
@@ -667,36 +669,53 @@ public function product_view_cart_details($request)
             ->where('status','1')->first();
 
             if($shipping_charges){
-                $shipping_fees+=$shipping_charges->shipping_fee *$val->quantity ;
-            }else{
-                $shipping_fees+=100 *$val->quantity;    
-            }
+                $get_shipping_charge=$shipping_charges->shipping_fee *$val->quantity ;
+
+                $shipping_fees+=$get_shipping_charge;
 
             }else{
-                $shipping_fees+=100 *$val->quantity;
+                $get_shipping_charge=100 *$val->quantity;
+                $shipping_fees+=$get_shipping_charge;
             }
+
+            }else{
+                $get_shipping_charge=100 *$val->quantity;
+                $shipping_fees+=$get_shipping_charge;
+           
             }
-            
-        }
 
-        // Tax calucltor Code  start
-
-
-        $response['total_mrp']=$total_mrp;
+            // Tax calculate Code 
 
         if(isset($userCountry_id)){
 
         $Tax_calculate= Tax::where('country_id',$userCountry_id)->where('status','1')->first();
 
         if($Tax_calculate){
-            $tax= $total_mrp*$Tax_calculate->tax/100; 
-            $total_amount=$total_amount+$tax;
+            $taxAmount= $ItemAmounttotal*$Tax_calculate->tax/100; 
+             $tax+=$taxAmount;
+            // $total_amount=$total_amount+$tax;
+           
         }else{
-            $tax=0;
+            $taxAmount= 10; 
+             $tax+=$taxAmount;
+
         }
           }else{
-           $tax=0;
+
+            $taxAmount= 10; 
+            $tax+=$taxAmount;
+            
          }
+
+            Addtocart::where('id',$val->id)->update(['shipping_fees'=>$get_shipping_charge,'tax'=>$taxAmount]); // Update Shiping Charge
+            }   
+        }
+
+        // Tax calucltor Code  start
+
+        $response['total_mrp']=$total_mrp;
+
+       
 
         $response['discount_on_mrp']=$discount_on_mrp;
         $response['discount_coupon']=$discount_coupon;
