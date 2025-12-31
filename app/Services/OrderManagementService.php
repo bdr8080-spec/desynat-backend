@@ -492,12 +492,19 @@ class OrderManagementService
 
                 $seller_id = $order->product_details->seller_id ?? null;
                 //dd($seller_id);
-                $amount    = $order->amount ?? 0;
+                $amount_with_charges =
+                    ($order->amount ?? 0) +
+                    ($order->tax ?? 0) +
+                    ($order->order->shipping_fees ?? 0) +
+                    ($order->order->promocode_value ?? 0) +
+                    ($order->order->giftcard_amount ?? 0);
+
+                 $order->amount_with_charges = round($amount_with_charges, 2);
 
                 $order->admin_commission = calculateAndSaveCommission(
                     $order->id,
                     $seller_id,
-                    $amount
+                    $amount_with_charges
                 );
 
                 $order->seller_id = $seller_id;
@@ -591,12 +598,19 @@ class OrderManagementService
 
                 $seller_id = $order->product_details->seller_id ?? null;
                 //dd($seller_id);
-                $amount    = $order->amount ?? 0;
+                $amount_with_charges =
+                    ($order->amount ?? 0) +
+                    ($order->tax ?? 0) +
+                    ($order->order->shipping_fees ?? 0) +
+                    ($order->order->promocode_value ?? 0) +
+                    ($order->order->giftcard_amount ?? 0);
+
+                 $order->amount_with_charges = round($amount_with_charges, 2);
 
                 $order->admin_commission = calculateAndSaveCommission(
                     $order->id,
                     $seller_id,
-                    $amount
+                    $amount_with_charges
                 );
 
                 $order->seller_id = $seller_id;
@@ -692,12 +706,19 @@ class OrderManagementService
 
                 $seller_id = $order->product_details->seller_id ?? null;
                 //dd($seller_id);
-                $amount    = $order->amount ?? 0;
+                $amount_with_charges =
+                    ($order->amount ?? 0) +
+                    ($order->tax ?? 0) +
+                    ($order->order->shipping_fees ?? 0) +
+                    ($order->order->promocode_value ?? 0) +
+                    ($order->order->giftcard_amount ?? 0);
+
+                 $order->amount_with_charges = round($amount_with_charges, 2);
 
                 $order->admin_commission = calculateAndSaveCommission(
                     $order->id,
                     $seller_id,
-                    $amount
+                    $amount_with_charges
                 );
 
                 $order->seller_id = $seller_id;
@@ -793,12 +814,19 @@ class OrderManagementService
 
                 $seller_id = $order->product_details->seller_id ?? null;
                 //dd($seller_id);
-                $amount    = $order->amount ?? 0;
+                $amount_with_charges =
+                    ($order->amount ?? 0) +
+                    ($order->tax ?? 0) +
+                    ($order->order->shipping_fees ?? 0) +
+                    ($order->order->promocode_value ?? 0) +
+                    ($order->order->giftcard_amount ?? 0);
+
+                 $order->amount_with_charges = round($amount_with_charges, 2);
 
                 $order->admin_commission = calculateAndSaveCommission(
                     $order->id,
                     $seller_id,
-                    $amount
+                    $amount_with_charges
                 );
 
                 $order->seller_id = $seller_id;
@@ -845,12 +873,20 @@ class OrderManagementService
             ->where('id', $request->id)->first();
 
             $seller_id = $checkOrder->product_details->seller_id ?? null;
-            $amount    = $checkOrder->amount ?? 0;
+            $amount_with_charges =
+                ($checkOrder->amount ?? 0) +
+                ($checkOrder->tax ?? 0) +
+                ($checkOrder->order->shipping_fees ?? 0) +
+                ($checkOrder->order->promocode_value ?? 0) +
+                ($checkOrder->order->giftcard_amount ?? 0);
 
+            $checkOrder->amount_with_charges = round($amount_with_charges, 2);
+
+            // Calculate & save commission
             $checkOrder->admin_commission = calculateAndSaveCommission(
                 $checkOrder->id,
                 $seller_id,
-                $amount
+                $checkOrder->amount_with_charges
             );
 
             $checkOrder->seller_id = $seller_id;

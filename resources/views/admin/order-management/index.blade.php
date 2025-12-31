@@ -138,7 +138,7 @@
                             @forelse($activeOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>#{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -168,10 +168,10 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount'] == floor($data['amount']))
-                                        {{ intval($data['amount']) }} KD
+                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                        {{ intval($data['amount_with_charges']) }} KD
                                     @else
-                                        {{ number_format($data['amount'], 2) }} KD
+                                        {{ number_format($data['amount_with_charges'], 2) }} KD
                                     @endif
                                 </td>
                                 <td>
@@ -322,7 +322,7 @@
                            @forelse($returnOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>#{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -352,10 +352,10 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount'] == floor($data['amount']))
-                                        {{ intval($data['amount']) }} KD
+                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                        {{ intval($data['amount_with_charges']) }} KD
                                     @else
-                                        {{ number_format($data['amount'], 2) }} KD
+                                        {{ number_format($data['amount_with_charges'], 2) }} KD
                                     @endif
                                 </td>
                                 <td>
@@ -506,7 +506,7 @@
                             @forelse($completeOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>#{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -536,10 +536,10 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount'] == floor($data['amount']))
-                                        {{ intval($data['amount']) }} KD
+                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                        {{ intval($data['amount_with_charges']) }} KD
                                     @else
-                                        {{ number_format($data['amount'], 2) }} KD
+                                        {{ number_format($data['amount_with_charges'], 2) }} KD
                                     @endif
                                 </td>
 
@@ -660,7 +660,7 @@
                             @forelse($cancelledOrders as $index => $data)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>#{{ $data['order']['order_id'] }}</td>
+                                <td>#{{ $data['id'] }}</td>
                                 <td>
                                     @php
                                         $firstOrderDetail = $data['product_details']->first();
@@ -690,10 +690,10 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount'] == floor($data['amount']))
-                                        {{ intval($data['amount']) }} KD
+                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                        {{ intval($data['amount_with_charges']) }} KD
                                     @else
-                                        {{ number_format($data['amount'], 2) }} KD
+                                        {{ number_format($data['amount_with_charges'], 2) }} KD
                                     @endif
                                 </td>
                                 <td>
