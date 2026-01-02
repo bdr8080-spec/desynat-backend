@@ -81,4 +81,37 @@ class DashBoardController extends Controller
         }
     }
 
+    
+
+
+    public function getlatestSearch(Request $request)
+    {
+       // dd($request->all());
+
+        try {
+
+            $user=  $request->user();
+            $request_data = (object)[
+                    'user_id' =>  $user->id,
+                ];
+
+            $data = $this->UserDashboardService->Recommanded_HomeRecentSearchList($request_data);
+            
+            $message = $data['message'];
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to search',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

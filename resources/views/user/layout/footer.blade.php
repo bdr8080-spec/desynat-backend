@@ -722,6 +722,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('headerSearchInput');
     const searchDrop = document.querySelector('.searchdrop');
     const latestSearchDiv = document.getElementById('latestSearchResults');
+
+    const recentSearchResults = document.getElementById('recentSearchResults');
+
     const recommendedDiv = document.getElementById('recommendedResults');
 
     const searchForm = document.getElementById("searchForm");
@@ -757,18 +760,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     });
 
-                    // data.data.data.forEach(item => {
-                    //     const div = document.createElement("div");
-                    //     div.classList.add("search-item");
-                    //     div.textContent = item.name;
+                    searchDrop.style.display = 'block';
 
-                    //     div.addEventListener("click", () => {
-                    //         searchInput.value = item.name; // e.g. "shirt"
-                    //         searchForm.requestSubmit(); // ✅ redirects
-                    //     });
+                } else {
+                    searchDrop.style.display = 'none';
+                }
 
-                    //     latestSearchDiv.appendChild(div);
-                    // });
+                // Recommended section (static example)
+                // recommendedDiv.innerHTML = `
+                //     <div><a href="#">Puma</a></div>
+                //     <div><a href="#">Nike</a></div>
+                // `;
+            })
+            .catch(err => console.error(err));
+
+        fetch("{{ route('user.getlatestSearch') }}", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data); // debug console
+
+                if (data.status === 'success' && data.data?.data?.length > 0) {
+                    recentSearchResults.innerHTML = ''; // Clear previous results
+
+                    data.data.data.forEach(item => {
+                        const div = document.createElement('div');
+                        // Use item.name instead of item.search
+                        div.innerHTML =
+                            `<a href="{{url('/')}}/user/all-product?search=${item.name}">${item.name}</a>`;
+                        recentSearchResults.appendChild(div);
+
+
+                        div.addEventListener("click", () => {
+                            searchInput.value = item.name; // e.g. "shirt"
+                            searchForm.requestSubmit(); // ✅ redirects
+                        });
+
+                    });
 
                     searchDrop.style.display = 'block';
 
@@ -783,6 +816,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // `;
             })
             .catch(err => console.error(err));
+
+
+
+
     }
 
     // Show recent searches when input is focused

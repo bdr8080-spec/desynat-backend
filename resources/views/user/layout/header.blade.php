@@ -446,6 +446,12 @@
                                             <!-- <h6>Recommended</h6> -->
                                             <div class="latest-lists" id="recommendedResults"></div>
                                         </div>
+
+                                        <div class="latestsearch">
+                                            <h6>Recent-search</h6>
+                                            <div class="latest-lists" id="recentSearchResults"></div>
+                                        </div>
+
                                     </div>
                                 </form>
 
