@@ -99,11 +99,7 @@ use App\Http\Controllers\User\DashBoardController;
   Route::post('/return_order', [OrderController::class,'return_order'])->name('user.return_order');
   Route::post('/submitRating', [OrderController::class,'submitRating'])->name('user.submitRating');
 
-
-Route::get('/all-product', [UserStoreController::class,'all_product'])->name('user.allproduct');
-
-
-
+  Route::get('/all-product', [UserStoreController::class,'all_product'])->name('user.allproduct');
 
 });
 

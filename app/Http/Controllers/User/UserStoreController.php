@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Helpers\ApiResponse;
 use App\Services\UserManagementService;
+use App\Services\UserDashboardService;
+
+
 use Validator;
 use App\Models\Brand;
 use App\Models\color;
@@ -17,10 +20,11 @@ use App\Models\Addtocart;
 class UserStoreController extends Controller
 {
 
-    public function __construct(UserManagementService $UserManagementService){
+    public function __construct(UserManagementService $UserManagementService,UserDashboardService $UserDashboardService){
 
         $this->UserManagementService=$UserManagementService;
-           
+        $this->UserDashboardService=$UserDashboardService;
+   
     }
 
 
@@ -329,28 +333,21 @@ foreach ($data->product_variants as $item) {
         // Get logged-in user ID
         $user_id = isset($request->user()->id) ? $request->user()->id : null;
 
-        // Prepare request data as an object
-        $request_data = (object)[
-            'user_id'        => $user_id,
-            'store_id'       => "32",
-            'search'         => $request->search ?? null,
-            'sort_filter'    => $request->sort_filter ?? null,
-            'brand_id'       => $request->brand_id ?? null,
-            'category_id'    => $request->category_id ?? null,
-            'size_id'        => $request->size_id ?? null,
-            'color_id'       => $request->color_id ?? null,
-            'price_min'      => isset($request->price_min) ? intval($request->price_min) : null,
-            'price_max'      => isset($request->price_max) ? intval($request->price_max) : null,
-            'discount'       => isset($request->discount) ? intval($request->discount) : null,
-            'rating'         => $request->rating ?? null,
-            'delivery_time'  => $request->delivery_time ?? null,
-            'delivery_option'=> $request->delivery_option ?? null,
-        ];
+        $request_data=(object)[
+        'user_id'=>$user_id??null,
+        'search' =>$request->search,
+        'sort_filter'=> $request->sort_filter,
+        'brand_id'     => is_array($request->brand_id) ? $request->brand_id : [],     
+        'category_id'  => is_array($request->category_id) ? $request->category_id : [],   
+        'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
+        'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
+        'price_min'    => $request->price_min ?? null,
+        'price_max'    => $request->price_max ?? null,
+       ];
 
-        // Call service method
-        $store_details = $this->UserManagementService->singleStoreWiseAllproduct($request_data);
-        $store_details = $store_details['data'];
-
+     $AllProduct_data=$this->UserDashboardService->HomePageSearch($request_data);
+    
+    $AllProduct = $AllProduct_data['data'];
 
         // Fetch filters for view
         $brand = Brand::orderBy('name_english', 'asc')->get();
@@ -358,7 +355,7 @@ foreach ($data->product_variants as $item) {
         $size = Size::orderBy('name', 'desc')->get();
         $color = Color::orderBy('name', 'asc')->get();
         
-        return view('user.product.all-product', compact('store_details', 'category', 'brand', 'size', 'color'));
+        return view('user.product.all-product', compact('AllProduct', 'category', 'brand', 'size', 'color'));
     }
 
 

@@ -32,7 +32,8 @@ class DashBoardController extends Controller
                 ];
 
             $data = $this->UserDashboardService->HomePageSearchWeb($request_data);
-            
+       
+
             $message = $data['message'];
 
             return response()->json([

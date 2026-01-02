@@ -4,16 +4,233 @@
 
 
 <div class="product_reels customContainer">
+
+    <h1>All products</h1>
+
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="product-tab-pane" role="tabpanel" aria-labelledby="product-tab"
             tabindex="0">
             <div class="categoryDetail customContainer">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <div class="category_filter pb-3 mb-3 d-flex align-items-center justify-content-between">
+                            <h3 style="color: var(--secondry2-color);">Sort By</h3>
+                            <a data-bs-toggle="modal" data-bs-target="#sortMOdal">
+                                <img src="{{asset('user')}}/assets/images/sort.svg" class="img-fluid" />
+                            </a>
+                        </div>
+                        <div class="category_filter">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h3>Filters</h3>
+                                <a href="">Clear</a>
+                            </div>
+                            <form action="{{ url('user/all-product/') }}" method="GET">
+                                <div class="form-group mt-4">
+                                    <h5>Category</h5>
+                                    @foreach ($category as $key => $item)
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input mb-1" type="radio" name="category_id[]"
+                                            value="{{ $item->id }}" id="category_{{ $key }}"
+                                            {{ is_array(request()->category_id) && in_array($item->id, request()->category_id) ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="category_{{ $key }}">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="form-group mt-4">
+                                    <h5>Brand</h5>
+                                    <small>A-z</small>
+                                    @foreach ($brand as $key => $item)
+                                    <div class="form-check my-4 brand-item {{ $key >= 8 ? 'd-none extra-brand' : '' }}">
+                                        <input class="form-check-input mb-1" type="checkbox" name="brand_id[]"
+                                            value="{{ $item->id }}" id="brand_{{ $key }}"
+                                            {{ is_array(request()->brand_id) && in_array($item->id, request()->brand_id) ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="brand_{{ $key }}">
+                                            {{ $item->name_english }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                    @if(count($brand) > 8)
+                                    <button id="seeMoreBtn" type="button" class="btn btn-link p-0"
+                                        style="font-size:14px; color:var(--third-color);font-weight: 500;">
+                                        See More
+                                    </button>
+                                    @endif
+                                </div>
+                                <div class="form-group mt-4">
+                                    <h5>Price</h5>
+                                    <div class="slider-wrap" id="priceArea">
+                                        <div class="track">
+                                            <div class="left-dot"></div>
+                                            <div class="track-line"></div>
+
+                                            <div class="active-indicator" id="indicator"></div>
+
+                                            <div class="value-bubble" id="valueBubble">100000 KD</div>
+
+                                            <input type="range" min="99" max="100000"
+                                                value="{{ request()->price_max ?? 50000 }}" id="priceRange"
+                                                style="width:100%;">
+                                            <input type="hidden" name="price_min" id="priceMin"
+                                                value="{{ request()->price_min ?? 99 }}">
+                                            <input type="hidden" name="price_max" id="priceMax"
+                                                value="{{ request()->price_max ?? 50000 }}">
+                                        </div>
+
+                                        <div class="ticks">
+                                            <div class="tick text-start">99 KD</div>
+                                            <div class="tick text-end">100000 KD</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {{-- Color --}}
+                                <div class="form-group mt-4">
+                                    <h5>Color</h5>
+
+                                    @foreach ($color as $key => $item)
+                                    <div
+                                        class="form-check my-4 color-item {{ $key >= 10 ? 'd-none extra-color' : '' }}">
+                                        <input class="form-check-input" type="checkbox" name="color_id[]"
+                                            value="{{ $item->id }}" id="color{{ $item->id }}"
+                                            {{ request()->color_id == $item->id ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="color{{ $item->id }}">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+
+                                    @if(count($color) > 10)
+                                    <button type="button" id="toggleColors" class="btn btn-sm btn-link p-0 mt-2">
+                                        See More
+                                    </button>
+                                    @endif
+                                </div>
+
+                                {{-- Discount Range --}}
+                                <div class="form-group mt-4">
+                                    <h5>Discount Range</h5>
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="discount" value="10"
+                                            id="discount10" {{ request()->discount == 10 ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="discount10">
+                                            10%
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="discount" value="20"
+                                            id="discount20" {{ request()->discount == 20 ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="discount20">
+                                            20%
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {{-- Sizes --}}
+                                <div class="form-group mt-4">
+                                    <h5>Sizes</h5>
+                                    @foreach ($size as $key => $item)
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="checkbox" name="size_id[]"
+                                            value="{{ $item->id }}" id="size_{{ $key }}"
+                                            {{ is_array(request()->size_id) && in_array($item->id, request()->size_id) ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="size_{{ $key }}">
+                                            {{ $item->name }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+
+
+                                {{-- Ratings --}}
+                                <div class="form-group mt-4">
+                                    <h5>Ratings</h5>
+
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="rating" value="2"
+                                            id="rating2" {{ request()->rating == 2 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="rating2">
+                                            Upto 2 Star
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="rating" value="3"
+                                            id="rating3" {{ request()->rating == 3 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="rating3">
+                                            Upto 3 Star
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {{-- Delivery Time --}}
+                                <div class="form-group mt-4">
+                                    <h5>Delivery Time</h5>
+
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="delivery_time" value="1-2"
+                                            id="del1" {{ request()->delivery_time == '1-2' ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="del1">
+                                            Today - 2 days
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="radio" name="delivery_time" value="3-5"
+                                            id="del2" {{ request()->delivery_time == '3-5' ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="del2">
+                                            3 - 5 days
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {{-- Delivery Options --}}
+                                <div class="form-group delivery">
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="checkbox" value="shortest"
+                                            name="delivery_option[]" id="shortest"
+                                            {{ is_array(request()->delivery_option) && in_array('shortest', request()->delivery_option) ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="shortest">
+                                            Shortest Delivery time
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check my-4">
+                                        <input class="form-check-input" type="checkbox" value="highest_sale"
+                                            name="delivery_option[]" id="highest_sale"
+                                            {{ is_array(request()->delivery_option) && in_array('highest_sale', request()->delivery_option) ? 'checked' : '' }}>
+
+                                        <label class="form-check-label" for="highest_sale">
+                                            Highest Sale
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button class="customBtn customBtn5 mt-5">Apply</button>
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
                         <div class="categoryDetail_content">
                             <div class="row">
 
-                                @foreach ($store_details['All_Product'] as $item)
+                                @foreach ($AllProduct as $item)
                                 <div class="col-lg-4 col-md-4 col-6 my-3 cardblock">
                                     <a href="{{ route('user.product_details',[$item->id]) }}"
                                         style="text-decoration:none;">
@@ -42,7 +259,7 @@
 
                                             <div class="product-content">
                                                 <h5 class="black-title">{{ $item->product_name_en }}
-                                                    ({{ "by " . $store_details['store']['store_name'] }})</h5>
+                                                </h5>
                                                 <div class="rating">
                                                     <i class="fa-solid fa-star"></i>
                                                     <i class="fa-solid fa-star"></i>
