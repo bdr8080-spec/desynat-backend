@@ -475,6 +475,11 @@
 
                     <div class="orderstatus p-3 mb-4">
                         <div class="order-view-lists mt-3">
+
+                            <!-- Status Code Start      -->
+
+                            @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1')
+
                             <div class="or-box">
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
@@ -482,30 +487,73 @@
                                 <div>Confirm</div>
                             </div>
 
-                            <div class="or-box">
-                                <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
-                                        style="filter: brightness(26);">
-                                </div>
-                                <div>In Progress</div>
-                            </div>
+                            @else
 
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
-                                        style="filter: brightness(26);">
+                                    <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
                                 </div>
-                                <div>In Progress</div>
+                                <div>Confirm</div>
                             </div>
 
+                            @endif
+
+                            @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' ||
+                            $orderData->delivery_status=='7')
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
-                                        style="filter: brightness(26);">
+                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
-                                <div>In Progress</div>
+                                <div>Shipped</div>
+                            </div>
+                            @else
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
+                                </div>
+                                <div>Shipped</div>
+                            </div>
+                            @endif
+                            @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' ||
+                            $orderData->delivery_status=='7')
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                </div>
+                                <div>On the Way</div>
+                            </div>
+                            @else
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
+                                </div>
+                                <div>On the Way</div>
+                            </div>
+                            @endif
+
+                            <!--  -->
+
+                            @if(($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
+                            $orderData->delivery_status=='3' ) && ($orderData->return_type=='0' ))
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                </div>
+                                <div>Delivered</div>
                             </div>
 
+                            @else
+                            <div class="or-box">
+                                <div class="fill-box"
+                                    style="background:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);">
+                                    <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}"
+                                        class="img-fluid">
+                                </div>
+                                <div>Delivered</div>
+                            </div>
+                            @endif
+
+                            <!-- Status Code End Here  -->
 
                         </div>
                     </div>
