@@ -441,11 +441,17 @@
                             {{ \Carbon\Carbon::parse($orderData->updated_at)->format('d/m/Y') }}</div>
                         @elseif($orderData->return_type!=='0')
                         <div class="order-14">Expected Picked Date:
-                            3-5 Working Days</div>
+                            <!-- 3-5 Working Days -->
+                            {{ $orderData->updated_at->copy()->addDays(6)->format('d M Y') }}
+
+                        </div>
                         @else
                         <div class="order-14">Expected Delivery:
                             <!-- {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div> -->
-                            3-5 Working Days
+                            <!-- 3-5 Working Days -->
+
+                            {{ $orderData->updated_at->copy()->addDays(6)->format('d M Y') }}
+
                         </div>
                         @endif
                     </div>
