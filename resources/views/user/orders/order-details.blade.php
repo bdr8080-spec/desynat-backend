@@ -245,16 +245,21 @@
                                 {{-- Price --}}
                                 <div class="price">
                                     <span
-                                        class="price-current">{{ number_format($val->variation_details->final_price ?? 0, 2) }}
+                                        class="price-current">{{ number_format($orderData->variation_details->final_price ?? 0, 2) }}
                                         KD</span>
-                                    @if(isset($val->variation_details->actual_price) &&
-                                    $val->variation_details->actual_price >
-                                    $val->variation_details->final_price)
+                                    @if(isset($orderData->variation_details->actual_price) &&
+                                    $orderData->variation_details->actual_price >
+                                    $orderData->variation_details->final_price)
                                     <span
-                                        class="price-old">{{ number_format($val->variation_details->actual_price, 2) }}
+                                        class="price-old">{{ number_format($orderData->variation_details->actual_price, 2) }}
                                         KD</span>
+                                    @if($orderData->variation_details->discount_type == '1')
+                                    <span class="discount ms-2">{{ $orderData->variation_details->discount_value }}%
+                                        Off</span>
+                                    @endif
                                     @endif
                                 </div>
+
                             </div>
                         </div>
                     </div>
