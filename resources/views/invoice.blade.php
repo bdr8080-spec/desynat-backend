@@ -328,7 +328,7 @@
                             <td>{{$val->variation_details->size->name}}</td>
                             <td>{{$val->variation_details->color->name}}</td>
                             <td>{{$val->quantity}}</td>
-                            <td>{{$val->variation_details->actual_price}}</td>
+                            <td>{{$val->variation_details->actual_price}} KD</td>
                         </tr>
 
                         @endforeach
@@ -353,13 +353,19 @@
                     <tr>
                         <td>Discount</td>
                         <td>{{$checkOrder->discount_mrp}} KD</td>
+
+                        @if($checkOrder->promocode_details)
+
                         <td>Promo Code</td>
                         <td>{{@$checkOrder->promocode_details->name_english }}</td>
+
+                        @endif
                     </tr>
 
                     <tr>
                         <td>Delivery Fee</td>
                         <td>{{$checkOrder->shipping_fees}} KD</td>
+
                         <td>Tax (VAT)</td>
                         <td>{{$checkOrder->tax}} KD</td>
                     </tr>
