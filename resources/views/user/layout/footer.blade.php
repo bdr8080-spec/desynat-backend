@@ -745,7 +745,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     data.data.data.forEach(item => {
                         const div = document.createElement('div');
                         // Use item.name instead of item.search
-                        div.innerHTML = `<a href="/${item.name}">${item.name}</a>`;
+                        div.innerHTML =
+                            `<a href="{{url('/')}}/user/all-product?search=${item.name}">${item.name}</a>`;
                         latestSearchDiv.appendChild(div);
 
 
