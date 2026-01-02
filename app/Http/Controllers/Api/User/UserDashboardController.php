@@ -116,6 +116,30 @@ public function get_recommanded_search_data(Request $request){
 
     
 
+public function get_Invoice(Request $request){
+
+    $validate = Validator::make($request->all(), [
+        'order_id' => 'required|exists:orders,order_id',
+        ]);
+
+    if($validate->fails()){
+      return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $request_data=(object)[
+        'order_id'=>$request->order_id,
+        ];
+
+
+        $data=Url('/')."/invoice/".$request->order_id;
+        
+
+    return ApiResponse::generateResponse('success', "Invoice Url get Successfully ",$data, 200);
+
+    }
+
+    
+
 
 
 }

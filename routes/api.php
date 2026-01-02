@@ -127,7 +127,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::get('/get-recent-search-data', [UserDashboardController::class,'get_recent_search_data']);
   Route::get('/get-recommnded-search-data', [UserDashboardController::class,'get_recommanded_search_data']);
 
-
+  Route::post('/get-Invoice', [UserDashboardController::class,'get_Invoice']);
 
 });
 
