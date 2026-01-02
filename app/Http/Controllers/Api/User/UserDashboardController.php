@@ -60,6 +60,7 @@ public function home_page_search(Request $request){
         'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
         'price_min'    => $request->price_min ?? null,
         'price_max'    => $request->price_max ?? null,
+        'attributes'    => $request->attributes ?? null,
        ];
 
      $data=$this->UserDashboardService->HomePageSearch($request_data);

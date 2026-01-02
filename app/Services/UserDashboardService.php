@@ -67,6 +67,7 @@ if (!empty($data->search)) {
         $query->where('product_name_en', 'LIKE', '%' . $data->search . '%')
               ->orWhere('other_en', 'LIKE', '%' . $data->search . '%')
               ->orWhere('description_en', 'LIKE', '%' . $data->search . '%');
+              
     });
 }
 
@@ -83,6 +84,14 @@ if (!empty($data->brand_id) && is_array($data->brand_id)) {
 if (!empty($data->category_id) && is_array($data->category_id)) {
     $products->whereIn('category_id', array_map('intval', $data->category_id));
 }
+
+// if (!empty($data->search)) {
+
+
+
+// }
+
+
 
 /**
  * Variant-based filtering
