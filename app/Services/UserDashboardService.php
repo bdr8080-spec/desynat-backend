@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product};
+use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand};
 
 
 
@@ -346,7 +346,9 @@ public function Recommanded_HomeRecentSearchList($request)
         'user_id'=>$request->user_id,
     ];
         // Store Search Data 
-$search_result=RecentSearch::where('user_id', $request->user_id)->limit(8)->orderBy('id','desc')->get();
+// $search_result=RecentSearch::where('user_id', $request->user_id)->limit(8)->orderBy('id','desc')->get();
+
+$search_result = Brand::all();
 
 return [
     'status'  => 'success',

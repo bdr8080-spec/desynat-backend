@@ -792,12 +792,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         const div = document.createElement('div');
                         // Use item.name instead of item.search
                         div.innerHTML =
-                            `<a href="{{url('/')}}/user/all-product?search=${item.name}">${item.name}</a>`;
+                            `<a href="{{url('/')}}/user/all-product?search=${item.name_english}">${item.name_english}</a>`;
                         recentSearchResults.appendChild(div);
 
 
                         div.addEventListener("click", () => {
-                            searchInput.value = item.name; // e.g. "shirt"
+                            searchInput.value = item.name_english; // e.g. "shirt"
                             searchForm.requestSubmit(); // ✅ redirects
                         });
 
