@@ -92,9 +92,10 @@
                                         <span
                                             class="price-old">{{ number_format($orderData->variation_details->actual_price, 2) }}
                                             KD</span>
-                                            @if($orderData->variation_details->discount_type == '1')
-                                            <span class="discount ms-2">{{ $orderData->variation_details->discount_value }}% Off</span>
-                                            @endif
+                                        @if($orderData->variation_details->discount_type == '1')
+                                        <span class="discount ms-2">{{ $orderData->variation_details->discount_value }}%
+                                            Off</span>
+                                        @endif
                                         @endif
                                     </div>
                                 </div>
@@ -439,7 +440,7 @@
                         @else
                         <div class="order-14">Expected Delivery:
                             <!-- {{ \Carbon\Carbon::parse($orderData->created_at)->addDays(6)->format('d/m/Y') }}</div> -->
-                              3-5 Working Days
+                            3-5 Working Days
                         </div>
                         @endif
                     </div>
@@ -481,7 +482,8 @@
                             </div>
                             <div>Confirmed</div>
                         </div>
-                        @if($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2')
+                        @if($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
+                        $orderData->delivery_status=='3')
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
@@ -496,7 +498,7 @@
                             <div>Shipped</div>
                         </div>
                         @endif
-                        @if($orderData->delivery_status=='2.2')
+                        @if($orderData->delivery_status=='2.2' || $orderData->delivery_status=='3')
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
@@ -512,17 +514,21 @@
                         </div>
                         @endif
 
+                        <!--  -->
+
                         @if(($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
-                        $orderData->delivery_status=='3') && $orderData->return_type!=='0')
+                        $orderData->delivery_status=='3' ) && ($orderData->return_type=='0' ))
                         <div class="or-box">
-                            <div class="fill-box" style="background:#fff;">
+                            <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                             </div>
                             <div>Delivered</div>
                         </div>
+
                         @else
                         <div class="or-box">
-                            <div class="fill-box" style="background:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);">
+                            <div class="fill-box"
+                                style="background:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);">
                                 <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}" class="img-fluid">
                             </div>
                             <div>Delivered</div>
