@@ -496,7 +496,8 @@
 
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
+                                    <img src="{{ asset('user/assets/images/order-ic/confirm-white.svg') }}"
+                                        class="img-fluid">
                                 </div>
                                 <div>Confirm</div>
                             </div>
@@ -509,14 +510,15 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
-                                <div>Shipped</div>
+                                <div>In progress</div>
                             </div>
                             @else
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
+                                    <img src="{{ asset('user/assets/images/order-ic/shipped-white.svg') }}"
+                                        class="img-fluid">
                                 </div>
-                                <div>Shipped</div>
+                                <div>In progress</div>
                             </div>
                             @endif
                             @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' ||
@@ -525,14 +527,15 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
-                                <div>On the Way</div>
+                                <div>Picked up </div>
                             </div>
                             @else
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
+                                    <img src="{{ asset('user/assets/images/order-ic/on-the-way.svg') }}"
+                                        class="img-fluid">
                                 </div>
-                                <div>On the Way</div>
+                                <div>Picked up</div>
                             </div>
                             @endif
 
@@ -542,19 +545,20 @@
                             $orderData->delivery_status=='3' ) && ($orderData->return_type=='0' ))
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                    <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}"
+                                        class="img-fluid">
                                 </div>
-                                <div>Delivered</div>
+                                <div>Completed</div>
                             </div>
 
                             @else
                             <div class="or-box">
                                 <div class="fill-box"
                                     style="background:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);">
-                                    <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}"
+                                    <img src="{{ asset('user/assets/images/order-ic/delivered-white.svg') }}"
                                         class="img-fluid">
                                 </div>
-                                <div>Delivered</div>
+                                <div>Completed</div>
                             </div>
                             @endif
 
@@ -578,14 +582,15 @@
                         $orderData->delivery_status=='3')
                         <div class="or-box">
                             <div class="fill-box">
-                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
                             </div>
                             <div>Shipped</div>
                         </div>
                         @else
                         <div class="or-box">
                             <div class="fill-box">
-                                <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
+                                <img src="{{ asset('user/assets/images/order-ic/shipped-white.svg') }}"
+                                    class="img-fluid">
                             </div>
                             <div>Shipped</div>
                         </div>
@@ -593,14 +598,14 @@
                         @if($orderData->delivery_status=='2.2' || $orderData->delivery_status=='3')
                         <div class="or-box">
                             <div class="fill-box">
-                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
                             </div>
                             <div>On the Way</div>
                         </div>
                         @else
                         <div class="or-box">
                             <div class="fill-box">
-                                <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
+                                <img src="{{ asset('user/assets/images/order-ic/on-the-way.svg') }}" class="img-fluid">
                             </div>
                             <div>On the Way</div>
                         </div>
@@ -611,7 +616,7 @@
                         @if(($orderData->delivery_status=='3' ) && ($orderData->return_type=='0' ))
                         <div class="or-box">
                             <div class="fill-box">
-                                <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}" class="img-fluid">
                             </div>
                             <div>Delivered</div>
                         </div>
@@ -620,7 +625,8 @@
                         <div class="or-box">
                             <div class="fill-box"
                                 style="background:linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);">
-                                <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}" class="img-fluid">
+                                <img src="{{ asset('user/assets/images/order-ic/delivered-white.svg') }}"
+                                    class="img-fluid">
                             </div>
                             <div>Delivered</div>
                         </div>
