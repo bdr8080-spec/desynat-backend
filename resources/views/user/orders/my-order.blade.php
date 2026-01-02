@@ -214,6 +214,9 @@
 
                             'Cancelled' => ['#E70000', '#E700001A'],
 
+                            "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
+                            "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
+
                             default => ['#FF5F1B', '#79d69d1a'],
                             };
                             @endphp
@@ -300,12 +303,15 @@
                                     @elseif($orderdetail->delivery_status == '3' && $orderdetail->return_type == '2')
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                        Exchange Request Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        Exchange Date :
+                                        {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }}
                                     </div>
                                     @elseif($orderdetail->delivery_status == '3' && $orderdetail->return_type == '1')
                                     <div class="expert-date"
                                         style="background:{{ $bgColor }}; color:{{ $statusColor }}">
-                                        Return Request Date : {{ $orderdetail->updated_at->format('d M Y') }}
+                                        Pickup Date :
+                                        {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }}
+
                                     </div>
                                     @elseif($orderdetail->delivery_status == '3' && $orderdetail->payment_status == '1'
                                     && $orderdetail->return_type == '0')
