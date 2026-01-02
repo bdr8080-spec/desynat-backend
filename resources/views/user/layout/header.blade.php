@@ -65,12 +65,12 @@
                                     </span>
                                 </a>
                                 @php
-                                    $cartCount = App\Models\Addtocart::where('user_id', auth()->id())->count();
+                                $cartCount = App\Models\Addtocart::where('user_id', auth()->id())->count();
                                 @endphp
                                 <a href="{{route('user.view_cart')}}" class="position-relative">
                                     <span>
                                         @if($cartCount > 0)
-                                            <span class="badge text-bg-danger red-badge">{{ $cartCount }}</span>
+                                        <span class="badge text-bg-danger red-badge">{{ $cartCount }}</span>
                                         @endif
                                         <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
                                     </span>
@@ -115,7 +115,8 @@
                                                     <button class="custom-btn3">My wallet</button>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="{{route('user.myOrders')}}" class="custom-btn3">My Orders</a>
+                                                    <a href="{{route('user.myOrders')}}" class="custom-btn3">My
+                                                        Orders</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <button class="custom-btn3">My saved Cards</button>
@@ -302,8 +303,7 @@
                             </div>
                             <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false"
-                                    >
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <span id="selectedCurrency">KWD</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end custom-dropdown-menu currency">
@@ -390,8 +390,7 @@
                             </div>
                             <div class="dropdown-center mobileLang">
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false"
-                                   >
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid"
                                         style="width: 15px !important;" /> EN
                                 </button>
@@ -431,47 +430,27 @@
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-6  d-lg-block d-md-block d-none">
-                                <div class="form-group position-relative search">
-                                    <input type="text" id="headerSearchInput" autocomplete="off" class="form-control" placeholder="Search Product" />
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </div>
+                                <form action="{{route('user.allproduct')}}" method="get" id="searchForm">
 
-                                <!-- <div class="searchdrop">
-                                    <div class="latestsearch">
-                                        <h6>Latest Search Result</h6>
-                                        <div class="latest-lists">
-                                            <div>
-                                                <a href="#">T-shirt</a>
-                                            </div>
-                                            <div>
-                                                <a href="#">Shoes</a>
-                                            </div>
+                                    <div class="form-group position-relative search">
+                                        <input type="text" id="headerSearchInput" autocomplete="off"
+                                            class="form-control" placeholder="Search Product" />
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </div>
+                                    <div class="searchdrop" style="display: none;">
+                                        <div class="latestsearch">
+                                            <h6>Latest Search Result</h6>
+                                            <div class="latest-lists" id="latestSearchResults"></div>
+                                        </div>
+                                        <div class="latestsearch">
+                                            <!-- <h6>Recommended</h6> -->
+                                            <div class="latest-lists" id="recommendedResults"></div>
                                         </div>
                                     </div>
-                                    <div class="latestsearch">
-                                        <h6>Recommended</h6>
-                                        <div class="latest-lists">
-                                            <div>
-                                                <a href="#">Puma</a>
-                                            </div>
-                                            <div>
-                                                <a href="#">Nike</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <div class="searchdrop" style="display: none;">
-                                    <div class="latestsearch">
-                                        <h6>Latest Search Result</h6>
-                                        <div class="latest-lists" id="latestSearchResults"></div>
-                                    </div>
-                                    <div class="latestsearch">
-                                        <!-- <h6>Recommended</h6> -->
-                                        <div class="latest-lists" id="recommendedResults"></div>
-                                    </div>
-                                </div>
+                                </form>
 
                             </div>
+
 
                             <div class="col-lg-6 col-12">
 
@@ -530,7 +509,8 @@
                                         </li>
                                         @if (Auth::guard('web')->check())
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="{{route('user.gift_cards')}}">Gift Card</a>
+                                            <a class="nav-link active" aria-current="page"
+                                                href="{{route('user.gift_cards')}}">Gift Card</a>
                                         </li>
                                         @endif
                                         <li class="nav-item">
@@ -587,5 +567,3 @@
             </div>
         </div>
     </div>
-
-    

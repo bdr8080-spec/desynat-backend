@@ -724,6 +724,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const latestSearchDiv = document.getElementById('latestSearchResults');
     const recommendedDiv = document.getElementById('recommendedResults');
 
+    const searchForm = document.getElementById("searchForm");
+
     // Fetch recent search data if user is logged in
     function fetchRecentSearch() {
         fetch("{{ route('user.getSearchData') }}", {
@@ -743,13 +745,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     data.data.data.forEach(item => {
                         const div = document.createElement('div');
                         // Use item.name instead of item.search
-                        div.innerHTML = `<a href="#">${item.name}</a>`;
+                        div.innerHTML = `<a href="/${item.name}">${item.name}</a>`;
                         latestSearchDiv.appendChild(div);
+
+
+                        div.addEventListener("click", () => {
+                            searchInput.value = item.name; // e.g. "shirt"
+                            searchForm.requestSubmit(); // ✅ redirects
+                        });
+
                     });
 
+                    // data.data.data.forEach(item => {
+                    //     const div = document.createElement("div");
+                    //     div.classList.add("search-item");
+                    //     div.textContent = item.name;
+
+                    //     div.addEventListener("click", () => {
+                    //         searchInput.value = item.name; // e.g. "shirt"
+                    //         searchForm.requestSubmit(); // ✅ redirects
+                    //     });
+
+                    //     latestSearchDiv.appendChild(div);
+                    // });
+
                     searchDrop.style.display = 'block';
-
-
 
                 } else {
                     searchDrop.style.display = 'none';
@@ -776,6 +796,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 200);
     });
 });
+     </script>
+
+
+     <script>
+document.getElementById("headerSearchInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendSearch();
+    }
+});
+
+function sendSearch() {
+    const value = document.getElementById("headerSearchInput").value.trim();
+    if (value !== "") {
+        window.location.href = "/user/all-product?search=" + encodeURIComponent(value);
+    }
+}
      </script>
 
 

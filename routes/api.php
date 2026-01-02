@@ -129,7 +129,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/get-Invoice', [UserDashboardController::class,'get_Invoice']);
 
+
 });
+
+Route::post('/get-Invoice', [UserDashboardController::class,'get_Invoice']);
 
 
 Route::get('/store_filter', [UserStoreController::class,'store_filter']);
