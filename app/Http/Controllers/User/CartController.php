@@ -197,7 +197,6 @@ class CartController extends Controller
             'order_id' => $orderId,
         ];
         $orderData = $this->UserOrderService->singleOrderDetails($data);
-        //dd($orderData);
         return view('user.carts.orderplace',compact('orderData'));
 
     }
