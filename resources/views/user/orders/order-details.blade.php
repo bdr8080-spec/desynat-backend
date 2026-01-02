@@ -479,7 +479,7 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
-                                <div>Return Request</div>
+                                <div>Confirm</div>
                             </div>
 
                             <div class="or-box">

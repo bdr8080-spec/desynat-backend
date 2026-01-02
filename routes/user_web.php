@@ -100,6 +100,11 @@ use App\Http\Controllers\User\DashBoardController;
   Route::post('/submitRating', [OrderController::class,'submitRating'])->name('user.submitRating');
 
 
+Route::get('/all-product', [OrderController::class,'all_product'])->name('user.allproduct');
+
+
+
+
 });
 
 

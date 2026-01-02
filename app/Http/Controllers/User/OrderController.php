@@ -294,6 +294,10 @@ class OrderController extends Controller
 
 
 
+    public function all_product(){
+        return View('user.product.all-product');
+    }
+
 
 
 
