@@ -287,8 +287,7 @@
                                     </div>
                                     @if(in_array($orderdetail->delivery_status, ['1', '2','2.1','2.2','8']) &&
                                     $orderdetail->payment_status !== '2' && $orderdetail->payment_status !== '3' )
-                                    <div class="expert-date"
-                                        style="background:{{ $bgColor }}; color:{{ $statusColor }}">
+                                    <div class="expert-date" style="background:{{ $bgColor }}; color:#28a745">
                                         <!-- Expected Delivery Date : -->
                                         <!-- {{ $orderdetail->updated_at->copy()->addDays(6)->format('d M Y') }} -->
                                         Expected Delivery Date : 3-5 Working Days
