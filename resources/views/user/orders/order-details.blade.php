@@ -469,12 +469,51 @@
                         </div>
                     </div>
 
+                    @elseif($orderData->return_type!=='0')
+
+                    <!-- when Order In Return State  -->
+
+                    <div class="orderstatus p-3 mb-4">
+                        <div class="order-view-lists mt-3">
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                </div>
+                                <div>Return Request</div>
+                            </div>
+
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
+                                        style="filter: brightness(26);">
+                                </div>
+                                <div>In Progress</div>
+                            </div>
+
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
+                                        style="filter: brightness(26);">
+                                </div>
+                                <div>In Progress</div>
+                            </div>
+
+                            <div class="or-box">
+                                <div class="fill-box">
+                                    <img src="{{ asset('user/assets/images/order-ic/box.svg') }}" class="img-fluid"
+                                        style="filter: brightness(26);">
+                                </div>
+                                <div>In Progress</div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
                     @else
 
+
                     <!-- when Order is Not Cancelled -->
-
-
-
                     <div class="order-view-lists mt-3">
                         <div class="or-box">
                             <div class="fill-box">
