@@ -443,7 +443,7 @@
                                             <div class="latest-lists" id="latestSearchResults"></div>
                                         </div>
                                         <div class="latestsearch">
-                                            <!-- <h6>Recommended</h6> -->
+                                            <h6>Recommended</h6>
                                             <div class="latest-lists" id="recommendedResults"></div>
                                         </div>
 

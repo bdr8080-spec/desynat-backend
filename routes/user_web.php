@@ -108,8 +108,10 @@ use App\Http\Controllers\User\DashBoardController;
 Route::get('Payment-Callback',[CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
 Route::post('/headerSearch', [DashBoardController::class, 'headerSearch'])->name('user.headerSearch');
 Route::get('/getSearchData', [DashBoardController::class, 'getSearchData'])->name('user.getSearchData');
-Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])->name('user.getlatestSearch');
 
+Route::get('/getRecommandedlatestSearch', [DashBoardController::class, 'getRecommandedlatestSearch'])->name('user.getRecommandedlatestSearch');
+
+Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])->name('user.getlatestSearch');
 
 
 
