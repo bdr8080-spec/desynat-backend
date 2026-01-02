@@ -75,6 +75,9 @@ if (!empty($data->search)) {
               ->orWhere('description_en', 'LIKE', '%' . $data->search . '%');
               
     });
+     $products->orWhereHas('brand', function ($q) use ($data) {
+                $q->Where('name_english', 'LIKE', "%{$data->search}%");
+        });
 }
 
 /**
