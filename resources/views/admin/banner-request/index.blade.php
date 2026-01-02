@@ -34,8 +34,8 @@
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <form method="GET" action="{{ route('admin.bannerRequestManagement') }}" id="filterForm">
                     <input type="hidden" name="type" value="new" />
-                <div class="row">
-                    <!-- <div class="col-lg-3 col-md-4 col-12">
+                    <div class="row">
+                        <!-- <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" class="form-control" />
@@ -47,25 +47,24 @@
                             <input type="date" id="from" class="form-control" />
                         </div>
                     </div> -->
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
-                            <select name="country_name" id="country_name"
-                                class="form-select form-select-lg"
-                                onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select country</option>
-                                @foreach($countries as $country)
+                        <div class="col-lg-3 col-md-12 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="to" class="form-label">Select Country</label>
+                                <select name="country_name" id="country_name" class="form-select form-select-lg"
+                                    onchange="document.getElementById('filterForm').submit();">
+                                    <option value="">Select country</option>
+                                    @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'new' && request('country_name') == $country['name'] ? 'selected' : '' }}>
                                         {{ $country['name'] }}
                                     </option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
-               </form>
+                    </div>
+                </form>
 
                 <div class="table-responsive mt-5">
                     <table id="myTable" class="table">
@@ -90,7 +89,8 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $data['order_id'] }}</td>
 
-                                <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
+                                <td>{{ $data['seller_details']['first_name'] }}
+                                    {{ $data['seller_details']['last_name'] }}</td>
                                 <td>
                                     {{
                                         \App\Models\Country::where(
@@ -103,7 +103,9 @@
                                     {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>
-                                    <img src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px" class="square" />
+                                    <a href="{{ $data['upload_banner'] }}" target="blank"> <img
+                                            src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px"
+                                            class="square" /> </a>
                                 </td>
                                 <td>
                                     {{
@@ -125,20 +127,22 @@
 
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
-                                        <a class="table-button approveBannerBtn" data-id="{{ $data['id'] }}" type="button">
+                                        <a class="table-button approveBannerBtn" data-id="{{ $data['id'] }}"
+                                            type="button">
                                             <i class="bi bi-check-circle-fill"></i>
                                         </a>
 
-                                        <a class="table-button rejectBannerBtn" data-id="{{ $data['id'] }}" data-bs-toggle="modal" data-bs-target="#rejectmodel" type="button">
+                                        <a class="table-button rejectBannerBtn" data-id="{{ $data['id'] }}"
+                                            data-bs-toggle="modal" data-bs-target="#rejectmodel" type="button">
                                             <i class="bi bi-x-circle-fill"></i>
                                         </a>
                                     </div>
                                 </td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="12" class="text-center">No data found</td>
-                                </tr>
+                            <tr>
+                                <td colspan="12" class="text-center">No data found</td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -149,8 +153,8 @@
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.bannerRequestManagement') }}" id="filterForm1">
                     <input type="hidden" name="type" value="approved" />
-                <div class="row">
-                    <!-- <div class="col-lg-3 col-md-4 col-12">
+                    <div class="row">
+                        <!-- <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" class="form-control" />
@@ -162,24 +166,23 @@
                             <input type="date" id="from" class="form-control" />
                         </div>
                     </div> -->
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
-                            <select name="country_name" id="country_name"
-                                class="form-select form-select-lg"
-                                onchange="document.getElementById('filterForm1').submit();">
-                                <option value="">Select country</option>
-                                @foreach($countries as $country)
+                        <div class="col-lg-3 col-md-12 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="to" class="form-label">Select Country</label>
+                                <select name="country_name" id="country_name" class="form-select form-select-lg"
+                                    onchange="document.getElementById('filterForm1').submit();">
+                                    <option value="">Select country</option>
+                                    @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'approved' && request('country_name') == $country['name'] ? 'selected' : '' }}>
                                         {{ $country['name'] }}
                                     </option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
+                    </div>
                 </form>
                 <div class="table-responsive mt-5">
                     <table id="myTable1" class="table">
@@ -206,7 +209,8 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $data['order_id'] }}</td>
 
-                                <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
+                                <td>{{ $data['seller_details']['first_name'] }}
+                                    {{ $data['seller_details']['last_name'] }}</td>
                                 <td>
                                     {{
                                         \App\Models\Country::where(
@@ -219,7 +223,9 @@
                                     {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>
-                                    <img src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px" class="square" />
+                                    <a href="{{ $data['upload_banner'] }}" target="blank"> <img
+                                            src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px"
+                                            class="square" /> </a>
                                 </td>
                                 <td>
                                     {{
@@ -242,21 +248,22 @@
                                 <td>{{ $data['payment_status'] == 1 ? 'Yes' : 'No' }}</td>
                                 <td>
                                     @if($data['payment_status'] == 1)
-                                        @php
-                                            $price = (float) $data['price'];
-                                            $formattedPrice = ($price == floor($price)) ? intval($price) : number_format($price, 2, '.', '');
-                                        @endphp
-                                        {{ $formattedPrice }} KD
+                                    @php
+                                    $price = (float) $data['price'];
+                                    $formattedPrice = ($price == floor($price)) ? intval($price) : number_format($price,
+                                    2, '.', '');
+                                    @endphp
+                                    {{ $formattedPrice }} KD
                                     @else
-                                        N/A
+                                    N/A
                                     @endif
                                 </td>
 
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="12" class="text-center">No data found</td>
-                                </tr>
+                            <tr>
+                                <td colspan="12" class="text-center">No data found</td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -269,8 +276,8 @@
                 tabindex="0">
                 <form method="GET" action="{{ route('admin.bannerRequestManagement') }}" id="filterForm2">
                     <input type="hidden" name="type" value="rejected" />
-                <div class="row">
-                    <!-- <div class="col-lg-3 col-md-4 col-12">
+                    <div class="row">
+                        <!-- <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
                             <input type="date" id="from" class="form-control" />
@@ -282,24 +289,23 @@
                             <input type="date" id="from" class="form-control" />
                         </div>
                     </div> -->
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">Select Country</label>
-                            <select name="country_name" id="country_name"
-                                class="form-select form-select-lg"
-                                onchange="document.getElementById('filterForm2').submit();">
-                                <option value="">Select country</option>
-                                @foreach($countries as $country)
+                        <div class="col-lg-3 col-md-12 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="to" class="form-label">Select Country</label>
+                                <select name="country_name" id="country_name" class="form-select form-select-lg"
+                                    onchange="document.getElementById('filterForm2').submit();">
+                                    <option value="">Select country</option>
+                                    @foreach($countries as $country)
                                     <option value="{{ $country['name'] }}"
                                         {{ request('type') == 'rejected' && request('country_name') == $country['name'] ? 'selected' : '' }}>
                                         {{ $country['name'] }}
                                     </option>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                </div>
+                    </div>
                 </form>
 
                 <div class="table-responsive mt-5 mt-5">
@@ -325,7 +331,8 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $data['order_id'] }}</td>
 
-                                <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['last_name'] }}</td>
+                                <td>{{ $data['seller_details']['first_name'] }}
+                                    {{ $data['seller_details']['last_name'] }}</td>
                                 <td>
                                     {{
                                         \App\Models\Country::where(
@@ -338,7 +345,9 @@
                                     {{ \Carbon\Carbon::parse($data['created_at'])->timezone('Asia/Kuwait')->format('jS F Y | h:i A') }}
                                 </td>
                                 <td>
-                                    <img src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px" class="square" />
+                                    <a href="{{ $data['upload_banner'] }}" target="blank"> <img
+                                            src="{{ $data['upload_banner'] }}" alt="" width="40px" height="40px"
+                                            class="square" /> </a>
                                 </td>
                                 <td>
                                     {{
@@ -363,9 +372,9 @@
                                 </td>
                             </tr>
                             @empty
-                                <tr>
-                                    <td colspan="12" class="text-center">No data found</td>
-                                </tr>
+                            <tr>
+                                <td colspan="12" class="text-center">No data found</td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -409,29 +418,29 @@ document.addEventListener('DOMContentLoaded', function() {
             let bannerId = this.getAttribute('data-id');
 
             fetch("{{ route('admin.approveBannerRequest') }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    banner_id: bannerId
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        banner_id: bannerId
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    toastr.success(data.message);
-                } else {
-                    toastr.error(data.message || 'Failed to approve banner.');
-                }
-                setTimeout(() => location.reload(), 2000);
-            })
-            .catch(error => {
-                //console.error(error);
-                toastr.error('Something went wrong while approving the banner.');
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        toastr.success(data.message);
+                    } else {
+                        toastr.error(data.message || 'Failed to approve banner.');
+                    }
+                    setTimeout(() => location.reload(), 2000);
+                })
+                .catch(error => {
+                    //console.error(error);
+                    toastr.error('Something went wrong while approving the banner.');
+                });
         });
     });
 
@@ -441,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    let currentBannerId = null; 
+    let currentBannerId = null;
 
     document.querySelectorAll('.rejectBannerBtn').forEach(button => {
         button.addEventListener('click', function() {
@@ -469,35 +478,36 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         fetch("{{ route('admin.rejectBannerRequest') }}", {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                banner_id: currentBannerId,
-                reason: reason
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    banner_id: currentBannerId,
+                    reason: reason
+                })
             })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                toastr.success(data.message);
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    toastr.success(data.message);
 
-                const modalEl = document.getElementById('rejectmodel');
-                const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-                modal.hide();
+                    const modalEl = document.getElementById('rejectmodel');
+                    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(
+                        modalEl);
+                    modal.hide();
 
-                setTimeout(() => location.reload(), 1500);
-            } else {
-                toastr.error(data.message || 'Failed to reject banner.');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            toastr.error('Something went wrong while rejecting the banner.');
-        });
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    toastr.error(data.message || 'Failed to reject banner.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                toastr.error('Something went wrong while rejecting the banner.');
+            });
     });
 });
 </script>
