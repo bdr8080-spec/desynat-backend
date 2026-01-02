@@ -241,7 +241,7 @@
                                                     <div class="product-info">
                                                         <h5 class="product-title">
                                                             Order ID :#
-                                                            <span>{{ $orderDetail->order->order_id }}</span>
+                                                            <span>{{ $orderDetail->id }}</span>
                                                         </h5>
 
                                                         <div class="price-current">

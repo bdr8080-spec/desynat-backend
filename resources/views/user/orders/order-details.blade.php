@@ -18,7 +18,7 @@
                             <img src="{{ asset('user/assets/images/left-ic.svg') }}" class="img-fluid mt-1">
                         </a>
                         <div class="order-subtitle">
-                            <h3>#{{ $orderData->order->order_id ?? 'N/A' }}</h3>
+                            <h3>#{{ $orderData->id ?? 'N/A' }}</h3>
                             <p>Placed on
                                 {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())->format('d/m/Y \a\t h:ia') }}
                             </p>
