@@ -81,7 +81,7 @@ class OrderController extends Controller
                 'cancel_reason' => $request->cancel_reason,
               ];
 
-            $data = $this->UserOrderService->cancelledSingleProduct($request_data);
+            $data = $this->UserOrderService->cancelledSingleProductNew($request_data);
             //dd($data);
             
             if ($data['status'] === 'success') {
