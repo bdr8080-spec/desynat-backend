@@ -48,8 +48,8 @@
     }
 
     .right-header {
-           padding-left: 34px;
-    font-size: 16px;
+        padding-left: 34px;
+        font-size: 16px;
     }
 
     .logo {
@@ -201,8 +201,8 @@
         <!-- HEADER -->
         <div class="header">
             <div class="left-header">
-                        <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" />
-               
+                <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" />
+
                 <div class="sub">multi-vendor fashion platform</div>
             </div>
 
@@ -242,7 +242,8 @@
             </tr>
             <tr>
                 <td class="label">Mobile Number:</td>
-                <td class="line">{{@$checkOrder->delivery_details->country_code }} {{@$checkOrder->delivery_details->mobile }}
+                <td class="line">{{@$checkOrder->delivery_details->country_code }}
+                    {{@$checkOrder->delivery_details->mobile }}
                 </td>
             </tr>
             <tr>
@@ -346,7 +347,7 @@
                 <table>
                     <tr>
                         <td><strong>SUBTOTAL</strong></td>
-                        <td>{{$checkOrder->total_mrp}}</td>
+                        <td>{{$checkOrder->total_mrp}} KD</td>
 
                     </tr>
                     <tr>
@@ -358,7 +359,7 @@
 
                     <tr>
                         <td>Delivery Fee</td>
-                        <td>{{$checkOrder->shipping_fees}}</td>
+                        <td>{{$checkOrder->shipping_fees}} KD</td>
                         <td>Tax (VAT)</td>
                         <td>{{$checkOrder->tax}} KD</td>
                     </tr>
