@@ -46,16 +46,17 @@ $products = product::with([
         }
 
         if (isset($data->price_min)) {
-            $q->where('final_price', '>=', $data->price_min);
+            $q->where('final_price', '>=', intval($data->price_min));
         }
 
         if (isset($data->price_max)) {
-            $q->where('final_price', '<=', $data->price_max);
+            $q->where('final_price', '<=', intval($data->price_max));
         }
     },
     'product_variants.color',
     'product_variants.size'
 ]);
+
 
 /**
  * Search filter

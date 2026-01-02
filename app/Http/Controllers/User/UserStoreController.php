@@ -349,6 +349,7 @@ foreach ($data->product_variants as $item) {
     
     $AllProduct = $AllProduct_data['data'];
 
+
         // Fetch filters for view
         $brand = Brand::orderBy('name_english', 'asc')->get();
         $category = Category::orderBy('id', 'desc')->get();
