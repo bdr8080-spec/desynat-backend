@@ -320,5 +320,47 @@ foreach ($data->product_variants as $item) {
 
      }
 
+
+
+
+     public function all_product(Request $request)
+    {
+      
+        // Get logged-in user ID
+        $user_id = isset($request->user()->id) ? $request->user()->id : null;
+
+        // Prepare request data as an object
+        $request_data = (object)[
+            'user_id'        => $user_id,
+            'store_id'       => "32",
+            'search'         => $request->search ?? null,
+            'sort_filter'    => $request->sort_filter ?? null,
+            'brand_id'       => $request->brand_id ?? null,
+            'category_id'    => $request->category_id ?? null,
+            'size_id'        => $request->size_id ?? null,
+            'color_id'       => $request->color_id ?? null,
+            'price_min'      => isset($request->price_min) ? intval($request->price_min) : null,
+            'price_max'      => isset($request->price_max) ? intval($request->price_max) : null,
+            'discount'       => isset($request->discount) ? intval($request->discount) : null,
+            'rating'         => $request->rating ?? null,
+            'delivery_time'  => $request->delivery_time ?? null,
+            'delivery_option'=> $request->delivery_option ?? null,
+        ];
+
+        // Call service method
+        $store_details = $this->UserManagementService->singleStoreWiseAllproduct($request_data);
+        $store_details = $store_details['data'];
+
+
+        // Fetch filters for view
+        $brand = Brand::orderBy('name_english', 'asc')->get();
+        $category = Category::orderBy('id', 'desc')->get();
+        $size = Size::orderBy('name', 'desc')->get();
+        $color = Color::orderBy('name', 'asc')->get();
+        
+        return view('user.product.all-product', compact('store_details', 'category', 'brand', 'size', 'color'));
+    }
+
+
     
 }
