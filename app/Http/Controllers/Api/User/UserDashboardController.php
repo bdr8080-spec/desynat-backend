@@ -130,8 +130,7 @@ public function get_Invoice(Request $request){
         'order_id'=>$request->order_id,
         ];
 
-
-        $data=Url('/')."/invoice/".$request->order_id;
+    $data=Url('/')."/invoice/".$request->order_id;
         
 
     return ApiResponse::generateResponse('success', "Invoice Url get Successfully ",$data, 200);
