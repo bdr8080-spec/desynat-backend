@@ -35,7 +35,7 @@
         display: grid;
         grid-template-columns: 1fr 1px 1fr;
         align-items: center;
-        padding: 30px;
+        /* padding: 30px; */
     }
 
     .header-divider {
@@ -48,8 +48,8 @@
     }
 
     .right-header {
-        padding-left: 25px;
-        font-size: 12px;
+           padding-left: 34px;
+    font-size: 16px;
     }
 
     .logo {
@@ -58,7 +58,7 @@
     }
 
     .sub {
-        font-size: 22px;
+        font-size: 21px;
         color: #555;
     }
 
@@ -71,7 +71,7 @@
     .meta {
         display: flex;
         justify-content: space-between;
-        font-size: 18px;
+        font-size: 16px;
         text-transform: uppercase;
 
     }
@@ -173,7 +173,7 @@
 
     .footer {
         margin-top: 30px;
-        font-size: 21px;
+        font-size: 18px;
         text-align: center;
     }
 
@@ -201,7 +201,8 @@
         <!-- HEADER -->
         <div class="header">
             <div class="left-header">
-                <div class="logo">DESYNAT</div>
+                        <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" />
+               
                 <div class="sub">multi-vendor fashion platform</div>
             </div>
 
