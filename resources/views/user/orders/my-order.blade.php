@@ -214,7 +214,7 @@
 
                             'Cancelled' => ['#E70000', '#E700001A'],
 
-                            default => ['#2fac54ff', '#79d69d1a'],
+                            default => ['#FF5F1B', '#79d69d1a'],
                             };
                             @endphp
 
