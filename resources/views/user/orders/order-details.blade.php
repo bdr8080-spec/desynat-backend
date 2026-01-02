@@ -603,8 +603,7 @@
 
                         <!--  -->
 
-                        @if(($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
-                        $orderData->delivery_status=='3' ) && ($orderData->return_type=='0' ))
+                        @if(($orderData->delivery_status=='3' ) && ($orderData->return_type=='0' ))
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
