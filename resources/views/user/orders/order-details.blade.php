@@ -272,10 +272,10 @@
                             <div>Total Quantity</div>
                             <div>{{$orderData->quantity}}</div>
                         </div>
-                        <div class="giftinfo">
+                        <!-- <div class="giftinfo">
                             <div>Address </div>
                             <div>{{$orderData->order->delivery_details->address}}</div>
-                        </div>
+                        </div> -->
                         <!-- <div class="giftinfo">
                             <div>Custom details</div>
                             <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</div>
