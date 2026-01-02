@@ -489,7 +489,7 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
-                                <div>Confirm</div>
+                                <div>Confirm </div>
                             </div>
 
                             @else
@@ -527,7 +527,13 @@
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
                                 </div>
+
+                                @if($orderData->return_type==1)
                                 <div>Picked up </div>
+                                @else
+                                <div>Exchange</div>
+                                @endif
+
                             </div>
                             @else
                             <div class="or-box">
@@ -535,7 +541,13 @@
                                     <img src="{{ asset('user/assets/images/order-ic/on-the-way.svg') }}"
                                         class="img-fluid">
                                 </div>
-                                <div>Picked up</div>
+
+                                @if($orderData->return_type==1)
+                                <div>Picked up </div>
+                                @else
+                                <div>Exchange</div>
+                                @endif
+
                             </div>
                             @endif
 
