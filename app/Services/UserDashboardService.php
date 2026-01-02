@@ -30,6 +30,12 @@ public function HomePageSearch($data)
 /**
  * Start product query directly
  */
+
+$attributes = is_array($data->attributes ?? null)
+    ? $data->attributes
+    : [];
+
+
 $products = product::with([
     'brand',
     'category',
@@ -124,6 +130,42 @@ if (
         if (!empty($data->discount)) {
             $q->where('discount_value', '<=', $data->discount);
         }
+    });
+}
+
+
+
+
+if (!empty($attributes)) {
+    $products->where(function ($query) use ($attributes) {
+
+        foreach ($attributes as $value) {
+            $query->orWhere('product_name_en', 'LIKE', "%{$value}%")
+                  ->orWhere('other_en', 'LIKE', "%{$value}%")
+                  ->orWhere('description_en', 'LIKE', "%{$value}%");
+        }
+
+        // 🔹 Brand name search
+        $query->orWhereHas('brand', function ($q) use ($attributes) {
+            foreach ($attributes as $value) {
+                $q->orWhere('name_english', 'LIKE', "%{$value}%");
+            }
+        });
+
+        // 🔹 Category name search
+        $query->orWhereHas('category', function ($q) use ($attributes) {
+            foreach ($attributes as $value) {
+                $q->orWhere('name', 'LIKE', "%{$value}%");
+            }
+        });
+
+          // 🔹 SubCategory name search
+        $query->orWhereHas('subcategory', function ($q) use ($attributes) {
+            foreach ($attributes as $value) {
+                $q->orWhere('name_english', 'LIKE', "%{$value}%");
+            }
+        });
+
     });
 }
 
