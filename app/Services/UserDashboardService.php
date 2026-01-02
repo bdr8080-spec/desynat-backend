@@ -337,6 +337,34 @@ if (!empty($data->sort_filter)) {
 
 
 
+public function Recommanded_HomeRecentSearchList($request)
+    {
+        try {
+
+
+    $search=[
+        'user_id'=>$request->user_id,
+    ];
+        // Store Search Data 
+$search_result=RecentSearch::where('user_id', $request->user_id)->limit(8)->orderBy('id','desc')->get();
+
+return [
+    'status'  => 'success',
+    'message' => 'Recent Search List ',
+    'data'    => $search_result
+];
+
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
 
 
 

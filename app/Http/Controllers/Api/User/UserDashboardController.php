@@ -94,6 +94,26 @@ public function get_recent_search_data(Request $request){
 
     }
 
+
+
+public function get_recommanded_search_data(Request $request){
+
+    $user_id=$request->user()->id;
+
+     $request_data=(object)[
+        'user_id'=>$user_id,
+        ];
+
+     $data=$this->UserDashboardService->Recommanded_HomeRecentSearchList($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
     
 
 
