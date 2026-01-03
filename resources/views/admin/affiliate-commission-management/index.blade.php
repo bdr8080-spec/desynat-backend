@@ -47,7 +47,7 @@
                                     floor($data['affiliate_commission_info']['commission']) == $data['affiliate_commission_info']['commission']
                                         ? number_format($data['affiliate_commission_info']['commission'], 0)
                                         : number_format($data['affiliate_commission_info']['commission'], 2)
-                                }}
+                                }}%
                             </td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
