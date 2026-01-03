@@ -286,6 +286,40 @@ class BannerService
         }
     }
 
+    public function blockUnblockBannerReq($request)
+    {
+        try {
+            $data = sellerBanner::find($request->id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Banner Req not found',
+                    'data' => []
+                ];
+            }
+
+            $data->status = $data->status == 1 ? 0 : 1;
+            $data->save();
+
+            $message = $data->status == 1
+                ? 'Banner Request Unblocked Successfully'
+                : 'Banner Request blocked Successfully';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch banner: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 

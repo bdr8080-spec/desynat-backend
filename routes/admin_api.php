@@ -164,6 +164,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_banner_request',[BannerController::class,'get_banner_request']);
      Route::post('/approve_banner_request',[BannerController::class,'approve_banner_request']);
      Route::post('/reject_banner_request',[BannerController::class,'reject_banner_request']);
+     Route::post('/block_unblock_banner_req',[BannerController::class,'block_unblock_banner_req']);
 
 
 

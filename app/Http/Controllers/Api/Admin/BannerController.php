@@ -140,6 +140,30 @@ class BannerController extends Controller
         }
     }
 
+    public function block_unblock_banner_req(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'id' => 'required|exists:seller_banners,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->BannerService->blockUnblockBannerReq($request);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

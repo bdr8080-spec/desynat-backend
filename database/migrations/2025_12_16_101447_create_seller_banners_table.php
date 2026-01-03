@@ -28,6 +28,7 @@ return new class extends Migration
             $table->enum('payment_status',['0','1','2'])->default('0')->comment(' 0 pending 1 paid 2 Cancelled 3 Failed');
             $table->string('transaction_id')->nullable();
             $table->longText('cancelled_reason')->nullable();
+            $table->string('status')->default(1)->comment('0-inactive, 1-active');
             $table->timestamps();
         });
     }
