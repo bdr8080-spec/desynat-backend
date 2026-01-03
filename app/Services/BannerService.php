@@ -286,10 +286,10 @@ class BannerService
         }
     }
 
-    public function blockUnblockBannerReq($request)
+    public function blockUnblockBannerReq($id)
     {
         try {
-            $data = sellerBanner::find($request->id);
+            $data = sellerBanner::find($id);
 
             if (!$data) {
                 return [

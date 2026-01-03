@@ -200,6 +200,7 @@
                                 <th scope="col">No. of Days</th>
                                 <th scope="col">Seller Posted</th>
                                 <th scope="col">Amount Paid</th>
+                                <th scope="col">Action</th>
 
                             </tr>
                         </thead>
@@ -257,6 +258,18 @@
                                     @else
                                     N/A
                                     @endif
+                                </td>
+                                <td>
+                                <div class="form-check form-switch d-flex justify-content-center align-items-center"">
+                                        <input
+                                            class="form-check-input toggleStatus"
+                                            type="checkbox"
+                                            role="switch"
+                                            id="switch{{ $data['id'] }}"
+                                            data-id="{{ $data['id'] }}"
+                                            {{ $data['status'] == 1 ? 'checked' : '' }}
+                                        />
+                                    </div>
                                 </td>
 
                             </tr>
@@ -528,6 +541,45 @@ document.addEventListener("DOMContentLoaded", function() {
     tabButtons.forEach((button) => {
         button.addEventListener("shown.bs.tab", function() {
             localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            let Id = this.getAttribute('data-id');
+
+            fetch(`/admin/updateBannerReqStatus/${Id}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // toastr.success(data.message);
+                     if(data.status == 1){
+                        toastr.success(data.message); // Green for active
+                    } else {
+                        toastr.error(data.message);   // Red for deactivated
+                    }
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(data.message);
+                }
+            })
+            .catch(error => {
+                //console.error(error);
+                toastr.error('Something went wrong while updating status.');
+            });
         });
     });
 });

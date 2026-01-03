@@ -150,6 +150,7 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/banner-request-management', [BannerRequestController::class, 'bannerRequestManagement'])->name('admin.bannerRequestManagement');
         Route::post('/approveBannerRequest', [BannerRequestController::class, 'approveBannerRequest'])->name('admin.approveBannerRequest');
         Route::post('/rejectBannerRequest', [BannerRequestController::class, 'rejectBannerRequest'])->name('admin.rejectBannerRequest');
+        Route::post('/updateBannerReqStatus/{id}', [BannerRequestController::class, 'updateBannerReqStatus'])->name('admin.updateBannerReqStatus');
         
 
     });

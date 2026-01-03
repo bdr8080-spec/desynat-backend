@@ -89,6 +89,27 @@ class BannerRequestController extends Controller
 
     }
 
+    public function updateBannerReqStatus($id)
+    {
+        $data = $this->BannerService->blockUnblockBannerReq($id);
+        //dd($result);
+
+        if ($data['status'] == 'success') {
+           // $statusText = $data['data']->status == 1 ? 'Activated' : 'Deactivated';
+  
+            return response()->json([
+                'success' => true,
+                'status' => $data['data']->status,
+                'message' => $data['message']
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => $data['message']
+            ], 400); 
+        }
+    }
+
 
 
     

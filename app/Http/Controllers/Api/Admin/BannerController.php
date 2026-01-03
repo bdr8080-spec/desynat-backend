@@ -151,7 +151,7 @@ class BannerController extends Controller
         }
 
         try {
-            $data = $this->BannerService->blockUnblockBannerReq($request);
+            $data = $this->BannerService->blockUnblockBannerReq($request->id);
 
             if (isset($data['status']) && $data['status'] == 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
