@@ -141,8 +141,13 @@
 
                 <div class="d-flex align-items-center mb-1">
                     <h4 class="fw-bold text-dark me-2" id="finalPrice">{{$firstVariant['final_price']}} KD</h4>
-                    <del class="text-muted me-2" id="actualPrice">{{$firstVariant['actual_price']}} KD</del>
+
+                    @if($firstVariant['discount_value']!=="0")
+                    <del class="text-muted me-2" id="actualPrice">{{$firstVariant['actual_price']}} KD
+                    </del>
                     <span class="text-danger fw-semibold">{{$firstVariant['discount_value']}}% off</span>
+                    @endif
+
                 </div>
 
                 <p class="text-muted mb-1">{{$data->store->store_name}}/{{$data->category->name}}</p>

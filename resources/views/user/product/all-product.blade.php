@@ -270,6 +270,8 @@
                                                 <div class="price">
                                                     <strong>{{ $item->product_variants[0]->final_price }}
                                                         KD</strong>
+
+                                                    @if($item->product_variants[0]->discount_value!=="0")
                                                     <div class="d-block">
                                                         <span
                                                             class="old-price">{{ $item->product_variants[0]->actual_price }}
@@ -281,6 +283,9 @@
 
                                                         </span>
                                                     </div>
+
+                                                    @endif
+
                                                 </div>
 
 
