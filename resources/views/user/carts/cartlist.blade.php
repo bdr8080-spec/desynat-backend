@@ -124,6 +124,9 @@
                                             {{ $item->product_variants->final_price }} KD
                                         </span>
 
+                                        @if($item->product_variants->discount_value!=="0")
+
+
                                         @if(!empty($item->product_variants->actual_price))
                                         <span class="price-old">
                                             {{ $item->product_variants->actual_price }} KD
@@ -136,6 +139,9 @@
                                             {{ $item->product_variants->discount_value }} KD Off
                                             @endif
                                         </span>
+
+                                        @endif
+
                                     </div>
 
                                 </div>
