@@ -35,6 +35,8 @@ class CartController extends Controller
         $cartData = $this->UserManagementService->product_view_cart_details($data)['data'];
 
 
+        dd($cartData);
+
         $userAddressId = userAddress::where('user_id',$user->id)->where('set_as_default','1')->value('id');
         //dd($cartData);
         $data1 = (object)[

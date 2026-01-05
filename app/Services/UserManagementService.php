@@ -649,6 +649,7 @@ public function product_view_cart_details($request)
 
          // discount Amount Code Apply 
         if($val->product->store){
+
             
         if($user_address && $userCountry_id!==0){
             $user_let=$user_address->latitude;
@@ -660,7 +661,6 @@ public function product_view_cart_details($request)
             // Calculate the distance
             $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
            
-        //    dd($distance);
             // $distance = 10;
 
             $shipping_charges= ShippingCharge::where('country_id',$userCountry_id)
@@ -683,6 +683,7 @@ public function product_view_cart_details($request)
                 $shipping_fees+=$get_shipping_charge;
            
             }
+
 
             // Tax calculate Code 
 
@@ -710,6 +711,7 @@ public function product_view_cart_details($request)
             Addtocart::where('id',$val->id)->update(['shipping_fees'=>$get_shipping_charge,'tax'=>$taxAmount]); // Update Shiping Charge
             }   
         }
+
 
         // Tax calucltor Code  start
 

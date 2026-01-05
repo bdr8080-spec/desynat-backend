@@ -11,12 +11,12 @@ use Carbon\Carbon;
 
 // Function to calculate the distance using the Haversine formula
 function calculateDistance($lat1, $lon1, $lat2, $lon2) {
-    if (
-        !is_numeric($lat1) || !is_numeric($lon1) ||
-        !is_numeric($lat2) || !is_numeric($lon2)
-    ) {
-        return null;
-    }
+    // if (
+    //     !is_numeric($lat1) || !is_numeric($lon1) ||
+    //     !is_numeric($lat2) || !is_numeric($lon2)
+    // ) {
+    //     return null;
+    // }
     // Radius of the Earth in kilometers
     $earthRadius = 6371;
     
@@ -38,6 +38,8 @@ function calculateDistance($lat1, $lon1, $lat2, $lon2) {
 
     // Distance in kilometers
     $distance = $earthRadius * $c;
+
+
     return $distance; // Distance in kilometers
 }
 
