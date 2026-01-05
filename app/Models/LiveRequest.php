@@ -21,7 +21,7 @@ class LiveRequest extends Model
 
     public function seller_details()
     {
-        return $this->belongsTo(Seller::class, 'seller_id');
+        return $this->belongsTo(seller::class, 'seller_id');
     }
 
 
