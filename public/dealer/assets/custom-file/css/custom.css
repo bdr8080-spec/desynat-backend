@@ -181,7 +181,7 @@
     border-right: 1px solid #b9946b;
     color: #000;
     border-radius: 0px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .tabs-panel .nav-pills .nav-link.active,
@@ -192,7 +192,7 @@
 
 .dt-column-title {
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
 }
 
@@ -426,6 +426,24 @@ table.dataTable {
     padding-top:10px;
     object-fit: contain;
 }
+/*--------------------------------------------------------------
+# Order management page
+--------------------------------------------------------------*/
+
+.mini-tabs-panel .nav-pills {
+    border-bottom: 1px solid #ddd;
+}
+.mini-tabs-panel .nav-link {
+    color: #000;
+    font-weight: 500;
+}
+.mini-tabs-panel .nav-pills .nav-link.active {
+    color: #8c643e;
+    background-color: transparent;
+    border-bottom: 1px solid #bc986e;
+    border-radius: 0px;
+    font-weight: 600;
+}
 
 
 @media (min-width: 1140px) and (max-width: 1440px) {
@@ -462,9 +480,11 @@ table.dataTable {
     .planheight {
         height: 270px !important;
     }
-   
-
 }
+
+
+
+
 
 @media (max-width:767px){
     
