@@ -93,6 +93,9 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::post('/all-banners', [SellerBannerController::class,'all_banners']);
 
 
+    // M6 APis
+
+
     
 });
 

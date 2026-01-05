@@ -236,7 +236,7 @@ $createOrder=Order::create($request_data);
 $order_id=$createOrder->id;
 
 // get Data From Add to cart and Insert  orderdetail Table
-$checkDataInCart =Addtocart::where('user_id',$userId)->get();
+$checkDataInCart =Addtocart::with('product.seller_details')->where('user_id',$userId)->get();
 if($checkDataInCart->isEmpty()){
     return [
         'status' => 'error',
@@ -277,6 +277,7 @@ foreach($checkDataInCart as $key=>$val){
     $cart_data=[
         "order_id"=>$order_id,
         "user_id"=>$val->user_id,
+        "seller_id"=>$val->product->seller_details->id,
         "product_id"=>$val->product_id,
         "variants_id"=>$val->variants_id,
         "quantity"=>$val->quantity,
