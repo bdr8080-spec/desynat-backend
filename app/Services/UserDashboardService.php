@@ -144,8 +144,8 @@ if (!empty($attributes)) {
 
         foreach ($attributes as $value) {
             $query->orWhere('product_name_en', 'LIKE', "%{$value}%")
-                  ->orWhere('other_en', 'LIKE', "%{$value}%")
-                  ->orWhere('description_en', 'LIKE', "%{$value}%");
+                  ->orWhere('other_en', 'LIKE', "%{$value}%");
+                //   ->orWhere('description_en', 'LIKE', "%{$value}%");
         }
 
         // 🔹 Brand name search
