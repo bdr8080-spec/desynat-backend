@@ -1550,8 +1550,12 @@ $(document).on("input change",
         }
         // Type=2 (Fixed price) → No restriction
         // -----------------------------------------
+        //   if (!actualPrice || !discountValue) {
+        //             $("#final_price_" + index + '_' + index1).val("");
+        //             return;
+        //     }
 
-        if (!actualPrice || !discountValue) {
+        if (!actualPrice) {
             $("#final_price_" + index + '_' + index1).val("");
             return;
         }
