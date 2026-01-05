@@ -50,7 +50,7 @@ class CountryService
                 return [
                     'status' => 'success',
                     'message' => 'No cities found for this country',
-                    'data' => (object) []
+                    'data' =>  []
                 ];
             }
 
@@ -64,7 +64,7 @@ class CountryService
                 return [
                     'status' => 'success',
                     'message' => 'All cities are already added in the Service Cities table',
-                    'data' => (object) []
+                    'data' =>  []
                 ];
             }
 
