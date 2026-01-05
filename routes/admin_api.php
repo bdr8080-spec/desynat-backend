@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Admin\BannerController;
 use App\Http\Controllers\Api\Admin\PromocodeController;
 use App\Http\Controllers\Api\Admin\AffiliateCommissionController;
 use App\Http\Controllers\Api\Admin\OrderManagementController;
+use App\Http\Controllers\Api\Admin\DealController;
 
 
 // Admin APi M1
@@ -165,6 +166,19 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/approve_banner_request',[BannerController::class,'approve_banner_request']);
      Route::post('/reject_banner_request',[BannerController::class,'reject_banner_request']);
      Route::post('/block_unblock_banner_req',[BannerController::class,'block_unblock_banner_req']);
+
+     //M5 api ends
+
+     //M6 api starts
+
+     //Deal Management
+     Route::post('/add_deal',[DealController::class,'add_deal']);
+     Route::post('/update_deal',[DealController::class,'update_deal']);
+     Route::get('/get_active_deals',[DealController::class,'get_active_deals']);
+     Route::get('/get_expired_deals',[DealController::class,'get_expired_deals']);
+     Route::post('/block_unblock_deal',[DealController::class,'block_unblock_deal']);
+     Route::post('/delete_deal',[DealController::class,'delete_deal']);
+
 
 
 
