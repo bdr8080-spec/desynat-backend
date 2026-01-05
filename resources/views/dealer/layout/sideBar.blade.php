@@ -36,6 +36,13 @@
                     <span>Banner Management</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/order-management') ? 'sidebar-active' : '' }}"
+                    href="{{ route('seller.order_management') }}">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/order.svg" alt="icon" class="asideicon">
+                    <span>Order Management</span>
+                </a>
+            </li>
 
 
             <!-- <li class="nav-item">
