@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\Admin\PromocodeController;
 use App\Http\Controllers\Api\Admin\AffiliateCommissionController;
 use App\Http\Controllers\Api\Admin\OrderManagementController;
 use App\Http\Controllers\Api\Admin\DealController;
+use App\Http\Controllers\Api\Admin\StoryController;
 
 
 // Admin APi M1
@@ -178,6 +179,12 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_expired_deals',[DealController::class,'get_expired_deals']);
      Route::post('/block_unblock_deal',[DealController::class,'block_unblock_deal']);
      Route::post('/delete_deal',[DealController::class,'delete_deal']);
+
+     //story Management
+     Route::post('/add_story',[StoryController::class,'add_story']);
+     Route::get('/get_seller_stories',[StoryController::class,'get_seller_stories']);
+     Route::get('/get_admin_stories',[StoryController::class,'get_admin_stories']);
+     Route::post('/delete_story',[StoryController::class,'delete_story']);
 
 
 
