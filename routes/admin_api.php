@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\Admin\AffiliateCommissionController;
 use App\Http\Controllers\Api\Admin\OrderManagementController;
 use App\Http\Controllers\Api\Admin\DealController;
 use App\Http\Controllers\Api\Admin\StoryController;
+use App\Http\Controllers\Api\Admin\LiveRequestController;
 
 
 // Admin APi M1
@@ -185,6 +186,16 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_seller_stories',[StoryController::class,'get_seller_stories']);
      Route::get('/get_admin_stories',[StoryController::class,'get_admin_stories']);
      Route::post('/delete_story',[StoryController::class,'delete_story']);
+
+     //live request & timeslot Management
+     Route::post('/add_timeslot',[LiveRequestController::class,'add_timeslot']);
+     Route::post('/update_timeslot',[LiveRequestController::class,'update_timeslot']);
+     Route::post('/delete_timeslot',[LiveRequestController::class,'delete_timeslot']);
+     Route::post('/block_unblock_timeslot',[LiveRequestController::class,'block_unblock_timeslot']);
+     Route::get('/get_timeslots',[LiveRequestController::class,'get_timeslots']);
+     Route::get('/get_live_requests',[LiveRequestController::class,'get_live_requests']);
+     Route::post('/accept_live_request',[LiveRequestController::class,'accept_live_request']);
+     Route::post('/reject_live_request',[LiveRequestController::class,'reject_live_request']);
 
 
 

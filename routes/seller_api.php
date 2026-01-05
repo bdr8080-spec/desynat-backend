@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\Seller\SellerDashboardController;
 
 use App\Http\Controllers\Api\Seller\SellerProductController;
 use App\Http\Controllers\Api\Seller\SellerBannerController;
+use App\Http\Controllers\Api\Seller\OrderManagement;
+
 
 
 use App\Http\Controllers\CommonController;
@@ -95,6 +97,11 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     // M6 APis
 
+    
+
+   Route::post('/all-orders', [OrderManagement::class,'all_orders']);
+
+   Route::post('/single-orders-data', [OrderManagement::class,'single_orders_data']);
 
     
 });

@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{User,sellerBanner,Banner,sellerStoreInformation};
+use App\Models\{User,sellerBanner,Banner,Order,orderdetail};
 
 
 class SellerOrderService
@@ -9,42 +9,94 @@ class SellerOrderService
 
 public function SellerGetOrders($request){
 
-    try{
+try{
 
-    // $order_id="Bann".time().Rand(0000000000,999999999999);
-    $order_id = substr(time() . rand(100, 999), 0, 9);
-    
-     $request_data=[
-        'order_id'=>$order_id,
-        'seller_id'=>$request->seller_id,
-        'banner_position'=>$request->banner_position,
-        'category'=>$request->category,
-        'subcatgory'=>$request->subcatgory,
-        'start_date'=>$request->start_date,
-        'end_date'=>$request->end_date,
-        'total_days'=>$request->total_days,
-        'upload_banner'=>$request->upload_banner,
-        'price'=>$request->price
-       ];
 
-       
+   $all_Order= orderdetail::with('order.user_details','order.delivery_details', 'product_details')->where('seller_id',$request->seller_id)
+   ->whereHas('order', function($query) use ($request) {
+    $query->where('order_type',$request->type);
+   });
 
-   $createBanner=sellerBanner::Create($request_data);
 
-   if($createBanner){
-    
-      return [
+
+   $response['All_order']=clone($all_Order)->get(); // All Orders
+  
+   $response['ongoing_order'] = clone($all_Order) // Ongoing order check
+    ->where('delivery_status', '!=', '3')
+    ->whereHas('order', function ($query) {
+        $query->where(function ($q) {
+            $q->where('payment_method', '3')
+              ->orWhere(function ($q2) {
+                  $q2->where('payment_method', '!=', '3')
+                     ->where('payment_status', '1');
+              });
+        });
+    })
+   ->get();
+
+   $response['past_order']=clone($all_Order)->whereIn('delivery_status',['3'])->orWhere('payment_status','2')
+   ->get();
+
+   if($response['All_order']->isNotEmpty()){
+
+     return [
             'status'  => 'success',
-            'message' => 'Banner create Successfully',
-            'data'    => $createBanner
+            'message' => 'All Orders fetch Successfully',
+            'data'    => $response
         ];
+   }else{
 
+    return [
+            'status'  => 'success',
+            'message' => 'All Orders fetch Successfully',
+            'data'    => []
+        ];
    }
 
 
     }catch (\Exception $e) {
-    return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+    return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
     }
+
+
+
+    
+}
+
+
+
+public function SellerSingleOrdersdata($request){
+
+try{
+
+
+   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details','UserRatingReviewProvide')->where('id',$request->id)->first();
+
+   if($singleOrder){
+    
+     return [
+            'status'  => 'success',
+            'message' => 'Single Orders fetch Successfully',
+            'data'    => $singleOrder
+        ];
+        
+    }else{
+
+    return [
+            'status'  => 'error',
+            'message' => ' Orders  id is inValid ',
+            'data'    => (object)[]
+        ];
+   }
+
+
+    }catch (\Exception $e) {
+    return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
+    }
+
+
+
+    
 }
 
 
