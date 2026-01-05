@@ -7,6 +7,7 @@ use App\Http\Controllers\Seller\LoginController;
 use App\Http\Controllers\Seller\WebSellerDashboard;
 use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Seller\SellerBannerManagement;
+use App\Http\Controllers\Seller\SellerOrderController;
 
 
 
@@ -108,7 +109,13 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/update-commison',[WebSellerDashboard::class,'update_commison'])->name('seller.update_commison');
 
-    
+
+    // M6 APi 
+
+     route::Match(['get','post'],'/order-management',[SellerOrderController::class,'order_management'])->name('seller.order_management');
+     route::Match(['get','post'],'/single-order-view',[SellerOrderController::class,'single_order_View'])->name('seller.single_order_View');
+     
+
     });
 
  
