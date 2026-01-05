@@ -209,7 +209,7 @@ class DealManagementService
         try {
             $deal = Deal::find($dealId);
 
-            if (!$dealId) {
+            if (!$deal) {
                 return [
                     'status' => 'error',
                     'message' => 'Deal not found',
