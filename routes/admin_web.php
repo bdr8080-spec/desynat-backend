@@ -163,6 +163,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //deal management
         Route::get('/deal-management', [DealController::class, 'dealManagement'])->name('admin.dealManagement');
+        Route::get('/seller-list', [DealController::class, 'sellerList'])->name('admin.sellerList');
+        Route::get('/product-list', [DealController::class, 'productList'])->name('admin.productList');
         
 
     });
