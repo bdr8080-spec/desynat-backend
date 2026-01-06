@@ -46,7 +46,7 @@
     /* Ensures no extra space at the top */
     padding-top: 0;
     /* Ensures no extra padding at the top */
-    height: 100%;
+    /* height: 100%; */
     /* Ensures sidebar takes full height */
     padding: 20px 5px;
 }

@@ -1252,7 +1252,6 @@ foreach($request->color_id as $key=>$val){
     'color_id' => $request->color_id[$key],
 
 
-
     'size_id' => $size_data,
     'total_stock' => $request->total_stock[$key][$size_key],
     'sku' => $request->sku[$key][$size_key],

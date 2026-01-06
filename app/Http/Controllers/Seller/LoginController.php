@@ -173,8 +173,8 @@ class LoginController extends Controller
             'password' => [
                 'required',
                 'string',
-                // 'min:8',
-                // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
             ],
             'confirm_password' => 'required|same:password',
             'accept_terms'=>"required|in:1"
