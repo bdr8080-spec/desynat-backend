@@ -234,275 +234,108 @@ class UserManagementService
         }
     }
 
-    // public function singleStoreWiseAllproduct($data)
-    // {
-    //     try {
-    
-    //         // Step 1: Find store
-    //         $store_information = sellerStoreInformation::find($data->store_id);
-    
-    //         // If store not found
-    //         if (!$store_information) {
-    //             return [
-    //                 'status' => 'success',
-    //                 'message' => 'No Store Found',
-    //                 'data'   => []
-    //             ];
-    //         }
-
-    //         $wishlistIds = wishlist::where('user_id', $data->user_id)
-    //                    ->pluck('product_id')
-    //                    ->toArray();
-    
-    //         // Step 2: Product query
-    //         $products = $store_information->All_product()
-    //             ->with([
-    //                 'brand',
-    //                 'category',
-    //                 'subcategory',
-    //                 'product_specifications',
-    //                 'product_variants.color',
-    //                 'product_variants.size'
-    //             ]);
-    
-    //         // Step 3: Search
-    //         if (!empty($data->search)) {
-    //             $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
-    //         }
-
-    //         // Apply Filter
-
-    //         switch ($data->sort_filter) {
-
-    //             case 1: // Recommended
-    //                 // $products = $products->orderBy('recommended_score', 'desc');
-    //                 break;
-            
-    //             case 2: // Price: Low to High
-    //                 $products = $products->whereHas('product_variants',function($query){
-    //                     $query->orderBy('actual_price', 'asc');
-                        
-    //                 });
-    //                 break;
-            
-    //             case 3: // Price: High to Low
-    //                 $products = $products->whereHas('product_variants',function($query){
-    //                     $query->orderBy('actual_price', 'desc');
-                        
-    //                 });
-    //                 break;
-            
-    //             case 4: // Newest First
-    //                 $products = $products->orderBy('created_at', 'desc');
-    //                 break;
-            
-    //             case 5: // Customer Rating
-    //                 // $products = $products->orderBy('rating', 'desc');
-    //                 break;
-            
-    //             case 6: // Best selling
-    //                 // $products = $products->orderBy('total_sales', 'desc');
-    //                 break;
-            
-    //             case 7: // Fastest delivery
-    //                 // $products = $products->orderBy('delivery_time', 'asc');
-    //                 break;
-            
-    //             default:
-    //                 // No filter
-    //                 break;
-    //         }
-            
-
-    //         // Step 4: Pagination (convert stdClass to array)
-    //         $products = $products->paginate()
-    //         ->through(function ($product) use ($wishlistIds) {
-    //             $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
-    //             return $product;
-    //         })
-    //         ->appends((array) $data);
-
-    //         // Step 5: Response
-    //         $response = [
-    //             'store'       => $store_information,
-    //             'All_Product' => $products,
-    //         ];
-    
-    //         return [
-    //             'status'  => 'success',
-    //             'message' => "single Store Information fetch Successfully",
-    //             'data'    => $response
-    //         ];
-    
-    //     } catch (\Exception $e) {
-    
-    //         return [
-    //             'status'  => 'error',
-    //             'message' => 'Failed: ' . $e->getMessage(),
-    //             'data'    => (object)[]
-    //         ];
-    //     }
-    // }
-
     public function singleStoreWiseAllproduct($data)
     {
         try {
-            $store_information = sellerStoreInformation::with('seller_information')->find($data->store_id);
-
+    
+            // Step 1: Find store
+            $store_information = sellerStoreInformation::find($data->store_id);
+    
+            // If store not found
             if (!$store_information) {
                 return [
-                    'status'  => 'success',
+                    'status' => 'success',
                     'message' => 'No Store Found',
-                    'data'    => []
+                    'data'   => []
                 ];
             }
 
             $wishlistIds = wishlist::where('user_id', $data->user_id)
-                ->pluck('product_id')
-                ->toArray();
-
+                       ->pluck('product_id')
+                       ->toArray();
+    
+            // Step 2: Product query
             $products = $store_information->All_product()
                 ->with([
                     'brand',
                     'category',
                     'subcategory',
                     'product_specifications',
-                    'product_variants' => function ($q) use ($data) {
-                        // Size filter
-                        if (!empty($data->size_id) && is_array($data->size_id)) {
-                            $sizeIds = array_map('intval', $data->size_id);
-                            $q->whereIn('size_id', $sizeIds);
-                        }
-
-                        // Color filter
-                        if (!empty($data->color_id) && is_array($data->color_id)) {
-                            $colorIds = array_map('intval', $data->color_id);
-                            $q->whereIn('color_id', $colorIds);
-                        }
-
-                        
-                        // Price filter
-                        if (isset($data->price_min)) {
-                            $q->where('final_price', '>=', $data->price_min);
-                        }
-                        if (isset($data->price_max)) {
-                            $q->where('final_price', '<=', $data->price_max);
-                        }
-                    },
                     'product_variants.color',
                     'product_variants.size'
                 ]);
-
-            // Search filter
+    
+            // Step 3: Search
             if (!empty($data->search)) {
                 $products->where('product_name_en', 'LIKE', '%' . $data->search . '%');
             }
 
-            //  Brand filter
-            if (!empty($data->brand_id) && is_array($data->brand_id)) {
-                $brandIds = array_map('intval', $data->brand_id);
-                $products->whereIn('brand_id', $brandIds);
+            // Apply Filter
+
+            switch ($data->sort_filter) {
+
+                case 1: // Recommended
+                    // $products = $products->orderBy('recommended_score', 'desc');
+                    break;
+            
+                case 2: // Price: Low to High
+                    $products = $products->whereHas('product_variants',function($query){
+                        $query->orderBy('actual_price', 'asc');
+                        
+                    });
+                    break;
+            
+                case 3: // Price: High to Low
+                    $products = $products->whereHas('product_variants',function($query){
+                        $query->orderBy('actual_price', 'desc');
+                        
+                    });
+                    break;
+            
+                case 4: // Newest First
+                    $products = $products->orderBy('created_at', 'desc');
+                    break;
+            
+                case 5: // Customer Rating
+                    // $products = $products->orderBy('rating', 'desc');
+                    break;
+            
+                case 6: // Best selling
+                    // $products = $products->orderBy('total_sales', 'desc');
+                    break;
+            
+                case 7: // Fastest delivery
+                    // $products = $products->orderBy('delivery_time', 'asc');
+                    break;
+            
+                default:
+                    // No filter
+                    break;
             }
+            
 
-            // Category filter
-            if (!empty($data->category_id) && is_array($data->category_id)) {
-                $categoryIds = array_map('intval', $data->category_id);
-                $products->whereIn('category_id', $categoryIds);
-            }
-
-            //  Filter by variants for product existence
-            if (!empty($data->size_id) || !empty($data->color_id) || !empty($data->price_min) || !empty($data->price_max) || isset($data->discount)  ) {
-                $products->whereHas('product_variants', function ($q) use ($data) {
-                    if (!empty($data->size_id) && is_array($data->size_id)) {
-                        $sizeIds = array_map('intval', $data->size_id);
-                        $q->whereIn('size_id', $sizeIds);
-                    }
-
-                    if (!empty($data->color_id) && is_array($data->color_id)) {
-                        $colorIds = array_map('intval', $data->color_id);
-                        $q->whereIn('color_id', $colorIds);
-                    }
-
-                    if (!empty($data->price_min)) {
-                        $q->where('final_price', '>=', $data->price_min);
-                    }
-                    if (!empty($data->price_max)) {
-                        $q->where('final_price', '<=', $data->price_max);
-                    }
-
-                    
-                    if (!empty($data->discount)) {
-                        $q->where('discount_value', '<=', $data->discount);
-                    }
-
-                });
-            }
-
-            // Sorting
-            if (!empty($data->sort_filter)) {
-                switch ($data->sort_filter) {
-                    case 1: // Recommended
-                        // $products = $products->orderBy('recommended_score', 'desc');
-                        break;
-
-                    case 2: // Price: Low to High
-                        $products->with(['product_variants' => function ($q) {
-                            $q->orderBy('final_price', 'asc');
-                        }]);
-                        break;
-
-                    case 3: // Price: High to Low
-                        $products->with(['product_variants' => function ($q) {
-                            $q->orderBy('final_price', 'desc');
-                        }]);
-                        break;
-
-                    case 4: // Newest First
-                        $products->orderBy('created_at', 'desc');
-                        break;
-
-                    case 5: // Customer Rating
-                        // $products = $products->orderBy('rating', 'desc');
-                        break;
-
-                    case 6: // Best selling
-                        // $products = $products->orderBy('total_sales', 'desc');
-                        break;
-
-                    case 7: // Fastest delivery
-                        // $products = $products->orderBy('delivery_time', 'asc');
-                        break;
-
-                    case 8: // Oldest First
-                        $products->orderBy('created_at', 'asc');
-                        break;
-
-                    default:
-                        // No filter
-                        break;
-                }
-            }
-
-            // Pagination & Wishlist marking
+            // Step 4: Pagination (convert stdClass to array)
             $products = $products->paginate()
-                ->through(function ($product) use ($wishlistIds) {
-                    $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
-                    return $product;
-                })
-                ->appends((array) $data);
+            ->through(function ($product) use ($wishlistIds) {
+                $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
+                return $product;
+            })
+            ->appends((array) $data);
 
+            // Step 5: Response
             $response = [
                 'store'       => $store_information,
                 'All_Product' => $products,
             ];
-
+    
             return [
                 'status'  => 'success',
-                'message' => "Single Store Information fetched successfully",
+                'message' => "single Store Information fetch Successfully",
                 'data'    => $response
             ];
-
+    
         } catch (\Exception $e) {
+    
             return [
                 'status'  => 'error',
                 'message' => 'Failed: ' . $e->getMessage(),
@@ -518,13 +351,14 @@ class UserManagementService
 
 
 
+
     public function singleproductView($request)
     {
         try {
     
             // Step 1: Find store
             
-            $product_details = Product::with(['category','subcategory','store','brand','product_specifications','product_variants.color','product_variants.size'])
+            $product_details = Product::with(['category','subcategory','store','brand','product_specifications','product_variants.color','product_variants.size','review','review.user_details'])
             ->where('id', $request->product_id)->first();
 
            
@@ -806,15 +640,16 @@ public function product_view_cart_details($request)
                 $val->check_stock='Stock_Availble';
             }
 
-            $total_amount+=$val->product_variants->final_price * $val->quantity ;
+            $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
+            $total_amount+=$ItemAmounttotal;
             // $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
             $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
             $total_mrp=$total_amount+$discount_on_mrp;
 
 
-            // discount Amount Code Apply 
-
+         // discount Amount Code Apply 
         if($val->product->store){
+
             
         if($user_address && $userCountry_id!==0){
             $user_let=$user_address->latitude;
@@ -824,8 +659,9 @@ public function product_view_cart_details($request)
             $store_long=$val->product->store->long;
 
             // Calculate the distance
-            // $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
-            $distance = 10;
+            $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
+           
+            // $distance = 10;
 
             $shipping_charges= ShippingCharge::where('country_id',$userCountry_id)
             ->where('range_from','<=',$distance)
@@ -833,36 +669,55 @@ public function product_view_cart_details($request)
             ->where('status','1')->first();
 
             if($shipping_charges){
-                $shipping_fees+=$shipping_charges->shipping_fee *$val->quantity ;
-            }else{
-                $shipping_fees+=100 *$val->quantity;    
-            }
+                $get_shipping_charge=$shipping_charges->shipping_fee *$val->quantity ;
+
+                $shipping_fees+=$get_shipping_charge;
 
             }else{
-                $shipping_fees+=100 *$val->quantity;
+                $get_shipping_charge=100 *$val->quantity;
+                $shipping_fees+=$get_shipping_charge;
             }
+
+            }else{
+                $get_shipping_charge=100 *$val->quantity;
+                $shipping_fees+=$get_shipping_charge;
+           
             }
-            
-        }
-
-        // Tax calucltor Code  start
 
 
-        $response['total_mrp']=$total_mrp;
+            // Tax calculate Code 
 
         if(isset($userCountry_id)){
 
         $Tax_calculate= Tax::where('country_id',$userCountry_id)->where('status','1')->first();
 
         if($Tax_calculate){
-            $tax= $total_mrp*$Tax_calculate->tax/100; 
-            $total_amount=$total_amount+$tax;
+            $taxAmount= $ItemAmounttotal*$Tax_calculate->tax/100; 
+             $tax+=$taxAmount;
+            // $total_amount=$total_amount+$tax;
+           
         }else{
-            $tax=0;
+            $taxAmount= 10; 
+             $tax+=$taxAmount;
+
         }
           }else{
-           $tax=0;
+
+            $taxAmount= 10; 
+            $tax+=$taxAmount;
+            
          }
+
+            Addtocart::where('id',$val->id)->update(['shipping_fees'=>$get_shipping_charge,'tax'=>$taxAmount]); // Update Shiping Charge
+            }   
+        }
+
+
+        // Tax calucltor Code  start
+
+        $response['total_mrp']=$total_mrp;
+
+       
 
         $response['discount_on_mrp']=$discount_on_mrp;
         $response['discount_coupon']=$discount_coupon;
@@ -1269,6 +1124,7 @@ public function addtoCart_Increment_decrement($request)
                 'data'    => (object)[]
             ];
         }
+        
     }
 
 

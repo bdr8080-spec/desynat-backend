@@ -20,6 +20,35 @@ class orderdetail extends Model
     }
 
     
+    public function order_details(){
+        return $this->hasOne(Order::class,'id','order_id');
 
+    }
+
+
+    public function UserRatingReviewProvide(){
+        return $this->hasOne(productRatings::class,'orderdetails_id','id');
+
+    }
+
+
+     public function order(){
+        return $this->hasOne(Order::class,'id','order_id');
+
+    }
+
+    public function store_info(){
+        return $this->hasOne(sellerStoreInformation::class,'id','store_id');
+
+    }
+
+     public function driver_details(){
+        
+        return $this->hasOne(DeliveryBoy::class,'id','delivery_boy_id');
+
+    }
+
+
+    
 
 }

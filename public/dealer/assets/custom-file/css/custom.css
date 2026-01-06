@@ -181,7 +181,7 @@
     border-right: 1px solid #b9946b;
     color: #000;
     border-radius: 0px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .tabs-panel .nav-pills .nav-link.active,
@@ -192,7 +192,7 @@
 
 .dt-column-title {
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
 }
 
@@ -409,6 +409,99 @@ table.dataTable {
     right: 0;
     bottom: -5px;
 }
+.showb {
+    height: 200px !important;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.showb img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.uploadbnr{
+    height: 240px;
+    width: 100%;
+    padding-top:10px;
+    object-fit: contain;
+}
+/*--------------------------------------------------------------
+# Order management page
+--------------------------------------------------------------*/
+
+.mini-tabs-panel .nav-pills {
+    border-bottom: 1px solid #ddd;
+}
+.mini-tabs-panel .nav-link {
+    color: #000;
+    font-weight: 500;
+}
+.mini-tabs-panel .nav-pills .nav-link.active {
+    color: #8c643e;
+    background-color: transparent;
+    border-bottom: 1px solid #bc986e;
+    border-radius: 0px;
+    font-weight: 600;
+}
+
+.box-shadow {
+    box-shadow: 0px 4px 20px 0px #00000014;
+    padding: 15px;
+}
+.border-radious-10{
+    border-radius: 20px;
+}
+.order-cont p {
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: #000;
+}
+.title-light {
+    color: #00000080;
+    font-size: 15px;
+}
+.pay-sum {
+    display: flex;
+    justify-content: space-between;
+    margin: 9px 0px;
+}
+.summary-title-1 {
+    color: #00000080;
+    font-size: 15px;
+}
+.font-15{
+    font-size: 15px;
+}
+.prodimg figure {
+    height: 160px;
+    overflow: hidden;
+    width: 120px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.prodimg img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.order-p-pnl {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+.order-light {
+    background: #ADADAD14;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
 
 @media (min-width: 1140px) and (max-width: 1440px) {
     .dash-circle {
@@ -444,9 +537,11 @@ table.dataTable {
     .planheight {
         height: 270px !important;
     }
-   
-
 }
+
+
+
+
 
 @media (max-width:767px){
     

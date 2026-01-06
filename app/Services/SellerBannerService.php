@@ -11,7 +11,8 @@ public function SellerAddBanner($request){
 
     try{
 
-    $order_id="Bann".time().Rand(0000000000,999999999999);
+    // $order_id="Bann".time().Rand(0000000000,999999999999);
+    $order_id = substr(time() . rand(100, 999), 0, 9);
     
      $request_data=[
         'order_id'=>$order_id,
@@ -116,13 +117,88 @@ try{
 
 $checkBanner=sellerBanner::with('category_details','subcategory_details')->where('seller_id',$request->seller_id);
 
+
 if($request->search){
   $checkBanner=$checkBanner->where('order_id','Like','%'.$request->search.'%');
 }
 
+if (isset($request->from) && isset($request->to)  ) {
 
-$checkBanner=$checkBanner->get();
+      $checkBanner = $checkBanner
+                ->whereDate('start_date', '>=' , $request->from)
+                ->whereDate('end_date', '<=' , $request->to);
 
+
+}
+
+if ($request->banner_filter) {
+
+    switch ($request->banner_filter) {
+
+        case '1':
+            // Active
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '1')
+                ->where('payment_status', '1')
+                ->whereDate('start_date', '<=', now())
+                ->whereDate('end_date', '>=', now());
+            break;
+
+            case '2':
+            // Confirmed
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '1')
+            ->whereIn('payment_status', ['0','1'])
+
+                ->where(function ($q) {
+                    
+                    $q->where('payment_status', '1')
+
+                     ->where(function ($q3) {
+                                    // $q3->whereDate('start_date', '<=', now())
+                                    $q3->WhereDate('end_date', '>=', now());
+                     });
+
+                });
+
+                // ->where(function ($q) {
+                //     $q->where('payment_status', '0') // fully confirmed, ignore dates
+                //     ->orWhere(function ($q2) {
+                //         $q2->where('payment_status', '1')
+                //             ->where(function ($q3) {
+                //                 $q3->whereDate('start_date', '<=', now())
+                //                     ->WhereDate('end_date', '>=', now());
+                //             });
+                //     });
+                // });
+            break;
+
+        case '3':
+            // Pending
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '0');
+            break;
+
+        case '4':
+            // Expired
+            $checkBanner = $checkBanner
+                ->where('Admin_verify', '1')
+                ->where('payment_status', '1')
+                ->whereDate('end_date', '<', now());
+            break;
+
+        case '5':
+            // Rejected
+            $checkBanner = $checkBanner
+                ->whereIn('payment_status', ['2','3'])
+                ->orWhere('Admin_verify','2');
+            break;
+    }
+}
+
+
+
+$checkBanner=$checkBanner->orderBy('id','desc')->get();
 
  return [
             'status'  => 'success',
@@ -154,15 +230,38 @@ try{
 
     }
 
-$checkBanner=Banner::where('type',$request->type)->where('country_id',$country_id)->get();
-if($checkBanner->isEmpty()){
-    return ['status'=>'error','message'=>"No Price Found",'data'=>[]];
+    $checkBanner=Banner::where('type',$request->type)->where('country_id',$country_id)->get();
+    if($checkBanner->isEmpty()){
+        return ['status'=>'error','message'=>"No Price Found",'data'=>[]];
 
-}
+    }
 
  return [
             'status'  => 'success',
             'message' => "All Banner Price fetch Successfully",
+            'data'    => $checkBanner
+        ];
+
+
+}catch (\Exception $e) {
+    return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+    }
+}
+
+
+
+
+
+public function singleBannerDetails($request){
+
+try{
+
+$checkBanner=sellerBanner::with('category_details','subcategory_details')->where('id',$request->id)->first();
+
+
+ return [
+            'status'  => 'success',
+            'message' => "single Bannner fetch Successfully",
             'data'    => $checkBanner
         ];
 
@@ -172,6 +271,8 @@ if($checkBanner->isEmpty()){
     return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
     }
 }
+
+
 
 
 

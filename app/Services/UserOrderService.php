@@ -2,14 +2,19 @@
 namespace App\Services;
 use App\Helpers\ApiResponse;
 use App\Models\User;
+use App\Models\size;
+use App\Models\color;
+use App\Models\ProductVariant;
 
 
-use App\Models\{UserGiftCards,GiftCard,UserWallet};
+use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
-use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart};
+use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 
 use DB;
+
+use Carbon\Carbon;
 
 class UserOrderService
 {
@@ -231,7 +236,7 @@ $createOrder=Order::create($request_data);
 $order_id=$createOrder->id;
 
 // get Data From Add to cart and Insert  orderdetail Table
-$checkDataInCart =Addtocart::where('user_id',$userId)->get();
+$checkDataInCart =Addtocart::with('product.seller_details')->where('user_id',$userId)->get();
 if($checkDataInCart->isEmpty()){
     return [
         'status' => 'error',
@@ -240,19 +245,53 @@ if($checkDataInCart->isEmpty()){
     ];
 }
 
+// Add To Card Count product 
+$AddToCardCount= $checkDataInCart->count();
+
+// equal divide GiftCard   
+$giftcard= $request->giftcard_id;
+if($giftcard){
+$giftcard_amount= $request->giftcard_amount;
+$giftCardAmountDivide= number_format($giftcard_amount/$AddToCardCount,2);
+}else{
+$giftCardAmountDivide=null;
+}
+
+// Check promoCode Value 
+$promoCodeId =$request->promocode_id;
+$promoCodevalue =$request->promocode_value;
+// $chekpromoCode= Promocode::where('id',$promoCodeId)->first();
+
+if(isset($promoCodevalue)){
+
+    $promocode_value= $promoCodevalue;
+    $PrmocodeCardAmountDivide= number_format($promocode_value/$AddToCardCount,2);
+}else{
+      $PrmocodeCardAmountDivide=null;
+}
+
+
+
 foreach($checkDataInCart as $key=>$val){
 
     $cart_data=[
         "order_id"=>$order_id,
         "user_id"=>$val->user_id,
+        "seller_id"=>$val->product->seller_details->id,
         "product_id"=>$val->product_id,
         "variants_id"=>$val->variants_id,
         "quantity"=>$val->quantity,
-        "amount"=>$val->amount
+        "amount"=>$val->amount,
+        "tax"=> $val->tax ,
+        "shipping_fees"=>$val->shipping_fees,
+        "giftcard_id"=>$giftcard,
+        "giftcard_amount"=>$giftCardAmountDivide,
+
+        "promocode_id"=>$promoCodeId,
+        "promocode_value"=>$PrmocodeCardAmountDivide,
     ];
     orderdetail::create($cart_data);
 }
-
 
 DB::commit();
    
@@ -342,13 +381,13 @@ return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$r
     }
 
  // User productOrderComplete
- public function productOrderComplete($request){
+public function productOrderComplete($request){
 
- try{
+try{
 
+DB::beginTransaction();
 
 $checkOrder=Order::where('order_id', $request->order_id)->first();
-
 
 if($checkOrder->payment_status!=='0' ){
     return [
@@ -366,24 +405,18 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
  // when i Received Payment in Cod
     if($checkOrder->payment_method=='3'){
 
-
-    DB::beginTransaction();
-
-        $checkOrder->update(['delivery_status'=>'2']);
+        $checkOrder->update(['payment_status'=>'0','delivery_status'=>'2']);
 
         $this->AddtocartRemoveData($checkOrder->id);
 
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
-        DB::commit();
 
-        return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
-    }
+         $msg="COD Order Place Successfully";  
 
-    if($checkOrder->payment_method=='2'){ // wallet Payment Code 
+        // return ['status'=>'success','message'=>"COD Order Place Successfully",'data'=>$checkOrder];
+    }elseif($checkOrder->payment_method=='2'){ // wallet Payment Code 
    
-         DB::beginTransaction();
-
        $request_data=(object)[
             'user_id'=>$userid,
             ];
@@ -401,24 +434,25 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
        }
 
        //    Cut Amount From The Wallet Amount 
-         $this->UserBalancePayOrder($userid,$OrderPayAmount);
+        $this->UserBalancePayOrder($userid,$OrderPayAmount);
 
-          $this->AddtocartRemoveData($checkOrder->id);
+        $this->AddtocartRemoveData($checkOrder->id);
 
-           OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
+        OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
+        $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
 
-       $checkOrder->update(['wallet_amount'=>$OrderPayAmount]); // add Wallet Amount in Table
-
-        DB::commit();
-
-       return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
-    }
+        $this->Order_detailsPaidStatusChange($checkOrder->id,$request->payment_status); // order details complete order
 
 
-    if($checkOrder->payment_method=='1'){
+         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
-         DB::beginTransaction();
+
+         $msg="Order Place Successfully";  
+
+    //    return ['status'=>'success','message'=>"Order Place Successfully",'data'=>$checkOrder];
+
+    }elseif($checkOrder->payment_method=='1'){
 
         $checkOrder->update(['payment_status'=>$request->payment_status,'delivery_status'=>'2']);
 
@@ -429,15 +463,21 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
          OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
-        }else{
-            $msg="Order Payment Cancelled";        
+        $this->Order_detailsPaidStatusChange($checkOrder->id,$request->payment_status); // order details complete order
+
         }
+        
+    }else{
+
+        $msg="Order Payment Cancelled";        
+        
+
+    }
 
     DB::commit();
 
-    return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
 
-    }
+    return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
 
     
     } catch (\Exception $e) {
@@ -517,6 +557,89 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     }
 
+    
+ public function AllOrderDetailsNew($request){
+
+try{
+
+     $orders = OrderDetail::with([
+        'order.delivery_details',
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.seller_details',
+        'variation_details.color',
+        'variation_details.size'
+    ])
+    ->whereHas('order', function ($q) use ($request) {
+
+        // User filter
+        $q->where('user_id', $request->user_id);
+
+        // Payment logic
+        $q->where(function ($query) {
+            $query->where('payment_method', '3') // COD
+                  ->orWhere(function ($sub) {
+                      $sub->whereIn('payment_method', ['1', '2'])
+                          ->where('payment_status', '!=', '0'); // Paid
+                  });
+        });
+
+        // Search filter
+        if (!empty($request->search)) {
+            $q->where('order_id', 'like', '%' . $request->search . '%');
+        }
+    });
+
+/*
+|--------------------------------------------------------------------------
+| OrderDetail status filters
+|--------------------------------------------------------------------------
+*/
+if (!empty($request->filter)) {
+    $orders->where(function ($query) use ($request) {
+
+        switch ($request->filter) {
+
+            case '2': // Ongoing
+                $query->whereIn('delivery_status', ['1', '2'])
+                ->whereIn('payment_status',['0','1']);
+                break;
+
+            case '3': // Delivered
+                $query->where('delivery_status', '3')
+                ->where('return_type','0');
+
+                break;
+
+            case '4': // Cancelled
+                $query->whereIn('payment_status', ['3','2']); // adjust if needed
+                break;
+
+            case '5': // Returned / Failed
+                $query->where('delivery_status', '3')
+                      ->where('return_type', '1');
+                break;
+        }
+    });
+}
+
+$orders = $orders->orderBy('id', 'desc')->get();
+
+
+    return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$orders];
+
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    }
+
 
     // delete Data from Add to cart
     public function AddtocartRemoveData($orderid){
@@ -538,7 +661,69 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         
     }
 
+
+      public function Order_detailsPaidStatusChange($orderid,$paymentstatus){
+        $checkOrder = orderdetail::where('order_id', $orderid)->update(['payment_status'=>$paymentstatus]);
+        
+    }
+
  // User singleOrderDetails
+ public function singleOrderDetailsNew($request){
+
+    try{
+
+
+         $checkOrder = OrderDetail::with([
+        'order.delivery_details',
+        'order.giftCard_details',
+        'order.promocode_details',
+        
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.seller_details',
+        'product_details.store',
+        'variation_details.color',
+        'variation_details.size',
+        'UserRatingReviewProvide'
+    ])
+    ->where('order_id', $request->order_id)
+    ->where('id',$request->orderdetails_id)
+    
+    ->first();
+
+    if($checkOrder){
+
+       $checkOrder->allOtherOrderVarient = OrderDetail::with([   
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.store',
+        'variation_details.color',
+        'variation_details.size',
+    ]) 
+     ->where('order_id', $request->order_id)
+     ->whereNOT('id',$request->orderdetails_id)
+    ->get();
+
+    }
+
+
+    return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+ // User singleOrderDetails New
  public function singleOrderDetails($request){
 
     try{
@@ -552,8 +737,11 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         'order_details.product_details.category',
         'order_details.product_details.subcategory',
         'order_details.product_details.seller_details',
+        'order_details.UserRatingReviewProvide',
+
     'order_details.variation_details.color','order_details.variation_details.size')
     ->where('order_id', $request->order_id)->first();
+
 
     return ['status'=>'success','message'=>"single Order details fetch Successfully",'data'=>$checkOrder];
 
@@ -621,7 +809,617 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         ];
     }
 
+    }
+
+
+ public function cancelledSingleProduct($request){
+
+    try{
+
+    $checkOrder=Order::where('id',$request->order_id)->first();
+
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order id Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->payment_status!=='1' && $checkOrder->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+
+    // check delivery status
+    if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' ){
+       return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
+    }
+
+    // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
+    if($checkOrder->payment_method=='3'){
+
+        $new_array=[
+        'payment_status'=>'2',
+        'delivery_status'=>'1'];
+        
+        if(isset($request->cancel_reason)){
+            $new_array['cancel_reason']= $request->cancel_reason;
+        }
+
+        $checkOrder->update($new_array);    
+
+         $new_array1=[
+        'payment_status'=>'2',
+         ];
+        
+        if(isset($request->cancel_reason)){
+            $new_array1['cancel_reason']= $request->cancel_reason;
+        }
+
+      orderdetail::where('order_id',$request->order_id)->update($new_array1);
+
+
+
+    }else{
+
+
+    $new_array=[
+    'payment_status'=>'3',
+    'delivery_status'=>'1'];
+
+    if(isset($request->cancel_reason)){
+        $new_array['cancel_reason']= $request->cancel_reason;
+    }
     
+    $checkOrder->update($new_array);
+
+         $new_array1=[
+        'payment_status'=>'3',
+         ];
+        
+        if(isset($request->cancel_reason)){
+            $new_array1['cancel_reason']= $request->cancel_reason;
+        }
+
+    orderdetail::where('order_id',$request->order_id)->update($new_array1);
+
+    }
+    
+
+
+
+
+
+
+
+
+    return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+ public function cancelledSingleProductNew($request){
+
+    try{
+
+
+    DB::beginTransaction();
+
+    // $checkOrder=Order::where('id',$request->order_id)->first();
+
+    $AllOrderCheck=orderdetail::where('order_id',$request->order_id)->whereIn('payment_status',['0','1'])->count();
+
+    $checkOrder=orderdetail::with('order')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order id Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->order->payment_status!=='1' && $checkOrder->order->payment_method!=='3'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+
+     if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' && $checkOrder->delivery_status!=='2.1' ){
+       return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
+    }
+
+    // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
+    if($checkOrder->order->payment_method=='3'){
+
+        $new_array=[
+        'payment_status'=>'2',
+        'delivery_status'=>'1'];
+        
+        if(isset($request->cancel_reason)){
+            $new_array['cancel_reason']= $request->cancel_reason;
+        }
+
+        $checkOrder->update($new_array);    
+
+    }else{
+
+
+    $new_array=[
+    'payment_status'=>'3',
+    'delivery_status'=>'1'];
+
+    if(isset($request->cancel_reason)){
+        $new_array['cancel_reason']= $request->cancel_reason;
+    }
+    
+    $checkOrder->update($new_array);
+
+    }
+
+    // Cancel Order In Order Table if i have 1 varient
+
+    if($AllOrderCheck ==1){
+
+        $checkOrderTable=Order::where('id',$request->order_id)->first();
+
+          if($checkOrderTable->payment_method=='3'){
+
+        $new_array2=[
+            'payment_status'=>'2',
+            'delivery_status'=>'1'
+
+        ];
+    }else{
+        $new_array2=[
+            'payment_status'=>'3',
+            'delivery_status'=>'1'
+        ];
+    }
+      
+    if(isset($request->cancel_reason)){
+        $new_array2['cancel_reason']= $request->cancel_reason;
+    }
+
+    $checkOrderTable->update($new_array2);    
+    
+    }
+
+    DB::commit();
+
+    return ['status'=>'success','message'=>"Order cancelled Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+    
+
+ public function getRejectReasonDetails($request){
+
+    try{
+
+    $checkReason=Reason::where('type',$request->type)->get();
+
+    if($checkReason->isEmpty()){
+        return ['status'=>'error','message'=>"No Reason Found",'data'=>[]];
+    }
+
+    return ['status'=>'success','message'=>"reason fetch Successfully",'data'=>$checkReason];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+
+ public function returnProductAfterdelivery($request){
+
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->payment_status!=='1'){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+    // check order is Alredy in return and exchange state 
+
+     if($checkOrder->return_type!=='0'){
+       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+     }
+     
+    
+    // check delivery status
+    if($checkOrder->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+    
+    if($checkOrder->product_details->product_return=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product Return days Availbility
+
+    if($checkOrder->product_details->product_return=='1'){
+    
+    $return_days= intVal($checkOrder->product_details->return_days);
+
+    $productOrderDate = $checkOrder->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product return Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'1','return_reason'=> $request->return_reason,'return_image'=>$request->return_image]);    
+
+    return ['status'=>'success','message'=>"Product return Request Send Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+    // exchnageProductAfterdelivery
+
+
+// product exchange Code 
+
+ public function exchnageProductAfterdelivery($request){
+
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->payment_status!=='1' ){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+    // check order is Alredy in return and exchange state 
+
+     if($checkOrder->return_type!=='0'){
+       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+     }
+     
+    
+    // check delivery status
+    if($checkOrder->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+    
+    if($checkOrder->product_details->product_exchangable=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product product_exchangable days Availbility
+
+    if($checkOrder->product_details->product_exchangable=='1'){
+    
+    $return_days= intVal($checkOrder->exchangable_days);
+
+    $productOrderDate = $checkOrder->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product Exchange Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
+
+    return ['status'=>'success','message'=>"Product Exchange Request Send Successfully",'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+    
+
+
+ public function ReturnAndExchnageProductAfterdelivery($request){
+
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->payment_status=='2'){
+       return ['status'=>'error','message'=>"Order is Cancelled or rejected",'data'=>(object)[]];
+    }
+
+    // if($checkOrder->payment_status!=='1'){
+    //    return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    // }
+    // check order is Alredy in return and exchange state 
+
+     if($checkOrder->return_type!=='0'){
+       return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+     }
+     
+    
+    // check delivery status
+    if($checkOrder->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+    
+
+    // check if The Product is return State 
+     if($request->type=='1'){
+
+         if($checkOrder->product_details->product_return=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product Return days Availbility
+
+    if($checkOrder->product_details->product_return=='1'){
+    
+    $return_days= intVal($checkOrder->product_details->return_days);
+
+    $productOrderDate = $checkOrder->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product return Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'1','return_reason'=> $request->return_reason,'return_image'=>$request->return_image]);    
+
+    $msg="Product return Request Send Successfully";
+
+
+     }
+
+
+    // check Type Code for exchnage 
+    if($request->type=='2'){
+
+    if($checkOrder->product_details->product_exchangable=='0'){
+       return ['status'=>'error','message'=>"Product return is Not Availble",'data'=>(object)[]];     
+    }
+
+    // Check Product product_exchangable days Availbility
+    if($checkOrder->product_details->product_exchangable=='1'){
+    
+    $return_days= intVal($checkOrder->product_details->exchangable_days);
+
+    $productOrderDate = $checkOrder->created_at;
+
+    // Add return days
+    $returnLastDate = $productOrderDate->copy()->addDays($return_days);
+
+    $today = now();
+
+    // Check if today is greater than return date
+    if ($today->greaterThan($returnLastDate)) {
+               
+        return ['status'=>'error','message'=>"Product Exchange Period Is Over",'data'=>(object)[]];     
+
+    }
+
+    }
+
+    $checkOrder->update(['return_type'=>'2','exchange_reason'=> $request->exchange_reason,'exchange_new_size'=>$request->new_size]);    
+
+    $msg="Product Exchange Request Send Successfully";
+
+}
+
+    return ['status'=>'success','message'=>$msg,'data'=>$checkOrder];
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+
+ public function ProductReviewAndRating($request){
+    
+    try{
+
+    $checkOrder=orderdetail::with('order_details','product_details')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
+
+    if(!$checkOrder){
+        return ['status'=>'error','message'=>"No Order details Not Found",'data'=>(object)[]];
+    }
+
+    if($checkOrder->payment_status!=='1' ){
+       return ['status'=>'error','message'=>"This Order Payment is Not Paid",'data'=>(object)[]];
+    }
+    // check order is Alredy in return and exchange state 
+
+    //  if($checkOrder->return_type!=='0'){
+    //    return ['status'=>'error','message'=>"Product Is Already in Return and Exchange State",'data'=>(object)[]];
+    //  }
+     
+    
+    // check delivery status
+    if($checkOrder->delivery_status!=='3'){
+       return ['status'=>'error','message'=>"Product Is Not delivered Now Wait for product Delivered",'data'=>(object)[]];
+    }
+
+
+    $product_id=$checkOrder->product_id;
+    $product_details=product::where('id',$product_id)->first();
+    $store_id= $product_details->store_id;
+    
+
+    $match=[
+    'user_id'=>$request->user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+    ];
+
+
+    $check_review=productRatings::where($match)->first();
+
+    if($check_review){
+        return [
+            'status' => 'error',
+            'message' => "This product Already Have review",
+            'data' => (object)[]
+        ];
+
+    }
+
+    $requestData=[
+    'user_id'=>$request->user_id,
+    "order_id"=>$request->order_id,
+    "orderdetails_id"=>$request->orderdetails_id,
+    "product_id"=>$product_id,
+    "product_rating"=>$request->product_rating??null,
+    "product_review"=>$request->product_review??null,
+    "product_image"=>json_encode($request->product_image)??null,
+    "store_id"=>$store_id,
+    "store_rating"=>$request->store_rating??null,
+    "store_review"=>$request->store_review??null,
+    "store_image"=>json_encode($request->store_image)??null,
+    ];
+
+
+
+
+   $create_review=productRatings::UpdateOrCreate($match,$requestData);
+
+    if($create_review){
+        return ['status'=>'success','message'=>"Product Review Save Successfully",'data'=>$create_review];
+    }
+
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
+    }
+
+    public function getSizesExceptProvided($request)
+    {
+        try {
+           // dd($request);
+            $productId = $request->product_id;
+            $sizeId    = $request->size_id;
+            $colorId   = $request->color_id; 
+
+            if (!$productId || !$sizeId || !$colorId) {
+                return [
+                    'status'  => 'error',
+                    'message' => 'Product ID, Size ID, and Color ID are required',
+                    'data'    => []
+                ];
+            }
+
+            $sizeIds = ProductVariant::where('product_id', $productId)
+                ->where('color_id', $colorId)
+                ->where('size_id', '!=', $sizeId)
+                ->pluck('size_id')
+                ->unique()
+                ->toArray();
+
+            $sizes = Size::whereIn('id', $sizeIds)
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get();
+
+            if ($sizes->isEmpty()) {
+                return [
+                    'status'  => 'success',
+                    'message' => 'No sizes found',
+                    'data'    => (object)[]
+                ];
+            }
+
+            return [
+                'status'  => 'success',
+                'message' => 'Sizes fetched successfully',
+                'data'    => $sizes
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
     }
 
 

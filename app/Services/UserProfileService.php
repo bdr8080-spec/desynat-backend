@@ -91,7 +91,7 @@ class UserProfileService
 
     // getSubCategory
     public function getSubCategories($request){
-        $subCategory = SubCategory::where('category_id', $request->category_id)->get();
+        $subCategory = SubCategory::where('category_id', $request->category_id)->where('status','1')->get();
 
         if ($subCategory->isEmpty()) {
              return ['status'=>'success','message'=>"No sub categories found",'data'=>[]];
@@ -106,7 +106,7 @@ class UserProfileService
     // get categories
     public function getCategories($request){
         
-        $category = Category::orderBy('id', 'asc')->get();
+        $category = Category::orderBy('id', 'asc')->where('status','1')->get();
 
 
         if ($category->isEmpty()) {

@@ -157,7 +157,7 @@ class BannerService
         try {
             $limit = (int)($request->input('limit'));
 
-            $data = sellerBanner::with('category_details','subcategory_details','seller_details.country_details')->where('Admin_verify', $request->type);
+            $data = sellerBanner::with('category_details','subcategory_details','seller_details.country_details','seller_details.seller_bank_details')->where('Admin_verify', $request->type);
             
             if ($request->search) {
                 $search = $request->search;
@@ -194,7 +194,7 @@ class BannerService
                 return [
                     'status' => 'success',
                     'message' => 'No Banner Request found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
@@ -208,7 +208,7 @@ class BannerService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch banner: ' . $e->getMessage(),
-                'data' => []
+                'data' => (object)[]
             ];
         }
     }
@@ -281,6 +281,40 @@ class BannerService
             return [
                 'status' => 'error',
                 'message' => 'Failed to reject banner request',
+                'data' => []
+            ];
+        }
+    }
+
+    public function blockUnblockBannerReq($id)
+    {
+        try {
+            $data = sellerBanner::find($id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Banner Req not found',
+                    'data' => []
+                ];
+            }
+
+            $data->status = $data->status == 1 ? 0 : 1;
+            $data->save();
+
+            $message = $data->status == 1
+                ? 'Banner Request Unblocked Successfully'
+                : 'Banner Request blocked Successfully';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch banner: ' . $e->getMessage(),
                 'data' => []
             ];
         }

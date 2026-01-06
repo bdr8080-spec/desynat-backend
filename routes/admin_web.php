@@ -17,6 +17,12 @@ use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\GiftCardController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\PromoCodeController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\AffiliateCommissionController;
+use App\Http\Controllers\Admin\BannerRequestController;
+use App\Http\Controllers\Admin\LiveRequestController;
+use App\Http\Controllers\Admin\StoryController;
+use App\Http\Controllers\Admin\DealController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -132,6 +138,31 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/update_promocode', [PromoCodeController::class, 'update_promocode'])->name('admin.update_promocode');
         Route::get('/add-promocode', [PromoCodeController::class, 'addPromocode'])->name('admin.addPromocode');
         Route::get('/edit-promocode/{id}', [PromoCodeController::class, 'editPromocode'])->name('admin.editPromocode');
+
+        //order management
+        Route::get('/order-management', [OrderController::class, 'orderManagement'])->name('admin.orderManagement');
+        Route::get('/invoice', [OrderController::class, 'invoice'])->name('admin.invoice');
+        Route::get('/getDriverListToAssign', [OrderController::class, 'getDriverListToAssign'])->name('admin.getDriverListToAssign');
+        Route::post('/assignDriver', [OrderController::class, 'assignDriver'])->name('admin.assignDriver');
+
+        //affiliate commission management
+        Route::get('/affiliate-commission-management', [AffiliateCommissionController::class, 'affiliateCommissionManagement'])->name('admin.affiliateCommissionManagement');
+        Route::post('/update_affiliate_commission', [AffiliateCommissionController::class, 'update_affiliate_commission'])->name('admin.update_affiliate_commission');
+
+        //banner rtequest management
+        Route::get('/banner-request-management', [BannerRequestController::class, 'bannerRequestManagement'])->name('admin.bannerRequestManagement');
+        Route::post('/approveBannerRequest', [BannerRequestController::class, 'approveBannerRequest'])->name('admin.approveBannerRequest');
+        Route::post('/rejectBannerRequest', [BannerRequestController::class, 'rejectBannerRequest'])->name('admin.rejectBannerRequest');
+        Route::post('/updateBannerReqStatus/{id}', [BannerRequestController::class, 'updateBannerReqStatus'])->name('admin.updateBannerReqStatus');
+
+        //live rtequest management
+        Route::get('/live-request-management', [LiveRequestController::class, 'liveRequestManagement'])->name('admin.liveRequestManagement');
+
+        //story management
+        Route::get('/story-management', [StoryController::class, 'storyManagement'])->name('admin.storyManagement');
+
+        //deal management
+        Route::get('/deal-management', [DealController::class, 'dealManagement'])->name('admin.dealManagement');
         
 
     });
@@ -139,9 +170,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-route::Match(['get','post'],'/affiliate-mgt', function(){
-    return view('admin.commission-mgt.affiliate-mgt');
-});
 
 
 Route::fallback(function (Request $request) {

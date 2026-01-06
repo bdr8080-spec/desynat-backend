@@ -427,7 +427,7 @@ h3.mid-headng{
   gap: 8px;
   cursor: pointer;
   position: relative;
-  font-size: 16px;
+  font-size: 16px !important;
   user-select: none;
 }
 
@@ -2356,3 +2356,220 @@ width: fit-content;
     border-radius: 5px;
     border: 1px solid #FF5F1B;
 }
+.return-green{
+    color: #17854C;
+}
+.btn-outline-red{
+    border:1px solid #D53B36;
+    color: #D53B36;
+}
+.return-view {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    justify-content: space-between;
+}
+.btn-outline-red:hover{
+    border:1px solid #D53B36;
+    color: #D53B36;
+}
+.orderstatus{
+    background: #FFF7EA;
+    position: relative;
+}
+.order-view-lists {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+.fill-box {
+    height: 32px;
+    width: 32px;
+    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+    text-align: center;
+    border-radius: 50px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 11;
+}
+.or-box div {
+    font-size: 12px;
+    margin-top: 6px;
+    color: #6E4527;
+    font-weight: 500;
+}
+.order-t {
+    font-weight: 500;
+}
+.order-14 {
+    font-size: 14px;
+}
+.order-view-lists:after {
+    content: '';
+    display: block;
+    border-bottom: 1px solid #6E4527;
+    position: absolute;
+    height: 2px;
+    width: 80%;
+    right: 10%;
+    left: 10%;
+    bottom: 42%;
+    z-index: 1;
+}
+.btn-outline-de{
+    border: 1px solid #48DB8F;
+    color: #48DB8F;
+}
+.btn-outline-de:hover{
+    border: 1px solid #48DB8F;
+    color: #48DB8F;
+}
+.btn-outline1 {
+    padding: 6px 12px;
+    border-radius: 5px;
+}
+.rating-pnl{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rating-widget {
+    max-width: 500px;
+}
+  
+.rating-widget .rating {
+	direction: rtl;
+    unicode-bidi: bidi-override;
+    color: #ddd;
+    margin: auto;
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+}
+.rating-widget .rating input {
+	display: none;
+}
+.rating-widget .rating label:hover,
+.rating-widget .rating label:hover ~ label,
+.rating-widget .rating input:checked + label,
+.rating-widget .rating input:checked + label ~ label {
+	color: #ffc107; 
+}
+.image-upload{
+    height: 80px;
+    width: 80px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.paperhover {
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+    font-size: 23px;
+}
+.reviewImg {
+    width: 100px;
+    overflow: hidden;
+    height: 100px;
+    border-radius: 7px;
+    position: relative;
+}
+.reviewImg img{
+    width: 100%;
+    height: 100%;
+   object-fit: cover;
+}
+.preview-box1 {
+    display: flex;
+    gap: 15px;
+}
+.reviewImg span {
+    position: absolute;
+    font-size: 16px;
+    right: 1px;
+    color: #ffffff;
+    background: #F44336;
+    height: 20px;
+    width: 20px;
+    top: 0px;
+    text-align: center;
+    cursor: pointer;
+}
+.paperhover input {
+    width: 20px;
+    cursor: pointer;
+    opacity: 0;
+}
+#requestimg {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    opacity: 0;
+    line-height: 4;
+}
+.requestbox {
+    cursor: pointer;
+    position: relative;
+}
+.searchdrop {
+    display: none;
+    position: absolute;
+    width: 32.00%;
+    background: #fff;
+    border: 1px solid #dddddd8a;
+    z-index: 100;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0px 0px 0px #000;
+}
+.latest-lists {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.latest-lists a {
+    color: #000;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    padding: 3px 10px;
+    font-size: 14px;
+    line-height: normal;
+    border-radius: 4px;
+    margin: 10px 0px;
+}
+
+
+/* -------------------- */
+img.img-fluid.circle-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.customBtn8 {
+    font-size: 20px;
+    line-height: 26px;
+    padding: 13px 38px;
+    font-weight: 500;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #6E4527;
+    border: 1px solid transparent;
+    background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(90deg, #6E4527, #C08A5A) border-box;
+}
+

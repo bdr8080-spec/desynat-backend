@@ -141,8 +141,13 @@
 
                 <div class="d-flex align-items-center mb-1">
                     <h4 class="fw-bold text-dark me-2" id="finalPrice">{{$firstVariant['final_price']}} KD</h4>
-                    <del class="text-muted me-2" id="actualPrice">{{$firstVariant['actual_price']}} KD</del>
+
+                    @if($firstVariant['discount_value']!=="0")
+                    <del class="text-muted me-2" id="actualPrice">{{$firstVariant['actual_price']}} KD
+                    </del>
                     <span class="text-danger fw-semibold">{{$firstVariant['discount_value']}}% off</span>
+                    @endif
+
                 </div>
 
                 <p class="text-muted mb-1">{{$data->store->store_name}}/{{$data->category->name}}</p>
@@ -358,51 +363,51 @@
             <h6 class="cd-size">View All</h6>
         </div>
         <div class="desc-box p-4 rounded-4">
+            @forelse($data->review as $review)
             <div class="review-box p-4 rounded-4">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex align-items-center gap-3">
-                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img img-fluid"
-                            width="60" />
+                        <!-- User Profile Image -->
+                        <img src="{{ $review->user_details->profile_image ?? 'https://cdn-icons-png.flaticon.com/512/149/149071.png' }}"
+                            class="profile-img img-fluid" width="60" alt="User Profile" />
                         <div>
-                            <h6 class="fw-semibold mb-1">Gimhana</h6>
-                            <span class="text-warning fs-5">★★★★☆</span>
+                            <h6 class="fw-semibold mb-1">{{ $review->user_details->full_name ?? 'Anonymous' }}</h6>
+                            <!-- Product Rating (stars) -->
+                            <span class="text-warning fs-5">
+                                @for ($i = 1; $i <= 5; $i++) <i
+                                    class="bi bi-star{{ $i <= $review->product_rating ? '-fill' : '' }} text-warning">
+                                    </i>
+                                    @endfor
+                            </span>
                         </div>
                     </div>
-                    <span class="text-muted">11 Nov 2025</span>
+                    <span class="text-muted">{{ \Carbon\Carbon::parse($review->created_at)->format('d M Y') }}</span>
                 </div>
                 <p class="mt-3 text-muted">
-                    lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
+                    {{ $review->product_review ?? 'No review provided' }}
                 </p>
                 <div class="d-flex gap-3 mt-3">
-                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                </div>
-            </div>
+                    <!-- Render Product Images (if any) -->
+                    @php
+                    $productImages = json_decode($review->product_image);
+                    @endphp
 
-            <div class="review-box p-4 rounded-4">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center gap-3">
-                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img img-fluid"
-                            width="60" />
-                        <div>
-                            <h6 class="fw-semibold mb-1">Gimhana</h6>
-                            <span class="text-warning fs-5">★★★★☆</span>
-                        </div>
-                    </div>
-                    <span class="text-muted">11 Nov 2025</span>
-                </div>
-                <p class="mt-3 text-muted">
-                    lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Ut enim ad minimdipisicing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim aliqua.
-                </p>
-                <div class="d-flex gap-3 mt-3">
-                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
-                    <img src="/mnt/data/a74c7c83-76b3-4c72-a009-2b0579341435.png" class="review-img" />
+                    @if($productImages && is_array($productImages))
+                    @foreach($productImages as $image)
+                    <img src="{{ $image }}" class="review-img" alt="Review Image"
+                        style="width: 100px; height: 100px; object-fit: cover;" />
+                    @endforeach
+                    @else
+
+                    @endif
                 </div>
             </div>
+            @empty
+            <p>No reviews yet. Be the first to review this product!</p>
+            @endforelse
+
+
+
 
         </div>
     </div>

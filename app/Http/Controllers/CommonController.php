@@ -97,7 +97,7 @@ class CommonController extends Controller
     public function getCategories(Request $request)
     {
 
-        $category = Category::orderBy('id', 'asc')->get();
+        $category = Category::orderBy('id', 'asc')->where('status','1')->get();
 
 
         if ($category->isEmpty()) {
@@ -122,7 +122,7 @@ class CommonController extends Controller
                return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
         }
 
-        $subCategory = SubCategory::where('category_id', $request->category_id)->get();
+        $subCategory = SubCategory::where('category_id', $request->category_id)->where('status','1')->get();
 
         if ($subCategory->isEmpty()) {
             return ApiResponse::generateResponse('success', 'No sub categories found', [], 200);

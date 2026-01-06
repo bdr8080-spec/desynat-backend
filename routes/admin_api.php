@@ -17,6 +17,9 @@ use App\Http\Controllers\Api\Admin\BannerController;
 use App\Http\Controllers\Api\Admin\PromocodeController;
 use App\Http\Controllers\Api\Admin\AffiliateCommissionController;
 use App\Http\Controllers\Api\Admin\OrderManagementController;
+use App\Http\Controllers\Api\Admin\DealController;
+use App\Http\Controllers\Api\Admin\StoryController;
+use App\Http\Controllers\Api\Admin\LiveRequestController;
 
 
 // Admin APi M1
@@ -164,6 +167,36 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_banner_request',[BannerController::class,'get_banner_request']);
      Route::post('/approve_banner_request',[BannerController::class,'approve_banner_request']);
      Route::post('/reject_banner_request',[BannerController::class,'reject_banner_request']);
+     Route::post('/block_unblock_banner_req',[BannerController::class,'block_unblock_banner_req']);
+
+     //M5 api ends
+
+     //M6 api starts
+
+     //Deal Management
+     Route::post('/add_deal',[DealController::class,'add_deal']);
+     Route::post('/update_deal',[DealController::class,'update_deal']);
+     Route::get('/get_active_deals',[DealController::class,'get_active_deals']);
+     Route::get('/get_expired_deals',[DealController::class,'get_expired_deals']);
+     Route::post('/block_unblock_deal',[DealController::class,'block_unblock_deal']);
+     Route::post('/delete_deal',[DealController::class,'delete_deal']);
+
+     //story Management
+     Route::post('/add_story',[StoryController::class,'add_story']);
+     Route::get('/get_seller_stories',[StoryController::class,'get_seller_stories']);
+     Route::get('/get_admin_stories',[StoryController::class,'get_admin_stories']);
+     Route::post('/delete_story',[StoryController::class,'delete_story']);
+
+     //live request & timeslot Management
+     Route::post('/add_timeslot',[LiveRequestController::class,'add_timeslot']);
+     Route::post('/update_timeslot',[LiveRequestController::class,'update_timeslot']);
+     Route::post('/delete_timeslot',[LiveRequestController::class,'delete_timeslot']);
+     Route::post('/block_unblock_timeslot',[LiveRequestController::class,'block_unblock_timeslot']);
+     Route::get('/get_timeslots',[LiveRequestController::class,'get_timeslots']);
+     Route::get('/get_live_requests',[LiveRequestController::class,'get_live_requests']);
+     Route::post('/accept_live_request',[LiveRequestController::class,'accept_live_request']);
+     Route::post('/reject_live_request',[LiveRequestController::class,'reject_live_request']);
+
 
 
 

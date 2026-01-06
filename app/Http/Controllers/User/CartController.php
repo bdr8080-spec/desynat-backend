@@ -10,6 +10,8 @@ use App\Services\UserOrderService;
 use App\Models\userAddress;
 use App\Helpers\ApiResponse;
 
+use Session;
+
 use Validator;
 
 class CartController extends Controller
@@ -48,6 +50,14 @@ class CartController extends Controller
         $userBalanceget=$this->UserOrderService->userBalanceget($data);
 
         $walletBalance=$userBalanceget['data']['balance'];
+
+        if($request->payment=='no'){
+        $msg="Payment Cancelled Or Failed";
+        $status='error';
+        Session::flash('message', $msg);
+        Session::flash('status', $status);
+         return redirect()->route('user.view_cart');
+        }
 
 
         return view('user.carts.cartlist',compact('cartData','promoCodes','walletBalance'));
@@ -187,7 +197,6 @@ class CartController extends Controller
             'order_id' => $orderId,
         ];
         $orderData = $this->UserOrderService->singleOrderDetails($data);
-        //dd($orderData);
         return view('user.carts.orderplace',compact('orderData'));
 
     }

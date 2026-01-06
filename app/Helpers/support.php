@@ -1,13 +1,22 @@
 <?php
 
 
-use App\Models\{UserGiftCards,UserWallet,Order};
+use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail,OrderDeliveryAddress};
 use App\Models\Zone;
 use App\Models\DeliveryBoy;
+use App\Models\SellerSubcriptionPlanBuy;
+use App\Models\Plan;
+use Carbon\Carbon;
 
 
 // Function to calculate the distance using the Haversine formula
 function calculateDistance($lat1, $lon1, $lat2, $lon2) {
+    // if (
+    //     !is_numeric($lat1) || !is_numeric($lon1) ||
+    //     !is_numeric($lat2) || !is_numeric($lon2)
+    // ) {
+    //     return null;
+    // }
     // Radius of the Earth in kilometers
     $earthRadius = 6371;
     
@@ -29,6 +38,7 @@ function calculateDistance($lat1, $lon1, $lat2, $lon2) {
 
     // Distance in kilometers
     $distance = $earthRadius * $c;
+
 
     return $distance; // Distance in kilometers
 }
@@ -59,7 +69,6 @@ function calculateDistance($lat1, $lon1, $lat2, $lon2) {
         ];
     }
 
-    
     }
 
 
@@ -139,7 +148,7 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
          //dd($foundZoneId);
  
        if ($foundZoneId !== null) {
-            $deliveryBoyIds = DeliveryBoy::whereJsonContains('zone_id', $foundZoneId)
+            $deliveryBoyIds = DeliveryBoy::where('zone_id', $foundZoneId)
                 ->orderBy('id', 'desc')    
                 ->pluck('id')                
                 ->toArray();               
@@ -168,3 +177,86 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
         return $c;
     }
  
+
+
+
+    // delete Data from Add to cart
+ function AddtocartRemoveData($orderid){
+
+        $checkOrder = Order::with('order_details.product_details')->where('id', $orderid)->first();
+
+        $userId = $checkOrder->user_id;  // ← correct source of user_id
+        
+        foreach ($checkOrder->order_details as $key => $val) {
+        
+            Addtocart::where([
+                'product_id' => $val->product_id,
+                'variants_id' => $val->variants_id,
+                'user_id'     => $userId
+            ])->delete();
+        
+        }
+
+        
+    }
+
+         function Order_detailsPaidStatusChange($orderid,$paymentstatus){
+        $checkOrder = orderdetail::where('order_id', $orderid)->update(['payment_status'=>$paymentstatus]);
+        
+    }
+
+    function calculateAndSaveCommission($orderDetailId, $seller_id, $amount)
+    {
+        $adminCommission = null;
+
+        $subscription = SellerSubcriptionPlanBuy::where('seller_id', $seller_id)
+            ->where('status', '1')
+            ->where('payment_status', '1')
+            ->whereDate('plan_end_date', '>=', Carbon::today())
+            ->first();
+         
+        //dd($subscription);
+
+        if ($subscription) {
+            $plan = Plan::where('id', $subscription->plan_id)
+                ->where('status', '1')
+                ->where('commission', '1')
+                ->first();
+
+            if ($plan && $plan->commission_percentage) {
+                $adminCommission = round(
+                    ($amount * $plan->commission_percentage) / 100,
+                    2
+                );
+            }
+        }
+
+        orderdetail::where('id', $orderDetailId)->update([
+            'seller_id' => $seller_id,
+            'admin_commission' => $adminCommission
+        ]);
+
+        return $adminCommission;
+    }
+
+
+
+
+    // delete Data from Add to cart
+ function delete_Order_Data($orderid){
+
+    $order = Order::find($orderid);
+    if ($order) {
+
+    // Delete delivery address
+    OrderDeliveryAddress::where('id', $order->delivery_address)->delete();
+
+    // Delete order details
+    OrderDetail::where('order_id', $orderid)->delete();
+
+    // Delete order
+    $order->delete();
+    }
+
+
+    }

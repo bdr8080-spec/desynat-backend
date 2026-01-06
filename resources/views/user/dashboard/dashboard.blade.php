@@ -45,7 +45,18 @@
         <h3 class="mid-headng mb-3">Suggested Stores</h3>
         <div class="suggestStore_contenar">
             <div class="owl-carousel storeCarousel">
-                <div class="item">
+                @foreach($stores as $store)
+                    <div class="item">
+                        <div class="suggestStore_content">
+                            <div class="suggestedStore_img">
+                                <img src="{{ $store->store_image }}" class="img-fluid circle-image" alt="{{ $store->store_name }}" />
+                            </div>
+                            <h5>{{ $store->store_name }}</h5>
+                        </div>
+                    </div>
+                @endforeach
+
+                <!-- <div class="item">
                     <div class="suggestStore_content">
                         <div class="suggestedStore_img">
                             <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
@@ -116,19 +127,11 @@
                         </div>
                         <h5>Atif Aslam</h5>
                     </div>
-                </div>
-                <div class="item">
-                    <div class="suggestStore_content">
-                        <div class="suggestedStore_img">
-                            <img src="{{ asset('user/assets/images/store1.jpg') }}" class="img-fluid" />
-                        </div>
-                        <h5>Atif Aslam</h5>
-                    </div>
-                </div>
+                </div> -->
             </div>
 
         </div>
-        <div class="suggestStore_contenar">
+        <!-- <div class="suggestStore_contenar">
             <div class="owl-carousel storeCarousel">
                 <div class="item">
                     <div class="suggestStore_content">
@@ -212,7 +215,7 @@
                 </div>
             </div>
 
-        </div>
+        </div> -->
     </div>
 
     <section class="bestSelling customContainer">

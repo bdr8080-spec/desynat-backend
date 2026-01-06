@@ -102,7 +102,10 @@ public function all_banners(Request $request){
 
     $request_data=(object) [
     'seller_id'=>$seller_details,
-    'search'=>$request->search??null
+    'search'=>$request->search??null,
+    'banner_filter'=>$request->banner_filter??null,
+     'from'=>$request->from??null,
+    'to'=>$request->to??null,
     ];
 
     $data= $this->SellerBannerService->SellerAllbanner($request_data);
@@ -136,7 +139,6 @@ public function seller_banner_price(Request $request){
     "type"=>$request->type
     ];
 
-
     $data=$this->SellerBannerService->BannerPriceDetails($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
@@ -145,7 +147,6 @@ public function seller_banner_price(Request $request){
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
-
 
 
 }

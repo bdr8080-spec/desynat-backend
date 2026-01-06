@@ -22,7 +22,7 @@ class OrderManagementController extends Controller
     public function active_orders(Request $request)
     {
         try {
-            $data = $this->OrderManagementService->ActiveOrders($request);
+            $data = $this->OrderManagementService->ActiveOrdersNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -38,7 +38,7 @@ class OrderManagementController extends Controller
     public function return_orders(Request $request)
     {
         try {
-            $data = $this->OrderManagementService->ReturnExchangeOrders($request);
+            $data = $this->OrderManagementService->ReturnExchangeOrdersNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -54,7 +54,7 @@ class OrderManagementController extends Controller
     public function completed_orders(Request $request)
     {
         try {
-            $data = $this->OrderManagementService->CompletedOrders($request);
+            $data = $this->OrderManagementService->CompletedOrdersNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -70,7 +70,7 @@ class OrderManagementController extends Controller
     public function cancelled_orders(Request $request)
     {
         try {
-            $data = $this->OrderManagementService->CancelledOrders($request);
+            $data = $this->OrderManagementService->CancelledOrdersNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -87,7 +87,7 @@ class OrderManagementController extends Controller
     {
 
         $validate = Validator::make($request->all(), [
-            'id' => 'required|exists:orders,id',
+            'id' => 'required|exists:orderdetails,id',
         ]);
 
         if ($validate->fails()) {
@@ -95,7 +95,7 @@ class OrderManagementController extends Controller
         }
 
         try {
-            $data = $this->OrderManagementService->SingleOrderDetail($request);
+            $data = $this->OrderManagementService->SingleOrderDetailNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -112,7 +112,7 @@ class OrderManagementController extends Controller
     {
 
         $validate = Validator::make($request->all(), [
-            'order_id' => 'required|exists:orders,id',
+            'order_id' => 'required|exists:orderdetails,id',
         ]);
 
         if ($validate->fails()) {
@@ -120,7 +120,7 @@ class OrderManagementController extends Controller
         }
 
         try {
-            $data = $this->OrderManagementService->getDriversListToAssign($request);
+            $data = $this->OrderManagementService->getDriversListToAssignNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);
@@ -138,7 +138,7 @@ class OrderManagementController extends Controller
 
         $validate = Validator::make($request->all(), [
             'driver_id' => 'required|exists:delivery_boys,id',
-            'order_id' => 'required|exists:orders,id',
+            'order_id' => 'required|exists:orderdetails,id',
         ]);
 
         if ($validate->fails()) {
@@ -146,7 +146,7 @@ class OrderManagementController extends Controller
         }
 
         try {
-            $data = $this->OrderManagementService->assignDriver($request);
+            $data = $this->OrderManagementService->assignDriverNew($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);

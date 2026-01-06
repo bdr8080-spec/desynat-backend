@@ -9,6 +9,8 @@ use App\Http\Controllers\User\UserStoreController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\UserGiftCardController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\DashBoardController;
 
 
 
@@ -87,14 +89,31 @@ use App\Http\Controllers\User\CartController;
   Route::get('order-details/{id}',[CartController::class, 'orderDetails'])->name('user.orderDetails');
 
 
-  Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');;
+  Route::get('/giftcard-complete-Payment', [UserGiftCardController::class,'giftcard_complete_Payment'])->name('user.giftcard_complete_Payment');
 
+  Route::get('/my-orders', [OrderController::class,'myOrders'])->name('user.myOrders');
+  Route::get('/order_details/{id}', [OrderController::class,'order_details'])->name('user.order_details');
+  Route::post('/cancel_order', [OrderController::class,'cancel_order'])->name('user.cancel_order');
+  Route::post('/exchange_order', [OrderController::class,'exchange_order'])->name('user.exchange_order');
+  Route::post('/getAvailableSize', [OrderController::class,'getAvailableSize'])->name('user.getAvailableSize');
+  Route::post('/return_order', [OrderController::class,'return_order'])->name('user.return_order');
+  Route::post('/submitRating', [OrderController::class,'submitRating'])->name('user.submitRating');
+
+  Route::get('/all-product', [UserStoreController::class,'all_product'])->name('user.allproduct');
 
 });
 
 
 
 Route::get('Payment-Callback',[CartController::class, 'Payment_Callback'])->name('user.Payment_Callback');
+Route::post('/headerSearch', [DashBoardController::class, 'headerSearch'])->name('user.headerSearch');
+Route::get('/getSearchData', [DashBoardController::class, 'getSearchData'])->name('user.getSearchData');
+
+Route::get('/getRecommandedlatestSearch', [DashBoardController::class, 'getRecommandedlatestSearch'])->name('user.getRecommandedlatestSearch');
+
+Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])->name('user.getlatestSearch');
+
+
 
 
 
@@ -120,21 +139,22 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/myorder', function () {
-     return view('user.orders.my-order');
+// Route::match(['get', 'post'], '/myorder', function () {
+//      return view('user.orders.my-order');
 
-})->name('user.myorder');
+// })->name('user.myorder');
 
-Route::match(['get', 'post'], '/order_details', function () {
-     return view('user.orders.order-details');
+// Route::match(['get', 'post'], '/order_details', function () {
+//      return view('user.orders.order-details');
 
-})->name('user.order_details');
+// })->name('user.order_details');
 
 
 // Route::match(['get', 'post'], '/view-cart', function () {
 
 //      return view('user.carts.cartlist');
 // })->name('user.view-cart');
+
 
 
 // Route::match(['get', 'post'], '/wishlist', function () {

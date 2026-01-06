@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Seller\LoginController;
 use App\Http\Controllers\Seller\WebSellerDashboard;
 use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Seller\SellerBannerManagement;
+use App\Http\Controllers\Seller\SellerOrderController;
 
 
 
@@ -107,7 +109,13 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/update-commison',[WebSellerDashboard::class,'update_commison'])->name('seller.update_commison');
 
-    
+
+    // M6 APi 
+
+     route::Match(['get','post'],'/order-management',[SellerOrderController::class,'order_management'])->name('seller.order_management');
+     route::Match(['get','post'],'/single-order-view',[SellerOrderController::class,'single_order_View'])->name('seller.single_order_View');
+     
+
     });
 
  
@@ -115,27 +123,21 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
     route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
 
-
     route::Match(['get','post'],'/removeImage',[LoginController::class,'removeImage'])->name('seller.removeImage');    
 
+    // M5 Work 
+
+    route::Match(['get','post'],'/seller_banner_price',[SellerBannerManagement::class,'seller_banner_price']);    
+
+    route::Match(['get','post'],'/add-banner',[SellerBannerManagement::class,'add_banner'])->name('seller.add_banner');    
+    route::Match(['get','post'],'/show-banner',[SellerBannerManagement::class,'show_banner'])->name('seller.show_banner');    
+    route::Match(['get','post'],'/show-single-banner/{id}',[SellerBannerManagement::class,'show_single_banner'])->name('seller.show_single_banner');    
 
 
 
 
 
-});
 
-
-route::Match(['get','post'],'/Add-product-2', function(){
-    return view('dealer.product.Add_product_2');
-});
-
-route::Match(['get','post'],'/banner-management', function(){
-    return view('dealer.bannermgt.banner');
-});
-
-route::Match(['get','post'],'/banner-details', function(){
-    return view('dealer.bannermgt.banner-details');
 });
 
 
