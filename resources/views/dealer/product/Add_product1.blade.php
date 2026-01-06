@@ -1376,10 +1376,10 @@ $(document).on('submit', 'form#addproduct', function(event) {
         cache: false,
         contentType: false,
         processData: false,
-        beforeSend: function() {
-            // Show loader
+         beforeSend: function() {
+        //     // Show loader
             $('#loader').show();
-        },
+         },
         success: function(response) {
             console.log(response);
 
@@ -1436,7 +1436,8 @@ $(document).on('submit', 'form#addproduct', function(event) {
                     $("#error-" + field).html(messages[0]);
                 }
             });
-        },
+        }
+        // ,
         complete: function() {
             // Hide loader (after success or error)
             $('#loader').hide();
