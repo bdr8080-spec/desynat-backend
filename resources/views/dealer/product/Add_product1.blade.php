@@ -1025,8 +1025,40 @@ $("#addmore").click(function() {
 // REMOVE ROW
 $(document).on("click", ".remove-btn", function() {
     $(this).closest(".specifications-row").remove();
+
+    refreshSpecificationIndexes();
 });
+
+// remove After refresh error code 
+function refreshSpecificationIndexes() {
+    $(".specifications-row").each(function (index) {
+
+        $(this).find("p[id^='error-product_spe_en_']")
+            .attr("id", "error-product_spe_en_" + index);
+
+        $(this).find("p[id^='error-product_spe_ar_']")
+            .attr("id", "error-product_spe_ar_" + index);
+
+        $(this).find("p[id^='error-product_spe_feature_en_']")
+            .attr("id", "error-product_spe_feature_en_" + index);
+
+        $(this).find("p[id^='error-product_spe_feature_ar_']")
+            .attr("id", "error-product_spe_feature_ar_" + index);
+    });
+
+    // update global counter
+    specification_count = $(".specifications-row").length;
+}
+
+
+
 </script>
+
+
+
+
+
+
 
 <script>
 // ADD NEW ROWs In product Variation Section
@@ -1437,7 +1469,7 @@ $(document).on('submit', 'form#addproduct', function(event) {
                 }
             });
         }
-        // ,
+        ,
         complete: function() {
             // Hide loader (after success or error)
             $('#loader').hide();
