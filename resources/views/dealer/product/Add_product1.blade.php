@@ -153,6 +153,7 @@
         </div>
         <div class="specifications-pnl">
             <div class="append-panel">
+                <div class="specifications-row">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
@@ -225,6 +226,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
             </div>
 
         </div>
