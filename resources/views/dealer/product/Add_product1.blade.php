@@ -1376,10 +1376,10 @@ $(document).on('submit', 'form#addproduct', function(event) {
         cache: false,
         contentType: false,
         processData: false,
-        // beforeSend: function() {
+         beforeSend: function() {
         //     // Show loader
-        //     $('#loader').show();
-        // },
+            $('#loader').show();
+         },
         success: function(response) {
             console.log(response);
 
@@ -1438,10 +1438,10 @@ $(document).on('submit', 'form#addproduct', function(event) {
             });
         }
         // ,
-        // complete: function() {
-        //     // Hide loader (after success or error)
-        //     $('#loader').hide();
-        // }
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
 
 
     });
