@@ -223,9 +223,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <div class="remove-btn22 "><i class="bi bi-x"></i> Remove</div>
+                    <div class="remove-btn22 " style="margin-left:90%;color: red;"><i class="bi bi-x"></i> Remove</div>
             </div>
         </div>
 
