@@ -2,6 +2,334 @@
 @section('content')
 
 
+<div class="inner-content management">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-lg-6 col-md-6 col-12">
+            <h2 class="h2">Deals Management</h2>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-12">
+            <div class="d-flex justify-content-end">
+                <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
+                    <span>Add Deals</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
+            <li class="nav-item m-1" role="presentation">
+                <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
+                    aria-selected="true">
+                    Active
+                </button>
+            </li>
+            <li class="nav-item m-1" role="presentation">
+                <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                    aria-selected="true">
+                    Expired
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="userManagecontent">
+        <div class="tab-content" id="pills-tabContent">
+            <!-- Exchange -->
+
+            <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
+                <div class="row">
+                    <div class="align-items-end d-flex">
+                        <div class="search-box" style="position: relative">
+                            <i class="bi bi-search" style="
+                            position: absolute;
+                            left: 10px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            font-size: 16px;
+                            color: #888;
+                          ">
+                            </i>
+                            <input type="text" class="form-control" placeholder="Search for..."
+                                style="padding-left: 35px" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-5 w-100">
+                    <table class="table w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr.No</th>
+                                <th scope="col">Banner</th>
+                                <th scope="col">Deal Name</th>
+                                <th scope="col">Discount Percentage</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Sub-category</th>
+                                <th scope="col">Start From</th>
+                                <th scope="col">End To</th>
+                                <th scope="col">Number of Sellers Enrolled</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>
+                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                </td>
+                                <td>lorem</td>
+                                <td>10%</td>
+                                <td>Men</td>
+                                <td>Tshirt</td>
+                                <td>2nd September 2025</td>
+                                <td>6th September 2025</td>
+                                <td class="short-title">
+                                    <a href="seller-list.html">100 Seller</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <a class="table-button" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a>
+
+                                        <a class="table-button" type="button">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="flexSwitchCheckChecked" />
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>
+                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                </td>
+                                <td>lorem</td>
+                                <td>10%</td>
+                                <td>Men</td>
+                                <td>Tshirt</td>
+                                <td>2nd September 2025</td>
+                                <td>6th September 2025</td>
+                                <td class="short-title">
+                                    <a href="seller-list.html">100 Seller</a>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <a class="table-button" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#sentModal3"><i class="bi bi-pencil-square"></i></a>
+
+                                        <a class="table-button" type="button">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="flexSwitchCheckChecked" />
+                                            <label class="form-check-label" for="flexSwitchCheckChecked"></label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Return -->
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+                tabindex="0">
+                <div class="row">
+                    <div class="align-items-end d-flex">
+                        <div class="search-box" style="position: relative">
+                            <i class="bi bi-search" style="
+                            position: absolute;
+                            left: 10px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            font-size: 16px;
+                            color: #888;
+                          ">
+                            </i>
+                            <input type="text" class="form-control" placeholder="Search for..."
+                                style="padding-left: 35px" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-5 w-100">
+                    <table class="table w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr.No</th>
+                                <th scope="col">Banner</th>
+                                <th scope="col">Deal Name</th>
+                                <th scope="col">Discount Percentage</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Sub-category</th>
+                                <th scope="col">Start From</th>
+                                <th scope="col">End To</th>
+                                <th scope="col">Number of Sellers Enrolled</th>
+                                <th scope="col">Revenue Generated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>
+                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                </td>
+                                <td>lorem</td>
+                                <td>10%</td>
+                                <td>Men</td>
+                                <td>Tshirt</td>
+                                <td>2nd September 2025</td>
+                                <td>6th September 2025</td>
+                                <td class="short-title">
+                                    <a href="expired-seller-list.html">100 Seller</a>
+                                </td>
+
+                                <td>KD100000</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>
+                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                </td>
+                                <td>lorem</td>
+                                <td>10%</td>
+                                <td>Men</td>
+                                <td>Tshirt</td>
+                                <td>2nd September 2025</td>
+                                <td>6th September 2025</td>
+                                <td class="short-title">
+                                    <a href="expired-seller-list.html">100 Seller</a>
+                                </td>
+                                <td>KD100000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- End of Content Wrapper -->
+</div>
+
+
+<div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Add Deals</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="appointment-container">
+
+
+                    <div class="row">
+
+                        <!-- Upload Image -->
+                        <div class="col-lg-12">
+                            <div class="upload-title text-center">Upload Image</div>
+
+                            <label for="fileUpload" class="upload-box" style="cursor:pointer;">
+                                <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
+                                <img id="previewImage" class="preview-image"
+                                    style="display:none; max-width:216px; margin-top:-2px;" />
+                                <div class="upload-text">Upload Image</div>
+                                <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
+                            </label>
+                        </div>
+
+                        <!-- Brand Name English -->
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="brand name">Name (English)</label>
+                                <input type="text" name="name_english" class="form-control"
+                                    placeholder="Enter Brand Name in English" />
+                                <div class="text-danger" id="nameEnError"></div>
+                            </div>
+                        </div>
+
+                        <!-- Brand Name Arabic -->
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="brand name"> Name (Arabic)</label>
+                                <input type="text" name="name_arabic" class="form-control"
+                                    placeholder="Enter Brand Name in Arabic" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <label for="from" class="form-label">Select Category</label>
+
+                            <div class="d-flex gap-4 align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioDefault" id="radio1">
+                                    <label class="form-check-label" for="radio1">
+                                        Men
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioDefault" id="radio2">
+                                    <label class="form-check-label" for="radio2">
+                                        Woemen
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioDefault" id="radio3">
+                                    <label class="form-check-label" for="radio3">
+                                        Kids
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group mb-5 w-100">
+                                <label for="from" class="form-label">Select Sub-Category</label>
+                                <select class="form-select form-select-lg" aria-label="Large select example">
+                                    <option selected>Select Country</option>
+                                    <option value="1">country One</option>
+                                    <option value="2">country Two</option>
+                                    <option value="3">country Three</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group mb-5 w-100">
+                                <label class="form-label" for="brand name"> Discount %</label>
+                                <input type="text" name="name_arabic" class="form-control"
+                                    placeholder="Enter Brand Name in Arabic" />
+                            </div>
+                        </div>
+
+
+
+                        <!-- Submit Button -->
+                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <a type="button" id="submitBrandBtn" class="btn btn-dark customBtn mt-3">Submit</a>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
-
-
