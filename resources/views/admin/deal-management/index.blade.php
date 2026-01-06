@@ -1,5 +1,46 @@
 @extends('admin.layout.app')
 @section('content')
+ <style>
+#editPreviewImage {
+    display: block;
+}
+
+.upload-box {
+    width: 220px;
+    height: 160px;
+    border: 2px dotted #c8ad8d;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.upload-icon {
+    width: 60px;
+    opacity: 0.5;
+}
+
+.upload-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #444;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+</style>
+
 
 
 <div class="inner-content management">
@@ -297,7 +338,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group mb-5 w-100">
+                            <div class="form-group  w-100">
                                 <label for="from" class="form-label">Select Sub-Category</label>
                                 <select class="form-select form-select-lg" aria-label="Large select example">
                                     <option selected>Select Country</option>
@@ -309,10 +350,28 @@
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group mb-5 w-100">
+
+                            <div class="form-group  w-100">
                                 <label class="form-label" for="brand name"> Discount %</label>
                                 <input type="text" name="name_arabic" class="form-control"
                                     placeholder="Enter Brand Name in Arabic" />
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="d-flex gap-2">
+
+                                <div class="col-lg-6 ">
+                                    <div class="form-group mt-4 w-100">
+                                        <label for="from" class="form-label">From:</label>
+                                        <input type="date" id="from" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <div class="form-group mt-4 w-100">
+                                        <label for="from" class="form-label">To:</label>
+                                        <input type="date" id="from" class="form-control" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -331,5 +390,35 @@
         </div>
     </div>
 </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".inner-content").removeClass("innerToggle");
+        $(".menu").click(function () {
+          $(".customSidebar").toggleClass("toggle");
+          $(".inner-content").toggleClass("toggle");
+        });
+      });
+    </script>
+    <script>
+      const fileInput = document.getElementById("fileUpload");
+      const previewImage = document.getElementById("previewImage");
+      const uploadIcon = document.getElementById("uploadIcon");
+
+      fileInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+            uploadIcon.style.display = "none";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    </script>
 
 @endsection
