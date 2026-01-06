@@ -20,6 +20,9 @@ use App\Http\Controllers\Admin\PromoCodeController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\AffiliateCommissionController;
 use App\Http\Controllers\Admin\BannerRequestController;
+use App\Http\Controllers\Admin\LiveRequestController;
+use App\Http\Controllers\Admin\StoryController;
+use App\Http\Controllers\Admin\DealController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -151,6 +154,15 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/approveBannerRequest', [BannerRequestController::class, 'approveBannerRequest'])->name('admin.approveBannerRequest');
         Route::post('/rejectBannerRequest', [BannerRequestController::class, 'rejectBannerRequest'])->name('admin.rejectBannerRequest');
         Route::post('/updateBannerReqStatus/{id}', [BannerRequestController::class, 'updateBannerReqStatus'])->name('admin.updateBannerReqStatus');
+
+        //live rtequest management
+        Route::get('/live-request-management', [LiveRequestController::class, 'liveRequestManagement'])->name('admin.liveRequestManagement');
+
+        //story management
+        Route::get('/story-management', [StoryController::class, 'storyManagement'])->name('admin.storyManagement');
+
+        //deal management
+        Route::get('/deal-management', [DealController::class, 'dealManagement'])->name('admin.dealManagement');
         
 
     });

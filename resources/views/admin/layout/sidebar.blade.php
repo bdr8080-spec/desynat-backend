@@ -96,6 +96,24 @@
             Banner Request Management
         </a>
     </li>
+    <li class="nav-item {{ Request::routeIs('admin.liveRequestManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.liveRequestManagement') }}">
+            <span><img src="{{ asset('admin/image/image-03.svg') }}" alt="Live Request Management" /></span>
+            Live Request & Timeslot Management
+        </a>
+    </li>
+    <li class="nav-item {{ Request::routeIs('admin.storyManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.storyManagement') }}">
+            <span><img src="{{ asset('admin/image/image-03.svg') }}" alt="Story Management" /></span>
+            Story Management
+        </a>
+    </li>
+    <li class="nav-item {{ Request::routeIs('admin.dealManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.dealManagement') }}">
+            <span><img src="{{ asset('admin/image/image-03.svg') }}" alt="Deal Management" /></span>
+            Deal Management
+        </a>
+    </li>
      
     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
