@@ -139,10 +139,16 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-// Route::match(['get', 'post'], '/myorder', function () {
-//      return view('user.orders.my-order');
+Route::match(['get', 'post'], '/chat', function () {
+     return view('user.chat.chatlists');
 
-// })->name('user.myorder');
+})->name('user.chat');
+
+Route::match(['get', 'post'], '/user-chat', function () {
+     return view('user.chat.userChat');
+
+})->name('user.user-chat');
+
 
 // Route::match(['get', 'post'], '/order_details', function () {
 //      return view('user.orders.order-details');
