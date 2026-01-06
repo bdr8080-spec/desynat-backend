@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\Admin\OrderManagementController;
 use App\Http\Controllers\Api\Admin\DealController;
 use App\Http\Controllers\Api\Admin\StoryController;
 use App\Http\Controllers\Api\Admin\LiveRequestController;
+use App\Http\Controllers\Api\Admin\FullBannerController;
 
 
 // Admin APi M1
@@ -197,6 +198,11 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/accept_live_request',[LiveRequestController::class,'accept_live_request']);
      Route::post('/reject_live_request',[LiveRequestController::class,'reject_live_request']);
 
+     //FUll banner management
+     Route::post('/add_full_banner',[FullBannerController::class,'add_full_banner']);
+     Route::post('/update_full_banner',[FullBannerController::class,'update_full_banner']);
+     Route::post('/delete_full_banner',[FullBannerController::class,'delete_full_banner']);
+     Route::get('/get_full_banners',[FullBannerController::class,'get_full_banners']);
 
 
 
