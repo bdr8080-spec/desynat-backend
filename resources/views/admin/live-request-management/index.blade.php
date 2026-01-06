@@ -1,5 +1,457 @@
 @extends('admin.layout.app')
 @section('content')
 
+<div class="inner-content management">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-lg-6 col-md-6 col-12">
+            <h2 class="h2">Live Request & Timeslot Managemen</h2>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <ul class="nav nav-pills mb-4 tabs-pnl custom" id="pills-tab" role="tablist">
+            <li class="nav-item m-1" role="presentation">
+                <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
+                    aria-selected="true">
+                    Live Request Timeslot
+                </button>
+            </li>
+            <li class="nav-item m-1" role="presentation">
+                <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                    aria-selected="true">
+                    Live Requests
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="userManagecontent">
+        <div class="tab-content" id="pills-tabContent">
+            <!-- Exchange -->
+
+            <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
+                <div class="row">
+                    <div class="align-items-end d-flex">
+
+                        <div class="col-lg-6">
+                            <div class="align-items-end d-flex">
+                                <div class="form-group mb-5 w-50">
+                                    <!-- <label for="from" class="form-label">Country Name</label> -->
+                                    <select class="form-select form-select-lg" aria-label="Large select example">
+                                        <option selected>Select Country</option>
+                                        <option value="1">country One</option>
+                                        <option value="2">country Two</option>
+                                        <option value="3">country Three</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6 ">
+                            <div class="d-flex gap-3 justify-content-end">
+
+
+                                <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                                    <span>Add Timeslot</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- full calender -->
+
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-md-8 ">
+                            <div id="calendar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Return -->
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+                tabindex="0">
+                <div class="d-flex justify-content-center">
+                    <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
+                        <li class="nav-item m-1" role="presentation">
+                            <button class="nav-link customBtn2 m-0" id="pills-new-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
+                                aria-selected="true">
+                                New Requests
+                            </button>
+                        </li>
+                        <li class="nav-item m-1" role="presentation">
+                            <button class="nav-link  active customBtn2 m-0" id="pills-approved-tab"
+                                data-bs-toggle="pill" data-bs-target="#pills-approved" type="button" role="tab"
+                                aria-controls="pills-approved" aria-selected="true">
+                                Approved
+                            </button>
+                        </li>
+
+                        <li class="nav-item m-1" role="presentation">
+                            <button class="nav-link  customBtn2 m-0" id="pills-reject-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-reject" type="button" role="tab" aria-controls="pills-reject"
+                                aria-selected="false">
+                                Rejected
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="userManagecontent">
+                    <div class="tab-content" id="pills-tabContent">
+                        <!-- Exchange -->
+
+                        <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab"
+                            tabindex="0">
+                            <div class="row">
+                                <div class="align-items-end d-flex gap-3">
+                                    <div class="search-box" style="position: relative">
+                                        <i class="bi bi-search" style="
+                                  position: absolute;
+                                  left: 10px;
+                                  top: 50%;
+                                  transform: translateY(-50%);
+                                  font-size: 16px;
+                                  color: #888;
+                                ">
+                                        </i>
+                                        <input type="text" class="form-control" placeholder="Search for..."
+                                            style="padding-left: 35px" />
+                                    </div>
+                                    <div class="form-group w-25">
+                                        <!-- <label for="from" class="form-label">Country Name</label> -->
+                                        <select class="form-select form-select-lg" aria-label="Large select example">
+                                            <option selected>Select Country</option>
+                                            <option value="1">country One</option>
+                                            <option value="2">country Two</option>
+                                            <option value="3">country Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive mt-5 w-100">
+                                <table class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sr.No</th>
+                                            <th scope="col">Request ID</th>
+                                            <th scope="col">Seller Name</th>
+                                            <th scope="col">Seller Country</th>
+                                            <th scope="col">Request On</th>
+                                            <th scope="col">Live Date & Time</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>#22222</td>
+                                            <td>lorem</td>
+                                            <td>UAE</td>
+                                            <td>2nd September 2025 | 11 Am</td>
+                                            <td>10th September 2025 | 12 PM</td>
+                                            <td>
+                                                <div class="d-flex gap-3 justify-content-center">
+                                                    <a class="table-button" type="button"><i
+                                                            class="bi bi-check-circle-fill"></i></a>
+
+                                                    <a class="table-button" data-bs-toggle="modal"
+                                                        data-bs-target="#sentModal2" type="button">
+                                                        <i class="bi bi-x-circle-fill"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>#22222</td>
+                                            <td>lorem</td>
+                                            <td>UAE</td>
+                                            <td>2nd September 2025 | 11 Am</td>
+                                            <td>10th September 2025 | 12 PM</td>
+                                            <td>
+                                                <div class="d-flex gap-3 justify-content-center">
+                                                    <a class="table-button" type="button"><i
+                                                            class="bi bi-check-circle-fill"></i></a>
+
+                                                    <a class="table-button" data-bs-toggle="modal"
+                                                        data-bs-target="#sentModal2" type="button">
+                                                        <i class="bi bi-x-circle-fill"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Return -->
+                        <div class="tab-pane fade show active" id="pills-approved" role="tabpanel"
+                            aria-labelledby="pills-approved-tab" tabindex="0">
+                            <div class="row">
+                                <div class="align-items-end gap-3 d-flex">
+                                    <div class="search-box" style="position: relative">
+                                        <i class="bi bi-search" style="
+                                  position: absolute;
+                                  left: 10px;
+                                  top: 50%;
+                                  transform: translateY(-50%);
+                                  font-size: 16px;
+                                  color: #888;
+                                ">
+                                        </i>
+                                        <input type="text" class="form-control" placeholder="Search for..."
+                                            style="padding-left: 35px" />
+                                    </div>
+                                    <div class="form-group w-25">
+                                        <!-- <label for="from" class="form-label">Country Name</label> -->
+                                        <select class="form-select form-select-lg" aria-label="Large select example">
+                                            <option selected>Select Country</option>
+                                            <option value="1">country One</option>
+                                            <option value="2">country Two</option>
+                                            <option value="3">country Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive mt-5 w-100">
+                                <table class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sr.No</th>
+                                            <th scope="col">Request ID</th>
+                                            <th scope="col">Seller Name</th>
+                                            <th scope="col">Seller Country</th>
+                                            <th scope="col">Request On</th>
+                                            <th scope="col">Live Date & Time</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>#22222</td>
+                                            <td>lorem</td>
+                                            <td>UAE</td>
+                                            <td>2nd September 2025 | 11 Am</td>
+                                            <td>10th September 2025 | 12 PM</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>#22222</td>
+                                            <td>lorem</td>
+                                            <td>UAE</td>
+                                            <td>2nd September 2025 | 11 Am</td>
+                                            <td>10th September 2025 | 12 PM</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- cancle -->
+
+                        <div class="tab-pane fade" id="pills-reject" role="tabpanel" aria-labelledby="pills-reject-tab"
+                            tabindex="0">
+                            <div class="row">
+                                <div class="align-items-end gap-3 d-flex">
+                                    <div class="search-box" style="position: relative">
+                                        <i class="bi bi-search" style="
+                                  position: absolute;
+                                  left: 10px;
+                                  top: 50%;
+                                  transform: translateY(-50%);
+                                  font-size: 16px;
+                                  color: #888;
+                                ">
+                                        </i>
+                                        <input type="text" class="form-control" placeholder="Search for..."
+                                            style="padding-left: 35px" />
+                                    </div>
+                                    <div class="form-group w-25">
+                                        <!-- <label for="from" class="form-label">Country Name</label> -->
+                                        <select class="form-select form-select-lg" aria-label="Large select example">
+                                            <option selected>Select Country</option>
+                                            <option value="1">country One</option>
+                                            <option value="2">country Two</option>
+                                            <option value="3">country Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive mt-5 w-100">
+                                <table class="table w-100">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sr.No</th>
+                                            <th scope="col">Request ID</th>
+                                            <th scope="col">Seller Name</th>
+                                            <th scope="col">Seller Country</th>
+                                            <th scope="col">Request On</th>
+                                            <th scope="col">Live Date & Time</th>
+                                            <th scope="col">Rejection Reason</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>#22222</td>
+                                            <td>lorem</td>
+                                            <td>UAE</td>
+                                            <td>2nd September 2025 | 11 Am</td>
+                                            <td>10th September 2025 | 12 PM</td>
+                                            <td>lorem</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>#22222</td>
+                                            <td>lorem</td>
+                                            <td>UAE</td>
+                                            <td>2nd September 2025 | 11 Am</td>
+                                            <td>10th September 2025 | 12 PM</td>
+                                            <td>lorem</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End of Content Wrapper -->
+</div>
+
+<!-- add new model -->
+<div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+                <h2 class="h2">Reason</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1" class="form-label">Reason For Rejection
+                                        </label>
+                                        <textarea class="form-control" id="rejectReason" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                    style="margin-top: 30px">
+                                    <a class="btn btn-dark customBtn" href=""> Submit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Selected Date & Timeslot UI -->
+<div id="timeslotSection" style="display:none; margin-top:40px">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 id="selectedDateText" class="fw-bold"></h3>
+
+        <button class="btn btn-dark">
+            Add timeslot →
+        </button>
+    </div>
+
+    <div class="row g-3">
+
+        <!-- Timeslot Card -->
+        <div class="col-md-4">
+            <div class="timeslot-card active">
+                <span>10 AM - 11 AM</span>
+                <div class="actions">
+                    <i class="bi bi-pencil"></i>
+                    <i class="bi bi-toggle-on text-success"></i>
+                    <i class="bi bi-trash"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="timeslot-card">
+                <span>10 AM - 11 AM</span>
+                <div class="actions">
+                    <i class="bi bi-pencil"></i>
+                    <i class="bi bi-toggle-on text-success"></i>
+                    <i class="bi bi-trash"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var calendarEl = document.getElementById("calendar");
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        height: "auto",
+    });
+
+    calendar.render();
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var calendarEl = document.getElementById("calendar");
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        selectable: true,
+
+        dateClick: function(info) {
+            showSelectedDate(info.dateStr);
+        }
+    });
+
+    calendar.render();
+});
+
+function showSelectedDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    document.getElementById("selectedDateText").innerText =
+        `Today, ${date.toLocaleDateString('en-GB', options)}`;
+
+    document.getElementById("timeslotSection").style.display = "block";
+}
+</script>
+
 
 @endsection
