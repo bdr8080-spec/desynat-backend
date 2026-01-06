@@ -445,6 +445,63 @@ table.dataTable {
     font-weight: 600;
 }
 
+.box-shadow {
+    box-shadow: 0px 4px 20px 0px #00000014;
+    padding: 15px;
+}
+.border-radious-10{
+    border-radius: 20px;
+}
+.order-cont p {
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: #000;
+}
+.title-light {
+    color: #00000080;
+    font-size: 15px;
+}
+.pay-sum {
+    display: flex;
+    justify-content: space-between;
+    margin: 9px 0px;
+}
+.summary-title-1 {
+    color: #00000080;
+    font-size: 15px;
+}
+.font-15{
+    font-size: 15px;
+}
+.prodimg figure {
+    height: 160px;
+    overflow: hidden;
+    width: 120px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.prodimg img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.order-p-pnl {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+.order-light {
+    background: #ADADAD14;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+
+
+
+
+
 
 @media (min-width: 1140px) and (max-width: 1440px) {
     .dash-circle {
