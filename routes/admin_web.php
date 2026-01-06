@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\BannerRequestController;
 use App\Http\Controllers\Admin\LiveRequestController;
 use App\Http\Controllers\Admin\StoryController;
 use App\Http\Controllers\Admin\DealController;
+use App\Http\Controllers\Admin\FullScreenBannerController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -163,6 +164,11 @@ Route::group(['prefix'=>'admin'], function(){
 
         //deal management
         Route::get('/deal-management', [DealController::class, 'dealManagement'])->name('admin.dealManagement');
+        Route::get('/seller-list', [DealController::class, 'sellerList'])->name('admin.sellerList');
+        Route::get('/product-list', [DealController::class, 'productList'])->name('admin.productList');
+
+        //deal management
+        Route::get('/fullscreen-banner-management', [FullScreenBannerController::class, 'fullScreenBannerManagement'])->name('admin.fullScreenBannerManagement');
         
 
     });

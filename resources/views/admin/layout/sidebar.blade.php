@@ -114,6 +114,12 @@
             Deal Management
         </a>
     </li>
+    <li class="nav-item {{ Request::routeIs('admin.fullScreenBannerManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.fullScreenBannerManagement') }}">
+            <span><img src="{{ asset('admin/image/image-03.svg') }}" alt="Full Screen Banner Management" /></span>
+            Full Screen Banner Management
+        </a>
+    </li>
      
     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">

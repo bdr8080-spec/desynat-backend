@@ -20,6 +20,16 @@ class DealController extends Controller
         return view('admin.deal-management.index');
     }
 
+    public function sellerList(Request $request){
+        return view('admin.deal-management.seller-list');
+    }
+
+    public function productList(Request $request){
+        return view('admin.deal-management.product-list');
+    }
+
+
+
 
 
 
