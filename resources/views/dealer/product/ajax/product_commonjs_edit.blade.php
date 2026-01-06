@@ -224,15 +224,16 @@
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[${variation_id}][]" id="final_price_${variation_id}_${count_variation}">
+                            <input type="text" class="form-control notapplyspace" placeholder="Eg. 299.00 KD" name="final_price[${variation_id}][]" id="final_price_${variation_id}_${count_variation}">
                             <p class="text-danger" id="error-final_price_${variation_id}_${count_variation}"></p>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-end">
+                 <div class="d-flex justify-content-end">
                 <div class="remove-btn22 "><i class="bi bi-x"></i> Remove</div>
             </div>
+            </div>
+           
         </div>
 
     `);
