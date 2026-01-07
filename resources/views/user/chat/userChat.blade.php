@@ -49,7 +49,7 @@
 
                 <div class="gift-pnl mt-4">
                     <div class="border-1">
-                        <table class="table table-borderless">
+                        <table class="table table-borderless table-font">
                             <tr>
                                 <td>
                                     <div class="width-120">Total Quantity</div>
@@ -79,13 +79,69 @@
                                     <div class="width-120">Total Quantity</div>
                                 </td>
                                 <td>
-                                    <p class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                                    <div class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</div>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
 
+                <div class="time-pnl">
+                    <div class="gift-pnl mt-4">
+                        <div class="border-12">
+                            <div class="accordion" id="accordionPanelsStayOpenExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#viewRequest" aria-expanded="true" aria-controls="viewRequest">
+                                            View Request
+                                        </button>
+                                    </h2>
+                                    <div id="viewRequest" class="accordion-collapse collapse p-3">
+                                        <table class="table table-borderless table-font">
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Item Price</div>
+                                                </td>
+                                                <td>
+                                                    <div>4000 KD</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Shipping Fees</div>
+                                                </td>
+                                                <td>
+                                                    <div>80 KD</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Tax</div>
+                                                </td>
+                                                <td>
+                                                    <div>00.00 KD</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Total Amount </div>
+                                                </td>
+                                                <td>
+                                                    <div>4000.00 KD</div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-pay d-flex gap-3 pt-4 mb-3">
+                        <button type="reject" class="customBtn2">Reject</button>
+                        <button type="submit" class="customBtn">Accept</button>
+                    </div>
+                    <button type="submit" class="customBtn">Pay Now</button>
+                </div>
             </div>
 
             <div class="col-lg-8">

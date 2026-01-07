@@ -2686,3 +2686,19 @@ img.img-fluid.circle-image {
     width: 100%;
     object-fit: cover;
 }
+
+.table-font tr td {
+    font-size: 16px;
+    padding: 5px;
+}
+.accordion-button:not(.collapsed) {
+    color: #714829;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+}
+.accordion-button:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: none;
+}
