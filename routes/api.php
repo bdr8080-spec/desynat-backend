@@ -13,7 +13,10 @@ use App\Http\Controllers\Api\User\GiftCardControler;
 use App\Http\Controllers\Api\User\UserOrderController;
 
 
+use App\Http\Controllers\Api\User\ChatController;
+
 use App\Http\Controllers\CommonController;
+
 use Illuminate\Support\Facades\Artisan;
 
 
@@ -130,6 +133,15 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::get('/get-recommnded-search-data', [UserDashboardController::class,'get_recommanded_search_data']);
 
   Route::post('/get-Invoice', [UserDashboardController::class,'get_Invoice']);
+
+  // M6 APi 
+  Route::post('/create-Custom-order', [ChatController::class,'create_Custom_order']);
+
+  Route::post('/send-custom-order-request', [ChatController::class,'send_custom_order_request']);
+
+
+  
+
 
 
 });
