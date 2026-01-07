@@ -37,8 +37,9 @@
                                                 </span>
                                                 <span>Qnt: 1</span>
                                             </div>
-                                            <h5 class="product-title mt-2"> 440 KD</h5>
+                                            <h6 class="product-title mt-2"> 440 KD</h6>
                                         </div>
+                                        <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
                                     </div>
                                 </div>
                             </div>
@@ -90,41 +91,40 @@
             <div class="col-lg-8">
                 <div class="categoryDetail_content">
                     <div class="msger card">
-                        <header class="msger-header">
-                            <div class="msger-header-title">
-                                Rahul
+                        <header class="msger-header d-flex gap-2 align-items-center">
+                            <div class="chat-user-1 me-3">
+                                <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product" class="img-fluid">
                             </div>
+                            <h5 class="msger-header-title">Rahul </h5>
                         </header>
 
                         <main class="msger-chat">
                             <div class="msg left-msg">
                                 <div class="msg-bubble">
-                                    <div class="msg-info">
-                                        <div class="msg-info-name">BOT</div>
-                                        <div class="msg-info-time">12:45</div>
-                                    </div>
                                     <div class="msg-text">
-                                        Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+                                        Hi, welcome to SimpleChat! Go ahead and send me a message.
+                                    </div>
+                                    <div class="msg-info">
+                                        <div class="msg-info-time">12:45</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="msg right-msg">
                                 <div class="msg-bubble">
-                                    <div class="msg-info">
-                                        <div class="msg-info-name">Sajad</div>
-                                        <div class="msg-info-time">12:46</div>
-                                    </div>
                                     <div class="msg-text">
                                         You can change your name in JS section!
+                                    </div>
+                                    <div class="msg-info">
+                                        <div class="msg-info-time text-end">12:46</div>
                                     </div>
                                 </div>
                             </div>
                         </main>
 
                         <form class="msger-inputarea d-flex">
-                            <input type="text" class="form-control msger-input" placeholder="Enter your message...">
-                            <button type="submit" class="msger-send-btn">Send</button>
+                            <input type="text" class="form-control msger-input" placeholder="Type Message here...">
+                            <button type="submit" class="msger-send-btn"><i class="bi bi-send-fill"></i></button>
                         </form>
                     </div>
 
