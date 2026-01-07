@@ -22,7 +22,7 @@ use App\Http\Controllers\Admin\AffiliateCommissionController;
 use App\Http\Controllers\Admin\BannerRequestController;
 use App\Http\Controllers\Admin\LiveRequestController;
 use App\Http\Controllers\Admin\StoryController;
-use App\Http\Controllers\Admin\DealController;
+use App\Http\Controllers\Admin\DealManagementController;
 use App\Http\Controllers\Admin\FullScreenBannerController;
 
 
@@ -163,12 +163,20 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/story-management', [StoryController::class, 'storyManagement'])->name('admin.storyManagement');
 
         //deal management
-        Route::get('/deal-management', [DealController::class, 'dealManagement'])->name('admin.dealManagement');
-        Route::get('/seller-list', [DealController::class, 'sellerList'])->name('admin.sellerList');
-        Route::get('/product-list', [DealController::class, 'productList'])->name('admin.productList');
+        Route::get('/deal-management', [DealManagementController::class, 'dealManagement'])->name('admin.dealManagement');
+        Route::get('/seller-list', [DealManagementController::class, 'sellerList'])->name('admin.sellerList');
+        Route::get('/product-list', [DealManagementController::class, 'productList'])->name('admin.productList');
+        Route::get('/getSubCategories/{id}', [DealManagementController::class, 'getSubCategories'])->name('admin.getSubCategories');
+        Route::post('/updateDeal/{id}', [DealManagementController::class, 'updateDeal'])->name('admin.updateDeal');
+        Route::post('/submitDeal', [DealManagementController::class, 'submitDeal'])->name('admin.submitDeal');
+        Route::post('/deleteDeal/{id}', [DealManagementController::class, 'deleteDeal'])->name('admin.deleteDeal');
+        Route::post('/blockUnblockDeal/{id}', [DealManagementController::class, 'blockUnblockDeal'])->name('admin.blockUnblockDeal');
 
-        //deal management
+        //full screen banner management
         Route::get('/fullscreen-banner-management', [FullScreenBannerController::class, 'fullScreenBannerManagement'])->name('admin.fullScreenBannerManagement');
+        Route::post('/deleteFullScreenBanner/{id}', [FullScreenBannerController::class, 'deleteFullScreenBanner'])->name('admin.deleteFullScreenBanner');
+        Route::post('/addFullBanner', [FullScreenBannerController::class, 'addFullBanner'])->name('admin.addFullBanner');
+        Route::post('/updateFullBanner/{id}', [FullScreenBannerController::class, 'updateFullBanner'])->name('admin.updateFullBanner');
         
 
     });
