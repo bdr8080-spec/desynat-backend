@@ -21,7 +21,9 @@ class ProductVariant extends Model
     }
 
 
-    
+    public function product_details(){    
+        return $this->hasOne(product::class,'id','product_id');
+    }
 
 
 
