@@ -266,7 +266,7 @@
                                       <div class="upload-title text-center">Upload Image</div>
 
                                       <label for="fileUpload" class="upload-box" style="cursor:pointer;">
-                                          <img src="/image/imge-upload.svg" id="uploadIcon" />
+                                          <img src="/admin/image/upload-icon.svg" id="uploadIcon" />
                                           <img id="previewImage" class="preview-image" style="display:none; max-width:216px; margin-top:-2px;" />
                                           <div class="upload-text">Upload Image</div>
                                           <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
