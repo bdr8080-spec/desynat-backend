@@ -1926,3 +1926,112 @@ storeClient_profile_img{
 
 
 /* --------------------- */
+
+ .support-chat-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+  }
+
+  .support-chat-btn button {
+    background:#fff;
+    color: white;
+    box-shadow: 0 4px 8px #fff;
+    width: 80px;
+    height: 72px;
+    border-radius: 50%;
+  }
+
+  .support-chat-btn mat-icon {
+    font-size: 24px;
+  }
+  ::ng-deep .chat-dialog .mat-dialog-container {
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    max-height: 90vh;
+  }
+
+
+.support {
+  cursor: pointer;
+}
+
+.notification-badge {
+position: absolute;
+    top: 20px;
+    right: 10px;
+    /* background-color: red; */
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+    z-index: 10;
+    font-weight: 800;
+}
+
+
+.support-chat.active {
+  right: 0;
+}
+
+.chat-header {
+  padding: 15px;
+  background: #f3e9dd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.msg {
+  max-width: 75%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.msg.left {
+  background: #f1f1f1;
+}
+
+.msg.right {
+  background: #c29a6b;
+  color: #fff;
+  margin-left: auto;
+}
+
+.msg span {
+  display: block;
+  font-size: 11px;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+.chat-footer {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.chat-footer input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+.chat-footer button {
+  background: #c29a6b;
+  color: #fff;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+}
