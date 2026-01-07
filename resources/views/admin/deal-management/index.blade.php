@@ -972,6 +972,44 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('fromDate').value;
+        const toDateInput = document.getElementById('toDate');
+        
+        if (fromDate) {
+            const minDate = new Date(fromDate);
+            minDate.setDate(minDate.getDate() + 1); 
+            toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate(); 
+        document.getElementById('fromDate').addEventListener('input', updateToDate);
+    });
+</script>
+
+<script>
+    function updateToDate1() {
+        const fromDate = document.getElementById('editFromDate').value;
+        const toDateInput = document.getElementById('editToDate');
+        
+        if (fromDate) {
+            const minDate = new Date(fromDate);
+            minDate.setDate(minDate.getDate() + 1); 
+            toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate1(); 
+        document.getElementById('editFromDate').addEventListener('input', updateToDate1);
+    });
+</script>
+
 
 
 
