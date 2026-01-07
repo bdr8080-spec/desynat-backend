@@ -97,11 +97,16 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     // M6 APis
 
-    
 
    Route::post('/all-orders', [OrderManagement::class,'all_orders']);
 
    Route::post('/single-orders-data', [OrderManagement::class,'single_orders_data']);
+
+   Route::post('/all-chats-records', [OrderManagement::class,'AllChatsAndOrders']);
+
+   Route::post('/single-chats-records', [OrderManagement::class,'singleChatsRecords']);
+
+  Route::post('/Modify-single-chats-records', [OrderManagement::class,'Modifysinglechatsrecords']);
 
     
 });

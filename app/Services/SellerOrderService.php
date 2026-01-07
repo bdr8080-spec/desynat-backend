@@ -4,6 +4,10 @@ use App\Helpers\ApiResponse;
 use App\Models\{User,sellerBanner,Banner,Order,orderdetail};
 
 
+
+use App\Models\{product,ProductVariant,allproductchats};
+
+
 class SellerOrderService
 {
 
@@ -173,6 +177,118 @@ try{
     
 }
 
+
+
+public function SellerAllChatdata($request){
+
+try{
+
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('seller_id',$request->seller_id)->get();
+
+
+   if($check_chatRecord->isNotEmpty()){
+
+     return [
+            'status'  => 'success',
+            'message' => 'All Chat records fetch Successfully',
+            'data'    => $check_chatRecord
+        ];
+        
+    }else{
+
+    return [
+            'status'  => 'success',
+            'message' => ' No records Found ',
+            'data'    => []
+        ];
+   }
+
+
+    }catch (\Exception $e) {
+    return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
+    }
+
+
+
+    
+}
+
+
+
+public function SellerSingleChatdata($request){
+
+try{
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request->unique_id)->first();
+
+   if($check_chatRecord){
+
+     return [
+            'status'  => 'success',
+            'message' => 'Single Chat records fetch Successfully',
+            'data'    => $check_chatRecord
+        ];
+        
+    }else{
+
+    return [
+            'status'  => 'success',
+            'message' => ' No records Found ',
+            'data'    => []
+        ];
+   }
+
+
+    }catch (\Exception $e) {
+    return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
+    }    
+}
+
+
+
+public function Modifysinglechatsrecords($request){
+
+try{
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request->unique_id)->first();
+
+   if($check_chatRecord){
+
+    $request_data=[
+        'seller_id'=>$request->seller_id,
+        "unique_id"=>$request->unique_id,
+        "price"=>$request->price,
+        'quantity' => $request->quantity,
+        "shipping"=>$request->shipping,
+        "tax"=>$request->tax,
+        "total_amount"=>$request->total_amount,
+        "action"=>'2'
+       ];
+       
+    $check_chatRecord->update($request_data);
+
+
+     return [
+            'status'  => 'success',
+            'message' => 'Modify Order chat Successfully',
+            'data'    => $check_chatRecord
+        ];
+        
+    }else{
+
+    return [
+            'status'  => 'success',
+            'message' => ' No records Found ',
+            'data'    => []
+        ];
+   }
+
+
+    }catch (\Exception $e) {
+    return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
+    }    
+}
 
 
 
