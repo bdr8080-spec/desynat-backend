@@ -58,14 +58,7 @@
                             <th scope="row">1</th>
                             <td>Lorem </td>
                             <td>UAE</td>
-                            <td class="short-title"><a href="product-list.html">10 sellers</a></td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Lorem </td>
-                            <td>UAE</td>
-                            <td class="short-title"><a href="product-list.html">10 sellers</a></td>
+                            <td class="short-title"><a href="{{route('admin.productList')}}">10 sellers</a></td>
                             <td>200</td>
                         </tr>
                     </tbody>
