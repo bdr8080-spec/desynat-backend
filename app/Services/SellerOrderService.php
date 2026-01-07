@@ -17,11 +17,35 @@ try{
     $query->where('order_type',$request->type);
    });
 
+   $all_Order_data=clone($all_Order);
+   
+   if($request->tabs==1){
+
+    if (!empty($request->search)) {
+    $search = $request->search;
+
+    $all_Order_data=$all_Order_data->where(function ($q) use ($search) {
+        $q->whereHas('product_details', function ($p) use ($search) {
+            $p->where('name', 'LIKE', "%$search%");
+        })
+        ->orWhereHas('order', function ($o) use ($search) {
+            $o->where('order_id', 'LIKE', "%$search%");
+        });
+    });
+}
+
+if (!empty($request->from_date) && !empty($request->to_date)) {
+  $all_Order_data=$all_Order_data->whereBetween('created_at', [
+          $request->from_date . ' 00:00:00',
+        $request->to_date . ' 23:59:59'
+    ]);
+}
+   }
+
+   $all_Order_data=$all_Order_data->get(); // All Orders
 
 
-   $response['All_order']=clone($all_Order)->get(); // All Orders
-  
-   $response['ongoing_order'] = clone($all_Order) // Ongoing order check
+   $ongoing_order = clone($all_Order) // Ongoing order check
     ->where('delivery_status', '!=', '3')
     ->whereHas('order', function ($query) {
         $query->where(function ($q) {
@@ -31,28 +55,78 @@ try{
                      ->where('payment_status', '1');
               });
         });
-    })
-   ->get();
+    });
 
-   $response['past_order']=clone($all_Order)->whereIn('delivery_status',['3'])->orWhere('payment_status','2')
-   ->get();
+   if($request->tabs==2){
 
-   if($response['All_order']->isNotEmpty()){
+    if (!empty($request->search)) {
+    $search = $request->search;
+
+    $ongoing_order=$ongoing_order->where(function ($q) use ($search) {
+        $q->whereHas('product_details', function ($p) use ($search) {
+            $p->where('name', 'LIKE', "%$search%");
+        })
+        ->orWhereHas('order', function ($o) use ($search) {
+            $o->where('order_id', 'LIKE', "%$search%");
+        });
+    });
+}
+
+if (!empty($request->from_date) && !empty($request->to_date)) {
+  $ongoing_order=$ongoing_order->whereBetween('created_at', [
+          $request->from_date . ' 00:00:00',
+        $request->to_date . ' 23:59:59'
+    ]);
+}
+   }
+
+ $ongoing_order=$ongoing_order->get();
+
+
+
+
+
+
+$past_order=clone($all_Order)->whereIn('delivery_status',['3'])->orWhere('payment_status','2');
+
+
+   if($request->tabs==3){
+
+    if (!empty($request->search)) {
+    $search = $request->search;
+
+    $past_order=$past_order->where(function ($q) use ($search) {
+        $q->whereHas('product_details', function ($p) use ($search) {
+            $p->where('name', 'LIKE', "%$search%");
+        })
+        ->orWhereHas('order', function ($o) use ($search) {
+            $o->where('order_id', 'LIKE', "%$search%");
+        });
+    });
+}
+
+if (!empty($request->from_date) && !empty($request->to_date)) {
+  $past_order=$past_order->whereBetween('created_at', [
+          $request->from_date . ' 00:00:00',
+        $request->to_date . ' 23:59:59'
+    ]);
+}
+   }
+
+$past_order=$past_order->get();
+
+$response['All_order']=$all_Order_data; // All Orders
+$response['ongoing_order'] =$ongoing_order;
+$response['past_order']=$past_order;
+
+
 
      return [
             'status'  => 'success',
             'message' => 'All Orders fetch Successfully',
             'data'    => $response
         ];
-   }else{
-
-    return [
-            'status'  => 'success',
-            'message' => 'All Orders fetch Successfully',
-            'data'    => []
-        ];
-   }
-
+        
 
     }catch (\Exception $e) {
     return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];

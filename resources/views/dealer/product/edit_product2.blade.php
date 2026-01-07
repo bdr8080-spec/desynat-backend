@@ -217,6 +217,7 @@ $product_Variation_inside_count = 0;
             <div class="append-panel">
 
                 @foreach ($product_details['product_specifications'] as $item)
+                <div class="specifications-row">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
@@ -291,6 +292,7 @@ $product_Variation_inside_count = 0;
                         </div>
                     </div>
                 </div>
+            </div>
 
                 @php
                 $specification_count++;
@@ -305,9 +307,14 @@ $product_Variation_inside_count = 0;
 
         <div class="variant-panel">
 
+            @php 
+                $count_Variation_Button=0;
+                $count_Variation_ButtonMain=0;
+                @endphp
 
             @foreach ($product_details->variation_Group as $key => $item)
-            <div class="MainVarient variant-panel-bg ">
+
+            <div class="MainVarient variant-panel-bg variant-panel-remove">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form product-row">
@@ -384,7 +391,7 @@ $product_Variation_inside_count = 0;
 
                         {{-- Other Variation show start --}}
                         @foreach ($item->otherVariation as $var => $value)
-                        <div class="Varient_show inside_variation{{ $product_Variation_count }}" @if ($var !==0)
+                        <div class="Varient_show inside_variation{{ $product_Variation_count }} subpanel" @if ($var !==0)
                             style="background: #fff;border: 1px dashed #0d0606;border-radius: 10px; box-shadow: 0px 2px 4px #ddd;"
                             @endif>
                             <div class="wapper-header mt-2">
@@ -617,7 +624,7 @@ $product_Variation_inside_count = 0;
                                             <div class="label-flex">
                                                 <label>Final Price</label>
                                             </div>
-                                            <input type="number" class="form-control notapplyspace"
+                                            <input type="text" class="form-control notapplyspace"
                                                 placeholder="Eg. 299.00 KD"
                                                 name="final_price[{{ $product_Variation_count }}][]"
                                                 id="final_price_{{ $product_Variation_count }}_{{ $product_Variation_inside_count }}"
@@ -629,22 +636,38 @@ $product_Variation_inside_count = 0;
                                     </div>
                                 </div>
                             </div>
+                              @if($count_Variation_Button > 0 )
+                           <div class="d-flex justify-content-end">
+                              <div class="remove-btn22"><i class="bi bi-x"></i> Remove </div>
+                           </div>
+                             @endif
 
                         </div>
 
                         @php
+
+                     
+
+                        $count_Variation_Button++;
+
                         $product_Variation_inside_count++;
                         @endphp
                         @endforeach
                         {{-- Other Variation show End Here --}}
 
+                        @if($count_Variation_ButtonMain > 0 )
+                    <div class="removerow"><i class="bi bi-x"></i> Remove</div>
+                    @endif
 
                     </div>
 
                 </div>
 
                 @php
-                $product_Variation_count++;
+
+                   $product_Variation_count++;
+              
+              $count_Variation_ButtonMain++;
 
                 $product_Variation_inside_count = 0;
 
@@ -1210,7 +1233,35 @@ $("#addmore").click(function() {
 // REMOVE ROW
 $(document).on("click", ".remove-btn", function() {
     $(this).closest(".specifications-row").remove();
+
+    refreshSpecificationIndexes()
+
 });
+
+
+// remove After refresh error code 
+function refreshSpecificationIndexes() {
+    $(".specifications-row").each(function (index) {
+
+        $(this).find("p[id^='error-product_spe_en_']")
+            .attr("id", "error-product_spe_en_" + index);
+
+        $(this).find("p[id^='error-product_spe_ar_']")
+            .attr("id", "error-product_spe_ar_" + index);
+
+        $(this).find("p[id^='error-product_spe_feature_en_']")
+            .attr("id", "error-product_spe_feature_en_" + index);
+
+        $(this).find("p[id^='error-product_spe_feature_ar_']")
+            .attr("id", "error-product_spe_feature_ar_" + index);
+    });
+
+    // update global counter
+    specification_count = $(".specifications-row").length;
+}
+
+
+
 </script>
 
 <script>
@@ -1221,7 +1272,7 @@ var product_Variation_count = "{{$product_Variation_count}}";
 // ADD NEW Variant
 $(".addVariantBtn").click(function() {
     $(".variant-panel").append(`
-        <div class="MainVarient variant-panel-bg">
+        <div class="MainVarient variant-panel-bg variant-panel-remove ">
             <div class="product-pnls mt-4"  id="variant_image_id${product_Variation_count}">
                 <div class="upload-image" style="height:170px;">
                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:block;padding-top:2.5rem;">
@@ -1447,7 +1498,7 @@ $(".addVariantBtn").click(function() {
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="remove-btn removerow"><i class="bi bi-x"></i> Remove </div>
+                <div class="removerow"><i class="bi bi-x"></i> Remove </div>
             </div>
 
             </div>
@@ -1469,8 +1520,99 @@ $(".addVariantBtn").click(function() {
 
 // REMOVE ROW
 $(document).on("click", ".removerow", function() {
-    $(this).closest(".variant-panel-bg").remove();
+    // $(this).closest(".variant-panel-bg").remove();
+    $(this).closest(".variant-panel-remove").remove();
+
+    refreshVariantIndexes();
 });
+
+
+
+// refresh variation code 
+function refreshVariantIndexes() {
+
+    $(".variant-panel-remove").each(function (variantIndex) {
+
+        // IMAGE SECTION
+        $(this).find(".product-pnls")
+            .attr("id", "variant_image_id" + variantIndex);
+
+        $(this).find("input[type='file']")
+            .attr("name", `variant_image[${variantIndex}][]`)
+            .attr("rel", variantIndex);
+
+        $(this).find("[id^='error-variant_image_']")
+            .attr("id", "error-variant_image_" + variantIndex);
+
+        $(this).find("[id^='previewContainer']")
+            .attr("id", "previewContainer" + variantIndex);
+
+            
+        // UPDATE addmoreVariation REL
+        $(this).find(".addmoreVariation")
+            .attr("rel", variantIndex);
+
+               // 🔹 UPDATE PRICE FIELD IDS
+        $(this).find("[id^='actualprice_']")
+            .attr("id", `actualprice_${variantIndex}_0`);
+
+        $(this).find("[id^='discount_value_']")
+            .attr("id", `discount_value_${variantIndex}_0`);
+
+        $(this).find("[id^='final_price_']")
+            .attr("id", `final_price_${variantIndex}_0`);
+
+
+
+        // COLOR
+        $(this).find("select[name='color_id[]']")
+            .attr("rel", variantIndex);
+
+        $(this).find("[id^='error-color_id_']")
+            .attr("id", "error-color_id_" + variantIndex);
+
+        // ALL INPUTS WITH ARRAY INDEX
+        $(this).find("input, select").each(function () {
+
+            let name = $(this).attr("name");
+            if (!name) return;
+
+            name = name.replace(/\[\d+\]/, `[${variantIndex}]`);
+            $(this).attr("name", name);
+        });
+
+        // ERROR MESSAGE IDS
+        $(this).find("p[id^='error-']").each(function () {
+            let newId = $(this).attr("id")
+                .replace(/\_\d+(\_\d+)?$/, `_${variantIndex}_0`);
+            $(this).attr("id", newId);
+        });
+
+        // DISCOUNT RADIO BUTTONS
+        $(this).find("input[type='radio']").each(function () {
+            let id = $(this).attr("id");
+            if (id) {
+                id = id.replace(/\_\d+\_\d+$/, `_${variantIndex}_0`);
+                $(this).attr("id", id);
+            }
+
+            let name = $(this).attr("name");
+            if (name) {
+                name = name.replace(/\[\d+\]\[\d+\]/, `[${variantIndex}][0]`);
+                $(this).attr("name", name);
+            }
+        });
+
+    });
+
+    // RESET GLOBAL COUNT
+    product_Variation_count = $(".variant-panel-bg").length;
+
+    
+    console.log(product_Variation_count);
+}
+
+
 
 // When User select Again Category Then remove Error Message 
 function remove_Not_in_women_Category(val) {

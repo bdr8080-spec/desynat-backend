@@ -1642,7 +1642,7 @@ public function edit_product_code1(Request $request, $id){
           // Sizes: second level array
           'size_id' => 'required|array|min:1',
           'size_id.*' => 'required|array|min:1',
-          'size_id.*.*' => 'required|integer|exists:sizes,id|distinct',
+          'size_id.*.*' => 'required|integer|exists:sizes,id',
   
           // Product Inventory
           'total_stock.*.*' => 'required|integer|min:0',

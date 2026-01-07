@@ -1,7 +1,15 @@
 @include('dealer.layout.header')
+<style>
+.star-rating i,
+.star-rating {
+    color: #FFA41B;
+    font-size: 38px;
+
+}
+</style>
 
 <section class="section dashboard">
-   
+
     <div class="d-flex justify-content-between mt-2">
         <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Details</a>
         <div class="from-group-list">
@@ -43,7 +51,7 @@
         </div>
     </div>
 
-   
+
     <div class="row">
         <div class="col-lg-6 col-md-6">
             <div class="order-box border-radious-10 box-shadow mt-4">
@@ -68,8 +76,12 @@
             <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Delivery Instruction</h6>
                 <div class="cust-deatils-pnl">
-                    <p class="font-15">lorem ipsum dolor sit amet, consectetur adipisici elit,  sed do eiusmod temo incididunt
-                    labore et dolore  magna aliqua. Ut enim ad lorem ipsum dolor sit amet, consectetur is adipisici elit,  sed do eiusmod tempor incididunt ut labore et dolore  magna aliqua. Ut enim adlorem ipsum dolor sit amet, consectetur adipisici elit,  sed do eiusmod tempor incididunt ut labore et dolore  magna aliqua. Ut enim ad</p>
+                    <p class="font-15">lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod temo
+                        incididunt
+                        labore et dolore magna aliqua. Ut enim ad lorem ipsum dolor sit amet, consectetur is adipisici
+                        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adlorem ipsum
+                        dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad</p>
                 </div>
             </div>
 
@@ -91,19 +103,19 @@
                 <div class="pay-sum">
                     <div class="summary-title-1">Shipping Charges</div>
                     <div class="summary-value">20 KD</div>
-                </div>      
+                </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Total</div>
                     <div class="summary-value">105.5 KD</div>
-                </div>   
+                </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Paid By Customer</div>
                     <div class="summary-value">105.5 KD</div>
-                </div>  
+                </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Admin Commission</div>
                     <div class="summary-value">105.5 KD</div>
-                </div>  
+                </div>
             </div>
 
         </div>
@@ -122,35 +134,120 @@
                         <div class="pay-sum">
                             <div class="summary-title-1">Nike Shirt</div>
                             <div class="summary-value">20.5 KD</div>
-                        </div>  
+                        </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Size</div>
                             <div class="summary-value">M</div>
-                        </div> 
+                        </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Color </div>
                             <div class="summary-value">Black</div>
-                        </div>   
+                        </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Category </div>
                             <div class="summary-value">Men</div>
-                        </div>  
+                        </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Quantity</div>
                             <div class="summary-value">20.5 KD * 4</div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
-            
+            <div class="order-box border-radious-10 box-shadow mt-4">
+                <h6>Customer Ratings</h6>
+                <div class="star-rating mt-1">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
 
-            
+                </div>
+                <div class="cust-deatils-pnl mt-4">
+                    <h6>Review</h6>
+                    <p class="font-15">lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod temo
+                        incididunt
+                        labore et dolore magna aliqua. Ut enim ad lorem ipsum dolor sit amet, consectetur is adipisici
+                        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adlorem ipsum
+                        dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad</p>
+                </div>
+            </div>
+
+            <div class="order-box border-radious-10 box-shadow mt-4">
+                <h6>Return Details</h6>
+
+                <div class="pay-sum">
+                    <div class="summary-title-1">Return Id</div>
+                    <div class="summary-value">#455545</div>
+                </div>
+                <div class="pay-sum">
+                    <div class="summary-title-1">Requested on</div>
+                    <div class="summary-value">27/10/2024 at 07:30PM</div>
+                </div>
+                <div class="pay-sum">
+                    <div class="summary-title-1">Reason</div>
+                    <div class="summary-value">Lorem </div>
+                </div>
+
+            </div>
+            <div class="mt-4">
+
+                <h6>Uploaded image</h6>
+                <div class="order-box border-radious-10 box-shadow mt-4 d-flex justify-content-center">
+                    <div class="prodimg">
+                        <figure>
+                            <img src="/dealer/assets/img/image33.png" alt="icon" class="img-fluid">
+                        </figure>
+                    </div>
+
+                </div>
+            </div>
+
+              <div class="order-box border-radious-10 box-shadow mt-4">
+                <h6>Exchange Details</h6>
+
+                <div class="pay-sum">
+                    <div class="summary-title-1">Exchange Id</div>
+                    <div class="summary-value">#455545</div>
+                </div>
+                <div class="pay-sum">
+                    <div class="summary-title-1">Exchange requested on</div>
+                    <div class="summary-value">27/10/2024 at 07:30PM</div>
+                </div>
+                <div class="pay-sum">
+                    <div class="summary-title-1">Reason</div>
+                    <div class="summary-value">Lorem,</div>
+                </div>
+                <div class="pay-sum">
+                    <div class="summary-title-1">Exchange size</div>
+                    <div class="summary-value">M </div>
+                </div>
+
+            </div>
+            <div class="dashboard-button d-flex mt-5 gap-5">
+                <div class="from-group  w-100">
+                    <select class="form-select form-control option width-50" aria-label="Default select example">
+                        <option value="">Confirmed</option>
+                        <option value="1"> Confirmed </option>
+                        <option value="2"> Packed </option>
+                        <option value="3"> Shipped </option>
+                        <option value="4"> Exchange </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
+            </div>
+
+
+
         </div>
-        
-    </div>
-      
 
-      
+
+    </div>
+
+
+
 
 </section>
 

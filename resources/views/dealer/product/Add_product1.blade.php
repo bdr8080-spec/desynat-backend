@@ -153,6 +153,7 @@
         </div>
         <div class="specifications-pnl">
             <div class="append-panel">
+                <div class="specifications-row">
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form">
@@ -227,6 +228,8 @@
                 </div>
             </div>
 
+            </div>
+
         </div>
 
         <!----- variant panel ------>
@@ -278,7 +281,7 @@
             {{-- Add New Variationc code --}}
 
 
-            <div class="inside_variation0 subvariant">
+            <div class="inside_variation0 subvariant variant-panel-bg">
 
                 <div class="wapper-header mt-2">
                     <div class="row price-block">
@@ -1234,7 +1237,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Actual Price</label>
                             </div>
-                            <input type="number"  id="actualprice_${product_Variation_count}_0" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
+                        <input type="number"  id="actualprice_${product_Variation_count}_0" class="form-control" placeholder="Eg.299.00 KD" name="actual_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-actual_price_${product_Variation_count}_0"></p>
 
                             </div>
@@ -1284,7 +1287,7 @@ $(".addVariantBtn").click(function() {
                             <div class="label-flex">
                                 <label>Final Price</label>
                             </div>
-                            <input type="number" id="final_price_${product_Variation_count}_0" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
+                            <input type="text" id="final_price_${product_Variation_count}_0" class="form-control" placeholder="Eg.KD 299.00" name="final_price[${product_Variation_count}][]">
                           <p class="text-danger" id="error-final_price_${product_Variation_count}_0"></p>
 
                          </div>
@@ -1309,12 +1312,101 @@ $(".addVariantBtn").click(function() {
 
     product_Variation_count++; // Update Product Quantity
 
+
 });
 
 // REMOVE ROW
 $(document).on("click", ".removerow", function() {
     $(this).closest(".variant-panel-bg").remove();
+
+    refreshVariantIndexes();
+
 });
+
+// refresh variation code 
+function refreshVariantIndexes() {
+
+    $(".variant-panel-bg").each(function (variantIndex) {
+
+        // IMAGE SECTION
+        $(this).find(".product-pnls")
+            .attr("id", "variant_image_id" + variantIndex);
+
+        $(this).find("input[type='file']")
+            .attr("name", `variant_image[${variantIndex}][]`)
+            .attr("rel", variantIndex);
+
+        $(this).find("[id^='error-variant_image_']")
+            .attr("id", "error-variant_image_" + variantIndex);
+
+        $(this).find("[id^='previewContainer']")
+            .attr("id", "previewContainer" + variantIndex);
+
+            
+        // UPDATE addmoreVariation REL
+        $(this).find(".addmoreVariation")
+            .attr("rel", variantIndex);
+
+               // 🔹 UPDATE PRICE FIELD IDS
+        $(this).find("[id^='actualprice_']")
+            .attr("id", `actualprice_${variantIndex}_0`);
+
+        $(this).find("[id^='discount_value_']")
+            .attr("id", `discount_value_${variantIndex}_0`);
+
+        $(this).find("[id^='final_price_']")
+            .attr("id", `final_price_${variantIndex}_0`);
+
+
+        // COLOR
+        $(this).find("select[name='color_id[]']")
+            .attr("rel", variantIndex);
+
+        $(this).find("[id^='error-color_id_']")
+            .attr("id", "error-color_id_" + variantIndex);
+
+        // ALL INPUTS WITH ARRAY INDEX
+        $(this).find("input, select").each(function () {
+
+            let name = $(this).attr("name");
+            if (!name) return;
+
+            name = name.replace(/\[\d+\]/, `[${variantIndex}]`);
+            $(this).attr("name", name);
+        });
+
+        // ERROR MESSAGE IDS
+        $(this).find("p[id^='error-']").each(function () {
+            let newId = $(this).attr("id")
+                .replace(/\_\d+(\_\d+)?$/, `_${variantIndex}_0`);
+            $(this).attr("id", newId);
+        });
+
+        // DISCOUNT RADIO BUTTONS
+        $(this).find("input[type='radio']").each(function () {
+            let id = $(this).attr("id");
+            if (id) {
+                id = id.replace(/\_\d+\_\d+$/, `_${variantIndex}_0`);
+                $(this).attr("id", id);
+            }
+
+            let name = $(this).attr("name");
+            if (name) {
+                name = name.replace(/\[\d+\]\[\d+\]/, `[${variantIndex}][0]`);
+                $(this).attr("name", name);
+            }
+        });
+
+    });
+
+    // RESET GLOBAL COUNT
+    product_Variation_count = $(".variant-panel-bg").length - 1;
+
+    
+    console.log(product_Variation_count);
+}
+
+
 
 // When User select Again Category Then remove Error Message 
 function remove_Not_in_women_Category(val) {
