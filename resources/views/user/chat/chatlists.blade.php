@@ -74,7 +74,7 @@
 
 
                     <div class="cart-panel position-relative">
-                        <a href="order_details" class="link-content">
+                        <a href="user-chat" class="link-content">
                             <div class="cart-card">
                                 <div class="card-left mb-2 d-flex align-items-center">
                                     <div>
