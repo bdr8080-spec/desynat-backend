@@ -23,7 +23,7 @@ class FullScreenBannerController extends Controller
     public function fullScreenBannerManagement(Request $request){
         $banners = $this->FullBannerService->getFullBanners($request)['data'];
        // dd($banners);
-        $countries = $this->CountryService->getCountries()['data'];
+        $countries = $this->CountryService->getUserAllCountries()['data'];
         return view('admin.fullscreen-banner-management.index',compact('banners','countries'));
     }
 
