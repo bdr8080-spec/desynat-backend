@@ -171,6 +171,40 @@ class CommonController extends Controller
         }
         return ApiResponse::generateResponse('success', 'Size list fetched successfully', $data, 200);
      }
+
+     public function uploadFile(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:51200', // 50MB max
+        ]);
+
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $file = $request->file('file');
+
+            $filename = Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+            try {
+                $path = $file->storeAs('uploads', $filename, 's3');
+
+                if (!$path) {
+                    Log::error('File upload failed: storeAs returned false');
+                    return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
+                }
+
+                $url = Storage::disk('s3')->url($path);
+
+                return ApiResponse::generateResponse('success', 'File uploaded successfully.', ['url' => $url], 200);
+
+            } catch (\Exception $e) {
+                Log::error('File upload failed: ' . $e->getMessage());
+                Log::error('Trace: ' . $e->getTraceAsString());
+                return ApiResponse::generateResponse('error', 'Failed to upload file.', null, 500);
+            }
+        }
+
+        return ApiResponse::generateResponse('error', 'Invalid file upload.', null, 400);
+    }
+
  
 
      
