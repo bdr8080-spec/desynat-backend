@@ -112,10 +112,12 @@ class UserGiftCardController extends Controller
             'gift_card_id' => 'required|exists:gift_cards,id',
             'amount'          => 'required',
             'receiver_name'          => 'required',
-            'receiver_email'          => 'required',
-            'sender_name'          => 'required',
+            'receiver_email'         => 'required',
+            'sender_name'           => 'required',
             'sender_email'          => 'required',
             'wish_message'          => 'required',
+            "country_code"          => 'required',
+            "mobile"                =>'required'
         ]);
 
         try {

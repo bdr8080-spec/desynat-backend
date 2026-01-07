@@ -35,7 +35,9 @@ class OrderManagement extends Controller
        $request_data=(object) [
         'seller_id'=>$seller_details,
         "type" =>$request->type,
-
+        "tabs"=>$request->tabs??null,
+        "from_date"=>$request->from_date??null,
+        "to_date" =>$request->to_date??null,
        ];
 
 
