@@ -61,7 +61,10 @@ class UserGiftCardService
                 'sender_name' => $request->sender_name,  
                 'sender_email' => $request->sender_email,  
                 'wish_message' => $request->wish_message,
-                'notes' =>$request->notes  
+                'notes' =>$request->notes  ,
+                'country_code' =>$request->country_code  ,
+                'mobile' =>$request->mobile ,
+                
             ];
 
             $AddGiftCard = UserGiftCards::Create($data);

@@ -49,6 +49,8 @@ class GiftCardControler extends Controller
             'sender_name' => 'required',
             // 'sender_email' => 'required|email',
             'wish_message' => 'required',
+            "country_code"=>"required",
+            "mobile"=>"required"
             // 'notes' => 'required',
         ]);
         
@@ -68,7 +70,9 @@ class GiftCardControler extends Controller
         'sender_name' => $request->sender_name,  
         'sender_email' => $request->sender_email??null,
         'wish_message' => $request->wish_message,
-        'notes' =>$request->notes??null  
+        'notes' =>$request->notes??null  ,
+        'country_code' =>$request->country_code??null  ,
+        'mobile' =>$request->mobile??null  ,
        ];
 
 
