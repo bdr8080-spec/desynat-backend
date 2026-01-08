@@ -8,7 +8,7 @@ use App\Models\ProductVariant;
 
 
 use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
-use App\Models\{Promocode,userAddress,country,all_countrie};
+use App\Models\{Promocode,userAddress,country,all_countrie,allproductchats};
 
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 
@@ -573,6 +573,10 @@ try{
     ])
     ->whereHas('order', function ($q) use ($request) {
 
+        if(isset($request->order_type)){
+          $q->where('order_type', $request->order_type);
+        }
+        
         // User filter
         $q->where('user_id', $request->user_id);
 
@@ -706,6 +710,21 @@ $orders = $orders->orderBy('id', 'desc')->get();
      ->whereNOT('id',$request->orderdetails_id)
     ->get();
 
+
+        if($checkOrder->order->order_type=='2'){
+            $checkOrder->ChatroomRecordtable=allproductchats::where('unique_id',$checkOrder->order->unique_id)->first();
+        }else{
+             $checkOrder->ChatroomRecordtable=(object)[];
+        }
+
+
+    }else{
+
+         return [
+            'status' => 'error',
+            'message' => 'product id is Wrong',
+            'data' => []
+        ];
     }
 
 

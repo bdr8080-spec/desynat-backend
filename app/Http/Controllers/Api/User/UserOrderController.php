@@ -277,7 +277,14 @@ class UserOrderController extends Controller
 
         public function All_order(Request $request){
 
-            try{
+            try{    
+            $validate = Validator::make($request->all(), [
+                'order_type'=>'required|in:1,2',
+                ]);
+            
+           if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+           }
     
              $user_id= $request->user()->id;
 
@@ -286,6 +293,7 @@ class UserOrderController extends Controller
                 'user_id'=>$user_id,
                 'search'=>$request->search,
                 'filter'=>$request->filter,
+                "order_type"=>$request->order_type
                 ];
         
                 $data=$this->UserOrderService->AllOrderDetailsNew($request_data);
@@ -664,10 +672,6 @@ public function product_rating(Request $request){
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
 }
-
-
-
-
 
 
 
