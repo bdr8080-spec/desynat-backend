@@ -142,6 +142,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/user-Single-chats', [UserChatController::class,'userSinglechats']);
 
+  Route::post('/user-normal-chat-with-seller', [UserChatController::class,'UserNormalChatWithSeller']);
+
+
 
 });
 
