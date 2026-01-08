@@ -170,6 +170,35 @@ class UserChatController extends Controller
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
+    }
+
+
+    public function UserNormalChatWithSeller(Request $request){
+
+        $validate = Validator::make($request->all(), [
+            'seller_id' => 'required',
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       $user_id= $request->user()->id;
+       
+       $request_data=(object)[
+        'user_id'=>$user_id,
+        'seller_id' => $request->seller_id ,
+       ];
+
+
+    $data=$this->UserFirebaseService->CreateNormalChatFirebase($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
 
 
     }

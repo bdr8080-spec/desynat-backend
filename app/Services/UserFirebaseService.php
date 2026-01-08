@@ -240,6 +240,43 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
 }
 
 
+    public function CreateNormalChatFirebase($request){
+
+    $unique_id='chat'. rand(00000,99999);    
+
+    $match=[
+    "type"=>"1", //1 Normal 2 order Cutom Order Request
+    "user_id"=> $request->user_id,
+    "seller_id" =>$request->seller_id,
+    ];
+
+    $request_data=[
+    "unique_id"=>$unique_id,
+    "type"=>"1", //1 Normal 2 order Cutom Order Request
+    "user_id"=> $request->user_id,
+    "seller_id" =>$request->seller_id,
+    ];
+
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where($match)->first();
+
+    if(!$check_chatRecord){
+    $check_record=allproductchats::UpdateOrCreate($match,$request_data);
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('id',$check_record->id)->first();
+        
+    }
+
+    return [
+        'status'  => 'success',
+        'message' => 'Normal Chat request send Successfully',
+        'data'    => $check_chatRecord
+    ];
+
+    }
+
+
+
 
 
 
