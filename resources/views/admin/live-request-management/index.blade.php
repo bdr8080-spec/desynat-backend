@@ -91,15 +91,25 @@
                                                     <span class="">{{$slot['from']}}- {{$slot['to']}}</span>
                                                 </div>
                                                <div class="d-flex gap-3 justify-content-center">
-                                                        <a class="table-button">
-                                                            <i class="bi bi-pencil-square"></i></a>
+                                                        <a class="table-button editTimeslotModal"
+                                                            data-id="{{ $slot['id'] }}"
+                                                            data-from="{{ $slot['from'] }}"
+                                                            data-to="{{ $slot['to'] }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editTimeslotModal">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </a>
 
-                                                        <a class="table-button text-danger deleteDeliveryBoy mb-1 mt-1">
+                                                        <a class="table-button text-danger deleteTimeslot mb-1 mt-1" data-id="{{ $slot['id'] }}">
                                                             <i class="bi bi-trash3-fill"></i>
                                                         </a>
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input toggleStatus"
-                                                                type="checkbox" />
+                                                            <input class="form-check-input toggleStatus" 
+                                                                type="checkbox" 
+                                                                id="flexSwitchCheckChecked{{ $slot['id'] }}" 
+                                                                data-id="{{ $slot['id'] }}"
+                                                                {{ $slot['status'] == 1 ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked{{ $slot['id'] }}"></label>
                                                         </div>
                                                     </div>
                                             </div>
@@ -382,7 +392,7 @@
     <!-- End of Content Wrapper -->
 </div>
 
-<!-- add new model -->
+<!-- reason model -->
 <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -416,11 +426,12 @@
         </div>
     </div>
 </div>
+
+<!-- add modal -->
 <div class="modal fade" id="sentModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
                 <h2 class="h2">Add Timeslot</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -428,47 +439,26 @@
                 <div class="appointment-container">
                     <div class="time-wrapper">
                         <div id="timeContainer">
-                            <!-- First Row (Default) -->
                             <div class="time-row">
-                                <div class="time-block">
+                                <div class="time-block from-block">
                                     <label>From</label>
-                                    <select>
-                                        <option>HH</option>
-                                    </select>
-                                    <select>
-                                        <option>MM</option>
-                                    </select>
-                                    <select>
-                                        <option>AM</option>
-                                        <option>PM</option>
-                                    </select>
+                                    <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
                                 </div>
 
-                                <div class="time-block">
+                                <div class="time-block to-block">
                                     <label>To</label>
-                                    <select>
-                                        <option>HH</option>
-                                    </select>
-                                    <select>
-                                        <option>MM</option>
-                                    </select>
-                                    <select>
-                                        <option>AM</option>
-                                        <option>PM</option>
-                                    </select>
+                                    <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <a href="javascript:void(0)" class="add-more" onclick="addRow()">+ Add More</a> -->
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                            style="margin-top: 30px">
-                            <button type="submit" class="btn btn-dark customBtn">
-                                Submit
-                            </button>
-                            <!-- <button type="button" class="btn btn-dark customBtn" href=""> Submit</button> -->
+                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
+                            <button type="submit" class="btn btn-dark customBtn">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -476,6 +466,49 @@
         </div>
     </div>
 </div>
+
+<!-- edit modal -->
+<div class="modal fade" id="editTimeslotModal" tabindex="-1" aria-labelledby="editTimeslotLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Edit Timeslot</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="time-wrapper">
+                        <div id="editTimeContainer">
+                            <div class="time-row">
+                                <div class="time-block from-block">
+                                    <label>From</label>
+                                    <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                </div>
+                                <div class="time-block to-block">
+                                    <label>To</label>
+                                    <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
+                            <button type="submit" class="btn btn-dark customBtn" id="editTimeslotSubmit">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 <script>
@@ -559,6 +592,407 @@ function reloadWithDate(dateStr) {
     window.location.href = url.toString();
 }
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.deleteTimeslot').forEach(button => {
+        button.addEventListener('click', function() {
+            let id = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deleteTimeslot/${id}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                toastr.success(data.message);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2000);
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
+                }
+            });
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            let id = this.getAttribute('data-id');
+            let isChecked = this.checked;
+
+            fetch(`/admin/blockUnblockTimeslot/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        is_block: isChecked ? 0 : 1
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        if (isChecked) {
+                            toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                        this.checked = !isChecked;
+                    }
+                })
+                .catch(error => {
+                    toastr.error('Something went wrong while updating status.');
+                    this.checked = !isChecked;
+                });
+        });
+    });
+});
+</script>
+
+<!-- add timeslot -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const timeContainer = document.getElementById("timeContainer");
+    const row = timeContainer.querySelector(".time-row");
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const countryId = urlParams.get('country_id');
+    const date = urlParams.get('date');
+
+    // Populate dropdowns
+    function populateDropdowns(row) {
+        const hhs = row.querySelectorAll("select.hh");
+        const mms = row.querySelectorAll("select.mm");
+        const aps = row.querySelectorAll("select.ap");
+
+        hhs.forEach(select => {
+            select.innerHTML = '<option value="">HH</option>';
+            for(let i=1;i<=12;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        mms.forEach(select => {
+            select.innerHTML = '<option value="">MM</option>';
+            for(let i=0;i<=59;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        aps.forEach(select => {
+            select.innerHTML = '<option value="">AM/PM</option><option value="AM">AM</option><option value="PM">PM</option>';
+        });
+    }
+
+    populateDropdowns(row);
+
+    document.addEventListener('change', function(e){
+        if(e.target.tagName === 'SELECT'){
+            const next = e.target.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+        }
+    });
+
+    // Validate row with custom messages
+    function validateRow(row){
+        let valid = true;
+        row.querySelectorAll("select").forEach(select=>{
+            const next = select.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+
+            if(!select.value){
+                const error = document.createElement('small');
+                error.classList.add('error-msg');
+                error.style.color = 'red';
+
+                if(select.classList.contains('hh')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} Hour`;
+                else if(select.classList.contains('mm')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} Minute`;
+                else if(select.classList.contains('ap')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} AM/PM`;
+                else error.innerText = 'Please select a value';
+
+                select.parentNode.insertBefore(error, select.nextSibling);
+                valid = false;
+            }
+        });
+        return valid;
+    }
+
+    // Convert time to total minutes for comparison
+    function timeToMinutes(hh, mm, ap){
+        let hour = parseInt(hh);
+        const minute = parseInt(mm);
+        if(ap === 'PM' && hour !== 12) hour += 12;
+        if(ap === 'AM' && hour === 12) hour = 0;
+        return hour * 60 + minute;
+    }
+
+    document.querySelector("#sentModal3 .btn[type='submit']").addEventListener('click', function(e){
+        e.preventDefault();
+
+        if(!validateRow(row)) return;
+
+        if(!countryId){
+            toastr.error('Please select a country');
+            return;
+        }
+
+        if(!date){
+            toastr.error('Please select a date');
+            return;
+        }
+
+        const fromHH = row.querySelector(".from-block select.hh").value;
+        const fromMM = row.querySelector(".from-block select.mm").value;
+        const fromAP = row.querySelector(".from-block select.ap").value;
+
+        const toHH = row.querySelector(".to-block select.hh").value;
+        const toMM = row.querySelector(".to-block select.mm").value;
+        const toAP = row.querySelector(".to-block select.ap").value;
+
+        const fromTotal = timeToMinutes(fromHH, fromMM, fromAP);
+        const toTotal = timeToMinutes(toHH, toMM, toAP);
+
+        if(toTotal <= fromTotal){
+            toastr.error('To time should be greater than From time');
+            return;
+        }
+
+        const fromTime = `${fromHH}:${fromMM} ${fromAP}`;
+        const toTime = `${toHH}:${toMM} ${toAP}`;
+
+        fetch("{{ route('admin.addTimeslot') }}", {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRF-TOKEN':'{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                country_id: countryId,
+                date: date,
+                from: fromTime,
+                to: toTime
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message || 'Timeslot added successfully!');
+                location.reload();
+            } else {
+                toastr.error(res.message || 'Something went wrong!');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error('Failed to create timeslot. See console for details.');
+        });
+    });
+
+});
+</script>
+
+
+<!-- update timeslot -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    function populateDropdowns(container) {
+        container.querySelectorAll("select.hh").forEach(select => {
+            select.innerHTML = '<option value="">HH</option>';
+            for(let i=1;i<=12;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        container.querySelectorAll("select.mm").forEach(select => {
+            select.innerHTML = '<option value="">MM</option>';
+            for(let i=0;i<=59;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        container.querySelectorAll("select.ap").forEach(select => {
+            select.innerHTML = '<option value="">AM/PM</option><option value="AM">AM</option><option value="PM">PM</option>';
+        });
+    }
+
+    function validateRow(container, prefix) {
+        let valid = true;
+        container.querySelectorAll("select").forEach(select => {
+            const next = select.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+
+            if(!select.value){
+                const error = document.createElement('small');
+                error.classList.add('error-msg');
+                error.style.color = 'red';
+
+                // Custom messages
+                let msg = 'Please select a value';
+                if(select.classList.contains('hh')) msg = `Please select ${prefix} Hour`;
+                if(select.classList.contains('mm')) msg = `Please select ${prefix} Minute`;
+                if(select.classList.contains('ap')) msg = `Please select ${prefix} AM/PM`;
+
+                error.innerText = msg;
+                select.parentNode.insertBefore(error, select.nextSibling);
+                valid = false;
+            }
+        });
+        return valid;
+    }
+
+    document.addEventListener('change', function(e){
+        if(e.target.tagName === 'SELECT'){
+            const next = e.target.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+        }
+    });
+
+    const editModalEl = document.getElementById('editTimeslotModal');
+    const editRow = editModalEl.querySelector(".time-row");
+    populateDropdowns(editRow);
+
+    editModalEl.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const slotId = button.getAttribute('data-id');
+        const fromTime = button.getAttribute('data-from');
+        const toTime = button.getAttribute('data-to');
+
+        if(!slotId || !fromTime || !toTime){
+            toastr.error('Invalid timeslot data');
+            return;
+        }
+
+        const fromParts = fromTime.split(/[: ]/);
+        const toParts = toTime.split(/[: ]/);
+
+        editRow.querySelector(".from-block select.hh").value = fromParts[0];
+        editRow.querySelector(".from-block select.mm").value = fromParts[1];
+        editRow.querySelector(".from-block select.ap").value = fromParts[2];
+
+        editRow.querySelector(".to-block select.hh").value = toParts[0];
+        editRow.querySelector(".to-block select.mm").value = toParts[1];
+        editRow.querySelector(".to-block select.ap").value = toParts[2];
+
+        document.getElementById('editTimeslotSubmit').dataset.slotId = slotId;
+    });
+
+    document.getElementById('editTimeslotSubmit')?.addEventListener('click', function(e){
+        e.preventDefault();
+
+        const fromValid = validateRow(editRow.querySelector(".from-block"), "From");
+        const toValid   = validateRow(editRow.querySelector(".to-block"), "To");
+        if(!fromValid || !toValid) return;
+
+        const slotId = this.dataset.slotId;
+        const urlParams = new URLSearchParams(window.location.search);
+        const countryId = urlParams.get('country_id');
+        const date = urlParams.get('date');
+
+        if(!countryId){
+            toastr.error('Please select a country');
+            return;
+        }
+        if(!date){
+            toastr.error('Please select a date');
+            return;
+        }
+
+        const fromHour = editRow.querySelector(".from-block select.hh").value;
+        const fromMinute = editRow.querySelector(".from-block select.mm").value;
+        const fromAP = editRow.querySelector(".from-block select.ap").value;
+
+        const toHour = editRow.querySelector(".to-block select.hh").value;
+        const toMinute = editRow.querySelector(".to-block select.mm").value;
+        const toAP = editRow.querySelector(".to-block select.ap").value;
+
+        const from = `${fromHour}:${fromMinute} ${fromAP}`;
+        const to   = `${toHour}:${toMinute} ${toAP}`;
+
+        function timeTo24Hour(hh, mm, ap){
+            let hour = parseInt(hh);
+            const minute = parseInt(mm);
+            if(ap === 'PM' && hour !== 12) hour += 12;
+            if(ap === 'AM' && hour === 12) hour = 0;
+            return hour*60 + minute; // total minutes
+        }
+
+        const fromTotal = timeTo24Hour(fromHour, fromMinute, fromAP);
+        const toTotal = timeTo24Hour(toHour, toMinute, toAP);
+
+        if(toTotal <= fromTotal){
+            toastr.error('To time should be greater than From time');
+            return;
+        }
+
+        fetch(`/admin/updateTimeslot/${slotId}`, {
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRF-TOKEN':'{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ country_id: countryId, date, from, to })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message);
+                bootstrap.Modal.getInstance(editModalEl).hide();
+                location.reload();
+            } else {
+                toastr.error(res.message || 'Failed to update timeslot');
+            }
+        })
+        .catch(err => toastr.error('Failed to update timeslot'));
+    });
+
+});
+</script>
+
+
+
+
+
+
+
+
 
 
 
