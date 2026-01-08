@@ -140,6 +140,36 @@ class UserChatController extends Controller
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
+    }
+
+
+  public function SendMessageInChats(Request $request){
+
+        $validate = Validator::make($request->all(), [
+            'unique_id' => 'required|exists:allproductchats,unique_id',
+            "message" => 'required',
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       $request_data=(object)[
+        "unique_id"=>$request->unique_id,
+        "message"=>$request->message,
+        "type"=>$request->type , // 0 message and 1 for Image 
+        'by'=>$request->by,
+       ];
+
+
+    $data=$this->UserFirebaseService->userSendChatsMessage($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
 
 
     }

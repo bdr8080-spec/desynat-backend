@@ -145,6 +145,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
 });
 
+Route::post('/send-message-in-chats', [UserChatController::class,'SendMessageInChats']);
+
+
 Route::post('/get-Invoice', [UserDashboardController::class,'get_Invoice']);
 
 
