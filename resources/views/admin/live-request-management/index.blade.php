@@ -62,10 +62,51 @@
 
                 <!-- full calender -->
 
-                <div class="container ">
+                <div class="container-2 mt-4">
                     <div class="row">
-                        <div class="col-md-8 ">
-                            <div id="calendar"></div>
+                        <div class="col-md-6">
+                            <div class="mb-5">
+                                <div id="calendar"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Selected Date & Timeslot UI -->
+                            <div id="timeslotSection" style="display:none; margin-top:40px">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h3 id="selectedDateText" class="fw-bold"></h3>
+                                </div>
+
+                                <div class="row g-3">
+                                    <!-- Timeslot Card -->
+                                    <div class="col-md-4">
+                                        <div class="timeslot-card d-flex">
+                                            <div class="timeslot-card active">
+                                                <span>10 AM - 11 AM</span>
+                                            </div>
+                                            <div class="actions">
+                                                <i class="bi bi-pencil"></i>
+                                                <i class="bi bi-toggle-on text-success"></i>
+                                                <i class="bi bi-trash"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="timeslot-card d-flex">
+                                            <div class="timeslot-card">
+                                                <span>10 AM - 11 AM</span>
+                                            </div>
+                                            <div class="actions">
+                                                <i class="bi bi-pencil"></i>
+                                                <i class="bi bi-toggle-on text-success"></i>
+                                                <i class="bi bi-trash"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -368,90 +409,44 @@
         </div>
     </div>
 </div>
-<!-- Selected Date & Timeslot UI -->
-<div id="timeslotSection" style="display:none; margin-top:40px">
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 id="selectedDateText" class="fw-bold"></h3>
-
-        <button class="btn btn-dark">
-            Add timeslot →
-        </button>
-    </div>
-
-    <div class="row g-3">
-
-        <!-- Timeslot Card -->
-        <div class="col-md-4">
-            <div class="timeslot-card active">
-                <span>10 AM - 11 AM</span>
-                <div class="actions">
-                    <i class="bi bi-pencil"></i>
-                    <i class="bi bi-toggle-on text-success"></i>
-                    <i class="bi bi-trash"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="timeslot-card">
-                <span>10 AM - 11 AM</span>
-                <div class="actions">
-                    <i class="bi bi-pencil"></i>
-                    <i class="bi bi-toggle-on text-success"></i>
-                    <i class="bi bi-trash"></i>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 
-<script src="js/bootstrap.bundle.min.js"></script>
-<script src="js/jquery.js"></script>
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var calendarEl = document.getElementById("calendar");
+    document.addEventListener("DOMContentLoaded", function () {
+        var calendarEl = document.getElementById("calendar");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: "dayGridMonth",
+            selectable: true,
+            height: "auto",
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        height: "auto",
+            dateClick: function (info) {
+                showSelectedDate(info.dateStr);
+            }
+        });
+
+        calendar.render();
+
+        // ✅ PAGE LOAD par aaj ki date show karne ke liye
+        const today = new Date().toISOString().split('T')[0];
+        showSelectedDate(today);
     });
 
-    calendar.render();
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var calendarEl = document.getElementById("calendar");
+    function showSelectedDate(dateStr) {
+        const date = new Date(dateStr);
+        const options = {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        };
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        selectable: true,
+        document.getElementById("selectedDateText").innerText =
+            `Today, ${date.toLocaleDateString('en-GB', options)}`;
 
-        dateClick: function(info) {
-            showSelectedDate(info.dateStr);
-        }
-    });
-
-    calendar.render();
-});
-
-function showSelectedDate(dateStr) {
-    const date = new Date(dateStr);
-    const options = {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    };
-
-    document.getElementById("selectedDateText").innerText =
-        `Today, ${date.toLocaleDateString('en-GB', options)}`;
-
-    document.getElementById("timeslotSection").style.display = "block";
-}
+        document.getElementById("timeslotSection").style.display = "block";
+    }
 </script>
 
 
 @endsection
+
