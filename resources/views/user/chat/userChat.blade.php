@@ -178,7 +178,12 @@
                             </div>
                         </main>
 
-                        <form class="msger-inputarea d-flex">
+                        <form class="msger-inputarea d-flex position-relative">
+                            <div class="attached-icon">
+                                <i class="bi bi-paperclip"></i>
+                                <input type="file" id="imageUpload" accept="image/*">
+                            </div>
+
                             <input type="text" class="form-control msger-input" placeholder="Type Message here...">
                             <button type="submit" class="msger-send-btn"><i class="bi bi-send-fill"></i></button>
                         </form>
@@ -204,6 +209,4 @@
 </div>
 
 
-
 @endsection
-
