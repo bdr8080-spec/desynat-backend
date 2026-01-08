@@ -278,13 +278,13 @@ class UserOrderController extends Controller
         public function All_order(Request $request){
 
             try{    
-            $validate = Validator::make($request->all(), [
-                'order_type'=>'required|in:1,2',
-                ]);
+        //     $validate = Validator::make($request->all(), [
+        //         'order_type'=>'required|in:1,2',
+        //         ]);
             
-           if($validate->fails()){
-            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
-           }
+        //    if($validate->fails()){
+        //     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        //    }
     
              $user_id= $request->user()->id;
 
