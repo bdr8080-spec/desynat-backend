@@ -26,8 +26,8 @@
         </ul>
     </div>
     <div class="userManagecontent">
+        <form method="GET" action="{{ route('admin.liveRequestManagement') }}" id="filterForm">
         <div class="tab-content" id="pills-tabContent">
-            <!-- Exchange -->
 
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <div class="row">
@@ -35,13 +35,17 @@
 
                         <div class="col-lg-6">
                             <div class="align-items-end d-flex">
-                                <div class="form-group mb-5 w-50">
-                                    <!-- <label for="from" class="form-label">Country Name</label> -->
-                                    <select class="form-select form-select-lg" aria-label="Large select example">
-                                        <option selected>Select Country</option>
-                                        <option value="1">country One</option>
-                                        <option value="2">country Two</option>
-                                        <option value="3">country Three</option>
+                                <div class="form-group mb-5 w-100">
+                                    <select name="country_id"
+                                        class="form-select form-select-lg "
+                                        onchange="document.getElementById('filterForm').submit();">
+                                        <option value="">Select country</option>
+                                        @foreach($countries as $country)
+                                        <option value="{{ $country['id'] }}"
+                                            {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
+                                            {{ $country['name'] }}
+                                        </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -369,6 +373,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
 
     <!-- End of Content Wrapper -->
@@ -454,7 +459,7 @@
                             </div>
                         </div>
 
-                        <a href="javascript:void(0)" class="add-more" onclick="addRow()">+ Add More</a>
+                        <!-- <a href="javascript:void(0)" class="add-more" onclick="addRow()">+ Add More</a> -->
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
                             <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
@@ -472,8 +477,29 @@
 </div>
 
 
-
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get last active tab from localStorage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+
+    // Save active tab to localStorage when switched
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
+
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -506,8 +532,61 @@ function showSelectedDate(dateStr) {
 
     document.getElementById("timeslotSection").style.display = "block";
 }
-</script>
+</script> -->
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
+
+    // 👉 Get date from URL if exists, else today
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlDate = urlParams.get('date');
+    const today = new Date().toISOString().split('T')[0];
+    const selectedDate = urlDate ?? today;
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        selectable: true,
+        height: "auto",
+        initialDate: selectedDate,
+
+        dateClick: function (info) {
+            updateUrl(info.dateStr);
+            showSelectedDate(info.dateStr);
+        }
+    });
+
+    calendar.render();
+
+    // ✅ On page load
+    updateUrl(selectedDate);
+    showSelectedDate(selectedDate);
+});
+
+function showSelectedDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    document.getElementById("selectedDateText").innerText =
+        `Today, ${date.toLocaleDateString('en-GB', options)}`;
+
+    document.getElementById("timeslotSection").style.display = "block";
+}
+
+// ✅ Update URL without reload
+function updateUrl(dateStr) {
+    const url = new URL(window.location);
+    url.searchParams.set('date', dateStr);
+    window.history.pushState({}, '', url);
+}
+</script>
+
+
+<!-- <script>
 function addRow() {
     const container = document.getElementById('timeContainer');
 
@@ -538,6 +617,6 @@ function addRow() {
 function removeRow(el) {
     el.parentElement.remove();
 }
-</script>
+</script> -->
 
 @endsection

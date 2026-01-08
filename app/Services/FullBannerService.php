@@ -41,7 +41,7 @@ class FullBannerService
                 return [
                     'status' => 'success',
                     'message' => 'No Banner found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
