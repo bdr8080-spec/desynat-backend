@@ -165,11 +165,17 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
     $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request->unique_id)->first();
 
    if($check_chatRecord){
+
+     $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
+
+     $response['record']=$check_chatRecord;
+     $response['firbase_chat']=$firbase_chat;
+     
      
     return [
         'status'  => 'success',
         'message' => 'Single Chat records fetch Successfully',
-        'data'    => $check_chatRecord
+        'data'    => $response
     ];
         }else{
 
@@ -181,6 +187,57 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
 
 }
     }
+
+    
+
+
+
+ public function userSendChatsMessage($request){
+
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request->unique_id)->first();
+
+   if(!$check_chatRecord){
+    return [
+        'status'  => 'success',
+        'message' => 'Chat romm Is Not found',
+        'data'    => (object)[]
+    ];
+        }
+        
+     $request_data=[
+        'user_id'=>$check_chatRecord->user_id,
+        "unique_id"=>$request->unique_id,
+        "message"=>$request->message,
+        "type"=>$request->type , // 0 message and 1 for Image 
+        'by'=>$request->by ,
+         "times"=>Now(),
+       ];
+
+
+       $room=$request->unique_id;
+       $message=$request_data;
+
+         $newMessageRef = $this->database
+                ->getReference("chats/{$room}")
+                ->push(); // this generates the key, but doesn't write data yet
+
+            $msgId = $newMessageRef->getKey();
+
+            // Step 2: Add the generated key as 'id' in your message array
+            $message['id'] = $msgId;
+
+            // Step 3: Write the message data using the generated key
+            $newMessageRef->set($message);
+
+            
+    return [
+        'status'  => 'success',
+        'message' => 'Chat message send successfully',
+        'data'    => $request_data
+    ];
+
+}
 
 
 

@@ -3,13 +3,32 @@ namespace App\Services;
 use App\Helpers\ApiResponse;
 use App\Models\{User,sellerBanner,Banner,Order,orderdetail};
 
-
-
 use App\Models\{product,ProductVariant,allproductchats};
+
+
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Database;
 
 
 class SellerOrderService
 {
+
+     protected Database $database;
+
+    public function __construct()
+    {
+        $factory = (new Factory)
+    ->withServiceAccount(storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json'))
+    ->withDatabaseUri('https://desynat-default-rtdb.firebaseio.com');
+
+        // $factory = (new Factory)
+        //     ->withServiceAccount(storage_path('ichrono-firebase-adminsdk-fbsvc-bc66e0b097.json'));
+
+        $this->database = $factory->createDatabase();
+
+    }
+
+
 
 public function SellerGetOrders($request){
 
@@ -224,10 +243,16 @@ try{
 
    if($check_chatRecord){
 
+     $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
+
+     $response['record']=$check_chatRecord;
+     $response['firbase_chat']=$firbase_chat;
+     
+
      return [
             'status'  => 'success',
             'message' => 'Single Chat records fetch Successfully',
-            'data'    => $check_chatRecord
+            'data'    => $response
         ];
         
     }else{
@@ -290,6 +315,17 @@ try{
     }    
 }
 
+
+
+
+    public function getMessages(string $room): array
+    {
+
+        return $this->database
+            ->getReference("chats/{$room}")
+            ->orderByChild('timestamp')
+            ->getValue() ?? [];
+    }
 
 
 }
