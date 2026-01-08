@@ -111,8 +111,12 @@
                                     placeholder="Enter Email ID">
                                 <span class="text-danger error-text receiver_email_error"></span>
                             </div>
+
+                            
+
                         </div>
                     </div>
+
                     <div class="gift-pnl">
                         <h6>From</h6>
                         <div class="form-group w-100 py-2">
@@ -519,6 +523,8 @@ window.addEventListener('pageshow', function(event) {
 if (performance.navigation.type === 2) {
     window.location.reload(true);
 }
+
+
 </script>
 
 
