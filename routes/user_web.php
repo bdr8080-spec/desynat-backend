@@ -149,6 +149,10 @@ Route::match(['get', 'post'], '/user-chat', function () {
 
 })->name('user.user-chat');
 
+Route::match(['get', 'post'], '/details-chat', function () {
+     return view('user.chat.detailsChat');
+     
+})->name('user.details-chat');
 
 // Route::match(['get', 'post'], '/order_details', function () {
 //      return view('user.orders.order-details');
