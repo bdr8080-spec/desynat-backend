@@ -117,7 +117,11 @@
                         @forelse($banners as $index => $banner)
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td> <img src="{{ $banner['image'] }}" alt="" width="40px" height="40px" class="square" /> </td>
+                            <td>
+                                <a href="{{ $banner['image'] }}" target="_blank">
+                                    <img src="{{ $banner['image'] }}" alt="" width="40" height="40" class="square">
+                                </a>
+                            </td>
                             <td>{{ $banner['title'] }}</td>
                             <td>{{ $banner['country_info']['name'] }}</td>
                             <td>{{ $banner['start_date'] }}</td>
