@@ -52,7 +52,7 @@
 
 
                                 <a class="btn btn-dark customBtn " style="margin-top: 60px" data-bs-toggle="modal"
-                                                        data-bs-target="#sentModal3" >
+                                    data-bs-target="#sentModal3">
                                     <span>Add Timeslot</span>
                                 </a>
                             </div>
@@ -104,7 +104,7 @@
                                         </div>
                                     </div>
 
-                                    
+
                                 </div>
                             </div>
 
@@ -420,28 +420,51 @@
             </div>
             <div class="modal-body">
                 <div class="appointment-container">
-                 <div class="time-wrapper">
-  <div id="timeContainer">
-    <!-- First Row (Default) -->
-    <div class="time-row">
-      <div class="time-block">
-        <label>From</label>
-        <select><option>HH</option></select>
-        <select><option>MM</option></select>
-        <select><option>AM</option><option>PM</option></select>
-      </div>
+                    <div class="time-wrapper">
+                        <div id="timeContainer">
+                            <!-- First Row (Default) -->
+                            <div class="time-row">
+                                <div class="time-block">
+                                    <label>From</label>
+                                    <select>
+                                        <option>HH</option>
+                                    </select>
+                                    <select>
+                                        <option>MM</option>
+                                    </select>
+                                    <select>
+                                        <option>AM</option>
+                                        <option>PM</option>
+                                    </select>
+                                </div>
 
-      <div class="time-block">
-        <label>To</label>
-        <select><option>HH</option></select>
-        <select><option>MM</option></select>
-        <select><option>AM</option><option>PM</option></select>
-      </div>
-    </div>
-  </div>
+                                <div class="time-block">
+                                    <label>To</label>
+                                    <select>
+                                        <option>HH</option>
+                                    </select>
+                                    <select>
+                                        <option>MM</option>
+                                    </select>
+                                    <select>
+                                        <option>AM</option>
+                                        <option>PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-  <a href="javascript:void(0)" class="add-more" onclick="addRow()">+ Add More</a>
-</div>
+                        <a href="javascript:void(0)" class="add-more" onclick="addRow()">+ Add More</a>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                style="margin-top: 30px">
+                                <button type="submit" class="btn btn-dark customBtn">
+                                    Submit
+                                </button>
+                                <!-- <button type="button" class="btn btn-dark customBtn" href=""> Submit</button> -->
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -451,47 +474,47 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var calendarEl = document.getElementById("calendar");
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: "dayGridMonth",
-            selectable: true,
-            height: "auto",
+document.addEventListener("DOMContentLoaded", function() {
+    var calendarEl = document.getElementById("calendar");
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        selectable: true,
+        height: "auto",
 
-            dateClick: function (info) {
-                showSelectedDate(info.dateStr);
-            }
-        });
-
-        calendar.render();
-
-        // ✅ PAGE LOAD par aaj ki date show karne ke liye
-        const today = new Date().toISOString().split('T')[0];
-        showSelectedDate(today);
+        dateClick: function(info) {
+            showSelectedDate(info.dateStr);
+        }
     });
 
-    function showSelectedDate(dateStr) {
-        const date = new Date(dateStr);
-        const options = {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        };
+    calendar.render();
 
-        document.getElementById("selectedDateText").innerText =
-            `Today, ${date.toLocaleDateString('en-GB', options)}`;
+    // ✅ PAGE LOAD par aaj ki date show karne ke liye
+    const today = new Date().toISOString().split('T')[0];
+    showSelectedDate(today);
+});
 
-        document.getElementById("timeslotSection").style.display = "block";
-    }
+function showSelectedDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    };
+
+    document.getElementById("selectedDateText").innerText =
+        `Today, ${date.toLocaleDateString('en-GB', options)}`;
+
+    document.getElementById("timeslotSection").style.display = "block";
+}
 </script>
 <script>
-    function addRow() {
-  const container = document.getElementById('timeContainer');
+function addRow() {
+    const container = document.getElementById('timeContainer');
 
-  const row = document.createElement('div');
-  row.className = 'time-row';
+    const row = document.createElement('div');
+    row.className = 'time-row';
 
-  row.innerHTML = `
+    row.innerHTML = `
     <div class="time-block">
       <label>From</label>
       <select><option>HH</option></select>
@@ -509,13 +532,12 @@
     <span class="remove-btn" onclick="removeRow(this)">✖</span>
   `;
 
-  container.appendChild(row);
+    container.appendChild(row);
 }
 
 function removeRow(el) {
-  el.parentElement.remove();
+    el.parentElement.remove();
 }
 </script>
 
 @endsection
-
