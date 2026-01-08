@@ -51,7 +51,8 @@
                             <div class="d-flex gap-3 justify-content-end">
 
 
-                                <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                                <a class="btn btn-dark customBtn " style="margin-top: 60px" data-bs-toggle="modal"
+                                                        data-bs-target="#sentModal3" >
                                     <span>Add Timeslot</span>
                                 </a>
                             </div>
@@ -409,6 +410,43 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="sentModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+                <h2 class="h2">Add Timeslot</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                 <div class="time-wrapper">
+  <div id="timeContainer">
+    <!-- First Row (Default) -->
+    <div class="time-row">
+      <div class="time-block">
+        <label>From</label>
+        <select><option>HH</option></select>
+        <select><option>MM</option></select>
+        <select><option>AM</option><option>PM</option></select>
+      </div>
+
+      <div class="time-block">
+        <label>To</label>
+        <select><option>HH</option></select>
+        <select><option>MM</option></select>
+        <select><option>AM</option><option>PM</option></select>
+      </div>
+    </div>
+  </div>
+
+  <a href="javascript:void(0)" class="add-more" onclick="addRow()">+ Add More</a>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -446,7 +484,38 @@
         document.getElementById("timeslotSection").style.display = "block";
     }
 </script>
+<script>
+    function addRow() {
+  const container = document.getElementById('timeContainer');
 
+  const row = document.createElement('div');
+  row.className = 'time-row';
+
+  row.innerHTML = `
+    <div class="time-block">
+      <label>From</label>
+      <select><option>HH</option></select>
+      <select><option>MM</option></select>
+      <select><option>AM</option><option>PM</option></select>
+    </div>
+
+    <div class="time-block">
+      <label>To</label>
+      <select><option>HH</option></select>
+      <select><option>MM</option></select>
+      <select><option>AM</option><option>PM</option></select>
+    </div>
+
+    <span class="remove-btn" onclick="removeRow(this)">✖</span>
+  `;
+
+  container.appendChild(row);
+}
+
+function removeRow(el) {
+  el.parentElement.remove();
+}
+</script>
 
 @endsection
 

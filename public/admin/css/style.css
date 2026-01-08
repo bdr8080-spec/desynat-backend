@@ -2500,3 +2500,49 @@ header,
     z-index: 1;
     width: 100% !important;
 }
+
+.time-wrapper {
+  width: 400px;
+}
+
+.time-row {
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.time-block {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.time-block label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+select {
+  padding: 3px;
+  width: 55px;
+}
+select {
+    word-wrap: normal;
+    width: 86px !important;
+    margin-right: 22px !important;
+    margin-top: 22px !important;
+}
+
+.remove-btn {
+  color: red;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.add-more {
+  color: #0b5ed7;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
