@@ -21,6 +21,7 @@ class LiveRequestController extends Controller
     public function liveRequestManagement(Request $req){
         $countries = $this->CountryService->getCountries()['data'];
         $timeslots = $this->LiveRequestService->getTimeslots($req)['data'];
+       // dd($timeslots);
         return view('admin.live-request-management.index',compact('countries','timeslots'));
     }
 
