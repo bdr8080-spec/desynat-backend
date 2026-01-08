@@ -154,6 +154,34 @@ class FullBannerService
         }
     }
 
+    public function bannerDetails($bannerId)
+    {
+        try {
+           $data = FullBanner::with('country_info')->find($bannerId);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Banner not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Banner details fetched successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch banne details',
+                'data' => []
+            ];
+        }
+    }
+
 
 
 
