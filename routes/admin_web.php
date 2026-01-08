@@ -162,6 +162,8 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/blockUnblockTimeslot/{id}', [LiveRequestController::class, 'blockUnblockTimeslot'])->name('admin.blockUnblockTimeslot');
         Route::post('/addTimeslot', [LiveRequestController::class, 'addTimeslot'])->name('admin.addTimeslot');
         Route::post('/updateTimeslot/{id}', [LiveRequestController::class, 'updateTimeslot'])->name('admin.updateTimeslot');
+        Route::post('/approveLiveRequest', [LiveRequestController::class, 'approveLiveRequest'])->name('admin.approveLiveRequest');
+        Route::post('/rejectLiveRequest', [LiveRequestController::class, 'rejectLiveRequest'])->name('admin.rejectLiveRequest');
 
         //story management
         Route::get('/story-management', [StoryController::class, 'storyManagement'])->name('admin.storyManagement');

@@ -158,40 +158,47 @@
                     </div>
                     <div class="userManagecontent">
                         <div class="tab-content" id="pills-tabContent">
-                            <!-- Exchange -->
+                            <!-- new -->
 
                             <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab"
                                 tabindex="0">
                                 <div class="row">
+                                    <form method="GET" action="{{ route('admin.liveRequestManagement') }}" id="filterForm">
+                                     <input type="hidden" name="type" value="new" />
                                     <div class="align-items-end d-flex gap-3">
-                                        <div class="search-box" style="position: relative">
+                                        <!-- <div class="search-box" style="position: relative">
                                             <i class="bi bi-search" style="
-                                  position: absolute;
-                                  left: 10px;
-                                  top: 50%;
-                                  transform: translateY(-50%);
-                                  font-size: 16px;
-                                  color: #888;
-                                ">
-                                            </i>
-                                            <input type="text" class="form-control" placeholder="Search for..."
-                                                style="padding-left: 35px" />
-                                        </div>
+                                            position: absolute;
+                                            left: 10px;
+                                            top: 50%;
+                                            transform: translateY(-50%);
+                                            font-size: 16px;
+                                            color: #888;
+                                            ">
+                                                        </i>
+                                                        <input type="text" class="form-control" placeholder="Search for..."
+                                                            style="padding-left: 35px" />
+                                        </div> -->
                                         <div class="form-group ">
                                             <!-- <label for="from" class="form-label">Country Name</label> -->
-                                            <select class="form-select form-select-lg w-25" 
-                                                aria-label="Large select example">
-                                                <option selected>Select Country</option>
-                                                <option value="1">country One</option>
-                                                <option value="2">country Two</option>
-                                                <option value="3">country Three</option>
+                                            <select name="country_name" id="country_name"
+                                                class="form-select form-select-lg"
+                                                onchange="document.getElementById('filterForm').submit();">
+                                                <option value="">Select country</option>
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country['name'] }}"
+                                                        {{ request('type') == 'new' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                        {{ $country['name'] }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
 
                                 <div class="table-responsive mt-5 w-100">
-                                    <table class="table w-100">
+                                    <table id="myTable" class="table w-100">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Sr.No</th>
@@ -204,82 +211,81 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse($newRequest as $index => $data)
                                             <tr>
-                                                <th scope="row">1</th>
-                                                <td>#22222</td>
-                                                <td>lorem</td>
-                                                <td>UAE</td>
-                                                <td>2nd September 2025 | 11 Am</td>
-                                                <td>10th September 2025 | 12 PM</td>
+                                                <th scope="row">{{ $index + 1 }}</th>
+                                                <td>#{{ $data['order_id'] }}</td>
+                                                <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['first_name'] }}</td>
+                                                <td>{{ $data['seller_details']['country_details']['name'] }}</td>
+                                                <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}</td>
                                                 <td>
                                                     <div class="d-flex gap-3 justify-content-center">
-                                                        <a class="table-button" type="button"><i
-                                                                class="bi bi-check-circle-fill"></i></a>
-
-                                                        <a class="table-button" data-bs-toggle="modal"
-                                                            data-bs-target="#sentModal2" type="button">
-                                                            <i class="bi bi-x-circle-fill"></i>
+                                                        <a class="table-button approveLiveRequest"
+                                                            href="javascript:void(0)"
+                                                            data-id="{{ $data['id'] }}">
+                                                                <i class="bi bi-check-circle-fill"></i>
+                                                        </a>
+                                                        <a class="table-button rejectBtn"
+                                                            href="javascript:void(0)"
+                                                            data-id="{{ $data['id'] }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#sentModal2">
+                                                                <i class="bi bi-x-circle-fill"></i>
                                                         </a>
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>#22222</td>
-                                                <td>lorem</td>
-                                                <td>UAE</td>
-                                                <td>2nd September 2025 | 11 Am</td>
-                                                <td>10th September 2025 | 12 PM</td>
-                                                <td>
-                                                    <div class="d-flex gap-3 justify-content-center">
-                                                        <a class="table-button" type="button"><i
-                                                                class="bi bi-check-circle-fill"></i></a>
-
-                                                        <a class="table-button" data-bs-toggle="modal"
-                                                            data-bs-target="#sentModal2" type="button">
-                                                            <i class="bi bi-x-circle-fill"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center">No data found</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-                            <!-- Return -->
+                            <!-- approved -->
                             <div class="tab-pane fade show active" id="pills-approved" role="tabpanel"
                                 aria-labelledby="pills-approved-tab" tabindex="0">
                                 <div class="row">
-                                    <div class="align-items-end gap-3 d-flex">
-                                        <div class="search-box" style="position: relative">
+                                    <form method="GET" action="{{ route('admin.liveRequestManagement') }}" id="filterForm1">
+                                     <input type="hidden" name="type" value="approved" />
+                                    <div class="align-items-end d-flex gap-3">
+                                        <!-- <div class="search-box" style="position: relative">
                                             <i class="bi bi-search" style="
-                                  position: absolute;
-                                  left: 10px;
-                                  top: 50%;
-                                  transform: translateY(-50%);
-                                  font-size: 16px;
-                                  color: #888;
-                                ">
-                                            </i>
-                                            <input type="text" class="form-control" placeholder="Search for..."
-                                                style="padding-left: 35px" />
-                                        </div>
+                                            position: absolute;
+                                            left: 10px;
+                                            top: 50%;
+                                            transform: translateY(-50%);
+                                            font-size: 16px;
+                                            color: #888;
+                                            ">
+                                                        </i>
+                                                        <input type="text" class="form-control" placeholder="Search for..."
+                                                            style="padding-left: 35px" />
+                                        </div> -->
                                         <div class="form-group ">
                                             <!-- <label for="from" class="form-label">Country Name</label> -->
-                                            <select class="form-select form-select-lg w-25"
-                                                aria-label="Large select example">
-                                                <option selected>Select Country</option>
-                                                <option value="1">country One</option>
-                                                <option value="2">country Two</option>
-                                                <option value="3">country Three</option>
+                                            <select name="country_name" id="country_name"
+                                                class="form-select form-select-lg"
+                                                onchange="document.getElementById('filterForm1').submit();">
+                                                <option value="">Select country</option>
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country['name'] }}"
+                                                        {{ request('type') == 'approved' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                        {{ $country['name'] }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
 
                                 <div class="table-responsive mt-5 w-100">
-                                    <table class="table w-100">
+                                    <table id="myTable1" class="table w-100">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Sr.No</th>
@@ -292,61 +298,66 @@
                                         </thead>
 
                                         <tbody>
+                                            @forelse($approvedRequest as $index => $data)
                                             <tr>
-                                                <th scope="row">1</th>
-                                                <td>#22222</td>
-                                                <td>lorem</td>
-                                                <td>UAE</td>
-                                                <td>2nd September 2025 | 11 Am</td>
-                                                <td>10th September 2025 | 12 PM</td>
+                                                <th scope="row">{{ $index + 1 }}</th>
+                                                <td>#{{ $data['order_id'] }}</td>
+                                                <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['first_name'] }}</td>
+                                                <td>{{ $data['seller_details']['country_details']['name'] }}</td>
+                                                <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}</td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>#22222</td>
-                                                <td>lorem</td>
-                                                <td>UAE</td>
-                                                <td>2nd September 2025 | 11 Am</td>
-                                                <td>10th September 2025 | 12 PM</td>
-                                            </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center">No data found</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-                            <!-- cancle -->
+                            <!-- reject -->
 
                             <div class="tab-pane fade" id="pills-reject" role="tabpanel"
                                 aria-labelledby="pills-reject-tab" tabindex="0">
                                 <div class="row">
-                                    <div class="align-items-end gap-3 d-flex">
-                                        <div class="search-box" style="position: relative">
+                                    <form method="GET" action="{{ route('admin.liveRequestManagement') }}" id="filterForm2">
+                                     <input type="hidden" name="type" value="reject" />
+                                    <div class="align-items-end d-flex gap-3">
+                                        <!-- <div class="search-box" style="position: relative">
                                             <i class="bi bi-search" style="
-                                  position: absolute;
-                                  left: 10px;
-                                  top: 50%;
-                                  transform: translateY(-50%);
-                                  font-size: 16px;
-                                  color: #888;
-                                ">
-                                            </i>
-                                            <input type="text" class="form-control" placeholder="Search for..."
-                                                style="padding-left: 35px" />
-                                        </div>
+                                            position: absolute;
+                                            left: 10px;
+                                            top: 50%;
+                                            transform: translateY(-50%);
+                                            font-size: 16px;
+                                            color: #888;
+                                            ">
+                                                        </i>
+                                                        <input type="text" class="form-control" placeholder="Search for..."
+                                                            style="padding-left: 35px" />
+                                        </div> -->
                                         <div class="form-group ">
                                             <!-- <label for="from" class="form-label">Country Name</label> -->
-                                            <select class="form-select form-select-lg w-25"
-                                                aria-label="Large select example">
-                                                <option selected>Select Country</option>
-                                                <option value="1">country One</option>
-                                                <option value="2">country Two</option>
-                                                <option value="3">country Three</option>
+                                            <select name="country_name" id="country_name"
+                                                class="form-select form-select-lg"
+                                                onchange="document.getElementById('filterForm2').submit();">
+                                                <option value="">Select country</option>
+                                                @foreach($countries as $country)
+                                                    <option value="{{ $country['name'] }}"
+                                                        {{ request('type') == 'reject' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                        {{ $country['name'] }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
 
                                 <div class="table-responsive mt-5 w-100">
-                                    <table class="table w-100">
+                                    <table id="myTable2" class="table w-100">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Sr.No</th>
@@ -360,24 +371,21 @@
                                         </thead>
 
                                         <tbody>
+                                            @forelse($rejectRequest as $index => $data)
                                             <tr>
-                                                <th scope="row">1</th>
-                                                <td>#22222</td>
-                                                <td>lorem</td>
-                                                <td>UAE</td>
-                                                <td>2nd September 2025 | 11 Am</td>
-                                                <td>10th September 2025 | 12 PM</td>
-                                                <td>lorem</td>
+                                                <th scope="row">{{ $index + 1 }}</th>
+                                                <td>#{{ $data['order_id'] }}</td>
+                                                <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['first_name'] }}</td>
+                                                <td>{{ $data['seller_details']['country_details']['name'] }}</td>
+                                                <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}</td>
+                                                <td>{{ $data['reject_reason'] }}</td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>#22222</td>
-                                                <td>lorem</td>
-                                                <td>UAE</td>
-                                                <td>2nd September 2025 | 11 Am</td>
-                                                <td>10th September 2025 | 12 PM</td>
-                                                <td>lorem</td>
-                                            </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center">No data found</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
                                 </div>
@@ -397,7 +405,6 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
                 <h2 class="h2">Reason</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -985,6 +992,128 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 </script>
+
+<!-- accept request -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.addEventListener('click', function(e){
+        const btn = e.target.closest('.approveLiveRequest');
+        if(!btn) return;
+
+        e.preventDefault();
+
+        const id = btn.getAttribute('data-id');
+
+        fetch("{{ route('admin.approveLiveRequest') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ request_id: id })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message);
+                setTimeout(() => {
+                    location.reload();
+                }, 2000); 
+            } else {
+                toastr.error(res.message || 'Failed to approve request');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+<!-- reject request -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let rejectId = null;
+    const modalEl = document.getElementById('sentModal2');
+    const reasonInput = document.getElementById('rejectReason');
+
+    // When reject modal opens
+    modalEl.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        rejectId = button.getAttribute('data-id');
+
+        // Reset textarea & errors
+        reasonInput.value = '';
+        removeError();
+    });
+
+    // Remove error while typing
+    reasonInput.addEventListener('input', function () {
+        removeError();
+    });
+
+    function showError(message){
+        removeError();
+        const error = document.createElement('small');
+        error.classList.add('error-msg');
+        error.style.color = 'red';
+        error.innerText = message;
+        reasonInput.parentNode.appendChild(error);
+    }
+
+    function removeError(){
+        const error = reasonInput.parentNode.querySelector('.error-msg');
+        if(error) error.remove();
+    }
+
+    // Submit reject
+    document.querySelector('#sentModal2 .customBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const reason = reasonInput.value.trim();
+
+        if(!reason){
+            showError('Please Enter Reject Reason');
+            return;
+        }
+
+        fetch("{{ route('admin.rejectLiveRequest') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                request_id: rejectId,
+                reject_reason: reason
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message);
+
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } else {
+                toastr.error(res.message || 'Failed to reject request');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error('Something went wrong');
+        });
+    });
+
+});
+</script>
+
+
 
 
 

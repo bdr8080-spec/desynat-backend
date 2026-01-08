@@ -22,7 +22,34 @@ class LiveRequestController extends Controller
         $countries = $this->CountryService->getCountries()['data'];
         $timeslots = $this->LiveRequestService->getTimeslots($req)['data'];
        // dd($timeslots);
-        return view('admin.live-request-management.index',compact('countries','timeslots'));
+        $type = $req->get('type'); 
+        $country = $req->get('country_name');
+
+        // New request
+        $newRequestParams = [];
+        if ($type === 'new') {
+            $newRequestParams['country'] = $country;         
+        }
+        $newRequestParams['type'] = '0';
+        $newRequest = $this->LiveRequestService->getLiveRequests(new Request($newRequestParams))['data'];
+
+        //Approved
+        $approvedRequestParams = [];
+        if ($type === 'approved') {
+            $approvedRequestParams['country'] = $country;         
+        }
+        $approvedRequestParams['type'] = '1';
+        $approvedRequest = $this->LiveRequestService->getLiveRequests(new Request($approvedRequestParams))['data'];
+
+        //Reject
+        $rejectRequestParams = [];
+        if ($type === 'reject') {
+            $rejectRequestParams['country'] = $country;         
+        }
+        $rejectRequestParams['type'] = '2';
+        $rejectRequest = $this->LiveRequestService->getLiveRequests(new Request($rejectRequestParams))['data'];
+
+        return view('admin.live-request-management.index',compact('countries','timeslots','newRequest','approvedRequest','rejectRequest'));
     }
 
     public function deleteTimeslot($id)
@@ -115,6 +142,40 @@ class LiveRequestController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function approveLiveRequest(Request $request)
+    {
+        $result = $this->LiveRequestService->acceptLiveRequest($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function rejectLiveRequest(Request $request)
+    {
+        $result = $this->LiveRequestService->rejectLiveRequest($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
     }
 
 
