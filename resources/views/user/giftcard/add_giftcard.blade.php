@@ -112,51 +112,7 @@
                                 <span class="text-danger error-text receiver_email_error"></span>
                             </div>
 
-                            <!-- <div class="d-flex align-items-center">
-                                <div class="LoginCountryCode">
-                                    <div class="dropdown">
-                                        <button
-                                            class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
-                                            type="button" id="countryDropdown"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span id="selected-flag">
-                                                {{ old('country_flag', $country[0]->flag1) }}
-                                            </span>
-                                            <span id="selected-code" class="ms-2">
-                                                {{ old('country_code', $country[0]->dial_code) }}
-                                            </span>
-                                        </button>
-
-                                        <ul class="dropdown-menu p-2 newcountrybox" aria-labelledby="countryDropdown">
-                                            @foreach ($country as $index => $item)
-                                                <li>
-                                                    <label
-                                                        class="dropdown-item d-flex align-items-center gap-2 country-option"
-                                                        style="cursor: pointer;">
-                                                        <input type="radio" name="country_code"
-                                                            value="{{ $item->dial_code }}"
-                                                            data-flag="{{ $item->flag1 }}"
-                                                            data-name="{{ $item->name }}"
-                                                            class="country-radio"
-                                                            {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
-                                                            hidden>
-                                                        <div width="25" height="16">
-                                                            <span>{{ $item->flag1 }} {{ $item->dial_code }}
-                                                                ({{ $item->name }})
-                                                            </span>
-                                                        </div>
-                                                    </label>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-
-                                </div> 
-                                <div class="w-100 LoginMobileDesign">
-                                    <input type="text" class="form-control notapplyspace"  value="" placeholder="Please enter mobile" name="mobileOrEmail" id="LoginMobile"
-                                    />
-                                </div>
-                            </div> -->
+                            
 
                         </div>
                     </div>
@@ -567,27 +523,6 @@ window.addEventListener('pageshow', function(event) {
 if (performance.navigation.type === 2) {
     window.location.reload(true);
 }
-
-
-// When a user selects a country code
-$(document).ready(function() {
-    $(document).on('click', '.country-option', function() {
-        let radio = $(this).find('.country-radio');
-        let flag = radio.data('flag');
-        let code = radio.val();
-        let name = radio.data('name');
-
-        // Update the flag and code shown on the button
-        $('#selected-flag').html(flag);
-        $('#selected-code').text(code);
-
-        // Set the radio input as checked
-        radio.prop('checked', true);
-
-        // Close the dropdown (Bootstrap 5)
-        $('#countryDropdown').dropdown('hide');
-    });
-});
 
 
 </script>
