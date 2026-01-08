@@ -5,7 +5,10 @@ namespace App\Services;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Database;
 
-use App\Models\{product,ProductVariant,allproductchats};
+use App\Models\{product,ProductVariant,allproductchats,
+      userAddress,OrderDeliveryAddress,Order,orderdetail};
+
+use DB;
 
 class UserFirebaseService
 {
@@ -273,6 +276,147 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
         'data'    => $check_chatRecord
     ];
 
+    }
+
+    
+ // User Create order Custom order 
+ public function CustomCreateOrder($request_data){
+
+    try{
+
+        DB::beginTransaction();
+
+         $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request_data->unique_id)->first();
+
+        if(!$check_chatRecord){
+        return [
+            'status'  => 'error',
+            'message' => 'records not Found',
+            'data'    => (object)[]
+        ];
+        }
+        
+        if($check_chatRecord->product_request!=='1'){
+        return [
+            'status'  => 'error',
+            'message' => "User didn't Request This Order This Is Normal Chat ",
+            'data'    => (object)[]
+        ];
+        }
+
+        if($check_chatRecord->action!=='1' &&  $check_chatRecord->action!=='2'){
+        return [
+            'status'  => 'error',
+            'message' => "Seller didn't Accept Order Or Cancel This order",
+            'data'    => (object)[]
+        ];
+        
+        }
+
+        $request=(object)[
+            'user_id'=>$check_chatRecord->user_id,
+            'delivery_address'=>$check_chatRecord->delivery_address,
+            "total_mrp"=>$check_chatRecord->price,
+            "discount_mrp"=>0,
+            'promocode_status'=>"no",
+            "promocode_id"=>null,
+            "promocode_value"=>null,
+            'shipping_fees'=>$check_chatRecord->shipping,
+            "tax"=>$check_chatRecord->tax,
+            "total_amount"=>$check_chatRecord->total_amount,
+            'giftcard_id'=>$request_data->giftcard_id??null,
+            'giftcard_amount'=>$request_data->giftcard_amount??null,
+            'Payment_method'=>$request_data->Payment_method
+           ];
+
+
+        $orderId="Order". rand('11111111111111','99999999999999999');
+
+        $userId=$request->user_id;
+
+        // Address Table data insert Into delivery Table inside    
+      $user_address=userAddress::where('id',$request->delivery_address)->first();
+
+      if($user_address){
+
+        $address_data=[
+            "user_id"=>$userId,
+            "name"=>$user_address->name,
+            "mobile"=>$user_address->mobile ,
+            "country_code"=>$user_address->country_code ,
+            "address"=>$user_address->address ,
+            "house_no"=>$user_address->house_no ,
+            "street_no"=>$user_address->street_no ,
+            "postal_code"=>$user_address->postal_code  ,
+            "city"=>$user_address->city ,
+            "state"=>$user_address->state,
+            "country_name"=>$user_address->country_name,
+            "landmark"=>$user_address->landmark,
+            "save_address_as"=>$user_address->save_address_as,
+            "status"=>$user_address->status,
+            "latitude"=>$user_address->latitude,
+            "longitude"=>$user_address->longitude,
+        ];
+
+     $delivery_id=OrderDeliveryAddress::create($address_data);
+
+      }
+
+
+    //   Add Data in Order Table
+        $request_data=[
+            'order_id'=>$orderId,
+            "order_type"=>"2",
+            'user_id'=>$userId,
+            'delivery_address'=>$delivery_id->id,
+            "total_mrp"=>$check_chatRecord->total_amount,
+            "discount_mrp"=>$request->discount_mrp,
+            'promocode_status'=>$request->promocode_status,
+            "promocode_id"=>$request->promocode_id,
+            "promocode_value"=>$request->promocode_value,
+            'shipping_fees'=>$request->shipping_fees,
+            "tax"=>$request->tax,
+            "total_amount"=>$request->total_amount,
+            "giftcard_id"=>$request->giftcard_id,
+            "giftcard_amount"=>$request->giftcard_amount,
+            "Payment_method"=>$request_data->Payment_method
+           ];
+
+$createOrder=Order::create($request_data);
+
+$order_id=$createOrder->id;
+
+    $cart_data=[
+        "order_id"=>$order_id,
+        "user_id"=>$userId,
+        "seller_id"=>$check_chatRecord->seller_id,
+        "product_id"=>$check_chatRecord->product_id,
+        "variants_id"=>$check_chatRecord->variation_id,
+        "quantity"=>$check_chatRecord->quantity,
+        "amount"=>$check_chatRecord->price,
+        "tax"=> $check_chatRecord->tax ,
+        "shipping_fees"=>$check_chatRecord->shipping,
+        "giftcard_id"=>$request->giftcard_id,
+        "giftcard_amount"=>$request->giftcard_amount,
+        // "promocode_id"=>$promoCodeId,
+        // "promocode_value"=>$PrmocodeCardAmountDivide,
+    ];
+    orderdetail::create($cart_data);
+
+DB::commit();
+   
+return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'=>$createOrder];
+
+        
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to create order: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    
     }
 
 

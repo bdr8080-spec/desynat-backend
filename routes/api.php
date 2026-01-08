@@ -144,6 +144,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/user-normal-chat-with-seller', [UserChatController::class,'UserNormalChatWithSeller']);
 
+  Route::post('/custom-create-order', [UserChatController::class,'CustomOrderCreateOrder']);
+
+  Route::post('/custom-order-complete-payment', [UserOrderController::class,'product_order_complete_payment']);
 
 
 });

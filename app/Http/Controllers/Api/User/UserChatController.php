@@ -199,48 +199,40 @@ class UserChatController extends Controller
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
-
-
     }
 
 
 
+public function CustomOrderCreateOrder(Request $request){
 
-    //   public function userSinglechats(Request $request){
-
-    //     $validate = Validator::make($request->all(), [
-    //         'unique_id' => 'required|exists:allproductchats,unique_id',
-    //         'quantity' => 'required',
-    //         "custom_details"=>'required',
-    //         "delivery_address"=>'required',
-    //     ]);
+        $validate = Validator::make($request->all(), [
+            'unique_id' => 'required|exists:allproductchats,unique_id',
+        ]);
         
-    //    if($validate->fails()){
-    //     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
-    //    }
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
 
-    //    $user_id= $request->user()->id;
+       $user_id= $request->user()->id;
        
-    //    $request_data=(object)[
-    //     'user_id'=>$user_id,
-    //     'unique_id' => $request->unique_id ,
-    //     'quantity' => $request->quantity,
-    //     'custom_details' => $request->custom_details,
-    //     "delivery_address"=>$request->delivery_address
-    //    ];
+       $request_data=(object)[
+        'user_id'=>$user_id,
+        'unique_id' => $request->unique_id ,
+        'giftcard_id'=>$request->giftcard_id??null,
+        'giftcard_amount'=>$request->giftcard_amount??null,
+        'Payment_method'=>$request->Payment_method
+       ];
 
 
-    // $data=$this->UserFirebaseService->sendCustomOrderRequest($request_data);
+    $data=$this->UserFirebaseService->CustomCreateOrder($request_data);
 
-    // if(isset($data['status']) && $data['status']=='error' ){
-    //     return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
-    // }
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
 
-    // return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
-
-
-    // }
+}
 
 
 
