@@ -2444,20 +2444,20 @@ header,
     font-size: 13px;
 }
 
-    .timeslot-card {
+.timeslot-card {
   border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 10px 14px;
+  padding: 5px 7px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f8f8f8;
+  line-height: 20px;
 }
 
-.timeslot-card.active {
+/* .timeslot-card.active {
   background: #d32f2f;
   color: #fff;
-}
+} */
 
 .timeslot-card .actions i {
   margin-left: 8px;
@@ -2471,4 +2471,32 @@ header,
     text-decoration: underline;
     font-weight: 700;
     color: #000;
+}
+
+.container-2 .fc .fc-daygrid-day-number {
+    position: relative;
+    z-index: 4;
+    padding: 4px;
+    color: #000;
+    text-decoration: none;
+}
+.container-2 .fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+    color: #000;
+    text-decoration: none;
+}
+
+.container-2 .fc-col-header {
+    width: -webkit-fill-available !important;
+}
+
+.container-2 .fc .fc-scrollgrid-section-body table, .fc .fc-scrollgrid-section-footer table {
+    border-bottom-style: hidden;
+    width: 100% !important;
+}
+.container-2 .fc .fc-daygrid-body {
+    position: relative;
+    z-index: 1;
+    width: 100% !important;
 }

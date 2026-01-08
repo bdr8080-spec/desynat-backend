@@ -27,9 +27,7 @@
       rel="stylesheet"
     />
 
-    <!-- FullCalendar JS -->
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-
+    
 
 
 
