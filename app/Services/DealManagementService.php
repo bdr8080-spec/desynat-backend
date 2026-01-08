@@ -233,6 +233,34 @@ class DealManagementService
         }
     }
 
+    public function dealDetails($dealId)
+    {
+        try {
+           $data = Deal::with('category_details','subCategory_details')->find($dealId);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Deal not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Deal details fetched successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch deal details',
+                'data' => []
+            ];
+        }
+    }
+
 
 
 
