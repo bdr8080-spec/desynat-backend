@@ -83,10 +83,12 @@
 
                                 <div class="row g-3">
                                     <!-- Timeslot Card -->
+                                     @forelse($timeslots as $index => $slot)
                                     <div class="col-md-4">
                                         <div class="timeslot-card d-flex">
                                             <div class="timeslot-card active">
-                                                <span>10 AM - 11 AM</span>
+                                                <!-- <span>10 AM - 11 AM</span> -->
+                                                 <span>{{$slot['from']}}- {{$slot['to']}}</span>
                                             </div>
                                             <div class="actions">
                                                 <i class="bi bi-pencil"></i>
@@ -95,20 +97,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="timeslot-card d-flex">
-                                            <div class="timeslot-card">
-                                                <span>10 AM - 11 AM</span>
-                                            </div>
-                                            <div class="actions">
-                                                <i class="bi bi-pencil"></i>
-                                                <i class="bi bi-toggle-on text-success"></i>
-                                                <i class="bi bi-trash"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
+                                     @empty
+                                    <tr>
+                                        <span class="text-center">No slots found</span>
+                                    </tr>
+                                    @endforelse
                                 </div>
                             </div>
 
@@ -390,7 +383,6 @@
             </div>
             <div class="modal-body">
                 <div class="appointment-container">
-                    <form>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-12">
                                 <div class="form-group">
@@ -409,7 +401,6 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -499,50 +490,24 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var calendarEl = document.getElementById("calendar");
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "dayGridMonth",
-        selectable: true,
-        height: "auto",
-
-        dateClick: function(info) {
-            showSelectedDate(info.dateStr);
-        }
-    });
-
-    calendar.render();
-
-    // ✅ PAGE LOAD par aaj ki date show karne ke liye
-    const today = new Date().toISOString().split('T')[0];
-    showSelectedDate(today);
-});
-
-function showSelectedDate(dateStr) {
-    const date = new Date(dateStr);
-    const options = {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-    };
-
-    document.getElementById("selectedDateText").innerText =
-        `Today, ${date.toLocaleDateString('en-GB', options)}`;
-
-    document.getElementById("timeslotSection").style.display = "block";
-}
-</script> -->
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    var calendarEl = document.getElementById("calendar");
+    const url = new URL(window.location);
+    const urlParams = url.searchParams;
 
-    // 👉 Get date from URL if exists, else today
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlDate = urlParams.get('date');
-    const today = new Date().toISOString().split('T')[0];
-    const selectedDate = urlDate ?? today;
+    // ✅ If date NOT in URL → add today's date & reload ONCE
+    if (!urlParams.has('date')) {
+        const today = new Date().toISOString().split('T')[0];
+        urlParams.set('date', today);
+        window.location.replace(url.toString()); // prevents back-button issue
+        return;
+    }
+
+    // ✅ Date exists in URL
+    const selectedDate = urlParams.get('date');
+
+    var calendarEl = document.getElementById("calendar");
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
@@ -551,15 +516,15 @@ document.addEventListener("DOMContentLoaded", function () {
         initialDate: selectedDate,
 
         dateClick: function (info) {
-            updateUrl(info.dateStr);
-            showSelectedDate(info.dateStr);
+            reloadWithDate(info.dateStr);
         }
     });
 
     calendar.render();
 
-    // ✅ On page load
-    updateUrl(selectedDate);
+    // ✅ Highlight selected date
+    calendar.select(selectedDate);
+
     showSelectedDate(selectedDate);
 });
 
@@ -577,13 +542,16 @@ function showSelectedDate(dateStr) {
     document.getElementById("timeslotSection").style.display = "block";
 }
 
-// ✅ Update URL without reload
-function updateUrl(dateStr) {
+// ✅ Reload page when user clicks a date
+function reloadWithDate(dateStr) {
     const url = new URL(window.location);
     url.searchParams.set('date', dateStr);
-    window.history.pushState({}, '', url);
+    window.location.href = url.toString();
 }
 </script>
+
+
+
 
 
 <!-- <script>
