@@ -179,19 +179,21 @@
                                                         <input type="text" class="form-control" placeholder="Search for..."
                                                             style="padding-left: 35px" />
                                         </div> -->
-                                        <div class="form-group ">
-                                            <!-- <label for="from" class="form-label">Country Name</label> -->
-                                            <select name="country_name" id="country_name"
-                                                class="form-select form-select-lg"
-                                                onchange="document.getElementById('filterForm').submit();">
-                                                <option value="">Select country</option>
-                                                @foreach($countries as $country)
-                                                    <option value="{{ $country['name'] }}"
-                                                        {{ request('type') == 'new' && request('country_name') == $country['name'] ? 'selected' : '' }}>
-                                                        {{ $country['name'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-lg-3 col-md-12 col-12">
+                                            <div class="form-group mt-4 w-100">
+                                                <!-- <label for="from" class="form-label">Country Name</label> -->
+                                                <select name="country_name" id="country_name"
+                                                    class="form-select form-select-lg"
+                                                    onchange="document.getElementById('filterForm').submit();">
+                                                    <option value="">Select country</option>
+                                                    @foreach($countries as $country)
+                                                        <option value="{{ $country['name'] }}"
+                                                            {{ request('type') == 'new' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                            {{ $country['name'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     </form>
@@ -266,19 +268,21 @@
                                                         <input type="text" class="form-control" placeholder="Search for..."
                                                             style="padding-left: 35px" />
                                         </div> -->
-                                        <div class="form-group ">
-                                            <!-- <label for="from" class="form-label">Country Name</label> -->
-                                            <select name="country_name" id="country_name"
-                                                class="form-select form-select-lg"
-                                                onchange="document.getElementById('filterForm1').submit();">
-                                                <option value="">Select country</option>
-                                                @foreach($countries as $country)
-                                                    <option value="{{ $country['name'] }}"
-                                                        {{ request('type') == 'approved' && request('country_name') == $country['name'] ? 'selected' : '' }}>
-                                                        {{ $country['name'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-lg-3 col-md-12 col-12">
+                                            <div class="form-group mt-4 w-100">
+                                                <!-- <label for="from" class="form-label">Country Name</label> -->
+                                                <select name="country_name" id="country_name"
+                                                    class="form-select form-select-lg"
+                                                    onchange="document.getElementById('filterForm1').submit();">
+                                                    <option value="">Select country</option>
+                                                    @foreach($countries as $country)
+                                                        <option value="{{ $country['name'] }}"
+                                                            {{ request('type') == 'approved' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                            {{ $country['name'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     </form>
@@ -338,19 +342,21 @@
                                                         <input type="text" class="form-control" placeholder="Search for..."
                                                             style="padding-left: 35px" />
                                         </div> -->
-                                        <div class="form-group ">
-                                            <!-- <label for="from" class="form-label">Country Name</label> -->
-                                            <select name="country_name" id="country_name"
-                                                class="form-select form-select-lg"
-                                                onchange="document.getElementById('filterForm2').submit();">
-                                                <option value="">Select country</option>
-                                                @foreach($countries as $country)
-                                                    <option value="{{ $country['name'] }}"
-                                                        {{ request('type') == 'reject' && request('country_name') == $country['name'] ? 'selected' : '' }}>
-                                                        {{ $country['name'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                        <div class="col-lg-3 col-md-12 col-12">
+                                            <div class="form-group mt-4 w-100">
+                                                <!-- <label for="from" class="form-label">Country Name</label> -->
+                                                <select name="country_name" id="country_name"
+                                                    class="form-select form-select-lg"
+                                                    onchange="document.getElementById('filterForm2').submit();">
+                                                    <option value="">Select country</option>
+                                                    @foreach($countries as $country)
+                                                        <option value="{{ $country['name'] }}"
+                                                            {{ request('type') == 'reject' && request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                                            {{ $country['name'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     </form>
