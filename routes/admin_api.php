@@ -203,6 +203,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/update_full_banner',[FullBannerController::class,'update_full_banner']);
      Route::post('/delete_full_banner',[FullBannerController::class,'delete_full_banner']);
      Route::get('/get_full_banners',[FullBannerController::class,'get_full_banners']);
+     Route::get('/get_banner_detail',[FullBannerController::class,'get_banner_detail']);
 
 
 
