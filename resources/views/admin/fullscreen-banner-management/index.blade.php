@@ -654,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
+<!-- <script>
     function updateToDate() {
         const fromDate = document.getElementById('start_date').value;
         const toDateInput = document.getElementById('end_date');
@@ -671,12 +671,49 @@ document.addEventListener('DOMContentLoaded', function () {
         updateToDate(); 
         document.getElementById('start_date').addEventListener('input', updateToDate);
     });
+</script> -->
+<script>
+    function updateToDate() {
+        const fromInput = document.getElementById('start_date');
+        const toInput = document.getElementById('end_date');
+
+        if (fromInput.value) {
+            const minToDate = new Date(fromInput.value);
+            minToDate.setDate(minToDate.getDate() + 1);
+            toInput.min = minToDate.toISOString().split('T')[0];
+        } else {
+            toInput.removeAttribute('min');
+        }
+    }
+
+    function updateFromDate() {
+        const fromInput = document.getElementById('start_date');
+        const toInput = document.getElementById('end_date');
+
+        if (toInput.value) {
+            const maxFromDate = new Date(toInput.value);
+            maxFromDate.setDate(maxFromDate.getDate() - 1);
+            fromInput.max = maxFromDate.toISOString().split('T')[0];
+        } else {
+            fromInput.removeAttribute('max');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateToDate();
+        updateFromDate();
+
+        document.getElementById('start_date').addEventListener('change', updateToDate);
+        document.getElementById('end_date').addEventListener('change', updateFromDate);
+    });
 </script>
 
-<script>
+
+
+<!-- <script>
     function updateToDate1() {
         const fromDate = document.getElementById('editStartDate').value;
-        const toDateInput = document.getElementById('editendDate');
+        const toDateInput = document.getElementById('editEndDate');
         
         if (fromDate) {
             const minDate = new Date(fromDate);
@@ -690,7 +727,44 @@ document.addEventListener('DOMContentLoaded', function () {
         updateToDate1(); 
         document.getElementById('editStartDate').addEventListener('input', updateToDate1);
     });
+</script> -->
+
+<script>
+    function updateToDate1() {
+        const fromInput = document.getElementById('editStartDate');
+        const toInput = document.getElementById('editEndDate');
+
+        if (fromInput.value) {
+            const minToDate = new Date(fromInput.value);
+            minToDate.setDate(minToDate.getDate() + 1);
+            toInput.min = minToDate.toISOString().split('T')[0];
+        } else {
+            toInput.removeAttribute('min');
+        }
+    }
+
+    function updateToDate1() {
+        const fromInput = document.getElementById('editStartDate');
+        const toInput = document.getElementById('editEndDate');
+
+        if (toInput.value) {
+            const maxFromDate = new Date(toInput.value);
+            maxFromDate.setDate(maxFromDate.getDate() - 1);
+            fromInput.max = maxFromDate.toISOString().split('T')[0];
+        } else {
+            fromInput.removeAttribute('max');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateToDate();
+        updateFromDate();
+
+        document.getElementById('editStartDate').addEventListener('change', updateToDate1);
+        document.getElementById('editEndDate').addEventListener('change', updateToDate1);
+    });
 </script>
+
 
 
 

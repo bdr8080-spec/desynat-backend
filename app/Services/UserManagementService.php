@@ -3,9 +3,11 @@ namespace App\Services;
 
 use App\Models\{User,userAddress,country,Tax,ShippingCharge};
 use App\Models\UserWallet;
+use App\Models\UserWalletHistory;
 use App\Models\all_countrie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart};
 
@@ -146,6 +148,7 @@ class UserManagementService
 
     public function addUserWalletAmount($userId, $amount)
     {
+        DB::beginTransaction();
         try {
             $wallet = UserWallet::where('user_id', $userId)->first();
 
@@ -162,6 +165,16 @@ class UserManagementService
 
                 $message = 'Amount added in wallet successfully';
             }
+
+            $transaction = random_int(10000000, 99999999);
+            UserWalletHistory::create([
+                'user_id'        => $userId,
+                'type'           => 1, 
+                'transaction_id' => $transaction,
+                'amount'         => $amount,
+            ]);
+
+            DB::commit();
 
             return [
                 'status' => 'success',
