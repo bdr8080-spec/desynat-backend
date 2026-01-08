@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\UserGiftCardService;
 
+use App\Models\all_countrie;
+
 use Illuminate\Support\Facades\Session;
 
 
@@ -53,7 +55,6 @@ class UserGiftCardController extends Controller
     }
 
 
-
     public function add_gift_cards(Request $request)
     {
         $token      = config('myfatoorah.api_key');
@@ -93,8 +94,12 @@ class UserGiftCardController extends Controller
 
         $walletBalance=$userBalanceget['data']['balance'];
 
+
+
+        $country =   all_countrie::all();
+
        // dd($giftCardCategory);
-        return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory','baseUrl','walletBalance'));
+        return view('user.giftcard.add_giftcard', compact('sessionId','giftCardCategory','baseUrl','walletBalance','country'));
     }
 
     public function view_gift_card($id) {
