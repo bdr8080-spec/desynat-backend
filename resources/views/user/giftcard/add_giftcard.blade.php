@@ -156,7 +156,8 @@
                                         </div>
                                     </div>
                                     <div class="w-100">
-                                        <input type="number" class="form-control pline-10" placeholder="Enter WhatsApp Number" name="" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
+                                        <input type="number" class="form-control pline-10" name="mobile" placeholder="Enter WhatsApp Number" name="" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
+                                        <span class="text-danger error-text mobile_error"></span>
                                     </div>
                                 </div>
                             </div>
@@ -441,6 +442,8 @@ $(document).ready(function() {
 
         let receiver_name = $("input[name='receiver_name']").val().trim();
         let receiver_email = $("input[name='receiver_email']").val().trim();
+        let country_code = $("input[name='country_code']").val().trim();
+        let mobile = $("input[name='mobile']").val().trim();
         let sender_name = $("input[name='sender_name']").val().trim();
         let sender_email = $("input[name='sender_email']").val().trim();
         let wish_message = $("textarea[name='wish_message']").val().trim();
@@ -468,6 +471,12 @@ $(document).ready(function() {
         if (wish_message === "") {
             $("textarea[name='wish_message']").siblings(".error-text").text(
                 "Please enter Wish Message");
+            hasError = true;
+        }
+
+        if (mobile === "") {
+            $("input[name='mobile']").siblings(".error-text").text(
+                "Please enter whatsapp number");
             hasError = true;
         }
 
