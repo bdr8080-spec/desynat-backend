@@ -110,7 +110,7 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
     $total_amount=$price+$shipping+$tax;
 
     $request_data=[
-    "price"=>$price,
+    "price"=>$product_details->final_price,
     "quantity"=>$request->quantity,
     "custom_details"=>$request->custom_details,
     "delivery_address"=>$request->delivery_address,
@@ -133,6 +133,54 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
 
     
 
+
+
+ public function userGetAllChatsRecords($request){
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('user_id',$request->user_id)->get();
+
+   if($check_chatRecord->isNotEmpty()){
+     
+    return [
+        'status'  => 'success',
+        'message' => 'All Chat records fetch Successfully',
+        'data'    => $check_chatRecord
+    ];
+        }else{
+
+    return [
+        'status'  => 'success',
+        'message' => 'All Chat records fetch Successfully',
+        'data'    => []
+    ];
+
+}
+    }
+
+
+
+
+ public function userGetSingleChatsRecords($request){
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request->unique_id)->first();
+
+   if($check_chatRecord){
+     
+    return [
+        'status'  => 'success',
+        'message' => 'Single Chat records fetch Successfully',
+        'data'    => $check_chatRecord
+    ];
+        }else{
+
+    return [
+        'status'  => 'success',
+        'message' => 'Single Chat records fetch Successfully',
+        'data'    => []
+    ];
+
+}
+    }
 
 
 

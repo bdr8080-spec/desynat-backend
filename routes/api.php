@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\User\GiftCardControler;
 use App\Http\Controllers\Api\User\UserOrderController;
 
 
-use App\Http\Controllers\Api\User\ChatController;
+use App\Http\Controllers\Api\User\UserChatController;
 
 use App\Http\Controllers\CommonController;
 
@@ -135,13 +135,12 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/get-Invoice', [UserDashboardController::class,'get_Invoice']);
 
   // M6 APi 
-  Route::post('/create-Custom-order', [ChatController::class,'create_Custom_order']);
+  Route::post('/create-Custom-order', [UserChatController::class,'create_Custom_order']);
+  Route::post('/send-custom-order-request', [UserChatController::class,'send_custom_order_request']);
 
-  Route::post('/send-custom-order-request', [ChatController::class,'send_custom_order_request']);
+  Route::post('/user-all-chats', [UserChatController::class,'userAllChats']);
 
-
-  
-
+  Route::post('/user-Single-chats', [UserChatController::class,'userSinglechats']);
 
 
 });
