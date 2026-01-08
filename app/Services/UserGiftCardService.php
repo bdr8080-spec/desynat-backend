@@ -51,19 +51,19 @@ class UserGiftCardService
             $data=[
                 'order_id'=>$orderId,
                 'user_id'=>$request->user_id,
-                'gift_card_id' => $request->gift_card_id ,
+                'gift_card_id' => $request->gift_card_id,
                 'giftCardNo'=>$giftCardNo,
                 'giftCardPin'=>$giftCardPin,
                 'amount' => $request->amount,
                 'receiver_id'=>$receiver_id,
-                'receiver_name' => $request->receiver_name  ,
-                'receiver_email' => $request->receiver_email  ,
+                'receiver_name' => $request->receiver_name,
+                'receiver_email' => $request->receiver_email,
                 'sender_name' => $request->sender_name,  
                 'sender_email' => $request->sender_email,  
                 'wish_message' => $request->wish_message,
-                'notes' =>$request->notes  ,
-                'country_code' =>$request->country_code  ,
-                'mobile' =>$request->mobile ,
+                'notes' =>$request->notes,
+                'country_code' =>$request->country_code,
+                'mobile' =>$request->mobile,
                 
             ];
 
@@ -75,7 +75,7 @@ class UserGiftCardService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'message' => 'Failed to add gift card: ' . $e->getMessage(),
                 'data' => []
             ];
         }

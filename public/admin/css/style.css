@@ -2452,6 +2452,7 @@ header,
   justify-content: space-between;
   align-items: center;
   line-height: 20px;
+      font-size: 18px;
 }
 
 /* .timeslot-card.active {
@@ -2529,9 +2530,9 @@ select {
 }
 select {
     word-wrap: normal;
-    width: 86px !important;
-    margin-right: 22px !important;
-    margin-top: 22px !important;
+    /* width: 86px !important; */
+    /* margin-right: 22px !important;
+    margin-top: 22px !important; */
 }
 
 .remove-btn {

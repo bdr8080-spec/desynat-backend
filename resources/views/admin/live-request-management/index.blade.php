@@ -26,355 +26,373 @@
         </ul>
     </div>
     <div class="userManagecontent">
-        <div class="tab-content" id="pills-tabContent">
-            <!-- Exchange -->
+        <form method="GET" action="{{ route('admin.liveRequestManagement') }}" id="filterForm">
+            <div class="tab-content" id="pills-tabContent">
 
-            <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
-                <div class="row">
-                    <div class="align-items-end d-flex">
-
-                        <div class="col-lg-6">
-                            <div class="align-items-end d-flex">
-                                <div class="form-group mb-5 w-50">
-                                    <!-- <label for="from" class="form-label">Country Name</label> -->
-                                    <select class="form-select form-select-lg" aria-label="Large select example">
-                                        <option selected>Select Country</option>
-                                        <option value="1">country One</option>
-                                        <option value="2">country Two</option>
-                                        <option value="3">country Three</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-lg-6 ">
-                            <div class="d-flex gap-3 justify-content-end">
-
-
-                                <a class="btn btn-dark customBtn " style="margin-top: 60px" data-bs-toggle="modal"
-                                    data-bs-target="#sentModal3">
-                                    <span>Add Timeslot</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- full calender -->
-
-                <div class="container-2 mt-4">
+                <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab"
+                    tabindex="0">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-5">
-                                <div id="calendar"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Selected Date & Timeslot UI -->
-                            <div id="timeslotSection" style="display:none; margin-top:40px">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h3 id="selectedDateText" class="fw-bold"></h3>
+                        <div class="align-items-end d-flex">
+
+                            <div class="col-lg-6">
+                                <div class="align-items-end d-flex">
+                                    <div class="form-group mb-5 w-100">
+                                        <select name="country_id" class="form-select form-select-lg w-50"
+                                            onchange="document.getElementById('filterForm').submit();">
+                                            <option value="">Select country</option>
+                                            @foreach($countries as $country)
+                                            <option value="{{ $country['id'] }}"
+                                                {{ request('country_id') == $country['id'] ? 'selected' : '' }}>
+                                                {{ $country['name'] }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="row g-3">
-                                    <!-- Timeslot Card -->
-                                    <div class="col-md-4">
-                                        <div class="timeslot-card d-flex">
-                                            <div class="timeslot-card active">
-                                                <span>10 AM - 11 AM</span>
-                                            </div>
-                                            <div class="actions">
-                                                <i class="bi bi-pencil"></i>
-                                                <i class="bi bi-toggle-on text-success"></i>
-                                                <i class="bi bi-trash"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="timeslot-card d-flex">
-                                            <div class="timeslot-card">
-                                                <span>10 AM - 11 AM</span>
-                                            </div>
-                                            <div class="actions">
-                                                <i class="bi bi-pencil"></i>
-                                                <i class="bi bi-toggle-on text-success"></i>
-                                                <i class="bi bi-trash"></i>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="col-lg-6 ">
+                                <div class="d-flex gap-3 justify-content-end">
 
 
+                                    <a class="btn btn-dark customBtn " style="margin-top: 60px" data-bs-toggle="modal"
+                                        data-bs-target="#sentModal3">
+                                        <span>Add Timeslot</span>
+                                    </a>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
-                </div>
-            </div>
 
-            <!-- Return -->
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
-                tabindex="0">
-                <div class="d-flex justify-content-center">
-                    <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
-                        <li class="nav-item m-1" role="presentation">
-                            <button class="nav-link customBtn2 m-0" id="pills-new-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
-                                aria-selected="true">
-                                New Requests
-                            </button>
-                        </li>
-                        <li class="nav-item m-1" role="presentation">
-                            <button class="nav-link  active customBtn2 m-0" id="pills-approved-tab"
-                                data-bs-toggle="pill" data-bs-target="#pills-approved" type="button" role="tab"
-                                aria-controls="pills-approved" aria-selected="true">
-                                Approved
-                            </button>
-                        </li>
+                    <!-- full calender -->
 
-                        <li class="nav-item m-1" role="presentation">
-                            <button class="nav-link  customBtn2 m-0" id="pills-reject-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-reject" type="button" role="tab" aria-controls="pills-reject"
-                                aria-selected="false">
-                                Rejected
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <div class="userManagecontent">
-                    <div class="tab-content" id="pills-tabContent">
-                        <!-- Exchange -->
-
-                        <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab"
-                            tabindex="0">
-                            <div class="row">
-                                <div class="align-items-end d-flex gap-3">
-                                    <div class="search-box" style="position: relative">
-                                        <i class="bi bi-search" style="
-                                  position: absolute;
-                                  left: 10px;
-                                  top: 50%;
-                                  transform: translateY(-50%);
-                                  font-size: 16px;
-                                  color: #888;
-                                ">
-                                        </i>
-                                        <input type="text" class="form-control" placeholder="Search for..."
-                                            style="padding-left: 35px" />
-                                    </div>
-                                    <div class="form-group w-25">
-                                        <!-- <label for="from" class="form-label">Country Name</label> -->
-                                        <select class="form-select form-select-lg" aria-label="Large select example">
-                                            <option selected>Select Country</option>
-                                            <option value="1">country One</option>
-                                            <option value="2">country Two</option>
-                                            <option value="3">country Three</option>
-                                        </select>
-                                    </div>
+                    <div class="container-2 mt-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-5">
+                                    <div id="calendar"></div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <!-- Selected Date & Timeslot UI -->
+                                <div id="timeslotSection" style="display:none; margin-top:40px">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h3 id="selectedDateText" class="fw-bold"></h3>
+                                    </div>
 
-                            <div class="table-responsive mt-5 w-100">
-                                <table class="table w-100">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Sr.No</th>
-                                            <th scope="col">Request ID</th>
-                                            <th scope="col">Seller Name</th>
-                                            <th scope="col">Seller Country</th>
-                                            <th scope="col">Request On</th>
-                                            <th scope="col">Live Date & Time</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>#22222</td>
-                                            <td>lorem</td>
-                                            <td>UAE</td>
-                                            <td>2nd September 2025 | 11 Am</td>
-                                            <td>10th September 2025 | 12 PM</td>
-                                            <td>
-                                                <div class="d-flex gap-3 justify-content-center">
-                                                    <a class="table-button" type="button"><i
-                                                            class="bi bi-check-circle-fill"></i></a>
-
-                                                    <a class="table-button" data-bs-toggle="modal"
-                                                        data-bs-target="#sentModal2" type="button">
-                                                        <i class="bi bi-x-circle-fill"></i>
-                                                    </a>
+                                    <div class="row g-3">
+                                        <!-- Timeslot Card -->
+                                        @forelse($timeslots as $index => $slot)
+                                        <div class="col-md-5">
+                                            <div class="timeslot-card d-flex">
+                                                <div class="timeslot-card active">
+                                                    <!-- <span>10 AM - 11 AM</span> -->
+                                                    <span class="">{{$slot['from']}}- {{$slot['to']}}</span>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                               <div class="d-flex gap-3 justify-content-center">
+                                                        <a class="table-button editTimeslotModal"
+                                                            data-id="{{ $slot['id'] }}"
+                                                            data-from="{{ $slot['from'] }}"
+                                                            data-to="{{ $slot['to'] }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editTimeslotModal">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </a>
+
+                                                        <a class="table-button text-danger deleteTimeslot mb-1 mt-1" data-id="{{ $slot['id'] }}">
+                                                            <i class="bi bi-trash3-fill"></i>
+                                                        </a>
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input toggleStatus" 
+                                                                type="checkbox" 
+                                                                id="flexSwitchCheckChecked{{ $slot['id'] }}" 
+                                                                data-id="{{ $slot['id'] }}"
+                                                                {{ $slot['status'] == 1 ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="flexSwitchCheckChecked{{ $slot['id'] }}"></label>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        @empty
                                         <tr>
-                                            <th scope="row">1</th>
-                                            <td>#22222</td>
-                                            <td>lorem</td>
-                                            <td>UAE</td>
-                                            <td>2nd September 2025 | 11 Am</td>
-                                            <td>10th September 2025 | 12 PM</td>
-                                            <td>
-                                                <div class="d-flex gap-3 justify-content-center">
-                                                    <a class="table-button" type="button"><i
-                                                            class="bi bi-check-circle-fill"></i></a>
-
-                                                    <a class="table-button" data-bs-toggle="modal"
-                                                        data-bs-target="#sentModal2" type="button">
-                                                        <i class="bi bi-x-circle-fill"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
+                                            <span class="text-center">No slots found</span>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Return -->
-                        <div class="tab-pane fade show active" id="pills-approved" role="tabpanel"
-                            aria-labelledby="pills-approved-tab" tabindex="0">
-                            <div class="row">
-                                <div class="align-items-end gap-3 d-flex">
-                                    <div class="search-box" style="position: relative">
-                                        <i class="bi bi-search" style="
-                                  position: absolute;
-                                  left: 10px;
-                                  top: 50%;
-                                  transform: translateY(-50%);
-                                  font-size: 16px;
-                                  color: #888;
-                                ">
-                                        </i>
-                                        <input type="text" class="form-control" placeholder="Search for..."
-                                            style="padding-left: 35px" />
-                                    </div>
-                                    <div class="form-group w-25">
-                                        <!-- <label for="from" class="form-label">Country Name</label> -->
-                                        <select class="form-select form-select-lg" aria-label="Large select example">
-                                            <option selected>Select Country</option>
-                                            <option value="1">country One</option>
-                                            <option value="2">country Two</option>
-                                            <option value="3">country Three</option>
-                                        </select>
+                                        @endforelse
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="table-responsive mt-5 w-100">
-                                <table class="table w-100">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Sr.No</th>
-                                            <th scope="col">Request ID</th>
-                                            <th scope="col">Seller Name</th>
-                                            <th scope="col">Seller Country</th>
-                                            <th scope="col">Request On</th>
-                                            <th scope="col">Live Date & Time</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>#22222</td>
-                                            <td>lorem</td>
-                                            <td>UAE</td>
-                                            <td>2nd September 2025 | 11 Am</td>
-                                            <td>10th September 2025 | 12 PM</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>#22222</td>
-                                            <td>lorem</td>
-                                            <td>UAE</td>
-                                            <td>2nd September 2025 | 11 Am</td>
-                                            <td>10th September 2025 | 12 PM</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- cancle -->
-
-                        <div class="tab-pane fade" id="pills-reject" role="tabpanel" aria-labelledby="pills-reject-tab"
-                            tabindex="0">
-                            <div class="row">
-                                <div class="align-items-end gap-3 d-flex">
-                                    <div class="search-box" style="position: relative">
-                                        <i class="bi bi-search" style="
-                                  position: absolute;
-                                  left: 10px;
-                                  top: 50%;
-                                  transform: translateY(-50%);
-                                  font-size: 16px;
-                                  color: #888;
-                                ">
-                                        </i>
-                                        <input type="text" class="form-control" placeholder="Search for..."
-                                            style="padding-left: 35px" />
-                                    </div>
-                                    <div class="form-group w-25">
-                                        <!-- <label for="from" class="form-label">Country Name</label> -->
-                                        <select class="form-select form-select-lg" aria-label="Large select example">
-                                            <option selected>Select Country</option>
-                                            <option value="1">country One</option>
-                                            <option value="2">country Two</option>
-                                            <option value="3">country Three</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="table-responsive mt-5 w-100">
-                                <table class="table w-100">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Sr.No</th>
-                                            <th scope="col">Request ID</th>
-                                            <th scope="col">Seller Name</th>
-                                            <th scope="col">Seller Country</th>
-                                            <th scope="col">Request On</th>
-                                            <th scope="col">Live Date & Time</th>
-                                            <th scope="col">Rejection Reason</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>#22222</td>
-                                            <td>lorem</td>
-                                            <td>UAE</td>
-                                            <td>2nd September 2025 | 11 Am</td>
-                                            <td>10th September 2025 | 12 PM</td>
-                                            <td>lorem</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>#22222</td>
-                                            <td>lorem</td>
-                                            <td>UAE</td>
-                                            <td>2nd September 2025 | 11 Am</td>
-                                            <td>10th September 2025 | 12 PM</td>
-                                            <td>lorem</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Return -->
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+                    tabindex="0">
+                    <div class="d-flex justify-content-center">
+                        <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
+                            <li class="nav-item m-1" role="presentation">
+                                <button class="nav-link customBtn2 m-0" id="pills-new-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
+                                    aria-selected="true">
+                                    New Requests
+                                </button>
+                            </li>
+                            <li class="nav-item m-1" role="presentation">
+                                <button class="nav-link  active customBtn2 m-0" id="pills-approved-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-approved" type="button" role="tab"
+                                    aria-controls="pills-approved" aria-selected="true">
+                                    Approved
+                                </button>
+                            </li>
+
+                            <li class="nav-item m-1" role="presentation">
+                                <button class="nav-link  customBtn2 m-0" id="pills-reject-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-reject" type="button" role="tab" aria-controls="pills-reject"
+                                    aria-selected="false">
+                                    Rejected
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="userManagecontent">
+                        <div class="tab-content" id="pills-tabContent">
+                            <!-- Exchange -->
+
+                            <div class="tab-pane fade" id="pills-new" role="tabpanel" aria-labelledby="pills-new-tab"
+                                tabindex="0">
+                                <div class="row">
+                                    <div class="align-items-end d-flex gap-3">
+                                        <div class="search-box" style="position: relative">
+                                            <i class="bi bi-search" style="
+                                  position: absolute;
+                                  left: 10px;
+                                  top: 50%;
+                                  transform: translateY(-50%);
+                                  font-size: 16px;
+                                  color: #888;
+                                ">
+                                            </i>
+                                            <input type="text" class="form-control" placeholder="Search for..."
+                                                style="padding-left: 35px" />
+                                        </div>
+                                        <div class="form-group ">
+                                            <!-- <label for="from" class="form-label">Country Name</label> -->
+                                            <select class="form-select form-select-lg w-25" 
+                                                aria-label="Large select example">
+                                                <option selected>Select Country</option>
+                                                <option value="1">country One</option>
+                                                <option value="2">country Two</option>
+                                                <option value="3">country Three</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive mt-5 w-100">
+                                    <table class="table w-100">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sr.No</th>
+                                                <th scope="col">Request ID</th>
+                                                <th scope="col">Seller Name</th>
+                                                <th scope="col">Seller Country</th>
+                                                <th scope="col">Request On</th>
+                                                <th scope="col">Live Date & Time</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>#22222</td>
+                                                <td>lorem</td>
+                                                <td>UAE</td>
+                                                <td>2nd September 2025 | 11 Am</td>
+                                                <td>10th September 2025 | 12 PM</td>
+                                                <td>
+                                                    <div class="d-flex gap-3 justify-content-center">
+                                                        <a class="table-button" type="button"><i
+                                                                class="bi bi-check-circle-fill"></i></a>
+
+                                                        <a class="table-button" data-bs-toggle="modal"
+                                                            data-bs-target="#sentModal2" type="button">
+                                                            <i class="bi bi-x-circle-fill"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>#22222</td>
+                                                <td>lorem</td>
+                                                <td>UAE</td>
+                                                <td>2nd September 2025 | 11 Am</td>
+                                                <td>10th September 2025 | 12 PM</td>
+                                                <td>
+                                                    <div class="d-flex gap-3 justify-content-center">
+                                                        <a class="table-button" type="button"><i
+                                                                class="bi bi-check-circle-fill"></i></a>
+
+                                                        <a class="table-button" data-bs-toggle="modal"
+                                                            data-bs-target="#sentModal2" type="button">
+                                                            <i class="bi bi-x-circle-fill"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Return -->
+                            <div class="tab-pane fade show active" id="pills-approved" role="tabpanel"
+                                aria-labelledby="pills-approved-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="align-items-end gap-3 d-flex">
+                                        <div class="search-box" style="position: relative">
+                                            <i class="bi bi-search" style="
+                                  position: absolute;
+                                  left: 10px;
+                                  top: 50%;
+                                  transform: translateY(-50%);
+                                  font-size: 16px;
+                                  color: #888;
+                                ">
+                                            </i>
+                                            <input type="text" class="form-control" placeholder="Search for..."
+                                                style="padding-left: 35px" />
+                                        </div>
+                                        <div class="form-group ">
+                                            <!-- <label for="from" class="form-label">Country Name</label> -->
+                                            <select class="form-select form-select-lg w-25"
+                                                aria-label="Large select example">
+                                                <option selected>Select Country</option>
+                                                <option value="1">country One</option>
+                                                <option value="2">country Two</option>
+                                                <option value="3">country Three</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive mt-5 w-100">
+                                    <table class="table w-100">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sr.No</th>
+                                                <th scope="col">Request ID</th>
+                                                <th scope="col">Seller Name</th>
+                                                <th scope="col">Seller Country</th>
+                                                <th scope="col">Request On</th>
+                                                <th scope="col">Live Date & Time</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>#22222</td>
+                                                <td>lorem</td>
+                                                <td>UAE</td>
+                                                <td>2nd September 2025 | 11 Am</td>
+                                                <td>10th September 2025 | 12 PM</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>#22222</td>
+                                                <td>lorem</td>
+                                                <td>UAE</td>
+                                                <td>2nd September 2025 | 11 Am</td>
+                                                <td>10th September 2025 | 12 PM</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- cancle -->
+
+                            <div class="tab-pane fade" id="pills-reject" role="tabpanel"
+                                aria-labelledby="pills-reject-tab" tabindex="0">
+                                <div class="row">
+                                    <div class="align-items-end gap-3 d-flex">
+                                        <div class="search-box" style="position: relative">
+                                            <i class="bi bi-search" style="
+                                  position: absolute;
+                                  left: 10px;
+                                  top: 50%;
+                                  transform: translateY(-50%);
+                                  font-size: 16px;
+                                  color: #888;
+                                ">
+                                            </i>
+                                            <input type="text" class="form-control" placeholder="Search for..."
+                                                style="padding-left: 35px" />
+                                        </div>
+                                        <div class="form-group ">
+                                            <!-- <label for="from" class="form-label">Country Name</label> -->
+                                            <select class="form-select form-select-lg w-25"
+                                                aria-label="Large select example">
+                                                <option selected>Select Country</option>
+                                                <option value="1">country One</option>
+                                                <option value="2">country Two</option>
+                                                <option value="3">country Three</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive mt-5 w-100">
+                                    <table class="table w-100">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sr.No</th>
+                                                <th scope="col">Request ID</th>
+                                                <th scope="col">Seller Name</th>
+                                                <th scope="col">Seller Country</th>
+                                                <th scope="col">Request On</th>
+                                                <th scope="col">Live Date & Time</th>
+                                                <th scope="col">Rejection Reason</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>#22222</td>
+                                                <td>lorem</td>
+                                                <td>UAE</td>
+                                                <td>2nd September 2025 | 11 Am</td>
+                                                <td>10th September 2025 | 12 PM</td>
+                                                <td>lorem</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>#22222</td>
+                                                <td>lorem</td>
+                                                <td>UAE</td>
+                                                <td>2nd September 2025 | 11 Am</td>
+                                                <td>10th September 2025 | 12 PM</td>
+                                                <td>lorem</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <!-- End of Content Wrapper -->
 </div>
 
-<!-- add new model -->
+<!-- reason model -->
 <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -385,36 +403,35 @@
             </div>
             <div class="modal-body">
                 <div class="appointment-container">
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1" class="form-label">Reason For Rejection
-                                        </label>
-                                        <textarea class="form-control" id="rejectReason" rows="3"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                                <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                                    style="margin-top: 30px">
-                                    <a class="btn btn-dark customBtn" href=""> Submit</a>
+                                    <label for="exampleFormControlInput1" class="form-label">Reason For Rejection
+                                    </label>
+                                    <textarea class="form-control" id="rejectReason" rows="3"></textarea>
                                 </div>
                             </div>
                         </div>
-                    </form>
+
+                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
+                                style="margin-top: 30px">
+                                <a class="btn btn-dark customBtn" href=""> Submit</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- add modal -->
 <div class="modal fade" id="sentModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
                 <h2 class="h2">Add Timeslot</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -422,49 +439,67 @@
                 <div class="appointment-container">
                     <div class="time-wrapper">
                         <div id="timeContainer">
-                            <!-- First Row (Default) -->
                             <div class="time-row">
-                                <div class="time-block">
+                                <div class="time-block from-block">
                                     <label>From</label>
-                                    <select>
-                                        <option>HH</option>
-                                    </select>
-                                    <select>
-                                        <option>MM</option>
-                                    </select>
-                                    <select>
-                                        <option>AM</option>
-                                        <option>PM</option>
-                                    </select>
+                                    <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
                                 </div>
 
-                                <div class="time-block">
+                                <div class="time-block to-block">
                                     <label>To</label>
-                                    <select>
-                                        <option>HH</option>
-                                    </select>
-                                    <select>
-                                        <option>MM</option>
-                                    </select>
-                                    <select>
-                                        <option>AM</option>
-                                        <option>PM</option>
-                                    </select>
+                                    <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
                                 </div>
                             </div>
                         </div>
-
-                        <a href="javascript:void(0)" class="add-more" onclick="addRow()">+ Add More</a>
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <div class="d-flex align-items-center justify-content-center gap-3 mt-3"
-                                style="margin-top: 30px">
-                                <button type="submit" class="btn btn-dark customBtn">
-                                    Submit
-                                </button>
-                                <!-- <button type="button" class="btn btn-dark customBtn" href=""> Submit</button> -->
+                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
+                            <button type="submit" class="btn btn-dark customBtn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- edit modal -->
+<div class="modal fade" id="editTimeslotModal" tabindex="-1" aria-labelledby="editTimeslotLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Edit Timeslot</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="time-wrapper">
+                        <div id="editTimeContainer">
+                            <div class="time-row">
+                                <div class="time-block from-block">
+                                    <label>From</label>
+                                    <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                </div>
+                                <div class="time-block to-block">
+                                    <label>To</label>
+                                    <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
+                                    <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
+                                    <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                        <div class="d-flex align-items-center justify-content-center gap-3 mt-3" style="margin-top: 30px">
+                            <button type="submit" class="btn btn-dark customBtn" id="editTimeslotSubmit">Update</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -473,24 +508,67 @@
 
 
 
+
+
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    // Get last active tab from localStorage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+
+    // Save active tab to localStorage when switched
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const url = new URL(window.location);
+    const urlParams = url.searchParams;
+
+    // ✅ If date NOT in URL → add today's date & reload ONCE
+    if (!urlParams.has('date')) {
+        const today = new Date().toISOString().split('T')[0];
+        urlParams.set('date', today);
+        window.location.replace(url.toString()); // prevents back-button issue
+        return;
+    }
+
+    // ✅ Date exists in URL
+    const selectedDate = urlParams.get('date');
+
     var calendarEl = document.getElementById("calendar");
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
         selectable: true,
         height: "auto",
+        initialDate: selectedDate,
 
         dateClick: function(info) {
-            showSelectedDate(info.dateStr);
+            reloadWithDate(info.dateStr);
         }
     });
 
     calendar.render();
 
-    // ✅ PAGE LOAD par aaj ki date show karne ke liye
-    const today = new Date().toISOString().split('T')[0];
-    showSelectedDate(today);
+    // ✅ Highlight selected date
+    calendar.select(selectedDate);
+
+    showSelectedDate(selectedDate);
 });
 
 function showSelectedDate(dateStr) {
@@ -506,8 +584,421 @@ function showSelectedDate(dateStr) {
 
     document.getElementById("timeslotSection").style.display = "block";
 }
+
+// ✅ Reload page when user clicks a date
+function reloadWithDate(dateStr) {
+    const url = new URL(window.location);
+    url.searchParams.set('date', dateStr);
+    window.location.href = url.toString();
+}
 </script>
+
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.deleteTimeslot').forEach(button => {
+        button.addEventListener('click', function() {
+            let id = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deleteTimeslot/${id}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                toastr.success(data.message);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2000);
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
+                }
+            });
+        });
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            let id = this.getAttribute('data-id');
+            let isChecked = this.checked;
+
+            fetch(`/admin/blockUnblockTimeslot/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        is_block: isChecked ? 0 : 1
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        if (isChecked) {
+                            toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                        this.checked = !isChecked;
+                    }
+                })
+                .catch(error => {
+                    toastr.error('Something went wrong while updating status.');
+                    this.checked = !isChecked;
+                });
+        });
+    });
+});
+</script>
+
+<!-- add timeslot -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const timeContainer = document.getElementById("timeContainer");
+    const row = timeContainer.querySelector(".time-row");
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const countryId = urlParams.get('country_id');
+    const date = urlParams.get('date');
+
+    // Populate dropdowns
+    function populateDropdowns(row) {
+        const hhs = row.querySelectorAll("select.hh");
+        const mms = row.querySelectorAll("select.mm");
+        const aps = row.querySelectorAll("select.ap");
+
+        hhs.forEach(select => {
+            select.innerHTML = '<option value="">HH</option>';
+            for(let i=1;i<=12;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        mms.forEach(select => {
+            select.innerHTML = '<option value="">MM</option>';
+            for(let i=0;i<=59;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        aps.forEach(select => {
+            select.innerHTML = '<option value="">AM/PM</option><option value="AM">AM</option><option value="PM">PM</option>';
+        });
+    }
+
+    populateDropdowns(row);
+
+    document.addEventListener('change', function(e){
+        if(e.target.tagName === 'SELECT'){
+            const next = e.target.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+        }
+    });
+
+    // Validate row with custom messages
+    function validateRow(row){
+        let valid = true;
+        row.querySelectorAll("select").forEach(select=>{
+            const next = select.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+
+            if(!select.value){
+                const error = document.createElement('small');
+                error.classList.add('error-msg');
+                error.style.color = 'red';
+
+                if(select.classList.contains('hh')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} Hour`;
+                else if(select.classList.contains('mm')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} Minute`;
+                else if(select.classList.contains('ap')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} AM/PM`;
+                else error.innerText = 'Please select a value';
+
+                select.parentNode.insertBefore(error, select.nextSibling);
+                valid = false;
+            }
+        });
+        return valid;
+    }
+
+    // Convert time to total minutes for comparison
+    function timeToMinutes(hh, mm, ap){
+        let hour = parseInt(hh);
+        const minute = parseInt(mm);
+        if(ap === 'PM' && hour !== 12) hour += 12;
+        if(ap === 'AM' && hour === 12) hour = 0;
+        return hour * 60 + minute;
+    }
+
+    document.querySelector("#sentModal3 .btn[type='submit']").addEventListener('click', function(e){
+        e.preventDefault();
+
+        if(!validateRow(row)) return;
+
+        if(!countryId){
+            toastr.error('Please select a country');
+            return;
+        }
+
+        if(!date){
+            toastr.error('Please select a date');
+            return;
+        }
+
+        const fromHH = row.querySelector(".from-block select.hh").value;
+        const fromMM = row.querySelector(".from-block select.mm").value;
+        const fromAP = row.querySelector(".from-block select.ap").value;
+
+        const toHH = row.querySelector(".to-block select.hh").value;
+        const toMM = row.querySelector(".to-block select.mm").value;
+        const toAP = row.querySelector(".to-block select.ap").value;
+
+        const fromTotal = timeToMinutes(fromHH, fromMM, fromAP);
+        const toTotal = timeToMinutes(toHH, toMM, toAP);
+
+        if(toTotal <= fromTotal){
+            toastr.error('To time should be greater than From time');
+            return;
+        }
+
+        const fromTime = `${fromHH}:${fromMM} ${fromAP}`;
+        const toTime = `${toHH}:${toMM} ${toAP}`;
+
+        fetch("{{ route('admin.addTimeslot') }}", {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRF-TOKEN':'{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                country_id: countryId,
+                date: date,
+                from: fromTime,
+                to: toTime
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message || 'Timeslot added successfully!');
+                location.reload();
+            } else {
+                toastr.error(res.message || 'Something went wrong!');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error('Failed to create timeslot. See console for details.');
+        });
+    });
+
+});
+</script>
+
+
+<!-- update timeslot -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    function populateDropdowns(container) {
+        container.querySelectorAll("select.hh").forEach(select => {
+            select.innerHTML = '<option value="">HH</option>';
+            for(let i=1;i<=12;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        container.querySelectorAll("select.mm").forEach(select => {
+            select.innerHTML = '<option value="">MM</option>';
+            for(let i=0;i<=59;i++){
+                const val = i.toString().padStart(2,'0');
+                select.innerHTML += `<option value="${val}">${val}</option>`;
+            }
+        });
+
+        container.querySelectorAll("select.ap").forEach(select => {
+            select.innerHTML = '<option value="">AM/PM</option><option value="AM">AM</option><option value="PM">PM</option>';
+        });
+    }
+
+    function validateRow(container, prefix) {
+        let valid = true;
+        container.querySelectorAll("select").forEach(select => {
+            const next = select.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+
+            if(!select.value){
+                const error = document.createElement('small');
+                error.classList.add('error-msg');
+                error.style.color = 'red';
+
+                // Custom messages
+                let msg = 'Please select a value';
+                if(select.classList.contains('hh')) msg = `Please select ${prefix} Hour`;
+                if(select.classList.contains('mm')) msg = `Please select ${prefix} Minute`;
+                if(select.classList.contains('ap')) msg = `Please select ${prefix} AM/PM`;
+
+                error.innerText = msg;
+                select.parentNode.insertBefore(error, select.nextSibling);
+                valid = false;
+            }
+        });
+        return valid;
+    }
+
+    document.addEventListener('change', function(e){
+        if(e.target.tagName === 'SELECT'){
+            const next = e.target.nextElementSibling;
+            if(next && next.classList.contains('error-msg')) next.remove();
+        }
+    });
+
+    const editModalEl = document.getElementById('editTimeslotModal');
+    const editRow = editModalEl.querySelector(".time-row");
+    populateDropdowns(editRow);
+
+    editModalEl.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const slotId = button.getAttribute('data-id');
+        const fromTime = button.getAttribute('data-from');
+        const toTime = button.getAttribute('data-to');
+
+        if(!slotId || !fromTime || !toTime){
+            toastr.error('Invalid timeslot data');
+            return;
+        }
+
+        const fromParts = fromTime.split(/[: ]/);
+        const toParts = toTime.split(/[: ]/);
+
+        editRow.querySelector(".from-block select.hh").value = fromParts[0];
+        editRow.querySelector(".from-block select.mm").value = fromParts[1];
+        editRow.querySelector(".from-block select.ap").value = fromParts[2];
+
+        editRow.querySelector(".to-block select.hh").value = toParts[0];
+        editRow.querySelector(".to-block select.mm").value = toParts[1];
+        editRow.querySelector(".to-block select.ap").value = toParts[2];
+
+        document.getElementById('editTimeslotSubmit').dataset.slotId = slotId;
+    });
+
+    document.getElementById('editTimeslotSubmit')?.addEventListener('click', function(e){
+        e.preventDefault();
+
+        const fromValid = validateRow(editRow.querySelector(".from-block"), "From");
+        const toValid   = validateRow(editRow.querySelector(".to-block"), "To");
+        if(!fromValid || !toValid) return;
+
+        const slotId = this.dataset.slotId;
+        const urlParams = new URLSearchParams(window.location.search);
+        const countryId = urlParams.get('country_id');
+        const date = urlParams.get('date');
+
+        if(!countryId){
+            toastr.error('Please select a country');
+            return;
+        }
+        if(!date){
+            toastr.error('Please select a date');
+            return;
+        }
+
+        const fromHour = editRow.querySelector(".from-block select.hh").value;
+        const fromMinute = editRow.querySelector(".from-block select.mm").value;
+        const fromAP = editRow.querySelector(".from-block select.ap").value;
+
+        const toHour = editRow.querySelector(".to-block select.hh").value;
+        const toMinute = editRow.querySelector(".to-block select.mm").value;
+        const toAP = editRow.querySelector(".to-block select.ap").value;
+
+        const from = `${fromHour}:${fromMinute} ${fromAP}`;
+        const to   = `${toHour}:${toMinute} ${toAP}`;
+
+        function timeTo24Hour(hh, mm, ap){
+            let hour = parseInt(hh);
+            const minute = parseInt(mm);
+            if(ap === 'PM' && hour !== 12) hour += 12;
+            if(ap === 'AM' && hour === 12) hour = 0;
+            return hour*60 + minute; // total minutes
+        }
+
+        const fromTotal = timeTo24Hour(fromHour, fromMinute, fromAP);
+        const toTotal = timeTo24Hour(toHour, toMinute, toAP);
+
+        if(toTotal <= fromTotal){
+            toastr.error('To time should be greater than From time');
+            return;
+        }
+
+        fetch(`/admin/updateTimeslot/${slotId}`, {
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRF-TOKEN':'{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ country_id: countryId, date, from, to })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success'){
+                toastr.success(res.message);
+                bootstrap.Modal.getInstance(editModalEl).hide();
+                location.reload();
+            } else {
+                toastr.error(res.message || 'Failed to update timeslot');
+            }
+        })
+        .catch(err => toastr.error('Failed to update timeslot'));
+    });
+
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
 function addRow() {
     const container = document.getElementById('timeContainer');
 
@@ -538,6 +1029,6 @@ function addRow() {
 function removeRow(el) {
     el.parentElement.remove();
 }
-</script>
+</script> -->
 
 @endsection

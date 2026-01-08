@@ -181,6 +181,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_expired_deals',[DealController::class,'get_expired_deals']);
      Route::post('/block_unblock_deal',[DealController::class,'block_unblock_deal']);
      Route::post('/delete_deal',[DealController::class,'delete_deal']);
+     Route::get('/get_deal_detail',[DealController::class,'get_deal_detail']);
 
      //story Management
      Route::post('/add_story',[StoryController::class,'add_story']);
@@ -203,6 +204,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/update_full_banner',[FullBannerController::class,'update_full_banner']);
      Route::post('/delete_full_banner',[FullBannerController::class,'delete_full_banner']);
      Route::get('/get_full_banners',[FullBannerController::class,'get_full_banners']);
+     Route::get('/get_banner_detail',[FullBannerController::class,'get_banner_detail']);
 
 
 

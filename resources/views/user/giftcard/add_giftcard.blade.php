@@ -111,9 +111,62 @@
                                     placeholder="Enter Email ID">
                                 <span class="text-danger error-text receiver_email_error"></span>
                             </div>
+
+                            <div class="form-group position-relative py-2 mobileInput">
+                                <label>WhatsApp Number</label>
+                                <div class="d-flex align-items-center mt-1">
+                                    <div class="">
+                                        <div class="dropdown">
+                                            <button
+                                                class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control pline-10"
+                                                type="button" id="countryDropdown"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+
+                                                <span id="selected-flag">
+                                                    {{ old('country_flag', $country[0]->flag1) }}
+                                                </span>
+                                                <span id="selected-code" class="ms-2">
+                                                    {{ old('country_code', $country[0]->dial_code) }}
+                                                </span>
+                                            </button>
+
+                                            <ul class="dropdown-menu p-2 newcountrybox" aria-labelledby="countryDropdown">
+                                                @foreach ($country as $index => $item)
+                                                    <li>
+                                                        <label
+                                                            class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                            style="cursor: pointer;">
+                                                            <input type="radio" name="country_code"
+                                                                value="{{ $item->dial_code }}"
+                                                                data-flag="{{ $item->flag1 }}"
+                                                                data-name="{{ $item->name }}"
+                                                                class="country-radio"
+                                                                {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                hidden>
+                                                            <div width="25" height="16">
+                                                                <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                                    ({{ $item->name }})
+                                                                </span>
+                                                            </div>
+
+                                                        </label>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="w-100">
+                                        <input type="number" class="form-control pline-10" name="mobile" placeholder="Enter WhatsApp Number" name="" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 15)">
+                                        <span class="text-danger error-text mobile_error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
                         </div>
                     </div>
-                    <div class="gift-pnl">
+
+                    <div class="gift-pnl mt-3">
                         <h6>From</h6>
                         <div class="form-group w-100 py-2">
                             <label>Name</label>
@@ -389,6 +442,8 @@ $(document).ready(function() {
 
         let receiver_name = $("input[name='receiver_name']").val().trim();
         let receiver_email = $("input[name='receiver_email']").val().trim();
+        let country_code = $("input[name='country_code']").val().trim();
+        let mobile = $("input[name='mobile']").val().trim();
         let sender_name = $("input[name='sender_name']").val().trim();
         let sender_email = $("input[name='sender_email']").val().trim();
         let wish_message = $("textarea[name='wish_message']").val().trim();
@@ -416,6 +471,12 @@ $(document).ready(function() {
         if (wish_message === "") {
             $("textarea[name='wish_message']").siblings(".error-text").text(
                 "Please enter Wish Message");
+            hasError = true;
+        }
+
+        if (mobile === "") {
+            $("input[name='mobile']").siblings(".error-text").text(
+                "Please enter whatsapp number");
             hasError = true;
         }
 
@@ -519,6 +580,30 @@ window.addEventListener('pageshow', function(event) {
 if (performance.navigation.type === 2) {
     window.location.reload(true);
 }
+
+
+// When a user selects a country code
+$(document).ready(function() {
+    $(document).on('click', '.country-option', function() {
+        let radio = $(this).find('.country-radio');
+        let flag = radio.data('flag');
+        let code = radio.val();
+        let name = radio.data('name');
+
+        // Update the flag and code shown on the button
+        $('#selected-flag').html(flag);
+        $('#selected-code').text(code);
+
+        // Set the radio input as checked
+        radio.prop('checked', true);
+
+        // Close the dropdown (Bootstrap 5)
+        $('#countryDropdown').dropdown('hide');
+    });
+});
+
+
+
 </script>
 
 
