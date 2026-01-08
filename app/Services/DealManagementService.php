@@ -35,7 +35,7 @@ class DealManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Deal found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
@@ -79,7 +79,7 @@ class DealManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Deal found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
