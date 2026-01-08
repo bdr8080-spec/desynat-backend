@@ -112,7 +112,7 @@
                                 <span class="text-danger error-text receiver_email_error"></span>
                             </div>
 
-                            <div class="d-flex align-items-center">
+                            <!-- <div class="d-flex align-items-center">
                                 <div class="LoginCountryCode">
                                     <div class="dropdown">
                                         <button
@@ -156,7 +156,7 @@
                                     <input type="text" class="form-control notapplyspace"  value="" placeholder="Please enter mobile" name="mobileOrEmail" id="LoginMobile"
                                     />
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>
