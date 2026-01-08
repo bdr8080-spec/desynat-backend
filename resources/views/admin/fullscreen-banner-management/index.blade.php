@@ -63,8 +63,8 @@
         <div class="">
             <form method="GET" action="{{ route('admin.fullScreenBannerManagement') }}" id="filterForm">
             <div class="row">
-                <div class="col-lg-3 col-md-4 col-12">
-                    <!-- <div class="search-box" style="position: relative;">
+                <!-- <div class="col-lg-3 col-md-4 col-12">
+                    <div class="search-box" style="position: relative;">
                         <i class="bi bi-search" style="
                         position: absolute;
                         left: 10px;
@@ -76,14 +76,14 @@
                         </i>
                         <input type="text" class="form-control" placeholder="Search for..."
                             style="padding-left: 35px" />
-                    </div> -->
-                </div>
+                    </div>
+                </div> -->
 
-                <div class="col-lg-3 col-md-4 col-12">
-                    <div class="form-group mb-5 w-100">
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="form-group mb-5 ">
                         <!-- <label for="from" class="form-label">Country Name</label> -->
                         <select name="country"
-                            class="form-select form-select-lg "
+                            class="form-select form-select-lg w-50 "
                             onchange="document.getElementById('filterForm').submit();">
                             <option value="">Select country</option>
                             @foreach($countries as $country)
