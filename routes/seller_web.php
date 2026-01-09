@@ -113,7 +113,7 @@ Route::group(['prefix' => 'seller'], function () {
     // M6 APi 
 
      route::Match(['get','post'],'/order-management',[SellerOrderController::class,'order_management'])->name('seller.order_management');
-     route::Match(['get','post'],'/single-order-view',[SellerOrderController::class,'single_order_View'])->name('seller.single_order_View');
+     route::Match(['get','post'],'/single-order-view/{id}',[SellerOrderController::class,'single_order_View'])->name('seller.single_order_View');
      
 
     });

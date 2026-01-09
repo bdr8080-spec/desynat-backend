@@ -35,7 +35,7 @@ public function SellerGetOrders($request){
 try{
 
 
-   $all_Order= orderdetail::with('order.user_details','order.delivery_details', 'product_details')->where('seller_id',$request->seller_id)
+   $all_Order= orderdetail::with('user_details','order.user_details','order.delivery_details', 'product_details','variation_details')->where('seller_id',$request->seller_id)
    ->whereHas('order', function($query) use ($request) {
     $query->where('order_type',$request->type);
    });
