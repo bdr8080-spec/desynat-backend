@@ -218,7 +218,7 @@ class LiveRequestService
                 return [
                     'status' => 'success',
                     'message' => 'No Request found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
