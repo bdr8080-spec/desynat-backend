@@ -51,7 +51,7 @@
                 <div class="order-ic">
                     <div class="order-cont">
                         <div class="title-light">Date & Time </div>
-                        <p>21/01/2025 at 16:14 PM</p>
+                        <p>{{$order_details->created_at}}</p>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 <div class="cust-deatils-pnl d-flex justify-content-between">
                     <div class="cust-deatils">
                         <div class="order-cont">
-                            <p>Jimmy Wilson</p>
+                            <p>{{$order_details->order->user_details->full_name}}</p>
                             <div class="title-light">Phone:<span>+12345678958</span></div>
                         </div>
                     </div>
