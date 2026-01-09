@@ -165,6 +165,7 @@ Route::get('user/sub-category',[ProfileController::class, 'getSubCategories']);
 // common APi
 
 Route::post('upload', [CommonController::class, 'upload']);
+Route::post('uploadFile', [CommonController::class, 'uploadFile']);
 Route::get('country', [CommonController::class, 'country']);
 Route::get('all_country', [CommonController::class, 'all_country']);
 

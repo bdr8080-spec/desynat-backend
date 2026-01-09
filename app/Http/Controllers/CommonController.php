@@ -174,9 +174,13 @@ class CommonController extends Controller
 
      public function uploadFile(Request $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:51200', // 50MB max
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120', // 5MB (KB)
         ]);
+
+        if ($validator->fails()) {
+               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
+        }
 
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $file = $request->file('file');
