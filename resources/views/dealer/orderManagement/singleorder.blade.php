@@ -28,7 +28,7 @@
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/order.svg" alt="icon" class="img-fluid">
                     <div class="order-cont">
                         <div class="title-light">Order ID</div>
-                        <p>#98777897</p>
+                        <p>#{{ $order_details->id}}</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,14 @@
                 <div class="order-ic">
                     <div class="order-cont">
                         <div class="title-light">Order Type</div>
-                        <p>By Customer</p>
+                        <p>
+                            @if($order_details->order->order_type=='1')
+                            Normal Order
+                            @else
+                            Custom Order
+                            @endif
+
+                        </p>
                     </div>
                 </div>
             </div>
@@ -205,7 +212,7 @@
                 </div>
             </div>
 
-              <div class="order-box border-radious-10 box-shadow mt-4">
+            <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Exchange Details</h6>
 
                 <div class="pay-sum">

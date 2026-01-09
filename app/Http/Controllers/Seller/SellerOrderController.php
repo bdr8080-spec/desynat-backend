@@ -58,7 +58,7 @@ class SellerOrderController extends Controller
         "id" =>$id,
        ];
 
-       $data= $this->SellerOrderService->SellerSingleOrdersdata($request_data);
+    $data= $this->SellerOrderService->SellerSingleOrdersdata($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
