@@ -67,14 +67,16 @@
                 <div class="cust-deatils-pnl d-flex justify-content-between">
                     <div class="cust-deatils">
                         <div class="order-cont">
-                            <p>{{$order_details->order->user_details->full_name}}</p>
-                            <div class="title-light">Phone:<span>+12345678958</span></div>
+                            <p>{{$order_details->order->delivery_details->name}}</p>
+                            <div class="title-light">
+                                Phone:<span>{{$order_details->order->delivery_details->country_code}}
+                                    {{$order_details->order->delivery_details->mobile}}</span></div>
                         </div>
                     </div>
                     <div class="cust-deatils">
                         <div class="order-cont">
                             <div class="title-light">Shipping Location</div>
-                            <p>Flat No. 123 New Delhi </p>
+                            <p>{{$order_details->order->delivery_details->address}} </p>
                         </div>
                     </div>
                 </div>
@@ -97,31 +99,42 @@
 
                 <div class="pay-sum">
                     <div class="summary-title-1">Transaction id</div>
-                    <div class="summary-value">#455545</div>
+                    <div class="summary-value">#{{$order_details->order->transaction_id}} </div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Sub Total</div>
-                    <div class="summary-value">1054.0 KD</div>
+                    <div class="summary-value">{{$order_details->amount}} KD</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Coupon Applied</div>
-                    <div class="summary-value">20 KD</div>
+                    <div class="summary-value">{{$order_details->promocode_value}} KD</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Shipping Charges</div>
-                    <div class="summary-value">20 KD</div>
+                    <div class="summary-value">{{$order_details->shipping_fees}} KD</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Total</div>
-                    <div class="summary-value">105.5 KD</div>
+
+                    @php
+
+                    $user_Paid_amount= $order_details->amount + $order_details->tax
+                    + $order_details->shipping_fees;
+
+                    $total_amount= $order_details->amount + $order_details->tax +
+                    $order_details->promocode_value + $order_details->shipping_fees +$order_details->giftcard_amount ;
+
+                    @endphp
+
+                    <div class="summary-value">{{$total_amount}} KD</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Paid By Customer</div>
-                    <div class="summary-value">105.5 KD</div>
+                    <div class="summary-value">{{$user_Paid_amount}} KD</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Admin Commission</div>
-                    <div class="summary-value">105.5 KD</div>
+                    <div class="summary-value">0 KD</div>
                 </div>
             </div>
 

@@ -64,10 +64,7 @@ class SellerOrderController extends Controller
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
     }
 
-    $order_details=  $data['data'];
-
-    dump($order_details);
-    
+    $order_details=  $data['data'];    
     
     return View('dealer.orderManagement.singleorder',compact('order_details'));
     
