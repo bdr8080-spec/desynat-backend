@@ -47,7 +47,7 @@ class StoryManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Story found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
@@ -88,7 +88,7 @@ class StoryManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Story found',
-                    'data' =>  []
+                    'data' =>  (object)[]
                 ];
             }
 
