@@ -29,7 +29,7 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active w-100" id="pills-all-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all"
-                                aria-selected="true">All ({{count($custom['All_order'])}}) </button>
+                                aria-selected="true">All ({{count($normal['All_order'])}}) </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-ongoing-tab" data-bs-toggle="pill"
@@ -108,7 +108,7 @@
                                     </thead>
                                     <tbody>
 
-                                        @foreach($custom['All_order'] as $key => $val)
+                                        @foreach($normal['All_order'] as $key => $val)
 
                                         <tr>
                                             <td>{{$key+1}}</td>
@@ -210,7 +210,7 @@
                                     </thead>
                                     <tbody>
 
-                                        @foreach($custom['ongoing_order'] as $key => $val)
+                                        @foreach($normal['ongoing_order'] as $key => $val)
 
                                         <tr>
                                             <td>{{$key+1}}</td>
@@ -311,7 +311,7 @@
                                     </thead>
                                     <tbody>
 
-                                        @foreach($custom['past_order'] as $key => $val)
+                                        @foreach($normal['past_order'] as $key => $val)
                                         <tr>
                                             <td>{{$key+1}}</td>
                                             <td>
@@ -364,7 +364,7 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active w-100" id="pills-all2-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-all2" type="button" role="tab" aria-controls="pills-all2"
-                                aria-selected="true">All (123)</button>
+                                aria-selected="true">All ({{count($custom['All_order'])}}) </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-ongoing2-tab" data-bs-toggle="pill"
@@ -442,22 +442,27 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                        @foreach($custom['All_order'] as $key => $val)
+
                                         <tr>
-                                            <td>1</td>
+                                            <td>{{$key+1}}</td>
                                             <td>
-                                                <img src="" class="img-fluid" alt="image" class="pro-image"
+                                                <img src="{{$val->variation_details->variant_image['0']}}"
+                                                    class="img-fluid" alt="image" class="pro-image"
                                                     style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td> {{$val->id}}</td>
+                                            <td>{{$val->created_at}} </td>
+                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td> {{$val->quantity}}</td>
+                                            <td>{{$val->order->user_details->full_name}}</td>
+                                            <td>{{$val->order->delivery_details->address}}</td>
+                                            <td>{{$val->amount}}</td>
+                                            <td>0</td>
                                             <td>
-                                                <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                                <a href="{{ route('seller.single_order_View', $val->id ) }}"
+                                                    class="eyebtn"><i class="bi bi-eye"></i></a>
                                             </td>
                                             <td>
                                                 <div class="from-group">
@@ -471,6 +476,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -537,22 +543,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($custom['ongoing_order'] as $key => $val)
+
                                         <tr>
-                                            <td>1</td>
+                                            <td>{{$key+1}}</td>
                                             <td>
-                                                <img src="" class="img-fluid" alt="image" class="pro-image"
+                                                <img src="{{$val->variation_details->variant_image['0']}}"
+                                                    class="img-fluid" alt="image" class="pro-image"
                                                     style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td> {{$val->id}}</td>
+                                            <td>{{$val->created_at}} </td>
+                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td> {{$val->quantity}}</td>
+                                            <td>{{$val->order->user_details->full_name}}</td>
+                                            <td>{{$val->order->delivery_details->address}}</td>
+                                            <td>{{$val->amount}}</td>
+                                            <td>0</td>
                                             <td>
-                                                <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                                <a href="{{ route('seller.single_order_View', $val->id ) }}"
+                                                    class="eyebtn"><i class="bi bi-eye"></i></a>
                                             </td>
                                             <td>
                                                 <div class="from-group">
@@ -566,6 +576,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -632,22 +643,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($custom['past_order'] as $key => $val)
                                         <tr>
-                                            <td>1</td>
+                                            <td>{{$key+1}}</td>
                                             <td>
-                                                <img src="" class="img-fluid" alt="image" class="pro-image"
+                                                <img src="{{$val->variation_details->variant_image['0']}}"
+                                                    class="img-fluid" alt="image" class="pro-image"
                                                     style="width: 80px;height: 80px;border-radius: 5%;object-fit: cover;">
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td> {{$val->id}}</td>
+                                            <td>{{$val->created_at}} </td>
+                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td> {{$val->quantity}}</td>
+                                            <td>{{$val->order->user_details->full_name}}</td>
+                                            <td>{{$val->order->delivery_details->address}}</td>
+                                            <td>{{$val->amount}}</td>
+                                            <td>0</td>
                                             <td>
-                                                <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                                <a href="{{ route('seller.single_order_View', $val->id ) }}"
+                                                    class="eyebtn"><i class="bi bi-eye"></i></a>
                                             </td>
                                             <td>
                                                 <div class="from-group-list">
@@ -658,6 +672,7 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>

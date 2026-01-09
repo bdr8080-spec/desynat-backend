@@ -167,7 +167,7 @@ public function SellerSingleOrdersdata($request){
 try{
 
 
-   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details','UserRatingReviewProvide')->where('id',$request->id)->first();
+   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details','UserRatingReviewProvide','variation_details')->where('id',$request->id)->first();
 
    if($singleOrder){
     

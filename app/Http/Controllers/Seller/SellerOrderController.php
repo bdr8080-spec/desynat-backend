@@ -46,15 +46,31 @@ class SellerOrderController extends Controller
        $custom_data= $this->SellerOrderService->SellerGetOrders($request_data1);
        $custom= $custom_data['data'];       
 
-       dump($custom);
-
         return View('dealer.orderManagement.allOrder',compact('normal','custom'));
     }
 
-     public function single_order_View(Request $Request){   
+     public function single_order_View(Request $Request, $id){   
 
-        return View('dealer.orderManagement.singleorder');
-   
+    $seller_details=Auth::guard('seller')->user()->id;
+
+    $request_data=(object) [
+        'seller_id'=>$seller_details,
+        "id" =>$id,
+       ];
+
+       $data= $this->SellerOrderService->SellerSingleOrdersdata($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    $order_details=  $data['data'];
+
+    dump($order_details);
+    
+    
+    return View('dealer.orderManagement.singleorder',compact('order_details'));
+    
     }
 
     
