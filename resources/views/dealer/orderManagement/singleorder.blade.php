@@ -97,18 +97,24 @@
             <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Payment Summary</h6>
 
+                @isset($order_details->order->transaction_id)
                 <div class="pay-sum">
                     <div class="summary-title-1">Transaction id</div>
                     <div class="summary-value">#{{$order_details->order->transaction_id}} </div>
                 </div>
+                @endisset
                 <div class="pay-sum">
                     <div class="summary-title-1">Sub Total</div>
                     <div class="summary-value">{{$order_details->amount}} KD</div>
                 </div>
+
+                @isset($order_details->promocode_value)
                 <div class="pay-sum">
                     <div class="summary-title-1">Coupon Applied</div>
                     <div class="summary-value">{{$order_details->promocode_value}} KD</div>
                 </div>
+                @endIsset
+
                 <div class="pay-sum">
                     <div class="summary-title-1">Shipping Charges</div>
                     <div class="summary-value">{{$order_details->shipping_fees}} KD</div>
