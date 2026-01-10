@@ -25,7 +25,7 @@ class SellerOrderController extends Controller
 
        $request_data=(object) [
         'seller_id'=>$seller_details,
-        "type" =>'1',
+        "type" =>"1",
         "tabs"=>$request->tabs??null,
         "from_date"=>$request->from_date??null,
         "to_date" =>$request->to_date??null,
@@ -37,14 +37,16 @@ class SellerOrderController extends Controller
 
         $request_data1=(object) [
         'seller_id'=>$seller_details,
-        "type" =>'2',
+        "type" =>"2",
         "tabs"=>$request->tabs??null,
         "from_date"=>$request->from_date??null,
         "to_date" =>$request->to_date??null,
        ];
 
        $custom_data= $this->SellerOrderService->SellerGetOrders($request_data1);
-       $custom= $custom_data['data'];       
+       $custom= $custom_data['data'];      
+       
+       dd($custom);
 
         return View('dealer.orderManagement.allOrder',compact('normal','custom'));
     }
