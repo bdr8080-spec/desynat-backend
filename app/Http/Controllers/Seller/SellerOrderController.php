@@ -5,24 +5,72 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Auth;
+
+use App\Services\SellerOrderService;
+
 class SellerOrderController extends Controller
 {
+
+    public function __construct(SellerOrderService $SellerOrderService){
+        $this->SellerOrderService=$SellerOrderService;
+    }
+
     
 
     public function order_management(Request $Request){
-        return View('dealer.orderManagement.allOrder');
+
+          $seller_details=Auth::guard('seller')->user()->id;
+
+
+       $request_data=(object) [
+        'seller_id'=>$seller_details,
+        "type" =>"1",
+        "tabs"=>$request->tabs??null,
+        "from_date"=>$request->from_date??null,
+        "to_date" =>$request->to_date??null,
+       ];
+
+
+        $normal_data= $this->SellerOrderService->SellerGetOrders($request_data);
+        $normal= $normal_data['data'];
+
+        $request_data1=(object) [
+        'seller_id'=>$seller_details,
+        "type" =>"2",
+        "tabs"=>$request->tabs??null,
+        "from_date"=>$request->from_date??null,
+        "to_date" =>$request->to_date??null,
+       ];
+
+       $custom_data= $this->SellerOrderService->SellerGetOrders($request_data1);
+       $custom= $custom_data['data'];      
+       
+       dd($custom);
+
+        return View('dealer.orderManagement.allOrder',compact('normal','custom'));
     }
 
-     public function single_order_View(Request $Request){   
+     public function single_order_View(Request $Request, $id){   
 
-        return View('dealer.orderManagement.singleorder');
-   
+    $seller_details=Auth::guard('seller')->user()->id;
+
+    $request_data=(object) [
+        'seller_id'=>$seller_details,
+        "id" =>$id,
+       ];
+
+    $data= $this->SellerOrderService->SellerSingleOrdersdata($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
     }
 
+    $order_details=  $data['data'];    
     
-
-
-
+    return View('dealer.orderManagement.singleorder',compact('order_details'));
+    
+    }
 
 
 }

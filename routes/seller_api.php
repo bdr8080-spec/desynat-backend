@@ -102,6 +102,10 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
    Route::post('/single-orders-data', [OrderManagement::class,'single_orders_data']);
 
+   Route::post('/update-single-order-status', [OrderManagement::class,'updateSingleOrderStatus']);
+
+
+
    Route::post('/all-chats-records', [OrderManagement::class,'AllChatsAndOrders']);
 
    Route::post('/single-chats-records', [OrderManagement::class,'singleChatsRecords']);

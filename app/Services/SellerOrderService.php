@@ -33,11 +33,11 @@ class SellerOrderService
 public function SellerGetOrders($request){
 
 try{
-
-
-   $all_Order= orderdetail::with('order.user_details','order.delivery_details', 'product_details')->where('seller_id',$request->seller_id)
+    
+   $all_Order= orderdetail::with('user_details','order.user_details','order.delivery_details', 'product_details','variation_details.color','variation_details.size')->where('seller_id',$request->seller_id)
    ->whereHas('order', function($query) use ($request) {
     $query->where('order_type',$request->type);
+
    });
 
    $all_Order_data=clone($all_Order);
@@ -106,11 +106,7 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
  $ongoing_order=$ongoing_order->get();
 
 
-
-
-
-
-$past_order=clone($all_Order)->whereIn('delivery_status',['3'])->orWhere('payment_status','2');
+$past_order=clone($all_Order);
 
 
    if($request->tabs==3){
@@ -136,7 +132,14 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 }
    }
 
-$past_order=$past_order->get();
+$past_order = $past_order
+    ->whereIn('payment_status',['2','3'])
+    ->where(function ($query) {
+        $query->where('delivery_status', 3);
+        })
+    ->get();
+
+
 
 $response['All_order']=$all_Order_data; // All Orders
 $response['ongoing_order'] =$ongoing_order;
@@ -166,14 +169,50 @@ public function SellerSingleOrdersdata($request){
 
 try{
 
-
-   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details','UserRatingReviewProvide')->where('id',$request->id)->first();
-
+   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details.category','product_details.subcategory','product_details.brand','UserRatingReviewProvide','variation_details.color','variation_details.size')->where('id',$request->id)->first();
+   
    if($singleOrder){
     
      return [
             'status'  => 'success',
             'message' => 'Single Orders fetch Successfully',
+            'data'    => $singleOrder
+        ];
+        
+    }else{
+
+    return [
+            'status'  => 'error',
+            'message' => ' Orders  id is inValid ',
+            'data'    => (object)[]
+        ];
+   }
+
+
+    }catch (\Exception $e) {
+    return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
+    }
+
+
+
+    
+}
+
+
+
+public function updateSingleOrderStatus($request){
+
+try{
+
+   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details.category','product_details.subcategory','product_details.brand','UserRatingReviewProvide','variation_details.color','variation_details.size')->where('id',$request->id)->first();
+   
+   if($singleOrder){
+
+    $singleOrder->update(['delivery_status'=> $request->status]);
+    
+     return [
+            'status'  => 'success',
+            'message' => 'Status Update Successfully',
             'data'    => $singleOrder
         ];
         
