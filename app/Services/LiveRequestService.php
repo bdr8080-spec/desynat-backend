@@ -280,7 +280,7 @@ class LiveRequestService
                 return [
                     'status' => 'error',
                     'message' => 'Timeslot not found',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
             $data->delete();
