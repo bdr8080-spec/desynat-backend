@@ -675,4 +675,6 @@ public function product_rating(Request $request){
 
 
 
+
+
 }

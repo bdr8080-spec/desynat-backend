@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand};
+use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner};
 
 
 
@@ -449,6 +449,39 @@ return [
             ];
         }
     }
+
+
+public function PopUPHomeScreenBanner($request)
+    {
+        try {
+
+
+$user_id=$request->user_id;
+
+
+$user_details=  User::where('id', $user_id)->first();
+
+$country_code=all_countrie::where('dial_code', $user_details->country_code)->first();
+
+$all_Banners= FullBanner::where('country_id',$country_code->id)->get();
+
+return [
+    'status'  => 'success',
+    'message' => 'All Banner Get Successfully',
+    'data'    => $all_Banners
+];
+
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
 
 
 
