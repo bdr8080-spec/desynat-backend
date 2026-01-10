@@ -118,7 +118,7 @@ class LiveRequestService
                 return [
                     'status' => 'error',
                     'message' => 'Please select a minimum 30-minute timeslot',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
@@ -137,7 +137,7 @@ class LiveRequestService
                 return [
                     'status' => 'error',
                     'message' => 'This timeslot is already added',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
@@ -211,7 +211,7 @@ class LiveRequestService
             return [
                 'status' => 'error',
                 'message' => 'Timeslot not found',
-                'data' => []
+                'data' => (object)[]
             ];
         }
 
@@ -223,7 +223,7 @@ class LiveRequestService
                 return[
                     'status' => 'error',
                     'message' => 'Please select a minimum 30-minute timeslot',
-                    'data' => []
+                    'data' =>(object) []
                 ];
             }
 
@@ -242,7 +242,7 @@ class LiveRequestService
                 return[
                     'status' => 'error',
                     'message' => 'This timeslot is already added',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
