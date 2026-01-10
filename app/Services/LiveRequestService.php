@@ -82,10 +82,65 @@ class LiveRequestService
     }
 
 
+    // public function addTimeslot(Request $request)
+    // {
+
+    //     try {
+    //         $data = LiveRequestTimeslot::create([
+    //             'country_id' => $request->country_id,
+    //             'date' => $request->date,
+    //             'from' => $request->from,
+    //             'to' => $request->to,
+    //         ]);
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Timeslot added successfully',
+    //             'data' => $data
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to add timeslot',
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
     public function addTimeslot(Request $request)
     {
-
         try {
+            $from = \Carbon\Carbon::createFromFormat('h:i A', strtoupper($request->from));
+            $to   = \Carbon\Carbon::createFromFormat('h:i A', strtoupper($request->to));
+
+            if ($from->diffInMinutes($to) < 30) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Please select a minimum 30-minute timeslot',
+                    'data' => (object)[]
+                ];
+            }
+
+            $exists = LiveRequestTimeslot::where('country_id', $request->country_id)
+                ->where('date', $request->date)
+                ->where(function($q) use ($from, $to) {
+                    $q->where(function($q2) use ($from, $to) {
+                        // Any existing slot that starts before new slot ends AND ends after new slot starts
+                        $q2->whereTime('from', '<', $to->format('H:i:s'))
+                        ->whereTime('to', '>', $from->format('H:i:s'));
+                    });
+                })
+                ->exists();
+
+            if ($exists) {
+                return [
+                    'status' => 'error',
+                    'message' => 'This timeslot is already added',
+                    'data' => (object)[]
+                ];
+            }
+
             $data = LiveRequestTimeslot::create([
                 'country_id' => $request->country_id,
                 'date' => $request->date,
@@ -100,6 +155,7 @@ class LiveRequestService
             ];
 
         } catch (\Exception $e) {
+            \Log::error('Add timeslot error: '.$e->getMessage());
             return [
                 'status' => 'error',
                 'message' => 'Failed to add timeslot',
@@ -107,6 +163,45 @@ class LiveRequestService
             ];
         }
     }
+
+
+
+
+
+    // public function updateTimeslot(Request $request, $dealId)
+    // {
+    //     $data = LiveRequestTimeslot::find($dealId);
+
+    //     if (!$data) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Timeslot not found',
+    //             'data' => []
+    //         ];
+    //     }
+
+    //     try {
+    //         $data->update([
+    //             'country_id' => $request->country_id,
+    //             'date' => $request->date,
+    //             'from' => $request->from,
+    //             'to' => $request->to, 
+    //         ]);
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Timeslot updated successfully',
+    //             'data' => $data
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to update timeslot',
+    //             'data' => []
+    //         ];
+    //     }
+    // }
 
     public function updateTimeslot(Request $request, $dealId)
     {
@@ -116,32 +211,65 @@ class LiveRequestService
             return [
                 'status' => 'error',
                 'message' => 'Timeslot not found',
-                'data' => []
+                'data' => (object)[]
             ];
         }
 
         try {
+            $from = \Carbon\Carbon::createFromFormat('h:i A', strtoupper($request->from));
+            $to   = \Carbon\Carbon::createFromFormat('h:i A', strtoupper($request->to));
+
+            if ($from->diffInMinutes($to) < 30) {
+                return[
+                    'status' => 'error',
+                    'message' => 'Please select a minimum 30-minute timeslot',
+                    'data' =>(object) []
+                ];
+            }
+
+            $exists = LiveRequestTimeslot::where('country_id', $request->country_id)
+                ->where('date', $request->date)
+                ->where('id', '!=', $dealId)
+                ->where(function($q) use ($from, $to) {
+                    $q->where(function($q2) use ($from, $to) {
+                        $q2->whereTime('from', '<', $to->format('H:i:s'))
+                        ->whereTime('to', '>', $from->format('H:i:s'));
+                    });
+                })
+                ->exists();
+
+            if ($exists) {
+                return[
+                    'status' => 'error',
+                    'message' => 'This timeslot is already added',
+                    'data' => (object)[]
+                ];
+            }
+
             $data->update([
                 'country_id' => $request->country_id,
                 'date' => $request->date,
                 'from' => $request->from,
-                'to' => $request->to, 
+                'to' => $request->to,
             ]);
 
-            return [
+            return[
                 'status' => 'success',
                 'message' => 'Timeslot updated successfully',
                 'data' => $data
             ];
 
         } catch (\Exception $e) {
-            return [
+            \Log::error('Update timeslot error: '.$e->getMessage());
+            return[
                 'status' => 'error',
-                'message' => 'Failed to update timeslot',
+                'message' => 'Failed to update timeslot: ' . $e->getMessage(),
                 'data' => []
             ];
         }
     }
+
+
 
     public function deleteTimeslot($timeslotId)
     {
@@ -152,7 +280,7 @@ class LiveRequestService
                 return [
                     'status' => 'error',
                     'message' => 'Timeslot not found',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
             $data->delete();

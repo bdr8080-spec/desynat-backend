@@ -1010,6 +1010,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('sentModal2');
+    modal.addEventListener('hidden.bs.modal', function () {
+        location.reload(); 
+    });
+});
+</script>
 
 
 

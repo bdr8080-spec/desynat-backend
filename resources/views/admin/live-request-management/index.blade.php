@@ -116,7 +116,7 @@
                                         </div>
                                         @empty
                                         <tr>
-                                            <span class="text-center">No slots found</span>
+                                            <span class="text-center">No Timeslot Added</span>
                                         </tr>
                                         @endforelse
                                     </div>
@@ -458,6 +458,7 @@
                                     <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
                                     <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
                                     <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                    <small class="error-msg" style="color:red;"></small>
                                 </div>
 
                                 <div class="time-block to-block">
@@ -465,6 +466,7 @@
                                     <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
                                     <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
                                     <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                    <small class="error-msg" style="color:red;"></small>
                                 </div>
                             </div>
                         </div>
@@ -498,13 +500,17 @@
                                     <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
                                     <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
                                     <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                    <small class="error-msg" style="color:red;"></small>
                                 </div>
+                                
                                 <div class="time-block to-block">
                                     <label>To</label>
                                     <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
                                     <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
                                     <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                    <small class="error-msg" style="color:red;"></small>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -552,15 +558,24 @@ document.addEventListener("DOMContentLoaded", function() {
     const url = new URL(window.location);
     const urlParams = url.searchParams;
 
-    // ✅ If date NOT in URL → add today's date & reload ONCE
+    let reloadNeeded = false;
+
+    if (!urlParams.has('country_id')) {
+        urlParams.set('country_id', 1);
+        reloadNeeded = true;
+    }
+
     if (!urlParams.has('date')) {
         const today = new Date().toISOString().split('T')[0];
         urlParams.set('date', today);
-        window.location.replace(url.toString()); // prevents back-button issue
+        reloadNeeded = true;
+    }
+
+    if (reloadNeeded) {
+        window.location.replace(url.toString()); 
         return;
     }
 
-    // ✅ Date exists in URL
     const selectedDate = urlParams.get('date');
 
     var calendarEl = document.getElementById("calendar");
@@ -578,7 +593,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     calendar.render();
 
-    // ✅ Highlight selected date
     calendar.select(selectedDate);
 
     showSelectedDate(selectedDate);
@@ -598,13 +612,18 @@ function showSelectedDate(dateStr) {
     document.getElementById("timeslotSection").style.display = "block";
 }
 
-// ✅ Reload page when user clicks a date
 function reloadWithDate(dateStr) {
     const url = new URL(window.location);
     url.searchParams.set('date', dateStr);
+
+    if (!url.searchParams.has('country_id')) {
+        url.searchParams.set('country_id', 1);
+    }
+
     window.location.href = url.toString();
 }
 </script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -728,44 +747,48 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         aps.forEach(select => {
-            select.innerHTML = '<option value="">AM/PM</option><option value="AM">AM</option><option value="PM">PM</option>';
+            select.innerHTML = '<option value="AM">AM</option><option value="PM">PM</option>';
         });
     }
 
     populateDropdowns(row);
 
+    // ✅ Remove error only if HH, MM, and AP are all selected
     document.addEventListener('change', function(e){
         if(e.target.tagName === 'SELECT'){
-            const next = e.target.nextElementSibling;
-            if(next && next.classList.contains('error-msg')) next.remove();
+            const block = e.target.closest('.time-block');
+            if(block){
+                const hh = block.querySelector('select.hh').value;
+                const mm = block.querySelector('select.mm').value;
+                const ap = block.querySelector('select.ap').value;
+
+                if(hh && mm && ap){
+                    const error = block.querySelector('.error-msg');
+                    if(error) error.innerText = '';
+                }
+            }
         }
     });
 
     // Validate row with custom messages
     function validateRow(row){
         let valid = true;
-        row.querySelectorAll("select").forEach(select=>{
-            const next = select.nextElementSibling;
-            if(next && next.classList.contains('error-msg')) next.remove();
+        row.querySelectorAll('.time-block').forEach(block => {
+            const hh = block.querySelector('select.hh').value;
+            const mm = block.querySelector('select.mm').value;
+            const ap = block.querySelector('select.ap').value;
 
-            if(!select.value){
-                const error = document.createElement('small');
-                error.classList.add('error-msg');
-                error.style.color = 'red';
+            const errorEl = block.querySelector('.error-msg');
+            if(errorEl) errorEl.innerText = '';
 
-                if(select.classList.contains('hh')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} Hour`;
-                else if(select.classList.contains('mm')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} Minute`;
-                else if(select.classList.contains('ap')) error.innerText = `Please select ${select.closest('.time-block').querySelector('label').innerText} AM/PM`;
-                else error.innerText = 'Please select a value';
-
-                select.parentNode.insertBefore(error, select.nextSibling);
+            if(!hh || !mm || !ap){
+                if(errorEl) errorEl.innerText = `Please select ${block.querySelector('label').innerText} time`;
                 valid = false;
             }
         });
         return valid;
     }
 
-    // Convert time to total minutes for comparison
     function timeToMinutes(hh, mm, ap){
         let hour = parseInt(hh);
         const minute = parseInt(mm);
@@ -823,16 +846,19 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(res => res.json())
         .then(res => {
+            console.log(res);
             if(res.status === 'success'){
-                toastr.success(res.message || 'Timeslot added successfully!');
-                location.reload();
+                toastr.success(res.message);
+               setTimeout(() => {
+                            location.reload();
+                        }, 2000);
             } else {
                 toastr.error(res.message || 'Something went wrong!');
             }
         })
         .catch(err => {
             console.error(err);
-            toastr.error('Failed to create timeslot. See console for details.');
+            toastr.error('Failed to create timeslot');
         });
     });
 
@@ -840,10 +866,17 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
+
+
+
+
+
+
 <!-- update timeslot -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
+    // Populate HH, MM, AP selects
     function populateDropdowns(container) {
         container.querySelectorAll("select.hh").forEach(select => {
             select.innerHTML = '<option value="">HH</option>';
@@ -862,46 +895,49 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         container.querySelectorAll("select.ap").forEach(select => {
-            select.innerHTML = '<option value="">AM/PM</option><option value="AM">AM</option><option value="PM">PM</option>';
+            select.innerHTML = '<option value="AM">AM</option><option value="PM">PM</option>';
         });
     }
 
-    function validateRow(container, prefix) {
-        let valid = true;
-        container.querySelectorAll("select").forEach(select => {
-            const next = select.nextElementSibling;
-            if(next && next.classList.contains('error-msg')) next.remove();
+    // Validate a block (from/to) → show one error below the block if incomplete
+    function validateBlock(block, prefix) {
+        const hh = block.querySelector("select.hh").value;
+        const mm = block.querySelector("select.mm").value;
+        const ap = block.querySelector("select.ap").value;
 
-            if(!select.value){
-                const error = document.createElement('small');
-                error.classList.add('error-msg');
-                error.style.color = 'red';
+        const errorEl = block.querySelector(".error-msg");
+        if(errorEl) errorEl.innerText = '';
 
-                // Custom messages
-                let msg = 'Please select a value';
-                if(select.classList.contains('hh')) msg = `Please select ${prefix} Hour`;
-                if(select.classList.contains('mm')) msg = `Please select ${prefix} Minute`;
-                if(select.classList.contains('ap')) msg = `Please select ${prefix} AM/PM`;
-
-                error.innerText = msg;
-                select.parentNode.insertBefore(error, select.nextSibling);
-                valid = false;
-            }
-        });
-        return valid;
+        if(!hh || !mm || !ap){
+            if(errorEl) errorEl.innerText = `Please select ${prefix} time`;
+            return false;
+        }
+        return true;
     }
 
+    // Remove error automatically when all fields selected
     document.addEventListener('change', function(e){
         if(e.target.tagName === 'SELECT'){
-            const next = e.target.nextElementSibling;
-            if(next && next.classList.contains('error-msg')) next.remove();
+            const block = e.target.closest('.time-block');
+            if(block){
+                const hh = block.querySelector('select.hh').value;
+                const mm = block.querySelector('select.mm').value;
+                const ap = block.querySelector('select.ap').value;
+                if(hh && mm && ap){
+                    const errorEl = block.querySelector('.error-msg');
+                    if(errorEl) errorEl.innerText = '';
+                }
+            }
         }
     });
 
+    // Modal elements
     const editModalEl = document.getElementById('editTimeslotModal');
     const editRow = editModalEl.querySelector(".time-row");
+
     populateDropdowns(editRow);
 
+    // When modal opens → populate fields
     editModalEl.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
         const slotId = button.getAttribute('data-id');
@@ -925,13 +961,17 @@ document.addEventListener("DOMContentLoaded", function() {
         editRow.querySelector(".to-block select.ap").value = toParts[2];
 
         document.getElementById('editTimeslotSubmit').dataset.slotId = slotId;
+
+        // Clear previous errors
+        editRow.querySelectorAll('.error-msg').forEach(el => el.innerText = '');
     });
 
+    // Submit update
     document.getElementById('editTimeslotSubmit')?.addEventListener('click', function(e){
         e.preventDefault();
 
-        const fromValid = validateRow(editRow.querySelector(".from-block"), "From");
-        const toValid   = validateRow(editRow.querySelector(".to-block"), "To");
+        const fromValid = validateBlock(editRow.querySelector(".from-block"), "From");
+        const toValid   = validateBlock(editRow.querySelector(".to-block"), "To");
         if(!fromValid || !toValid) return;
 
         const slotId = this.dataset.slotId;
@@ -959,12 +999,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const from = `${fromHour}:${fromMinute} ${fromAP}`;
         const to   = `${toHour}:${toMinute} ${toAP}`;
 
+        // Convert to minutes for comparison
         function timeTo24Hour(hh, mm, ap){
             let hour = parseInt(hh);
             const minute = parseInt(mm);
             if(ap === 'PM' && hour !== 12) hour += 12;
             if(ap === 'AM' && hour === 12) hour = 0;
-            return hour*60 + minute; // total minutes
+            return hour*60 + minute;
         }
 
         const fromTotal = timeTo24Hour(fromHour, fromMinute, fromAP);
@@ -988,16 +1029,22 @@ document.addEventListener("DOMContentLoaded", function() {
             if(res.status === 'success'){
                 toastr.success(res.message);
                 bootstrap.Modal.getInstance(editModalEl).hide();
-                location.reload();
+                setTimeout(() => {
+                            location.reload();
+                        }, 2000);
             } else {
-                toastr.error(res.message || 'Failed to update timeslot');
+                toastr.error(res.message);
             }
         })
-        .catch(err => toastr.error('Failed to update timeslot'));
+        .catch(err => {
+            console.error(err);
+            toastr.error('Failed to create timeslot');
+        });
     });
 
 });
 </script>
+
 
 <!-- accept request -->
 <script>
@@ -1118,6 +1165,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('sentModal3');
+    modal.addEventListener('hidden.bs.modal', function () {
+        location.reload(); 
+    });
+});
+</script>
+
 
 
 

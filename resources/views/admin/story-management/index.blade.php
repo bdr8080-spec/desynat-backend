@@ -156,7 +156,11 @@
                                         <span>File not supported</span>
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($story['created_at'])->format('jS F Y | h:i A') }}</td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($story['created_at'])
+                                        ->timezone('Asia/Kolkata')
+                                        ->format('jS F Y | h:i A') }}
+                                </td>
 
                             </tr>
                             @empty
@@ -244,7 +248,11 @@
                                         <span>File not supported</span>
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($story['created_at'])->format('jS F Y | h:i A') }}</td>
+                                <td>
+                                    {{ \Carbon\Carbon::parse($story['created_at'])
+                                        ->timezone('Asia/Kolkata')
+                                        ->format('jS F Y | h:i A') }}
+                                </td>
                                 <td>{{ $story['status'] == 1 ? 'Active' : 'Inactive' }}</td>
                                 <td>
 
@@ -465,6 +473,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        submitBtn.innerText = 'Uploading...';
+        submitBtn.classList.add('disabled');
+        submitBtn.style.pointerEvents = 'none';
+
         const formData = new FormData();
         formData.append('file', file);
 
@@ -493,6 +505,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('sentModalphoto');
+    modal.addEventListener('hidden.bs.modal', function () {
+        location.reload(); 
+    });
 });
 </script>
 

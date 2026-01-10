@@ -101,7 +101,7 @@ class LiveRequestController extends Controller
             $message = $data['message'];
 
             return response()->json([
-                'status' => 'success',
+                'status' => $data['status'],
                 'message' => $message,
                 'data' => $data
             ]);
@@ -130,7 +130,7 @@ class LiveRequestController extends Controller
             $message = $data['message'];
 
             return response()->json([
-                'status' => 'success',
+                'status' => $data['status'],
                 'message' => $message,
                 'data' => $data
             ]);
