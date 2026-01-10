@@ -70,10 +70,5 @@ class SellerOrderController extends Controller
     
     }
 
-    
-
-
-
-
 
 }

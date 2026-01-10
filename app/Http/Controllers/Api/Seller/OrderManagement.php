@@ -82,6 +82,39 @@ class OrderManagement extends Controller
     }
 
 
+    public function updateSingleOrderStatus(Request $request){
+
+          $seller_details=$request->user()->id;
+
+            $validate = Validator::make($request->all(), [
+            'id' => 'required|exists:orderdetails,id', // 1 Normal Order  2 custom Order 
+            'status'=>'required'
+        ]);
+            
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       $request_data=(object) [
+        'seller_id'=>$seller_details,
+        "id" =>$request->id,
+        'status'=>$request->status
+       ];
+
+
+       $data= $this->SellerOrderService->updateSingleOrderStatus($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+        
+    }
+
+
+
     public function AllChatsAndOrders(Request $request){
 
         $seller_details=$request->user()->id;
