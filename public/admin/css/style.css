@@ -2516,7 +2516,8 @@ header,
 .time-block {
   display: flex;
   align-items: center;
-  gap: 5px;
+     gap: 9px;
+    margin: 21px;
 }
 
 .time-block label {
