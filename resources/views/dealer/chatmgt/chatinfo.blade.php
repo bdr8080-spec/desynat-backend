@@ -210,6 +210,8 @@
                     </div>
                 </div>
 
+                @if($single_chats['record']->action=='2' || $single_chats['record']->action=='3')
+
                 <div class="time-pnl">
                     <div class="gift-pnl mt-4">
                         <h5>Quotation</h5>
@@ -251,14 +253,16 @@
                             </table>
                         </div>
                     </div>
-
                     <div class="mt-3">
                         <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal"
                             data-bs-target="#modifyModal">Modify Quotation</button>
                     </div>
-
                 </div>
+                @endif
+
             </div>
+
+
 
             @endif
 
