@@ -68,7 +68,7 @@
                     @foreach($all_chats as $key=>$val)
 
                     <div class="cart-panel position-relative">
-                        <a href="chat-info" class="link-content">
+                        <a href="{{route('seller.single-chat-info', $val->unique_id)}}" class="link-content">
                             <div class="cart-card">
                                 <div class="card-left mb-2 d-flex align-items-center">
                                     <div>

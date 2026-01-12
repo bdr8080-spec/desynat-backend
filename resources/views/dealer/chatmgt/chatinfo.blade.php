@@ -275,27 +275,28 @@
                         </header>
 
                         <main class="msger-chat chatfull">
-                            <div class="msg left-msg w-100">
+
+                            @foreach($single_chats['firbase_chat'] as $key=>$val)
+
+                            <div class="msg w-100  @if($val['by']=='user') left-msg  @else right-msg  @endif">
                                 <div class="msg-bubble">
                                     <div class="msg-text">
-                                        Hi, welcome to SimpleChat! Go ahead and send me a message.
+                                        @if($val['type']=='0')
+                                        {{$val['message']}}
+                                        @else
+                                        <img src="{{$val['message']}}" width="100px">
+                                        @endif
+
+
                                     </div>
-                                    <div class="msg-info">
-                                        <div class="msg-info-time">12:45</div>
+                                    <div class="msg-info @if($val['by']=='user')  @else text-end  @endif ">
+                                        <div class="msg-info-time"> {{ formatChatTime( $val['times'])}} </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="msg right-msg w-100">
-                                <div class="msg-bubble">
-                                    <div class="msg-text">
-                                        You can change your name in JS section!
-                                    </div>
-                                    <div class="msg-info">
-                                        <div class="msg-info-time text-end">12:46</div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
+
                         </main>
 
                         <form class="msger-inputarea d-flex position-relative">
@@ -328,42 +329,186 @@
                 <h1 class="modal-title fs-5">Modify Quotation </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-4">
-                <div class="quation-pnl mt-1">
-                    <div class="form-group sub-form">
-                        <label for="item" class="size14">Per Item Price</label>
-                        <input type="text" class="form-control" placeholder="Eg 20 KD">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group sub-form">
-                                <label for="item" class="size14">Shipping Fees </label>
-                                <input type="text" class="form-control" placeholder="Eg 20 KD">
+            <form id="ModifyPrice" action="{{ route('seller.Modify_custom_order_price')}}" method="post">
+                @csrf
+
+                <input type="hidden" class="form-control notapplyspace " placeholder="Eg 20 KD"
+                    value="{{ $single_chats['record']->quantity}}" name="quantity" id="quantity">
+
+                <input type="hidden" class="form-control notapplyspace " placeholder="Eg 20 KD"
+                    value="{{ $single_chats['record']->unique_id}}" name="unique_id">
+
+                <div class="modal-body p-4">
+                    <div class="quation-pnl mt-1">
+                        <div class="form-group sub-form">
+                            <label for="item" class="size14">Per Item Price</label>
+                            <input type="text" class="form-control notapplyspace applynumberOnly" placeholder="Eg 20 KD"
+                                name="price" id="price" value="{{ $single_chats['record']->price}}">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group sub-form">
+                                    <label for="item" class="size14">Shipping Fees </label>
+                                    <input type="text" class="form-control notapplyspace applynumberOnly"
+                                        placeholder="Eg 20 KD" value="{{ $single_chats['record']->shipping}}"
+                                        name="shipping" id="shipping">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group sub-form">
+                                    <label for="item" class="size14">Tax</label>
+                                    <input type="text" class="form-control notapplyspace applynumberOnly"
+                                        placeholder="Eg 20 KD" value="{{ $single_chats['record']->tax}}" name="tax"
+                                        id="tax">
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="form-group sub-form">
+                                    <label for="item" class="size14">Total Amount</label>
+                                    <input type="text" class="form-control notapplyspace applynumberOnly"
+                                        placeholder="Eg 20 KD" value="{{ $single_chats['record']->total_amount}}"
+                                        name="total_amount" id="total_amount">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group sub-form">
-                                <label for="item" class="size14">Tax</label>
-                                <input type="text" class="form-control" placeholder="Eg 20 KD">
-                            </div>
+                        <div class="mt-4">
+                            <button type="submit" class="btn add-fillbtn w-100">Confirm & Modify</button>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="form-group sub-form">
-                                <label for="item" class="size14">Total Amount</label>
-                                <input type="text" class="form-control" placeholder="Eg 20 KD">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <button type="submit" class="btn add-fillbtn w-100">Confirm & Modify</button>
                     </div>
                 </div>
-
-            </div>
+            </form>
 
         </div>
     </div>
 </div>
+
+<script>
+function calculateTotal() {
+    let price = parseFloat(document.getElementById('price').value) || 0;
+    let shipping = parseFloat(document.getElementById('shipping').value) || 0;
+    let tax = parseFloat(document.getElementById('tax').value) || 0;
+    let quantity = parseFloat(document.getElementById('quantity').value) || 1;
+
+    let total = (price * quantity) + shipping + tax;
+
+    document.getElementById('total_amount').value = total.toFixed(2);
+}
+
+// Trigger calculation on input change
+document.getElementById('price').addEventListener('input', calculateTotal);
+document.getElementById('shipping').addEventListener('input', calculateTotal);
+document.getElementById('tax').addEventListener('input', calculateTotal);
+
+// Initial calculation on page load
+calculateTotal();
+
+
+// Add Banner Code 
+
+$(document).on('submit', 'form#ModifyPrice', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $("#file-error").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                // toastr.success(response.message);
+
+                $('#RequestBanner').modal('show');
+
+                $('.submit').attr('disabled', true);
+                window.setTimeout(function() {
+                    window.location =
+                        "{{ route('seller.single-chat-info', request()->id) }}";
+                }, 2000);
+            }
+        },
+        error: function(xhr) {
+
+            $('#loader').hide();
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
+
+                } else {
+
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
+                    }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+
+    });
+
+    return false;
+});
+</script>
 
 
 @include('dealer.layout.custom_code');

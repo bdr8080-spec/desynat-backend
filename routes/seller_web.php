@@ -140,6 +140,7 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/chat-info/{id}',[SellerChatController::class,'single_chat_room'])->name('seller.single-chat-info');    
 
+    route::Match(['get','post'],'/Modify-custom-order-price',[SellerChatController::class,'Modify_custom_order_price'])->name('seller.Modify_custom_order_price');    
 
 });
 

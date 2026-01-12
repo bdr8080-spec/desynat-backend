@@ -10,6 +10,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
+document.querySelectorAll('.applynumberOnly').forEach(function(input) {
+    input.addEventListener('input', function() {
+        // Remove anything that is not a number
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Prevent space key
+    input.addEventListener('keydown', function(e) {
+        if (e.key === ' ') {
+            e.preventDefault();
+        }
+    });
+});
+
+
+
 document.querySelectorAll('.notapplyspace').forEach(function(input) {
     input.addEventListener('keydown', function(e) {
         if (e.key === ' ') {

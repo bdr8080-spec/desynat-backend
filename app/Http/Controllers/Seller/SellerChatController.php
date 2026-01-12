@@ -85,7 +85,8 @@ class SellerChatController extends Controller
        }
 
 
-        $seller_details=$request->user()->id;
+         $seller_details=Auth::guard('seller')->user()->id;
+
 
        $request_data=(object) [
         'seller_id'=>$seller_details,
@@ -98,10 +99,49 @@ class SellerChatController extends Controller
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
     }
 
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);   
+    
+}
+
+    public function Modify_custom_order_price(Request $request){
+        
+          $validate = Validator::make($request->all(), [
+            'unique_id' => 'required|exists:allproductchats,unique_id',
+            "price"=>"required",
+            'quantity' => 'required',
+            "shipping"=>'required',
+            "tax"=>'required',
+            "total_amount"=>"required"
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       $seller_details=Auth::guard('seller')->user()->id;
+       
+       $request_data=(object) [
+        'seller_id'=>$seller_details,
+        "unique_id"=>$request->unique_id,
+        "price"=>$request->price,
+        'quantity' => $request->quantity,
+        "shipping"=>$request->shipping,
+        "tax"=>$request->tax,
+        "total_amount"=>$request->total_amount,
+
+       ];
+
+       $data= $this->SellerOrderService->Modifysinglechatsrecords($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
         
     }
+
 
     
 

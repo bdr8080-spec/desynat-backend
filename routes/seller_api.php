@@ -104,6 +104,9 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
    Route::post('/update-single-order-status', [OrderManagement::class,'updateSingleOrderStatus']);
 
+    route::Match(['get','post'],'/update-order-exchange-return-status',[SellerOrderController::class,'updateOrderExchangeReturnStatus'])->name('seller.update-return-exchange');
+
+
 
 
    Route::post('/all-chats-records', [OrderManagement::class,'AllChatsAndOrders']);
