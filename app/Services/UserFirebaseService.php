@@ -191,6 +191,10 @@ foreach ($check_chatRecord as $key => $val) {
 
      $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
 
+    //  Update Chat Read Status 
+
+    
+
      $response['record']=$check_chatRecord;
      $response['firbase_chat']=$firbase_chat;
      
