@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 @section('content')
 
- <style>
+<style>
 #editPreviewImage {
     display: block;
 }
@@ -62,8 +62,8 @@
     <div class="userManagecontent">
         <div class="">
             <form method="GET" action="{{ route('admin.fullScreenBannerManagement') }}" id="filterForm">
-            <div class="row">
-                <!-- <div class="col-lg-3 col-md-4 col-12">
+                <div class="row">
+                    <!-- <div class="col-lg-3 col-md-4 col-12">
                     <div class="search-box" style="position: relative;">
                         <i class="bi bi-search" style="
                         position: absolute;
@@ -79,27 +79,26 @@
                     </div>
                 </div> -->
 
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="form-group mb-5 ">
-                        <!-- <label for="from" class="form-label">Country Name</label> -->
-                        <select name="country"
-                            class="form-select form-select-lg w-50 "
-                            onchange="document.getElementById('filterForm').submit();">
-                            <option value="">Select country</option>
-                            @foreach($countries as $country)
-                            <option value="{{ $country['name'] }}"
-                                {{ request('country') == $country['name'] ? 'selected' : '' }}>
-                                {{ $country['name'] }}
-                            </option>
-                            @endforeach
-                        </select>
+                    <div class="col-lg-4 col-md-4 col-12">
+                        <div class="form-group mb-5 ">
+                            <label for="from" class="form-label">Country Name</label>
+                            <select name="country" class="form-select form-select-lg w-50 "
+                                onchange="document.getElementById('filterForm').submit();">
+                                <option value="">Select country</option>
+                                @foreach($countries as $country)
+                                <option value="{{ $country['name'] }}"
+                                    {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                    {{ $country['name'] }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
+
                 </div>
+            </form>
 
-            </div>
-           </form>
-
-            <div class="table-responsive w-100">
+            <div class="table-responsive mb-5 w-100">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>
@@ -128,20 +127,17 @@
                             <td>{{ $banner['end_date'] }}</td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-center">
-                                    <a href="javascript:void(0);"
-                                        class="table-button edit-reason-btn"
-                                        data-id="{{ $banner['id'] }}"
-                                        data-title="{{ $banner['title'] }}"
+                                    <a href="javascript:void(0);" class="table-button edit-reason-btn"
+                                        data-id="{{ $banner['id'] }}" data-title="{{ $banner['title'] }}"
                                         data-country-id="{{ $banner['country_id'] }}"
                                         data-start-date="{{ $banner['start_date'] }}"
-                                        data-end-date="{{ $banner['end_date'] }}"
-                                        data-image="{{ $banner['image'] }}"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editBannerModal">
-                                            <i class="bi bi-pencil-square"></i>
+                                        data-end-date="{{ $banner['end_date'] }}" data-image="{{ $banner['image'] }}"
+                                        data-bs-toggle="modal" data-bs-target="#editBannerModal">
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
 
-                                    <a href="javascript:void(0);" class="table-button text-danger deleteBanner mb-1 mt-1"
+                                    <a href="javascript:void(0);"
+                                        class="table-button text-danger deleteBanner mb-1 mt-1"
                                         data-id="{{ $banner->id }}">
                                         <i class="bi bi-trash3-fill"></i>
                                     </a>
@@ -150,9 +146,9 @@
 
                         </tr>
                         @empty
-                            <tr>
-                                <td colspan="6" class="text-center">No data found</td>
-                            </tr>
+                        <tr>
+                            <td colspan="6" class="text-center">No data found</td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -181,7 +177,7 @@
                             <label for="fileUpload" class="upload-box" style="cursor:pointer;">
                                 <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
                                 <img id="previewImage" class="preview-image"
-                                     style="display:none; max-width:216px; margin-top:-2px;" />
+                                    style="display:none; max-width:216px; margin-top:-2px;" />
                                 <div class="upload-text">Upload Image</div>
                                 <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
                             </label>
@@ -193,7 +189,8 @@
                             <div class="form-group">
                                 <label class="form-label" for="title">Title</label>
                                 <input type="text" id="title" name="title" class="form-control"
-                                       placeholder="Enter Title" oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"/>
+                                    placeholder="Enter Title"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="titleError"></div>
                             </div>
                         </div>
@@ -202,12 +199,11 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label class="form-label">Select Country</label>
-                                <select id="countrySelect" name="country_id"
-                                        class="form-select form-select-lg"
-                                        aria-label="Large select example">
+                                <select id="countrySelect" name="country_id" class="form-select form-select-lg"
+                                    aria-label="Large select example">
                                     <option value="">Select Country</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
                                 </select>
                                 <div class="text-danger" id="countryError"></div>
@@ -219,19 +215,17 @@
                             <div class="d-flex gap-2">
 
                                 <div class="col-lg-6">
-                                    <div class="form-group mt-4 w-100">
+                                    <div class="form-group  w-100">
                                         <label class="form-label">From:</label>
-                                        <input type="date" id="start_date" name="start_date"
-                                               class="form-control" />
+                                        <input type="date" id="start_date" name="start_date" class="form-control" />
                                         <div class="text-danger" id="startDateError"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="form-group mt-4 w-100">
+                                    <div class="form-group  w-100">
                                         <label class="form-label">To:</label>
-                                        <input type="date" id="end_date" name="end_date"
-                                               class="form-control" />
+                                        <input type="date" id="end_date" name="end_date" class="form-control" />
                                         <div class="text-danger" id="endDateError"></div>
                                     </div>
                                 </div>
@@ -241,8 +235,7 @@
 
                         <!-- Submit -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <a type="button" id="submitBannerBtn"
-                               class="btn btn-dark customBtn mt-3">
+                            <a type="button" id="submitBannerBtn" class="btn btn-dark customBtn mt-3">
                                 Submit
                             </a>
                         </div>
@@ -275,44 +268,59 @@
                             <label for="editFileUpload" class="upload-box" style="cursor:pointer;">
                                 <img src="/admin/image/imge-upload.svg" id="editUploadIcon" />
                                 <img id="editPreviewImage" class="preview-image"
-                                     style="display:none; max-width:216px; margin-top:-2px;" />
+                                    style="display:none; max-width:216px; margin-top:-2px;" />
                                 <div class="upload-text">Upload Image</div>
                                 <input type="file" id="editFileUpload" hidden />
                             </label>
                             <div class="text-danger text-center" id="editImageError"></div>
                         </div>
 
-                        <div class="col-lg-12">
-                            <label class="form-label">Title</label>
-                            <input type="text" id="editTitle" class="form-control" oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')">
-                            <div class="text-danger" id="editTitleError"></div>
+                        <div class="form-group">
+                            <div class="col-lg-12">
+
+                                <label class="form-label">Title</label>
+                                <input type="text" id="editTitle" class="form-control"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')">
+                                <div class="text-danger" id="editTitleError"></div>
+                            </div>
                         </div>
 
                         <div class="col-lg-12">
-                            <label class="form-label">Select Country</label>
-                            <select id="editCountrySelect" class="form-select form-select-lg">
-                                <option value="">Select Country</option>
-                                @foreach ($countries as $country)
+                            <div class="form-group w-100">
+                                <label class="form-label">Select Country</label>
+                                <select id="editCountrySelect" class="form-select form-select-lg">
+                                    <option value="">Select Country</option>
+                                    @foreach ($countries as $country)
                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                @endforeach
-                            </select>
-                            <div class="text-danger" id="editCountryError"></div>
+                                    @endforeach
+                                </select>
+                                <div class="text-danger" id="editCountryError"></div>
+                            </div>
                         </div>
+                        <div class="col-lg-12">
+                            <div class="d-flex gap-2">
+                                <div class="col-lg-6">
+                                    <div class="form-group  w-100">
 
-                        <div class="col-lg-6">
-                            <label class="form-label">From</label>
-                            <input type="date" id="editStartDate" class="form-control">
-                            <div class="text-danger" id="editStartDateError"></div>
+                                        <label class="form-label">From</label>
+                                        <input type="date" id="editStartDate" class="form-control">
+                                        <div class="text-danger" id="editStartDateError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group  w-100">
+
+                                        <label class="form-label">To</label>
+                                        <input type="date" id="editEndDate" class="form-control">
+                                        <div class="text-danger" id="editEndDateError"></div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="editBannerId">
+                            </div>
+
                         </div>
-
-                        <div class="col-lg-6">
-                            <label class="form-label">To</label>
-                            <input type="date" id="editEndDate" class="form-control">
-                            <div class="text-danger" id="editEndDateError"></div>
-                        </div>
-
-                        <input type="hidden" id="editBannerId">
-
                         <div class="col-lg-12 d-flex justify-content-center">
                             <a id="updateBannerBtn" class="btn btn-dark customBtn mt-3">
                                 Update
@@ -376,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 
     const modal = document.getElementById('sentModal2');
     const fileInput = document.getElementById('fileUpload');
@@ -402,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function () {
         endDateError.innerText = '';
     });
 
-    fileInput.addEventListener('change', function () {
+    fileInput.addEventListener('change', function() {
         if (this.files[0]) {
             const reader = new FileReader();
             reader.onload = e => {
@@ -421,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
     start_date.addEventListener('change', () => startDateError.innerText = '');
     end_date.addEventListener('change', () => endDateError.innerText = '');
 
-    submitBannerBtn.addEventListener('click', function () {
+    submitBannerBtn.addEventListener('click', function() {
 
         imageError.innerText = '';
         titleError.innerText = '';
@@ -462,32 +470,32 @@ document.addEventListener('DOMContentLoaded', function () {
         if (hasError) return;
 
         fetch('{{ route("admin.addFullBanner") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                toastr.success(data.message);
-                setTimeout(() => {
-                    $('#sentModal2').modal('hide');
-                    location.reload();
-                }, 1500);
-            } else {
-                toastr.error(data.message || 'Something went wrong');
-            }
-        })
-        .catch(() => toastr.error('Server error'));
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        $('#sentModal2').modal('hide');
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(data.message || 'Something went wrong');
+                }
+            })
+            .catch(() => toastr.error('Server error'));
     });
 });
 </script>
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 
     const editModalElement = document.getElementById('editBannerModal');
     const editModal = new bootstrap.Modal(editModalElement);
@@ -510,13 +518,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const editStartDateError = document.getElementById('editStartDateError');
     const editEndDateError = document.getElementById('editEndDateError');
 
-    editFileUpload.addEventListener('change', function (e) {
+    editFileUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
 
         if (file) {
             const reader = new FileReader();
 
-            reader.onload = function (event) {
+            reader.onload = function(event) {
                 editPreviewImage.src = event.target.result;
                 editPreviewImage.style.display = 'block';
                 editUploadIcon.style.display = 'none';
@@ -528,9 +536,9 @@ document.addEventListener('DOMContentLoaded', function () {
         editImageError.innerText = '';
     });
 
-    document.querySelectorAll('.edit-reason-btn').forEach(function (button) {
+    document.querySelectorAll('.edit-reason-btn').forEach(function(button) {
 
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
 
             editBannerId.value = this.getAttribute('data-id');
             editTitle.value = this.getAttribute('data-title');
@@ -557,25 +565,25 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    editTitle.addEventListener('input', function () {
+    editTitle.addEventListener('input', function() {
         editTitleError.innerText = '';
     });
 
-    editCountrySelect.addEventListener('change', function () {
+    editCountrySelect.addEventListener('change', function() {
         editCountryError.innerText = '';
     });
 
-    editStartDate.addEventListener('change', function () {
+    editStartDate.addEventListener('change', function() {
         editStartDateError.innerText = '';
     });
 
-    editEndDate.addEventListener('change', function () {
+    editEndDate.addEventListener('change', function() {
         editEndDateError.innerText = '';
     });
 
-    updateBannerBtn.addEventListener('click', function (e) {
+    updateBannerBtn.addEventListener('click', function(e) {
 
-        e.preventDefault(); 
+        e.preventDefault();
 
         editImageError.innerText = '';
         editTitleError.innerText = '';
@@ -622,33 +630,33 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         fetch(`{{ url('/admin/updateFullBanner') }}/${id}`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
 
-            if (data.success) {
-                toastr.success(data.message);
+                if (data.success) {
+                    toastr.success(data.message);
 
-                setTimeout(function () {
-                    editModal.hide();
-                    location.reload();
-                }, 1500);
+                    setTimeout(function() {
+                        editModal.hide();
+                        location.reload();
+                    }, 1500);
 
-            } else {
-                toastr.error(data.message || 'Something went wrong.');
-            }
-        })
-        .catch(function (error) {
-            toastr.error('Server error.');
-            console.error(error);
-        });
+                } else {
+                    toastr.error(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(function(error) {
+                toastr.error('Server error.');
+                console.error(error);
+            });
     });
 
 });
@@ -656,116 +664,116 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 <script>
-    function getTodayLocal() {
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-        return `${yyyy}-${mm}-${dd}`;
+function getTodayLocal() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function setTodayMinDate() {
+    const fromInput = document.getElementById('start_date');
+    fromInput.min = getTodayLocal();
+}
+
+function updateToDate() {
+    const fromInput = document.getElementById('start_date');
+    const toInput = document.getElementById('end_date');
+
+    if (fromInput.value) {
+        const minToDate = new Date(fromInput.value);
+        minToDate.setDate(minToDate.getDate() + 1);
+
+        const yyyy = minToDate.getFullYear();
+        const mm = String(minToDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(minToDate.getDate()).padStart(2, '0');
+
+        toInput.min = `${yyyy}-${mm}-${dd}`;
+    } else {
+        toInput.removeAttribute('min');
     }
+}
 
-    function setTodayMinDate() {
-        const fromInput = document.getElementById('start_date');
-        fromInput.min = getTodayLocal();
+function updateFromDate() {
+    const fromInput = document.getElementById('start_date');
+    const toInput = document.getElementById('end_date');
+
+    if (toInput.value) {
+        const maxFromDate = new Date(toInput.value);
+        maxFromDate.setDate(maxFromDate.getDate() - 1);
+
+        const yyyy = maxFromDate.getFullYear();
+        const mm = String(maxFromDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(maxFromDate.getDate()).padStart(2, '0');
+
+        fromInput.max = `${yyyy}-${mm}-${dd}`;
+    } else {
+        fromInput.removeAttribute('max');
     }
+}
 
-    function updateToDate() {
-        const fromInput = document.getElementById('start_date');
-        const toInput = document.getElementById('end_date');
+document.addEventListener('DOMContentLoaded', function() {
+    setTodayMinDate();
+    updateToDate();
+    updateFromDate();
 
-        if (fromInput.value) {
-            const minToDate = new Date(fromInput.value);
-            minToDate.setDate(minToDate.getDate() + 1);
-
-            const yyyy = minToDate.getFullYear();
-            const mm = String(minToDate.getMonth() + 1).padStart(2, '0');
-            const dd = String(minToDate.getDate()).padStart(2, '0');
-
-            toInput.min = `${yyyy}-${mm}-${dd}`;
-        } else {
-            toInput.removeAttribute('min');
-        }
-    }
-
-    function updateFromDate() {
-        const fromInput = document.getElementById('start_date');
-        const toInput = document.getElementById('end_date');
-
-        if (toInput.value) {
-            const maxFromDate = new Date(toInput.value);
-            maxFromDate.setDate(maxFromDate.getDate() - 1);
-
-            const yyyy = maxFromDate.getFullYear();
-            const mm = String(maxFromDate.getMonth() + 1).padStart(2, '0');
-            const dd = String(maxFromDate.getDate()).padStart(2, '0');
-
-            fromInput.max = `${yyyy}-${mm}-${dd}`;
-        } else {
-            fromInput.removeAttribute('max');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        setTodayMinDate();
-        updateToDate();
-        updateFromDate();
-
-        document.getElementById('start_date').addEventListener('change', updateToDate);
-        document.getElementById('end_date').addEventListener('change', updateFromDate);
-    });
+    document.getElementById('start_date').addEventListener('change', updateToDate);
+    document.getElementById('end_date').addEventListener('change', updateFromDate);
+});
 </script>
 
 <script>
-    function formatDateLocal(date) {
-        const yyyy = date.getFullYear();
-        const mm = String(date.getMonth() + 1).padStart(2, '0');
-        const dd = String(date.getDate()).padStart(2, '0');
-        return `${yyyy}-${mm}-${dd}`;
+function formatDateLocal(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function setEditStartMinToday() {
+    const startInput = document.getElementById('editStartDate');
+    const today = new Date();
+    startInput.min = formatDateLocal(today);
+}
+
+function updateEditEndDate() {
+    const fromInput = document.getElementById('editStartDate');
+    const toInput = document.getElementById('editEndDate');
+
+    if (fromInput.value) {
+        const minToDate = new Date(fromInput.value);
+        minToDate.setDate(minToDate.getDate() + 1);
+        toInput.min = formatDateLocal(minToDate);
+    } else {
+        toInput.removeAttribute('min');
     }
+}
 
-    function setEditStartMinToday() {
-        const startInput = document.getElementById('editStartDate');
-        const today = new Date();
-        startInput.min = formatDateLocal(today);
+function updateEditStartDate() {
+    const fromInput = document.getElementById('editStartDate');
+    const toInput = document.getElementById('editEndDate');
+
+    if (toInput.value) {
+        const maxFromDate = new Date(toInput.value);
+        maxFromDate.setDate(maxFromDate.getDate() - 1);
+        fromInput.max = formatDateLocal(maxFromDate);
+    } else {
+        fromInput.removeAttribute('max');
     }
+}
 
-    function updateEditEndDate() {
-        const fromInput = document.getElementById('editStartDate');
-        const toInput = document.getElementById('editEndDate');
+document.addEventListener('DOMContentLoaded', function() {
+    setEditStartMinToday();
+    updateEditEndDate();
+    updateEditStartDate();
 
-        if (fromInput.value) {
-            const minToDate = new Date(fromInput.value);
-            minToDate.setDate(minToDate.getDate() + 1);
-            toInput.min = formatDateLocal(minToDate);
-        } else {
-            toInput.removeAttribute('min');
-        }
-    }
+    document.getElementById('editStartDate')
+        .addEventListener('change', updateEditEndDate);
 
-    function updateEditStartDate() {
-        const fromInput = document.getElementById('editStartDate');
-        const toInput = document.getElementById('editEndDate');
-
-        if (toInput.value) {
-            const maxFromDate = new Date(toInput.value);
-            maxFromDate.setDate(maxFromDate.getDate() - 1);
-            fromInput.max = formatDateLocal(maxFromDate);
-        } else {
-            fromInput.removeAttribute('max');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        setEditStartMinToday();   
-        updateEditEndDate();
-        updateEditStartDate();
-
-        document.getElementById('editStartDate')
-            .addEventListener('change', updateEditEndDate);
-
-        document.getElementById('editEndDate')
-            .addEventListener('change', updateEditStartDate);
-    });
+    document.getElementById('editEndDate')
+        .addEventListener('change', updateEditStartDate);
+});
 </script>
 
 

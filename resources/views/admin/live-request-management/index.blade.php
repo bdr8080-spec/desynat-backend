@@ -4,7 +4,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Live Request & Timeslot Managemen</h2>
+            <h2 class="h2">Live Request & Timeslot Management</h2>
         </div>
     </div>
     <div class="d-flex justify-content-center">
@@ -78,7 +78,7 @@
                                 <!-- Selected Date & Timeslot UI -->
                                 <div id="timeslotSection" style="display:none; margin-top:40px">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h3 id="selectedDateText" class="fw-bold"></h3>
+                                        <h3 id="selectedDateText" class=""></h3>
                                     </div>
 
                                     <div class="row g-3">
@@ -199,7 +199,7 @@
                                     </form>
                                 </div>
 
-                                <div class="table-responsive mt-5 w-100">
+                                <div class="table-responsive mt-3 w-100">
                                     <table id="myTable" class="table w-100">
                                         <thead>
                                             <tr>
@@ -288,7 +288,7 @@
                                     </form>
                                 </div>
 
-                                <div class="table-responsive mt-5 w-100">
+                                <div class="table-responsive mt-3 w-100">
                                     <table id="myTable1" class="table w-100">
                                         <thead>
                                             <tr>
@@ -362,7 +362,7 @@
                                     </form>
                                 </div>
 
-                                <div class="table-responsive mt-5 w-100">
+                                <div class="table-responsive mt-3 w-100">
                                     <table id="myTable2" class="table w-100">
                                         <thead>
                                             <tr>
@@ -455,17 +455,17 @@
                             <div class="time-row">
                                 <div class="time-block from-block">
                                     <label>From</label>
-                                    <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
-                                    <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
-                                    <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                    <select class="hh form-select" data-error="Please select From Hour"><option value="">HH</option></select>
+                                    <select class="mm form-select" data-error="Please select From Minute"><option value="">MM</option></select>
+                                    <select class="ap form-select" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
 
                                 <div class="time-block to-block">
                                     <label>To</label>
-                                    <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
-                                    <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
-                                    <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                    <select class="hh form-select" data-error="Please select To Hour"><option value="">HH</option></select>
+                                    <select class="mm form-select" data-error="Please select To Minute"><option value="">MM</option></select>
+                                    <select class="ap form-select" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
                             </div>
@@ -497,17 +497,17 @@
                             <div class="time-row">
                                 <div class="time-block from-block">
                                     <label>From</label>
-                                    <select class="hh" data-error="Please select From Hour"><option value="">HH</option></select>
-                                    <select class="mm" data-error="Please select From Minute"><option value="">MM</option></select>
-                                    <select class="ap" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                    <select class="hh form-select" data-error="Please select From Hour"><option value="">HH</option></select>
+                                    <select class="mm form-select" data-error="Please select From Minute"><option value="">MM</option></select>
+                                    <select class="ap form-select" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
                                 
                                 <div class="time-block to-block">
                                     <label>To</label>
-                                    <select class="hh" data-error="Please select To Hour"><option value="">HH</option></select>
-                                    <select class="mm" data-error="Please select To Minute"><option value="">MM</option></select>
-                                    <select class="ap" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                    <select class="hh form-select" data-error="Please select To Hour"><option value="">HH</option></select>
+                                    <select class="mm form-select" data-error="Please select To Minute"><option value="">MM</option></select>
+                                    <select class="ap form-select" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
                                 

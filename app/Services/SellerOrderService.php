@@ -198,8 +198,7 @@ try{
     
 }
 
-
-
+// delivery Status code
 public function updateSingleOrderStatus($request){
 
 try{
@@ -229,15 +228,11 @@ try{
     }catch (\Exception $e) {
     return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
     }
-
-
-
     
 }
 
 
-
-
+// exchnage and return Status code
 
 public function updateOrderExchangeReturnStatus($request){
 
@@ -247,7 +242,19 @@ try{
    
    if($singleOrder){
 
-    $singleOrder->update(['r_e_approve'=> $request->status]);
+    $data=['r_e_approve'=> $request->status];
+
+    if($request->status=='1'){
+
+        $data['is_picked']='0';
+        $data['assign_date']=null;
+        $data['assign_status']='0';
+        $data['delivery_boy_id']=null;
+        $data['delivery_status']='0';
+    }
+
+
+    $singleOrder->update($data);
     
      return [
             'status'  => 'success',
@@ -277,10 +284,30 @@ public function SellerAllChatdata($request){
 try{
 
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('seller_id',$request->seller_id)->get();
+    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details')->where('seller_id',$request->seller_id)->get();
 
 
    if($check_chatRecord->isNotEmpty()){
+    
+    foreach ($check_chatRecord as $key => $val) {
+
+    $firbase_chat = $this->getMessages($val->unique_id);
+
+    if (!empty($firbase_chat)) {
+        // Ensure array order
+        $lastMessage = end($firbase_chat);
+
+        $val->last_chat = $lastMessage['message'] ?? null;
+        $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
+    } else {
+        $val->last_chat = null;
+        $val->last_chat_time = null;
+    }
+}
+
+
+
+
 
      return [
             'status'  => 'success',
@@ -313,11 +340,25 @@ public function SellerSingleChatdata($request){
 
 try{
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request->unique_id)->first();
+    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details')->where('unique_id',$request->unique_id)->first();
 
    if($check_chatRecord){
 
-     $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
+    $chatRoom_id=$check_chatRecord->unique_id;
+
+    $firbase_chat= $this->getMessages($chatRoom_id);
+
+     foreach($firbase_chat as $key=>$val){
+        $messageId= $key;
+        
+        $data=[
+            "read"=>1
+        ];
+
+        $this->updateMessage($check_chatRecord->unique_id,$messageId,$data);
+     }
+
+
 
      $response['record']=$check_chatRecord;
      $response['firbase_chat']=$firbase_chat;
@@ -390,8 +431,6 @@ try{
 }
 
 
-
-
     public function getMessages(string $room): array
     {
 
@@ -401,5 +440,26 @@ try{
             ->getValue() ?? [];
     }
 
+
+       public function updateMessage(string $room, string $messageId, array $data): void
+    {
+        $this->database
+            ->getReference("chats/{$room}/{$messageId}")
+            ->update($data);
+    }
+
+     public function countUnreadMessages($room, $currentUserId)
+    {
+        $messages = $this->getMessages($room);
+        $count = 0;
+
+        foreach ($messages as $msg) {
+            if (isset($msg['id']) && $msg['id'] != $currentUserId && (!isset($msg['read_status']) || $msg['read_status'] == 0)) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
 
 }

@@ -2502,9 +2502,9 @@ header,
     width: 100% !important;
 }
 
-.time-wrapper {
+/* .time-wrapper {
   width: 400px;
-}
+} */
 
 .time-row {
   /* display: flex; */
@@ -2516,7 +2516,8 @@ header,
 .time-block {
   display: flex;
   align-items: center;
-  gap: 5px;
+     gap: 9px;
+    margin: 21px;
 }
 
 .time-block label {
@@ -2546,4 +2547,12 @@ select {
   font-size: 18px;
   font-weight: 600;
   text-decoration: none;
+}
+
+.fc .fc-button-primary:disabled {
+  
+    background: linear-gradient(to bottom left, #F9DBAB, #7D532F) !important;
+}
+.fc .fc-button, .fc .fc-button .fc-icon, .fc .fc-button-group, .fc .fc-timegrid-slot-label {
+    background: linear-gradient(to bottom left, #F9DBAB, #7D532F) !important;
 }
