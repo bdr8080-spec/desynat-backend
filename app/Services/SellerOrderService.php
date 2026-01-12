@@ -289,16 +289,16 @@ try{
 
    if($check_chatRecord->isNotEmpty()){
 
-    foreach($check_chatRecord as $key=>$val){
+    // foreach($check_chatRecord as $key=>$val){
 
 
 
-    }
+    // }
 
-     $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
+    //  $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
 
-     $response['record']=$check_chatRecord;
-     $response['firbase_chat']=$firbase_chat;
+    //  $response['record']=$check_chatRecord;
+    //  $response['firbase_chat']=$firbase_chat;
 
 
 
