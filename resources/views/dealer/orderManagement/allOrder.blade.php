@@ -34,12 +34,12 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-ongoing-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-ongoing" type="button" role="tab" aria-controls="pills-ongoing"
-                                aria-selected="false">Ongoing orders</button>
+                                aria-selected="false">Ongoing orders ({{count($normal['ongoing_order'])}})</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-past-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-past" type="button" role="tab" aria-controls="pills-past"
-                                aria-selected="false">Past orders</button>
+                                aria-selected="false">Past orders ({{count($normal['past_order'])}})</button>
                         </li>
                     </ul>
                 </div>
@@ -354,6 +354,7 @@
 
             </div>
 
+
             <!---------------- End Normal Orders ----------------------->
 
             <div class="tab-pane fade" id="pills-Custom-Order" role="tabpanel" aria-labelledby="pills-Custom-Order-tab"
@@ -369,12 +370,12 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-ongoing2-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-ongoing2" type="button" role="tab" aria-controls="pills-ongoing2"
-                                aria-selected="false">Ongoing orders</button>
+                                aria-selected="false">Ongoing orders ({{count($custom['ongoing_order'])}})</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link w-100" id="pills-past2-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-past2" type="button" role="tab" aria-controls="pills-past2"
-                                aria-selected="false">Past orders</button>
+                                aria-selected="false">Past orders ({{count($custom['past_order'])}})</button>
                         </li>
                     </ul>
                 </div>
