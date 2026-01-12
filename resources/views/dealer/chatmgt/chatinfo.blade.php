@@ -60,8 +60,8 @@
                             <div class="card-left mb-2 d-flex">
                                 <div>
                                     <div class="chat-odr me-3">
-                                        <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                            class="img-fluid">
+                                        <img src="{{ $single_chats['record']->product_variation->variant_image[0]}}"
+                                            alt="Product" class="img-fluid">
                                     </div>
                                 </div>
 
@@ -109,7 +109,7 @@
                                     <div class="width-120">Address</div>
                                 </td>
                                 <td>
-                                    <div>33XH+2M3, Al Ahmadi, Kuwait</div>
+                                    <div> {{ $single_chats['record']->delivery_details->address}} </div>
                                 </td>
                             </tr>
                             <tr>
@@ -175,7 +175,7 @@
                                                     <div class="width-120">Item Price</div>
                                                 </td>
                                                 <td>
-                                                    <div>4000 KD</div>
+                                                    <div>{{ $single_chats['record']->price}} KD</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -183,7 +183,7 @@
                                                     <div class="width-120">Shipping Fees</div>
                                                 </td>
                                                 <td>
-                                                    <div>80 KD</div>
+                                                    <div>{{ $single_chats['record']->shipping}} KD</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -191,7 +191,7 @@
                                                     <div class="width-120">Tax</div>
                                                 </td>
                                                 <td>
-                                                    <div>00.00 KD</div>
+                                                    <div>{{ $single_chats['record']->tax}} KD</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -199,7 +199,7 @@
                                                     <div class="width-120">Total Amount </div>
                                                 </td>
                                                 <td>
-                                                    <div>4000.00 KD</div>
+                                                    <div>{{ $single_chats['record']->total_amount}} KD</div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -221,7 +221,7 @@
                                         <div class="width-120">Per Item Price</div>
                                     </td>
                                     <td>
-                                        <div>4000 KD</div>
+                                        <div>{{ $single_chats['record']->price}} KD</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -229,7 +229,7 @@
                                         <div class="width-120">Shipping Fees</div>
                                     </td>
                                     <td>
-                                        <div>80 KD</div>
+                                        <div>{{ $single_chats['record']->shipping}} KD</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -237,7 +237,7 @@
                                         <div class="width-120">Tax</div>
                                     </td>
                                     <td>
-                                        <div>00.00 KD</div>
+                                        <div>{{ $single_chats['record']->tax}} KD</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -245,7 +245,7 @@
                                         <div class="width-120">Total Amount </div>
                                     </td>
                                     <td>
-                                        <div>4000.00 KD</div>
+                                        <div>{{ $single_chats['record']->total_amount}} KD</div>
                                     </td>
                                 </tr>
                             </table>
@@ -268,10 +268,10 @@
                     <div class="msger card">
                         <header class="msger-header d-flex gap-2 align-items-center">
                             <div class="chat-user-1 me-3">
-                                <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
+                                <img src="{{ $single_chats['record']->user_details->profile_image}}" alt="Product"
                                     class="img-fluid">
                             </div>
-                            <h5 class="msger-header-title">Rahul </h5>
+                            <h5 class="msger-header-title">{{ $single_chats['record']->user_details->full_name}} </h5>
                         </header>
 
                         <main class="msger-chat chatfull">
