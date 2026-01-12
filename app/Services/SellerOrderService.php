@@ -298,7 +298,7 @@ try{
         $lastMessage = end($firbase_chat);
 
         $val->last_chat = $lastMessage['message'] ?? null;
-        $val->last_chat_time = $lastMessage['times'] ?? null;
+        $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
     } else {
         $val->last_chat = null;
         $val->last_chat_time = null;

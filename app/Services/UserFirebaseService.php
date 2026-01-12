@@ -154,6 +154,9 @@ foreach ($check_chatRecord as $key => $val) {
 
         $val->last_chat = $lastMessage['message'] ?? null;
         $val->last_chat_time = $lastMessage['times'] ?? null;
+
+        $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
+        
     } else {
         $val->last_chat = null;
         $val->last_chat_time = null;
@@ -232,6 +235,7 @@ foreach ($check_chatRecord as $key => $val) {
         "type"=>$request->type , // 0 message and 1 for Image 
         'by'=>$request->by ,
          "times"=>Now(),
+         "read"=>0 // 0 un read and 1 read 
        ];
 
 

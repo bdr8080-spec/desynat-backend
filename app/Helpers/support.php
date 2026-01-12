@@ -260,3 +260,29 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
 
 
     }
+
+
+
+    function formatChatTime($timestamp)
+{
+    // Convert Firebase timestamp to DateTime
+    $chatTime = new DateTime($timestamp);
+    $now = new DateTime();
+
+    // Difference
+    $diff = $now->diff($chatTime);
+    $daysAgo = (int)$diff->days;
+
+    // Same day
+    if ($daysAgo === 0) {
+        return $chatTime->format('d M Y, h:i A');
+    }
+
+    // Yesterday
+    if ($daysAgo === 1) {
+        return '1 day ago';
+    }
+
+    // Older
+    return $daysAgo . ' days ago';
+}
