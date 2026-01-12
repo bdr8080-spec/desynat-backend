@@ -99,7 +99,6 @@
                                                             data-bs-target="#editTimeslotModal">
                                                             <i class="bi bi-pencil-square"></i>
                                                         </a>
-
                                                         <a class="table-button text-danger deleteTimeslot mb-1 mt-1" data-id="{{ $slot['id'] }}">
                                                             <i class="bi bi-trash3-fill"></i>
                                                         </a>
@@ -453,19 +452,23 @@
                     <div class="time-wrapper">
                         <div id="timeContainer">
                             <div class="time-row">
-                                <div class="time-block from-block">
+                                <div class="time-block from-block flex-wrap">
                                     <label>From</label>
+                                    <div class="d-flex gap-2">
                                     <select class="hh form-select" data-error="Please select From Hour"><option value="">HH</option></select>
                                     <select class="mm form-select" data-error="Please select From Minute"><option value="">MM</option></select>
                                     <select class="ap form-select" data-error="Please select From AM/PM"><option value="">AM/PM</option></select>
+                                    </div>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
 
-                                <div class="time-block to-block">
+                                <div class="time-block from-block flex-wrap">
                                     <label>To</label>
+                                     <div class="d-flex gap-2">
                                     <select class="hh form-select" data-error="Please select To Hour"><option value="">HH</option></select>
                                     <select class="mm form-select" data-error="Please select To Minute"><option value="">MM</option></select>
                                     <select class="ap form-select" data-error="Please select To AM/PM"><option value="">AM/PM</option></select>
+                                    </div>
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
                             </div>
@@ -553,7 +556,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     const url = new URL(window.location);
     const urlParams = url.searchParams;
@@ -622,7 +625,7 @@ function reloadWithDate(dateStr) {
 
     window.location.href = url.toString();
 }
-</script>
+</script> -->
 
 
 <script>
@@ -1222,5 +1225,78 @@ function removeRow(el) {
     el.parentElement.remove();
 }
 </script> -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const url = new URL(window.location);
+    const urlParams = url.searchParams;
+ 
+    let reloadNeeded = false;
+ 
+    if (!urlParams.has('country_id')) {
+        urlParams.set('country_id', 1);
+        reloadNeeded = true;
+    }
+ 
+    if (!urlParams.has('date')) {
+        const today = new Date().toISOString().split('T')[0];
+        urlParams.set('date', today);
+        reloadNeeded = true;
+    }
+ 
+    if (reloadNeeded) {
+        window.location.replace(url.toString());
+        return;
+    }
+ 
+    const selectedDate = urlParams.get('date');
+    const calendarEl = document.getElementById("calendar");
+ 
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        selectable: true,
+        height: "auto",
+        initialDate: selectedDate,
+ 
+        headerToolbar: {
+            left: 'prev',
+            center: 'title',
+            right: 'next'
+        },
+ 
+        showNonCurrentDates: false,
+        fixedWeekCount: false,  
+ 
+        dateClick: function(info) {
+            reloadWithDate(info.dateStr);
+        }
+    });
+ 
+    calendar.render();
+    calendar.select(selectedDate);
+    showSelectedDate(selectedDate);
+});
+ 
+function showSelectedDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+ 
+    document.getElementById("selectedDateText").innerText =
+        `Today, ${date.toLocaleDateString('en-GB', options)}`;
+ 
+    document.getElementById("timeslotSection").style.display = "block";
+}
+ 
+function reloadWithDate(dateStr) {
+    const url = new URL(window.location);
+    url.searchParams.set('date', dateStr);
+ 
+    if (!url.searchParams.has('country_id')) {
+        url.searchParams.set('country_id', 1);
+    }
+ 
+    window.location.href = url.toString();
+}
+</script>
+ 
 
 @endsection
