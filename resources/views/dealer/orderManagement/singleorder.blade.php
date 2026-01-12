@@ -13,10 +13,26 @@
     <div class="d-flex justify-content-between mt-2">
         <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Details</a>
         <div class="from-group-list">
-            <div style="color:#16B364;">Confirmed</div>
+
             <!-- <div style="color:#FF5F1B;">Returned</div>
             <div style="color:#D53B36;">Cancelled</div>
             <div style="color:#FF5F1B;">Exchange</div> -->
+
+            @if($order_details->return_type=="1")
+            <div style="color:#FF5F1B;">Returned</div>
+
+            @elseif($order_details->return_type=="2")
+            <div style="color:#FF5F1B;">Exchange1</div>
+
+            @elseif($order_details->payment_status!=="1" && order_details->order->payment_method!=="3")
+            <div style="color:#D53B36;">Cancelled</div>
+
+            @else
+            <div style="color:#16B364;">Confirmed</div>
+            @endif
+
+
+
         </div>
     </div>
 
@@ -82,7 +98,7 @@
                 </div>
             </div>
 
-            <div class="order-box border-radious-10 box-shadow mt-4">
+            <!-- <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Delivery Instruction</h6>
                 <div class="cust-deatils-pnl">
                     <p class="font-15">lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod temo
@@ -92,7 +108,7 @@
                         dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore et dolore
                         magna aliqua. Ut enim ad</p>
                 </div>
-            </div>
+            </div> -->
 
             <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Payment Summary</h6>
@@ -152,69 +168,74 @@
                 <div class="order-p-pnl">
                     <div class="prodimg">
                         <figure>
-                            <img src="{{ asset('dealer') }}/assets/img/reel-3.svg" alt="icon" class="img-fluid">
+                            <img src="{{ $order_details->variation_details->variant_image[0] }}" alt="icon"
+                                class="img-fluid">
                         </figure>
                     </div>
 
                     <div class="w-100">
                         <div class="pay-sum">
-                            <div class="summary-title-1">Nike Shirt</div>
-                            <div class="summary-value">20.5 KD</div>
+                            <div class="summary-title-1">{{ $order_details->product_details->product_name_en }}</div>
+                            <div class="summary-value">{{$order_details->variation_details->final_price }} KD</div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Size</div>
-                            <div class="summary-value">M</div>
+                            <div class="summary-value">{{ $order_details->variation_details->size->name }}</div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Color </div>
-                            <div class="summary-value">Black</div>
+                            <div class="summary-value">{{ $order_details->variation_details->color->name }}</div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Category </div>
-                            <div class="summary-value">Men</div>
+                            <div class="summary-value">{{ $order_details->product_details->category->name }}</div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Quantity</div>
-                            <div class="summary-value">20.5 KD * 4</div>
+                            <div class="summary-value">{{ $order_details->quantity}}</div>
                         </div>
                     </div>
                 </div>
             </div>
+            @isset($order_details->UserRatingReviewProvide)
             <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Customer Ratings</h6>
-                <div class="star-rating mt-1">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
 
+                <div class="star-rating mt-1">
+
+                    @for ($i = 0; $i < $order_details->UserRatingReviewProvide->product_rating ; $i++)
+                        <i class="bi bi-star-fill"></i>
+                        @endfor
                 </div>
+
                 <div class="cust-deatils-pnl mt-4">
                     <h6>Review</h6>
-                    <p class="font-15">lorem ipsum dolor sit amet, consectetur adipisici elit, sed do eiusmod temo
-                        incididunt
-                        labore et dolore magna aliqua. Ut enim ad lorem ipsum dolor sit amet, consectetur is adipisici
-                        elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adlorem ipsum
-                        dolor sit amet, consectetur adipisici elit, sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad</p>
+                    <p class="font-15">
+                        {{$order_details->UserRatingReviewProvide->product_review}}
+                    </p>
                 </div>
             </div>
+
+            @endisset
+
+            <!-- Product return Code  Start -->
+
+            @if($order_details->return_type==!'0' && $order_details->return_type=='1' )
 
             <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Return Details</h6>
 
                 <div class="pay-sum">
                     <div class="summary-title-1">Return Id</div>
-                    <div class="summary-value">#455545</div>
+                    <div class="summary-value">#{{$order_details->id }}</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Requested on</div>
-                    <div class="summary-value">27/10/2024 at 07:30PM</div>
+                    <div class="summary-value">{{$order_details->updated_at }}</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Reason</div>
-                    <div class="summary-value">Lorem </div>
+                    <div class="summary-value">{{$order_details->return_reason }} </div>
                 </div>
 
             </div>
@@ -224,58 +245,424 @@
                 <div class="order-box border-radious-10 box-shadow mt-4 d-flex justify-content-center">
                     <div class="prodimg">
                         <figure>
-                            <img src="/dealer/assets/img/image33.png" alt="icon" class="img-fluid">
+                            <img src="{{$order_details->return_image }}" alt="icon" class="img-fluid">
                         </figure>
                     </div>
 
                 </div>
             </div>
 
+            @endif
+
+            <!-- Product return Code  End  -->
+
+            <!-- Product Exchange Code  Start -->
+
+            @if($order_details->return_type!=='0' && $order_details->return_type=='2' )
+
+
             <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Exchange Details</h6>
 
                 <div class="pay-sum">
                     <div class="summary-title-1">Exchange Id</div>
-                    <div class="summary-value">#455545</div>
+                    <div class="summary-value">#{{$order_details->id }}</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Exchange requested on</div>
-                    <div class="summary-value">27/10/2024 at 07:30PM</div>
+                    <div class="summary-value"> {{$order_details->updated_at }}</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Reason</div>
-                    <div class="summary-value">Lorem,</div>
+                    <div class="summary-value">{{$order_details->exchange_reason }}</div>
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Exchange size</div>
-                    <div class="summary-value">M </div>
+                    <div class="summary-value">{{@$order_details->exchange_new_size_data->name}}</div>
                 </div>
-
-            </div>
-            <div class="dashboard-button d-flex mt-5 gap-5">
-                <div class="from-group  w-100">
-                    <select class="form-select form-control option width-50" aria-label="Default select example">
-                        <option value="">Confirmed</option>
-                        <option value="1"> Confirmed </option>
-                        <option value="2"> Packed </option>
-                        <option value="3"> Shipped </option>
-                        <option value="4"> Exchange </option>
-                    </select>
-                </div>
-                <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
             </div>
 
+            @endif
 
+            <!-- Product Exchange Code  End Here  -->
+
+            <!-- Return Acceopt and reject Submit Form -->
+            @if($order_details->return_type!=='0' && $order_details->return_type=='1' &&
+            $order_details->r_e_approve=='0' )
+
+            <form id="updateReturnStatus" action="{{ route('seller.update-return-exchange') }}" method="post">
+                @csrf
+
+                <input type="hidden" name="id" value="{{ request()->id}}">
+
+                <div class="dashboard-button d-flex mt-5 gap-5">
+                    <div class="from-group  w-100">
+                        <select class="form-select form-control option width-50" aria-label="Default select example"
+                            name="status">
+                            <option value="">Select Return </option>
+                            <option value="1"> Accept </option>
+                            <option value="2"> Reject </option>
+
+                        </select>
+                    </div>
+                    <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
+                </div>
+
+            </form>
+
+            @endif
+
+
+            <!-- Exchnage Accept and reject Submit Form -->
+            @if($order_details->return_type!=='0' && $order_details->return_type=='2' &&
+            $order_details->r_e_approve=='0' )
+
+            <form id="updateexchnageStatus" action="{{ route('seller.update-return-exchange') }}" method="post">
+                @csrf
+
+                <input type="hidden" name="id" value="{{ request()->id}}">
+
+                <div class="dashboard-button d-flex mt-5 gap-5">
+                    <div class="from-group  w-100">
+                        <select class="form-select form-control option width-50" aria-label="Default select example"
+                            name="status">
+                            <option value="">Select Exchange request </option>
+                            <option value="1"> Accept </option>
+                            <option value="2"> Reject </option>
+
+                        </select>
+                    </div>
+                    <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
+                </div>
+
+            </form>
+
+            @endif
+
+            <!-- If Delivery Form in Process  -->
+
+            @if($order_details->return_type=="0" && in_array($order_details->delivery_status,['1','2','2.1','2.2']))
+
+            <form id="updateDeliveryStatus" action="{{ route('seller.update-delivery-status') }}" method="post">
+                @csrf
+
+                <input type="hidden" name="id" value="{{ request()->id}}">
+                <div class="dashboard-button d-flex mt-5 gap-5">
+                    <div class="from-group  w-100">
+                        <select class="form-select form-control option width-50" aria-label="Default select example"
+                            name="status">
+                            <option value="">Delivery process</option>
+                            <option value="1" @if($order_details->delivery_status=="1") selected @endif > Confirmed
+                            </option>
+                            <option value="2.1" @if($order_details->delivery_status=="2.1") selected @endif > Packed
+                            </option>
+                            <option value="2.2" @if($order_details->delivery_status=="2.2") selected @endif> Shipped
+                            </option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn add-fillbtn w-100">Update Status</button>
+                </div>
+
+            </form>
+
+            @endif
 
         </div>
-
-
     </div>
 
-
-
-
 </section>
+
+<script>
+$(document).on('submit', 'form#updateDeliveryStatus', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $("#file-error").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                toastr.success(response.message);
+            }
+        },
+        error: function(xhr) {
+
+            $('#loader').hide();
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
+
+                } else {
+
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
+                    }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+
+    });
+
+    return false;
+});
+
+
+// return accept and reject status code 
+
+$(document).on('submit', 'form#updateReturnStatus', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $("#file-error").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                toastr.success(response.message);
+            }
+        },
+        error: function(xhr) {
+
+            $('#loader').hide();
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
+
+                } else {
+
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
+                    }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+
+    });
+
+    return false;
+});
+
+
+// exchnage Accept and reject Code 
+
+$(document).on('submit', 'form#updateexchnageStatus', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $("#file-error").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                toastr.success(response.message);
+            }
+        },
+        error: function(xhr) {
+
+            $('#loader').hide();
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
+
+                } else {
+
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
+                    }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+
+    });
+
+    return false;
+});
+</script>
+
 
 <!-- OVERLAY -->
 <div class="overlay" id="overlay"></div>

@@ -54,6 +54,13 @@ class orderdetail extends Model
 
     }
 
+      public function exchange_new_size_data(){
+        
+        return $this->hasOne(size::class,'id','exchange_new_size');
+
+    }
+
+
     
 
 }
