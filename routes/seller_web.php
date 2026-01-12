@@ -137,7 +137,8 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/show-single-banner/{id}',[SellerBannerManagement::class,'show_single_banner'])->name('seller.show_single_banner');    
 
     route::Match(['get','post'],'/all-chats',[SellerChatController::class,'All_chats'])->name('seller.All_chats');    
-    
+
+    route::Match(['get','post'],'/chat-info/{id}',[SellerChatController::class,'single_chat_room'])->name('seller.single-chat-info');    
 
 
 });
@@ -149,13 +150,6 @@ Route::match(['get', 'post'], '/chats', function () {
     return view('dealer.chatmgt.chatlist');
 
 })->name('dealer.chats');
-
-
-Route::match(['get', 'post'], '/chat-info', function () {
-    return view('dealer.chatmgt.chatinfo');
-
-})->name('dealer.chat-info');
-
 
 
 Route::fallback(function () {
