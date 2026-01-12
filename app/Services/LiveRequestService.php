@@ -124,19 +124,21 @@ class LiveRequestService
 
             $exists = LiveRequestTimeslot::where('country_id', $request->country_id)
                 ->where('date', $request->date)
-                ->where(function($q) use ($from, $to) {
-                    $q->where(function($q2) use ($from, $to) {
-                        // Any existing slot that starts before new slot ends AND ends after new slot starts
-                        $q2->whereTime('from', '<', $to->format('H:i:s'))
-                        ->whereTime('to', '>', $from->format('H:i:s'));
-                    });
-                })
+                ->whereRaw("
+                    STR_TO_DATE(`from`, '%h:%i %p') < ?
+                    AND
+                    STR_TO_DATE(`to`, '%h:%i %p') > ?
+                ", [
+                    $to->format('H:i:s'),
+                    $from->format('H:i:s')
+                ])
                 ->exists();
+
 
             if ($exists) {
                 return [
                     'status' => 'error',
-                    'message' => 'This timeslot is already added',
+                    'message' => 'This timeslot is already exist',
                     'data' => (object)[]
                 ];
             }
@@ -230,18 +232,20 @@ class LiveRequestService
             $exists = LiveRequestTimeslot::where('country_id', $request->country_id)
                 ->where('date', $request->date)
                 ->where('id', '!=', $dealId)
-                ->where(function($q) use ($from, $to) {
-                    $q->where(function($q2) use ($from, $to) {
-                        $q2->whereTime('from', '<', $to->format('H:i:s'))
-                        ->whereTime('to', '>', $from->format('H:i:s'));
-                    });
-                })
+                 ->whereRaw("
+                    STR_TO_DATE(`from`, '%h:%i %p') < ?
+                    AND
+                    STR_TO_DATE(`to`, '%h:%i %p') > ?
+                ", [
+                    $to->format('H:i:s'),
+                    $from->format('H:i:s')
+                ])
                 ->exists();
 
             if ($exists) {
                 return[
                     'status' => 'error',
-                    'message' => 'This timeslot is already added',
+                    'message' => 'This timeslot is already exists',
                     'data' => (object)[]
                 ];
             }
