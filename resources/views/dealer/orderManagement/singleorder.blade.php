@@ -24,7 +24,7 @@
             @elseif($order_details->return_type=="2")
             <div style="color:#FF5F1B;">Exchange1</div>
 
-            @elseif($order_details->payment_status!=="1" && order_details->order->payment_method!=="3")
+            @elseif($order_details->payment_status!=="1" && @$order_details->order->payment_method!=="3")
             <div style="color:#D53B36;">Cancelled</div>
 
             @else

@@ -298,7 +298,7 @@ try{
         $lastMessage = end($firbase_chat);
 
         $val->last_chat = $lastMessage['message'] ?? null;
-        $val->last_chat_time = $lastMessage['times'] ?? null;
+        $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
     } else {
         $val->last_chat = null;
         $val->last_chat_time = null;
@@ -344,7 +344,21 @@ try{
 
    if($check_chatRecord){
 
-     $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
+    $chatRoom_id=$check_chatRecord->unique_id;
+
+    $firbase_chat= $this->getMessages($chatRoom_id);
+
+     foreach($firbase_chat as $key=>$val){
+        $messageId= $key;
+        
+        $data=[
+            "read"=>1
+        ];
+
+        $this->updateMessage($check_chatRecord->unique_id,$messageId,$data);
+     }
+
+
 
      $response['record']=$check_chatRecord;
      $response['firbase_chat']=$firbase_chat;
@@ -417,8 +431,6 @@ try{
 }
 
 
-
-
     public function getMessages(string $room): array
     {
 
@@ -428,5 +440,26 @@ try{
             ->getValue() ?? [];
     }
 
+
+       public function updateMessage(string $room, string $messageId, array $data): void
+    {
+        $this->database
+            ->getReference("chats/{$room}/{$messageId}")
+            ->update($data);
+    }
+
+     public function countUnreadMessages($room, $currentUserId)
+    {
+        $messages = $this->getMessages($room);
+        $count = 0;
+
+        foreach ($messages as $msg) {
+            if (isset($msg['id']) && $msg['id'] != $currentUserId && (!isset($msg['read_status']) || $msg['read_status'] == 0)) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
 
 }

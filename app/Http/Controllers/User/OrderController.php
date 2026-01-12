@@ -25,6 +25,7 @@ class OrderController extends Controller
 
         $data = (object)[
             'user_id' => $user->id,
+            'order_type' => '1',
             'search' => $request->search ?? null,
             'filter' => $request->filter ?? null
         ];
@@ -32,7 +33,17 @@ class OrderController extends Controller
         $orderData = $this->UserOrderService->AllOrderDetailsNew($data)['data'];
         // dump($orderData);
 
-        return view('user.orders.my-order',compact('orderData'));
+        $data1 = (object)[
+            'user_id' => $user->id,
+            'order_type' => '2',
+            'search' => $request->search1 ?? null,
+            'filter' => $request->filter1 ?? null
+        ];
+
+        $customOrderData = $this->UserOrderService->AllOrderDetailsNew($data1)['data'];
+        //dd($customOrderData);
+
+        return view('user.orders.my-order',compact('orderData','customOrderData'));
 
     }
 

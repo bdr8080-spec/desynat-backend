@@ -54,7 +54,7 @@
                             @if (Auth::guard('web')->check())
 
                             <div class="user_nav_inner_profile">
-                                <a href="">
+                                <a href="{{route('user.allChats')}}">
                                     <span>
                                         <img src="{{asset('user/assets/images/chat.svg')}}" class=img-fluid />
                                     </span>
