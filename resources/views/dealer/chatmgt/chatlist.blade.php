@@ -4,7 +4,7 @@
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <a class="title24 alink"> Chat </a>
     </div>
-   
+
 
     <div class="main-content categoryDetail mt-4">
         <div class="row">
@@ -14,7 +14,7 @@
                         <h3 class="mb-0">Filter</h3>
                         <a href="#" class="link-apply">Apply</a>
                     </div>
-                    
+
                     <form>
                         <div class="orderfilter">
                             <div class="check_radio mb-3">
@@ -65,24 +65,55 @@
                     </form>
 
 
+                    @foreach($all_chats as $key=>$val)
+
                     <div class="cart-panel position-relative">
                         <a href="chat-info" class="link-content">
                             <div class="cart-card">
                                 <div class="card-left mb-2 d-flex align-items-center">
                                     <div>
                                         <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
+                                            <img src="{{ $val->user_details->profile_image }}" alt="Product"
                                                 class="img-fluid">
                                         </div>
                                     </div>
                                     <div class="w-100">
                                         <div class="card-right d-flex w-100 justify-content-between">
                                             <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
+                                                <h6 class="product-title"> {{ $val->user_details->full_name }}</h6>
+                                                <div class="chat-user-light"> {{ $val->user_details->last_chat }}</div>
+                                                <div class="chat-user-light"> {{ $val->user_details->last_chat_time }}
+                                                </div>
                                             </div>
-                                            <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
+
+
+                                            @if($val->type=='1' && $val->product_request=='1' && $val->action=='0')
+
+                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Quotation
+                                                Received</div>
+
+                                            @elseif($val->type=='1' && $val->product_request=='1' && $val->action=='1'
+                                            || $val->action=='2' )
+
+                                            <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation
+                                                Accepted</div>
+
+                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='3'
+                                            || $val->action=='4' )
+
+                                            <div class="red-bg" style="color:#EA9413;background:##fb0b0b;">Request
+                                                Cancelled
+                                            </div>
+
+
+                                            @else
+                                            <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting
+                                            </div>
+
+
+
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div>
@@ -90,80 +121,9 @@
                         </a>
                     </div>
 
-                    <div class="cart-panel position-relative">
-                        <a href="order_details" class="link-content">
-                            <div class="cart-card">
-                                <div class="card-left mb-2 d-flex align-items-center">
-                                    <div>
-                                        <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
-                                            <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
-                                            </div>
-                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Quotation Received</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+                    @endforeach
 
-                    <div class="cart-panel position-relative">
-                        <a href="order_details" class="link-content">
-                            <div class="cart-card">
-                                <div class="card-left mb-2 d-flex align-items-center">
-                                    <div>
-                                        <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/item-2.svg')}}" alt="Product"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
-                                            <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
-                                            </div>
-                                            <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation Accepted</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
-                    <div class="cart-panel position-relative">
-                        <a href="order_details" class="link-content">
-                            <div class="cart-card">
-                                <div class="card-left mb-2 d-flex align-items-center">
-                                    <div>
-                                        <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/item-1.svg')}}" alt="Product"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
-                                            <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
-                                            </div>
-                                            <!-- <div class="yellow-bg" style="color:#EA9413;">Waiting</div> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
 
 
 
@@ -175,7 +135,7 @@
 
     </div>
 
-   
+
 
 
 
