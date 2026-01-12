@@ -14,7 +14,9 @@
                         <div class="cart-card">
                             <div class="pb-2 d-flex justify-content-between">
                                 <div class="request-title">Request id #6776676</div>
-                                <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">New</div>
+                                <!-- <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">New</div> -->
+                                <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Quotation Received</div>
+                                <!-- <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation Accepted</div> -->
                             </div>
                             <div class="card-left mb-2 d-flex">
                                 <div>
@@ -80,7 +82,7 @@
                     </div>
                 </div>
 
-                <div class="quation-pnl mt-3">
+                <div class="quation-pnl mt-3 d-none">
                     <h5>Quotation</h5>
                     <div class="form-group sub-form">
                         <label for="item" class="size14">Per Item Price</label>
@@ -111,7 +113,7 @@
                     </div>
                 </div>
 
-                <div class="time-pnl d-none">
+                <div class="time-pnl">
                     <div class="gift-pnl mt-4">
                         <div class="border-12">
                             <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -163,10 +165,54 @@
                     </div>
                 </div>
 
+                <div class="time-pnl">
+                    <div class="gift-pnl mt-4">
+                        <h5>Quotation</h5>
 
+                        <div class="border-1">
+                            <table class="table table-borderless table-font mb-0">
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Per Item Price</div>
+                                    </td>
+                                    <td>
+                                        <div>4000 KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Shipping Fees</div>
+                                    </td>
+                                    <td>
+                                        <div>80 KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Tax</div>
+                                    </td>
+                                    <td>
+                                        <div>00.00 KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Total Amount </div>
+                                    </td>
+                                    <td>
+                                        <div>4000.00 KD</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
 
+                    <div class="mt-3">
+                         <button type="submit" class="btn add-fillbtn w-100" data-bs-toggle="modal" data-bs-target="#modifyModal">Modify Quotation</button>
+                    </div>
+
+                </div>
             </div>
-
 
 
             <div class="col-lg-8">
@@ -179,8 +225,8 @@
                             <h5 class="msger-header-title">Rahul </h5>
                         </header>
 
-                        <main class="msger-chat">
-                            <div class="msg left-msg">
+                        <main class="msger-chat chatfull">
+                            <div class="msg left-msg w-100">
                                 <div class="msg-bubble">
                                     <div class="msg-text">
                                         Hi, welcome to SimpleChat! Go ahead and send me a message.
@@ -191,7 +237,7 @@
                                 </div>
                             </div>
 
-                            <div class="msg right-msg">
+                            <div class="msg right-msg w-100">
                                 <div class="msg-bubble">
                                     <div class="msg-text">
                                         You can change your name in JS section!
@@ -222,13 +268,53 @@
 
     </div>
 
-   
-
-
-
-
 </section>
 
+
+<!-- Modal -->
+<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Modify Quotation </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="quation-pnl mt-1">
+            <div class="form-group sub-form">
+                <label for="item" class="size14">Per Item Price</label>
+                <input type="text" class="form-control" placeholder="Eg 20 KD">
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group sub-form">
+                        <label for="item" class="size14">Shipping Fees </label>
+                        <input type="text" class="form-control" placeholder="Eg 20 KD">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group sub-form">
+                        <label for="item" class="size14">Tax</label>
+                        <input type="text" class="form-control" placeholder="Eg 20 KD">
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group sub-form">
+                        <label for="item" class="size14">Total Amount</label>
+                        <input type="text" class="form-control" placeholder="Eg 20 KD">
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn add-fillbtn w-100">Confirm & Modify</button>
+            </div>
+        </div>
+
+      </div>
+     
+    </div>
+  </div>
+</div>
 
 
 @include('dealer.layout.custom_code');
