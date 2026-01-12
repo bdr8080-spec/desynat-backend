@@ -68,18 +68,22 @@
                                 <div class="w-100">
                                     <div class="card-right d-flex w-100 justify-content-between">
                                         <div class="product-info">
-                                            <h5 class="product-title">Mooei 3 Pcs set</h5>
+                                            <h5 class="product-title">
+                                                {{ $single_chats['record']->product_variation->product_details->product_name_en  }}
+                                            </h5>
                                             <div class="psize d-flex gap-4 mt-2">
-                                                <span>Size: M</span>
+                                                <span>Size:
+                                                    {{ $single_chats['record']->product_variation->size->name  }}</span>
                                                 <span class="d-flex align-items-center gap-2">
                                                     Color:
                                                     <div class="colorbox"
-                                                        style="width:15px;height:15px;border-radius:3px;background:#000;">
+                                                        style="width:15px;height:15px;border-radius:3px;background:{{ $single_chats['record']->product_variation->color->hex_code }};">
                                                     </div>
                                                 </span>
 
                                             </div>
-                                            <h6 class="product-title mt-2"> 440 KD</h6>
+                                            <h6 class="product-title mt-2">
+                                                {{ $single_chats['record']->product_variation->final_price }} KD</h6>
                                         </div>
 
                                     </div>
@@ -97,7 +101,7 @@
                                     <div class="width-120">Total Quantity</div>
                                 </td>
                                 <td>
-                                    <div>1</div>
+                                    <div> {{ $single_chats['record']->quantity }}</div>
                                 </td>
                             </tr>
                             <tr>
@@ -113,7 +117,7 @@
                                     <div class="width-120">Custom details</div>
                                 </td>
                                 <td>
-                                    <div class="mb-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</div>
+                                    <div class="mb-0">{{ $single_chats['record']->custom_details}} </div>
                                 </td>
                             </tr>
 
