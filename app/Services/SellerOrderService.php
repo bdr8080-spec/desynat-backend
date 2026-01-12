@@ -288,17 +288,22 @@ try{
 
 
    if($check_chatRecord->isNotEmpty()){
+    
+    foreach ($check_chatRecord as $key => $val) {
 
-    foreach($check_chatRecord as $key=>$val){
+    $firbase_chat = $this->getMessages($val->unique_id);
 
+    if (!empty($firbase_chat)) {
+        // Ensure array order
+        $lastMessage = end($firbase_chat);
 
-
+        $val->last_chat = $lastMessage['message'] ?? null;
+        $val->last_chat_time = $lastMessage['times'] ?? null;
+    } else {
+        $val->last_chat = null;
+        $val->last_chat_time = null;
     }
-
-     $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
-
-     $response['record']=$check_chatRecord;
-     $response['firbase_chat']=$firbase_chat;
+}
 
 
 
