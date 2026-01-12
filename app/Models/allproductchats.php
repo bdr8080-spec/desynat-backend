@@ -25,4 +25,9 @@ class allproductchats extends Model
       }
 
 
+      public function delivery_details(){ // get From Address table 
+            return $this->hasOne(userAddress::class,'id','delivery_address');
+      }
+
+
 }
