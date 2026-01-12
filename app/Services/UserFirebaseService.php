@@ -143,6 +143,23 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
     $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details')->where('user_id',$request->user_id)->get();
 
    if($check_chatRecord->isNotEmpty()){
+
+foreach ($check_chatRecord as $key => $val) {
+
+    $firbase_chat = $this->getMessages($val->unique_id);
+
+    if (!empty($firbase_chat)) {
+        // Ensure array order
+        $lastMessage = end($firbase_chat);
+
+        $val->last_chat = $lastMessage['message'] ?? null;
+        $val->last_chat_time = $lastMessage['times'] ?? null;
+    } else {
+        $val->last_chat = null;
+        $val->last_chat_time = null;
+    }
+}
+
      
     return [
         'status'  => 'success',
