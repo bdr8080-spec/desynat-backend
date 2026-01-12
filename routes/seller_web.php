@@ -8,7 +8,7 @@ use App\Http\Controllers\Seller\WebSellerDashboard;
 use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Seller\SellerBannerManagement;
 use App\Http\Controllers\Seller\SellerOrderController;
-
+use App\Http\Controllers\Seller\SellerChatController;
 
 
 Route::group(['prefix' => 'seller'], function () {
@@ -136,8 +136,13 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/show-banner',[SellerBannerManagement::class,'show_banner'])->name('seller.show_banner');    
     route::Match(['get','post'],'/show-single-banner/{id}',[SellerBannerManagement::class,'show_single_banner'])->name('seller.show_single_banner');    
 
+    route::Match(['get','post'],'/all-chats',[SellerChatController::class,'All_chats'])->name('seller.All_chats');    
+    
+
 
 });
+
+
 
 
 Route::match(['get', 'post'], '/chats', function () {
