@@ -198,8 +198,7 @@ try{
     
 }
 
-
-
+// delivery Status code
 public function updateSingleOrderStatus($request){
 
 try{
@@ -229,15 +228,11 @@ try{
     }catch (\Exception $e) {
     return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
     }
-
-
-
     
 }
 
 
-
-
+// exchnage and return Status code
 
 public function updateOrderExchangeReturnStatus($request){
 
@@ -247,7 +242,19 @@ try{
    
    if($singleOrder){
 
-    $singleOrder->update(['r_e_approve'=> $request->status]);
+    $data=['r_e_approve'=> $request->status];
+
+    if($request->status=='1'){
+
+        $data['is_picked']='0';
+        $data['assign_date']=null;
+        $data['assign_status']='0';
+        $data['delivery_boy_id']=null;
+        $data['delivery_status']='0';
+    }
+
+
+    $singleOrder->update($data);
     
      return [
             'status'  => 'success',
