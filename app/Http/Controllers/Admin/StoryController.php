@@ -45,38 +45,99 @@ class StoryController extends Controller
         ], 200);
     }
 
+    // public function addStory(Request $request)
+    // {
+    //    //dd($request->all());
+    //     $validator = Validator::make($request->all(), [
+    //         'file' => 'required|mimes:jpeg,png,jpg,gif,mp4,mov,avi,mkv|max:20480',
+    //     ]);
+
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     $story = new Story();
+
+    //     if($request->hasFile('file')){
+    //         //dd('123');
+    //         $commonController = new CommonController();
+    //         $uploadResult = $commonController->uploadFile($request);
+    //         $uploadResultArray = $uploadResult->getData(true); 
+
+    //         if ($uploadResultArray['status'] === 'error') {
+    //             return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+    //         }
+
+    //         $imageUrl = $uploadResultArray['data']['url'];
+    //         $story->file = $imageUrl; 
+    //     }
+
+    //     $story->save();
+
+    //     return response()->json(['success' => true, 'message' => 'Story Added Successfully!']);
+    // }
+
     public function addStory(Request $request)
     {
-       //dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:jpeg,png,jpg,gif,mp4,mov,avi,mkv|max:51200',
-        ]);
+        if (!$request->hasFile('file')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File is required'
+            ], 422);
+        }
 
+        $file = $request->file('file');
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+        // Allowed extensions
+        $allowedExtensions = ['jpeg','png','jpg','gif','mp4','mov','avi','mkv'];
+        if (!in_array($file->getClientOriginalExtension(), $allowedExtensions)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid file type'
+            ], 422);
+        }
+
+        // Size check (20MB)
+        $maxSize = 20 * 1024 * 1024; // bytes
+        if ($file->getSize() > $maxSize) {
+
+            if (str_starts_with($file->getMimeType(), 'video')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "You can't upload video of more than 20 MB"
+                ], 422);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => "You can't upload image of more than 20 MB"
+            ], 422);
         }
 
         $story = new Story();
 
-        if($request->hasFile('file')){
-            //dd('123');
-            $commonController = new CommonController();
-            $uploadResult = $commonController->uploadFile($request);
-            $uploadResultArray = $uploadResult->getData(true); 
+        $commonController = new CommonController();
+        $uploadResult = $commonController->uploadFile($request);
+        $uploadResultArray = $uploadResult->getData(true);
 
-            if ($uploadResultArray['status'] === 'error') {
-                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
-            }
-
-            $imageUrl = $uploadResultArray['data']['url'];
-            $story->file = $imageUrl; 
+        if ($uploadResultArray['status'] === 'error') {
+            return response()->json([
+                'success' => false,
+                'message' => $uploadResultArray['message']
+            ]);
         }
 
+        $story->file = $uploadResultArray['data']['url'];
         $story->save();
 
-        return response()->json(['success' => true, 'message' => 'Story Added Successfully!']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Story Added Successfully!'
+        ]);
     }
+
+
 
 
 
