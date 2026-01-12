@@ -16,5 +16,13 @@ class allproductchats extends Model
 
       }
 
+        public function user_details(){
+            return $this->hasOne(User::class,'id','user_id');
+      }
+
+         public function seller_details(){
+            return $this->hasOne(seller::class,'id','seller_id');
+      }
+
 
 }
