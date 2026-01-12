@@ -116,7 +116,7 @@
                                         @endif
                                     </div>
                                     @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
-                                    $orderData->payment_status !== '3')
+                                    $orderData->payment_status !== '3' && $orderData->order->order_type == '1')
                                     <div class="d-none-1">
                                         <button class="btn btn-outline-red w-100 cancelBtn" data-bs-toggle="modal"
                                             data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
@@ -762,13 +762,24 @@
                     </div>
                 </div>
 
-
+                @if($orderData->order->order_type == '1')
                 <div class="mt-4 text-center">
                     <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
                         class="customBtn8 mb-3 text-decoration-none">
                         Download Invoice
                     </a>
                 </div>
+                @endif
+                @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
+                                    $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
+                <div class="mt-4 text-center">
+                    <button class="btn btn-outline-red W-100 mb-3 text-decoration-none cancelBtn" data-bs-toggle="modal"
+                        data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
+                        data-order-details-id="{{ $orderData->id }}">
+                        Cancel Order
+                    </button>
+                </div>
+                @endif
             </div>
         </div>
     </div>
