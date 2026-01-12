@@ -462,7 +462,7 @@
                                     <small class="error-msg" style="color:red;"></small>
                                 </div>
 
-                                <div class="time-block from-block flex-wrap">
+                                <div class="time-block to-block flex-wrap">
                                     <label>To</label>
                                      <div class="d-flex gap-2">
                                     <select class="hh form-select" data-error="Please select To Hour"><option value="">HH</option></select>
