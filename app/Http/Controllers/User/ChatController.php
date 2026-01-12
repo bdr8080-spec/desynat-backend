@@ -34,7 +34,7 @@ class ChatController extends Controller
 
     }
 
-    public function userChat(Request $request){ 
+    public function userChat(Request $request, $id){ 
 
         return view('user.chat.userChat');
 

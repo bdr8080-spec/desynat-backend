@@ -75,7 +75,7 @@
 
                     @forelse ($chatData as $chat)
                         <div class="cart-panel position-relative">
-                            <a href="user-chat" class="link-content">
+                            <a href="{{ route('user.userChat', ['id' => $chat->unique_id]) }}" class="link-content">
                                 <div class="cart-card">
                                     <div class="card-left mb-2 d-flex align-items-center">
                                         <div>
@@ -88,10 +88,37 @@
                                             <div class="card-right d-flex w-100 justify-content-between">
                                                 <div class="product-info">
                                                     <h6 class="product-title">{{$chat['seller_details']['first_name']}} {{$chat['seller_details']['last_name']}}</h6>
-                                                    <div class="chat-user-light"> Thank you, bro!</div>
-                                                    <div class="chat-user-light"> Today 5 PM</div>                                            
+                                                    @if(!empty($chat['last_chat']))
+                                                    <div class="chat-user-light"> {{$chat['last_chat']}}</div>
+                                                    @endif
+                                                    @if(!empty($chat['last_chat_time']))
+                                                    <div class="chat-user-light"> {{$chat['last_chat_time']}}</div>
+                                                    @endif                                            
                                                 </div>
-                                                <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
+                                                @if($chat['type'] == '2' && $chat['action'] == '0')
+                                                    <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">
+                                                        Waiting
+                                                    </div>
+
+                                                @elseif($chat['type'] == '2' && in_array($chat['action'], ['1','2']))
+                                                    <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
+                                                        Quotation Accepted
+                                                    </div>
+
+                                                @elseif($chat['type'] == '2' && $chat['action'] == '3')
+                                                    <div class="yellow-bg" style="color:#D32F2F;background:#D32F2F1A;">
+                                                        Quotation Rejected
+                                                    </div>
+
+                                                <!-- @elseif($chat['type'] == '2' && $chat['product_request'] == '1')
+                                                    <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
+                                                        Quotation Received
+                                                    </div> -->
+
+                                                @elseif($chat['type'] == '1')
+                                                   
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>

@@ -5,7 +5,7 @@
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
-        <a href="{{route('dashboard')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
+        <a href="{{route('user.allChats')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
         <h3>Chat</h3>
     </div>
 

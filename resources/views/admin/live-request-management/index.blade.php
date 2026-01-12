@@ -1,5 +1,11 @@
 @extends('admin.layout.app')
 @section('content')
+<style>
+.tabs-pnl,
+.tab-content {
+    visibility: hidden;
+}
+</style>
 
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
@@ -12,14 +18,14 @@
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
-                    aria-selected="true">
+                    >
                     Live Request Timeslot
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
                 <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                    aria-selected="true">
+                    >
                     Live Requests
                 </button>
             </li>
@@ -55,7 +61,7 @@
                                 <div class="d-flex gap-3 justify-content-end">
 
 
-                                    <a class="btn btn-dark customBtn " style="margin-top: 60px" data-bs-toggle="modal"
+                                    <a class="btn btn-dark customBtn" id="addTimeslotBtn" style="margin-top: 60px" data-bs-toggle="modal"
                                         data-bs-target="#sentModal3">
                                         <span>Add Timeslot</span>
                                     </a>
@@ -134,14 +140,14 @@
                             <li class="nav-item m-1" role="presentation">
                                 <button class="nav-link customBtn2 m-0" id="pills-new-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-new" type="button" role="tab" aria-controls="pills-new"
-                                    aria-selected="true">
+                                    >
                                     New Requests
                                 </button>
                             </li>
                             <li class="nav-item m-1" role="presentation">
                                 <button class="nav-link  active customBtn2 m-0" id="pills-approved-tab"
                                     data-bs-toggle="pill" data-bs-target="#pills-approved" type="button" role="tab"
-                                    aria-controls="pills-approved" aria-selected="true">
+                                    aria-controls="pills-approved" >
                                     Approved
                                 </button>
                             </li>
@@ -149,7 +155,7 @@
                             <li class="nav-item m-1" role="presentation">
                                 <button class="nav-link  customBtn2 m-0" id="pills-reject-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-reject" type="button" role="tab" aria-controls="pills-reject"
-                                    aria-selected="false">
+                                    >
                                     Rejected
                                 </button>
                             </li>
@@ -531,29 +537,33 @@
 
 
 
-
-
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Get last active tab from localStorage
-    const lastTab = localStorage.getItem("activeTab");
-    if (lastTab) {
-        const triggerEl = document.querySelector(`#${lastTab}`);
-        if (triggerEl) {
-            const tab = new bootstrap.Tab(triggerEl);
-            tab.show();
-        }
+document.addEventListener("DOMContentLoaded", function () {
+
+    const storedTab = localStorage.getItem("activeTab");
+
+    let tabToShow = storedTab
+        ? document.getElementById(storedTab)
+        : document.querySelector('button[data-bs-toggle="pill"]');
+
+    if (tabToShow) {
+        new bootstrap.Tab(tabToShow).show();
     }
 
-    // Save active tab to localStorage when switched
-    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
-    tabButtons.forEach((button) => {
-        button.addEventListener("shown.bs.tab", function() {
-            localStorage.setItem("activeTab", this.id);
+    // Show tabs AFTER correct tab is activated
+    document.querySelectorAll('.tabs-pnl, .tab-content').forEach(el => {
+        el.style.visibility = 'visible';
+    });
+
+    // Save active tab
+    document.querySelectorAll('button[data-bs-toggle="pill"]').forEach(btn => {
+        btn.addEventListener('shown.bs.tab', function () {
+            localStorage.setItem('activeTab', this.id);
         });
     });
 });
 </script>
+
 
 
 <!-- <script>
@@ -1297,6 +1307,36 @@ function reloadWithDate(dateStr) {
     window.location.href = url.toString();
 }
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedDate = urlParams.get('date');
+
+    if (!selectedDate) return;
+
+    // Normalize dates (ignore time)
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const selected = new Date(selectedDate);
+    selected.setHours(0,0,0,0);
+
+    // If selected date is in the past → hide buttons
+    if (selected < today) {
+        // Hide Add button
+        const addBtn = document.getElementById('addTimeslotBtn');
+        if (addBtn) addBtn.style.display = 'none';
+
+        // Hide all Edit buttons
+        document.querySelectorAll('.editTimeslotModal').forEach(btn => {
+            btn.style.display = 'none';
+        });
+    }
+});
+</script>
+
  
 
 @endsection
