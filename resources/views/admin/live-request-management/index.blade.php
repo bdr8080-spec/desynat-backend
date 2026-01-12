@@ -4,7 +4,7 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Live Request & Timeslot Managemen</h2>
+            <h2 class="h2">Live Request & Timeslot Management</h2>
         </div>
     </div>
     <div class="d-flex justify-content-center">
@@ -199,7 +199,7 @@
                                     </form>
                                 </div>
 
-                                <div class="table-responsive mt-5 w-100">
+                                <div class="table-responsive mt-3 w-100">
                                     <table id="myTable" class="table w-100">
                                         <thead>
                                             <tr>
@@ -288,7 +288,7 @@
                                     </form>
                                 </div>
 
-                                <div class="table-responsive mt-5 w-100">
+                                <div class="table-responsive mt-3 w-100">
                                     <table id="myTable1" class="table w-100">
                                         <thead>
                                             <tr>
@@ -362,7 +362,7 @@
                                     </form>
                                 </div>
 
-                                <div class="table-responsive mt-5 w-100">
+                                <div class="table-responsive mt-3 w-100">
                                     <table id="myTable2" class="table w-100">
                                         <thead>
                                             <tr>

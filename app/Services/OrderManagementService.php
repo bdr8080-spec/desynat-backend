@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\DeliveryBoy;
 use App\Models\SellerSubcriptionPlanBuy;
 use App\Models\Plan;
+use App\Models\OrderRecordDetail;
 use App\Models\{UserGiftCards,GiftCard,UserWallet};
 use App\Models\{Promocode,userAddress,country,all_countrie};
 
@@ -549,7 +550,8 @@ class OrderManagementService
                 'UserRatingReviewProvide',
                 'driver_details.zone_info'
             ])
-            ->where('return_type', '!=', '0');
+            ->where('return_type', '!=', '0')
+            ->where('r_e_approve', '!=', '1');
             
             if ($request->search) {
                 $checkOrder->where(function ($query) use ($request) {
@@ -656,7 +658,7 @@ class OrderManagementService
                 'driver_details.zone_info'
             ])
             ->where('delivery_status', '3')
-            ->where('return_type', '0')
+            //->where('return_type', '0')
             ->where('payment_status', '1');
             
             if ($request->search) {
@@ -1002,6 +1004,14 @@ class OrderManagementService
             $order->update([
                 'delivery_boy_id' => $driver->id,
                 'assign_status'   => 1,
+                'assign_date'     => Carbon::now()
+            ]);
+
+             OrderRecordDetail::create([
+                'order_id'        => $order->order_id,
+                'orderdetails_id' => $order->id,
+                'type'            => '2',
+                'driver_id'       => $driver->id,
                 'assign_date'     => Carbon::now()
             ]);
 
