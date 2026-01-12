@@ -35,8 +35,17 @@ class ChatController extends Controller
     }
 
     public function userChat(Request $request, $id){ 
+        $user=  $request->user();
 
-        return view('user.chat.userChat');
+        $data = (object)[
+            //'unique_id' => $user->id,
+            'unique_id' => $id,
+        ];
+
+        $chatData = $this->UserFirebaseService->userGetSingleChatsRecords($data)['data'];
+        //dd($chatData);
+
+        return view('user.chat.userChat',compact('chatData'));
 
     }
 

@@ -110,10 +110,10 @@
                                                         Quotation Rejected
                                                     </div>
 
-                                                <!-- @elseif($chat['type'] == '2' && $chat['product_request'] == '1')
+                                                @elseif($chat['type'] == '2' && $chat['product_request'] == '1')
                                                     <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
                                                         Quotation Received
-                                                    </div> -->
+                                                    </div>
 
                                                 @elseif($chat['type'] == '1')
                                                    
