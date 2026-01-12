@@ -41,9 +41,6 @@ class SellerChatController extends Controller
     }
 
         $all_chats=$data['data'];
-        
-        dump($all_chats);
-
 
         return view('dealer.chatmgt.chatlist',compact('all_chats'));
         
