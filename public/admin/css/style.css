@@ -2556,6 +2556,28 @@ select {
 .fc .fc-button, .fc .fc-button .fc-icon, .fc .fc-button-group, .fc .fc-timegrid-slot-label {
     background: linear-gradient(to bottom left, #F9DBAB, #7D532F) !important;
 }
+.fc .fc-button {
+    -webkit-appearance: button;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0em 0em !important;
+    font-size: 1em;
+    line-height: 1.5;
+}
 /* .fc-today-button {
     display: none !important;
 } */
+
+/* 👇 ye main alignment fix hai */
+.time-block .d-flex {
+    width: 100%;
+}
+
+/* selects equal width me align honge */
+.time-block select {
+    flex: 1;
+}
