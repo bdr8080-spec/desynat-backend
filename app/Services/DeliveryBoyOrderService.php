@@ -406,6 +406,7 @@ class DeliveryBoyOrderService
                     'order_id'           => $orderDetail->order_id,
                     'orderdetails_id'    => $orderDetail->id,
                     'driver_id'    => $orderDetail->delivery_boy_id,
+                    'type'    => '1',
                     'not_delivered_date' => now(),
                     'next_delivery_date' => now()->addDay(),
                 ]);
