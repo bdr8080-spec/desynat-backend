@@ -98,7 +98,7 @@
                     </div>
                 </div>
 
-                <div class="table-responsive mt-5 w-100">
+                <div class="table-responsive mb-5 w-100">
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
@@ -193,7 +193,7 @@
                     </div>
                 </div>
 
-                <div class="table-responsive mt-5 w-100">
+                <div class="table-responsive mb-5 w-100">
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>

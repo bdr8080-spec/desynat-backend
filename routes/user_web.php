@@ -11,6 +11,7 @@ use App\Http\Controllers\User\UserGiftCardController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\DashBoardController;
+use App\Http\Controllers\User\ChatController;
 
 
 
@@ -101,6 +102,10 @@ use App\Http\Controllers\User\DashBoardController;
 
   Route::get('/all-product', [UserStoreController::class,'all_product'])->name('user.allproduct');
 
+  Route::get('/chat', [ChatController::class,'allChats'])->name('user.allChats');
+  Route::get('/user-chat', [ChatController::class,'userChat'])->name('user.userChat');
+  Route::get('/chat-details', [ChatController::class,'chatDetails'])->name('user.chatDetails');
+
 });
 
 
@@ -139,20 +144,20 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/chat', function () {
-     return view('user.chat.chatlists');
+// Route::match(['get', 'post'], '/chat', function () {
+//      return view('user.chat.chatlists');
 
-})->name('user.chat');
+// })->name('user.chat');
 
-Route::match(['get', 'post'], '/user-chat', function () {
-     return view('user.chat.userChat');
+// Route::match(['get', 'post'], '/user-chat', function () {
+//      return view('user.chat.userChat');
 
-})->name('user.user-chat');
+// })->name('user.user-chat');
 
-Route::match(['get', 'post'], '/details-chat', function () {
-     return view('user.chat.detailsChat');
+// Route::match(['get', 'post'], '/details-chat', function () {
+//      return view('user.chat.detailsChat');
      
-})->name('user.details-chat');
+// })->name('user.details-chat');
 
 // Route::match(['get', 'post'], '/order_details', function () {
 //      return view('user.orders.order-details');

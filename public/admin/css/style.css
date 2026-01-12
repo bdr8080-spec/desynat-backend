@@ -2516,7 +2516,8 @@ header,
 .time-block {
   display: flex;
   align-items: center;
-  gap: 5px;
+     gap: 9px;
+    margin: 21px;
 }
 
 .time-block label {
@@ -2555,3 +2556,6 @@ select {
 .fc .fc-button, .fc .fc-button .fc-icon, .fc .fc-button-group, .fc .fc-timegrid-slot-label {
     background: linear-gradient(to bottom left, #F9DBAB, #7D532F) !important;
 }
+/* .fc-today-button {
+    display: none !important;
+} */
