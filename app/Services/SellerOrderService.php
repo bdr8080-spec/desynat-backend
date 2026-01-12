@@ -299,9 +299,13 @@ try{
 
         $val->last_chat = $lastMessage['message'] ?? null;
         $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
+        $val->last_chat = $lastMessage['by'] ?? null;
+  
     } else {
         $val->last_chat = null;
         $val->last_chat_time = null;
+        $val->last_chat_time = '';
+
     }
 }
 

@@ -54,7 +54,7 @@
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link nav-icon" href="{{route('seller.All_chats')}}">
                         <img src="{{ asset('dealer') }}/assets/img/chat.svg" alt="icon" class="bell-icon">
                         <!-- <span class="badge bg-success badge-number">3</span> -->
                     </a>
@@ -179,6 +179,4 @@
     @if(Request()->Path()!=='seller/view-profile' && Request()->Path()!=='seller/edit-profile' )
     @include('dealer.layout.sideBar')
     <main id="main" class="main">
-    @endif
-
-    
+        @endif
