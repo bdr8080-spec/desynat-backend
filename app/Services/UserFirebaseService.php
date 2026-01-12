@@ -185,7 +185,7 @@ foreach ($check_chatRecord as $key => $val) {
 
  public function userGetSingleChatsRecords($request){
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details')->where('unique_id',$request->unique_id)->first();
+    $check_chatRecord=allproductchats::with('product_variation.product_details','product_variation.color','product_variation.size','user_details','seller_details')->where('unique_id',$request->unique_id)->first();
 
    if($check_chatRecord){
 
