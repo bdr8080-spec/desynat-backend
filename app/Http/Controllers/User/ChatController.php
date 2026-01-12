@@ -28,9 +28,9 @@ class ChatController extends Controller
         ];
 
         $chatData = $this->UserFirebaseService->userGetAllChatsRecords($data)['data'];
-        // dump($orderData);
+         //dd($chatData);
 
-        return view('user.chat.chatlists',compact('$chatData'));
+        return view('user.chat.chatlists',compact('chatData'));
 
     }
 

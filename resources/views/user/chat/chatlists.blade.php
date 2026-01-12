@@ -60,7 +60,7 @@
 
             <div class="col-lg-8">
                 <div class="categoryDetail_content">
-                    <form action="{{ route('user.myOrders') }}" method="GET">
+                    <form action="{{ route('user.allChats') }}" method="GET">
                         <div class="seArch">
                             <div class="form-group position-relative search">
                                 <input type="text" class="form-control" placeholder="Search" name="search"
@@ -73,33 +73,38 @@
                         </div>
                     </form>
 
-
-                    <div class="cart-panel position-relative">
-                        <a href="user-chat" class="link-content">
-                            <div class="cart-card">
-                                <div class="card-left mb-2 d-flex align-items-center">
-                                    <div>
-                                        <div class="chat-user-circle me-3">
-                                            <img src="{{asset('user/assets/images/categorie1.png')}}" alt="Product"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
-                                            <div class="product-info">
-                                                <h6 class="product-title"> Max jacobson</h6>
-                                                <div class="chat-user-light"> Thank you, bro!</div>
-                                                <div class="chat-user-light"> Today 5 PM</div>                                            
+                    @forelse ($chatData as $chat)
+                        <div class="cart-panel position-relative">
+                            <a href="user-chat" class="link-content">
+                                <div class="cart-card">
+                                    <div class="card-left mb-2 d-flex align-items-center">
+                                        <div>
+                                            <div class="chat-user-circle me-3">
+                                                <img src="{{$chat['seller_details']['profile_pic']}}" alt="Product"
+                                                    class="img-fluid">
                                             </div>
-                                            <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="card-right d-flex w-100 justify-content-between">
+                                                <div class="product-info">
+                                                    <h6 class="product-title">{{$chat['seller_details']['first_name']}} {{$chat['seller_details']['last_name']}}</h6>
+                                                    <div class="chat-user-light"> Thank you, bro!</div>
+                                                    <div class="chat-user-light"> Today 5 PM</div>                                            
+                                                </div>
+                                                <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    @empty
+                        <div class="text-center py-5">
+                            <h6 class="text-muted">No Chat Found</h6>
+                        </div>
+                    @endforelse
 
-                    <div class="cart-panel position-relative">
+                    <!-- <div class="cart-panel position-relative">
                         <a href="order_details" class="link-content">
                             <div class="cart-card">
                                 <div class="card-left mb-2 d-flex align-items-center">
@@ -122,9 +127,9 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> -->
 
-                    <div class="cart-panel position-relative">
+                    <!-- <div class="cart-panel position-relative">
                         <a href="order_details" class="link-content">
                             <div class="cart-card">
                                 <div class="card-left mb-2 d-flex align-items-center">
@@ -147,9 +152,9 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> -->
 
-                    <div class="cart-panel position-relative">
+                    <!-- <div class="cart-panel position-relative">
                         <a href="order_details" class="link-content">
                             <div class="cart-card">
                                 <div class="card-left mb-2 d-flex align-items-center">
@@ -166,13 +171,12 @@
                                                 <div class="chat-user-light"> Thank you, bro!</div>
                                                 <div class="chat-user-light"> Today 5 PM</div>                                            
                                             </div>
-                                            <!-- <div class="yellow-bg" style="color:#EA9413;">Waiting</div> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> -->
 
 
 
