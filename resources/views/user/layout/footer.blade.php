@@ -352,8 +352,8 @@ $('.bannerpop').owlCarousel({
     loop: true,
     margin: 10,
     responsiveClass: true,
-    nav: true,
     dots: true,
+    smartSpeed: 1000,
     responsive: {
         0: {
             items: 1,
@@ -926,21 +926,24 @@ function sendSearch() {
 </script>
 
 <script>
-   $(window).on('load', function () {
+  $(window).on('load', function () {
 
-        const $modal = $('#showBanner');
+    // 👉 Sirf is page par modal open hoga
+    if (window.location.pathname === '/') {
+        const $modal1 = $('#showBanner');
 
-        $modal.fadeIn();
-        // $('body').addClass('overflow-hidden');
+        $modal1.fadeIn();
+        $('body').addClass('overflow-hidden');
 
         $('.btn-skip, #showBanner').on('click', function (e) {
             if ($(e.target).is('.btn-skip') || $(e.target).is('#showBanner')) {
-                $modal.fadeOut();
-                // $('body').removeClass('overflow-hidden');
+                $modal1.fadeOut();
+                $('body').removeClass('overflow-hidden');
             }
         });
+    }
 
-    });
+});
 
 </script>
 
