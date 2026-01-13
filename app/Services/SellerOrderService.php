@@ -34,6 +34,7 @@ public function SellerGetOrders($request){
 
 try{
     
+
    $all_Order= orderdetail::with('user_details','order.user_details','order.delivery_details', 'product_details','variation_details.color','variation_details.size')->where('seller_id',$request->seller_id)
    ->whereHas('order', function($query) use ($request) {
     $query->where('order_type',$request->type);
@@ -41,6 +42,8 @@ try{
    });
 
    $all_Order_data=clone($all_Order);
+   $past_order=clone($all_Order);
+
    
    if($request->tabs==1){
 
@@ -109,9 +112,8 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
  $ongoing_order=$ongoing_order->get();
 
 
-$past_order=clone($all_Order);
-
-
+    // Past Order Code 
+    
    if($request->tabs==3){
 
     if (!empty($request->search)) {
@@ -135,17 +137,19 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 }
    }
 
+   
 $past_order = $past_order
-    ->whereIn('payment_status',['2','3'])
     ->where(function ($query) {
-        $query->where('delivery_status', 3);
-        })
+        $query->whereIn('payment_status', [2, 3])
+              ->orWhere('delivery_status', 3);
+    })
     ->get();
-
+    
 
 $response['All_order']=$all_Order_data; // All Orders
 $response['ongoing_order'] =$ongoing_order;
 $response['past_order']=$past_order;
+
 
 
 
