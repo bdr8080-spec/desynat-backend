@@ -191,7 +191,7 @@
                 <p class="text-muted mb-1">{{$data->description_en}}</p> --}}
                 <div id="optionError" style="color:red; font-size:14px; display:none;"></div>
                 @if ($data->customized_product==1)
-                <button class="customBtn2">Custom Order</button>
+                <button class="customBtn2" id="customOrder">Custom Order</button>
                 @endif
 
 
@@ -1250,6 +1250,62 @@ function AddAndBuyButtonHideAndShowCode() {
 
 }
 </script>
+
+<!-- custom order -->
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const customBtn = document.getElementById('customOrder');
+    const productId = document.getElementById('productId');
+    const variantId = document.getElementById('variantId');
+    const optionError = document.getElementById('optionError');
+
+    customBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        optionError.style.display = 'none';
+
+        const product_id = productId.value;
+        const variant_id = variantId.value;
+
+        //  Validation
+        if (!product_id || !variant_id) {
+            optionError.textContent = "Please select a product and variant.";
+            optionError.style.display = 'block';
+            return;
+        }
+
+        fetch("{{ route('user.createCustomOrder') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                product_id: product_id,
+                variation_id: variant_id
+            })
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.status === 'success') {
+                const unique_id = res.data.data.unique_id;
+                window.location.href = "{{ route('user.userChat', '') }}/" + unique_id;
+            } else {
+                optionError.textContent = res.message || 'Failed to create custom order';
+                optionError.style.display = 'block';
+            }
+        })
+        .catch(err => {
+            optionError.textContent = 'Something went wrong';
+            optionError.style.display = 'block';
+            console.error(err);
+        });
+    });
+
+});
+</script>
+
 
 
 @endsection
