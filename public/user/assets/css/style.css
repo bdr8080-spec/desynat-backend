@@ -2575,8 +2575,8 @@ img.img-fluid.circle-image {
         linear-gradient(90deg, #6E4527, #C08A5A) border-box;
 }
 .chat-user-circle{
-    height: 90px;
-    width: 90px;
+    height: 70px;
+    width: 70px;
     border: 1px solid #ddd;
     border-radius: 50%;
     overflow: hidden;
@@ -2619,11 +2619,16 @@ img.img-fluid.circle-image {
     border-bottom: 1px solid #ddd;
 }
 .msger-chat {
-    flex: 1;
     overflow-y: auto;
     padding: 10px;
     height: 450px;
 }
+.msger-chat1 {
+    height: 450px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
 .msger-chat::-webkit-scrollbar {
     width: 6px;
 }

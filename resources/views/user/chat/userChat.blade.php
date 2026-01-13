@@ -49,6 +49,34 @@
                         </div>
                     </a>
                 </div>
+                <!----------- Add Request ---------------->
+                <div class="gift-pnl mt-4">
+                    <div class="border-1 my-profile">
+                        <div class="form-group mb-3">
+                            <label>Add Quantity</label>
+                            <input type="text" name="quantity" class="form-control" placeholder="Eg.200">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Custom Details</label>
+                            <textarea rows="4" class="form-control" placeholder="Write Here"></textarea>
+                        </div>
+
+                        <h6>Delivering Address</h6> 
+                        <div class="border-1 d-flex justify-content-between category_filter">
+                            <div class="address-title">Sector 64 Noida,UP</div>
+                            <a href="#"> Change <i class="bi bi-arrow-right"></i></a>
+                        </div>
+
+                        <div class="pt-4">
+                            <button type="submit" class="customBtn w-100">Send Request</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-----------End Add Request ---------------->
+
 
                 <div class="gift-pnl mt-4">
                     <div class="border-1">
@@ -193,7 +221,7 @@
                                 <input type="file" name="image" id="imageUpload1" accept="image/*">
                             </div>
 
-                            <input type="text" name="message" class="form-control msger-input1" placeholder="Type Message here...">
+                            <input type="text" name="message" class="form-control msger-input" placeholder="Type Message here...">
                             <small class="text-danger d-none" id="chatError1">
                                 Please enter a message or upload an image
                             </small>
