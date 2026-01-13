@@ -5,9 +5,19 @@
 @if(request('type') !=='cart')
 <div class="address-tops">
     <div class="my-profile customContainer">
-        <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
+        <!-- <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
             <a class="text-black" href="{{route('dashboard')}}" style="text-decoration: none;"><i  class="fa-solid fa-chevron-left"></i> My Saved Address</a>
+        </div> -->
+        <div class="my-profie-nav d-flex align-items-center mt-3 justify-content-between">
+            <a class="text-black" 
+            href="{{ request()->has('chat') 
+                        ? route('user.userChat', ['id' => request()->get('chat')]) 
+                        : route('dashboard') }}" 
+            style="text-decoration: none;">
+                <i class="fa-solid fa-chevron-left"></i> My Saved Address
+            </a>
         </div>
+
 
         <div class="saved-address-contenar mt-3">
             @forelse ($address as $item)

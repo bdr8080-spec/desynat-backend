@@ -6,7 +6,11 @@
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
         <a href="{{route('user.allChats')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
+        @if($chatData['record']['product_request'] == '0' && $chatData['record']['action'] == '0')
+        <h3>Chat Request</h3>
+        @else
         <h3>Chat</h3>
+        @endif
     </div>
 
     <div class="main-content">
@@ -38,9 +42,9 @@
                                                 </span>
                                                 <!-- <span>Qnt: {{$chatData['record']['quantity']}}</span> -->
                                             </div>
-                                            <h6 class="product-title mt-2"> {{$chatData['record']['price']}} KD</h6>
+                                            <h6 class="product-title mt-2"> {{$chatData['record']['product_variation']['final_price']}} KD</h6>
                                         </div>
-                                        @if($chatData['record']['action'] == '0')
+                                        @if($chatData['record']['action'] == '0' && $chatData['record']['product_request'] == '1')
                                         <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
                                         @endif
                                     </div>
@@ -50,34 +54,42 @@
                     </a>
                 </div>
                 <!----------- Add Request ---------------->
+                @if($chatData['record']['action'] == '0' && $chatData['record']['product_request'] == '0')
                 <div class="gift-pnl mt-4">
-                    <div class="border-1 my-profile">
+                    <div class="border-1 my-profile" id="customOrderFormContainer">
                         <div class="form-group mb-3">
                             <label>Add Quantity</label>
                             <input type="text" name="quantity" class="form-control" placeholder="Eg.200">
+                            <small class="text-danger d-none" id="quantityError">Please enter quantity</small>
                         </div>
+
+                        <input type="hidden" name="delivery_address" value="{{ $userAddress->id }}">
+                        <input type="hidden" name="unique_id" value="{{ $chatData['record']['unique_id'] }}">
+
                         <div class="form-group mb-3">
                             <label>Custom Details</label>
-                            <textarea rows="4" class="form-control" placeholder="Write Here"></textarea>
+                            <textarea rows="4" name="custom_details" class="form-control" placeholder="Write Here"></textarea>
+                            <small class="text-danger d-none" id="detailsError">Please enter custom details</small>
                         </div>
 
                         <h6>Delivering Address</h6> 
                         <div class="border-1 d-flex justify-content-between category_filter">
-                            <div class="address-title">Sector 64 Noida,UP</div>
-                            <a href="#"> Change <i class="bi bi-arrow-right"></i></a>
+                            <div class="address-title">{{ $userAddress->address }}</div>
+                            <a href="{{ route('user.view_address', ['chat' => $chatData['record']['unique_id']]) }}"> Change <i class="bi bi-arrow-right"></i></a>
                         </div>
 
                         <div class="pt-4">
-                            <button type="submit" class="customBtn w-100">Send Request</button>
+                            <button type="button" class="customBtn w-100" id="sendCustomOrderBtn">Send Request</button>
                         </div>
-
                     </div>
                 </div>
+
+                @endif
 
 
                 <!-----------End Add Request ---------------->
 
-
+               @if($chatData['record']['product_request'] == '1' && in_array($chatData['record']['action'], ['0','1','2']))
                 <div class="gift-pnl mt-4">
                     <div class="border-1">
                         <table class="table table-borderless table-font">
@@ -110,6 +122,7 @@
                         </table>
                     </div>
                 </div>
+                @endif
 
                 @if($chatData['record']['action'] == '1' || $chatData['record']['action'] == '2')
                 <div class="time-pnl">
@@ -221,7 +234,7 @@
                                 <input type="file" name="image" id="imageUpload1" accept="image/*">
                             </div>
 
-                            <input type="text" name="message" class="form-control msger-input" placeholder="Type Message here...">
+                            <input type="text" name="message" class="form-control msger-input1" placeholder="Type Message here...">
                             <small class="text-danger d-none" id="chatError1">
                                 Please enter a message or upload an image
                             </small>
@@ -510,129 +523,75 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<!-- <script>
+<!-- send custom order request -->
+<script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const chatForm  = document.getElementById('chatFormNormal');
-    const chatBox   = document.querySelector('.msger-chat');
-    const messageEl = chatForm.querySelector('.msger-input');
-    const imageEl   = chatForm.querySelector('#imageUpload');
-    const errorEl   = document.getElementById('chatError');
+    const formContainer = document.getElementById('customOrderFormContainer');
+    const btnSend = document.getElementById('sendCustomOrderBtn');
+    const quantityEl = formContainer.querySelector('input[name="quantity"]');
+    const detailsEl = formContainer.querySelector('textarea[name="custom_details"]');
+    const deliveryAddressEl = formContainer.querySelector('input[name="delivery_address"]');
+    const uniqueIdEl = formContainer.querySelector('input[name="unique_id"]');
 
-    let imagePreviewEl = null; // track current preview
+    const quantityError = document.getElementById('quantityError');
+    const detailsError = document.getElementById('detailsError');
 
-    messageEl.addEventListener('input', hideError);
-    imageEl.addEventListener('change', handleImagePreview);
+    // Remove error on typing
+    quantityEl.addEventListener('input', () => quantityError.classList.add('d-none'));
+    detailsEl.addEventListener('input', () => detailsError.classList.add('d-none'));
 
-    chatForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    btnSend.addEventListener('click', function () {
+        const quantity = quantityEl.value.trim();
+        const customDetails = detailsEl.value.trim();
+        const deliveryAddress = deliveryAddressEl.value;
+        const uniqueId = uniqueIdEl.value;
 
-        const message = messageEl.value.trim();
-        const image   = imageEl.files[0] ?? null;
+        let hasError = false;
 
-        if (!message && !image) {
-            showError();
-            return;
+        if (!quantity) {
+            quantityError.classList.remove('d-none');
+            hasError = true;
         }
 
-        const formData = new FormData(chatForm);
-        const type = image ? 1 : 0;
-        formData.append('type', type);
+        if (!customDetails) {
+            detailsError.classList.remove('d-none');
+            hasError = true;
+        }
 
-        fetch("{{ route('user.sendNormalMessage') }}", {
+        if (hasError) return;
+
+        const formData = new FormData();
+        formData.append('quantity', quantity);
+        formData.append('custom_details', customDetails);
+        formData.append('delivery_address', deliveryAddress);
+        formData.append('unique_id', uniqueId);
+
+        fetch("{{ route('user.sendCustomOrderRequest') }}", {
             method: "POST",
-            headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
             body: formData
         })
         .then(res => res.json())
         .then(res => {
             if (res.status === 'success') {
+                toastr.success(res.message || 'Request sent successfully!');
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
 
-                // Remove preview and replace with real message
-                if (imagePreviewEl) {
-                    imagePreviewEl.remove();
-                    imagePreviewEl = null;
-                }
-
-                if (type === 0) {
-                    appendTextMessage(message, 'right');
-                } else {
-                    appendImageMessage(res.image_url, 'right');
-                }
-
-                chatForm.reset();
-                hideError();
-                scrollToBottom();
+            } else {
+                toastr.error(res.message || 'Failed to send request');
             }
-        });
+        })
+        .catch(() => toastr.error('Something went wrong'));
     });
 
-    function handleImagePreview() {
-        hideError();
-
-        const file = imageEl.files[0];
-        if (!file) return;
-
-        // Remove old preview if exists
-        if (imagePreviewEl) {
-            imagePreviewEl.remove();
-        }
-
-        const previewUrl = URL.createObjectURL(file);
-
-        imagePreviewEl = document.createElement('div');
-        imagePreviewEl.className = 'msg left-msg image-preview';
-
-        imagePreviewEl.innerHTML = `
-            <div class="msg-bubble">
-                <img src="${previewUrl}" class="img-fluid rounded" style="max-width:200px">
-                <div class="msg-info">
-                    <div class="msg-info-time">Preview</div>
-                </div>
-            </div>
-        `;
-
-        chatBox.appendChild(imagePreviewEl);
-        scrollToBottom();
-    }
-
-    function appendTextMessage(text, side) {
-        appendMessage(`<div class="msg-text">${text}</div>`, side);
-    }
-
-    function appendImageMessage(imageUrl, side) {
-        appendMessage(`<img src="${imageUrl}" class="img-fluid rounded" style="max-width:200px">`, side);
-    }
-
-    function appendMessage(content, side) {
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        chatBox.insertAdjacentHTML('beforeend', `
-            <div class="msg ${side}-msg">
-                <div class="msg-bubble">
-                    ${content}
-                    <div class="msg-info">
-                        <div class="msg-info-time ${side === 'right' ? 'text-end' : ''}">${time}</div>
-                    </div>
-                </div>
-            </div>
-        `);
-    }
-
-    function showError() {
-        errorEl.classList.remove('d-none');
-    }
-
-    function hideError() {
-        errorEl.classList.add('d-none');
-    }
-
-    function scrollToBottom() {
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
 });
-</script> -->
+
+</script>
 
 
 

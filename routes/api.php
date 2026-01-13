@@ -146,6 +146,8 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/custom-create-order', [UserChatController::class,'CustomOrderCreateOrder']);
 
+  Route::post('/custom-accept-reject-order-request', [UserChatController::class,'customAcceptRejectOrder']);
+
   Route::post('/custom-order-complete-payment', [UserOrderController::class,'product_order_complete_payment']);
 
   Route::post('/popUp-Home-screen-Banner', [UserDashboardController::class,'popUpHomescreenBanner']);
