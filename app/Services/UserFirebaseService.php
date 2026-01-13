@@ -329,7 +329,7 @@ foreach ($check_chatRecord as $key => $val) {
         ];
         }
 
-        if($check_chatRecord->action!=='1' &&  $check_chatRecord->action!=='2'){
+        if($check_chatRecord->action!=='1' &&  $check_chatRecord->action!=='2' && $check_chatRecord->action!=='5'){
         return [
             'status'  => 'error',
             'message' => "Seller didn't Accept Order Or Cancel This order",
