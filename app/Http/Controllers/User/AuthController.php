@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Services\UserProfileService;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\FullBanner;
 use App\Models\all_countrie;
 use Illuminate\Validation\Rule;
 use Auth;
@@ -557,18 +558,31 @@ class AuthController extends Controller
 
 
 
-    public function dashboard(Request $request){    
-
+   public function dashboard(Request $request)
+{
     $subCategory = SubCategory::where('category_id','1')->orderBy('name_english','desc')->get();
-    
+
     if($request->ajax()){
-            $subCategory = SubCategory::where('category_id', $request->id)->orderBy('name_english','desc')->get();
-            return view('user.dashboard.subCategory', compact('subCategory'))->render();
-        }
+        $subCategory = SubCategory::where('category_id', $request->id)->orderBy('name_english','desc')->get();
+        return view('user.dashboard.subCategory', compact('subCategory'))->render();
+    }
 
     $stores = sellerStoreInformation::orderBy('store_name', 'desc')->get();
-    //dd($brands);
 
-      return view('user.dashboard.dashboard', compact('subCategory','stores'));
+    // Fetch banners only if user is logged in
+    $banners = collect(); // default empty collection
+
+    if(auth()->check()){
+        $userCountryCode = auth()->user()->country_code;
+
+        $banners = FullBanner::with('country_info')
+            ->whereHas('country_info', function($query) use ($userCountryCode){
+                $query->where('dial_code', $userCountryCode);
+            })
+            ->get();
     }
+
+    return view('user.dashboard.dashboard', compact('subCategory','stores','banners'));
+}
+
 }
