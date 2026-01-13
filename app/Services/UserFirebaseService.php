@@ -445,6 +445,41 @@ return ['status'=>'success','message'=>"Custom Order Create Successfully",'data'
     }
 
 
+    public function UserCustomOrderAcceptAndReject($request){
+
+
+    $match=[
+    "unique_id"=> $request->unique_id,
+    ];
+
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where($match)->first();
+
+    if($check_chatRecord){
+
+
+     if($check_chatRecord->action!=='1' && $check_chatRecord->action!=='2'){
+
+         return [
+            'status'  => 'error',
+            'message' => "Seller Process Already proceed",
+            'data'    => (object)[]
+        ];
+     }
+
+    $check_chatRecord->update(['action'=>$request->status]);
+    $check_chatRecord=allproductchats::with('product_variation.product_details')->where('id',$check_chatRecord->id)->first();
+    
+}
+
+    return [
+        'status'  => 'success',
+        'message' => 'Custom request Update Successfully',
+        'data'    => $check_chatRecord
+    ];
+
+    }
+
+
 
 
 
