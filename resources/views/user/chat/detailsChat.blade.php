@@ -10,6 +10,18 @@
     </div>
 
     <div class="main-content">
+        @if (session('status') == 'success')
+        <div class="alert alert-success">
+            <script>
+            // $('#payModalSuccess').modal('show');
+            </script>
+            <!-- {{ session('message') }} -->
+        </div>
+        @elseif (session('status') == 'error')
+        <div class="alert alert-danger">
+            {{ session('message') }}
+        </div>
+        @endif
         <div class="row">
             <div class="col-lg-8">
                 <div class="cart-panel position-relative">
