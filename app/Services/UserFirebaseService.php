@@ -308,6 +308,7 @@ foreach ($check_chatRecord as $key => $val) {
  public function CustomCreateOrder($request_data){
 
     try{
+        //dd($request_data);
 
         DB::beginTransaction();
 
