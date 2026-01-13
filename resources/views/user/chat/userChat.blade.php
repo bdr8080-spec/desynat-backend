@@ -157,38 +157,49 @@
                             <h5 class="msger-header-title">{{$chatData['record']['seller_details']['first_name']}} {{$chatData['record']['seller_details']['last_name']}}</h5>
                         </header>
 
-                        <main class="msger-chat">
+                        <main class="msger-chat1">
                             <div class="msg left-msg">
                                 <div class="msg-bubble">
-                                    <div class="msg-text">
+                                    <!-- <div class="msg-text">
                                         Hi, welcome to SimpleChat! Go ahead and send me a message.
                                     </div>
                                     <div class="msg-info">
                                         <div class="msg-info-time">12:45</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 
                             <div class="msg right-msg">
-                                <div class="msg-bubble">
+                                <!-- <div class="msg-bubble">
                                     <div class="msg-text">
                                         You can change your name in JS section!
                                     </div>
                                     <div class="msg-info">
                                         <div class="msg-info-time text-end">12:46</div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </main>
 
-                        <form class="msger-inputarea d-flex position-relative">
+                        <form id="chatFormCustom" class="msger-inputarea d-flex position-relative">
+                            @csrf
+
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                            <input type="hidden" name="seller_id" value="{{ $chatData['record']->seller_id }}">
+                            <input type="hidden" name="unique_id" value="{{ $chatData['record']->unique_id }}">
+
                             <div class="attached-icon">
                                 <i class="bi bi-paperclip"></i>
-                                <input type="file" id="imageUpload" accept="image/*">
+                                <input type="file" name="image" id="imageUpload1" accept="image/*">
                             </div>
 
-                            <input type="text" class="form-control msger-input" placeholder="Type Message here...">
-                            <button type="submit" class="msger-send-btn"><i class="bi bi-send-fill"></i></button>
+                            <input type="text" name="message" class="form-control msger-input1" placeholder="Type Message here...">
+                            <small class="text-danger d-none" id="chatError1">
+                                Please enter a message or upload an image
+                            </small>
+                            <button type="submit" class="msger-send-btn">
+                                <i class="bi bi-send-fill"></i>
+                            </button>
                         </form>
                     </div>
 
@@ -213,48 +224,43 @@
                         <main class="msger-chat">
                             <div class="msg left-msg">
                                 <div class="msg-bubble">
-                                    <div class="msg-text">
+                                    <!-- <div class="msg-text">
                                         Hi, welcome to SimpleChat! Go ahead and send me a message.
-                                    </div>
-                                    <div class="msg-info">
+                                    </div> -->
+                                    <!-- <div class="msg-info">
                                         <div class="msg-info-time">12:45</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 
                             <div class="msg right-msg">
                                 <div class="msg-bubble">
-                                    <div class="msg-text">
+                                    <!-- <div class="msg-text">
                                         You can change your name in JS section!
-                                    </div>
-                                    <div class="msg-info">
+                                    </div> -->
+                                    <!-- <div class="msg-info">
                                         <div class="msg-info-time text-end">12:46</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </main>
 
-                        <!-- <form class="msger-inputarea d-flex position-relative">
-                            <div class="attached-icon">
-                                <i class="bi bi-paperclip"></i>
-                                <input type="file" id="imageUpload" accept="image/*">
-                            </div>
-
-                            <input type="text" class="form-control msger-input" placeholder="Type Message here...">
-                            <button type="submit" class="msger-send-btn"><i class="bi bi-send-fill"></i></button>
-                        </form> -->
                         <form id="chatFormNormal" class="msger-inputarea d-flex position-relative">
                             @csrf
 
                             <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                             <input type="hidden" name="seller_id" value="{{ $chatData['record']->seller_id }}">
+                            <input type="hidden" name="unique_id" value="{{ $chatData['record']->unique_id }}">
 
                             <div class="attached-icon">
                                 <i class="bi bi-paperclip"></i>
                                 <input type="file" name="image" id="imageUpload" accept="image/*">
                             </div>
 
-                            <input type="text" name="message" class="form-control msger-input" placeholder="Type Message here..." required>
+                            <input type="text" name="message" class="form-control msger-input" placeholder="Type Message here...">
+                            <small class="text-danger d-none" id="chatError">
+                                Please enter a message or upload an image
+                            </small>
                             <button type="submit" class="msger-send-btn">
                                 <i class="bi bi-send-fill"></i>
                             </button>
@@ -282,58 +288,94 @@
     <div class="loader"></div>
 </div>
 
+<!-- send normal chat -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const chatForm = document.getElementById('chatForm');
-    const chatBox  = document.querySelector('.msger-chat');
+    const chatForm  = document.getElementById('chatFormNormal');
+    const chatBox   = document.querySelector('.msger-chat');
+    const messageEl = chatForm.querySelector('.msger-input');
+    const imageEl   = chatForm.querySelector('#imageUpload');
+    const errorEl   = document.getElementById('chatError');
+
+    // Remove error on typing or image select
+    messageEl.addEventListener('input', hideError);
+    imageEl.addEventListener('change', hideError);
 
     chatForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        const message = messageEl.value.trim();
+        const image   = imageEl.files[0] ?? null;
+
+        //  Validation
+        if (!message && !image) {
+            showError();
+            return;
+        }
+
         const formData = new FormData(chatForm);
-        const message  = chatForm.querySelector('.msger-input').value.trim();
 
-        if (!message) return;
+        // type: 0 = text, 1 = image
+        const type = image ? 1 : 0;
+        formData.append('type', type);
 
-        fetch("{{ route('user.snedNormalMessage') }}", {
+        fetch("{{ route('user.sendNormalMessage') }}", {
             method: "POST",
             headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
             body: formData
         })
         .then(res => res.json())
         .then(res => {
             if (res.status === 'success') {
-                appendMessage(message, 'right');
+
+                if (type === 0) {
+                    appendTextMessage(res.message);
+                } else {
+                    appendImageMessage(res.message);
+                }
+
                 chatForm.reset();
+                hideError();
                 scrollToBottom();
             } else {
                 toastr.error(res.message || 'Failed to send message');
             }
         })
-        .catch(() => {
-            toastr.error('Something went wrong');
-        });
+        .catch(() => toastr.error('Something went wrong'));
     });
 
-    function appendMessage(text, side = 'right') {
+    function showError() {
+        errorEl.classList.remove('d-none');
+    }
+
+    function hideError() {
+        errorEl.classList.add('d-none');
+    }
+
+    function appendTextMessage(text) {
+        appendMessage(`<div class="msg-text">${text}</div>`);
+    }
+
+    function appendImageMessage(imageUrl) {
+        appendMessage(`<img src="${imageUrl}" class="img-fluid rounded" style="max-width:200px">`);
+    }
+
+    function appendMessage(content) {
         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-        const msgHTML = `
-            <div class="msg ${side}-msg">
+        chatBox.insertAdjacentHTML('beforeend', `
+            <div class="msg right-msg">
                 <div class="msg-bubble">
-                    <div class="msg-text">${text}</div>
+                    ${content}
                     <div class="msg-info">
-                        <div class="msg-info-time ${side === 'right' ? 'text-end' : ''}">${time}</div>
+                        <div class="msg-info-time text-end">${time}</div>
                     </div>
                 </div>
             </div>
-        `;
-
-        chatBox.insertAdjacentHTML('beforeend', msgHTML);
+        `);
     }
 
     function scrollToBottom() {
@@ -342,6 +384,230 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
+
+<!-- send custom chat -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatForm  = document.getElementById('chatFormCustom');
+    const chatBox   = document.querySelector('.msger-chat1');
+    const messageEl = chatForm.querySelector('.msger-input1');
+    const imageEl   = chatForm.querySelector('#imageUpload1');
+    const errorEl   = document.getElementById('chatError1');
+
+    // Remove error on typing or image select
+    messageEl.addEventListener('input', hideError);
+    imageEl.addEventListener('change', hideError);
+
+    chatForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const message = messageEl.value.trim();
+        const image   = imageEl.files[0] ?? null;
+
+        //  Validation
+        if (!message && !image) {
+            showError();
+            return;
+        }
+
+        const formData = new FormData(chatForm);
+
+        // type: 0 = text, 1 = image
+        const type = image ? 1 : 0;
+        formData.append('type', type);
+
+        fetch("{{ route('user.sendNormalMessage') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+
+                if (type === 0) {
+                    appendTextMessage(res.message);
+                } else {
+                    appendImageMessage(res.message);
+                }
+
+                chatForm.reset();
+                hideError();
+                scrollToBottom();
+            } else {
+                toastr.error(res.message || 'Failed to send message');
+            }
+        })
+        .catch(() => toastr.error('Something went wrong'));
+    });
+
+    function showError() {
+        errorEl.classList.remove('d-none');
+    }
+
+    function hideError() {
+        errorEl.classList.add('d-none');
+    }
+
+    function appendTextMessage(text) {
+        appendMessage(`<div class="msg-text">${text}</div>`);
+    }
+
+    function appendImageMessage(imageUrl) {
+        appendMessage(`<img src="${imageUrl}" class="img-fluid rounded" style="max-width:200px">`);
+    }
+
+    function appendMessage(content) {
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        chatBox.insertAdjacentHTML('beforeend', `
+            <div class="msg right-msg">
+                <div class="msg-bubble">
+                    ${content}
+                    <div class="msg-info">
+                        <div class="msg-info-time text-end">${time}</div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+});
+</script>
+
+<!-- <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatForm  = document.getElementById('chatFormNormal');
+    const chatBox   = document.querySelector('.msger-chat');
+    const messageEl = chatForm.querySelector('.msger-input');
+    const imageEl   = chatForm.querySelector('#imageUpload');
+    const errorEl   = document.getElementById('chatError');
+
+    let imagePreviewEl = null; // track current preview
+
+    messageEl.addEventListener('input', hideError);
+    imageEl.addEventListener('change', handleImagePreview);
+
+    chatForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const message = messageEl.value.trim();
+        const image   = imageEl.files[0] ?? null;
+
+        if (!message && !image) {
+            showError();
+            return;
+        }
+
+        const formData = new FormData(chatForm);
+        const type = image ? 1 : 0;
+        formData.append('type', type);
+
+        fetch("{{ route('user.sendNormalMessage') }}", {
+            method: "POST",
+            headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+
+                // Remove preview and replace with real message
+                if (imagePreviewEl) {
+                    imagePreviewEl.remove();
+                    imagePreviewEl = null;
+                }
+
+                if (type === 0) {
+                    appendTextMessage(message, 'right');
+                } else {
+                    appendImageMessage(res.image_url, 'right');
+                }
+
+                chatForm.reset();
+                hideError();
+                scrollToBottom();
+            }
+        });
+    });
+
+    function handleImagePreview() {
+        hideError();
+
+        const file = imageEl.files[0];
+        if (!file) return;
+
+        // Remove old preview if exists
+        if (imagePreviewEl) {
+            imagePreviewEl.remove();
+        }
+
+        const previewUrl = URL.createObjectURL(file);
+
+        imagePreviewEl = document.createElement('div');
+        imagePreviewEl.className = 'msg left-msg image-preview';
+
+        imagePreviewEl.innerHTML = `
+            <div class="msg-bubble">
+                <img src="${previewUrl}" class="img-fluid rounded" style="max-width:200px">
+                <div class="msg-info">
+                    <div class="msg-info-time">Preview</div>
+                </div>
+            </div>
+        `;
+
+        chatBox.appendChild(imagePreviewEl);
+        scrollToBottom();
+    }
+
+    function appendTextMessage(text, side) {
+        appendMessage(`<div class="msg-text">${text}</div>`, side);
+    }
+
+    function appendImageMessage(imageUrl, side) {
+        appendMessage(`<img src="${imageUrl}" class="img-fluid rounded" style="max-width:200px">`, side);
+    }
+
+    function appendMessage(content, side) {
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        chatBox.insertAdjacentHTML('beforeend', `
+            <div class="msg ${side}-msg">
+                <div class="msg-bubble">
+                    ${content}
+                    <div class="msg-info">
+                        <div class="msg-info-time ${side === 'right' ? 'text-end' : ''}">${time}</div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
+    function showError() {
+        errorEl.classList.remove('d-none');
+    }
+
+    function hideError() {
+        errorEl.classList.add('d-none');
+    }
+
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+});
+</script> -->
+
+
+
 
 
 
