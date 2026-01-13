@@ -577,29 +577,7 @@
     </div>
 
 
-    <!-- banner Modal image -->
-    <div class="modal-wapper" id="showBanner">
-        <div class="modal-content-2">
-            <div class="banner-body">
-                <button type="button" class="btn-skip">Skip</button>
-                <div class="popbanner">
-                    <div class="owl-carousel owl-theme bannerpop">
-                        <div class="item">
-                            <div class="bannerScreen">
-                                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="bannerScreen">
-                                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-            </div>
-        </div>
-    </div>
+    
 
 
 
