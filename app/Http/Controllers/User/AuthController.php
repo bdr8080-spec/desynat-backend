@@ -581,6 +581,7 @@ class AuthController extends Controller
             })
             ->get();
     }
+   // dd($banners);
 
     return view('user.dashboard.dashboard', compact('subCategory','stores','banners'));
 }

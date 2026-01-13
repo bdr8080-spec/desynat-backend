@@ -712,7 +712,7 @@
                         @foreach($banners as $banner)
                             <div class="item">
                                 <div class="bannerScreen">
-                                    <img src="{{ asset($banner->image) }}" alt="Banner" class="img-fluid" />
+                                    <img src="{{ $banner->image }}" alt="Banner" class="img-fluid" />
                                 </div>
                             </div>
                         @endforeach

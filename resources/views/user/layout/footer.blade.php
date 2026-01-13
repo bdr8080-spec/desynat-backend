@@ -931,12 +931,12 @@ function sendSearch() {
         const $modal = $('#showBanner');
 
         $modal.fadeIn();
-        $('body').addClass('overflow-hidden');
+        // $('body').addClass('overflow-hidden');
 
         $('.btn-skip, #showBanner').on('click', function (e) {
             if ($(e.target).is('.btn-skip') || $(e.target).is('#showBanner')) {
                 $modal.fadeOut();
-                $('body').removeClass('overflow-hidden');
+                // $('body').removeClass('overflow-hidden');
             }
         });
 
