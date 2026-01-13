@@ -125,36 +125,61 @@
                     </div>
                 </div>
 
-                <!-- <div class="quation-pnl mt-3 d-none">
-                    <h5>Quotation</h5>
-                    <div class="form-group sub-form">
-                        <label for="item" class="size14">Per Item Price</label>
-                        <input type="text" class="form-control" placeholder="Eg 20 KD">
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group sub-form">
-                                <label for="item" class="size14">Shipping Fees </label>
-                                <input type="text" class="form-control" placeholder="Eg 20 KD">
+
+                <!-- Show Quetasion Code  -->
+                @if($single_chats['record']->product_request=='1' && $single_chats['record']->action=='0')
+
+                <form id="SendQuotation" action="{{ route('seller.Modify_custom_order_price')}}" method="post">
+                    @csrf
+
+                    <input type="hidden" class="form-control notapplyspace " placeholder="Eg 20 KD"
+                        value="{{ $single_chats['record']->quantity }}" name="quantity" id="quantity1">
+
+                    <input type="hidden" class="form-control notapplyspace " placeholder="Eg 20 KD"
+                        value="{{ $single_chats['record']->unique_id}}" name="unique_id">
+
+
+                    <div class="quation-pnl mt-3">
+                        <h5>Quotation</h5>
+                        <div class="form-group sub-form">
+                            <label for="item" class="size14">Per Item Price</label>
+                            <input type="text" class="form-control notapplyspace applynumberOnly" placeholder="Eg 20 KD"
+                                name="price" id="price1">
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group sub-form">
+                                    <label for="item" class="size14">Shipping Fees </label>
+                                    <input type="text" class="form-control notapplyspace applynumberOnly"
+                                        placeholder="Eg 20 KD" name="shipping" id="shipping1">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group sub-form">
+                                    <label for="item" class="size14">Tax</label>
+                                    <input type="text" class="form-control notapplyspace applynumberOnly"
+                                        placeholder="Eg 20 KD" name="tax" id="tax1">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group sub-form">
+                                    <label for="item" class="size14">Total Amount</label>
+                                    <input type="text" class="form-control notapplyspace applynumberOnly"
+                                        name="total_amount" id="total_amount1" placeholder="Eg 20 KD">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group sub-form">
-                                <label for="item" class="size14">Tax</label>
-                                <input type="text" class="form-control" placeholder="Eg 20 KD">
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group sub-form">
-                                <label for="item" class="size14">Total Amount</label>
-                                <input type="text" class="form-control" placeholder="Eg 20 KD">
-                            </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn add-fillbtn w-100">Send Quotation</button>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <button type="submit" class="btn add-fillbtn w-100">Send Quotation</button>
-                    </div>
-                </div> -->
+
+                </form>
+
+                @endif
+
+
+                @if($single_chats['record']->product_request=='1' || $single_chats['record']->action=='0')
 
                 <div class="time-pnl">
                     <div class="gift-pnl mt-4">
@@ -210,6 +235,8 @@
                     </div>
                 </div>
 
+                @endif
+
                 @if($single_chats['record']->action=='2' || $single_chats['record']->action=='3')
 
                 <div class="time-pnl">
@@ -263,7 +290,6 @@
             </div>
 
 
-
             @endif
 
 
@@ -275,7 +301,8 @@
                                 <img src="{{ $single_chats['record']->user_details->profile_image}}" alt="Product"
                                     class="img-fluid">
                             </div>
-                            <h5 class="msger-header-title">{{ $single_chats['record']->user_details->full_name}} </h5>
+                            <h5 class="msger-header-title">{{ $single_chats['record']->user_details->full_name}}
+                            </h5>
                         </header>
 
                         <main class="msger-chat chatfull">
@@ -337,7 +364,7 @@
                 @csrf
 
                 <input type="hidden" class="form-control notapplyspace " placeholder="Eg 20 KD"
-                    value="{{ $single_chats['record']->quantity}}" name="quantity" id="quantity">
+                    value="{{ $single_chats['record']->quantity}}" name="quantity" id="quantity0">
 
                 <input type="hidden" class="form-control notapplyspace " placeholder="Eg 20 KD"
                     value="{{ $single_chats['record']->unique_id}}" name="unique_id">
@@ -347,7 +374,7 @@
                         <div class="form-group sub-form">
                             <label for="item" class="size14">Per Item Price</label>
                             <input type="text" class="form-control notapplyspace applynumberOnly" placeholder="Eg 20 KD"
-                                name="price" id="price" value="{{ $single_chats['record']->price}}">
+                                name="price" id="price0" value="{{ $single_chats['record']->price}}">
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
@@ -355,7 +382,7 @@
                                     <label for="item" class="size14">Shipping Fees </label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->shipping}}"
-                                        name="shipping" id="shipping">
+                                        name="shipping" id="shipping0">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -363,17 +390,16 @@
                                     <label for="item" class="size14">Tax</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->tax}}" name="tax"
-                                        id="tax">
+                                        id="tax0">
                                 </div>
                             </div>
-
 
                             <div class="col-lg-12">
                                 <div class="form-group sub-form">
                                     <label for="item" class="size14">Total Amount</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->total_amount}}"
-                                        name="total_amount" id="total_amount">
+                                        name="total_amount" id="total_amount0">
                                 </div>
                             </div>
                         </div>
@@ -388,31 +414,145 @@
     </div>
 </div>
 
+
+<!-- jQuery (required by Toastr) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-function calculateTotal() {
-    let price = parseFloat(document.getElementById('price').value) || 0;
-    let shipping = parseFloat(document.getElementById('shipping').value) || 0;
-    let tax = parseFloat(document.getElementById('tax').value) || 0;
-    let quantity = parseFloat(document.getElementById('quantity').value) || 1;
+function calculateTotal(val) {
+    let price = parseFloat(document.getElementById('price' + val).value) || 0;
+    let shipping = parseFloat(document.getElementById('shipping' + val).value) || 0;
+    let tax = parseFloat(document.getElementById('tax' + val).value) || 0;
+    let quantity = parseFloat(document.getElementById('quantity' + val).value) || 1;
 
     let total = (price * quantity) + shipping + tax;
 
-    document.getElementById('total_amount').value = total.toFixed(2);
+    document.getElementById('total_amount' + val).value = total.toFixed(2);
 }
 
-// Trigger calculation on input change
-document.getElementById('price').addEventListener('input', calculateTotal);
-document.getElementById('shipping').addEventListener('input', calculateTotal);
-document.getElementById('tax').addEventListener('input', calculateTotal);
+// Row 0
+document.getElementById('price0').addEventListener('input', () => calculateTotal(0));
+document.getElementById('shipping0').addEventListener('input', () => calculateTotal(0));
+document.getElementById('tax0').addEventListener('input', () => calculateTotal(0));
+document.getElementById('quantity0').addEventListener('input', () => calculateTotal(0));
 
-// Initial calculation on page load
-calculateTotal();
+// Row 1
+document.getElementById('price1').addEventListener('input', () => calculateTotal(1));
+document.getElementById('shipping1').addEventListener('input', () => calculateTotal(1));
+document.getElementById('tax1').addEventListener('input', () => calculateTotal(1));
+document.getElementById('quantity1').addEventListener('input', () => calculateTotal(1));
 
 
-// Add Banner Code 
 
+// // modify Orders Code 
+$(document).on('submit', 'form#SendQuotation', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $("#file-error").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                // toastr.success(response.message);
+                toastr.success("Send Quotation Request Send Successfully");
+
+                // $('#RequestBanner').modal('show');
+
+                $('.submit').attr('disabled', true);
+                window.setTimeout(function() {
+                    window.location =
+                        "{{ route('seller.single-chat-info', request()->id) }}";
+                }, 2000);
+            }
+        },
+        error: function(xhr) {
+
+            $('#loader').hide();
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
+
+                } else {
+
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
+                    }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+
+    });
+
+    return false;
+});
+
+
+// modify Orders Code 
 $(document).on('submit', 'form#ModifyPrice', function(event) {
     event.preventDefault();
+
     $('p.error_container').html("");
     $("#file-error").html("");
 
