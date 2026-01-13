@@ -49,7 +49,7 @@
                     class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
                         <a class="navbar-brand" href="{{route('dashboard')}}"><img
-                                src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" /></a>
+                                src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid"/></a>
                         <div class="header_nav_button_dropdown d-flex">
                             @if (Auth::guard('web')->check())
 
@@ -534,6 +534,8 @@
         </nav>
     </header>
 
+   
+   
 
     <!-- Modal -->
     <div class="modal fade location" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -573,3 +575,31 @@
             </div>
         </div>
     </div>
+
+
+    <!-- banner Modal image -->
+    <div class="modal-wapper" id="showBanner">
+        <div class="modal-content-2">
+            <div class="banner-body">
+                <button type="button" class="btn-skip">Skip</button>
+                <div class="popbanner">
+                    <div class="owl-carousel owl-theme bannerpop">
+                        <div class="item">
+                            <div class="bannerScreen">
+                                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="bannerScreen">
+                                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+
+
