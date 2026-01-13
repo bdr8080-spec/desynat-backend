@@ -89,7 +89,7 @@
 
                 <!-----------End Add Request ---------------->
 
-               @if($chatData['record']['product_request'] == '1' && in_array($chatData['record']['action'], ['0','1','2']))
+               @if($chatData['record']['product_request'] == '1' && in_array($chatData['record']['action'], ['0','1','2','4','5']))
                 <div class="gift-pnl mt-4">
                     <div class="border-1">
                         <table class="table table-borderless table-font">
@@ -106,7 +106,7 @@
                                     <div class="width-120">Address</div>
                                 </td>
                                 <td>
-                                    <div>33XH+2M3, Al Ahmadi, Kuwait</div>
+                                    <div>{{$chatData['record']['delivery_details']['address']}}</div>
                                 </td>
                             </tr>
                             @if(!empty($chatData['record']['custom_details']))
@@ -124,7 +124,7 @@
                 </div>
                 @endif
 
-                @if($chatData['record']['action'] == '1' || $chatData['record']['action'] == '2')
+                @if(in_array($chatData['record']['action'], ['1','2','4','5']))
                 <div class="time-pnl">
                     <div class="gift-pnl mt-4">
                         <div class="border-12">
@@ -177,12 +177,13 @@
                     </div>
                     @if($chatData['record']['action'] == '1' || $chatData['record']['action'] == '2')
                     <div class="chat-pay d-flex gap-3 pt-4 mb-3">
-                        <button type="reject" class="customBtn2">Reject</button>
-                        <button type="submit" class="customBtn">Accept</button>
+                        <input type="hidden" id="chatUniqueId" value="{{ $chatData['record']['unique_id'] }}">
+                        <button type="button" class="customBtn2" id="rejectBtn">Reject</button>
+                        <button type="button" class="customBtn" id="acceptBtn">Accept</button>
                     </div>
                     @endif
                     @if($chatData['record']['action'] == '5')
-                    <button type="submit" class="customBtn">Pay Now</button>
+                    <a href="{{ route('user.chatDetails', ['id' => $chatData['record']['unique_id']]) }}" class="customBtn w-100">Pay Now</a>
                     @endif
                 </div>
                 @endif
@@ -593,6 +594,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
+<!-- accept-reject -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const uniqueId = document.getElementById('chatUniqueId').value;
+    const acceptBtn = document.getElementById('acceptBtn');
+    const rejectBtn = document.getElementById('rejectBtn');
+
+    acceptBtn.addEventListener('click', () => sendAction(5)); // Accept
+    rejectBtn.addEventListener('click', () => sendAction(4)); // Reject
+
+    function sendAction(status) {
+
+        const formData = new FormData();
+        formData.append('unique_id', uniqueId);
+        formData.append('status', status);
+
+        fetch("{{ route('user.acceptRejectCustOrder') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                toastr.success(res.message || 'Action completed');
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+
+            } else {
+                toastr.error(res.message || 'Action failed');
+            }
+        })
+        .catch(() => toastr.error('Something went wrong'));
+    }
+
+});
+
+</script>
 
 
 

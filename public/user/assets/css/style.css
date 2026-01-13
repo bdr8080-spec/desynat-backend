@@ -2659,6 +2659,11 @@ img.img-fluid.circle-image {
     background: #FFF7EA;
     padding: 15px 40px;
 }
+.msger-input1 {
+    flex: 1;
+    background: #FFF7EA;
+    padding: 15px 40px;
+}
 .msger-send-btn {
     cursor: pointer;
     border: none;

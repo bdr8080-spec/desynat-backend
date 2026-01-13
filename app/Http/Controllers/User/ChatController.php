@@ -208,6 +208,43 @@ class ChatController extends Controller
         }
     }
 
+    public function acceptRejectCustOrder(Request $request)
+    {
+        //dd($request->all());
+        $user=  $request->user();
+
+        try {
+              $request_data = (object)[
+                'unique_id' => $request->unique_id,
+                'status' => $request->status,
+              ];
+
+            $data = $this->UserFirebaseService->UserCustomOrderAcceptAndReject($request_data);
+            //dd($data);
+            
+            if ($data['status'] === 'success') {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $data['message'],
+                    'data' => $data
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $data['message'],
+                    'data' => (object)[]
+                ], 422); 
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed create order',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
 
