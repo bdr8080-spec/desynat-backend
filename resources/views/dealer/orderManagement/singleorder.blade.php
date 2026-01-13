@@ -17,18 +17,35 @@
             <!-- <div style="color:#FF5F1B;">Returned</div>
             <div style="color:#D53B36;">Cancelled</div>
             <div style="color:#FF5F1B;">Exchange</div> -->
-
+            <!-- 
             @if($order_details->return_type=="1")
             <div style="color:#FF5F1B;">Returned</div>
 
             @elseif($order_details->return_type=="2")
             <div style="color:#FF5F1B;">Exchange1</div>
 
+            @elseif($order_details->payment_status=="2" || $order_details->payment_status=="2" || @$order_details->order->payment_method!=="3")
+            <div style="color:#D53B36;">Cancelled</div>
+
+
             @elseif($order_details->payment_status!=="1" && @$order_details->order->payment_method!=="3")
             <div style="color:#D53B36;">Cancelled</div>
 
             @else
             <div style="color:#16B364;">Confirmed</div>
+            @endif -->
+
+            @if($order_details->payment_status == '2' || $order_details->payment_status == '3')
+            <div class="btn-outline1 btn-outline-red" style="color:#D53B36;">Cancelled</div>
+            @elseif(in_array($order_details->delivery_status, ['1', '2']) && $order_details->payment_status !== '2' &&
+            $order_details->payment_status !== '3' )
+            <div class="btn-outline1 btn-ongoing">Ongoing</div>
+            @elseif($order_details->delivery_status == '3' && $order_details->return_type == '0')
+            <div class="btn-outline1 btn-outline-de">Delivered</div>
+            @elseif($order_details->delivery_status == '3' && $order_details->return_type == '1')
+            <div class="btn-outline1 btn-ongoing">Return Request</div>
+            @elseif($order_details->delivery_status == '3' && $order_details->return_type == '2')
+            <div class="btn-outline1 btn-ongoing">Exchange Request</div>
             @endif
 
 
@@ -341,7 +358,8 @@
 
             <!-- If Delivery Form in Process  -->
 
-            @if($order_details->return_type=="0" && in_array($order_details->delivery_status,['1','2','2.1','2.2']))
+            @if($order_details->return_type=="0" && !in_array($order_details->payment_status, ["2", "3"]) &&
+            in_array($order_details->delivery_status,['1','2','2.1','2.2']))
 
             <form id="updateDeliveryStatus" action="{{ route('seller.update-delivery-status') }}" method="post">
                 @csrf
@@ -354,8 +372,8 @@
                             <option value="">Delivery process</option>
                             <option value="1" @if($order_details->delivery_status=="1") selected @endif > Confirmed
                             </option>
-                            <option value="2.1" @if($order_details->delivery_status=="2.1") selected @endif > Packed
-                            </option>
+                            <!-- <option value="2.1" @if($order_details->delivery_status=="2.1") selected @endif > Packed
+                            </option> -->
                             <option value="2.2" @if($order_details->delivery_status=="2.2") selected @endif> Shipped
                             </option>
                         </select>

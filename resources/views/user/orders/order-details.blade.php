@@ -30,6 +30,7 @@
                             $status = $orderData->delivery_status ?? 0;
                         @endphp -->
 
+
                     @if($orderData->payment_status == '2' || $orderData->payment_status == '3')
                     <div class="btn-outline1 btn-outline-red">Cancelled</div>
                     @elseif(in_array($orderData->delivery_status, ['1', '2']) && $orderData->payment_status !== '2' &&
@@ -771,7 +772,7 @@
                 </div>
                 @endif
                 @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
-                                    $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
+                $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
                 <div class="mt-4 text-center">
                     <button class="btn btn-outline-red W-100 mb-3 text-decoration-none cancelBtn" data-bs-toggle="modal"
                         data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
