@@ -104,9 +104,12 @@ use App\Http\Controllers\User\ChatController;
 
   Route::get('/chat', [ChatController::class,'allChats'])->name('user.allChats');
   Route::get('/user-chat/{id}', [ChatController::class,'userChat'])->name('user.userChat');
-  Route::get('/chat-details', [ChatController::class,'chatDetails'])->name('user.chatDetails');
+  Route::get('/chat-details/{id}', [ChatController::class,'chatDetails'])->name('user.chatDetails');
   Route::post('/sendNormalMessage', [ChatController::class,'sendNormalMessage'])->name('user.sendNormalMessage');
   Route::get('/custom-request', [ChatController::class,'customRequest'])->name('user.customRequest');
+  Route::post('/createCustomOrder', [ChatController::class,'createCustomOrder'])->name('user.createCustomOrder');
+  Route::post('/sendCustomOrderRequest', [ChatController::class,'sendCustomOrderRequest'])->name('user.sendCustomOrderRequest');
+  Route::post('/acceptRejectCustOrder', [ChatController::class,'acceptRejectCustOrder'])->name('user.acceptRejectCustOrder');
 
 });
 

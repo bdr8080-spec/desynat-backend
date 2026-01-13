@@ -347,6 +347,27 @@ $('.customOwlcarousel').owlCarousel({
         }
     }
 })
+
+$('.bannerpop').owlCarousel({
+    loop: true,
+    margin: 10,
+    responsiveClass: true,
+    nav: true,
+    dots: true,
+    responsive: {
+        0: {
+            items: 1,
+        },
+        600: {
+            items: 1,
+        },
+        1000: {
+            items: 1,
+            dots: true
+        }
+    }
+})
+
      </script>
 
      <script>
@@ -901,7 +922,27 @@ function sendSearch() {
         window.location.href = "/user/all-product?search=" + encodeURIComponent(value);
     }
 }
-     </script>
+
+</script>
+
+<script>
+   $(window).on('load', function () {
+
+        const $modal = $('#showBanner');
+
+        $modal.fadeIn();
+        $('body').addClass('overflow-hidden');
+
+        $('.btn-skip, #showBanner').on('click', function (e) {
+            if ($(e.target).is('.btn-skip') || $(e.target).is('#showBanner')) {
+                $modal.fadeOut();
+                $('body').removeClass('overflow-hidden');
+            }
+        });
+
+    });
+
+</script>
 
 
      </body>

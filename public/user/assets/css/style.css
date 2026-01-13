@@ -2659,6 +2659,11 @@ img.img-fluid.circle-image {
     background: #FFF7EA;
     padding: 15px 40px;
 }
+.msger-input1 {
+    flex: 1;
+    background: #FFF7EA;
+    padding: 15px 40px;
+}
 .msger-send-btn {
     cursor: pointer;
     border: none;
@@ -2726,4 +2731,38 @@ img.img-fluid.circle-image {
 }
 .msg-text img {
     display: block;
+}
+
+.modal-wapper {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 9999;
+}
+
+.modal-content-2 {
+    max-width: 100%;
+    margin: 0% auto;
+    background: #fff;
+    padding: 10px;
+    height: 100vh;
+}
+
+.btn-skip {
+    background: transparent;
+    border: none;
+    position: absolute;
+    right: 30px;
+    z-index: 111;
+    font-size: 21px;
+}
+
+.bannerScreen img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.bannerScreen {
+    height: 100vh;
 }
