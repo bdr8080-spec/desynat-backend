@@ -70,11 +70,14 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 
    $ongoing_order = clone($all_Order) // Ongoing order check
     ->where('delivery_status', '!=', '3')
+    ->where( function($q3){
+       $q3->whereNotIn('payment_status',['3','2']);
+    })
     ->whereHas('order', function ($query) {
         $query->where(function ($q) {
             $q->where('payment_method', '3')
               ->orWhere(function ($q2) {
-                  $q2->where('payment_method', '!=', '3')
+                  $q2->whereNotIn('payment_method',['3','2'])
                      ->where('payment_status', '1');
               });
         });
@@ -138,7 +141,6 @@ $past_order = $past_order
         $query->where('delivery_status', 3);
         })
     ->get();
-
 
 
 $response['All_order']=$all_Order_data; // All Orders
