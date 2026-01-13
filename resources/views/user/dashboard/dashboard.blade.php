@@ -701,28 +701,29 @@
     </section>
 
     <!-- banner Modal image -->
+    @auth
+    @if(isset($banners) && $banners->count() > 0)
     <div class="modal-wapper" id="showBanner">
         <div class="modal-content-2">
             <div class="banner-body">
                 <button type="button" class="btn-skip">Skip</button>
                 <div class="popbanner">
                     <div class="owl-carousel owl-theme bannerpop">
-                        <div class="item">
-                            <div class="bannerScreen">
-                                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
+                        @foreach($banners as $banner)
+                            <div class="item">
+                                <div class="bannerScreen">
+                                    <img src="{{ $banner->image }}" alt="Banner" class="img-fluid" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="bannerScreen">
-                                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            
             </div>
         </div>
     </div>
+    @endif
+    @endauth
+
 
   
 

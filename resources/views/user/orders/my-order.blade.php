@@ -778,7 +778,7 @@
                                                     </div>
 
                                                     <h5 class="product-title">
-                                                        {{ floor($variant->final_price) != $variant->final_price? number_format($variant->final_price, 2) : number_format($variant->final_price, 0) }}
+                                                        {{ floor($order->total_mrp) }}
                                                         KD
 
                                                     </h5>
