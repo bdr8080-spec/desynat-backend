@@ -140,7 +140,7 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
 
  public function userGetAllChatsRecords($request){
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details')->where('user_id',$request->user_id)->get();
+    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('user_id',$request->user_id)->get();
 
    if($check_chatRecord->isNotEmpty()){
 
@@ -185,7 +185,7 @@ foreach ($check_chatRecord as $key => $val) {
 
  public function userGetSingleChatsRecords($request){
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details', 'product_variation.size','product_variation.color','user_details','seller_details','delivery_details')->where('unique_id',$request->unique_id)->first();
+    $check_chatRecord=allproductchats::with('product_variation.product_details', 'product_variation.size','product_variation.color','user_details','seller_details','delivery_details','order_create_status')->where('unique_id',$request->unique_id)->first();
 
    if($check_chatRecord){
 
@@ -330,7 +330,7 @@ foreach ($check_chatRecord as $key => $val) {
         ];
         }
 
-        if($check_chatRecord->action!=='1' &&  $check_chatRecord->action!=='2'){
+        if($check_chatRecord->action!=='1' &&  $check_chatRecord->action!=='2' && $check_chatRecord->action!=='5'){
         return [
             'status'  => 'error',
             'message' => "Seller didn't Accept Order Or Cancel This order",

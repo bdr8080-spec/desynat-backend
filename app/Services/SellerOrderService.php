@@ -290,8 +290,7 @@ public function SellerAllChatdata($request){
 try{
 
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details')->where('seller_id',$request->seller_id)->get();
-
+  $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('seller_id',$request->seller_id)->get();
 
    if($check_chatRecord->isNotEmpty()){
     
@@ -347,7 +346,7 @@ public function SellerSingleChatdata($request){
 
 try{
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details', 'product_variation.size','product_variation.color', 'user_details','seller_details','delivery_details')->where('unique_id',$request->unique_id)->first();
+    $check_chatRecord=allproductchats::with('product_variation.product_details', 'product_variation.size','product_variation.color', 'user_details','seller_details','delivery_details','order_create_status')->where('unique_id',$request->unique_id)->first();
 
    if($check_chatRecord){
 
