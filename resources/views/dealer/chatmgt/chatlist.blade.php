@@ -81,8 +81,8 @@
                                         <div class="card-right d-flex w-100 justify-content-between">
                                             <div class="product-info">
                                                 <h6 class="product-title"> {{ $val->user_details->full_name }}</h6>
-                                                <div class="chat-user-light"> {{ $val->user_details->last_chat }}</div>
-                                                <div class="chat-user-light"> {{ $val->user_details->last_chat_time }}
+                                                <div class="chat-user-light"> {{ $val->last_chat }}</div>
+                                                <div class="chat-user-light"> {{ $val->last_chat_time }}
                                                 </div>
                                             </div>
 
