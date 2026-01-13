@@ -55,6 +55,15 @@ class ChatController extends Controller
 
     }
 
+    public function snedNormalMessage(Request $request){ 
+
+        $data = (object)[
+            'user_id' => $request->user_id,
+            'seller_id' => $request->seller_id,
+        ];
+
+    }
+
 
 
 

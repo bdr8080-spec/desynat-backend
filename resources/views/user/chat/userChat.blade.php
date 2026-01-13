@@ -234,7 +234,7 @@
                             </div>
                         </main>
 
-                        <form class="msger-inputarea d-flex position-relative">
+                        <!-- <form class="msger-inputarea d-flex position-relative">
                             <div class="attached-icon">
                                 <i class="bi bi-paperclip"></i>
                                 <input type="file" id="imageUpload" accept="image/*">
@@ -242,7 +242,24 @@
 
                             <input type="text" class="form-control msger-input" placeholder="Type Message here...">
                             <button type="submit" class="msger-send-btn"><i class="bi bi-send-fill"></i></button>
+                        </form> -->
+                        <form id="chatFormNormal" class="msger-inputarea d-flex position-relative">
+                            @csrf
+
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                            <input type="hidden" name="seller_id" value="{{ $chatData['record']->seller_id }}">
+
+                            <div class="attached-icon">
+                                <i class="bi bi-paperclip"></i>
+                                <input type="file" name="image" id="imageUpload" accept="image/*">
+                            </div>
+
+                            <input type="text" name="message" class="form-control msger-input" placeholder="Type Message here..." required>
+                            <button type="submit" class="msger-send-btn">
+                                <i class="bi bi-send-fill"></i>
+                            </button>
                         </form>
+
                     </div>
 
 
@@ -264,6 +281,68 @@
 <div id="loader" style="display:none;">
     <div class="loader"></div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatForm = document.getElementById('chatForm');
+    const chatBox  = document.querySelector('.msger-chat');
+
+    chatForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(chatForm);
+        const message  = chatForm.querySelector('.msger-input').value.trim();
+
+        if (!message) return;
+
+        fetch("{{ route('user.snedNormalMessage') }}", {
+            method: "POST",
+            headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                appendMessage(message, 'right');
+                chatForm.reset();
+                scrollToBottom();
+            } else {
+                toastr.error(res.message || 'Failed to send message');
+            }
+        })
+        .catch(() => {
+            toastr.error('Something went wrong');
+        });
+    });
+
+    function appendMessage(text, side = 'right') {
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const msgHTML = `
+            <div class="msg ${side}-msg">
+                <div class="msg-bubble">
+                    <div class="msg-text">${text}</div>
+                    <div class="msg-info">
+                        <div class="msg-info-time ${side === 'right' ? 'text-end' : ''}">${time}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        chatBox.insertAdjacentHTML('beforeend', msgHTML);
+    }
+
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+});
+</script>
+
 
 
 @endsection
