@@ -55,6 +55,12 @@ class ChatController extends Controller
 
     }
 
+    public function customRequest(Request $request){ 
+
+        return view('user.chat.custom-request');
+
+    }
+
     public function sendNormalMessage(Request $request)
 {
     try {
