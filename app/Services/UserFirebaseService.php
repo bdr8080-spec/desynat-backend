@@ -339,6 +339,7 @@ foreach ($check_chatRecord as $key => $val) {
         }
 
         $request=(object)[
+            'unique_id' => $request_data->unique_id,
             'user_id'=>$check_chatRecord->user_id,
             'delivery_address'=>$check_chatRecord->delivery_address,
             "total_mrp"=>$check_chatRecord->price,
@@ -404,7 +405,9 @@ foreach ($check_chatRecord as $key => $val) {
             "total_amount"=>$request->total_amount,
             "giftcard_id"=>$request->giftcard_id,
             "giftcard_amount"=>$request->giftcard_amount,
-            "Payment_method"=>$request_data->Payment_method
+            "Payment_method"=>$request_data->Payment_method,
+            'unique_id' => $request_data->unique_id
+          
            ];
 
 $createOrder=Order::create($request_data);
