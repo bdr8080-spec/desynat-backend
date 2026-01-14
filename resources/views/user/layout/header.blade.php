@@ -29,6 +29,7 @@
     @php
     use App\Models\Category;
     use App\Models\UserCurrentLocation;
+    use App\Models\Story;
 
     $user = Auth::guard('web')->user();
     if($user){
@@ -36,7 +37,12 @@
     }
 
     $data = Category::with('subCategories')->get();
+
+    $adminStories = Story::where('type','1')->where('status','1')->get();
+
     @endphp
+
+
 
 </head>
 
