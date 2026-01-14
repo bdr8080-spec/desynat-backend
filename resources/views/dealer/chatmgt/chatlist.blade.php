@@ -78,9 +78,9 @@
                                         </div>
                                     </div>
                                     <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between">
+                                        <div class="card-right d-flex w-100 justify-content-between align-items-baseline">
                                             <div class="product-info">
-                                                <h6 class="product-title"> {{ $val->user_details->full_name }}</h6>
+                                                <h6 class="product-title linkgold"> {{ $val->user_details->full_name }}</h6>
                                                 @if($val->message_type=='0')
                                                 <div class="chat-user-light"> {{ $val->last_chat }}</div>
                                                 @else

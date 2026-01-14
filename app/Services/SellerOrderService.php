@@ -252,13 +252,38 @@ try{
 
     if($request->status=='1'){
 
-        $data['is_picked']='0';
-        $data['assign_date']=null;
-        $data['assign_status']='0';
-        $data['delivery_boy_id']=null;
-        $data['delivery_status']='0';
+       // If Seller Accept Exchnage Code Then  Create A new order With return/ Exchange Follow 
+  
+       if($singleOrder->return_type==2){
+  
+       $Createnew_data=[
+        "order_id"=>$singleOrder->order_id,
+        "r_e_type"=> $singleOrder->return_type,
+        'p_orderdetails_id'=> $singleOrder->id,
+        "user_id"=>$singleOrder->user_id,
+        "seller_id"=>$singleOrder->seller_id,
+        "product_id"=>$singleOrder->product_id,
+        "variants_id"=>$singleOrder->variants_id,
+        "quantity"=>$singleOrder->quantity,
+        "amount"=>$singleOrder->amount,
+        "tax"=> $singleOrder->tax ,
+        "shipping_fees"=>$singleOrder->shipping_fees,
+        "giftcard_id"=>$singleOrder->giftcard_id,
+        "giftcard_amount"=>$singleOrder->giftcard_amount,
+        "promocode_value"=>$singleOrder->promocode_value,
+        "exchange_new_size"=>$singleOrder->exchange_new_size,
+        "exchange_old_size"=>$singleOrder->exchange_old_size,
+        "payment_status"=>$singleOrder->payment_status,
+    ];
+        orderdetail::create($Createnew_data);
     }
-
+    
+        // $data['is_picked']='0';
+        // $data['assign_date']=null;
+        // $data['assign_status']='0';
+        // $data['delivery_boy_id']=null;
+        // $data['delivery_status']='0';
+    }
 
     $singleOrder->update($data);
     
@@ -302,7 +327,7 @@ try{
         // Ensure array order
         $lastMessage = end($firbase_chat);
 
-        $val->message_type = $lastMessage['type'] ?? null;
+        $val->message_type = StrVal($lastMessage['type']) ?? null;
         $val->last_chat = $lastMessage['message'] ?? null;
         $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
         $val->last_chat_by = $lastMessage['by'] ?? null;
