@@ -263,26 +263,53 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
 
 
 
-    function formatChatTime($timestamp)
+//     function formatChatTime($timestamp)
+// {
+//     // Convert Firebase timestamp to DateTime
+//     $chatTime = new DateTime($timestamp);
+//     $now = new DateTime();
+
+//     // Difference
+//     $diff = $now->diff($chatTime);
+//     $daysAgo = (int)$diff->days;
+
+//     // Same day
+//     if ($daysAgo === 0) {
+//         return $chatTime->format('d M Y, h:i A');
+//     }
+
+//     // Yesterday
+//     if ($daysAgo === 1) {
+//         return '1 day ago';
+//     }
+
+//     // Older
+//     return $daysAgo . ' days ago';
+// }
+
+function formatChatTime($timestamp)
 {
-    // Convert Firebase timestamp to DateTime
+    // Convert to DateTime
     $chatTime = new DateTime($timestamp);
     $now = new DateTime();
 
-    // Difference
+    // Calculate difference
     $diff = $now->diff($chatTime);
     $daysAgo = (int)$diff->days;
 
-    // Same day
-    if ($daysAgo === 0) {
-        return $chatTime->format('d M Y, h:i A');
+    // Format time only
+    $time = $chatTime->format('h:i A');
+
+    if ($daysAgo === 0 && $now->format('Y-m-d') === $chatTime->format('Y-m-d')) {
+        // Today
+        return "Today $time";
     }
 
-    // Yesterday
-    if ($daysAgo === 1) {
-        return '1 day ago';
+    if ($daysAgo === 1 || ($daysAgo === 0 && $diff->invert === 1 && $now->format('d') != $chatTime->format('d'))) {
+        // Yesterday
+        return "Yesterday $time";
     }
 
     // Older
-    return $daysAgo . ' days ago';
+    return "$daysAgo Days ago, $time";
 }

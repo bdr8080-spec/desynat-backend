@@ -142,7 +142,7 @@
                                                     <div class="width-120">Item Price</div>
                                                 </td>
                                                 <td>
-                                                    <div>{{$chatData['record']['price']}} KD</div>
+                                                    <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD</div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -166,7 +166,13 @@
                                                     <div class="width-120">Total Amount </div>
                                                 </td>
                                                 <td>
-                                                    <div>{{$chatData['record']['total_amount']}} KD</div>
+                                                    <div>
+                                                        {{
+                                                            ((float)$chatData['record']['total_amount'] % 1 == 0)
+                                                                ? number_format((float)$chatData['record']['total_amount'], 0, '.', '')
+                                                                : number_format((float)$chatData['record']['total_amount'], 2, '.', '')
+                                                        }} KD
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -182,7 +188,7 @@
                         <button type="button" class="customBtn" id="acceptBtn">Accept</button>
                     </div>
                     @endif
-                    @if($chatData['record']['action'] == '5')
+                    @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null)
                     <a href="{{ route('user.chatDetails', ['id' => $chatData['record']['unique_id']]) }}" class="customBtn w-100">Pay Now</a>
                     @endif
                 </div>
@@ -820,6 +826,50 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <!-- accept-reject -->
+<!-- <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const uniqueId = document.getElementById('chatUniqueId').value;
+    const acceptBtn = document.getElementById('acceptBtn');
+    const rejectBtn = document.getElementById('rejectBtn');
+
+    acceptBtn.addEventListener('click', () => sendAction(5)); // Accept
+    rejectBtn.addEventListener('click', () => sendAction(4)); // Reject
+
+    function sendAction(status) {
+
+        const formData = new FormData();
+        formData.append('unique_id', uniqueId);
+        formData.append('status', status);
+
+        fetch("{{ route('user.acceptRejectCustOrder') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                // toastr.success(res.message || 'Action completed');
+                toastr.success('Quotation Accepted Successfully');
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+
+            } else {
+                toastr.error(res.message || 'Action failed');
+            }
+        })
+        .catch(() => toastr.error('Something went wrong'));
+    }
+
+});
+
+</script> -->
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -846,7 +896,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(res => res.json())
         .then(res => {
             if (res.status === 'success') {
-                toastr.success(res.message || 'Action completed');
+                // Show different message based on status
+                if(status == 5){
+                    toastr.success('Quotation Accepted Successfully');
+                } else if(status == 4){
+                    toastr.success('Quotation Rejected Successfully');
+                }
 
                 setTimeout(() => {
                     location.reload();
@@ -860,8 +915,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
 </script>
+
 
 
 

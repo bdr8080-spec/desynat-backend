@@ -117,6 +117,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Order ID</th>
+                                <!-- <th scope="col">Order Type</th> -->
                                 <th scope="col">Seller Name</th>
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Country</th>
@@ -168,10 +169,14 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                        {{ intval($data['amount_with_charges']) }} KD
+                                    @if($data['order']['order_type'] == '1')
+                                        @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                            {{ intval($data['amount_with_charges']) }} KD
+                                        @else
+                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        @endif
                                     @else
-                                        {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        {{ intval($data['order']['total_amount']) }} KD
                                     @endif
                                 </td>
                                 <td>
@@ -179,7 +184,13 @@
                                         ? $data['admin_commission'] . ' KD' 
                                         : 'N/A' }}
                                 </td>
-                                <td>Normal</td>
+                                <td>
+                                    @if($data['order']['order_type']=='1')
+                                    Normal
+                                    @else
+                                    Custom
+                                    @endif
+                                </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
@@ -190,14 +201,15 @@
                                 <td>N/A</td>
                                 @php
                                     $deliveryStatuses = [
-                                        1 => 'Confirmed',
-                                        2 => 'On The Way',
-                                        3 => 'Delivered',
-                                        4 => 'Cancelled',
-                                        5 => 'Return',
-                                        6 => 'Confirmed',
-                                        7 => 'Picked',
-                                        8 => 'Not Delivered',
+                                        '1' => 'Confirmed',
+                                        '2.1' => 'Shipped',
+                                        '2.2' => 'On the Way',
+                                        '3' => 'Delivered',
+                                        '4' => 'Cancelled',
+                                        '5' => 'Return',
+                                        '6' => 'Confirmed',
+                                        '7' => 'Picked',
+                                        '8' => 'Not Delivered',
                                     ];
                                 @endphp
                                 <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td>
@@ -352,10 +364,14 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                        {{ intval($data['amount_with_charges']) }} KD
+                                    @if($data['order']['order_type'] == '1')
+                                        @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                            {{ intval($data['amount_with_charges']) }} KD
+                                        @else
+                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        @endif
                                     @else
-                                        {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        {{ intval($data['order']['total_amount']) }} KD
                                     @endif
                                 </td>
                                 <td>
@@ -363,7 +379,13 @@
                                         ? $data['admin_commission'] . ' KD' 
                                         : 'N/A' }}
                                 </td>
-                                <td>Normal</td>
+                                <td>
+                                    @if($data['order']['order_type']=='1')
+                                    Normal
+                                    @else
+                                    Custom
+                                    @endif
+                                </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
@@ -374,8 +396,8 @@
                                 <td>N/A</td>
                                 @php
                                     $deliveryStatuses = [
-                                        1 => 'Return',
-                                        2 => 'Exchange',
+                                        '1' => 'Return',
+                                        '2' => 'Exchange',
                                     ];
                                 @endphp
                                 <td>{{ $deliveryStatuses[$data['return_type']] ?? 'Unknown' }}</td>
@@ -386,19 +408,20 @@
                                     {{ $data['exchange_reason'] ?? 'N/A' }}
                                     @endif
                                 </td>
-                                @php
-                                    $deliveryStatus = [
-                                        1 => 'Pending',
-                                        2 => 'On The Way',
-                                        3 => 'Delivered',
-                                        4 => 'Cancelled',
-                                        5 => 'Return',
-                                        6 => 'Confirmed',
-                                        7 => 'Picked',
-                                        8 => 'Not Delivered',
+                                 @php
+                                    $deliveryStatuses = [
+                                        '1' => 'Confirmed',
+                                        '2.1' => 'Shipped',
+                                        '2.2' => 'On the Way',
+                                        '3' => 'Delivered',
+                                        '4' => 'Cancelled',
+                                        '5' => 'Return',
+                                        '6' => 'Confirmed',
+                                        '7' => 'Picked',
+                                        '8' => 'Not Delivered',
                                     ];
                                 @endphp
-                                <td>{{ $deliveryStatus[$data['delivery_status']] ?? 'Unknown' }}</td>
+                                <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td>
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
                                 <td>
                                     @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_code'] === '+965')
@@ -536,10 +559,14 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                        {{ intval($data['amount_with_charges']) }} KD
+                                    @if($data['order']['order_type'] == '1')
+                                        @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                            {{ intval($data['amount_with_charges']) }} KD
+                                        @else
+                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        @endif
                                     @else
-                                        {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        {{ intval($data['order']['total_amount']) }} KD
                                     @endif
                                 </td>
 
@@ -548,7 +575,13 @@
                                         ? $data['admin_commission'] . ' KD' 
                                         : 'N/A' }}
                                 </td>
-                                <td>Normal</td>
+                                <td>
+                                    @if($data['order']['order_type']=='1')
+                                    Normal
+                                    @else
+                                    Custom
+                                    @endif
+                                </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
@@ -690,10 +723,14 @@
                                     <!-- {{ $data['order']['delivery_details']['country_name'] }} -->
                                 </td>
                                 <td>
-                                    @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
-                                        {{ intval($data['amount_with_charges']) }} KD
+                                    @if($data['order']['order_type'] == '1')
+                                        @if($data['amount_with_charges'] == floor($data['amount_with_charges']))
+                                            {{ intval($data['amount_with_charges']) }} KD
+                                        @else
+                                            {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        @endif
                                     @else
-                                        {{ number_format($data['amount_with_charges'], 2) }} KD
+                                        {{ intval($data['order']['total_amount']) }} KD
                                     @endif
                                 </td>
                                 <td>
@@ -701,7 +738,13 @@
                                         ? $data['admin_commission'] . ' KD' 
                                         : 'N/A' }}
                                 </td>
-                                <td>Normal</td>
+                                <td>
+                                    @if($data['order']['order_type']=='1')
+                                    Normal
+                                    @else
+                                    Custom
+                                    @endif
+                                </td>
                                 <td>
                                     @if(empty($data['driver_details']['full_name_english']))
                                         Not Assigned
@@ -868,44 +911,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalBody = document.getElementById('productModalBody');
     const templateCard = document.getElementById('productCardTemplate');
 
-    //console.log('modalBody:', modalBody);
-    //console.log('templateCard:', templateCard);
-
     if (!modalBody || !templateCard) {
-        //console.error('Modal elements not found. Check IDs.');
+        console.error('Modal elements not found. Check IDs.');
         return;
     }
 
     const buttons = document.querySelectorAll('.view-products');
-    //console.log('Found buttons:', buttons.length);
 
     buttons.forEach(button => {
-
-        //console.log('Button element:', button);
-        //console.log('data-product attribute:', button.dataset.product);
-
         button.addEventListener('click', function () {
-
-            //console.log('Clicked button:', this);
 
             // Clear old cards
             modalBody.querySelectorAll('.product-card:not(#productCardTemplate)')
                 .forEach(card => card.remove());
 
-            const raw = this.dataset.product; 
-            console.log('Raw data-product:', raw);
+            const raw = this.dataset.product;
 
-            if (!raw) {
-                //console.error('data-product is empty!');
-                return;
-            }
+            if (!raw) return;
 
             let item;
             try {
                 item = JSON.parse(raw);
-               // console.log('Parsed item:', item);
             } catch (e) {
-                //console.error('JSON parse error:', e, raw);
+                console.error('JSON parse error:', e, raw);
                 return;
             }
 
@@ -913,36 +941,50 @@ document.addEventListener('DOMContentLoaded', function () {
             card.classList.remove('d-none');
             card.removeAttribute('id');
 
-            //console.log('Card cloned:', card);
-
+            // Product Image
             card.querySelector('.product-image').src =
-                item.variation_details?.variant_image?.[0]
-                || '/admin/image/download.jpeg';
+                item.variation_details?.variant_image?.[0] ?? '/admin/image/download.jpeg';
 
+            // Product Name
             card.querySelector('.product-name').textContent =
                 item.product_details?.product_name_en ?? 'N/A';
 
+            // Category
             card.querySelector('.product-category').textContent =
                 'Category: ' + (item.product_details?.category?.name ?? 'N/A');
 
+            // Brand
             card.querySelector('.product-brand').textContent =
                 'Brand: ' + (item.product_details?.brand?.name_english ?? 'N/A');
 
+            // Sub-Category
             card.querySelector('.product-subcategory').textContent =
-                'Sub-Category: ' +
-                (item.product_details?.subcategory?.name_english ?? 'N/A');
+                'Sub-Category: ' + (item.product_details?.subcategory?.name_english ?? 'N/A');
+
+            // Price
+            let finalPrice = 0;
+            const orderType = item.order?.order_type ?? '1';
+
+            if (orderType == '1') {
+                // Type 1: show item.amount
+                finalPrice = parseFloat(item.amount ?? 0);
+            } else if (orderType == '2') {
+                // Type 2: show total_amount from order
+                finalPrice = parseFloat(item.order?.total_amount ?? 0);
+            }
 
             card.querySelector('.product-price').textContent =
-                'Price: ' + (item.amount ?? '0') + ' KD';
+                'Price: ' + finalPrice.toFixed(2) + ' KD';
 
+            // Append card to modal
             modalBody.appendChild(card);
 
-           // console.log('Card appended to modal body');
         });
-
     });
+
 });
 </script>
+
 
 
 

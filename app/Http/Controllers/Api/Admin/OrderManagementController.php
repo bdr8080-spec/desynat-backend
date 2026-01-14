@@ -23,6 +23,7 @@ class OrderManagementController extends Controller
     {
         try {
             $data = $this->OrderManagementService->ActiveOrdersNew($request);
+           // dd($data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);

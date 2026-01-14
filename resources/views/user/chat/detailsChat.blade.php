@@ -64,9 +64,9 @@
                     <div class="gift-pnl mt-4">
                         <div class="border-1">
                             <div class="accordion-item">
-                                <h2 class="accordion-header mb-2">
+                                <!-- <h2 class="accordion-header mb-2">
                                     <button class="accordion-button">  View Request </button>
-                                </h2>
+                                </h2> -->
                                 <div class="p-0">
                                     <div class="giftinfo">
                                         <div>Total Quantity </div>
@@ -112,7 +112,7 @@
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>Item Price </div>
-                            <div>{{$chatData['record']['total_amount']}} KD</div>
+                            <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD</div>
                         </div>
                         <div class="giftinfo d-none" id="couponDiscountRow">
                             <div>Coupon Discount</div>
@@ -133,12 +133,18 @@
                         <hr>
                         <div class="giftinfo">
                             <div>Total Amount </div>
-                            <div>{{$chatData['record']['total_amount']}} KD</div>
+                            <div>
+                                {{
+                                    fmod((float)$chatData['record']['total_amount'], 1) == 0
+                                        ? number_format((float)$chatData['record']['total_amount'], 0, '.', '')
+                                        : number_format((float)$chatData['record']['total_amount'], 2, '.', '')
+                                }} KD
+                            </div>
                         </div>
                     </div>
-                    <p id="promoSavingsText" class="return-text mb-2">
+                    <!-- <p id="promoSavingsText" class="return-text mb-2">
                         You will save 0 KD on this
-                    </p>
+                    </p> -->
                 </div>
             </div>
 
@@ -557,7 +563,7 @@ function refreshDiscountUI() {
         $('#promoApplyLink').hide();
         $('#cancelPromoSection').removeClass('d-none');
 
-        $('#couponDiscountAmount').text(savedPromo.discountValue + ' KD');
+        $('#couponDiscountAmount').text(formatAmount(parseFloat(savedPromo.discountValue)));
         $('#couponDiscountRow').removeClass('d-none');
     } else {
         $('#applyPromoText').text('Apply PromoCode');
@@ -574,7 +580,7 @@ function refreshDiscountUI() {
         $('#applyGiftCardBtn').hide();
         $('#cancelGiftCardBtn').removeClass('d-none');
 
-        $('#giftCardDiscountAmount').text(savedGiftCard.giftCardAmount + ' KD');
+        $('#giftCardDiscountAmount').text(formatAmount(parseFloat(savedGiftCard.giftCardAmount)));
         $('#giftCardDiscountRow').removeClass('d-none');
     } else {
         $('#applyGiftCardText').text('Have a Gift Card');
@@ -600,7 +606,7 @@ function refreshDiscountUI() {
 
     // ---------- SAVINGS ----------
     const totalSavings = promoDiscount + giftCardDiscount;
-    $('#promoSavingsText').text(`You will save ${totalSavings.toFixed(2)} KD on this`);
+    $('#promoSavingsText').text(`You will save ${formatAmount(totalSavings)} on this`);
 }
 
 /* ---------- HELPERS ---------- */
@@ -615,7 +621,12 @@ function getAmountByLabel(label) {
 function setAmountByLabel(label, amount) {
     $('.giftinfo').filter(function () {
         return $(this).find('div').first().text().trim() === label;
-    }).find('div').last().text(amount.toFixed(2) + ' KD');
+    }).find('div').last().text(formatAmount(amount));
+}
+
+// ---------- FORMAT HELPER ----------
+function formatAmount(amount) {
+    return (amount % 1 === 0) ? amount.toFixed(0) + ' KD' : amount.toFixed(2) + ' KD';
 }
 </script>
 

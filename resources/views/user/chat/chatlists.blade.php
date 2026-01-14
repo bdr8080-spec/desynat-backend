@@ -114,10 +114,17 @@
                                                         Quotation Rejected
                                                     </div>
 
-                                                @elseif($chat['type'] == '2' && $chat['product_request'] == '1')
-                                                    <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
-                                                        Quotation Received
+                                                @elseif($chat['type'] == '2' && $chat['action'] == '5' && $chat['order_create_status'] == null)
+                                                    <!-- <div class="yellow-bg" style="color:#172B85;background:#172B851A;"> -->
+                                                    <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
+                                                        Quotation Accepted
                                                     </div>
+                                                
+                                                @elseif($chat['type'] == '2' && $chat['order_create_status'] !== null)
+                                                <!-- <div class="yellow-bg" style="color:#172B85;background:#172B851A;"> -->
+                                                <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
+                                                    Order Placed
+                                                </div>
 
                                                 @elseif($chat['type'] == '1')
                                                    
