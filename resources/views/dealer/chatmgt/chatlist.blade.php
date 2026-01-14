@@ -109,13 +109,13 @@
                                             @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='3'
                                             || $val->action=='4')
 
-                                            <div class="red-bg" style="color:#EA9413;background:##fb0b0b;">Request
+                                            <div class="red-bg yellow-bg" style="color:#EA9413;background:##fb0b0b;">Request
                                                 Cancelled
                                             </div>
 
                                             @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='5')
 
-                                            <div class="" style="color:#172B85;background:#172B851A;">
+                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
                                                 Quotation Accepted
                                             </div>
 
