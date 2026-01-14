@@ -15,27 +15,30 @@
                 <div class="category_filter">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h3 class="mb-0">Filter</h3>
-                        <a href="{{route('user.myOrders')}}">Apply</a>
+                        <a href="{{route('user.allChats')}}">Clear</a>
                     </div>
                     
                     <form>
                         <div class="orderfilter">
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="">
+                                <input type="radio" name="filter" value=""
+                                {{ request('filter') == null ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">All</div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="">
+                                <input type="radio" name="filter" value="1"
+                                {{ request('filter') == '1' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">Waiting </div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="">
+                                <input type="radio" name="filter" value="2"
+                                {{ request('filter') == '2' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">Quotation Received
@@ -43,7 +46,8 @@
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="">
+                                <input type="radio" name="filter" value="3"
+                                {{ request('filter') == '3' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">Quotation Accepted
@@ -53,7 +57,7 @@
 
                         </div>
 
-                        <!-- <button type="submit" class="customBtn customBtn5 mt-5"> Apply </button> -->
+                        <button type="submit" class="customBtn customBtn5 mt-5"> Apply </button>
                     </form>
                 </div>
             </div>
