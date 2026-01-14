@@ -468,6 +468,10 @@ table.dataTable {
     color: #00000080;
     font-size: 15px;
 }
+.title-light span {
+    color: #000;
+    font-weight: 500;
+}
 .pay-sum {
     display: flex;
     justify-content: space-between;
@@ -501,6 +505,9 @@ table.dataTable {
     background: #ADADAD14;
     padding: 20px;
     border-radius: 10px;
+}
+.link-content:hover {
+    color: #8E6E56;
 }
 
 /*--------------------------------------------------------------
