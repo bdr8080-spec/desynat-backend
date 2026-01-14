@@ -559,7 +559,10 @@ table.dataTable td.dt-type-date {
     border-radius: 10px;
 }
 
-.linkgold:hover {
+.link-content:hover .linkgold {
+    color: #8E6E56;
+}
+.request-title{
     color: #8E6E56;
 }
 
