@@ -327,7 +327,7 @@ try{
         // Ensure array order
         $lastMessage = end($firbase_chat);
 
-        $val->message_type = $lastMessage['type'] ?? null;
+        $val->message_type = StrVal($lastMessage['type']) ?? null;
         $val->last_chat = $lastMessage['message'] ?? null;
         $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
         $val->last_chat_by = $lastMessage['by'] ?? null;
