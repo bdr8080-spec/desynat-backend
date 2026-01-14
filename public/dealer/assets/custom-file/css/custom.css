@@ -565,6 +565,9 @@ table.dataTable td.dt-type-date {
 .request-title{
     color: #8E6E56;
 }
+.rightline{
+    border-right:1px solid #666;
+}
 
 /*--------------------------------------------------------------
 # Chat UI page
