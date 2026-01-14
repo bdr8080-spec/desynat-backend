@@ -221,42 +221,31 @@
 </section>
 
 <!-- support chat -->
-<div class="support-chat-btn"onclick="openChat()">
-    <button>
-        <div class="icon">
-            <img src="/dealer/assets/img/Frame.svg" width="50px" />
-            <div class="notification-badge">
-
-
-            </div>
-        </div>
-    </button>
+<div class="support-chat-btn" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+    <button><img src="/dealer/assets/img/Frame.svg" width="50px" /></button>
 </div>
 
-<!-- Support Chat Button -->
-<!-- <div class="support-chat-btn" onclick="openChat()">
-  <img src="/dealer/assets/img/Frame.svg" width="50">
-</div> -->
+
+<div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+  <div class="offcanvas-header chat-header">
+    <h5 class="offcanvas-title" id="staticBackdropLabel">Support Chat</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  
+  <div class="offcanvas-body">
+    <div class="support-chat">
+       
+
+
+    </div>
+
+  </div>
+</div>
+
 
 <!-- Chat Box -->
-<div class="support-chat" id="supportChat">
-  <div class="chat-header">
-    <h4>Support Chat</h4>
-    <span onclick="closeChat()">✕</span>
-  </div>
 
-  <div class="chat-body" id="chatBody">
-    <div class="msg left">
-      Hi 👋 How can we help you?
-      <span class="time">08:30 am</span>
-    </div>
-</div>
 
-  <div class="chat-footer">
-    <input type="text" id="messageInput" placeholder="Type message..." />
-    <button onclick="sendMessage()"><i class="bi bi-send"></i></button>
-  </div>
-</div>
   
 <!-- Edit shipping Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -349,46 +338,5 @@
 
 
 <script>
-function openChat() {
-  document.getElementById("supportChat").classList.add("active");
-}
 
-function closeChat() {
-  document.getElementById("supportChat").classList.remove("active");
-}
-
-function sendMessage() {
-  const input = document.getElementById("messageInput");
-  const message = input.value.trim();
-  if (!message) return;
-
-  addMessage(message, "right");
-  input.value = "";
-
-  // Fake support reply (API ki jagah)
-  setTimeout(() => {
-    addMessage("Thanks for your message. Our team will contact you shortly 😊", "left");
-  }, 1200);
-}
-
-function addMessage(text, side) {
-  const chatBody = document.getElementById("chatBody");
-  const msgDiv = document.createElement("div");
-  msgDiv.className = `msg ${side}`;
-
-  const time = new Date().toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-
-  msgDiv.innerHTML = `${text}<span>${time}</span>`;
-  chatBody.appendChild(msgDiv);
-
-  chatBody.scrollTop = chatBody.scrollHeight;
-}
-
-/* Enter key support */
-document.getElementById("messageInput").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") sendMessage();
-});
 </script>

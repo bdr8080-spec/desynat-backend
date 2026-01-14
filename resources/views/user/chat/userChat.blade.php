@@ -106,7 +106,7 @@
                                     <div class="width-120">Address</div>
                                 </td>
                                 <td>
-                                    <div>{{$chatData['record']['delivery_details']['address']}}</div>
+                                    <div>{{@$chatData['record']['delivery_details']['address']}}</div>
                                 </td>
                             </tr>
                             @if(!empty($chatData['record']['custom_details']))
