@@ -152,14 +152,17 @@ foreach ($check_chatRecord as $key => $val) {
         // Ensure array order
         $lastMessage = end($firbase_chat);
 
-        $val->last_chat = $lastMessage['message'] ?? null;
-        $val->last_chat_time = $lastMessage['times'] ?? null;
+        $val->message_type = $lastMessage['type'] ?? null;
 
+        $val->last_chat = $lastMessage['message'] ?? null;
         $val->last_chat_time = $lastMessage['times'] ? formatChatTime($lastMessage['times']) : null;
+        $val->last_chat_by = $lastMessage['by'] ?? null;
         
     } else {
+        $val->message_type=null;
         $val->last_chat = null;
         $val->last_chat_time = null;
+        $val->last_chat_by = null;
     }
 }
 
