@@ -11,6 +11,9 @@ use App\Http\Controllers\Seller\SellerOrderController;
 use App\Http\Controllers\Seller\SellerChatController;
 
 
+use App\Http\Controllers\ChatController;
+
+
 Route::group(['prefix' => 'seller'], function () {
 
 
@@ -142,9 +145,10 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/Modify-custom-order-price',[SellerChatController::class,'Modify_custom_order_price'])->name('seller.Modify_custom_order_price');    
 
+
 });
 
-
+Route::post('/send-message-in-chats', [ChatController::class,'SendMessageInChats'])->name("seller.send-chat");
 
 
 Route::match(['get', 'post'], '/chats', function () {

@@ -11,7 +11,6 @@ use App\Http\Controllers\Api\Seller\SellerBannerController;
 use App\Http\Controllers\Api\Seller\OrderManagement;
 
 
-
 use App\Http\Controllers\CommonController;
 
 
@@ -104,7 +103,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
    Route::post('/update-single-order-status', [OrderManagement::class,'updateSingleOrderStatus']);
 
-    route::Match(['get','post'],'/update-order-exchange-return-status',[SellerOrderController::class,'updateOrderExchangeReturnStatus']);
+    route::Match(['get','post'],'/update-order-exchange-return-status',[OrderManagement::class,'updateOrderExchangeReturnStatus']);
 
 
 
