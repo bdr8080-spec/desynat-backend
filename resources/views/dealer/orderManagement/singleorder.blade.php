@@ -43,9 +43,9 @@
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '0')
             <div class="btn-outline1 btn-outline-de">Delivered</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '1')
-            <div class="btn-outline1 btn-ongoing">Return Request</div>
+            <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Return Request</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '2')
-            <div class="btn-outline1 btn-ongoing">Exchange Request</div>
+            <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Exchange Request</div>
             @endif
 
 
@@ -108,7 +108,7 @@
                     </div>
                     <div class="cust-deatils">
                         <div class="order-cont">
-                            <div class="title-light">Shipping Location</div>
+                            <div class="title-light">Shipping Address</div>
                             <p>{{$order_details->order->delivery_details->address}} </p>
                         </div>
                     </div>
