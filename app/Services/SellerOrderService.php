@@ -254,7 +254,7 @@ try{
 
        // If Seller Accept return Code Then  Create A new order With return/ Exchange Follow 
 
-    $cart_data=[
+    $Createnew_data=[
         "order_id"=>$singleOrder->order_id,
         "r_e_type"=> $singleOrder->return_type,
         'p_orderdetails_id'=> $singleOrder->id,
@@ -273,7 +273,7 @@ try{
         "exchange_old_size"=>$singleOrder->exchange_old_size,
         "payment_status"=>$singleOrder->payment_status,
     ];
-    orderdetail::create($cart_data);
+    orderdetail::create($Createnew_data);
     
         // $data['is_picked']='0';
         // $data['assign_date']=null;
