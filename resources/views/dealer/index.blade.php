@@ -238,8 +238,9 @@
   <img src="/dealer/assets/img/Frame.svg" width="50">
 </div> -->
 
+
 <!-- Chat Box -->
-<div class="support-chat" id="supportChat">
+<!-- <div class="support-chat" id="supportChat">
   <div class="chat-header">
     <h4>Support Chat</h4>
     <span onclick="closeChat()">✕</span>
@@ -256,7 +257,7 @@
     <input type="text" id="messageInput" placeholder="Type message..." />
     <button onclick="sendMessage()"><i class="bi bi-send"></i></button>
   </div>
-</div>
+</div> -->
   
 <!-- Edit shipping Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

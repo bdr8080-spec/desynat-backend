@@ -429,7 +429,14 @@ table.dataTable {
 /*--------------------------------------------------------------
 # Order management page
 --------------------------------------------------------------*/
-
+.tabs-panel .maintabs {
+    border: 1px solid #ac875e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.dataTable th.dt-type-numeric, table.dataTable th.dt-type-date, table.dataTable td.dt-type-numeric, table.dataTable td.dt-type-date {
+    text-align: center !important;
+}
 .mini-tabs-panel .nav-pills {
     border-bottom: 1px solid #ddd;
 }

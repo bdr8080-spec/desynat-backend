@@ -6,7 +6,7 @@
     </div>
 
     <div class="tabs-panel py-4">
-        <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab-Main" role="tablist">
+        <ul class="nav nav-pills mb-3 nav-justified maintabs" id="pills-tab-Main" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-Normal-Order" type="button" role="tab" aria-controls="pills-allproduct"
