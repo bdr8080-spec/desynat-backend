@@ -61,7 +61,7 @@ class StoryController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 400);
         }
 
         try {

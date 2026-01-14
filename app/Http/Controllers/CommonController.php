@@ -179,7 +179,7 @@ class CommonController extends Controller
         ]);
 
         if ($validator->fails()) {
-               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
+               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 400);
         }
 
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
