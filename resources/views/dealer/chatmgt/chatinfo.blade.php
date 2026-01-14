@@ -321,7 +321,7 @@
 
                         <main class="msger-chat chatfull">
 
-                            @foreach($single_chats['firbase_chat'] as $key=>$val)
+                            <!-- @foreach($single_chats['firbase_chat'] as $key=>$val)
 
                             <div class="msg w-100  @if($val['by']=='user') left-msg  @else right-msg  @endif">
                                 <div class="msg-bubble">
@@ -339,13 +339,15 @@
                                 </div>
                             </div>
 
-                            @endforeach
+                            @endforeach -->
 
                             <main class="chatfull" id="chatBody">
                                 <!-- messages append here -->
                             </main>
 
                         </main>
+
+                        <input type="hidden" id="lastMessageId">
 
                         <form class="msger-inputarea d-flex position-relative" id="Send_ChatForm"
                             action="{{ route('seller.send-chat') }}" method="post" enctype="multipart/form-data">
@@ -817,6 +819,114 @@ function appendRightMessage({
     // auto scroll to bottom
     $('#chatBody').scrollTop($('#chatBody')[0].scrollHeight);
 }
+
+
+
+function appendLeftMessage({
+    message = '',
+    image = '',
+    time = ''
+}) {
+
+    console.log("test---".message);
+
+    let imgHtml = image ?
+        `<img src="${image}" width="100px">` :
+        '';
+
+    let textHtml = message ?
+        `<div>${message}</div>` :
+        '';
+
+    let html = `
+        <div class="msg w-100 left-msg">
+            <div class="msg-bubble">
+                <div class="msg-text">
+                    ${imgHtml}
+                    ${textHtml}
+                </div>
+                <div class="msg-info text-end">
+                    <div class="msg-info-time">${time}</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    $('#chatBody').append(html);
+
+    // auto scroll to bottom
+    $('#chatBody').scrollTop($('#chatBody')[0].scrollHeight);
+}
+
+
+let lastMessageId = $('#lastMessageId').val(lastMessageId);
+
+let isLoadingChat = false;
+
+function loadChatMessages() {
+
+    if (isLoadingChat) return;
+
+    isLoadingChat = true;
+
+    $.ajax({
+        url: "{{ route('seller.load-chat') }}",
+        type: "POST",
+        data: {
+            _token: "{{ csrf_token() }}",
+            unique_id: "{{ $single_chats['record']->unique_id }}",
+            last_id: lastMessageId
+        },
+        success: function(response) {
+
+            if (response.status !== 'success') return;
+
+            const messages = response.data.firbase_chat;
+            const lastMessageId = response.data.lastMessageId;
+
+            $('#lastMessageId').val(lastMessageId);
+
+            // Loop through Firebase object
+            Object.keys(messages).forEach(function(msgId) {
+
+                const msg = messages[msgId];
+
+                const time = new Date(msg.times).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                if (msg.by === 'user') {
+                    appendLeftMessage({
+                        message: msg.type == '0' ? msg.message : '',
+                        image: msg.type == '1' ? msg.message : '',
+                        time: time
+                    });
+                } else {
+                    appendRightMessage({
+                        message: msg.type == '0' ? msg.message : '',
+                        image: msg.type == '1' ? msg.message : '',
+                        time: time
+                    });
+                }
+            });
+
+
+        },
+        complete: function() {
+            isLoadingChat = false;
+        }
+    });
+}
+
+/* ⏱ Load every 5 seconds */
+setInterval(loadChatMessages, 5000);
+
+/* Load immediately on page open */
+loadChatMessages();
+
+
+// Load ajax Code 
 </script>
 
 

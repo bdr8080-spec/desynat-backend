@@ -140,6 +140,41 @@ class SellerChatController extends Controller
         
     }
 
+   public function loadChat(Request $request)
+{
+    
+    $lastId = $request->last_id;
+
+    // $messages = Chat::where('chat_id', $request->unique_id)
+    //     ->where('id', '>', $lastId)
+    //     ->orderBy('id', 'asc')
+    //     ->get();
+
+
+       $request_data=(object) [
+        "unique_id"=>$request->unique_id
+       ];
+
+       $data= $this->SellerOrderService->GetChatDataUsingChatRoomId($request_data);
+       
+       $messages=$data['data'];
+
+
+    return response()->json([
+        'status' => 'success',
+        'data' => $messages
+        
+        // ->map(function ($chat) {
+            // return [
+                // 'id'      => $chat->id,
+                // 'by'      => $chat->by,
+                // 'message' => $chat->message,
+                // 'image'   => $chat->image_url,
+                // 'time'    => formatChatTime($chat->times)
+            // ];
+        // })
+    ]);
+}
 
     
 

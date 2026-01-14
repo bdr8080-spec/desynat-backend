@@ -276,13 +276,15 @@ try{
         "payment_status"=>$singleOrder->payment_status,
     ];
         orderdetail::create($Createnew_data);
+    }else{
+        
+        $data['is_picked']='0';
+        $data['assign_date']=null;
+        $data['assign_status']='0';
+        $data['delivery_boy_id']=null;
+        $data['delivery_status']='0';
+
     }
-    
-        // $data['is_picked']='0';
-        // $data['assign_date']=null;
-        // $data['assign_status']='0';
-        // $data['delivery_boy_id']=null;
-        // $data['delivery_status']='0';
     }
 
     $singleOrder->update($data);
@@ -494,5 +496,50 @@ try{
 
         return $count;
     }
+
+
+public function GetChatDataUsingChatRoomId($request){
+
+try{
+
+    $lastMessageId = null;
+
+    $chatRoom_id=$request->unique_id;
+
+    $firbase_chat= $this->getMessages($chatRoom_id);
+
+     foreach($firbase_chat as $key=>$val){
+        $messageId= $key;
+        
+        $data=[
+            "read"=>1
+        ];
+
+        $this->updateMessage($chatRoom_id,$messageId,$data);
+        
+        $lastMessageId=$messageId;// last message id send
+        
+     }     
+
+     $firbase_chat = (array) $firbase_chat;
+     
+     $response['firbase_chat']=$firbase_chat;
+     $response['lastMessageId']=$lastMessageId;
+     
+     return [
+            'status'  => 'success',
+            'message' => 'Firebase Chat records fetch Successfully',
+            'data'    => $response
+        ];
+
+
+
+    }catch (\Exception $e) {
+    return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
+    }    
+}
+
+
+
 
 }
