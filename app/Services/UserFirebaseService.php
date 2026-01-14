@@ -221,10 +221,8 @@ foreach ($check_chatRecord as $key => $val) {
     
 
 
-
  public function userSendChatsMessage($request){
-
-
+    
     $check_chatRecord=allproductchats::with('product_variation.product_details')->where('unique_id',$request->unique_id)->first();
 
    if(!$check_chatRecord){

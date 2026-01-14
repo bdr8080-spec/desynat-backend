@@ -341,17 +341,35 @@
 
                             @endforeach
 
+                            <main class="msger-chat chatfull" id="chatBody">
+                                <!-- messages append here -->
+                            </main>
+
                         </main>
 
-                        <form class="msger-inputarea d-flex position-relative">
+                        <form class="msger-inputarea d-flex position-relative" id="Send_ChatForm"
+                            action="{{ route('seller.send-chat') }}" method="post" enctype="multipart/form-data">
+
+                            @csrf
+
+                            <input type="hidden" name="unique_id" value="{{ $single_chats['record']->unique_id }}">
+
+                            <input type="hidden" name="by" value="seller">
+
                             <div class="attached-icon">
                                 <i class="bi bi-paperclip"></i>
-                                <input type="file" id="imageUpload" accept="image/*">
+                                <input type="file" id="imageUpload" accept="image/*" name="image">
                             </div>
 
-                            <input type="text" class="form-control msger-input" placeholder="Type Message here...">
-                            <button type="submit" class="msger-send-btn"><i class="bi bi-send-fill"></i></button>
+                            <input type="text" class="form-control msger-input" name="message" id="chatMessage"
+                                placeholder="Type Message here...">
+
+                            <!-- IMPORTANT: type="button" -->
+                            <button type="button" id="sendMessageBtn" class="msger-send-btn">
+                                <i class="bi bi-send-fill"></i>
+                            </button>
                         </form>
+
                     </div>
 
 
@@ -660,6 +678,150 @@ $(document)
 
         return false;
     });
+
+
+
+
+// <!-------- -->
+// Firebase Chat Code Upload 
+
+
+$(document).ready(function() {
+
+    /* -------------------------------
+       Prevent auto-submit on image select
+    -------------------------------- */
+    $('#imageUpload').on('change', function(e) {
+        // e.stopPropagation(); // stops implicit submit
+        // Optional: show image preview here
+
+        $('#Send_ChatForm').trigger('submit');
+    });
+
+    /* -------------------------------
+       Send button click → submit form
+    -------------------------------- */
+    $('#sendMessageBtn').on('click', function() {
+        $('#Send_ChatForm').trigger('submit');
+    });
+
+    /* -------------------------------
+       Enter key → submit (Shift+Enter = new line)
+       
+    -------------------------------- */
+
+    $('#chatMessage').on('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            $('#Send_ChatForm').trigger('submit');
+        }
+    });
+
+    /* -------------------------------
+       AJAX submit (MAIN)
+    -------------------------------- */
+    $(document)
+        .off('submit', '#Send_ChatForm')
+        .on('submit', '#Send_ChatForm', function(e) {
+
+            e.preventDefault();
+
+            let form = this;
+            let formData = new FormData(form);
+
+            let hasText = $('#chatMessage').val().trim() !== '';
+            let hasImage = $('#imageUpload')[0].files.length > 0;
+
+            // ❌ Do not send empty message
+            if (!hasText && !hasImage) {
+                return false;
+            }
+
+            $('#sendMessageBtn').prop('disabled', true);
+
+            $.ajax({
+                url: form.action,
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+
+                    console.log(response);
+
+                    if (response.status === 'success') {
+
+                        let type = response.data.type;
+                        let image;
+                        let msg;
+
+                        if (type == "1") {
+                            image = response.data.message;
+                        } else {
+                            msg = response.data.message;
+                        }
+
+                        let time = response.data.times;
+
+                        appendRightMessage(msg == null, image == null, time);
+                    }
+
+                    // Clear inputs
+                    // $('#chatMessage').val('');
+                    // $('#imageUpload').val('');
+
+                    // $('#sendMessageBtn').prop('disabled', false);
+
+                    // Optional: append message to chat UI here
+                    // appendMessage(response);
+                },
+                error: function() {
+                    $('#sendMessageBtn').prop('disabled', false);
+                }
+            });
+        });
+
+});
+
+
+function appendRightMessage({
+    message = '',
+    image = '',
+    time = ''
+}) {
+
+    console.log("test---".message);
+
+    let imgHtml = image ?
+        `<img src="${image}" width="100px">` :
+        '';
+
+    let textHtml = message ?
+        `<div>${message}</div>` :
+        '';
+
+    let html = `
+        <div class="msg w-100 right-msg">
+            <div class="msg-bubble">
+                <div class="msg-text">
+                    ${imgHtml}
+                    ${textHtml}
+                </div>
+                <div class="msg-info text-end">
+                    <div class="msg-info-time">${time}</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    alert("hjk");
+    console.log(html);
+
+    $('#chatBody').append(html);
+
+    // auto scroll to bottom
+    $('#chatBody').scrollTop($('#chatBody')[0].scrollHeight);
+}
 </script>
 
 

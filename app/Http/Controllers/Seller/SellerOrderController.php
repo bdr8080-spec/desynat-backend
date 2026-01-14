@@ -110,6 +110,7 @@ class SellerOrderController extends Controller
 
     public function updateOrderExchangeReturnStatus(Request $request){
 
+
         $seller_details=Auth::guard('seller')->user()->id;
 
         $validate = Validator::make($request->all(), [
