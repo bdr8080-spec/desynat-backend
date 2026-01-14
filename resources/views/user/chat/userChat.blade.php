@@ -264,7 +264,7 @@
                         </header>
 
                         <main class="msger-chat">
-                            <div class="msg left-msg">
+                                 <div class="msg left-msg">
                                 <div class="msg-bubble">
                                     <!-- <div class="msg-text">
                                         Hi, welcome to SimpleChat! Go ahead and send me a message.
@@ -306,6 +306,9 @@
                             <button type="submit" class="msger-send-btn">
                                 <i class="bi bi-send-fill"></i>
                             </button>
+                            <div id="textLoader" style="display:none; font-size:14px; color:#6c757d;">
+                                Loading...
+                            </div>
                         </form>
 
                     </div>
@@ -339,6 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const messageEl = chatForm.querySelector('.msger-input');
     const imageEl   = chatForm.querySelector('#imageUpload');
     const errorEl   = document.getElementById('chatError');
+    const sendBtn   = chatForm.querySelector('.msger-send-btn');
 
     // Remove error on typing or image select
     messageEl.addEventListener('input', hideError);
@@ -350,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const message = messageEl.value.trim();
         const image   = imageEl.files[0] ?? null;
 
-        //  Validation
+        // Validation
         if (!message && !image) {
             showError();
             return;
@@ -361,6 +365,10 @@ document.addEventListener("DOMContentLoaded", function () {
         // type: 0 = text, 1 = image
         const type = image ? 1 : 0;
         formData.append('type', type);
+
+        // Disable send button and show "Sending..."
+        sendBtn.disabled = true;
+        // sendBtn.innerHTML = 'Sending...';
 
         fetch("{{ route('user.sendNormalMessage') }}", {
             method: "POST",
@@ -386,7 +394,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 toastr.error(res.message || 'Failed to send message');
             }
         })
-        .catch(() => toastr.error('Something went wrong'));
+        .catch(() => toastr.error('Something went wrong'))
+        .finally(() => {
+            // Re-enable send button and restore icon
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i class="bi bi-send-fill"></i>';
+        });
     });
 
     function showError() {
@@ -425,7 +438,116 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
 </script>
+
+<!-- fetch normal chat -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatBox  = document.querySelector('.msger-chat');
+    const uniqueId = document.querySelector('input[name="unique_id"]').value;
+
+    // Format ISO8601 date string to "hh:mm AM/PM"
+    function formatISOTime(isoString) {
+        if (!isoString) return '';
+        const date = new Date(isoString);
+
+        if (isNaN(date.getTime())) return isoString; // fallback if invalid
+
+        let hours = date.getHours();
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        const strHours = String(hours).padStart(2, '0');
+
+        return `${strHours}:${minutes} ${ampm}`;
+    }
+
+    /**
+     * Fetch messages from server
+     */
+    function fetchMessages() {
+        const url = `{{ route('user.get_all_messages', ':id') }}`.replace(':id', uniqueId);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(res => {
+                if (res.status === 'success' && Array.isArray(res.data)) {
+                    chatBox.innerHTML = '';
+
+                    res.data.forEach(msg => {
+                        appendMessage(msg);
+                    });
+
+                    scrollToBottom();
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+    }
+
+    /**
+     * Append single message
+     * LEFT = seller | RIGHT = user
+     */
+    function appendMessage(msg) {
+        const isUser = msg.by === 'user';
+        const side   = isUser ? 'right-msg' : 'left-msg';
+
+        let content = '';
+
+        // IMAGE MESSAGE
+        if (msg.type == 1 && msg.message) {
+            content = `
+                <img src="${msg.message}"
+                     class="img-fluid rounded chat-image"
+                     style="max-width:200px; cursor:pointer;"
+                     onclick="window.open('${msg.message}', '_blank')">
+            `;
+        }
+        // TEXT MESSAGE
+        else {
+            content = `<div class="msg-text">${msg.message ?? ''}</div>`;
+        }
+
+        const timeString = formatISOTime(msg.times);
+
+        chatBox.insertAdjacentHTML('beforeend', `
+            <div class="msg ${side}">
+                <div class="msg-bubble">
+                    ${content}
+                    <div class="msg-info">
+                        <div class="msg-info-time ${isUser ? 'text-end' : ''}">
+                            ${timeString}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
+    /**
+     * Scroll chat to bottom
+     */
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Initial load
+    fetchMessages();
+
+    // Auto refresh every 30 seconds
+    setInterval(fetchMessages, 10000);
+
+});
+</script>
+
+
+
+
+
 
 <!-- send custom chat -->
 <script>
@@ -520,6 +642,109 @@ document.addEventListener("DOMContentLoaded", function () {
     function scrollToBottom() {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
+
+});
+</script>
+
+<!-- fetch custom chat -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatBox  = document.querySelector('.msger-chat1');
+    const uniqueId = document.querySelector('input[name="unique_id"]').value;
+
+    // Format ISO8601 date string to "hh:mm AM/PM"
+    function formatISOTime(isoString) {
+        if (!isoString) return '';
+        const date = new Date(isoString);
+
+        if (isNaN(date.getTime())) return isoString; // fallback if invalid
+
+        let hours = date.getHours();
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        const strHours = String(hours).padStart(2, '0');
+
+        return `${strHours}:${minutes} ${ampm}`;
+    }
+
+    /**
+     * Fetch messages from server
+     */
+    function fetchMessages() {
+        const url = `{{ route('user.get_all_custom_messages', ':id') }}`.replace(':id', uniqueId);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(res => {
+                if (res.status === 'success' && Array.isArray(res.data)) {
+                    chatBox.innerHTML = '';
+
+                    res.data.forEach(msg => {
+                        appendMessage(msg);
+                    });
+
+                    scrollToBottom();
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+    }
+
+    /**
+     * Append single message
+     * LEFT = seller | RIGHT = user
+     */
+    function appendMessage(msg) {
+        const isUser = msg.by === 'user';
+        const side   = isUser ? 'right-msg' : 'left-msg';
+
+        let content = '';
+
+        // IMAGE MESSAGE
+        if (msg.type == 1 && msg.message) {
+            content = `
+                <img src="${msg.message}"
+                     class="img-fluid rounded chat-image"
+                     style="max-width:200px; cursor:pointer;"
+                     onclick="window.open('${msg.message}', '_blank')">
+            `;
+        }
+        // TEXT MESSAGE
+        else {
+            content = `<div class="msg-text">${msg.message ?? ''}</div>`;
+        }
+
+        const timeString = formatISOTime(msg.times);
+
+        chatBox.insertAdjacentHTML('beforeend', `
+            <div class="msg ${side}">
+                <div class="msg-bubble">
+                    ${content}
+                    <div class="msg-info">
+                        <div class="msg-info-time ${isUser ? 'text-end' : ''}">
+                            ${timeString}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
+    /**
+     * Scroll chat to bottom
+     */
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Initial load
+    fetchMessages();
+
+    // Auto refresh every 10 seconds
+    setInterval(fetchMessages, 10000);
 
 });
 </script>

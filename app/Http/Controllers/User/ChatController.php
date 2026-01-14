@@ -322,6 +322,68 @@ class ChatController extends Controller
         }
     }
 
+    public function get_all_messages(Request $request, $id)
+    {
+        try {
+            // Firebase returns messages directly
+            $messages = $this->UserFirebaseService->getMessages($id);
+
+            if (empty($messages)) {
+                return response()->json([
+                    'status' => 'success',
+                    'data' => []
+                ]);
+            }
+
+            // Convert Firebase keys to normal array
+            $formattedMessages = array_values($messages);
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $formattedMessages
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to fetch messages',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function get_all_custom_messages(Request $request, $id)
+    {
+        try {
+            // Firebase returns messages directly
+            $messages = $this->UserFirebaseService->getMessages($id);
+
+            if (empty($messages)) {
+                return response()->json([
+                    'status' => 'success',
+                    'data' => []
+                ]);
+            }
+
+            // Convert Firebase keys to normal array
+            $formattedMessages = array_values($messages);
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $formattedMessages
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to fetch messages',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
 
 
 
