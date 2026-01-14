@@ -54,8 +54,10 @@
                 <div
                     class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
-                        <a class="navbar-brand" href="{{route('dashboard')}}"><img
-                                src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid"/></a>
+                        <a class="navbar-brand" href="{{route('dashboard')}}">
+                            <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid"/>
+                        </a>
+
                         <div class="header_nav_button_dropdown d-flex">
                             @if (Auth::guard('web')->check())
 
