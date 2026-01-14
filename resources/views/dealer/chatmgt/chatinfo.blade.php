@@ -763,17 +763,15 @@ $(document).ready(function() {
 
                         let time = response.data.times;
 
-                        appendRightMessage(msg == null, image == null, time);
+                        appendRightMessage({
+                            message: msg ?? '',
+                            image: image ?? '',
+                            time: time ?? ''
+                        });
+
+                        $('#chatMessage').val('');
                     }
 
-                    // Clear inputs
-                    // $('#chatMessage').val('');
-                    // $('#imageUpload').val('');
-
-                    // $('#sendMessageBtn').prop('disabled', false);
-
-                    // Optional: append message to chat UI here
-                    // appendMessage(response);
                 },
                 error: function() {
                     $('#sendMessageBtn').prop('disabled', false);
@@ -813,9 +811,6 @@ function appendRightMessage({
             </div>
         </div>
     `;
-
-    alert("hjk");
-    console.log(html);
 
     $('#chatBody').append(html);
 
