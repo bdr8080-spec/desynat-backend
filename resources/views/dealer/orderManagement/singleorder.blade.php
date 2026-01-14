@@ -43,9 +43,9 @@
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '0')
             <div class="btn-outline1 btn-outline-de">Delivered</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '1')
-            <div class="btn-outline1 btn-ongoing">Return Request</div>
+            <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Return Request</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '2')
-            <div class="btn-outline1 btn-ongoing">Exchange Request</div>
+            <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Exchange Request</div>
             @endif
 
 
@@ -99,16 +99,24 @@
 
                 <div class="cust-deatils-pnl d-flex justify-content-between">
                     <div class="cust-deatils">
-                        <div class="order-cont">
-                            <p>{{$order_details->order->delivery_details->name}}</p>
-                            <div class="title-light">
-                                Phone:<span>{{$order_details->order->delivery_details->country_code}}
-                                    {{$order_details->order->delivery_details->mobile}}</span></div>
+                        <div class="d-flex gap-3">
+                            <div class="user-box1">
+                                <img src="{{ $order_details->variation_details->variant_image[0] }}" alt="icon" class="img-fluid">
+                            </div>
+                            <div class="order-cont">
+                                <p>{{$order_details->order->delivery_details->name}}</p>
+                                <div class="title-light">
+                                    Phone:<span>{{$order_details->order->delivery_details->country_code}}
+                                        {{$order_details->order->delivery_details->mobile}}</span></div>
+                            </div>
+                        </div>
+                        <div class="title-light mt-2">
+                             Mail id:<span> abc@gmail.com</span>    
                         </div>
                     </div>
                     <div class="cust-deatils">
                         <div class="order-cont">
-                            <div class="title-light">Shipping Location</div>
+                            <div class="title-light">Shipping Address</div>
                             <p>{{$order_details->order->delivery_details->address}} </p>
                         </div>
                     </div>
