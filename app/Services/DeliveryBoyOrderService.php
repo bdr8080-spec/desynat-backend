@@ -883,6 +883,7 @@ class DeliveryBoyOrderService
                 'variation_details.size',
                 'UserRatingReviewProvide',
                 'order.user_details',
+                'exchange_new_size_data'
             )
             ->where('id', $request->id)
             ->first();
