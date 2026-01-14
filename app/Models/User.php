@@ -30,7 +30,8 @@ class User extends Authenticatable
         'otp_verify',
         'device_type',
         'fcm_token',
-        'profile_image'
+        'profile_image',
+        'banner_view'
     ];
 
     /**

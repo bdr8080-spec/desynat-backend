@@ -514,6 +514,12 @@ class AuthController extends Controller
 
         public function userLogout()
         {
+            $user = auth()->user();
+            //dd($user);
+
+        if ($user) {
+            $user->update(['banner_view' => '0']);
+        }
             Auth::guard('web')->logout();
 
             request()->session()->invalidate();
@@ -559,31 +565,44 @@ class AuthController extends Controller
 
 
    public function dashboard(Request $request)
-{
-    $subCategory = SubCategory::where('category_id','1')->orderBy('name_english','desc')->get();
+    {
+        $subCategory = SubCategory::where('category_id','1')->orderBy('name_english','desc')->get();
 
-    if($request->ajax()){
-        $subCategory = SubCategory::where('category_id', $request->id)->orderBy('name_english','desc')->get();
-        return view('user.dashboard.subCategory', compact('subCategory'))->render();
+        if($request->ajax()){
+            $subCategory = SubCategory::where('category_id', $request->id)->orderBy('name_english','desc')->get();
+            return view('user.dashboard.subCategory', compact('subCategory'))->render();
+        }
+
+        $stores = sellerStoreInformation::orderBy('store_name', 'desc')->get();
+
+        // Fetch banners only if user is logged in
+       $banners = collect(); // default empty collection
+
+        if (auth()->check() && auth()->user()->banner_view == '0') {
+
+            $userCountryCode = auth()->user()->country_code;
+
+            $banners = FullBanner::with('country_info')
+                ->whereHas('country_info', function($query) use ($userCountryCode) {
+                    $query->where('dial_code', $userCountryCode);
+                })
+                ->get();
+        }
+    // dd($banners);
+
+        return view('user.dashboard.dashboard', compact('subCategory','stores','banners'));
     }
 
-    $stores = sellerStoreInformation::orderBy('store_name', 'desc')->get();
+    public function updateBannerView(Request $request)
+    {
+        $user = auth()->user();
+        $user->banner_view = '1'; 
+        $user->save();
 
-    // Fetch banners only if user is logged in
-    $banners = collect(); // default empty collection
-
-    if(auth()->check()){
-        $userCountryCode = auth()->user()->country_code;
-
-        $banners = FullBanner::with('country_info')
-            ->whereHas('country_info', function($query) use ($userCountryCode){
-                $query->where('dial_code', $userCountryCode);
-            })
-            ->get();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Banner marked as viewed'
+        ]);
     }
-   // dd($banners);
-
-    return view('user.dashboard.dashboard', compact('subCategory','stores','banners'));
-}
 
 }

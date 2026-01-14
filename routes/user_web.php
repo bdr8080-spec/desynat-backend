@@ -35,6 +35,7 @@ use App\Http\Controllers\User\ChatController;
    Route::match(['get','post'],'/profile', [ProfileController::class, 'userProfile'])->name('userProfile');
    Route::match(['get','post'],'/change-password', [ProfileController::class, 'changePassword'])->name('userChangePassword');
    Route::get('/logout',[AuthController::class,'userLogout'])->name('userLogout');
+   Route::post('/updateBannerView',[AuthController::class,'updateBannerView'])->name('user.updateBannerView');
 
   Route::match(['get', 'post'], '/old-number-send-otp', [ProfileController::class, 'oldNumberSendOtp'])->name('userOldNumberSendOtp');
   Route::match(['get', 'post'], '/verify-contact-otp', [ProfileController::class, 'oldNumberVerify'])->name('userOldNumberVerify');

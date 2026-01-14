@@ -725,7 +725,38 @@
     @endauth
 
 
-  
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const skipBtn = document.querySelector('.btn-skip');
+    const bannerModal = document.getElementById('showBanner');
+
+    if(skipBtn){
+        skipBtn.addEventListener('click', function() {
+
+            // Hide modal immediately
+            bannerModal.style.display = 'none';
+
+            // Send AJAX request to update banner_view
+            fetch("{{ route('user.updateBannerView') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            })
+            .then(res => res.json())
+            .then(res => {
+                if(res.status === 'success'){
+                    //console.log('Banner marked as viewed');
+                }
+            })
+            .catch(err => console.error('Error updating banner view', err));
+        });
+    }
+});
+</script>
 
 
     <script>
