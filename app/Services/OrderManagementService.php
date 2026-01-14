@@ -550,8 +550,8 @@ class OrderManagementService
                 'UserRatingReviewProvide',
                 'driver_details.zone_info'
             ])
-            ->where('return_type', '!=', '0')
-            ->where('r_e_approve', '!=', '1');
+            ->where('return_type', '!=', '0');
+            // ->where('r_e_approve', '!=', '1');
             
             if ($request->search) {
                 $checkOrder->where(function ($query) use ($request) {
