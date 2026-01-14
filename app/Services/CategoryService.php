@@ -13,7 +13,7 @@ class CategoryService
     public function getCategory($request)
     {
         try {
-            $category_details = Category::orderBy('id', 'desc')->get();
+            $category_details = Category::orderBy('id', 'asc')->get();
 
             if ($category_details->isEmpty()) {
                 return [
