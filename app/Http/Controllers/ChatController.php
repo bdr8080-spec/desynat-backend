@@ -54,14 +54,18 @@ class ChatController extends Controller
         'by'=>$request->by,
        ];
 
-
-    $data=$this->UserFirebaseService->userSendChatsMessage($request_data);
+    $data=$this->UserFirebaseService->userSendChatsMessage($request_data,'web');
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
     }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    $chat_data=$data['data'];
+    if($chat_data){
+        $chat_data['times']=formatChatTime($chat_data['times']);
+    }
+    
+    return ApiResponse::generateResponse('success', $data['message'],$chat_data, 200);
 
     }
 
