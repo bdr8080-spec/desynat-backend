@@ -771,6 +771,7 @@ $(document).ready(function() {
                             time: time ?? ''
                         });
 
+                        $('#lastMessageId').val(response.data.msg_id);
                         $('#chatMessage').val('');
                     }
 
@@ -858,8 +859,7 @@ function appendLeftMessage({
     $('#chatBody').scrollTop($('#chatBody')[0].scrollHeight);
 }
 
-
-let lastMessageId = $('#lastMessageId').val(lastMessageId);
+var lastMessageId = null;
 
 let isLoadingChat = false;
 
@@ -868,6 +868,8 @@ function loadChatMessages() {
     if (isLoadingChat) return;
 
     isLoadingChat = true;
+
+    lastMessageId = $('#lastMessageId').val();
 
     $.ajax({
         url: "{{ route('seller.load-chat') }}",
@@ -884,7 +886,9 @@ function loadChatMessages() {
             const messages = response.data.firbase_chat;
             const lastMessageId = response.data.lastMessageId;
 
+            // if (messages.length > 0) {
             $('#lastMessageId').val(lastMessageId);
+            // }
 
             // Loop through Firebase object
             Object.keys(messages).forEach(function(msgId) {

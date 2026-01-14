@@ -282,7 +282,7 @@ try{
         $data['assign_date']=null;
         $data['assign_status']='0';
         $data['delivery_boy_id']=null;
-        $data['delivery_status']='0';
+        $data['delivery_status']='1';
 
     }
     }
@@ -502,11 +502,14 @@ public function GetChatDataUsingChatRoomId($request){
 
 try{
 
-    $lastMessageId = null;
-
+    $lastMessageId_data = $request->lastId ?? null;
+    
     $chatRoom_id=$request->unique_id;
 
-    $firbase_chat= $this->getMessages($chatRoom_id);
+    $lastMessageId='';
+
+    // $firbase_chat= $this->getMessages($chatRoom_id);
+    $firbase_chat= $this->getMessagesAfter($chatRoom_id,$lastMessageId_data);
 
      foreach($firbase_chat as $key=>$val){
         $messageId= $key;
@@ -515,11 +518,14 @@ try{
             "read"=>1
         ];
 
-        $this->updateMessage($chatRoom_id,$messageId,$data);
-        
+        $this->updateMessage($chatRoom_id,$messageId,$data);  
         $lastMessageId=$messageId;// last message id send
-        
      }     
+
+     if(empty($lastMessageId)){
+        $lastMessageId=$lastMessageId_data;
+
+     }
 
      $firbase_chat = (array) $firbase_chat;
      
@@ -538,6 +544,21 @@ try{
     return ['status'=>'error','message'=>$e->getMessage(),'data'=>$e->getMessage()];
     }    
 }
+
+
+public function getMessagesAfter($chatRoomId, $lastMessageId = null)
+{
+    $ref = $this->database
+        ->getReference("chats/{$chatRoomId}")
+        ->orderByKey();
+
+    if ($lastMessageId) {
+        $ref = $ref->startAfter($lastMessageId);
+    }
+
+    return $ref->getValue();
+}
+
 
 
 

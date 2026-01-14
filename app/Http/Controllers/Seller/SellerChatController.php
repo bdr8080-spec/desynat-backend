@@ -145,20 +145,14 @@ class SellerChatController extends Controller
     
     $lastId = $request->last_id;
 
-    // $messages = Chat::where('chat_id', $request->unique_id)
-    //     ->where('id', '>', $lastId)
-    //     ->orderBy('id', 'asc')
-    //     ->get();
-
-
        $request_data=(object) [
-        "unique_id"=>$request->unique_id
-       ];
+        "unique_id"=>$request->unique_id,
+        "lastId"=>$lastId
+           ];
 
        $data= $this->SellerOrderService->GetChatDataUsingChatRoomId($request_data);
        
        $messages=$data['data'];
-
 
     return response()->json([
         'status' => 'success',

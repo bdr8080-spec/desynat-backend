@@ -264,7 +264,8 @@ foreach ($check_chatRecord as $key => $val) {
     return [
         'status'  => 'success',
         'message' => 'Chat message send successfully',
-        'data'    => $request_data
+        'data'    => $request_data,
+        "msg_id" => $msgId
     ];
 
 }
