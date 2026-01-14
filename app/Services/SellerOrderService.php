@@ -252,7 +252,7 @@ try{
 
     if($request->status=='1'){
 
-        // If Seller Accept return Code Then  Create A new order With return/ Exchange Follow 
+       // If Seller Accept return Code Then  Create A new order With return/ Exchange Follow 
 
     $cart_data=[
         "order_id"=>$singleOrder->order_id,

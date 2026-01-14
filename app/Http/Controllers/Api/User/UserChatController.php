@@ -157,7 +157,7 @@ class UserChatController extends Controller
        $request_data=(object)[
         "unique_id"=>$request->unique_id,
         "message"=>$request->message,
-        "type"=>$request->type , // 0 message and 1 for Image 
+        "type"=>strval($request->type), // 0 message and 1 for Image 
         'by'=>$request->by,
        ];
 
