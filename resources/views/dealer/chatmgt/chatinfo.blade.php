@@ -59,6 +59,7 @@
 
 
 
+
                             </div>
                             <div class="card-left mb-2 d-flex">
                                 <div>
@@ -178,6 +179,15 @@
                     </div>
 
                 </form>
+
+
+                <script>
+                // Row 1
+                document.getElementById('price1').addEventListener('input', () => calculateTotal(1));
+                document.getElementById('shipping1').addEventListener('input', () => calculateTotal(1));
+                document.getElementById('tax1').addEventListener('input', () => calculateTotal(1));
+                document.getElementById('quantity1').addEventListener('input', () => calculateTotal(1));
+                </script>
 
                 @endif
 
@@ -407,7 +417,8 @@
                             </div>
                         </div>
                         <div class="mt-4">
-                            <button type="submit" class="btn add-fillbtn w-100">Confirm & Modify</button>
+                            <button type="submit" class="btn add-fillbtn w-100">Confirm &
+                                Modify</button>
                         </div>
                     </div>
                 </div>
@@ -438,13 +449,6 @@ document.getElementById('price0').addEventListener('input', () => calculateTotal
 document.getElementById('shipping0').addEventListener('input', () => calculateTotal(0));
 document.getElementById('tax0').addEventListener('input', () => calculateTotal(0));
 document.getElementById('quantity0').addEventListener('input', () => calculateTotal(0));
-
-// Row 1
-document.getElementById('price1').addEventListener('input', () => calculateTotal(1));
-document.getElementById('shipping1').addEventListener('input', () => calculateTotal(1));
-document.getElementById('tax1').addEventListener('input', () => calculateTotal(1));
-document.getElementById('quantity1').addEventListener('input', () => calculateTotal(1));
-
 
 
 // // modify Orders Code 
@@ -552,109 +556,110 @@ $(document).on('submit', 'form#SendQuotation', function(event) {
 });
 
 
-// modify Orders Code 
-$(document).on('submit', 'form#ModifyPrice', function(event) {
-    event.preventDefault();
+$(document)
+    .off('submit', '#ModifyPrice')
+    .on('submit', '#ModifyPrice', function(event) {
+        event.preventDefault();
 
-    $('p.error_container').html("");
-    $("#file-error").html("");
+        $('p.error_container').html("");
+        $("#file-error").html("");
 
-    var form = $(this);
-    var data = new FormData($(this)[0]);
-    var url = form.attr("action");
-    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+        var form = $(this);
+        var data = new FormData($(this)[0]);
+        var url = form.attr("action");
+        var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
 
-    $('.submit').attr('disabled', true);
-    // $('.form-control').attr('readonly', true).addClass('disabled-link');
-    $('.error-control').addClass('disabled-link');
+        $('.submit').attr('disabled', true);
+        // $('.form-control').attr('readonly', true).addClass('disabled-link');
+        $('.error-control').addClass('disabled-link');
 
-    if ($('.submit').html() !== loadingText) {
-        $('.submit').html(loadingText);
-    }
-
-    $.ajax({
-        type: form.attr('method'),
-        url: url,
-        data: data,
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend: function() {
-            // Show loader
-            $('#loader').show();
-        },
-        success: function(response) {
-            console.log(response);
-
-            window.setTimeout(function() {
-                $('.customBtn, .form-control').attr('disabled', false).removeClass(
-                    'disabled-link');
-                $('.submit').html('Upload');
-            }, 2000);
-
-            if (response.status === 'success') {
-                // toastr.success(response.message);
-
-                $('#RequestBanner').modal('show');
-
-                $('.submit').attr('disabled', true);
-                window.setTimeout(function() {
-                    window.location =
-                        "{{ route('seller.single-chat-info', request()->id) }}";
-                }, 2000);
-            }
-        },
-        error: function(xhr) {
-
-            $('#loader').hide();
-            $('.text-danger').empty(); // Clear previous errors
-
-            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
-
-            $.each(errors, function(field, messages) {
-
-                // 1️⃣ Handle array fields with index → product_spe_en.0
-                if (field.includes(".")) {
-
-                    let parts = field.split(".");
-                    let fieldName = parts[0];
-                    let index = parts[1];
-                    let index1 = parts[2];
-
-
-                    // Example → #error-product_spe_en_0
-
-                    let errorId = "#error-" + fieldName + "_" + index;
-
-                    // If second index exists, append it
-                    if (typeof index1 !== "undefined" && index1 !== "") {
-                        errorId += "_" + index1;
-                    }
-                    $(errorId).html(messages[0]);
-
-
-                } else {
-
-                    // 2️⃣ File special case
-                    if (field === "file") {
-                        $("#file-error").html(messages[0]);
-                    }
-
-                    // 3️⃣ Handle whole array errors (custom rule)
-                    $("#error-" + field).html(messages[0]);
-                }
-            });
-        },
-        complete: function() {
-            // Hide loader (after success or error)
-            $('#loader').hide();
+        if ($('.submit').html() !== loadingText) {
+            $('.submit').html(loadingText);
         }
 
+        $.ajax({
+            type: form.attr('method'),
+            url: url,
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+                // Show loader
+                $('#loader').show();
+            },
+            success: function(response) {
+                console.log(response);
 
+                window.setTimeout(function() {
+                    $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                        'disabled-link');
+                    $('.submit').html('Upload');
+                }, 2000);
+
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+
+                    // $('#RequestBanner').modal('show');
+
+                    $('.submit').attr('disabled', true);
+                    window.setTimeout(function() {
+                        window.location =
+                            "{{ route('seller.single-chat-info', request()->id) }}";
+                    }, 2000);
+                }
+            },
+            error: function(xhr) {
+
+                $('#loader').hide();
+                $('.text-danger').empty(); // Clear previous errors
+
+                let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+                $.each(errors, function(field, messages) {
+
+                    // 1️⃣ Handle array fields with index → product_spe_en.0
+                    if (field.includes(".")) {
+
+                        let parts = field.split(".");
+                        let fieldName = parts[0];
+                        let index = parts[1];
+                        let index1 = parts[2];
+
+
+                        // Example → #error-product_spe_en_0
+
+                        let errorId = "#error-" + fieldName + "_" + index;
+
+                        // If second index exists, append it
+                        if (typeof index1 !== "undefined" && index1 !== "") {
+                            errorId += "_" + index1;
+                        }
+                        $(errorId).html(messages[0]);
+
+
+                    } else {
+
+                        // 2️⃣ File special case
+                        if (field === "file") {
+                            $("#file-error").html(messages[0]);
+                        }
+
+                        // 3️⃣ Handle whole array errors (custom rule)
+                        $("#error-" + field).html(messages[0]);
+                    }
+                });
+            },
+            complete: function() {
+                // Hide loader (after success or error)
+                $('#loader').hide();
+            }
+
+
+        });
+
+        return false;
     });
-
-    return false;
-});
 </script>
 
 
