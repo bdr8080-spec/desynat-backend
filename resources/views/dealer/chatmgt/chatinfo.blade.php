@@ -113,7 +113,7 @@
                                     <div class="width-120">Address</div>
                                 </td>
                                 <td>
-                                    <div> {{ $single_chats['record']->delivery_details->address}} </div>
+                                    <div> {{ @$single_chats['record']->delivery_details->address}} </div>
                                 </td>
                             </tr>
                             <tr>
