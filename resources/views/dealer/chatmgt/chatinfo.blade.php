@@ -808,7 +808,7 @@ function appendRightMessage({
                     ${imgHtml}
                     ${textHtml}
                 </div>
-                <div class="msg-info text-end">
+                <div class="msg-info text-start">
                     <div class="msg-info-time">${time}</div>
                 </div>
             </div>
