@@ -94,24 +94,30 @@
                                             </div>
 
 
-                                            @if($val->type=='1' && $val->product_request=='1' && $val->action=='0')
+                                            @if($val->type=='2' && $val->product_request=='1' && $val->action=='0')
 
-                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Quotation
-                                                Received</div>
+                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Request
+                                                Quotation
+                                            </div>
 
-                                            @elseif($val->type=='1' && $val->product_request=='1' && $val->action=='1'
+                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='1'
                                             || $val->action=='2' )
 
                                             <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation
-                                                Accepted</div>
+                                                Send</div>
 
                                             @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='3'
-                                            || $val->action=='4' )
+                                            || $val->action=='4')
 
                                             <div class="red-bg" style="color:#EA9413;background:##fb0b0b;">Request
                                                 Cancelled
                                             </div>
 
+                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='5')
+
+                                            <div class="" style="color:#172B85;background:#172B851A;">
+                                                Quotation Accepted
+                                            </div>
 
                                             @else
                                             <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting

@@ -23,35 +23,38 @@
                                 </div> -->
 
 
-
-                                @if($single_chats['record']->type=='1' &&
+                                @if($single_chats['record']->type=='2' &&
                                 $single_chats['record']->product_request=='1' && $single_chats['record']->action=='0')
 
-                                <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Quotation
-                                    Received</div>
+                                <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Request
+                                    Quotation
+                                </div>
 
-                                @elseif($single_chats['record']->type=='1' &&
+                                @elseif($single_chats['record']->type=='2' &&
                                 $single_chats['record']->product_request=='1' && $single_chats['record']->action=='1'
                                 || $single_chats['record']->action=='2' )
 
                                 <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation
-                                    Accepted</div>
+                                    Send</div>
 
                                 @elseif($single_chats['record']->type=='2' &&
                                 $single_chats['record']->product_request=='1' && $single_chats['record']->action=='3'
-                                || $single_chats['record']->action=='4' )
+                                || $single_chats['record']->action=='4')
 
                                 <div class="red-bg" style="color:#EA9413;background:##fb0b0b;">Request
                                     Cancelled
                                 </div>
 
+                                @elseif($single_chats['record']->type=='2' &&
+                                $single_chats['record']->product_request=='1' && $single_chats['record']->action=='5')
+
+                                <div class="red-bg" style="color:#172B85;background:#172B851A;">
+                                    Quotation Accepted
+                                </div>
 
                                 @else
                                 <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting
                                 </div>
-
-
-
                                 @endif
 
 
@@ -109,7 +112,7 @@
                                     <div class="width-120">Address</div>
                                 </td>
                                 <td>
-                                    <div> {{ $single_chats['record']->delivery_details->address}} </div>
+                                    <div> {{ @$single_chats['record']->delivery_details->address}} </div>
                                 </td>
                             </tr>
                             <tr>
