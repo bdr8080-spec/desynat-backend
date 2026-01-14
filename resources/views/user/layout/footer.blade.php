@@ -933,7 +933,7 @@ function sendSearch() {
         const $modal1 = $('#showBanner');
 
         $modal1.fadeIn();
-        $('body').addClass('overflow-hidden');
+      //  $('body').addClass('overflow-hidden');
 
         $('.btn-skip, #showBanner').on('click', function (e) {
             if ($(e.target).is('.btn-skip') || $(e.target).is('#showBanner')) {
