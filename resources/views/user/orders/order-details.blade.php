@@ -83,6 +83,7 @@
                                     </div>
 
                                     {{-- Price --}}
+                                    @if($orderData->order->order_type=='1')
                                     <div class="price">
                                         <span
                                             class="price-current">{{ number_format($orderData->variation_details->final_price ?? 0, 2) }}
@@ -99,6 +100,14 @@
                                         @endif
                                         @endif
                                     </div>
+                                    @endif
+                                    @if($orderData->order->order_type=='2')
+                                    <div class="price">
+                                        <span
+                                            class="price-current">{{ $orderData->amount ?? 0 }}
+                                            KD</span>
+                                    </div>
+                                    @endif
                                 </div>
 
                                 <div class="return-view">
@@ -683,7 +692,12 @@
                     <div class="border-1">
                         <div class="giftinfo">
                             <div>Total MRP</div>
+                            @if($orderData->order->order_type=='1')
                             <div>{{$orderData->order->total_mrp }} KD</div>
+                            @endif
+                            @if($orderData->order->order_type=='2')
+                            <div>{{ $orderData->amount * $orderData->quantity }} KD</div>
+                            @endif
                         </div>
                         <div class="giftinfo">
                             <div>Discount on MRP </div>
