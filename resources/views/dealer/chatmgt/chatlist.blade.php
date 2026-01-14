@@ -115,7 +115,7 @@
 
                                             @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='5')
 
-                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
+                                            <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
                                                 Quotation Accepted
                                             </div>
 

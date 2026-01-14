@@ -42,14 +42,14 @@
                                 $single_chats['record']->product_request=='1' && $single_chats['record']->action=='3'
                                 || $single_chats['record']->action=='4')
 
-                                <div class="red-bg" style="color:#EA9413;background:##fb0b0b;">Request
+                                <div class="red-bg yellow-bg" style="color:#EA9413;background:##fb0b0b;">Request
                                     Cancelled
                                 </div>
 
                                 @elseif($single_chats['record']->type=='2' &&
                                 $single_chats['record']->product_request=='1' && $single_chats['record']->action=='5')
 
-                                <div class="red-bg" style="color:#172B85;background:#172B851A;">
+                                <div class="red-bg yellow-bg" style="color:#17854C;background:#17854C1A;">
                                     Quotation Accepted
                                 </div>
 
