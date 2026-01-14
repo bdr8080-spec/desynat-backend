@@ -42,14 +42,14 @@
                                 $single_chats['record']->product_request=='1' && $single_chats['record']->action=='3'
                                 || $single_chats['record']->action=='4')
 
-                                <div class="red-bg" style="color:#EA9413;background:##fb0b0b;">Request
+                                <div class="red-bg yellow-bg" style="color:#EA9413;background:##fb0b0b;">Request
                                     Cancelled
                                 </div>
 
                                 @elseif($single_chats['record']->type=='2' &&
                                 $single_chats['record']->product_request=='1' && $single_chats['record']->action=='5')
 
-                                <div class="red-bg" style="color:#172B85;background:#172B851A;">
+                                <div class="red-bg yellow-bg" style="color:#17854C;background:#17854C1A;">
                                     Quotation Accepted
                                 </div>
 
@@ -771,6 +771,7 @@ $(document).ready(function() {
                             time: time ?? ''
                         });
 
+                        $('#lastMessageId').val(response.data.msg_id);
                         $('#chatMessage').val('');
                     }
 
@@ -807,7 +808,7 @@ function appendRightMessage({
                     ${imgHtml}
                     ${textHtml}
                 </div>
-                <div class="msg-info text-end">
+                <div class="msg-info text-start">
                     <div class="msg-info-time">${time}</div>
                 </div>
             </div>
@@ -858,8 +859,7 @@ function appendLeftMessage({
     $('#chatBody').scrollTop($('#chatBody')[0].scrollHeight);
 }
 
-
-let lastMessageId = $('#lastMessageId').val(lastMessageId);
+var lastMessageId = null;
 
 let isLoadingChat = false;
 
@@ -868,6 +868,8 @@ function loadChatMessages() {
     if (isLoadingChat) return;
 
     isLoadingChat = true;
+
+    lastMessageId = $('#lastMessageId').val();
 
     $.ajax({
         url: "{{ route('seller.load-chat') }}",
@@ -884,7 +886,9 @@ function loadChatMessages() {
             const messages = response.data.firbase_chat;
             const lastMessageId = response.data.lastMessageId;
 
+            // if (messages.length > 0) {
             $('#lastMessageId').val(lastMessageId);
+            // }
 
             // Loop through Firebase object
             Object.keys(messages).forEach(function(msgId) {

@@ -127,8 +127,7 @@ class SellerOrderController extends Controller
         "id" =>$request->id,
         'status'=>$request->status
        ];
-
-
+       
        $data= $this->SellerOrderService->updateOrderExchangeReturnStatus($request_data);
 
         if(isset($data['status']) && $data['status']=='error' ){

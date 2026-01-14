@@ -61,6 +61,8 @@ class ChatController extends Controller
     }
 
     $chat_data=$data['data'];
+    $chat_data['msg_id']=$data['msg_id'];
+    
     if($chat_data){
         $chat_data['times']=formatChatTime($chat_data['times']);
     }

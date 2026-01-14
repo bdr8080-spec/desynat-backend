@@ -39,9 +39,9 @@
             <div class="btn-outline1 btn-outline-red" style="color:#D53B36;">Cancelled</div>
             @elseif(in_array($order_details->delivery_status, ['1', '2']) && $order_details->payment_status !== '2' &&
             $order_details->payment_status !== '3' )
-            <div class="btn-outline1 btn-ongoing">Ongoing</div>
+            <div class="btn-outline1 btn-ongoing" style="color:#16B364;">Ongoing</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '0')
-            <div class="btn-outline1 btn-outline-de">Delivered</div>
+            <div class="btn-outline1 btn-outline-de" style="color:#16B364;">Delivered</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '1')
             <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Return Request</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '2')
@@ -56,7 +56,7 @@
 
     <div class="order-box border-radious-10 box-shadow mt-4">
         <div class="row">
-            <div class="col">
+            <div class="col rightline">
                 <div class="order-ic d-flex gap-2">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/order.svg" alt="icon" class="img-fluid">
                     <div class="order-cont">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col rightline">
                 <div class="order-ic">
                     <div class="order-cont">
                         <div class="title-light">Order Type</div>
@@ -101,7 +101,10 @@
                     <div class="cust-deatils">
                         <div class="d-flex gap-3">
                             <div class="user-box1">
-                                <img src="{{ $order_details->variation_details->variant_image[0] }}" alt="icon" class="img-fluid">
+
+
+                                <img src="{{ $order_details->order->user_details->profile_image }}" alt="icon"
+                                    class="img-fluid">
                             </div>
                             <div class="order-cont">
                                 <p>{{$order_details->order->delivery_details->name}}</p>
@@ -111,7 +114,7 @@
                             </div>
                         </div>
                         <div class="title-light mt-2">
-                             Mail id:<span> abc@gmail.com</span>    
+                            Mail id:<span> {{ $order_details->order->user_details->email }}</span>
                         </div>
                     </div>
                     <div class="cust-deatils">
@@ -377,7 +380,7 @@
                     <div class="from-group  w-100">
                         <select class="form-select form-control option width-50" aria-label="Default select example"
                             name="status">
-                            <option value="">Delivery process</option>
+                            <!-- <option value="">Delivery process</option> -->
                             <option value="1" @if($order_details->delivery_status=="1") selected @endif > Confirmed
                             </option>
                             <!-- <option value="2.1" @if($order_details->delivery_status=="2.1") selected @endif > Packed
