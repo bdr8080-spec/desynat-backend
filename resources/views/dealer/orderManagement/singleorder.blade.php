@@ -101,7 +101,10 @@
                     <div class="cust-deatils">
                         <div class="d-flex gap-3">
                             <div class="user-box1">
-                                <img src="{{ $order_details->variation_details->variant_image[0] }}" alt="icon" class="img-fluid">
+
+
+                                <img src="{{ $order_details->order->user_details->profile_image }}" alt="icon"
+                                    class="img-fluid">
                             </div>
                             <div class="order-cont">
                                 <p>{{$order_details->order->delivery_details->name}}</p>
@@ -111,7 +114,7 @@
                             </div>
                         </div>
                         <div class="title-light mt-2">
-                             Mail id:<span> abc@gmail.com</span>    
+                            Mail id:<span> {{ $order_details->order->user_details->email }}</span>
                         </div>
                     </div>
                     <div class="cust-deatils">
