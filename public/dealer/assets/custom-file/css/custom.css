@@ -515,6 +515,7 @@ table.dataTable td.dt-type-date {
 .title-light span {
     color: #000;
     font-weight: 500;
+    font-size: 14px;
 }
 
 .pay-sum {
@@ -650,6 +651,18 @@ table.dataTable td.dt-type-date {
     color: #000;
     margin: 10px 0px 0px !important;
 
+}
+.user-box1{
+    height: 50px;
+    width: 50px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    overflow: hidden;
+}
+.user-box1 img{
+    height:100%;
+    width:100%;
+    object-fit: cover;
 }
 
 /* Chat Ui */

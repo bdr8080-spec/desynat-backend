@@ -99,11 +99,19 @@
 
                 <div class="cust-deatils-pnl d-flex justify-content-between">
                     <div class="cust-deatils">
-                        <div class="order-cont">
-                            <p>{{$order_details->order->delivery_details->name}}</p>
-                            <div class="title-light">
-                                Phone:<span>{{$order_details->order->delivery_details->country_code}}
-                                    {{$order_details->order->delivery_details->mobile}}</span></div>
+                        <div class="d-flex gap-3">
+                            <div class="user-box1">
+                                <img src="{{ $order_details->variation_details->variant_image[0] }}" alt="icon" class="img-fluid">
+                            </div>
+                            <div class="order-cont">
+                                <p>{{$order_details->order->delivery_details->name}}</p>
+                                <div class="title-light">
+                                    Phone:<span>{{$order_details->order->delivery_details->country_code}}
+                                        {{$order_details->order->delivery_details->mobile}}</span></div>
+                            </div>
+                        </div>
+                        <div class="title-light mt-2">
+                             Mail id:<span> abc@gmail.com</span>    
                         </div>
                     </div>
                     <div class="cust-deatils">
