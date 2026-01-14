@@ -114,7 +114,7 @@ class SellerOrderController extends Controller
         $seller_details=Auth::guard('seller')->user()->id;
 
         $validate = Validator::make($request->all(), [
-        'id' => 'required|exists:orderdetails,id', // 1 Normal Order  2 custom Order 
+        'id' => 'required|exists:orderdetails,id', // 
         'status'=>'required|in:0,1,2'
         ]);
 

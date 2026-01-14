@@ -2,7 +2,8 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
-        <a class="title24 alink"> Chat Info</a>
+
+        <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Chat</a>
     </div>
 
 
@@ -331,7 +332,6 @@
                                         <img src="{{$val['message']}}" width="100px">
                                         @endif
 
-
                                     </div>
                                     <div class="msg-info @if($val['by']=='user')  @else text-end  @endif ">
                                         <div class="msg-info-time"> {{ formatChatTime( $val['times'])}} </div>
@@ -341,7 +341,7 @@
 
                             @endforeach
 
-                            <main class="msger-chat chatfull" id="chatBody">
+                            <main class="chatfull" id="chatBody">
                                 <!-- messages append here -->
                             </main>
 
