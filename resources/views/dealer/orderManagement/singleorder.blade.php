@@ -293,18 +293,26 @@
                 </div>
 
             </div>
-            <div class="mt-4">
 
+
+            @if(isset($order_details->return_image) && count(@$order_details->return_image) > 0)
+            <div class="mt-4">
                 <h6>Uploaded image</h6>
+
                 <div class="order-box border-radious-10 box-shadow mt-4 d-flex justify-content-center">
                     <div class="prodimg">
+
+                        @foreach($order_details->return_image as $image)
                         <figure>
-                            <img src="{{@$order_details->return_image[0] }}" alt="icon" class="img-fluid">
+                            <img src="{{$image}}" alt="icon" class="img-fluid">
                         </figure>
+                        @endforeach
                     </div>
 
                 </div>
             </div>
+
+            @endif
 
             @endif
 
