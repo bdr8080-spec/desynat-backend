@@ -224,7 +224,7 @@
                 @endisset
                 <div class="pay-sum">
                     <div class="summary-title-1">Item price</div>
-                    <div class="summary-value">{{$order_details->amount}} KD</div>
+                    <div class="summary-value">{{$order_details->amount}} KD </div>
                 </div>
 
                 @isset($order_details->promocode_value)
