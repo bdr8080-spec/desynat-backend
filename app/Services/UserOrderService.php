@@ -944,7 +944,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
      if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' && $checkOrder->delivery_status!=='2.1' ){
        return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
     }
-
+    
     // if The Order create before 3 Hours then Don't Cancel Order in Custom Order 
 
     if($checkOrder->order->order_type=='2'){
@@ -955,7 +955,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
         if ($orderCreatedFutureDate->lt($nowDateTime)) {
             return [
                 'status' => 'error',
-                'message' => 'Order cancel time is over',
+                'message' => 'Custom Order cancel time is Over',
                 'data' => (object)[]
             ];
         }
