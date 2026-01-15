@@ -116,6 +116,7 @@ class UserStoreController extends Controller
     // }
     public function store_details(Request $request, $id)
     {
+
         // Validate store ID
         $validate = Validator::make(['id' => $id], [
             'id' => 'required|exists:seller_store_information,id',

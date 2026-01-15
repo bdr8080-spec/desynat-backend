@@ -153,7 +153,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/popUp-Home-screen-Banner', [UserDashboardController::class,'popUpHomescreenBanner']);
 
 
-
+  Route::post('/Home-screen-Banner-catgory-banner', [UserDashboardController::class,'HomescreenBanner']);
 
 
 

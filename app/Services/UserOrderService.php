@@ -5,16 +5,12 @@ use App\Models\User;
 use App\Models\size;
 use App\Models\color;
 use App\Models\ProductVariant;
-
+use Carbon\Carbon;
 
 use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
 use App\Models\{Promocode,userAddress,country,all_countrie,allproductchats};
-
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
-
 use DB;
-
-use Carbon\Carbon;
 
 class UserOrderService
 {
@@ -936,6 +932,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
 
     $checkOrder=orderdetail::with('order')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
 
+
     if(!$checkOrder){
         return ['status'=>'error','message'=>"No Order id Found",'data'=>(object)[]];
     }
@@ -946,6 +943,23 @@ $orders = $orders->orderBy('id', 'desc')->get();
 
      if($checkOrder->delivery_status!=='1' && $checkOrder->delivery_status!=='2' && $checkOrder->delivery_status!=='2.1' ){
        return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
+    }
+    
+    // if The Order create before 3 Hours then Don't Cancel Order in Custom Order 
+
+    if($checkOrder->order->order_type=='2'){
+       $orderCreatedDate = $checkOrder->order->created_at;
+       $orderCreatedFutureDate = $orderCreatedDate->copy()->addHours(3);
+       $nowDateTime = now();
+
+        if ($orderCreatedFutureDate->lt($nowDateTime)) {
+            return [
+                'status' => 'error',
+                'message' => 'Custom Order cancel time is Over',
+                'data' => (object)[]
+            ];
+        }
+        
     }
 
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 

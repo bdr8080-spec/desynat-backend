@@ -8,7 +8,10 @@ class orderdetail extends Model
 {
     protected $guarded = [];
 
-
+    protected $casts=[
+        "return_image"=>'json'
+    ];
+    
     public function product_details(){
         return $this->hasOne(product::class,'id','product_id');
 
@@ -60,6 +63,11 @@ class orderdetail extends Model
 
     }
 
+     public function chatRoomrecords(){
+        
+        return $this->hasOne(allproductchats::class,'unique_id','unique_id');
+
+    }
 
     
 

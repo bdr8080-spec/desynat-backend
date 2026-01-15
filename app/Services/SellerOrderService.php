@@ -35,7 +35,7 @@ public function SellerGetOrders($request){
 try{
     
 
-   $all_Order= orderdetail::with('user_details','order.user_details','order.delivery_details', 'product_details','variation_details.color','variation_details.size')->where('seller_id',$request->seller_id)
+   $all_Order= orderdetail::with('user_details','order.user_details','order.delivery_details', 'product_details','variation_details.color','variation_details.size','chatRoomrecords')->where('seller_id',$request->seller_id)
    ->whereHas('order', function($query) use ($request) {
     $query->where('order_type',$request->type);
 
@@ -68,7 +68,9 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 }
    }
 
-   $all_Order_data=$all_Order_data->get(); // All Orders
+   $all_Order_data=$all_Order_data
+   ->orderBy('id','desc')
+   ->get(); // All Orders
 
 
    $ongoing_order = clone($all_Order) // Ongoing order check
@@ -109,7 +111,8 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 }
    }
 
- $ongoing_order=$ongoing_order->get();
+ $ongoing_order=$ongoing_order->orderBy('id','desc')
+   ->get();
 
 
     // Past Order Code 
@@ -143,8 +146,9 @@ $past_order = $past_order
         $query->whereIn('payment_status', [2, 3])
               ->orWhere('delivery_status', 3);
     })
-    ->get();
-    
+   ->orderBy('id','desc')
+  ->get();
+  
 
 $response['All_order']=$all_Order_data; // All Orders
 $response['ongoing_order'] =$ongoing_order;
@@ -253,7 +257,7 @@ try{
     if($request->status=='1'){
 
        // If Seller Accept Exchnage Code Then  Create A new order With return/ Exchange Follow 
-  
+
        if($singleOrder->return_type==2){
   
        $Createnew_data=[
@@ -276,6 +280,9 @@ try{
         "payment_status"=>$singleOrder->payment_status,
     ];
         orderdetail::create($Createnew_data);
+
+        $data['order_status']='exchange'; // when order Is exchange and create a new product 
+
     }else{
         
         $data['is_picked']='0';
@@ -283,6 +290,8 @@ try{
         $data['assign_status']='0';
         $data['delivery_boy_id']=null;
         $data['delivery_status']='1';
+
+        $data['order_status']='return'; // for when Order is return 
 
     }
     }

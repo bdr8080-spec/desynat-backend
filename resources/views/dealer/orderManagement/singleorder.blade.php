@@ -11,7 +11,8 @@
 <section class="section dashboard">
 
     <div class="d-flex justify-content-between mt-2">
-        <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Details</a>
+        <a class="title24 alink" href="{{route('seller.order_management')}}"> <i class="bi bi-chevron-left"></i>
+            Details</a>
         <div class="from-group-list">
 
             <!-- <div style="color:#FF5F1B;">Returned</div>
@@ -273,7 +274,7 @@
                 <div class="order-box border-radious-10 box-shadow mt-4 d-flex justify-content-center">
                     <div class="prodimg">
                         <figure>
-                            <img src="{{$order_details->return_image }}" alt="icon" class="img-fluid">
+                            <img src="{{@$order_details->return_image[0] }}" alt="icon" class="img-fluid">
                         </figure>
                     </div>
 
@@ -443,6 +444,10 @@ $(document).on('submit', 'form#updateDeliveryStatus', function(event) {
 
             if (response.status === 'success') {
                 toastr.success(response.message);
+
+                window.setTimeout(function() {
+                    window.location = window.location.href;
+                }, 2000);
             }
         },
         error: function(xhr) {
@@ -540,6 +545,11 @@ $(document).on('submit', 'form#updateReturnStatus', function(event) {
 
             if (response.status === 'success') {
                 toastr.success(response.message);
+
+                window.setTimeout(function() {
+                    window.location = window.location.href;
+                }, 2000);
+
             }
         },
         error: function(xhr) {
@@ -637,6 +647,12 @@ $(document).on('submit', 'form#updateexchnageStatus', function(event) {
 
             if (response.status === 'success') {
                 toastr.success(response.message);
+
+                window.setTimeout(function() {
+                    window.location = window.location.href;
+                }, 2000);
+
+
             }
         },
         error: function(xhr) {

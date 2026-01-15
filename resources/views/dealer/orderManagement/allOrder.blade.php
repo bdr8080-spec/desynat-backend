@@ -752,7 +752,7 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{$val->amount}}</td>
+                                            <td>{{@$val->chatRoomrecords->price}} KD </td>
                                             <td>{{$val->admin_commission}}</td>
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
@@ -956,7 +956,8 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{$val->amount}}</td>
+                                            <td>{{@$val->chatRoomrecords->price}} KD</td>
+
                                             <td>{{$val->admin_commission}}</td>
 
                                             <td>
@@ -1157,7 +1158,7 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{$val->amount}}</td>
+                                            <td>{{@$val->chatRoomrecords->price}} KD </td>
                                             <td>{{$val->admin_commission}}</td>
 
                                             <td>

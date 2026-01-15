@@ -103,8 +103,7 @@
                                     @endif
                                     @if($orderData->order->order_type=='2')
                                     <div class="price">
-                                        <span
-                                            class="price-current">{{ $orderData->amount ?? 0 }}
+                                        <span class="price-current">{{ $orderData->amount ?? 0 }}
                                             KD</span>
                                     </div>
                                     @endif
@@ -448,7 +447,7 @@
 
                 @if(isset($orderData->return_type) && $orderData->return_type == 1)
                 @php
-                $returnImages = json_decode($orderData->return_image ?? '[]', true);
+                $returnImages = $orderData->return_image ?? '[]';
                 @endphp
 
                 @if(!empty($returnImages))

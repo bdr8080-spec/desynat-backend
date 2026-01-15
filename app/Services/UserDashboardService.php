@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner};
+use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner,sellerBanner};
 
 
 
@@ -483,6 +483,48 @@ return [
             ];
         }
     }
+
+
+
+public function HomeScreenBanner($request)
+{
+try {
+
+$user_id=$request->user_id;
+
+$homeScreenBanner=sellerBanner::with('category_details','subcategory_details')->where('banner_position',$request->type)
+->whereDate('start_date', '<=', now())
+->whereDate('end_date', '>=', now())
+->where('payment_status','1')
+->where('status','1');
+
+if($request->type=='3'){
+    $homeScreenBanner=$homeScreenBanner->where('category',$request->category);
+}elseif($request->type=='3' && isset($request->subcatgory)){
+    $homeScreenBanner=$homeScreenBanner->where('subcatgory',$request->subcatgory);
+}
+
+
+$homeScreenBanner=$homeScreenBanner->get();
+
+
+return [
+    'status'  => 'success',
+    'message' => 'All Home Screen Banner or category Banner fetch Successfully',
+    'data'    => $homeScreenBanner
+];
+
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
+
+
 
 
 
