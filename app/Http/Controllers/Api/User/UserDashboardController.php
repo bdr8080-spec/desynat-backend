@@ -159,6 +159,39 @@ public function popUpHomescreenBanner(Request $request){
     }
 
 
+public function HomescreenBanner(Request $request){
+
+      $validate = Validator::make($request->all(), [
+                'type' => 'required|in:1,2,3',
+                'category' => 'nullable|required_if:type,3',
+                'subcategory' => 'nullable|required_if:type,3',
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $user_id=$request->user()->id;
+
+     $request_data=(object) [
+    'user_id'=>$user_id,
+    "type"=>$request->type,
+    'category'=>$request->category??null,
+    'subcatgory'=>$request->subcategory??null,
+    
+    ];
+
+  $data=$this->UserDashboardService->HomeScreenBanner($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    }
+
+
 
     
 
