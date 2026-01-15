@@ -781,7 +781,9 @@
 
                 $totalDiscount = $discountMRP + $couponDiscount + $giftcardDiscount;
                 @endphp
+                @if($orderData->order->order_type=='1')
                 <div class="return-green">You will save {{$totalDiscount }} KD on this</div>
+                @endif
 
 
                 <div class="gift-pnl mt-3">
@@ -794,7 +796,7 @@
                     </div>
                     <div class="border-1">
                         <div class="giftinfo">
-                            <div>{{$orderData->order->total_amount }} KD</div>
+                            <div>{{ rtrim(rtrim(str_replace(',', '', number_format($orderData->order->total_amount, 2)), '0'), '.') }} KD</div>
                             <!-- <div>Paid By Card</div> -->
                             <div>
                                 @php
@@ -829,7 +831,14 @@
                 </div>
                 @endif
                 @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
-                $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
+                        $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
+                @php
+                 $cancelDays = 3; 
+                $orderCreated = \Carbon\Carbon::parse($orderData->order->created_at);
+                $cancelLastDate = $orderCreated->copy()->addDays($cancelDays);
+                $cancelAllowed = \Carbon\Carbon::today()->lte($cancelLastDate);
+                @endphp
+                @if($cancelAllowed)
                 <div class="mt-4 text-center">
                     <button class="btn btn-outline-red W-100 mb-3 text-decoration-none cancelBtn" data-bs-toggle="modal"
                         data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
@@ -837,6 +846,7 @@
                         Cancel Order
                     </button>
                 </div>
+                @endif
                 @endif
             </div>
         </div>
@@ -1531,169 +1541,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-    // ===== STAR RATING FUNCTION =====
-    function setupRating(ratingName) {
-        const inputs = document.querySelectorAll(`#ratingModal input[name="${ratingName}"]`);
-        inputs.forEach((input, idx) => {
-            input.addEventListener('change', () => {
-                inputs.forEach((i, j) => {
-                    const label = i.nextElementSibling;
-                    if (j <= idx) label.classList.add('selected');
-                    else label.classList.remove('selected');
-                });
-            });
-
-            // Initialize 5-star selection
-            if (input.value === '5') {
-                input.checked = true;
-                input.dispatchEvent(new Event('change'));
-            }
-        });
-    }
-
-    setupRating('raterating'); // Product
-    setupRating('storerating'); // Store
-
-    // ===== IMAGE PREVIEW =====
-    function setupImagePreview(fileInputId, previewId, textarea) {
-        const input = document.getElementById(fileInputId);
-        const preview = document.getElementById(previewId);
-
-        input.addEventListener('change', function () {
-            [...this.files].forEach(file => {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    const div = document.createElement('div');
-                    div.className = 'reviewImg position-relative d-inline-block me-2 mb-2';
-                    div.innerHTML = `
-                        <img src="${e.target.result}" style="width:80px; height:80px; object-fit:cover; border-radius:5px;">
-                        <span style="
-                            position:absolute;
-                            top:-5px;
-                            right:-5px;
-                            background:red;
-                            color:white;
-                            width:18px;
-                            height:18px;
-                            text-align:center;
-                            line-height:18px;
-                            border-radius:50%;
-                            cursor:pointer;
-                            font-weight:bold;">&times;</span>`;
-                    preview.appendChild(div);
-                };
-                reader.readAsDataURL(file);
-            });
-
-            const error = textarea.parentElement.querySelector('.text-danger');
-            if (error) error.classList.add('d-none');
-        });
-
-        preview.addEventListener('click', function (e) {
-            if (e.target.tagName === 'SPAN') e.target.parentElement.remove();
-        });
-
-        textarea.addEventListener('input', () => {
-            const error = textarea.parentElement.querySelector('.text-danger');
-            if (error) error.classList.add('d-none');
-        });
-    }
-
-    const textareas = document.querySelectorAll('#ratingModal .form-group textarea');
-    setupImagePreview('images', 'preview', textareas[0]);
-    setupImagePreview('reviewpic', 'preview1', textareas[1]);
-
-    // ===== SET MODAL DATA ON OPEN =====
-    const ratingTriggers = document.querySelectorAll('.order-ratings .rating');
-    const submitBtn = document.querySelector('#ratingModal .customBtn');
-
-    ratingTriggers.forEach(trigger => {
-        trigger.addEventListener('click', function () {
-            submitBtn.dataset.orderId = this.dataset.orderId;
-            submitBtn.dataset.orderDetailsId = this.dataset.orderDetailsId;
-            submitBtn.dataset.productId = this.dataset.productId;
-            submitBtn.dataset.storeId = this.dataset.storeId;
-
-            // Reset previous form
-            textareas.forEach(t => t.value = '');
-            document.getElementById('preview').innerHTML = '';
-            document.getElementById('preview1').innerHTML = '';
-
-            // Reset stars to 5
-            setupRating('raterating');
-            setupRating('storerating');
-        });
-    });
-
-    // ===== SUBMIT REVIEW =====
-    submitBtn.addEventListener('click', function () {
-        const productTextarea = textareas[0];
-        const storeTextarea = textareas[1];
-        const productImages = document.getElementById('preview').querySelectorAll('img');
-        const storeImages = document.getElementById('preview1').querySelectorAll('img');
-
-        let valid = true;
-        document.querySelectorAll('#ratingModal .text-danger').forEach(e => e.remove());
-
-        if (!productTextarea.value.trim() && productImages.length === 0) {
-            const error = document.createElement('small');
-            error.className = 'text-danger d-block';
-            error.textContent = 'Please enter a product review or upload an image.';
-            productTextarea.parentElement.appendChild(error);
-            valid = false;
-        }
-
-        if (!storeTextarea.value.trim() && storeImages.length === 0) {
-            const error = document.createElement('small');
-            error.className = 'text-danger d-block';
-            error.textContent = 'Please enter a store review or upload an image.';
-            storeTextarea.parentElement.appendChild(error);
-            valid = false;
-        }
-
-        if (!valid) return;
-
-        const productRating = document.querySelector('input[name="raterating"]:checked').value;
-        const storeRating = document.querySelector('input[name="storerating"]:checked').value;
-
-        const formData = new FormData();
-        formData.append('order_id', submitBtn.dataset.orderId);
-        formData.append('orderdetails_id', submitBtn.dataset.orderDetailsId);
-        formData.append('product_id', submitBtn.dataset.productId);
-        formData.append('store_id', submitBtn.dataset.storeId);
-        formData.append('product_rating', productRating);
-        formData.append('store_rating', storeRating);
-        if (productTextarea.value.trim()) formData.append('product_review', productTextarea.value.trim());
-        if (storeTextarea.value.trim()) formData.append('store_review', storeTextarea.value.trim());
-
-        productImages.forEach((img) => formData.append('product_image[]', img.src));
-        storeImages.forEach((img) => formData.append('store_image[]', img.src));
-
-        fetch("{{ route('user.submitRating') }}", {
-            method: 'POST',
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(response => {
-            if (response.status === 'success') {
-                toastr.success(response.message);
-                const modal = bootstrap.Modal.getInstance(document.getElementById('ratingModal'));
-                modal.hide();
-            } else {
-                toastr.error(response.message || 'Something went wrong');
-            }
-        })
-        .catch(() => toastr.error('Something went wrong'));
-    });
-});
-
-</script> -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
