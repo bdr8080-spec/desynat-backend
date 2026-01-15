@@ -2,18 +2,16 @@
 
 @section('content')
     <div class="customContainer">
-        <div class="owl-carousel owl-theme customOwlcarousel">
+        <div class="owl-carousel owl-theme customOwlcarousel storeBanner">
             <div class="item">
-                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
+                <div class="Bannerstores">
+                     <img src="{{ asset('user/assets/images/active-banner.png') }}" alt="banner" class="img-fluid" />
+                </div>
             </div>
             <div class="item">
-                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
-            </div>
-            <div class="item">
-                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
-            </div>
-            <div class="item">
-                <img src="{{ asset('user/assets/images/banner.svg') }}" class="img-fluid" />
+                <div class="Bannerstores">
+                     <img src="{{ asset('user/assets/images/active-banner.png') }}" alt="banner" class="img-fluid" />
+                </div>
             </div>
         </div>
     </div>

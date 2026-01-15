@@ -164,6 +164,12 @@
                     <div class="summary-title-1">Shipping Charges</div>
                     <div class="summary-value">{{$order_details->shipping_fees}} KD</div>
                 </div>
+
+                <div class="pay-sum">
+                    <div class="summary-title-1">tax</div>
+                    <div class="summary-value">{{$order_details->tax}} KD</div>
+                </div>
+
                 <div class="pay-sum">
                     <div class="summary-title-1">Total</div>
 
@@ -183,9 +189,10 @@
                     <div class="summary-title-1">Paid By Customer</div>
                     <div class="summary-value">{{$user_Paid_amount}} KD</div>
                 </div>
+
                 <div class="pay-sum">
                     <div class="summary-title-1">Admin Commission</div>
-                    <div class="summary-value">0 KD</div>
+                    <div class="summary-value">{{$order_details->admin_commission}} KD</div>
                 </div>
             </div>
 
@@ -238,11 +245,29 @@
                 </div>
 
                 <div class="cust-deatils-pnl mt-4">
-                    <h6>Review</h6>
+                    <!-- <h6>Review</h6> -->
                     <p class="font-15">
                         {{$order_details->UserRatingReviewProvide->product_review}}
                     </p>
                 </div>
+
+                <!-- Store rating  -->
+                <h6>Store Ratings</h6>
+                <div class="star-rating mt-1">
+
+                    @for ($i = 0; $i < $order_details->UserRatingReviewProvide->store_rating ; $i++)
+                        <i class="bi bi-star-fill"></i>
+                        @endfor
+                </div>
+
+                <div class="cust-deatils-pnl mt-4">
+                    <!-- <h6>Review</h6> -->
+                    <p class="font-15">
+                        {{$order_details->UserRatingReviewProvide->store_review}}
+                    </p>
+                </div>
+
+
             </div>
 
             @endisset

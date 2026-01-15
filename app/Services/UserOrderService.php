@@ -703,6 +703,8 @@ $orders = $orders->orderBy('id', 'desc')->get();
         'variation_details.size',
     ]) 
      ->where('order_id', $request->order_id)
+     ->where('order_id', $request->order_id)
+     ->where('order_status','!=','exchange')     
      ->whereNOT('id',$request->orderdetails_id)
     ->get();
 
