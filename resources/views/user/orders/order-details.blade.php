@@ -242,7 +242,7 @@
                 <!-- relivent product  -->
 
 
-                <h1> Relevant product </h1>
+                <!-- <h1> Relevant product </h1> -->
 
                 @foreach($orderData->allOtherOrderVarient as $key=>$val)
 

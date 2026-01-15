@@ -1404,6 +1404,10 @@ h3.mid-headng{
     z-index: 99999;
 }
 
+.product-title {
+    font-weight: 400;
+    font-size: 15px;
+}
 /* Progress bars row */
 .progress-container {
     position: absolute;
@@ -2364,6 +2368,7 @@ width: fit-content;
 .btn-outline-red{
     border:1px solid #D53B36;
     color: #D53B36;
+    font-weight: 500;
 }
 .return-view {
     display: flex;

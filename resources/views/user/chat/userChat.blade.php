@@ -91,35 +91,47 @@
 
                @if($chatData['record']['product_request'] == '1' && in_array($chatData['record']['action'], ['0','1','2','4','5']))
                 <div class="gift-pnl mt-4">
-                    <div class="border-1">
-                        <table class="table table-borderless table-font">
-                            <tr>
-                                <td>
-                                    <div class="width-120">Total Quantity</div>
-                                </td>
-                                <td>
-                                    <div>{{$chatData['record']['quantity']}}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="width-120">Address</div>
-                                </td>
-                                <td>
-                                    <div>{{@$chatData['record']['delivery_details']['address']}}</div>
-                                </td>
-                            </tr>
-                            @if(!empty($chatData['record']['custom_details']))
-                            <tr>
-                                <td>
-                                    <div class="width-120">Custom details</div>
-                                </td>
-                                <td>
-                                    <div>{{$chatData['record']['custom_details']}}</div>
-                                </td>
-                            </tr>
-                            @endif
-                        </table>
+                    <div class="border-12">
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#viewRequest" aria-expanded="true" aria-controls="viewRequest">
+                                        View Request
+                                    </button>
+                                </h2>
+                                <div id="viewRequest" class="accordion-collapse collapse p-3 show">
+                                     <table class="table table-borderless table-font">
+                                        <tr>
+                                            <td>
+                                                <div class="width-120">Total Quantity</div>
+                                            </td>
+                                            <td>
+                                                <div>{{$chatData['record']['quantity']}}</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="width-120">Address</div>
+                                            </td>
+                                            <td>
+                                                <div>{{@$chatData['record']['delivery_details']['address']}}</div>
+                                            </td>
+                                        </tr>
+                                        @if(!empty($chatData['record']['custom_details']))
+                                        <tr>
+                                            <td>
+                                                <div class="width-120">Custom details</div>
+                                            </td>
+                                            <td>
+                                                <div>{{$chatData['record']['custom_details']}}</div>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>                       
                     </div>
                 </div>
                 @endif
@@ -127,58 +139,48 @@
                 @if(in_array($chatData['record']['action'], ['1','2','4','5']))
                 <div class="time-pnl">
                     <div class="gift-pnl mt-4">
-                        <div class="border-12">
-                            <div class="accordion" id="accordionPanelsStayOpenExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#viewRequest" aria-expanded="true" aria-controls="viewRequest">
-                                            View Request
-                                        </button>
-                                    </h2>
-                                    <div id="viewRequest" class="accordion-collapse collapse p-3 show">
-                                        <table class="table table-borderless table-font">
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Item Price</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Shipping Fees</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{$chatData['record']['shipping']}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Tax</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{$chatData['record']['tax']}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Total Amount </div>
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        {{
-                                                            ((float)$chatData['record']['total_amount'] % 1 == 0)
-                                                                ? number_format((float)$chatData['record']['total_amount'], 0, '.', '')
-                                                                : number_format((float)$chatData['record']['total_amount'], 2, '.', '')
-                                                        }} KD
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="border-1">
+                            <table class="table table-borderless table-font">
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Item Price</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Shipping Fees</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$chatData['record']['shipping']}} KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Tax</div>
+                                    </td>
+                                    <td>
+                                        <div>{{$chatData['record']['tax']}} KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Total Amount </div>
+                                    </td>
+                                    <td>
+                                        <div>
+                                            {{
+                                                ((float)$chatData['record']['total_amount'] % 1 == 0)
+                                                    ? number_format((float)$chatData['record']['total_amount'], 0, '.', '')
+                                                    : number_format((float)$chatData['record']['total_amount'], 2, '.', '')
+                                            }} KD
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                                   
                         </div>
                     </div>
                     @if($chatData['record']['action'] == '1' || $chatData['record']['action'] == '2')
