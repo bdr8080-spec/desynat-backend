@@ -1118,7 +1118,7 @@ if($checkOrder->p_orderdetails_id!==''){
     
     $return_days= intVal($checkOrder->product_details->return_days);
 
-    $productOrderDate = $checkOrder->product_details->created_at;
+    $productOrderDate = $checkOrder->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1190,7 +1190,7 @@ if($checkOrder->p_orderdetails_id!==''){
     
     $return_days= intVal($checkOrder->product_details->exchangable_days);
 
-    $productOrderDate = $checkOrder->product_details->created_at;
+    $productOrderDate = $checkOrder->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
