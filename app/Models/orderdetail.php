@@ -63,6 +63,11 @@ class orderdetail extends Model
 
     }
 
+     public function chatRoomrecords(){
+        
+        return $this->hasOne(allproductchats::class,'unique_id','unique_id');
+
+    }
 
     
 
