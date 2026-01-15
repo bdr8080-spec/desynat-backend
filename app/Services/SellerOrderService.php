@@ -43,6 +43,7 @@ try{
 
    $all_Order_data=clone($all_Order);
    $past_order=clone($all_Order);
+    $ongoing_order=   clone($all_Order);
 
    
    if($request->tabs==1){
@@ -73,7 +74,7 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
    ->get(); // All Orders
 
 
-   $ongoing_order = clone($all_Order) // Ongoing order check
+   $ongoing_order = $ongoing_order // Ongoing order check
     ->where('delivery_status', '!=', '3')
     ->where( function($q3){
        $q3->whereNotIn('payment_status',['3','2']);
@@ -142,9 +143,9 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 
    
 $past_order = $past_order
-    ->where(function ($query) {
-        $query->whereIn('payment_status', [2, 3])
-              ->orWhere('delivery_status', 3);
+    ->where(function ($query1) {
+        $query1->whereIn('payment_status', ["2", "3"])
+              ->orWhere('delivery_status', "3");
     })
    ->orderBy('id','desc')
   ->get();

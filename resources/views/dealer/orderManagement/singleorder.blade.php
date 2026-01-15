@@ -185,7 +185,7 @@
                 </div>
                 <div class="pay-sum">
                     <div class="summary-title-1">Admin Commission</div>
-                    <div class="summary-value">0 KD</div>
+                    <div class="summary-value">{{$order_details->admin_commission}} KD</div>
                 </div>
             </div>
 
