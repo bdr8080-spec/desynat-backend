@@ -1098,7 +1098,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
     
     $return_days= intVal($checkOrder->product_details->return_days);
 
-    $productOrderDate = $checkOrder->created_at;
+    $productOrderDate = $checkOrder->product_details->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);
@@ -1168,9 +1168,9 @@ $orders = $orders->orderBy('id', 'desc')->get();
 
     if($checkOrder->product_details->product_exchangable=='1'){
     
-    $return_days= intVal($checkOrder->exchangable_days);
+    $return_days= intVal($checkOrder->product_details->exchangable_days);
 
-    $productOrderDate = $checkOrder->created_at;
+    $productOrderDate = $checkOrder->product_details->created_at;
 
     // Add return days
     $returnLastDate = $productOrderDate->copy()->addDays($return_days);

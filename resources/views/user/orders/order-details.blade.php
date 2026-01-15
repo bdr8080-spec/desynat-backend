@@ -184,8 +184,38 @@
                         @endif
 
                         @if($orderData->delivery_status == '3' && !in_array($orderData->return_type, ['1', '2']) &&
-                        $orderData->payment_status == '1')
+                        $orderData->payment_status == '1' && $orderData->order->order_type == '1')
                         <div class="d-flex gap-3">
+                            @php
+                                $exchangeAllowed = false;
+
+                                if (
+                                    $orderData->product_details->product_exchangable == '1' &&
+                                    !empty($orderData->product_details->exchangable_days)
+                                ) {
+                                    $exchangeDays = (int) $orderData->product_details->exchangable_days;
+
+                                    $exchangeLastDate = \Carbon\Carbon::parse($orderData->product_details->created_at)
+                                        ->addDays($exchangeDays);
+
+                                    $exchangeAllowed = \Carbon\Carbon::today()->lte($exchangeLastDate);
+                                }
+
+                                $returnAllowed = false;
+
+                                if (
+                                    $orderData->product_details->product_return == '1' &&
+                                    !empty($orderData->product_details->return_days)
+                                ) {
+                                    $returnDays = (int) $orderData->product_details->return_days;
+
+                                    $returnLastDate = \Carbon\Carbon::parse($orderData->product_details->created_at)
+                                        ->addDays($returnDays);
+
+                                    $returnAllowed = now()->lte($returnLastDate);
+                                }
+                            @endphp
+                            @if($exchangeAllowed)
                             <button class="btn btn-outline-red exchangeBtn" data-bs-toggle="modal"
                                 data-bs-target="#exchangeModal" data-order-id="{{ $orderData->order_id }}"
                                 data-order-details-id="{{ $orderData->id }}"
@@ -194,12 +224,15 @@
                                 data-color-id="{{ $orderData->variation_details->color->id }}" style="width:130px;">
                                 Exchange
                             </button>
+                            @endif
+                            @if($returnAllowed)
                             <button class="btn btn-outline-red returnBtn" data-bs-toggle="modal"
                                 data-bs-target="#returnModal" data-order-id="{{ $orderData->order_id }}"
                                 data-order-details-id="{{ $orderData->id }}"
                                 style="width:130px; background:#D53B36; color:#fff;">
                                 Return
                             </button>
+                            @endif
                         </div>
                         @endif
                     </div>
@@ -519,8 +552,8 @@
 
                             @endif
 
-                            @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' ||
-                            $orderData->delivery_status=='7')
+                            @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' &&
+                            $orderData->assign_status=='1')
                             <div class="or-box">
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
@@ -536,8 +569,8 @@
                                 <div>In progress</div>
                             </div>
                             @endif
-                            @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' ||
-                            $orderData->delivery_status=='7')
+                            @if($orderData->return_type!=='0' && $orderData->r_e_approve=='1' &&
+                            $orderData->is_picked=='1')
                             <div class="or-box">
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
@@ -546,7 +579,7 @@
                                 @if($orderData->return_type==1)
                                 <div>Picked up </div>
                                 @else
-                                <div>Exchange</div>
+                                <div>Picked up</div>
                                 @endif
 
                             </div>
@@ -560,7 +593,7 @@
                                 @if($orderData->return_type==1)
                                 <div>Picked up </div>
                                 @else
-                                <div>Exchange</div>
+                                <div>Picked up</div>
                                 @endif
 
                             </div>
@@ -568,8 +601,8 @@
 
                             <!--  -->
 
-                            @if(($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
-                            $orderData->delivery_status=='3' ) && ($orderData->return_type=='0' ))
+                            @if($orderData->delivery_status=='3' && $orderData->r_e_approve=='1' &&
+                            $orderData->assign_status=='1'  && $orderData->is_picked=='1' )
                             <div class="or-box">
                                 <div class="fill-box">
                                     <img src="{{ asset('user/assets/images/order-ic/delivered-2.svg') }}"
@@ -690,7 +723,11 @@
                 <div class="gift-pnl mt-0">
                     <div class="border-1">
                         <div class="giftinfo">
+                            @if($orderData->order->order_type=='1')
                             <div>Total MRP</div>
+                            @elseif($orderData->order->order_type=='2')
+                            <div>Item Price({{ $orderData->amount}} KD *{{$orderData->quantity}})</div>
+                            @endif
                             @if($orderData->order->order_type=='1')
                             <div>{{$orderData->order->total_mrp }} KD</div>
                             @endif
@@ -698,10 +735,12 @@
                             <div>{{ $orderData->amount * $orderData->quantity }} KD</div>
                             @endif
                         </div>
+                        @if($orderData->order->order_type=='1')
                         <div class="giftinfo">
                             <div>Discount on MRP </div>
                             <div class="discount">{{$orderData->order->discount_mrp }} KD</div>
                         </div>
+                        @endif
                         @if(isset($orderData->order->promocode_value) && $orderData->order->promocode_value != 0)
                         <div class="giftinfo">
                             <div>Coupon Discount</div>
@@ -726,7 +765,12 @@
                         </div>
                         <div class="giftinfo">
                             <div>Total Amount</div>
-                            <div>{{$orderData->order->total_amount }} KD</div>
+                            @if($orderData->order->order_type=='1')
+                            <div>{{($orderData->order->total_amount) + ($orderData->order->tax) }} KD</div>
+                            @else
+                            <div>{{ rtrim(rtrim(str_replace(',', '', number_format($orderData->order->total_amount, 2)), '0'), '.') }} KD</div>
+                            @endif
+
                         </div>
                     </div>
                 </div>
