@@ -30,7 +30,6 @@ class UserStoreController extends Controller
 
     public function category_wise_store(Request $request,$id=null){
 
-
        $request_data=(object)[
         'category_id'=>$id,
         'search'=>$request->search,
@@ -47,9 +46,16 @@ class UserStoreController extends Controller
        $store_data=$store_data['data'];
 
        //dd($store_data);
+            $request_data1 = (object)[
+                    'type'        => '3',
+                    'category'    => $id,
+                ];
+
+            $catBanners= $this->UserDashboardService->HomeScreenBanner($request_data1);
+           // dd($catBanners);
 
     
-       return view('user.category.store',compact('store_data'));
+       return view('user.category.store',compact('store_data','catBanners'));
 
     }
 

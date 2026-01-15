@@ -17,12 +17,16 @@ use Illuminate\Validation\Rule;
 use Auth;
 use Validator;
 use Session;
+use App\Services\UserDashboardService;
 
 
 
 class AuthController extends Controller
 {
-    //  
+     public function __construct(UserDashboardService $UserDashboardService)
+    {
+        $this->UserDashboardService = $UserDashboardService;
+    }
 
 
 
@@ -590,7 +594,21 @@ class AuthController extends Controller
         }
     // dd($banners);
 
-        return view('user.dashboard.dashboard', compact('subCategory','stores','banners'));
+             $request_data = (object)[
+                    'type'        => '1',
+                ];
+
+            $topBanners= $this->UserDashboardService->HomeScreenBanner($request_data);
+            //dd($topBanners);
+
+            $request_data1 = (object)[
+                    'type'        => '2',
+                ];
+
+            $bottomBanners= $this->UserDashboardService->HomeScreenBanner($request_data1);
+            //dd($bottomBanners);
+
+        return view('user.dashboard.dashboard', compact('subCategory','stores','banners','topBanners','bottomBanners'));
     }
 
     public function updateBannerView(Request $request)

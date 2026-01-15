@@ -490,7 +490,7 @@ public function HomeScreenBanner($request)
 {
 try {
 
-$user_id=$request->user_id;
+//$user_id=$request->user_id;
 
 $homeScreenBanner=sellerBanner::with('category_details','subcategory_details')->where('banner_position',$request->type)
 ->whereDate('start_date', '<=', now())
