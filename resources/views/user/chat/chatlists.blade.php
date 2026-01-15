@@ -91,7 +91,7 @@
                                         <div class="w-100">
                                             <div class="card-right d-flex w-100 justify-content-between">
                                                 <div class="product-info">
-                                                    <h6 class="product-title">{{$chat['seller_details']['first_name']}} {{$chat['seller_details']['last_name']}}</h6>
+                                                    <div class="product-title">{{$chat['seller_details']['first_name']}} {{$chat['seller_details']['last_name']}}</div>
                                                     @if(!empty($chat['last_chat']))
                                                     <div class="chat-user-light"> {{$chat['last_chat']}}</div>
                                                     @endif
