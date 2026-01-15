@@ -3,16 +3,19 @@
 @section('content')
     <div class="customContainer">
         <div class="owl-carousel owl-theme customcatOwlcarousel storeBanner">
-            <div class="item">
-                <div class="Bannerstores">
-                    <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
+            @if(empty($catBanners['data']) || count($catBanners['data']) == 0)
+                <div class="item">
+                    <div class="Bannerstores">
+                        <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
+                    </div>
                 </div>
-            </div>
-            <div class="item">
-                <div class="Bannerstores">
-                    <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
-                </div>
-            </div>
+                @else
+                    @foreach($catBanners['data'] as $banner)
+                        <div class="premiumImg">
+                            <img src="{{ $banner->upload_banner }}" class="img-fluid" />
+                        </div>
+                    @endforeach
+            @endif
            
            
         </div>
