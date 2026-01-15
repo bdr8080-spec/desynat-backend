@@ -114,6 +114,7 @@
          </div>
      </div>
 
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="{{ asset('user/assets/js/custom.js') }}"></script>
      <script src="{{ asset('user/assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -122,9 +123,10 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-     <script src="{{ asset('user/assets/js/owl.carousel.js') }}"></script>
+     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+     <script src="{{ asset('user/assets/js/owl.carousel.js') }}"></script> -->
      <!-- <script src="{{ asset('user/assets/js/custom.js') }}"></script> -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
      <script async defer
          src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
