@@ -3,7 +3,7 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
 
-        <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Chat</a>
+        <a class="title24 alink" href="{{route('seller.All_chats')}}"> <i class="bi bi-chevron-left"></i> Chat</a>
     </div>
 
 
@@ -98,38 +98,93 @@
                     </div>
                 </div>
 
-                <div class="gift-pnl mt-4">
-                    <div class="border-1">
-                        <table class="table table-borderless table-font">
-                            <tr>
-                                <td>
-                                    <div class="width-120">Total Quantity</div>
-                                </td>
-                                <td>
-                                    <div> {{ $single_chats['record']->quantity }}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="width-120">Address</div>
-                                </td>
-                                <td>
-                                    <div> {{ @$single_chats['record']->delivery_details->address}} </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="width-120">Custom details</div>
-                                </td>
-                                <td>
-                                    <div class="mb-0">{{ $single_chats['record']->custom_details}} </div>
-                                </td>
-                            </tr>
+                @if($single_chats['record']->product_request=='1' && $single_chats['record']->action!=='0')
 
-                        </table>
+                <div class="time-pnl" style="">
+                    <div class="gift-pnl mt-4">
+                        <div class="border-12">
+                            <div class="accordion" id="accordionPanelsStayOpenExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#viewRequest" aria-expanded="true"
+                                            aria-controls="viewRequest">
+                                            View Request
+                                        </button>
+                                    </h2>
+                                    <div id="viewRequest" class="accordion-collapse collapse p-3">
+                                        <!-- <table class="table table-borderless table-font">
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Item Price</div>
+                                                </td>
+                                                <td>
+                                                    <div>{{ $single_chats['record']->price}} KD</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Shipping Fees</div>
+                                                </td>
+                                                <td>
+                                                    <div>{{ $single_chats['record']->shipping}} KD</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Tax</div>
+                                                </td>
+                                                <td>
+                                                    <div>{{ $single_chats['record']->tax}} KD</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Total Amount </div>
+                                                </td>
+                                                <td>
+                                                    <div>{{ $single_chats['record']->total_amount}} KD</div>
+                                                </td>
+                                            </tr>
+                                        </table> -->
+
+                                        <table class="table table-borderless table-font">
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Total Quantity</div>
+                                                </td>
+                                                <td>
+                                                    <div> {{ $single_chats['record']->quantity }}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Address</div>
+                                                </td>
+                                                <td>
+                                                    <div> {{ @$single_chats['record']->delivery_details->address}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="width-120">Custom details</div>
+                                                </td>
+                                                <td>
+                                                    <div class="mb-0">{{ $single_chats['record']->custom_details}}
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
+                @endif
 
                 <!-- Show Quetasion Code  -->
                 @if($single_chats['record']->product_request=='1' && $single_chats['record']->action=='0')
@@ -170,7 +225,7 @@
                                 <div class="form-group sub-form">
                                     <label for="item" class="size14">Total Amount</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
-                                        name="total_amount" id="total_amount1" placeholder="Eg 20 KD">
+                                        name="total_amount" id="total_amount1" placeholder="Eg 20 KD" readonly>
                                 </div>
                             </div>
                         </div>
@@ -193,63 +248,7 @@
                 @endif
 
 
-                @if($single_chats['record']->product_request=='1' || $single_chats['record']->action=='0')
 
-                <div class="time-pnl">
-                    <div class="gift-pnl mt-4">
-                        <div class="border-12">
-                            <div class="accordion" id="accordionPanelsStayOpenExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#viewRequest" aria-expanded="true"
-                                            aria-controls="viewRequest">
-                                            View Request
-                                        </button>
-                                    </h2>
-                                    <div id="viewRequest" class="accordion-collapse collapse p-3">
-                                        <table class="table table-borderless table-font">
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Item Price</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->price}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Shipping Fees</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->shipping}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Tax</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->tax}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Total Amount </div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->total_amount}} KD</div>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @endif
 
                 @if($single_chats['record']->action=='2' || $single_chats['record']->action=='3')
 
@@ -432,7 +431,7 @@
                                     <label for="item" class="size14">Total Amount</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->total_amount}}"
-                                        name="total_amount" id="total_amount0">
+                                        name="total_amount" id="total_amount0" readonly>
                                 </div>
                             </div>
                         </div>
