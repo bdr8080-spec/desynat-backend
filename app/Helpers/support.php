@@ -313,3 +313,104 @@ function formatChatTime($timestamp)
     // Older
     return "$daysAgo Days ago, $time";
 }
+
+
+
+
+if (!function_exists('Seller_orderItemViewData')) {
+
+    function Seller_orderItemViewData($orderDetail)
+    {
+        $order   = $orderDetail->order;
+        $product = $orderDetail->product_details;
+        $variant = $orderDetail->variation_details;
+
+        $color = $variant->color ?? null;
+        $size  = $variant->size ?? null;
+
+        // Variant image handling
+        if (is_array($variant->variant_image)) {
+            $images = $variant->variant_image;
+        } else {
+            $images = json_decode($variant->variant_image ?? '[]', true);
+        }
+
+        $image = $images[0] ?? asset('user/assets/images/categorie1.png');
+
+        // Order status text
+        $statusText = match (true) {
+
+            // Cancelled
+            $orderDetail->payment_status == '2' ||
+            $orderDetail->payment_status == '3'
+            => 'Cancelled',
+
+            // Shipped
+            $orderDetail->delivery_status == '2.1' &&
+            $orderDetail->return_type == '0'
+            => 'Shipped',
+
+            // On the way
+            $orderDetail->delivery_status == '2.2' &&
+            $orderDetail->return_type == '0'
+            => 'On The Way',
+
+            // Delivered
+            $orderDetail->delivery_status == '3' &&
+            $orderDetail->return_type == '0'
+            => 'Delivered',
+
+            // Exchange request
+            $orderDetail->delivery_status == '3' &&
+            $orderDetail->return_type == '2'
+            => 'Exchange Request',
+
+            // Return request
+            $orderDetail->delivery_status == '3' &&
+            $orderDetail->return_type == '1' && $orderDetail->is_picked == "0"
+            => 'Return Request',
+
+            $orderDetail->r_e_approve == '1' &&
+            $orderDetail->return_type == '1' && $orderDetail->is_picked == "0"
+            => 'Return Request Accepted',
+
+            $orderDetail->r_e_approve == '1' &&
+            $orderDetail->return_type == '1' &&  $orderDetail->is_picked == "1"
+            => 'Return Picked',
+
+            $orderDetail->r_e_approve == '2' &&
+            $orderDetail->return_type == '1'
+            => 'Return Cancelled',
+
+            // Default
+            default => 'Ongoing',
+        };
+
+        // Status colors
+        [$statusColor, $bgColor] = match ($statusText) {
+
+            'Delivered' => ['#28a745', '#28a7451A'],
+
+            'Cancelled' => ['#E70000', '#E700001A'],
+
+            'Exchange Request',
+            'Return Request'
+            => ['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
+
+            default => ['#FF5F1B', '#79d69d1a'],
+        };
+
+        return compact(
+            'order',
+            'orderDetail',
+            'product',
+            'variant',
+            'color',
+            'size',
+            'image',
+            'statusText',
+            'statusColor',
+            'bgColor'
+        );
+    }
+}

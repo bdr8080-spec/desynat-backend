@@ -35,19 +35,31 @@
             @else
             <div style="color:#16B364;">Confirmed</div>
             @endif -->
+            @php
+            $data = Seller_orderItemViewData($order_details);
+            @endphp
 
-            @if($order_details->payment_status == '2' || $order_details->payment_status == '3')
+            <div class="btn-outline1 btn-outline-red" style="color:color: {{ $data['statusColor'] }};
+             background: {{ $data['bgColor'] }}">{{ $data['statusText'] }}</div>
+
+            <!-- @if($order_details->payment_status == '2' || $order_details->payment_status == '3')
             <div class="btn-outline1 btn-outline-red" style="color:#D53B36;">Cancelled</div>
-            @elseif(in_array($order_details->delivery_status, ['1', '2']) && $order_details->payment_status !== '2' &&
+            @elseif(in_array($order_details->delivery_status, ['1', '2']) && $order_details->return_type == '0' &&
+            $order_details->payment_status !== '2' &&
             $order_details->payment_status !== '3' )
             <div class="btn-outline1 btn-ongoing" style="color:#16B364;">Ongoing</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '0')
             <div class="btn-outline1 btn-outline-de" style="color:#16B364;">Delivered</div>
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '1')
             <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Return Request</div>
+
+            @elseif($order_details->return_type == '1' &&
+            $order_details->r_e_approve == '1' )
+            <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Return Request Accepted</div>
+
             @elseif($order_details->delivery_status == '3' && $order_details->return_type == '2')
             <div class="btn-outline1 btn-ongoing" style="color:#FF5F1B;">Exchange Request</div>
-            @endif
+            @endif -->
 
 
 
@@ -361,7 +373,7 @@
                     <div class="from-group  w-100">
                         <select class="form-select form-control option width-50" aria-label="Default select example"
                             name="status">
-                            <option value="">Select Return </option>
+                            <option value="">Update Return status </option>
                             <option value="1"> Accept </option>
                             <option value="2"> Reject </option>
 
