@@ -1404,6 +1404,10 @@ h3.mid-headng{
     z-index: 99999;
 }
 
+.product-title {
+    font-weight: 400;
+    font-size: 15px;
+}
 /* Progress bars row */
 .progress-container {
     position: absolute;
