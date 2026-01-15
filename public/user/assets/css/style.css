@@ -2680,6 +2680,17 @@ img.img-fluid.circle-image {
     bottom: 13px;
     color: #6E4527;
 }
+.msger-send-btn1 {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 10px;
+    transform: rotate(45deg);
+    font-size: 20px;
+    bottom: 13px;
+    color: #6E4527;
+}
 .left-msg .msg-text {
     background: #EAECF0;
     padding: 9px;

@@ -249,7 +249,7 @@
                             <small class="text-danger d-none" id="chatError1">
                                 Please enter a message or upload an image
                             </small>
-                            <button type="submit" class="msger-send-btn">
+                            <button type="submit" class="msger-send-btn1">
                                 <i class="bi bi-send-fill"></i>
                             </button>
                         </form>
@@ -358,6 +358,13 @@ document.addEventListener("DOMContentLoaded", function () {
     messageEl.addEventListener('input', hideError);
     imageEl.addEventListener('change', hideError);
 
+    // 🔹 Automatically send image when selected
+    imageEl.addEventListener('change', function () {
+        if (imageEl.files[0]) {
+            chatForm.requestSubmit(); // triggers the form submit
+        }
+    });
+
     chatForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -376,9 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const type = image ? 1 : 0;
         formData.append('type', type);
 
-        // Disable send button and show "Sending..."
         sendBtn.disabled = true;
-        // sendBtn.innerHTML = 'Sending...';
 
         fetch("{{ route('user.sendNormalMessage') }}", {
             method: "POST",
@@ -397,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     appendImageMessage(res.message);
                 }
 
-                chatForm.reset();
+                chatForm.reset(); // clears text input and file input
                 hideError();
                 scrollToBottom();
             } else {
@@ -406,7 +411,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(() => toastr.error('Something went wrong'))
         .finally(() => {
-            // Re-enable send button and restore icon
             sendBtn.disabled = false;
             sendBtn.innerHTML = '<i class="bi bi-send-fill"></i>';
         });
@@ -421,18 +425,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function appendTextMessage(text) {
-        appendMessage(`<div class="msg-text">${text}</div>`);
+        appendMessage(`<div class="msg-text">${text}</div>`, 'right-msg');
     }
 
     function appendImageMessage(imageUrl) {
-        appendMessage(`<img src="${imageUrl}" class="img-fluid rounded" style="max-width:200px">`);
+        appendMessage(`<img src="${imageUrl}" class="img-fluid rounded" style="max-width:200px">`, 'right-msg');
     }
 
-    function appendMessage(content) {
+    // content = HTML, side = 'right-msg' or 'left-msg'
+    function appendMessage(content, side = 'right-msg') {
         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         chatBox.insertAdjacentHTML('beforeend', `
-            <div class="msg right-msg">
+            <div class="msg ${side}">
                 <div class="msg-bubble">
                     ${content}
                     <div class="msg-info">
@@ -448,8 +453,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
 </script>
+
+
+
 
 <!-- fetch normal chat -->
 <script>
@@ -458,23 +465,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatBox  = document.querySelector('.msger-chat');
     const uniqueId = document.querySelector('input[name="unique_id"]').value;
 
-    // Format ISO8601 date string to "hh:mm AM/PM"
     function formatISOTime(isoString) {
         if (!isoString) return '';
-        const date = new Date(isoString);
 
+        const date = new Date(isoString);
         if (isNaN(date.getTime())) return isoString; // fallback if invalid
 
+        // Date part
+        const day = String(date.getDate()).padStart(2, '0');
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+
+        // Time part
         let hours = date.getHours();
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const ampm = hours >= 12 ? 'PM' : 'AM';
 
         hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
+        hours = hours ? hours : 12;
         const strHours = String(hours).padStart(2, '0');
 
-        return `${strHours}:${minutes} ${ampm}`;
+        return `${day} ${month} ${year}, ${strHours}:${minutes} ${ampm}`;
     }
+
 
     /**
      * Fetch messages from server
@@ -560,7 +575,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 <!-- send custom chat -->
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function () {
 
     const chatForm  = document.getElementById('chatFormCustom');
@@ -637,6 +652,118 @@ document.addEventListener("DOMContentLoaded", function () {
     function appendMessage(content) {
         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+
+        chatBox.insertAdjacentHTML('beforeend', `
+            <div class="msg right-msg">
+                <div class="msg-bubble">
+                    ${content}
+                    <div class="msg-info">
+                        <div class="msg-info-time text-end">${time}</div>
+                    </div>
+                </div>
+            </div>
+        `);
+    }
+
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+});
+</script> -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatForm  = document.getElementById('chatFormCustom');
+    const chatBox   = document.querySelector('.msger-chat1');
+    const messageEl = chatForm.querySelector('.msger-input1');
+    const imageEl   = chatForm.querySelector('#imageUpload1');
+    const errorEl   = document.getElementById('chatError1');
+    const sendBtn   = chatForm.querySelector('.msger-send-btn1');
+
+    // Remove error on typing or image select
+    messageEl.addEventListener('input', hideError);
+    imageEl.addEventListener('change', hideError);
+
+    // 🔹 Automatically send image when selected
+    imageEl.addEventListener('change', function () {
+        if (imageEl.files[0]) {
+            chatForm.requestSubmit(); // triggers the form submit
+        }
+    });
+
+    chatForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const message = messageEl.value.trim();
+        const image   = imageEl.files[0] ?? null;
+
+        // Validation
+        if (!message && !image) {
+            showError();
+            return;
+        }
+
+        const formData = new FormData(chatForm);
+
+        // type: 0 = text, 1 = image
+        const type = image ? 1 : 0;
+        formData.append('type', type);
+
+        if (sendBtn) sendBtn.disabled = true;
+
+        fetch("{{ route('user.sendNormalMessage') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+
+                if (type === 0) {
+                    appendTextMessage(res.message);
+                } else {
+                    appendImageMessage(res.message);
+                }
+
+                chatForm.reset(); // clears text and file inputs
+                hideError();
+                scrollToBottom();
+            } else {
+                toastr.error(res.message || 'Failed to send message');
+            }
+        })
+        .catch(() => toastr.error('Something went wrong'))
+        .finally(() => {
+            if (sendBtn) {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="bi bi-send-fill"></i>';
+            }
+        });
+    });
+
+    function showError() {
+        errorEl.classList.remove('d-none');
+    }
+
+    function hideError() {
+        errorEl.classList.add('d-none');
+    }
+
+    function appendTextMessage(text) {
+        appendMessage(`<div class="msg-text">${text}</div>`);
+    }
+
+    function appendImageMessage(imageUrl) {
+        appendMessage(`<img src="${imageUrl}" class="img-fluid rounded" style="max-width:200px">`);
+    }
+
+    function appendMessage(content) {
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
         chatBox.insertAdjacentHTML('beforeend', `
             <div class="msg right-msg">
                 <div class="msg-bubble">
@@ -656,6 +783,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+
 <!-- fetch custom chat -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -666,20 +794,29 @@ document.addEventListener("DOMContentLoaded", function () {
     // Format ISO8601 date string to "hh:mm AM/PM"
     function formatISOTime(isoString) {
         if (!isoString) return '';
-        const date = new Date(isoString);
 
+        const date = new Date(isoString);
         if (isNaN(date.getTime())) return isoString; // fallback if invalid
 
+        // Date part
+        const day = String(date.getDate()).padStart(2, '0');
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+
+        // Time part
         let hours = date.getHours();
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const ampm = hours >= 12 ? 'PM' : 'AM';
 
         hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
+        hours = hours ? hours : 12;
         const strHours = String(hours).padStart(2, '0');
 
-        return `${strHours}:${minutes} ${ampm}`;
+        return `${day} ${month} ${year}, ${strHours}:${minutes} ${ampm}`;
     }
+
 
     /**
      * Fetch messages from server
