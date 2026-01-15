@@ -20,7 +20,9 @@
                         <div class="order-subtitle">
                             <h3>#{{ $orderData->id ?? 'N/A' }}</h3>
                             <p>Placed on
-                                {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())->format('d/m/Y \a\t h:ia') }}
+                                {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())
+                            ->timezone('Asia/Kolkata')
+                            ->format('d/m/Y \a\t h:ia') }}
                             </p>
                         </div>
                     </div>
@@ -556,7 +558,7 @@
                             $orderData->assign_status=='1')
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                    <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
                                 </div>
                                 <div>In progress</div>
                             </div>
@@ -573,13 +575,13 @@
                             $orderData->is_picked=='1')
                             <div class="or-box">
                                 <div class="fill-box">
-                                    <img src="{{ asset('user/assets/images/order-ic/sing-ic.svg') }}" class="img-fluid">
+                                    <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
                                 </div>
 
                                 @if($orderData->return_type==1)
                                 <div>Picked up </div>
                                 @else
-                                <div>Picked up</div>
+                                <div>Pickup & Exchange</div>
                                 @endif
 
                             </div>

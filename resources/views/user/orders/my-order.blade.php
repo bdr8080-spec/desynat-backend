@@ -281,7 +281,7 @@
                                                     <!-- <p class="delivery-label mb-2">{{ $statusText }}</p> -->
                                                     <p class="delivery-label mb-2">Placed</p>
                                                     <p class="delivery-date mb-2">
-                                                        {{ $order->created_at->format('h:i A | d-m-Y') }}
+                                                        {{ $order->created_at->timezone('Asia/Kolkata')->format('h:i A | d-m-Y') }}
                                                     </p>
                                                 </div>
                                             </div>
