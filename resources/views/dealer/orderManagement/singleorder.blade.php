@@ -245,11 +245,29 @@
                 </div>
 
                 <div class="cust-deatils-pnl mt-4">
-                    <h6>Review</h6>
+                    <!-- <h6>Review</h6> -->
                     <p class="font-15">
                         {{$order_details->UserRatingReviewProvide->product_review}}
                     </p>
                 </div>
+
+                <!-- Store rating  -->
+                <h6>Store Ratings</h6>
+                <div class="star-rating mt-1">
+
+                    @for ($i = 0; $i < $order_details->UserRatingReviewProvide->store_rating ; $i++)
+                        <i class="bi bi-star-fill"></i>
+                        @endfor
+                </div>
+
+                <div class="cust-deatils-pnl mt-4">
+                    <!-- <h6>Review</h6> -->
+                    <p class="font-15">
+                        {{$order_details->UserRatingReviewProvide->store_review}}
+                    </p>
+                </div>
+
+
             </div>
 
             @endisset
