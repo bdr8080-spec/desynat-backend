@@ -273,7 +273,7 @@
                 <div class="order-box border-radious-10 box-shadow mt-4 d-flex justify-content-center">
                     <div class="prodimg">
                         <figure>
-                            <img src="{{$order_details->return_image[0] }}" alt="icon" class="img-fluid">
+                            <img src="{{@$order_details->return_image[0] }}" alt="icon" class="img-fluid">
                         </figure>
                     </div>
 

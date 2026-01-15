@@ -227,7 +227,6 @@ class OrderManagement extends Controller
         'status'=>$request->status
        ];
 
-
        $data= $this->SellerOrderService->updateOrderExchangeReturnStatus($request_data);
 
         if(isset($data['status']) && $data['status']=='error' ){
