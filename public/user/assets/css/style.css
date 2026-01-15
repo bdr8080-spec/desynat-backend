@@ -494,6 +494,9 @@ h3.mid-headng{
 .term_policy label a{
     color: var(--secondry2-color);
 }
+.lineheight-2{
+    line-height: 35px;
+}
 
 /* // header-main */
 
