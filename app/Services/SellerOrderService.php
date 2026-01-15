@@ -68,7 +68,9 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 }
    }
 
-   $all_Order_data=$all_Order_data->get(); // All Orders
+   $all_Order_data=$all_Order_data
+   ->orderBy('id','desc')
+   ->get(); // All Orders
 
 
    $ongoing_order = clone($all_Order) // Ongoing order check
@@ -109,7 +111,8 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
 }
    }
 
- $ongoing_order=$ongoing_order->get();
+ $ongoing_order=$ongoing_order->orderBy('id','desc')
+   ->get();
 
 
     // Past Order Code 
@@ -143,8 +146,9 @@ $past_order = $past_order
         $query->whereIn('payment_status', [2, 3])
               ->orWhere('delivery_status', 3);
     })
-    ->get();
-    
+   ->orderBy('id','desc')
+  ->get();
+  
 
 $response['All_order']=$all_Order_data; // All Orders
 $response['ongoing_order'] =$ongoing_order;
