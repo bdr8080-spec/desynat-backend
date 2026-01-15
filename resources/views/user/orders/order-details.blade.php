@@ -129,7 +129,7 @@
                                     @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
                                     $orderData->payment_status !== '3' && $orderData->order->order_type == '1')
                                     <div class="d-none-1">
-                                        <button class="btn btn-outline-red w-100 cancelBtn lineheight-2" data-bs-toggle="modal"
+                                        <button class="btn btn-outline-red w-100 cancelBtn" data-bs-toggle="modal"
                                             data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
                                             data-order-details-id="{{ $orderData->id }}">
                                             Cancel Order
@@ -842,7 +842,7 @@
                 @endphp
                 @if($cancelAllowed)
                 <div class="mt-4 text-center">
-                    <button class="btn btn-outline-red W-100 mb-3 text-decoration-none cancelBtn" data-bs-toggle="modal"
+                    <button class="btn btn-outline-red W-100 mb-3 text-decoration-none cancelBtn lineheight-2" data-bs-toggle="modal"
                         data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
                         data-order-details-id="{{ $orderData->id }}">
                         Cancel Order
