@@ -842,7 +842,7 @@
                 @endphp
                 @if($cancelAllowed)
                 <div class="mt-4 text-center">
-                    <button class="btn btn-outline-red W-100 mb-3 text-decoration-none cancelBtn" data-bs-toggle="modal"
+                    <button class="btn btn-outline-red W-100 mb-3 text-decoration-none cancelBtn lineheight-2" data-bs-toggle="modal"
                         data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
                         data-order-details-id="{{ $orderData->id }}">
                         Cancel Order
