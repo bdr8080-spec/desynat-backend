@@ -113,7 +113,7 @@ class SellerChatController extends Controller
         ]);
         
        if($validate->fails()){
-        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
        }
 
        $seller_details=Auth::guard('seller')->user()->id;
