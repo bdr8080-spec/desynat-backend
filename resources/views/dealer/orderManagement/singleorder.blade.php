@@ -11,7 +11,8 @@
 <section class="section dashboard">
 
     <div class="d-flex justify-content-between mt-2">
-        <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Details</a>
+        <a class="title24 alink" href="{{route('seller.order_management')}}"> <i class="bi bi-chevron-left"></i>
+            Details</a>
         <div class="from-group-list">
 
             <!-- <div style="color:#FF5F1B;">Returned</div>
