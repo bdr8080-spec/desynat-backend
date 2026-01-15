@@ -929,9 +929,9 @@ $orders = $orders->orderBy('id', 'desc')->get();
     DB::beginTransaction();
 
     // $checkOrder=Order::where('id',$request->order_id)->first();
-
+    
     $AllOrderCheck=orderdetail::where('order_id',$request->order_id)->whereIn('payment_status',['0','1'])->count();
-
+    
     $checkOrder=orderdetail::with('order')->where('order_id',$request->order_id)->where('id',$request->orderdetails_id)->first();
 
 
@@ -947,8 +947,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
        return ['status'=>'error','message'=>"Delivery is Already proceeed  You Can't Cancel order ",'data'=>(object)[]];
     }
     
-    // if The Order create before 3 Hours then Don't Cancel Order in Custom Order 
-
+    // Cutom Order if The Order create before 3 Hours then Don't Cancel Order in Custom Order 
     if($checkOrder->order->order_type=='2'){
        $orderCreatedDate = $checkOrder->order->created_at;
        $orderCreatedFutureDate = $orderCreatedDate->copy()->addHours(3);
@@ -966,20 +965,39 @@ $orders = $orders->orderBy('id', 'desc')->get();
 
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
     if($checkOrder->order->payment_method=='3'){
-
         $new_array=[
         'payment_status'=>'2',
-        'delivery_status'=>'1'];
-        
+        'delivery_status'=>'1'];        
         if(isset($request->cancel_reason)){
             $new_array['cancel_reason']= $request->cancel_reason;
         }
-
         $checkOrder->update($new_array);    
-
     }else{
+        // If The Exchange Order cancelled  Reverse old Order Status
+if($checkOrder->p_orderdetails_id!==''){
 
+ $exchnageOldOrder=orderdetail::with('order')->where('id',$checkOrder->p_orderdetails_id)->first();
 
+ $exchnage_return=[
+    'delivery_status'=>'3',
+    "order_status" => '',
+    "return_type" =>"0",
+    "r_e_approve"=>"0"
+];
+ $exchnageOldOrder->update($exchnage_return);
+
+//  Cancelled exchnage New Order 
+ $new_array=[
+    'payment_status'=>'2',
+    'delivery_status'=>'1'];
+
+    if(isset($request->cancel_reason)){
+        $new_array['cancel_reason']= $request->cancel_reason;
+    }
+
+ $checkOrder->update($new_array);
+
+}else{
     $new_array=[
     'payment_status'=>'3',
     'delivery_status'=>'1'];
@@ -987,8 +1005,8 @@ $orders = $orders->orderBy('id', 'desc')->get();
     if(isset($request->cancel_reason)){
         $new_array['cancel_reason']= $request->cancel_reason;
     }
-    
     $checkOrder->update($new_array);
+}
 
     }
 

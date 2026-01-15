@@ -280,7 +280,7 @@ try{
         "exchange_old_size"=>$singleOrder->exchange_old_size,
         "payment_status"=>$singleOrder->payment_status,
     ];
-        orderdetail::create($Createnew_data);
+        orderdetail::UpdateOrcreate($Createnew_data);
 
         $data['order_status']='exchange'; // when order Is exchange and create a new product 
 
