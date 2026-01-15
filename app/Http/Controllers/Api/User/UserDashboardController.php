@@ -164,7 +164,7 @@ public function HomescreenBanner(Request $request){
       $validate = Validator::make($request->all(), [
                 'type' => 'required|in:1,2,3',
                 'category' => 'nullable|required_if:type,3',
-                'subcategory' => 'nullable|required_if:type,3',
+                // 'subcategory' => 'nullable|required_if:type,3',
                 ]);
             
     if($validate->fails()){
