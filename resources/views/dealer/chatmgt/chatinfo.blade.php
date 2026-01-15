@@ -205,6 +205,7 @@
                             <label for="item" class="size14">Per Item Price</label>
                             <input type="text" class="form-control notapplyspace applynumberOnly" placeholder="Eg 20 KD"
                                 name="price" id="price1">
+                            <p class="text-danger mb-0" id="error1-price"></p>
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
@@ -212,6 +213,7 @@
                                     <label for="item" class="size14">Shipping Fees </label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" name="shipping" id="shipping1">
+                                    <p class="text-danger mb-0" id="error1-shipping"></p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -219,6 +221,8 @@
                                     <label for="item" class="size14">Tax</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" name="tax" id="tax1">
+
+                                    <p class="text-danger mb-0" id="error1-tax"></p>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -226,6 +230,7 @@
                                     <label for="item" class="size14">Total Amount</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         name="total_amount" id="total_amount1" placeholder="Eg 20 KD" readonly>
+                                    <p class="text-danger mb-0" id="error1-total_amount"></p>
                                 </div>
                             </div>
                         </div>
@@ -407,6 +412,8 @@
                             <label for="item" class="size14">Per Item Price</label>
                             <input type="text" class="form-control notapplyspace applynumberOnly" placeholder="Eg 20 KD"
                                 name="price" id="price0" value="{{ $single_chats['record']->price}}">
+                            <p class="text-danger mb-0" id="error0-price"></p>
+
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
@@ -415,6 +422,7 @@
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->shipping}}"
                                         name="shipping" id="shipping0">
+                                    <p class="text-danger mb-0" id="error0-shipping"></p>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -423,6 +431,7 @@
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->tax}}" name="tax"
                                         id="tax0">
+                                    <p class="text-danger mb-0" id="error0-tax"></p>
                                 </div>
                             </div>
 
@@ -432,6 +441,7 @@
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" value="{{ $single_chats['record']->total_amount}}"
                                         name="total_amount" id="total_amount0" readonly>
+                                    <p class="text-danger mb-0" id="error0-total_amount"></p>
                                 </div>
                             </div>
                         </div>
@@ -542,7 +552,7 @@ $(document).on('submit', 'form#SendQuotation', function(event) {
 
                     // Example → #error-product_spe_en_0
 
-                    let errorId = "#error-" + fieldName + "_" + index;
+                    let errorId = "#error1-" + fieldName + "_" + index;
 
                     // If second index exists, append it
                     if (typeof index1 !== "undefined" && index1 !== "") {
@@ -559,7 +569,7 @@ $(document).on('submit', 'form#SendQuotation', function(event) {
                     }
 
                     // 3️⃣ Handle whole array errors (custom rule)
-                    $("#error-" + field).html(messages[0]);
+                    $("#error1-" + field).html(messages[0]);
                 }
             });
         },
@@ -648,7 +658,7 @@ $(document)
 
                         // Example → #error-product_spe_en_0
 
-                        let errorId = "#error-" + fieldName + "_" + index;
+                        let errorId = "#error0-" + fieldName + "_" + index;
 
                         // If second index exists, append it
                         if (typeof index1 !== "undefined" && index1 !== "") {
@@ -665,7 +675,7 @@ $(document)
                         }
 
                         // 3️⃣ Handle whole array errors (custom rule)
-                        $("#error-" + field).html(messages[0]);
+                        $("#error0-" + field).html(messages[0]);
                     }
                 });
             },
