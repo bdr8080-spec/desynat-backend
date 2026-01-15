@@ -581,7 +581,7 @@
                                 @if($orderData->return_type==1)
                                 <div>Picked up </div>
                                 @else
-                                <div>Picked up</div>
+                                <div>Pickup & Exchange</div>
                                 @endif
 
                             </div>
