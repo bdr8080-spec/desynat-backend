@@ -189,7 +189,9 @@
                     </div>
                     @endif
                     @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null)
-                    <a href="{{ route('user.chatDetails', ['id' => $chatData['record']['unique_id']]) }}" class="customBtn w-100">Pay Now</a>
+                    <div class="mt-3">
+                        <a href="{{ route('user.chatDetails', ['id' => $chatData['record']['unique_id']]) }}" class="btn customBtn w-100">Pay Now</a>
+                    </div>
                     @endif
                 </div>
                 @endif
