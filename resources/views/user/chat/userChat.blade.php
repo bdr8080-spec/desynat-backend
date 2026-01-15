@@ -143,7 +143,7 @@
                             <table class="table table-borderless table-font">
                                 <tr>
                                     <td>
-                                        <div class="width-120">Item Price</div>
+                                        <div class="width-120">Item Price({{ $chatData['record']['price']}} KD *{{$chatData['record']['quantity']}})</div>
                                     </td>
                                     <td>
                                         <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD</div>

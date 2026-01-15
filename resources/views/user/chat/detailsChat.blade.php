@@ -111,7 +111,7 @@
                 <div class="gift-pnl mt-4">
                     <div class="border-1">
                         <div class="giftinfo">
-                            <div>Item Price </div>
+                            <div>Item Price({{ $chatData['record']['price']}} KD *{{$chatData['record']['quantity']}}) </div>
                             <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD</div>
                         </div>
                         <div class="giftinfo d-none" id="couponDiscountRow">

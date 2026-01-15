@@ -448,6 +448,7 @@ try{
         "shipping"=>$request->shipping,
         "tax"=>$request->tax,
         "total_amount"=>$request->total_amount,
+        "product_request"=>'1',
         "action"=>'2'
        ];
        
