@@ -508,7 +508,7 @@ $homeScreenBanner=$homeScreenBanner->get();
 
 return [
     'status'  => 'success',
-    'message' => 'All Banner type Successfully',
+    'message' => 'All Home Screen Banner or category Banner fetch Successfully',
     'data'    => $homeScreenBanner
 ];
 
