@@ -947,26 +947,40 @@ function sendSearch() {
 </script>
 
 <script>
-  $(window).on('load', function () {
+$(window).on('load', function () {
 
-    // 👉 Sirf is page par modal open hoga
+    // 👉 Sirf home page par modal open hoga
     if (window.location.pathname === '/') {
         const $modal1 = $('#showBanner');
 
+        // Show modal
         $modal1.fadeIn();
-      //  $('body').addClass('overflow-hidden');
+        // $('body').addClass('overflow-hidden');
 
+        // Manual skip (button or overlay click)
         $('.btn-skip, #showBanner').on('click', function (e) {
             if ($(e.target).is('.btn-skip') || $(e.target).is('#showBanner')) {
-                $modal1.fadeOut();
-                $('body').removeClass('overflow-hidden');
+                closeBanner();
             }
         });
+
+        // ⏱ Auto skip after 5 seconds
+        setTimeout(function () {
+            if ($modal1.is(':visible')) {
+                closeBanner();
+            }
+        }, 5000);
+
+        // Common close function
+        function closeBanner() {
+            $modal1.fadeOut();
+            $('body').removeClass('overflow-hidden');
+        }
     }
 
 });
-
 </script>
+
 
 
      </body>

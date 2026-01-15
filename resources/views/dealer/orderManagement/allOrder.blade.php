@@ -133,100 +133,12 @@
                                             <td>
 
                                                 @php
-                                                $order = $val->order;
-                                                $orderdetail = $val;
-
-                                                $product = $orderdetail->product_details;
-                                                $variant = $orderdetail->variation_details;
-                                                $color = $variant->color ?? null;
-                                                $size = $variant->size ?? null;
-
-                                                // Handle variant image (array or JSON)
-                                                if (is_array($variant->variant_image)) {
-                                                $images = $variant->variant_image;
-                                                } else {
-                                                $images = json_decode($variant->variant_image ?? '[]', true);
-                                                }
-
-                                                $image = $images[0] ?? asset('user/assets/images/categorie1.png');
-
-                                                // Order status text
-                                                $statusText = match (true) {
-
-                                                // 1 → Cancelled Order
-                                                $orderdetail->payment_status == '2' || $orderdetail->payment_status ==
-                                                '3'
-                                                => 'Cancelled',
-
-                                                // 2 → confirmed
-                                                $orderdetail->delivery_status == '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2 → Ongoing
-                                                $orderdetail->delivery_status == '2' || $orderdetail->delivery_status ==
-                                                '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2.1 → shipped
-                                                $orderdetail->delivery_status == '2.1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Shipped',
-
-                                                // 2.2 → shipped
-                                                $orderdetail->delivery_status == '2.2' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'On The Way',
-
-                                                // 3 → Delivered
-                                                $orderdetail->delivery_status == '3' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Delivered',
-
-                                                // 4 → Cancelled
-                                                $orderdetail->payment_status == '2'
-                                                => 'Cancelled',
-
-                                                // 5 → Returned / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                                                => 'Exchange Request',
-
-                                                // 5 → Exchange / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                                                => 'Return Request',
-
-                                                // Default
-                                                default => 'On Going',
-                                                };
-
-                                                [$statusColor, $bgColor] = match ($statusText) {
-
-                                                'Delivered' => ['#28a745', '#28a7451A'],
-
-                                                'Cancelled' => ['#E70000', '#E700001A'],
-
-                                                "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                                                "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-
-                                                default => ['#FF5F1B', '#79d69d1a'],
-                                                };
-
+                                                $statusCode = Seller_orderItemViewData($val);
                                                 @endphp
-
                                                 <div class="from-group">
-
-                                                    <!-- <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-
-                                                        <option value="4"> Exchange </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select> -->
-                                                    <div class="ongoing-title" style="color:{{ $statusColor }}">
-                                                        {{ $statusText }}
+                                                    <div class="ongoing-title"
+                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        {{ $statusCode['statusText'] }}
                                                     </div>
 
                                                 </div>
@@ -324,112 +236,14 @@
                                                     class="eyebtn"><i class="bi bi-eye"></i></a>
                                             </td>
                                             <td>
-                                                <!-- <div class="from-group">
-                                                    <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select>
-                                                </div> -->
-
 
                                                 @php
-                                                $order = $val->order;
-                                                $orderdetail = $val;
-
-                                                $product = $orderdetail->product_details;
-                                                $variant = $orderdetail->variation_details;
-                                                $color = $variant->color ?? null;
-                                                $size = $variant->size ?? null;
-
-                                                // Handle variant image (array or JSON)
-                                                if (is_array($variant->variant_image)) {
-                                                $images = $variant->variant_image;
-                                                } else {
-                                                $images = json_decode($variant->variant_image ?? '[]', true);
-                                                }
-
-                                                $image = $images[0] ?? asset('user/assets/images/categorie1.png');
-
-                                                // Order status text
-                                                $statusText = match (true) {
-
-                                                // 1 → Cancelled Order
-                                                $orderdetail->payment_status == '2' || $orderdetail->payment_status ==
-                                                '3'
-                                                => 'Cancelled',
-
-                                                // 2 → confirmed
-                                                $orderdetail->delivery_status == '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2 → Ongoing
-                                                $orderdetail->delivery_status == '2' || $orderdetail->delivery_status ==
-                                                '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2.1 → shipped
-                                                $orderdetail->delivery_status == '2.1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Shipped',
-
-                                                // 2.2 → shipped
-                                                $orderdetail->delivery_status == '2.2' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'On The Way',
-
-                                                // 3 → Delivered
-                                                $orderdetail->delivery_status == '3' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Delivered',
-
-                                                // 4 → Cancelled
-                                                $orderdetail->payment_status == '2'
-                                                => 'Cancelled',
-
-                                                // 5 → Returned / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                                                => 'Exchange Request',
-
-                                                // 5 → Exchange / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                                                => 'Return Request',
-
-                                                // Default
-                                                default => 'On Going',
-                                                };
-
-                                                [$statusColor, $bgColor] = match ($statusText) {
-
-                                                'Delivered' => ['#28a745', '#28a7451A'],
-
-                                                'Cancelled' => ['#E70000', '#E700001A'],
-
-                                                "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                                                "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-
-                                                default => ['#FF5F1B', '#79d69d1a'],
-                                                };
-
+                                                $statusCode = Seller_orderItemViewData($val);
                                                 @endphp
-
                                                 <div class="from-group">
-
-                                                    <!-- <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-
-                                                        <option value="4"> Exchange </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select> -->
-                                                    <div class="ongoing-title" style="color:{{ $statusColor }}">
-                                                        {{ $statusText }}
+                                                    <div class="ongoing-title"
+                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        {{ $statusCode['statusText'] }}
                                                     </div>
 
                                                 </div>
@@ -526,108 +340,14 @@
                                                     class="eyebtn"><i class="bi bi-eye"></i></a>
                                             </td>
                                             <td>
-                                                <!-- <div class="from-group-list">
-                                                    <div style="color:#16B364;">Delivered</div>
-                                                    <div style="color:#FF5F1B;">Returned</div>
-                                                        <div style="color:#D53B36;">Cancelled</div>
-                                                        <div style="color:#FF5F1B;">Exchange</div>
-                                                </div> -->
 
                                                 @php
-                                                $order = $val->order;
-                                                $orderdetail = $val;
-
-                                                $product = $orderdetail->product_details;
-                                                $variant = $orderdetail->variation_details;
-                                                $color = $variant->color ?? null;
-                                                $size = $variant->size ?? null;
-
-                                                // Handle variant image (array or JSON)
-                                                if (is_array($variant->variant_image)) {
-                                                $images = $variant->variant_image;
-                                                } else {
-                                                $images = json_decode($variant->variant_image ?? '[]', true);
-                                                }
-
-                                                $image = $images[0] ?? asset('user/assets/images/categorie1.png');
-
-                                                // Order status text
-                                                $statusText = match (true) {
-
-                                                // 1 → Cancelled Order
-                                                $orderdetail->payment_status == '2' || $orderdetail->payment_status ==
-                                                '3'
-                                                => 'Cancelled',
-
-                                                // 2 → confirmed
-                                                $orderdetail->delivery_status == '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2 → Ongoing
-                                                $orderdetail->delivery_status == '2' || $orderdetail->delivery_status ==
-                                                '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2.1 → shipped
-                                                $orderdetail->delivery_status == '2.1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Shipped',
-
-                                                // 2.2 → shipped
-                                                $orderdetail->delivery_status == '2.2' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'On The Way',
-
-                                                // 3 → Delivered
-                                                $orderdetail->delivery_status == '3' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Delivered',
-
-                                                // 4 → Cancelled
-                                                $orderdetail->payment_status == '2'
-                                                => 'Cancelled',
-
-                                                // 5 → Returned / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                                                => 'Exchange Request',
-
-                                                // 5 → Exchange / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                                                => 'Return Request',
-
-                                                // Default
-                                                default => 'On Going',
-                                                };
-
-                                                [$statusColor, $bgColor] = match ($statusText) {
-
-                                                'Delivered' => ['#28a745', '#28a7451A'],
-
-                                                'Cancelled' => ['#E70000', '#E700001A'],
-
-                                                "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                                                "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-
-                                                default => ['#FF5F1B', '#79d69d1a'],
-                                                };
-
+                                                $statusCode = Seller_orderItemViewData($val);
                                                 @endphp
-
                                                 <div class="from-group">
-
-                                                    <!-- <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-
-                                                        <option value="4"> Exchange </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select> -->
-                                                    <div class="ongoing-title" style="color:{{ $statusColor }}">
-                                                        {{ $statusText }}
+                                                    <div class="ongoing-title"
+                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        {{ $statusCode['statusText'] }}
                                                     </div>
 
                                                 </div>
@@ -760,117 +480,16 @@
                                             </td>
                                             <td>
 
-                                                <!-- <div class="from-group">
-                                                    <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select>
-                                                </div> -->
-
-
                                                 @php
-                                                $order = $val->order;
-                                                $orderdetail = $val;
-
-                                                $product = $orderdetail->product_details;
-                                                $variant = $orderdetail->variation_details;
-                                                $color = $variant->color ?? null;
-                                                $size = $variant->size ?? null;
-
-                                                // Handle variant image (array or JSON)
-                                                if (is_array($variant->variant_image)) {
-                                                $images = $variant->variant_image;
-                                                } else {
-                                                $images = json_decode($variant->variant_image ?? '[]', true);
-                                                }
-
-                                                $image = $images[0] ?? asset('user/assets/images/categorie1.png');
-
-                                                // Order status text
-                                                $statusText = match (true) {
-
-                                                // 1 → Cancelled Order
-                                                $orderdetail->payment_status == '2' || $orderdetail->payment_status ==
-                                                '3'
-                                                => 'Cancelled',
-
-                                                // 2 → confirmed
-                                                $orderdetail->delivery_status == '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2 → Ongoing
-                                                $orderdetail->delivery_status == '2' || $orderdetail->delivery_status ==
-                                                '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2.1 → shipped
-                                                $orderdetail->delivery_status == '2.1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Shipped',
-
-                                                // 2.2 → shipped
-                                                $orderdetail->delivery_status == '2.2' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'On The Way',
-
-                                                // 3 → Delivered
-                                                $orderdetail->delivery_status == '3' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Delivered',
-
-                                                // 4 → Cancelled
-                                                $orderdetail->payment_status == '2'
-                                                => 'Cancelled',
-
-                                                // 5 → Returned / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                                                => 'Exchange Request',
-
-                                                // 5 → Exchange / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                                                => 'Return Request',
-
-                                                // Default
-                                                default => 'On Going',
-                                                };
-
-                                                [$statusColor, $bgColor] = match ($statusText) {
-
-                                                'Delivered' => ['#28a745', '#28a7451A'],
-
-                                                'Cancelled' => ['#E70000', '#E700001A'],
-
-                                                "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                                                "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-
-                                                default => ['#FF5F1B', '#79d69d1a'],
-                                                };
-
+                                                $statusCode = Seller_orderItemViewData($val);
                                                 @endphp
-
                                                 <div class="from-group">
-
-                                                    <!-- <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-
-                                                        <option value="4"> Exchange </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select> -->
-                                                    <div class="ongoing-title" style="color:{{ $statusColor }}">
-                                                        {{ $statusText }}
+                                                    <div class="ongoing-title"
+                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        {{ $statusCode['statusText'] }}
                                                     </div>
 
                                                 </div>
-
-
 
                                             </td>
                                         </tr>
@@ -965,112 +584,14 @@
                                                     class="eyebtn"><i class="bi bi-eye"></i></a>
                                             </td>
                                             <td>
-                                                <!-- <div class="from-group">
-                                                    <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select>
-                                                </div> -->
-
 
                                                 @php
-                                                $order = $val->order;
-                                                $orderdetail = $val;
-
-                                                $product = $orderdetail->product_details;
-                                                $variant = $orderdetail->variation_details;
-                                                $color = $variant->color ?? null;
-                                                $size = $variant->size ?? null;
-
-                                                // Handle variant image (array or JSON)
-                                                if (is_array($variant->variant_image)) {
-                                                $images = $variant->variant_image;
-                                                } else {
-                                                $images = json_decode($variant->variant_image ?? '[]', true);
-                                                }
-
-                                                $image = $images[0] ?? asset('user/assets/images/categorie1.png');
-
-                                                // Order status text
-                                                $statusText = match (true) {
-
-                                                // 1 → Cancelled Order
-                                                $orderdetail->payment_status == '2' || $orderdetail->payment_status ==
-                                                '3'
-                                                => 'Cancelled',
-
-                                                // 2 → confirmed
-                                                $orderdetail->delivery_status == '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2 → Ongoing
-                                                $orderdetail->delivery_status == '2' || $orderdetail->delivery_status ==
-                                                '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2.1 → shipped
-                                                $orderdetail->delivery_status == '2.1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Shipped',
-
-                                                // 2.2 → shipped
-                                                $orderdetail->delivery_status == '2.2' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'On The Way',
-
-                                                // 3 → Delivered
-                                                $orderdetail->delivery_status == '3' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Delivered',
-
-                                                // 4 → Cancelled
-                                                $orderdetail->payment_status == '2'
-                                                => 'Cancelled',
-
-                                                // 5 → Returned / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                                                => 'Exchange Request',
-
-                                                // 5 → Exchange / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                                                => 'Return Request',
-
-                                                // Default
-                                                default => 'On Going',
-                                                };
-
-                                                [$statusColor, $bgColor] = match ($statusText) {
-
-                                                'Delivered' => ['#28a745', '#28a7451A'],
-
-                                                'Cancelled' => ['#E70000', '#E700001A'],
-
-                                                "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                                                "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-
-                                                default => ['#FF5F1B', '#79d69d1a'],
-                                                };
-
+                                                $statusCode = Seller_orderItemViewData($val);
                                                 @endphp
-
                                                 <div class="from-group">
-
-                                                    <!-- <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-
-                                                        <option value="4"> Exchange </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select> -->
-                                                    <div class="ongoing-title" style="color:{{ $statusColor }}">
-                                                        {{ $statusText }}
+                                                    <div class="ongoing-title"
+                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        {{ $statusCode['statusText'] }}
                                                     </div>
 
                                                 </div>
@@ -1166,109 +687,14 @@
                                                     class="eyebtn"><i class="bi bi-eye"></i></a>
                                             </td>
                                             <td>
-                                                <!-- <div class="from-group-list">
-                                                    <div style="color:#16B364;">Delivered</div> -->
-                                                <!-- <div style="color:#FF5F1B;">Returned</div>
-                                                        <div style="color:#D53B36;">Cancelled</div>
-                                                        <div style="color:#FF5F1B;">Exchange</div> -->
-                                                <!-- </div> -->
-
 
                                                 @php
-                                                $order = $val->order;
-                                                $orderdetail = $val;
-
-                                                $product = $orderdetail->product_details;
-                                                $variant = $orderdetail->variation_details;
-                                                $color = $variant->color ?? null;
-                                                $size = $variant->size ?? null;
-
-                                                // Handle variant image (array or JSON)
-                                                if (is_array($variant->variant_image)) {
-                                                $images = $variant->variant_image;
-                                                } else {
-                                                $images = json_decode($variant->variant_image ?? '[]', true);
-                                                }
-
-                                                $image = $images[0] ?? asset('user/assets/images/categorie1.png');
-
-                                                // Order status text
-                                                $statusText = match (true) {
-
-                                                // 1 → Cancelled Order
-                                                $orderdetail->payment_status == '2' || $orderdetail->payment_status ==
-                                                '3'
-                                                => 'Cancelled',
-
-                                                // 2 → confirmed
-                                                $orderdetail->delivery_status == '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2 → Ongoing
-                                                $orderdetail->delivery_status == '2' || $orderdetail->delivery_status ==
-                                                '1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Ongoing',
-
-                                                // 2.1 → shipped
-                                                $orderdetail->delivery_status == '2.1' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Shipped',
-
-                                                // 2.2 → shipped
-                                                $orderdetail->delivery_status == '2.2' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'On The Way',
-
-                                                // 3 → Delivered
-                                                $orderdetail->delivery_status == '3' &&
-                                                $orderdetail->return_type == '0'
-                                                => 'Delivered',
-
-                                                // 4 → Cancelled
-                                                $orderdetail->payment_status == '2'
-                                                => 'Cancelled',
-
-                                                // 5 → Returned / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '2'
-                                                => 'Exchange Request',
-
-                                                // 5 → Exchange / Failed
-                                                $orderdetail->delivery_status == '3' && $orderdetail->return_type == '1'
-                                                => 'Return Request',
-
-                                                // Default
-                                                default => 'On Going',
-                                                };
-
-                                                [$statusColor, $bgColor] = match ($statusText) {
-
-                                                'Delivered' => ['#28a745', '#28a7451A'],
-
-                                                'Cancelled' => ['#E70000', '#E700001A'],
-
-                                                "Exchange Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-                                                "Return Request"=>['#FF5F1B', 'rgba(255, 95, 27, 0.1)'],
-
-                                                default => ['#FF5F1B', '#79d69d1a'],
-                                                };
-
+                                                $statusCode = Seller_orderItemViewData($val);
                                                 @endphp
-
                                                 <div class="from-group">
-
-                                                    <!-- <select class="form-select form-control"
-                                                        aria-label="Default select example">
-                                                        <option value="1"> Confirmed </option>
-                                                        <option value="2"> Packed </option>
-                                                        <option value="3"> Shipped </option>
-
-                                                        <option value="4"> Exchange </option>
-                                                        <option value="4"> Exchange </option>
-                                                    </select> -->
-                                                    <div class="ongoing-title" style="color:{{ $statusColor }}">
-                                                        {{ $statusText }}
+                                                    <div class="ongoing-title"
+                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        {{ $statusCode['statusText'] }}
                                                     </div>
 
                                                 </div>
