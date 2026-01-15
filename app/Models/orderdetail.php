@@ -8,7 +8,10 @@ class orderdetail extends Model
 {
     protected $guarded = [];
 
-
+    protected $casts=[
+        "return_image"=>'json'
+    ];
+    
     public function product_details(){
         return $this->hasOne(product::class,'id','product_id');
 
