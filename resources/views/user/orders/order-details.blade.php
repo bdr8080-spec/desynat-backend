@@ -20,7 +20,9 @@
                         <div class="order-subtitle">
                             <h3>#{{ $orderData->id ?? 'N/A' }}</h3>
                             <p>Placed on
-                                {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())->format('d/m/Y \a\t h:ia') }}
+                                {{ \Carbon\Carbon::parse($orderData->order->created_at ?? now())
+       ->timezone('Asia/Kolkata')
+       ->format('d/m/Y \a\t h:ia') }}
                             </p>
                         </div>
                     </div>
