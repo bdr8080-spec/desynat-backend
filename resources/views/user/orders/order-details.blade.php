@@ -195,7 +195,7 @@
                                 ) {
                                     $exchangeDays = (int) $orderData->product_details->exchangable_days;
 
-                                    $exchangeLastDate = \Carbon\Carbon::parse($orderData->product_details->created_at)
+                                    $exchangeLastDate = \Carbon\Carbon::parse($orderData->created_at)
                                         ->addDays($exchangeDays);
 
                                     $exchangeAllowed = \Carbon\Carbon::today()->lte($exchangeLastDate);
@@ -209,7 +209,7 @@
                                 ) {
                                     $returnDays = (int) $orderData->product_details->return_days;
 
-                                    $returnLastDate = \Carbon\Carbon::parse($orderData->product_details->created_at)
+                                    $returnLastDate = \Carbon\Carbon::parse($orderData->created_at)
                                         ->addDays($returnDays);
 
                                     $returnAllowed = now()->lte($returnLastDate);
