@@ -164,6 +164,12 @@
                     <div class="summary-title-1">Shipping Charges</div>
                     <div class="summary-value">{{$order_details->shipping_fees}} KD</div>
                 </div>
+
+                <div class="pay-sum">
+                    <div class="summary-title-1">tax</div>
+                    <div class="summary-value">{{$order_details->tax}} KD</div>
+                </div>
+
                 <div class="pay-sum">
                     <div class="summary-title-1">Total</div>
 
@@ -183,6 +189,7 @@
                     <div class="summary-title-1">Paid By Customer</div>
                     <div class="summary-value">{{$user_Paid_amount}} KD</div>
                 </div>
+
                 <div class="pay-sum">
                     <div class="summary-title-1">Admin Commission</div>
                     <div class="summary-value">{{$order_details->admin_commission}} KD</div>
