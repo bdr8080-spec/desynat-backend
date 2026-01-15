@@ -47,11 +47,21 @@
                                 </div>
 
                                 @elseif($single_chats['record']->type=='2' &&
-                                $single_chats['record']->product_request=='1' && $single_chats['record']->action=='5')
+                                $single_chats['record']->product_request=='1' && $single_chats['record']->action=='5' &&
+                                $single_chats['record']->order_create_status=='null')
 
                                 <div class="red-bg yellow-bg" style="color:#17854C;background:#17854C1A;">
                                     Quotation Accepted
                                 </div>
+
+                                @elseif($single_chats['record']->type=='2' &&
+                                $single_chats['record']->product_request=='1' && $single_chats['record']->action=='5' &&
+                                $single_chats['record']->order_create_status!=='null')
+
+                                <div class="red-bg yellow-bg" style="color:#17854C;background:#17854C1A;">
+                                    Place order
+                                </div>
+
 
                                 @else
                                 <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting

@@ -78,9 +78,11 @@
                                         </div>
                                     </div>
                                     <div class="w-100">
-                                        <div class="card-right d-flex w-100 justify-content-between align-items-baseline">
+                                        <div
+                                            class="card-right d-flex w-100 justify-content-between align-items-baseline">
                                             <div class="product-info">
-                                                <h6 class="product-title linkgold"> {{ $val->user_details->full_name }}</h6>
+                                                <h6 class="product-title linkgold"> {{ $val->user_details->full_name }}
+                                                </h6>
                                                 @if($val->message_type=='0')
                                                 <div class="chat-user-light"> {{ $val->last_chat }}</div>
                                                 @else
@@ -109,14 +111,24 @@
                                             @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='3'
                                             || $val->action=='4')
 
-                                            <div class="red-bg yellow-bg" style="color:#EA9413;background:##fb0b0b;">Request
+                                            <div class="red-bg yellow-bg" style="color:#EA9413;background:##fb0b0b;">
+                                                Request
                                                 Cancelled
                                             </div>
 
-                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='5')
+                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='5'
+                                            && $val->order_create_status=='null')
 
                                             <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
                                                 Quotation Accepted
+                                            </div>
+
+                                            @elseif($val->type=='2' &&
+                                            $val->product_request=='1' && $val->action=='5' &&
+                                            $val->order_create_status!=='null')
+
+                                            <div class="red-bg yellow-bg" style="color:#17854C;background:#17854C1A;">
+                                                Place order
                                             </div>
 
                                             @else

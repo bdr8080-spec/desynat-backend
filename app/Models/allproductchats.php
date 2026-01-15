@@ -35,8 +35,8 @@ class allproductchats extends Model
             ->where(function ($q) {
                   $q->where(function ($q1) {
                         // payment_method = 3 → payment_status NOT IN (2,3)
-                        $q1->where('payment_method', 3)
-                        ->whereNotIn('payment_status', [2, 3]);
+                        $q1->where('payment_method', '3')
+                        ->whereNotIn('payment_status', ['2', '3']);
                   })
                   ->orWhere(function ($q2) {
                         // payment_method != 3 → payment_status = 1

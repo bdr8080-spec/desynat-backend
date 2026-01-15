@@ -326,7 +326,6 @@ public function SellerAllChatdata($request){
 
 try{
 
-
   $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('seller_id',$request->seller_id)->get();
 
    if($check_chatRecord->isNotEmpty()){
