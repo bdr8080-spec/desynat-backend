@@ -253,7 +253,7 @@ try{
     if($request->status=='1'){
 
        // If Seller Accept Exchnage Code Then  Create A new order With return/ Exchange Follow 
-  
+
        if($singleOrder->return_type==2){
   
        $Createnew_data=[
@@ -276,6 +276,9 @@ try{
         "payment_status"=>$singleOrder->payment_status,
     ];
         orderdetail::create($Createnew_data);
+
+        $data['order_status']='exchange'; // when order Is exchange and create a new product 
+
     }else{
         
         $data['is_picked']='0';
@@ -283,6 +286,8 @@ try{
         $data['assign_status']='0';
         $data['delivery_boy_id']=null;
         $data['delivery_status']='1';
+
+        $data['order_status']='return'; // for when Order is return 
 
     }
     }
