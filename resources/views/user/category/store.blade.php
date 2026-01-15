@@ -2,19 +2,19 @@
 
 @section('content')
     <div class="customContainer">
-        <div class="owl-carousel owl-theme customcatOwlcarousel">
+        <div class="owl-carousel owl-theme customcatOwlcarousel storeBanner">
             <div class="item">
-                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
+                <div class="Bannerstores">
+                    <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
+                </div>
             </div>
             <div class="item">
-                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
+                <div class="Bannerstores">
+                    <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
+                </div>
             </div>
-            <div class="item">
-                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
-            </div>
-            <div class="item">
-                <img src="{{ asset('user/') }}/assets/images/category-img.svg" class="img-fluid" />
-            </div>
+           
+           
         </div>
     </div>
 
@@ -149,4 +149,8 @@
             </div>
         </div>
     </div>
+
+
+
+
 @endsection

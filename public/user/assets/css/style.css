@@ -2766,3 +2766,12 @@ img.img-fluid.circle-image {
 .bannerScreen {
     height: 100vh;
 }
+.Bannerstores{
+    height: 550px;
+    overflow: hidden;
+}
+.Bannerstores img{
+    height:100%;
+    width: 100%;
+    object-fit: cover;
+}
