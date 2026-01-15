@@ -413,7 +413,7 @@
                                         '1' => 'Confirmed',
                                         '2.1' => 'Shipped',
                                         '2.2' => 'On the Way',
-                                        '3' => 'Delivered',
+                                        '3' => 'Complete',
                                         '4' => 'Cancelled',
                                         '5' => 'Return',
                                         '6' => 'Confirmed',
@@ -421,7 +421,33 @@
                                         '8' => 'Not Delivered',
                                     ];
                                 @endphp
-                                <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td>
+                                <!-- <td>{{ $deliveryStatuses[$data['delivery_status']] ?? 'Unknown' }}</td> -->
+                                 <td>
+                                    @if($data['delivery_status']=='1')
+                                    Confirmed
+                                    @elseif($data['delivery_status']=='2.1')
+                                    Shipped
+                                    @elseif($data['delivery_status']=='2.2')
+                                    On The Way
+                                    @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='0' && $data['return_type']=='0')
+                                    Completed
+                                    @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='1' && $data['return_type']=='1')
+                                    Return Request
+                                    @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='2' && $data['return_type']=='1')
+                                    Return Rejected
+                                    @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='1' && $data['return_type']=='2')
+                                    Exchange Request
+                                    @elseif($data['delivery_status']=='3' && $data['r_e_approve']=='2' && $data['return_type']=='2')
+                                    Exchange Rejected
+                                    @elseif($data['delivery_status']=='7' && $data['is_picked']=='1')
+                                    Picked Up
+                                    @elseif($data['delivery_status']=='8')
+                                    Not Delivered
+                                    @else
+                                    @endif
+
+                                 </td>
+                                 
                                 <td>{{ $data['driver_details']['zone_info']['name_english'] ?? 'N/A' }}</td>
                                 <td>
                                     @if($data['assign_status'] == 0 && $data['order']['delivery_details']['country_code'] === '+965')
