@@ -1015,7 +1015,6 @@ if($checkOrder->p_orderdetails_id!==''){
 }
 
 
-
     // Cancel Order In Order Table if i have 1 varient
 
     if($AllOrderCheck ==1){
