@@ -355,7 +355,9 @@ $('.bannerpop').owlCarousel({
     margin: 10,
     responsiveClass: true,
     dots: true,
-    smartSpeed: 1000,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    smartSpeed: 5000,
     responsive: {
         0: {
             items: 1,
@@ -375,8 +377,8 @@ $('.bannerpop').owlCarousel({
     nav: false,
     dots: true,
     autoplay: true,
-    autoplayTimeout: 2000,
-    smartSpeed: 1000,
+   autoplayTimeout: 5000,
+    smartSpeed: 2000,
     responsive: {
         0: {
             items: 1,
