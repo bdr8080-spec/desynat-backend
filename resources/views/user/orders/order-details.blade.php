@@ -321,14 +321,21 @@
                             <div>Total Quantity</div>
                             <div>{{$orderData->quantity}}</div>
                         </div>
-                        <!-- <div class="giftinfo">
+                        @if($orderData->order->order_type == '2')
+                        <div class="giftinfo">
                             <div>Address </div>
-                            <div>{{$orderData->order->delivery_details->address}}</div>
-                        </div> -->
-                        <!-- <div class="giftinfo">
+                            <div>
+                              {{$orderData->order->delivery_details->address}}
+                                {{$orderData->order->delivery_details->state}}
+                                {{$orderData->order->delivery_details->postal_code}}
+                                {{$orderData->order->delivery_details->country_name}}
+                            </div>
+                        </div>
+                        <div class="giftinfo">
                             <div>Custom details</div>
-                            <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</div>
-                        </div> -->
+                            <div>{{$orderData->ChatroomRecordtable->custom_details}}</div>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
