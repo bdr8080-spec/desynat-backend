@@ -606,8 +606,9 @@ table.dataTable td.dt-type-date {
 
 .yellow-bg {
     height: max-content;
-    padding: 2px 6px;
+    padding: 2px 10px;
     font-size: 14px;
+    border-radius: 5px;
 }
 
 .categoryDetail .category_filter {
