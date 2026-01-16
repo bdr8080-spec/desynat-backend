@@ -370,8 +370,13 @@ if (!function_exists('Seller_orderItemViewData')) {
             => 'Return Request Accepted',
 
             $orderDetail->r_e_approve == '1' &&
+            $orderDetail->return_type == '1' &&  $orderDetail->is_picked == "1" &&  $orderDetail->delivery_status == "3" 
+            => 'Return complete',
+
+            $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' &&  $orderDetail->is_picked == "1"
             => 'Return Picked',
+
 
             $orderDetail->r_e_approve == '2' &&
             $orderDetail->return_type == '1'
