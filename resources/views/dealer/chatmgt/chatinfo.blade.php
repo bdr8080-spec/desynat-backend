@@ -83,40 +83,6 @@
                                         </button>
                                     </h2>
                                     <div id="viewRequest" class="accordion-collapse collapse p-3">
-                                        <!-- <table class="table table-borderless table-font">
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Item Price</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->price}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Shipping Fees</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->shipping}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Tax</div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->tax}} KD</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="width-120">Total Amount </div>
-                                                </td>
-                                                <td>
-                                                    <div>{{ $single_chats['record']->total_amount}} KD</div>
-                                                </td>
-                                            </tr>
-                                        </table> -->
 
                                         <table class="table table-borderless table-font">
                                             <tr>
@@ -155,6 +121,53 @@
                     </div>
                 </div>
                 @endif
+
+                @if($single_chats['record']->product_request=='1' && $single_chats['record']->action=='1')
+
+                <div class="time-pnl" style="display:none">
+                    <div class="gift-pnl mt-4">
+                        <div class="border-1">
+                            <table class="table table-borderless table-font mb-0">
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Per Item Price</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $single_chats['record']->price}} KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Shipping Fees</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $single_chats['record']->shipping}} KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Tax</div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $single_chats['record']->tax}} KD</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="width-120">Total Amount </div>
+                                    </td>
+                                    <td>
+                                        <div>{{ $single_chats['record']->total_amount}} KD</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                @endif
+
+
 
                 <!-- Show Quetasion Code  -->
                 @if($single_chats['record']->product_request=='1' && $single_chats['record']->action=='0')
@@ -224,8 +237,9 @@
 
 
 
+                @if($single_chats['record']->product_request=='1' && $single_chats['record']->action=='1' ||
+                $single_chats['record']->action=='2' )
 
-                @if($single_chats['record']->action=='2' || $single_chats['record']->action=='3')
 
                 <div class="time-pnl">
                     <div class="gift-pnl mt-4">
@@ -235,7 +249,7 @@
                             <table class="table table-borderless table-font mb-0">
                                 <tr>
                                     <td>
-                                        <div class="width-120">Per Item Price</div>
+                                        <div class="width-120">Per Item Price 1</div>
                                     </td>
                                     <td>
                                         <div>{{ $single_chats['record']->price}} KD</div>
@@ -443,6 +457,20 @@
 </div>
 
 
+<!-- ModifyRequestModal Modal -->
+<div class="modal fade" id="ModifyRequestModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+                    <div class="title24 py-3">Quotation Modify Successfully!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- jQuery (required by Toastr) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -475,6 +503,9 @@ $(document).on('submit', 'form#SendQuotation', function(event) {
     var form = $(this);
     var data = new FormData($(this)[0]);
     var url = form.attr("action");
+
+    data.append('action', '1');
+
     var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
 
     $('.submit').attr('disabled', true);
@@ -582,6 +613,7 @@ $(document)
         var form = $(this);
         var data = new FormData($(this)[0]);
         var url = form.attr("action");
+        data.append('action', '2');
         var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
 
         $('.submit').attr('disabled', true);
@@ -616,7 +648,7 @@ $(document)
                     // toastr.success(response.message);
 
                     $('#modifyModal').modal('hide');
-                    $('#SendRequestModal').modal('show');
+                    $('#ModifyRequestModal').modal('show');
 
 
 

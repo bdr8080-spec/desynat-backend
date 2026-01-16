@@ -451,8 +451,8 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             ($val->product_request == '1' && $val->action == '0')
         ) {
             $data['text']  = 'New';
-            $data['color'] = '#7e8517ff';
-            $data['bg']    = '#7981091a';
+            $data['color'] = '#EA9413';
+            $data['bg']    = '#EA94131A';
         }
 
         // QUOTATION SENT
@@ -461,8 +461,8 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             in_array($val->action, ['1', '2'])
         ) {
             $data['text']  = 'Quotation Sent';
-            $data['color'] = '#171985ff';
-            $data['bg']    = '#212f811a';
+            $data['color'] = '#172B85';
+            $data['bg']    = '#172B851A';
         }
 
         // REQUEST REJECTED
@@ -471,8 +471,8 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             in_array($val->action, ['3', '4'])
         ) {
             $data['text']  = 'Request Rejected';
-            $data['color'] = '#EA9413';
-            $data['bg']    = '#fb0b0b';
+            $data['color'] = '#f31616ff';
+            $data['bg']    = '#b3b3b3ff';
             $data['class'] = 'red-bg yellow-bg';
         }
 

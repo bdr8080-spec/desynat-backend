@@ -565,7 +565,9 @@ try{
         'product_details.subcategory',
         'product_details.seller_details',
         'variation_details.color',
-        'variation_details.size'
+        'variation_details.size',
+        "exchange_order_details",
+        "chatRoomrecords"
     ])
     ->whereHas('order', function ($q) use ($request) {
 
