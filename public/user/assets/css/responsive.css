@@ -362,6 +362,13 @@
     .orderstatus {
         margin-top: 10px;
     }
+    .card-right {
+        flex-wrap: wrap;
+    }
+
+
+
+    
 
 }
 
