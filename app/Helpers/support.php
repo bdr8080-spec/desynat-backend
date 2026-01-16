@@ -382,6 +382,10 @@ if (!function_exists('Seller_orderItemViewData')) {
             $orderDetail->return_type == '1'
             => 'Return Request',
 
+              // Delivered
+            $orderDetail->delivery_status == '7'
+            => 'On The Way',
+
             // Default
             default => 'Ongoing',
         };
