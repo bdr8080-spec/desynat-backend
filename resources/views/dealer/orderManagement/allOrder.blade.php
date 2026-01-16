@@ -123,8 +123,17 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{$val->amount}}</td>
-                                            <td>{{$val->admin_commission}}</td>
+
+                                            @php
+
+                                            $Total_Amount= $val->amount * $val->quantity;
+
+                                            $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
+
+                                            @endphp
+
+                                            <td>{{$Total_Amount}} KD</td>
+                                            <td>{{$val->admin_commission}} KD</td>
 
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
@@ -228,8 +237,17 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{$val->amount}}</td>
-                                            <td>{{$val->admin_commission}}</td>
+
+                                            @php
+
+                                            $Total_Amount= $val->amount * $val->quantity;
+
+                                            $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
+
+                                            @endphp
+
+                                            <td>{{$Total_Amount}} KD</td>
+                                            <td>{{$val->admin_commission}} KD</td>
 
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
@@ -332,8 +350,17 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{$val->amount}}</td>
-                                            <td>{{$val->admin_commission}}</td>
+                                            @php
+
+                                            $Total_Amount= $val->amount * $val->quantity;
+
+                                            $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
+
+                                            @endphp
+
+                                            <td>{{$Total_Amount}} KD</td>
+
+                                            <td>{{$val->admin_commission}} KD</td>
 
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
@@ -472,7 +499,16 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{@$val->chatRoomrecords->price}} KD </td>
+                                            @php
+
+                                            $Total_Amount= $val->amount * $val->quantity;
+
+                                            $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
+
+                                            @endphp
+
+                                            <td>{{$Total_Amount}} KD</td>
+
                                             <td>{{$val->admin_commission}}</td>
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
@@ -575,9 +611,17 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{@$val->chatRoomrecords->price}} KD</td>
+                                            @php
 
-                                            <td>{{$val->admin_commission}}</td>
+                                            $Total_Amount= $val->amount * $val->quantity;
+
+                                            $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
+
+                                            @endphp
+
+                                            <td>{{$Total_Amount}} KD</td>
+
+                                            <td>{{$val->admin_commission}} KD</td>
 
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
@@ -679,8 +723,17 @@
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
-                                            <td>{{@$val->chatRoomrecords->price}} KD </td>
-                                            <td>{{$val->admin_commission}}</td>
+                                            @php
+
+                                            $Total_Amount= $val->amount * $val->quantity;
+
+                                            $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
+
+                                            @endphp
+
+                                            <td>{{$Total_Amount}} KD</td>
+
+                                            <td>{{$val->admin_commission}} KD</td>
 
                                             <td>
                                                 <a href="{{ route('seller.single_order_View', $val->id ) }}"
