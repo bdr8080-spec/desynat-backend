@@ -382,6 +382,37 @@ class ChatController extends Controller
         }
     }
 
+    public function create_normal_chat(Request $request)
+    {
+        try {
+
+            $userId   = auth()->id();
+            $sellerId = $request->seller_id;
+
+            $chatData = (object)[
+                'user_id'   => $userId,
+                'seller_id' => $sellerId,
+            ];
+
+            $data = $this->UserFirebaseService->CreateNormalChatFirebase($chatData);
+
+
+            return response()->json([
+                'status'    => 'success',
+                'message' => $data['message'],
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Failed to send message',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
 
