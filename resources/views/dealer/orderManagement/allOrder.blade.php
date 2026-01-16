@@ -126,8 +126,8 @@
 
                                             @php
 
+                                            $Total_Amount=0;
                                             $Total_Amount= $val->amount * $val->quantity;
-
                                             $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
 
                                             @endphp
@@ -240,6 +240,7 @@
 
                                             @php
 
+                                            $Total_Amount=0;
                                             $Total_Amount= $val->amount * $val->quantity;
 
                                             $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
@@ -351,7 +352,7 @@
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
                                             @php
-
+                                            $Total_Amount=0;
                                             $Total_Amount= $val->amount * $val->quantity;
 
                                             $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
@@ -501,6 +502,7 @@
                                             <td>{{$val->order->delivery_details->address}}</td>
                                             @php
 
+                                            $Total_Amount=0;
                                             $Total_Amount= $val->amount * $val->quantity;
 
                                             $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
@@ -613,6 +615,7 @@
                                             <td>{{$val->order->delivery_details->address}}</td>
                                             @php
 
+                                            $Total_Amount=0;
                                             $Total_Amount= $val->amount * $val->quantity;
 
                                             $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
@@ -725,6 +728,7 @@
                                             <td>{{$val->order->delivery_details->address}}</td>
                                             @php
 
+                                            $Total_Amount=0;
                                             $Total_Amount= $val->amount * $val->quantity;
 
                                             $Total_Amount+=$Total_Amount+$val->tax + $val->shipping_fees+ $val->amount;
