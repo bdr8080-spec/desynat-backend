@@ -180,7 +180,7 @@ public function SellerSingleOrdersdata($request){
 
 try{
 
-   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details.category','product_details.subcategory','product_details.brand','UserRatingReviewProvide','variation_details.color','variation_details.size','exchange_new_size_data','exchange_order_details')->where('id',$request->id)->first();
+   $singleOrder= orderdetail::with('order.user_details','order.delivery_details', 'product_details.category','product_details.subcategory','product_details.brand','UserRatingReviewProvide','variation_details.color','variation_details.size','exchange_new_size_data','exchange_order_details','chatRoomrecords')->where('id',$request->id)->first();
    
    if($singleOrder){
     
