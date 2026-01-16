@@ -426,4 +426,83 @@ if (!function_exists('Seller_orderItemViewData')) {
             'bgColor'
         );
     }
+
+
+if (!function_exists('SellerChatproductRequestStatus')) {
+
+    function SellerChatproductRequestStatus($val)
+    {
+        // Default response
+        $data = [
+            'text'  => '',
+            'color' => '',
+            'bg'    => '',
+            'class' => 'yellow-bg',
+        ];
+
+        // Only for type = 2
+        if ($val->type != '2') {
+            return null;
+        }
+
+        // NEW
+        if (
+            $val->product_request == '0' ||
+            ($val->product_request == '1' && $val->action == '0')
+        ) {
+            $data['text']  = 'New';
+            $data['color'] = '#172B85';
+            $data['bg']    = '#172B851A';
+        }
+
+        // QUOTATION SENT
+        elseif (
+            $val->product_request == '1' &&
+            in_array($val->action, ['1', '2'])
+        ) {
+            $data['text']  = 'Quotation Sent';
+            $data['color'] = '#171985ff';
+            $data['bg']    = '#212f811a';
+        }
+
+        // REQUEST REJECTED
+        elseif (
+            $val->product_request == '1' &&
+            in_array($val->action, ['3', '4'])
+        ) {
+            $data['text']  = 'Request Rejected';
+            $data['color'] = '#EA9413';
+            $data['bg']    = '#fb0b0b';
+            $data['class'] = 'red-bg yellow-bg';
+        }
+
+        // QUOTATION ACCEPTED
+        elseif (
+            $val->product_request == '1' &&
+            $val->action == '5' &&
+            $val->order_create_status === 'null'
+        ) {
+            $data['text']  = 'Quotation Accepted';
+            $data['color'] = '#17854C';
+            $data['bg']    = '#17854C1A';
+        }
+
+        // PLACE ORDER
+        elseif (
+            $val->product_request == '1' &&
+            $val->action == '5' &&
+            $val->order_create_status !== 'null'
+        ) {
+            $data['text']  = 'Place Order';
+            $data['color'] = '#17854C';
+            $data['bg']    = '#17854C1A';
+            $data['class'] = 'red-bg yellow-bg';
+        }
+
+        return $data;
+    }
+}
+
+
+
 }

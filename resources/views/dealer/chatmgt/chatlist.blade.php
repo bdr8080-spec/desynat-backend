@@ -95,44 +95,15 @@
                                                 </div>
                                             </div>
 
-                                            @if($val->type=='2' && $val->product_request=='0' )
-                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">New
+                                            @php
+                                            $status = SellerChatproductRequestStatus($val);
+                                            @endphp
+
+                                            @if($status)
+                                            <div class="{{ $status['class'] }}"
+                                                style="color:{{ $status['color'] }}; background:{{ $status['bg'] }};">
+                                                {{ $status['text'] }}
                                             </div>
-
-                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='0')
-
-                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">New
-                                            </div>
-
-                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='1'
-                                            || $val->action=='2' )
-
-                                            <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation
-                                                Send</div>
-
-                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='3'
-                                            || $val->action=='4')
-
-                                            <div class="red-bg yellow-bg" style="color:#EA9413;background:##fb0b0b;">
-                                                Request
-                                                Rejected
-                                            </div>
-
-                                            @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='5'
-                                            && $val->order_create_status=='null')
-
-                                            <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
-                                                Quotation Accepted
-                                            </div>
-
-                                            @elseif($val->type=='2' &&
-                                            $val->product_request=='1' && $val->action=='5' &&
-                                            $val->order_create_status!=='null')
-
-                                            <div class="red-bg yellow-bg" style="color:#17854C;background:#17854C1A;">
-                                                Place order
-                                            </div>
-
                                             @endif
 
                                         </div>
