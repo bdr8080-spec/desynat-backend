@@ -95,11 +95,13 @@
                                                 </div>
                                             </div>
 
+                                            @if($val->type=='2' && $val->product_request=='0' )
+                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">New
+                                            </div>
 
                                             @if($val->type=='2' && $val->product_request=='1' && $val->action=='0')
 
-                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Request
-                                                Quotation
+                                            <div class="yellow-bg" style="color:#172B85;background:#172B851A;">New
                                             </div>
 
                                             @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='1'
@@ -113,7 +115,7 @@
 
                                             <div class="red-bg yellow-bg" style="color:#EA9413;background:##fb0b0b;">
                                                 Request
-                                                Cancelled
+                                                Rejected
                                             </div>
 
                                             @elseif($val->type=='2' && $val->product_request=='1' && $val->action=='5'
@@ -132,7 +134,7 @@
                                             </div>
 
                                             @else
-                                            <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting
+                                            <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">New
                                             </div>
 
 
