@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="table-responsive mb-5">
-                    <table class="table w-100">
+                    <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="table-responsive mb-5">
-                    <table class="table w-100">
+                    <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -186,7 +186,7 @@
                 </div>
 
                 <div class="table-responsive mb-5">
-                    <table class="table w-100">
+                    <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>

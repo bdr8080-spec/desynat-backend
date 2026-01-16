@@ -525,6 +525,7 @@ class DeliveryBoyOrderService
                 'variation_details.size',
                 'product_details.seller_details.store_info',
                 'order.user_details',
+                'exchange_order_details'
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->when($request->search, function ($q) use ($request) {
@@ -883,7 +884,8 @@ class DeliveryBoyOrderService
                 'variation_details.size',
                 'UserRatingReviewProvide',
                 'order.user_details',
-                'exchange_new_size_data'
+                'exchange_new_size_data',
+                'exchange_order_details'
             )
             ->where('id', $request->id)
             ->first();
@@ -959,6 +961,53 @@ class DeliveryBoyOrderService
             ];
         }
     }
+
+
+    
+
+
+
+    public function ReturnOrderToStoreOnExchnage($request)
+    {
+        try {
+            $data = orderdetail::find($request->id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            if($data->p_orderdetails_id=='null'){
+               return [
+                    'status' => 'error',
+                    'message' => 'This is Not Exchange found',
+                    'data' => []
+                ];
+
+
+            }
+
+
+            $data->returntostore = '1';
+            $data->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Order Return to Store Successfully',
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 

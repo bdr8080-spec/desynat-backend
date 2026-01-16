@@ -67,7 +67,7 @@
                 </form>
 
                 <div class="table-responsive mt-5">
-                    <table id="myTable" class="table">
+                    <!-- <table id="myTable" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -145,7 +145,53 @@
                             </tr>
                             @endforelse
                         </tbody>
+                    </table> -->
+                    <table id="myTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Sr.No</th>
+                                <th>Request ID</th>
+                                <th>Seller Name</th>
+                                <th>Seller Country</th>
+                                <th>Request On</th>
+                                <th>Banner Image</th>
+                                <th>Banner Place</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>No. of Days</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($newRequest as $index => $data)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>#{{ $data['order_id'] ?? '' }}</td>
+                                <td>{{ optional($data['seller_details'])->first_name ?? '' }} {{ optional($data['seller_details'])->last_name ?? '' }}</td>
+                                <td>{{ \App\Models\Country::where('dial_code', optional($data['seller_details'])->country_code)->value('name') ?? '' }}</td>
+                                <td>{{ optional($data['created_at']) ? \Carbon\Carbon::parse($data['created_at'])->format('jS F Y | h:i A') : '' }}</td>
+                                <td>
+                                    @if(!empty($data['upload_banner']))
+                                        <a href="{{ $data['upload_banner'] }}" target="_blank">
+                                            <img src="{{ $data['upload_banner'] }}" width="40" height="40"/>
+                                        </a>
+                                    @endif
+                                </td>
+                                <td>{{ [1=>'Home Top',2=>'Home Bottom',3=>'Sub Category'][$data['banner_position']] ?? '' }}</td>
+                                <td>{{ optional($data['start_date']) ? \Carbon\Carbon::parse($data['start_date'])->format('d F Y') : '' }}</td>
+                                <td>{{ optional($data['end_date']) ? \Carbon\Carbon::parse($data['end_date'])->format('d F Y') : '' }}</td>
+                                <td>{{ $data['total_days'] ?? '' }} days</td>
+                                <td>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <a class="table-button approveBannerBtn" data-id="{{ $data['id'] }}"><i class="bi bi-check-circle-fill"></i></a>
+                                        <a class="table-button rejectBannerBtn" data-id="{{ $data['id'] }}" data-bs-toggle="modal" data-bs-target="#rejectmodel"><i class="bi bi-x-circle-fill"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
+
                 </div>
             </div>
             <!-- approved -->

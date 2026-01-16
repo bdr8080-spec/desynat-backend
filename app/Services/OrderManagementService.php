@@ -871,7 +871,8 @@ class OrderManagementService
                 'variation_details.color',
                 'variation_details.size',
                 'UserRatingReviewProvide',
-                'driver_details.zone_info'
+                'driver_details.zone_info',
+                'exchange_order_details'
             ])
             ->where('id', $request->id)->first();
 

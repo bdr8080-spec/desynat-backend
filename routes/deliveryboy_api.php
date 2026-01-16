@@ -41,6 +41,7 @@ Route::group(['prefix' => 'deliveryboy'], function () {
     Route::get('/get_reasons', [DeliveryBoyOrderController::class,'get_reasons']);
 
 
+    Route::post('/return-order-to-store-in-exchange', [DeliveryBoyOrderController::class,'ReturnOrderToStoreOnExchnage']);
 
     });
 

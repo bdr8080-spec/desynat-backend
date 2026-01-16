@@ -235,6 +235,41 @@ class DeliveryBoyOrderController extends Controller
         }
     }
 
+
+      public function ReturnOrderToStoreOnExchnage(Request $request)
+    {   
+        $validate = Validator::make($request->all(), [
+            
+            'id' => 'required|exists:orderdetails,id',
+            'delivery_status' => 'required|in:1,2',
+            // 'reason' => 'required_if:delivery_status,8|string',
+            //'collect_amount' => 'required_if:delivery_status,3|in:1',
+        ]);
+
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $data = (object)[
+            'id' => $request->id,
+            'delivery_status' => $request->delivery_status,
+           ];
+
+        try {
+            $data = $this->DeliveryBoyOrderService->ReturnOrderToStoreOnExchnage($data);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 }
 
 

@@ -432,6 +432,7 @@ $order_id=$createOrder->id;
         "giftcard_amount"=>$request->giftcard_amount,
         // "promocode_id"=>$promoCodeId,
         // "promocode_value"=>$PrmocodeCardAmountDivide,
+        'unique_id' => $request_data->unique_id
     ];
     orderdetail::create($cart_data);
 
