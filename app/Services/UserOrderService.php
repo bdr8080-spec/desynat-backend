@@ -685,7 +685,8 @@ $orders = $orders->orderBy('id', 'desc')->get();
         'product_details.store',
         'variation_details.color',
         'variation_details.size',
-        'UserRatingReviewProvide'
+        'UserRatingReviewProvide',
+        'exchange_order_details'
     ])
     ->where('order_id', $request->order_id)
     ->where('id',$request->orderdetails_id)
