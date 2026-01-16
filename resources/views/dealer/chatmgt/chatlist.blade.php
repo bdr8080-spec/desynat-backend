@@ -133,7 +133,6 @@
                                                 Place order
                                             </div>
 
-
                                             @endif
 
                                         </div>
