@@ -439,6 +439,9 @@ try{
 
    if($check_chatRecord){
 
+    $action= isset($request->action)?$request->action:"2";
+
+
     $request_data=[
         'seller_id'=>$request->seller_id,
         "unique_id"=>$request->unique_id,
@@ -448,7 +451,7 @@ try{
         "tax"=>$request->tax,
         "total_amount"=>$request->total_amount,
         "product_request"=>'1',
-        "action"=>'2'
+        "action"=> $action
        ];
        
     $check_chatRecord->update($request_data);

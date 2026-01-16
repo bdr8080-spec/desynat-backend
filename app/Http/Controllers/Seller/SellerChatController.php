@@ -109,7 +109,7 @@ class SellerChatController extends Controller
             'quantity' => 'required',
             "shipping"=>'required',
             "tax"=>'required',
-            "total_amount"=>"required"
+            "total_amount"=>"required",
         ]);
         
        if($validate->fails()){
@@ -126,7 +126,7 @@ class SellerChatController extends Controller
         "shipping"=>$request->shipping,
         "tax"=>$request->tax,
         "total_amount"=>$request->total_amount,
-
+        "action"=>$request->action??null
        ];
 
        $data= $this->SellerOrderService->Modifysinglechatsrecords($request_data);
