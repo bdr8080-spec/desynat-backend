@@ -365,11 +365,6 @@ if (!function_exists('Seller_orderItemViewData')) {
             $orderDetail->return_type == '2'
             => 'Exchange Request',
 
-            // Return request
-            $orderDetail->delivery_status == '3' &&
-            $orderDetail->return_type == '1' && $orderDetail->is_picked == "0"
-            => 'Return Request',
-
             $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' && $orderDetail->is_picked == "0"
             => 'Return Request Accepted',
@@ -381,6 +376,11 @@ if (!function_exists('Seller_orderItemViewData')) {
             $orderDetail->r_e_approve == '2' &&
             $orderDetail->return_type == '1'
             => 'Return Cancelled',
+
+              // Return request
+            $orderDetail->delivery_status == '3' &&
+            $orderDetail->return_type == '1'
+            => 'Return Request',
 
             // Default
             default => 'Ongoing',
