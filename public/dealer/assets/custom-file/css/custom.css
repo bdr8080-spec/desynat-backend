@@ -919,7 +919,7 @@ table.dataTable td.dt-type-date {
         --btn-font: 14px;
         --form-label-size: 14px;
         --font-size-16: 14px;
-        --title24: 18px;
+        --title24: 16px;
         --title-color: #040404;
         --gold-color: #F3D1A2;
         --title30: 22px;
@@ -954,6 +954,18 @@ table.dataTable td.dt-type-date {
         height: 260px !important;
         width: 100%;
         border-radius: 0px;
+    }
+    .tabs-panel .nav-link {
+        line-height: 28px;
+        font-size: 15px;
+    }
+    .form-control {
+        padding: 8px;
+        font-size: 14px;
+    }
+    .logo img {
+        margin-right: -4px;
+        width: 140px;
     }
 
 }
