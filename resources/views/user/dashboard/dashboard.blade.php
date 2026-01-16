@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="customContainer">
-        <div class="owl-carousel owl-theme customOwlcarousel storeBanner">
+        <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
             @if(empty($topBanners['data']) || count($topBanners['data']) == 0)
                 <div class="item">
                     <div class="Bannerstores">
