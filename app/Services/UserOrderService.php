@@ -964,17 +964,9 @@ $orders = $orders->orderBy('id', 'desc')->get();
         
     }
 
-    // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
-    if($checkOrder->order->payment_method=='3'){
-        $new_array=[
-        'payment_status'=>'2',
-        'delivery_status'=>'1'];        
-        if(isset($request->cancel_reason)){
-            $new_array['cancel_reason']= $request->cancel_reason;
-        }
-        $checkOrder->update($new_array);    
-    }else{
-        // If The Exchange Order cancelled  Reverse old Order Status
+
+
+            // If The Exchange Order cancelled  Reverse old Order Status
 if($checkOrder->p_orderdetails_id!==''){
 
  $exchnageOldOrder=orderdetail::with('order')->where('id',$checkOrder->p_orderdetails_id)->first();
@@ -999,17 +991,30 @@ if($checkOrder->p_orderdetails_id!==''){
  $checkOrder->update($new_array);
 
 }else{
+    
+    // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
+    if($checkOrder->order->payment_method=='3'){
+        $new_array=[
+        'payment_status'=>'2',
+        'delivery_status'=>'1'];        
+        if(isset($request->cancel_reason)){
+            $new_array['cancel_reason']= $request->cancel_reason;
+        }
+        $checkOrder->update($new_array);    
+    }else{
+
     $new_array=[
     'payment_status'=>'3',
     'delivery_status'=>'1'];
-
     if(isset($request->cancel_reason)){
         $new_array['cancel_reason']= $request->cancel_reason;
     }
     $checkOrder->update($new_array);
+    }
+
 }
 
-    }
+
 
     // Cancel Order In Order Table if i have 1 varient
 
