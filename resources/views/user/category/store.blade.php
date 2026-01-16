@@ -153,9 +153,7 @@
         </div>
     </div>
 
-    <a href="{{route('user.allChats')}}" class="fixedchat">
-        <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
-    </a>
+
 
 
 

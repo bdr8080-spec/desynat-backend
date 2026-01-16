@@ -612,6 +612,10 @@
         </div>
     </div>
 </form>
+    <input type="hidden" name="seller_id" value="{{ $store_details['store']['seller_id'] }}"/>
+    <a href="javascript:void(0)" class="fixedchat">
+        <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
+    </a>
 
 
 
@@ -792,5 +796,49 @@ slider.addEventListener('input', function() {
         }
     };
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatBtn = document.querySelector('.fixedchat');
+    const sellerId = document.querySelector('input[name="seller_id"]').value;
+
+    if (chatBtn) {
+        chatBtn.addEventListener('click', function () {
+
+            fetch("{{ route('user.create_normal_chat') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    seller_id: sellerId
+                })
+            })
+            .then(res => res.json())
+            .then(res => {
+
+                if (res.status === 'success') {
+
+                    const uniqueId = res.data.data.unique_id;
+
+                    let chatUrl = "{{ route('user.userChat', ':id') }}";
+                    chatUrl = chatUrl.replace(':id', uniqueId);
+
+                    window.location.href = chatUrl;
+                }
+
+            })
+            .catch(err => console.error('Chat creation failed', err));
+        });
+    }
+
+});
+</script>
+
+
+
 
 @endsection
