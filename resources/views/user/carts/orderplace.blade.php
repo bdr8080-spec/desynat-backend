@@ -62,7 +62,12 @@
 
             <div>Track your Order</div>
 
-            <a href="{{ route('user.myOrders') }}"> <i class="bi bi-arrow-right arrow-icon"></i> </a>
+            <!-- <a href="{{ route('user.myOrders') }}"> <i class="bi bi-arrow-right arrow-icon"></i> </a> -->
+             <a href="{{ route('user.myOrders', [
+                    'type' => ($orderData['data']->order_type == '1') ? 'normal' : 'custom'
+                ]) }}">
+                <i class="bi bi-arrow-right arrow-icon"></i>
+            </a>
 
         </div>
 

@@ -4,7 +4,7 @@
 
 <div class="categoryDetail customContainer">
 
-    <div class="tabs-panel py-4">
+    <!-- <div class="tabs-panel py-4">
         <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
@@ -17,7 +17,47 @@
                     aria-selected="false">Custom Orders</button>
             </li>
         </ul>
+    </div> -->
+    @php
+    $type = request('type', 'normal'); // default = normal
+    @endphp
+
+    <div class="tabs-panel py-4">
+        <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+
+            <!-- Orders tab -->
+            <li class="nav-item" role="presentation">
+                <button
+                    class="nav-link w-100 {{ $type == 'normal' ? 'active' : '' }}"
+                    id="pills-orders-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-orders"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-orders"
+                    aria-selected="{{ $type == 'normal' ? 'true' : 'false' }}">
+                    Orders
+                </button>
+            </li>
+
+            <!-- Custom Orders tab -->
+            <li class="nav-item" role="presentation">
+                <button
+                    class="nav-link w-100 {{ $type == 'custom' ? 'active' : '' }}"
+                    id="pills-ordercustom-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#pills-ordercustom"
+                    type="button"
+                    role="tab"
+                    aria-controls="pills-ordercustom"
+                    aria-selected="{{ $type == 'custom' ? 'true' : 'false' }}">
+                    Custom Orders
+                </button>
+            </li>
+
+        </ul>
     </div>
+
 
     <div class="tab-body-wapper">
         <div class="tab-content" id="pills-tabContent">
