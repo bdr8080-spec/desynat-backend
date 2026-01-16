@@ -66,7 +66,7 @@
                                 </div>
                             </div>
 
-                            <div class="card-right d-flex w-100 justify-content-between">
+                            <div class="card-right d-flex w-100 justify-content-between flex-wrap">
                                 <div class="product-info">
                                     <h5 class="product-title">
                                         {{ $orderData->product_details->product_name_en ?? 'N/A' }}</h5>

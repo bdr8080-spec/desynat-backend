@@ -353,6 +353,12 @@
     .expert-date {
         font-size: 12px;
     }
+    .orderstatus.p-3.mb-4 {
+        padding: 10px !important;
+    }
+    .orderstatus {
+        margin-top: 10px;
+    }
 
 }
 
