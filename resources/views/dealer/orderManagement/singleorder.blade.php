@@ -39,7 +39,7 @@
             $statusCode = Seller_orderItemViewData($order_details);
             @endphp
 
-            <div class="btn-outline1 btn-outline-red" style="color:color: {{ $statusCode['statusColor'] }};
+            <div class="btn-outline1 btn-outline-red" style="color:{{ $statusCode['statusColor'] }};
              background: {{ $statusCode['bgColor'] }}">{{ $statusCode['statusText'] }}</div>
 
             <!-- @if($order_details->payment_status == '2' || $order_details->payment_status == '3')
@@ -482,7 +482,7 @@
             <!-- If Delivery Form in Process  -->
 
             @if($order_details->return_type=="0" && !in_array($order_details->payment_status, ["2", "3"]) &&
-            in_array($order_details->delivery_status,['1','2','2.1','2.2']))
+            in_array($order_details->delivery_status,['1','2']))
 
             <form id="updateDeliveryStatus" action="{{ route('seller.update-delivery-status') }}" method="post">
                 @csrf
@@ -497,7 +497,7 @@
                             </option>
                             <!-- <option value="2.1" @if($order_details->delivery_status=="2.1") selected @endif > Packed
                             </option> -->
-                            <option value="2.2" @if($order_details->delivery_status=="2.2") selected @endif> Shipped
+                            <option value="2.1" @if($order_details->delivery_status=="2.2") selected @endif> Shipped
                             </option>
                         </select>
                     </div>
