@@ -68,7 +68,10 @@ class orderdetail extends Model
         return $this->hasOne(allproductchats::class,'unique_id','unique_id');
 
     }
-
+    
+      public function exchange_order_details(){
+        return $this->hasOne(orderdetail::class,'p_orderdetails_id','id');
+    }
     
 
 }

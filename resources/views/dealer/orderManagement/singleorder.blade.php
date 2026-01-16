@@ -165,7 +165,7 @@
                 @endisset
                 <div class="pay-sum">
                     <div class="summary-title-1">Sub Total</div>
-                    <div class="summary-value">{{$order_details->amount}} KD</div>
+                    <div class="summary-value">{{$order_details->amount * $order_details->quantity}} KD</div>
                 </div>
 
                 @isset($order_details->promocode_value)
@@ -190,10 +190,10 @@
 
                     @php
 
-                    $user_Paid_amount= $order_details->amount + $order_details->tax
+                    $user_Paid_amount= $order_details->amount * $order_details->quantity + $order_details->tax
                     + $order_details->shipping_fees;
 
-                    $total_amount= $order_details->amount + $order_details->tax +
+                    $total_amount= $order_details->amount * $order_details->quantity + $order_details->tax +
                     $order_details->promocode_value + $order_details->shipping_fees +$order_details->giftcard_amount ;
 
                     @endphp
@@ -222,9 +222,11 @@
                     <div class="summary-value">#{{$order_details->order->transaction_id}} </div>
                 </div>
                 @endisset
+
                 <div class="pay-sum">
-                    <div class="summary-title-1">Item price</div>
-                    <div class="summary-value">{{$order_details->amount}} KD </div>
+                    <div class="summary-title-1">Per Item ( {{$order_details->amount}} KD x
+                        {{$order_details->quantity}}) </div>
+                    <div class="summary-value">{{$order_details->amount * $order_details->quantity}} KD</div>
                 </div>
 
                 @isset($order_details->promocode_value)
@@ -245,14 +247,14 @@
                 </div>
 
                 <div class="pay-sum">
-                    <div class="summary-title-1">Total</div>
+                    <div class="summary-title-1">Total Amount</div>
 
                     @php
 
-                    $user_Paid_amount= $order_details->amount + $order_details->tax
+                    $user_Paid_amount= $order_details->amount * $order_details->quantity + $order_details->tax
                     + $order_details->shipping_fees;
 
-                    $total_amount= $order_details->amount + $order_details->tax +
+                    $total_amount= $order_details->amount * $order_details->quantity + $order_details->tax +
                     $order_details->promocode_value + $order_details->shipping_fees +$order_details->giftcard_amount ;
 
                     @endphp
