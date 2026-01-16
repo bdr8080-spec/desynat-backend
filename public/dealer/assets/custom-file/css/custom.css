@@ -951,7 +951,7 @@ table.dataTable td.dt-type-date {
         font-weight: 600;
     }
     .brand-banner {
-        height: 260px;
+        height: 260px !important;
         width: 100%;
         border-radius: 0px;
     }
