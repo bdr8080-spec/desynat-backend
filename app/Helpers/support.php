@@ -362,8 +362,12 @@ if (!function_exists('Seller_orderItemViewData')) {
 
             // Exchange request
             $orderDetail->delivery_status == '3' &&
-            $orderDetail->return_type == '2'
+            $orderDetail->return_type == '2' && $orderDetail->r_e_approve == '0'
             => 'Exchange Request',
+
+            $orderDetail->delivery_status == '3' &&
+            $orderDetail->return_type == '2' && $orderDetail->r_e_approve == '1'
+            => 'Exchange Request Accepted',
 
             $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' && $orderDetail->is_picked == "0"
