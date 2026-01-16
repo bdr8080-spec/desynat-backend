@@ -525,6 +525,7 @@ class DeliveryBoyOrderService
                 'variation_details.size',
                 'product_details.seller_details.store_info',
                 'order.user_details',
+                'exchange_order_details'
             )
             ->where('delivery_boy_id', $request->delivery_boy_id)
             ->when($request->search, function ($q) use ($request) {
@@ -883,7 +884,8 @@ class DeliveryBoyOrderService
                 'variation_details.size',
                 'UserRatingReviewProvide',
                 'order.user_details',
-                'exchange_new_size_data'
+                'exchange_new_size_data',
+                'exchange_order_details'
             )
             ->where('id', $request->id)
             ->first();
