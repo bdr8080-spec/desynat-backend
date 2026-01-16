@@ -410,8 +410,7 @@ foreach ($check_chatRecord as $key => $val) {
             "giftcard_id"=>$request->giftcard_id,
             "giftcard_amount"=>$request->giftcard_amount,
             "Payment_method"=>$request_data->Payment_method,
-            'unique_id' => $request_data->unique_id
-          
+            'unique_id' => $request->unique_id
            ];
 
 $createOrder=Order::create($request_data);
@@ -432,7 +431,7 @@ $order_id=$createOrder->id;
         "giftcard_amount"=>$request->giftcard_amount,
         // "promocode_id"=>$promoCodeId,
         // "promocode_value"=>$PrmocodeCardAmountDivide,
-        'unique_id' => $request_data->unique_id
+        'unique_id' => $request->unique_id
     ];
     orderdetail::create($cart_data);
 

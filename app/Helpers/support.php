@@ -362,16 +362,25 @@ if (!function_exists('Seller_orderItemViewData')) {
 
             // Exchange request
             $orderDetail->delivery_status == '3' &&
-            $orderDetail->return_type == '2'
+            $orderDetail->return_type == '2' && $orderDetail->r_e_approve == '0'
             => 'Exchange Request',
+
+            $orderDetail->delivery_status == '3' &&
+            $orderDetail->return_type == '2' && $orderDetail->r_e_approve == '1'
+            => 'Exchange Request Accepted',
 
             $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' && $orderDetail->is_picked == "0"
             => 'Return Request Accepted',
 
             $orderDetail->r_e_approve == '1' &&
+            $orderDetail->return_type == '1' &&  $orderDetail->is_picked == "1" &&  $orderDetail->delivery_status == "3" 
+            => 'Return complete',
+
+            $orderDetail->r_e_approve == '1' &&
             $orderDetail->return_type == '1' &&  $orderDetail->is_picked == "1"
             => 'Return Picked',
+
 
             $orderDetail->r_e_approve == '2' &&
             $orderDetail->return_type == '1'
@@ -381,6 +390,10 @@ if (!function_exists('Seller_orderItemViewData')) {
             $orderDetail->delivery_status == '3' &&
             $orderDetail->return_type == '1'
             => 'Return Request',
+
+              // Delivered
+            $orderDetail->delivery_status == '7'
+            => 'On The Way',
 
             // Default
             default => 'Ongoing',
@@ -413,4 +426,83 @@ if (!function_exists('Seller_orderItemViewData')) {
             'bgColor'
         );
     }
+
+
+if (!function_exists('SellerChatproductRequestStatus')) {
+
+    function SellerChatproductRequestStatus($val)
+    {
+        // Default response
+        $data = [
+            'text'  => '',
+            'color' => '',
+            'bg'    => '',
+            'class' => 'yellow-bg',
+        ];
+
+        // Only for type = 2
+        if ($val->type != '2') {
+            return null;
+        }
+
+        // NEW
+        if (
+            $val->product_request == '0' ||
+            ($val->product_request == '1' && $val->action == '0')
+        ) {
+            $data['text']  = 'New';
+            $data['color'] = '#7e8517ff';
+            $data['bg']    = '#7981091a';
+        }
+
+        // QUOTATION SENT
+        elseif (
+            $val->product_request == '1' &&
+            in_array($val->action, ['1', '2'])
+        ) {
+            $data['text']  = 'Quotation Sent';
+            $data['color'] = '#171985ff';
+            $data['bg']    = '#212f811a';
+        }
+
+        // REQUEST REJECTED
+        elseif (
+            $val->product_request == '1' &&
+            in_array($val->action, ['3', '4'])
+        ) {
+            $data['text']  = 'Request Rejected';
+            $data['color'] = '#EA9413';
+            $data['bg']    = '#fb0b0b';
+            $data['class'] = 'red-bg yellow-bg';
+        }
+
+        // QUOTATION ACCEPTED
+        elseif (
+            $val->product_request == '1' &&
+            $val->action == '5' &&
+            !isset($val->order_create_status)
+        ) {
+            $data['text']  = 'Quotation Accepted';
+            $data['color'] = '#17854C';
+            $data['bg']    = '#17854C1A';
+        }
+
+        // PLACE ORDER
+        elseif (
+            $val->product_request == '1' &&
+            $val->action == '5' &&
+            isset( $val->order_create_status )
+        ) {
+            $data['text']  = 'Place Order';
+            $data['color'] = '#17854C';
+            $data['bg']    = '#17854C1A';
+            $data['class'] = 'red-bg yellow-bg';
+        }
+
+        return $data;
+    }
+}
+
+
+
 }
