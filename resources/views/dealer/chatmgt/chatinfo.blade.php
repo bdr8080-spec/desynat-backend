@@ -18,10 +18,7 @@
                         <div class="cart-card">
                             <div class="pb-2 d-flex justify-content-between">
                                 <div class="request-title">Request id # {{ $single_chats['record']->unique_id }}</div>
-                                <!-- <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">New</div> -->
-                                <!-- <div class="yellow-bg" style="color:#172B85;background:#172B851A;">Quotation Received</div> -->
-                                <!-- <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">Quotation Accepted
-                                </div> -->
+
 
 
                                 @if($single_chats['record']->type=='2' &&
@@ -245,8 +242,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button type="submit" class="btn add-fillbtn w-100"  data-bs-toggle="modal"
-                            data-bs-target="#successModal">Send Quotation</button>
+                            <button type="submit" class="btn add-fillbtn w-100">Send Quotation</button>
                         </div>
                     </div>
 
@@ -469,8 +465,8 @@
 </div>
 
 
- <!-- Success Modal -->
- <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Success Modal -->
+<div class="modal fade" id="SendRequestModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -548,9 +544,9 @@ $(document).on('submit', 'form#SendQuotation', function(event) {
 
             if (response.status === 'success') {
                 // toastr.success(response.message);
-                toastr.success("Send Quotation Request Send Successfully");
+                // toastr.success("Send Quotation Request Send Successfully");
 
-                // $('#RequestBanner').modal('show');
+                $('#SendRequestModal').modal('show');
 
                 $('.submit').attr('disabled', true);
                 window.setTimeout(function() {
@@ -654,9 +650,12 @@ $(document)
                 }, 2000);
 
                 if (response.status === 'success') {
-                    toastr.success(response.message);
+                    // toastr.success(response.message);
 
-                    // $('#RequestBanner').modal('show');
+                    $('#modifyModal').modal('hide');
+                    $('#SendRequestModal').modal('show');
+
+
 
                     $('.submit').attr('disabled', true);
                     window.setTimeout(function() {
