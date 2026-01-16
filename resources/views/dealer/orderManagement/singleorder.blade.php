@@ -398,6 +398,29 @@
 
             <!-- Product return Code  End  -->
 
+            <!-- Cancel Reason Show  -->
+
+            @if($order_details->payment_status=='2' || $order_details->payment_status=='3')
+
+            <div class="order-box border-radious-10 box-shadow mt-4">
+                <h6>Cancelled Details</h6>
+
+                <div class="pay-sum">
+                    <div class="summary-title-1">Cancelled Id</div>
+                    <div class="summary-value">#{{$order_details->id }}</div>
+                </div>
+                <div class="pay-sum">
+                    <div class="summary-title-1">Cancelled on</div>
+                    <div class="summary-value"> {{$order_details->updated_at }}</div>
+                </div>
+                <div class="pay-sum">
+                    <div class="summary-title-1">Reason</div>
+                    <div class="summary-value">{{$order_details->cancel_reason }}</div>
+                </div>
+            </div>
+
+            @endif
+
             <!-- Product Exchange Code  Start -->
 
             @if($order_details->return_type!=='0' && $order_details->return_type=='2' )
