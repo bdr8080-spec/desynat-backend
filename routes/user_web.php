@@ -114,6 +114,7 @@ use App\Http\Controllers\User\ChatController;
   Route::post('/sendCustomOrderRequest', [ChatController::class,'sendCustomOrderRequest'])->name('user.sendCustomOrderRequest');
   Route::post('/acceptRejectCustOrder', [ChatController::class,'acceptRejectCustOrder'])->name('user.acceptRejectCustOrder');
   Route::post('/create_custom_order', [ChatController::class,'create_custom_order'])->name('user.create_custom_order');
+  Route::post('/create_normal_chat', [ChatController::class,'create_normal_chat'])->name('user.create_normal_chat');
 
 });
 

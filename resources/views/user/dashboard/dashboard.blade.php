@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="customContainer">
-        <div class="owl-carousel owl-theme customOwlcarousel storeBanner">
+        <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
             @if(empty($topBanners['data']) || count($topBanners['data']) == 0)
                 <div class="item">
                     <div class="Bannerstores">
@@ -377,7 +377,7 @@
         <h3 class="mid-headng mb-3">Browse some Premium stores</h3>
         @if(empty($bottomBanners['data']) || count($bottomBanners['data']) == 0)
             <div class="premiumImg">
-                <img src="{{ asset('user/assets/images/premium.svg') }}" class="img-fluid" />
+                <img src="{{ asset('user/assets/images/active-banner.png') }}" class="img-fluid" />
             </div>
         @else
             @foreach($bottomBanners['data'] as $banner)
@@ -738,7 +738,7 @@
     @endauth
 
 
-  <script>
+  <!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     const skipBtn = document.querySelector('.btn-skip');
     const bannerModal = document.getElementById('showBanner');
@@ -769,7 +769,51 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+</script> -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const skipBtn = document.querySelector('.btn-skip');
+    const bannerModal = document.getElementById('showBanner');
+    let bannerUpdated = false; // prevent double call
+
+    function updateBannerView() {
+        if (bannerUpdated) return;
+        bannerUpdated = true;
+
+        if (bannerModal) {
+            bannerModal.style.display = 'none';
+        }
+
+        fetch("{{ route('user.updateBannerView') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({})
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                // console.log('Banner marked as viewed');
+            }
+        })
+        .catch(err => console.error('Error updating banner view', err));
+    }
+
+    // 1️⃣ Click on Skip button
+    if (skipBtn) {
+        skipBtn.addEventListener('click', updateBannerView);
+    }
+
+    // 2️⃣ Auto call after 5 seconds
+    setTimeout(updateBannerView, 5000);
+
+});
 </script>
+
 
 
     <script>
