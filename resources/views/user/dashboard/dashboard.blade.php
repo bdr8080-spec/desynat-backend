@@ -377,7 +377,7 @@
         <h3 class="mid-headng mb-3">Browse some Premium stores</h3>
         @if(empty($bottomBanners['data']) || count($bottomBanners['data']) == 0)
             <div class="premiumImg">
-                <img src="{{ asset('user/assets/images/premium.svg') }}" class="img-fluid" />
+                <img src="{{ asset('user/assets/images/active-banner.png') }}" class="img-fluid" />
             </div>
         @else
             @foreach($bottomBanners['data'] as $banner)
