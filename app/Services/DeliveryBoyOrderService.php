@@ -963,6 +963,53 @@ class DeliveryBoyOrderService
     }
 
 
+    
+
+
+
+    public function ReturnOrderToStoreOnExchnage($request)
+    {
+        try {
+            $data = orderdetail::find($request->id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                    'data' => []
+                ];
+            }
+
+            if($data->p_orderdetails_id=='null'){
+               return [
+                    'status' => 'error',
+                    'message' => 'This is Not Exchange found',
+                    'data' => []
+                ];
+
+
+            }
+
+
+            $data->returntostore = '1';
+            $data->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Order Return to Store Successfully',
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+
 
 
 
