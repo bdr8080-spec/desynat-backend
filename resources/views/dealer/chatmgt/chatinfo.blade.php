@@ -245,7 +245,8 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <button type="submit" class="btn add-fillbtn w-100">Send Quotation</button>
+                            <button type="submit" class="btn add-fillbtn w-100"  data-bs-toggle="modal"
+                            data-bs-target="#successModal">Send Quotation</button>
                         </div>
                     </div>
 
@@ -466,6 +467,22 @@
         </div>
     </div>
 </div>
+
+
+ <!-- Success Modal -->
+ <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+                    <div class="title24 py-3">Request Sent Successfully!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <!-- jQuery (required by Toastr) -->
