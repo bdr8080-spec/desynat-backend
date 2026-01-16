@@ -96,6 +96,7 @@
                                             </div>
 
                                             @php
+
                                             $status = SellerChatproductRequestStatus($val);
                                             @endphp
 

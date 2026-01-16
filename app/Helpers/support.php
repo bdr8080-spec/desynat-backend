@@ -480,7 +480,7 @@ if (!function_exists('SellerChatproductRequestStatus')) {
         elseif (
             $val->product_request == '1' &&
             $val->action == '5' &&
-            $val->order_create_status === 'null'
+            !isset($val->order_create_status)
         ) {
             $data['text']  = 'Quotation Accepted';
             $data['color'] = '#17854C';
@@ -491,7 +491,7 @@ if (!function_exists('SellerChatproductRequestStatus')) {
         elseif (
             $val->product_request == '1' &&
             $val->action == '5' &&
-            $val->order_create_status !== 'null'
+            isset( $val->order_create_status )
         ) {
             $data['text']  = 'Place Order';
             $data['color'] = '#17854C';
