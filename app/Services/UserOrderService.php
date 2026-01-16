@@ -960,14 +960,11 @@ $orders = $orders->orderBy('id', 'desc')->get();
                 'message' => 'Custom Order cancel time is Over',
                 'data' => (object)[]
             ];
-        }
-        
+        }   
     }
 
-
-
-            // If The Exchange Order cancelled  Reverse old Order Status
-if($checkOrder->p_orderdetails_id!==''){
+// If The Exchange Order cancelled  Reverse old Order Status
+if($checkOrder->p_orderdetails_id!=='0' && $checkOrder->p_orderdetails_id!=='null'){
 
  $exchnageOldOrder=orderdetail::with('order')->where('id',$checkOrder->p_orderdetails_id)->first();
 
@@ -991,7 +988,6 @@ if($checkOrder->p_orderdetails_id!==''){
  $checkOrder->update($new_array);
 
 }else{
-    
     // if The Payment is Paid By Cod Then cancelled Order Or Process refund process 
     if($checkOrder->order->payment_method=='3'){
         $new_array=[
