@@ -137,7 +137,7 @@
                                                 @endphp
                                                 <div class="from-group">
                                                     <div class="ongoing-title"
-                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        style="color:{{ $statusCode['statusColor'] }};">
                                                         {{ $statusCode['statusText'] }}
                                                     </div>
 
@@ -242,7 +242,7 @@
                                                 @endphp
                                                 <div class="from-group">
                                                     <div class="ongoing-title"
-                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        style="color:{{ $statusCode['statusColor'] }};">
                                                         {{ $statusCode['statusText'] }}
                                                     </div>
 
@@ -346,7 +346,7 @@
                                                 @endphp
                                                 <div class="from-group">
                                                     <div class="ongoing-title"
-                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        style="color:{{ $statusCode['statusColor'] }};">
                                                         {{ $statusCode['statusText'] }}
                                                     </div>
 
@@ -485,7 +485,7 @@
                                                 @endphp
                                                 <div class="from-group">
                                                     <div class="ongoing-title"
-                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        style="color:{{ $statusCode['statusColor'] }};">
                                                         {{ $statusCode['statusText'] }}
                                                     </div>
 
@@ -590,7 +590,7 @@
                                                 @endphp
                                                 <div class="from-group">
                                                     <div class="ongoing-title"
-                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        style="color:{{ $statusCode['statusColor'] }};">
                                                         {{ $statusCode['statusText'] }}
                                                     </div>
 
@@ -693,7 +693,7 @@
                                                 @endphp
                                                 <div class="from-group">
                                                     <div class="ongoing-title"
-                                                        style="color:color: {{ $statusCode['statusColor'] }};">
+                                                        style="color:{{ $statusCode['statusColor'] }};">
                                                         {{ $statusCode['statusText'] }}
                                                     </div>
 
