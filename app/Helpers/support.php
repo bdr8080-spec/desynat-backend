@@ -451,8 +451,8 @@ if (!function_exists('SellerChatproductRequestStatus')) {
             ($val->product_request == '1' && $val->action == '0')
         ) {
             $data['text']  = 'New';
-            $data['color'] = '#172B85';
-            $data['bg']    = '#172B851A';
+            $data['color'] = '#7e8517ff';
+            $data['bg']    = '#7981091a';
         }
 
         // QUOTATION SENT
