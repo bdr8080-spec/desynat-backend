@@ -377,8 +377,8 @@ $('.bannerpop').owlCarousel({
     nav: false,
     dots: true,
     autoplay: true,
-    autoplayTimeout: 5000,
-    smartSpeed: 5000,
+   autoplayTimeout: 5000,
+    smartSpeed: 2000,
     responsive: {
         0: {
             items: 1,
