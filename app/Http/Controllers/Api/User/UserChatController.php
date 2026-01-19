@@ -97,6 +97,7 @@ class UserChatController extends Controller
        
        $request_data=(object)[
         'user_id'=>$user_id,
+        "filters"=>$request->filters,
        ];
 
 
