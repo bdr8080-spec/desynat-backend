@@ -375,7 +375,26 @@
 
     <div class="customContainer">
         <h3 class="mid-headng mb-3">Browse some Premium stores</h3>
-        @if(empty($bottomBanners['data']) || count($bottomBanners['data']) == 0)
+        
+        <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
+            @if(empty($bottomBanners['data']) || count($bottomBanners['data']) == 0)
+                <div class="item">
+                    <div class="premiumImg">
+                        <img src="{{ asset('user/assets/images/active-banner.png') }}" class="img-fluid" />
+                    </div>
+                </div>
+            @else
+                @foreach($bottomBanners['data'] as $banner)
+                    <div class="item">
+                        <div class="premiumImg">
+                            <img src="{{ $banner->upload_banner }}" class="img-fluid" />
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
+        <!-- @if(empty($bottomBanners['data']) || count($bottomBanners['data']) == 0)
             <div class="premiumImg">
                 <img src="{{ asset('user/assets/images/active-banner.png') }}" class="img-fluid" />
             </div>
@@ -385,7 +404,7 @@
                     <img src="{{ $banner->upload_banner }}" class="img-fluid" />
                 </div>
             @endforeach
-        @endif
+        @endif -->
     </div>
 
     <section class="bestSelling customContainer mt-3">
