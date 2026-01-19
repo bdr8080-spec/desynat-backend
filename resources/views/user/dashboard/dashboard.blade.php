@@ -553,9 +553,15 @@
 
     <div class="customContainer">
         <h3 class="mid-headng mb-3">Browse some discounted deals</h3>
-        <div class="premiumImg">
-            <img src="{{ asset('user/assets/images/discount-deals.svg') }}" class="img-fluid" />
+
+        <div class="owl-carousel owl-theme customOwlcarousel2 storeBanner">
+            <div class="item">
+                <div class="premiumImg">
+                    <img src="{{ asset('user/assets/images/discount-deals.svg') }}" class="img-fluid" />
+                </div>
+            </div>
         </div>
+
     </div>
 
     <section class="customContainer mt-3">
