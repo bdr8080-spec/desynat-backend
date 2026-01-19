@@ -313,6 +313,7 @@
                     </div>
                 </div>
             </div>
+
             @isset($order_details->UserRatingReviewProvide)
             <div class="order-box border-radious-10 box-shadow mt-4">
                 <h6>Customer Ratings</h6>

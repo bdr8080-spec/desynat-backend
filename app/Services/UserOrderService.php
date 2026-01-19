@@ -1399,15 +1399,20 @@ if($checkOrder->p_orderdetails_id!=='0' && $checkOrder->p_orderdetails_id!=='nul
     "product_id"=>$product_id,
     "product_rating"=>$request->product_rating??null,
     "product_review"=>$request->product_review??null,
-    "product_image"=>json_encode($request->product_image)??null,
+    
+    
     "store_id"=>$store_id,
     "store_rating"=>$request->store_rating??null,
     "store_review"=>$request->store_review??null,
-    "store_image"=>json_encode($request->store_image)??null,
     ];
 
+    if(isset($request->product_image) && count($request->product_image) > 0){
+    $requestData["product_image"]=$request->product_image;
+    }
 
-
+    if(isset($request->store_image) && count($request->store_image) > 0){
+    $requestData["store_image"]=$request->store_image;
+    }
 
    $create_review=productRatings::UpdateOrCreate($match,$requestData);
 
