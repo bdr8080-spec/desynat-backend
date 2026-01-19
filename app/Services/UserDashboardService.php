@@ -466,6 +466,7 @@ $country_code=all_countrie::where('dial_code', $user_details->country_code)->fir
 $all_Banners= FullBanner::where('country_id',$country_code->id)
 ->whereDate('start_date','<=',date('Y-m-d'))
 ->whereDate('end_date','>=',date('Y-m-d'))
+->where('type',$request->type)
 ->where('status','1')->get();
 
 return [
@@ -496,6 +497,7 @@ $homeScreenBanner=sellerBanner::with('category_details','subcategory_details')->
 ->whereDate('start_date', '<=', now())
 ->whereDate('end_date', '>=', now())
 ->where('payment_status','1')
+->where('Admin_verify','1')
 ->where('status','1');
 
 if($request->type=='3'){

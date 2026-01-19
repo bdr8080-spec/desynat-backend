@@ -146,6 +146,7 @@ public function popUpHomescreenBanner(Request $request){
 
      $request_data=(object)[
         'user_id'=>$user_id,
+        "type" =>"1"
         ];
       
   $data=$this->UserDashboardService->PopUPHomeScreenBanner($request_data);
