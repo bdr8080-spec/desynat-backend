@@ -72,6 +72,7 @@ class FullBannerService
                 'title' => $request->title,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
+                'type' => $request->type,
             ]);
 
             return [
@@ -107,7 +108,8 @@ class FullBannerService
                 'country_id' => $request->country_id,
                 'title' => $request->title,
                 'start_date' => $request->start_date,
-                'end_date' => $request->end_date,  
+                'end_date' => $request->end_date, 
+                'type' => $request->type, 
             ]);
 
             return [
