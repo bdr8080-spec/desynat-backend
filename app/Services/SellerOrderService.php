@@ -67,6 +67,29 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
         $request->to_date . ' 23:59:59'
     ]);
 }
+
+// apply filter Code /
+  if (!empty($request->filters)) {
+    switch ($request->filters) {
+        case '1':
+        // $all_Order_data = $all_Order_data->where('delivery_status', '2.1');
+        break;
+        case '2':
+        // $all_Order_data = $all_Order_data->where('delivery_status', '2.1');
+        break;
+
+
+    case '3':
+        $all_Order_data = $all_Order_data->where('delivery_status', '2.1');
+        break;
+
+    case '4':
+        $all_Order_data = $all_Order_data->where('p_orderdetails_id', '!=', '0');
+        break;
+}
+
+  }
+
    }
 
    $all_Order_data=$all_Order_data
@@ -110,6 +133,30 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
         $request->to_date . ' 23:59:59'
     ]);
 }
+
+
+// apply filter Code /
+  if (!empty($request->filters)) {
+    switch ($request->filters) {
+        case '1':
+        // $all_Order_data = $all_Order_data->where('delivery_status', '2.1');
+        break;
+        case '2':
+        // $all_Order_data = $all_Order_data->where('delivery_status', '2.1');
+        break;
+
+
+    case '3':
+        $ongoing_order = $ongoing_order->where('delivery_status', '2.1');
+        break;
+
+    case '4':
+        $ongoing_order = $ongoing_order->where('p_orderdetails_id', '!=', '0');
+        break;
+}
+
+  }
+
    }
 
  $ongoing_order=$ongoing_order->orderBy('id','desc')
@@ -139,6 +186,31 @@ if (!empty($request->from_date) && !empty($request->to_date)) {
         $request->to_date . ' 23:59:59'
     ]);
 }
+
+
+
+// apply filter Code /
+  if (!empty($request->filters)) {
+    switch ($request->filters) {
+        case '1':
+        // $all_Order_data = $all_Order_data->where('delivery_status', '2.1');
+        break;
+        case '2':
+        // $all_Order_data = $all_Order_data->where('delivery_status', '2.1');
+        break;
+
+
+    case '3':
+        $past_order = $past_order->where('delivery_status', '2.1');
+        break;
+
+    case '4':
+        $past_order = $past_order->where('p_orderdetails_id', '!=', '0');
+        break;
+}
+
+  }
+
    }
 
    

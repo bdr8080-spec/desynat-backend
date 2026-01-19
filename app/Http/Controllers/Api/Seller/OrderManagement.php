@@ -39,6 +39,7 @@ class OrderManagement extends Controller
         "from_date"=>$request->from_date??null,
         "to_date" =>$request->to_date??null,
         "search" =>$request->search??null,
+        "filters" =>$request->filters??null
        ];
 
 
