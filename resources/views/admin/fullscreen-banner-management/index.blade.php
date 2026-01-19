@@ -105,6 +105,7 @@
                             <th scope="col">SR No.</th>
                             <th scope="col">Banner</th>
                             <th scope="col">Title</th>
+                            <th scope="col">Type</th>
                             <th scope="col">Country</th>
                             <th scope="col">Start Date</th>
                             <th scope="col">End Date</th>
@@ -122,6 +123,13 @@
                                 </a>
                             </td>
                             <td>{{ $banner['title'] }}</td>
+                            <td>
+                                @if($banner['type'] == '1')
+                                    Mobile
+                                @else
+                                    Web
+                                @endif
+                            </td>
                             <td>{{ $banner['country_info']['name'] }}</td>
                             <td>{{ $banner['start_date'] }}</td>
                             <td>{{ $banner['end_date'] }}</td>
