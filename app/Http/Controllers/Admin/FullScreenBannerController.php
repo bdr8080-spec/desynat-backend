@@ -66,6 +66,41 @@ class FullScreenBannerController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        if ($request->hasFile('image')) {
+
+            [$width, $height] = getimagesize($request->file('image'));
+
+            $imageRatio = $width / $height;
+            $tolerance  = 0.01;
+
+            // Determine target ratio based on type
+            if ($request->type == '1') {
+                // Mobile → 9:16 (portrait)
+                $targetRatio = 9 / 16;
+                $ratioLabel  = '9:16';
+            } else {
+                // Web → 16:9 (landscape)
+                $targetRatio = 16 / 9;
+                $ratioLabel  = '16:9';
+            }
+
+            if ($imageRatio < ($targetRatio - $tolerance)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "You can't upload image resolution lower than {$ratioLabel}"
+                ]);
+            }
+
+            if ($imageRatio > ($targetRatio + $tolerance)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "You can't upload image resolution greater than {$ratioLabel}"
+                ]);
+            }
+        }
+
+
+
         $banner = new FullBanner();
         $banner->title = $request->title;
         $banner->country_id = $request->country_id;
@@ -106,6 +141,39 @@ class FullScreenBannerController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        if ($request->hasFile('image')) {
+
+            [$width, $height] = getimagesize($request->file('image'));
+
+            $imageRatio = $width / $height;
+            $tolerance  = 0.01;
+
+            // Determine target ratio based on type
+            if ($request->type == '1') {
+                // Mobile → 9:16 (portrait)
+                $targetRatio = 9 / 16;
+                $ratioLabel  = '9:16';
+            } else {
+                // Web → 16:9 (landscape)
+                $targetRatio = 16 / 9;
+                $ratioLabel  = '16:9';
+            }
+
+            if ($imageRatio < ($targetRatio - $tolerance)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "You can't upload image resolution lower than {$ratioLabel}"
+                ]);
+            }
+
+            if ($imageRatio > ($targetRatio + $tolerance)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "You can't upload image resolution greater than {$ratioLabel}"
+                ]);
+            }
         }
 
         $banner->title = $request->title;
