@@ -72,6 +72,8 @@ class CommonController extends Controller
         return ApiResponse::generateResponse('error', 'Invalid file upload.', null, 400);
     }
 
+    
+
 
 
     public function country(Request $request){
@@ -208,6 +210,101 @@ class CommonController extends Controller
 
         return ApiResponse::generateResponse('error', 'Invalid file upload.', null, 400);
     }
+
+    public function uploadWithResolution(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'type'  => 'required|in:1,2', // 1 = Mobile, 2 = Web
+        ]);
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            $image = $request->file('image');
+
+            // ✅ Aspect ratio validation
+            [$width, $height] = getimagesize($image);
+
+            $imageRatio = $width / $height;
+            $tolerance  = 0.01;
+
+            if ($request->type == 1) {
+                // Mobile → 9:16
+                $targetRatio = 9 / 16;
+                $ratioLabel  = '9:16';
+            } else {
+                // Web → 16:9
+                $targetRatio = 16 / 9;
+                $ratioLabel  = '16:9';
+            }
+
+            if ($imageRatio < ($targetRatio - $tolerance)) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    "You can't upload image resolution lower than {$ratioLabel}",
+                    null,
+                    422
+                );
+            }
+
+            if ($imageRatio > ($targetRatio + $tolerance)) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    "You can't upload image resolution greater than {$ratioLabel}",
+                    null,
+                    422
+                );
+            }
+
+            // ✅ Generate filename
+            $filename = Str::random(10) . '.' . $image->getClientOriginalExtension();
+
+            try {
+                Log::info('S3 Configuration:', config('filesystems.disks.s3'));
+
+                $path = $image->storeAs('images', $filename, 's3');
+
+                if (!$path) {
+                    Log::error('File upload failed: storeAs returned false');
+                    return ApiResponse::generateResponse(
+                        'error',
+                        'Failed to upload file.',
+                        null,
+                        500
+                    );
+                }
+
+                $url = Storage::disk('s3')->url($path);
+
+                return ApiResponse::generateResponse(
+                    'success',
+                    'File uploaded successfully.',
+                    ['url' => $url],
+                    200
+                );
+
+            } catch (\Exception $e) {
+
+                Log::error('File upload failed: ' . $e->getMessage());
+                Log::error('Exception Trace: ' . $e->getTraceAsString());
+
+                return ApiResponse::generateResponse(
+                    'error',
+                    'Failed to upload file.',
+                    null,
+                    500
+                );
+            }
+        }
+
+        return ApiResponse::generateResponse(
+            'error',
+            'Invalid file upload.',
+            null,
+            400
+        );
+    }
+
 
  
 
