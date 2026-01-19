@@ -211,10 +211,11 @@ class CommonController extends Controller
         return ApiResponse::generateResponse('error', 'Invalid file upload.', null, 400);
     }
 
+
     public function uploadWithResolution(Request $request)
     {
         $request->validate([
-            'image' => 'required|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,avif',
             'type'  => 'required|in:1,2', // 1 = Mobile, 2 = Web
         ]);
 
@@ -222,41 +223,30 @@ class CommonController extends Controller
 
             $image = $request->file('image');
 
-            // ✅ Aspect ratio validation
+            //  Aspect ratio validation
             [$width, $height] = getimagesize($image);
 
             $imageRatio = $width / $height;
             $tolerance  = 0.01;
 
             if ($request->type == 1) {
-                // Mobile → 9:16
+                // Mobile → 9:16 (portrait)
                 $targetRatio = 9 / 16;
                 $ratioLabel  = '9:16';
             } else {
-                // Web → 16:9
+                // Web → 16:9 (landscape)
                 $targetRatio = 16 / 9;
                 $ratioLabel  = '16:9';
             }
-
-            if ($imageRatio < ($targetRatio - $tolerance)) {
+            if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
                 return ApiResponse::generateResponse(
                     'error',
-                    "You can't upload image resolution lower than {$ratioLabel}",
+                    "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio",
                     null,
                     422
                 );
             }
 
-            if ($imageRatio > ($targetRatio + $tolerance)) {
-                return ApiResponse::generateResponse(
-                    'error',
-                    "You can't upload image resolution greater than {$ratioLabel}",
-                    null,
-                    422
-                );
-            }
-
-            // ✅ Generate filename
             $filename = Str::random(10) . '.' . $image->getClientOriginalExtension();
 
             try {
@@ -284,7 +274,6 @@ class CommonController extends Controller
                 );
 
             } catch (\Exception $e) {
-
                 Log::error('File upload failed: ' . $e->getMessage());
                 Log::error('Exception Trace: ' . $e->getTraceAsString());
 
@@ -304,6 +293,7 @@ class CommonController extends Controller
             400
         );
     }
+
 
 
  

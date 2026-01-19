@@ -52,13 +52,13 @@ class FullScreenBannerController extends Controller
             'country_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'type' => 'required|',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'type' => 'required',
         ], [
             'image.required' => 'Please Upload an Image',
             'image.image' => 'The uploaded file must be an image',
             'image.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
-            'image.max' => 'Image size should not exceed 5MB',
+            //'image.max' => 'Image size should not exceed 5MB',
         ]);
 
 
@@ -84,17 +84,10 @@ class FullScreenBannerController extends Controller
                 $ratioLabel  = '16:9';
             }
 
-            if ($imageRatio < ($targetRatio - $tolerance)) {
+            if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
                 return response()->json([
                     'success' => false,
-                    'message' => "You can't upload image resolution lower than {$ratioLabel}"
-                ]);
-            }
-
-            if ($imageRatio > ($targetRatio + $tolerance)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => "You can't upload image resolution greater than {$ratioLabel}"
+                    'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
                 ]);
             }
         }
@@ -135,7 +128,7 @@ class FullScreenBannerController extends Controller
             'country_id' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'type' => 'required|',
         ]);
 
@@ -161,17 +154,10 @@ class FullScreenBannerController extends Controller
                 $ratioLabel  = '16:9';
             }
 
-            if ($imageRatio < ($targetRatio - $tolerance)) {
+            if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
                 return response()->json([
                     'success' => false,
-                    'message' => "You can't upload image resolution lower than {$ratioLabel}"
-                ]);
-            }
-
-            if ($imageRatio > ($targetRatio + $tolerance)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => "You can't upload image resolution greater than {$ratioLabel}"
+                    'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
                 ]);
             }
         }
