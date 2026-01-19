@@ -22,6 +22,7 @@ class FullBannerController extends Controller
 
     public function get_full_banners(Request $req)
     {
+
         try {
             $data = $this->FullBannerService->getFullBanners($req);
 
