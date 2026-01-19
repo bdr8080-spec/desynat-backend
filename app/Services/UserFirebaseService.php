@@ -140,7 +140,24 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
 
  public function userGetAllChatsRecords($request){
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('user_id',$request->user_id)->orderBy('id','desc')->get();
+    $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('user_id',$request->user_id);
+
+    if($request->filters && isset($request->filters)){
+
+        if($request->filters=='2'){
+            $check_chatRecord=$check_chatRecord->where('product_request','1')->where('action','0');
+        }elseif($request->filters=='3'){
+            $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['1','2']);
+        }elseif($request->filters=='4'){
+            $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['5']);
+        }elseif($request->filters=='5'){ // rejectced 
+            $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['4']);
+        }
+
+
+    }
+    
+   $check_chatRecord=$check_chatRecord->orderBy('id','desc')->get();
 
    if($check_chatRecord->isNotEmpty()){
 
