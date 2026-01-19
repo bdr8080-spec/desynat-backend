@@ -158,6 +158,11 @@ Route::match(['get', 'post'], '/chats', function () {
 
 })->name('dealer.chats');
 
+Route::match(['get', 'post'], '/deal', function () {
+    return view('dealer.dealMgt.deal');
+
+})->name('dealer.deal');
+
 
 Route::fallback(function () {
 

@@ -805,10 +805,38 @@ table.dataTable td.dt-type-date {
 .chatfull .msg {
     max-width: 100%;
 }
+/* Add story banner */
+.storywapper {
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    z-index:99999;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 65px);
+}
+#btnclose {
+    border: none;
+    background: transparent;
+    font-size: 27px;
+    color: #ad875f;
+}
 
-
-
-
+.status-panel {
+    max-width: 350px;
+    width: 100%;
+    margin: auto;
+}
+.sellerstatus{
+    height: 600px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+.sellerstatus img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
 
 
 @media (min-width: 1140px) and (max-width: 1440px) {
