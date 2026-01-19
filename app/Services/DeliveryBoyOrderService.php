@@ -944,7 +944,7 @@ class DeliveryBoyOrderService
                 ];
             }
 
-            $data->delivery_status = '7';
+            $data->delivery_status = '2.2';
             $data->is_picked = '1';
             $data->save();
 
