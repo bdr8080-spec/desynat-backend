@@ -586,10 +586,11 @@ class AuthController extends Controller
 
             $userCountryCode = auth()->user()->country_code;
 
-            $banners = FullBanner::with('country_info')
+            $banners = FullBanner::with('country_info')->where('type','2')
                 ->whereHas('country_info', function($query) use ($userCountryCode) {
                     $query->where('dial_code', $userCountryCode);
                 })
+                ->orderBy('id', 'desc')
                 ->get();
         }
     // dd($banners);
