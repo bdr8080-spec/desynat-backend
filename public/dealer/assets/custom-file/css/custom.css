@@ -805,8 +805,22 @@ table.dataTable td.dt-type-date {
 .chatfull .msg {
     max-width: 100%;
 }
-
-
+/* Add story banner */
+.storywapper {
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    z-index:99999;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 65px);
+}
+#btnclose {
+    border: none;
+    background: transparent;
+    font-size: 27px;
+    color: #ad875f;
+}
 
 
 

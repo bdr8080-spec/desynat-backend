@@ -21,24 +21,24 @@
                     <form>
                         <div class="orderfilter">
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="1"
-                                {{ request('filter') == '1' ? 'checked' : '' }}>
+                                <input type="radio" name="filters" value="1"
+                                {{ request('filters') == '1' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">All</div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="2"
-                                {{ request('filter') == '2' ? 'checked' : '' }}>
+                                <input type="radio" name="filters" value="2"
+                                {{ request('filters') == '2' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">Waiting </div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="3"
-                                {{ request('filter') == '3' ? 'checked' : '' }}>
+                                <input type="radio" name="filters" value="3"
+                                {{ request('filters') == '3' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">Quotation Received
@@ -46,8 +46,8 @@
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value="4"
-                                {{ request('filter') == '4' ? 'checked' : '' }}>
+                                <input type="radio" name="filters" value="4"
+                                {{ request('filters') == '4' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">Quotation Accepted
@@ -99,29 +99,28 @@
                                                     <div class="chat-user-light"> {{$chat['last_chat_time']}}</div>
                                                     @endif                                            
                                                 </div>
-                                                @if($chat['type'] == '2' && $chat['action'] == '0')
+                                                @if($chat['product_request'] == '1' && $chat['action'] == '0')
                                                     <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">
                                                         Waiting
                                                     </div>
 
-                                                @elseif($chat['type'] == '2' && $chat['action'] == '5')
+                                                @elseif($chat['product_request'] == '1' && $chat['action'] == '4')
                                                     <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
                                                         Quotation Accepted
                                                     </div>
 
-                                                @elseif($chat['type'] == '2' && in_array($chat['action'], ['3','4']))
+                                                @elseif($chat['product_request'] == '1' && in_array($chat['action'], ['3','4']))
                                                     <div class="yellow-bg" style="color:#D32F2F;background:#D32F2F1A;">
                                                         Quotation Rejected
                                                     </div>
 
-                                                @elseif($chat['type'] == '2' && in_array($chat['action'], ['1','2']) && $chat['order_create_status'] == null)
+                                                @elseif($chat['product_request'] == '1' && $chat['action']=='3')
                                                     <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
                                                     <!-- <div class="yellow-bg" style="color:#17854C;background:#17854C1A;"> -->
                                                         Quotation Received
                                                     </div>
                                                 
-                                                @elseif($chat['type'] == '2' && $chat['order_create_status'] !== null)
-                                                <!-- <div class="yellow-bg" style="color:#172B85;background:#172B851A;"> -->
+                                                @elseif($chat['type'] == '2' && $chat['product_request'] == '1' && $chat['order_create_status'] !== null)
                                                 <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
                                                     Order Placed
                                                 </div>
