@@ -28,6 +28,7 @@ class ChatController extends Controller
 
         $data = (object)[
             'user_id' => $user->id,
+            'filters' => $request->filters,
         ];
 
         $chatData = $this->UserFirebaseService->userGetAllChatsRecords($data)['data'];
