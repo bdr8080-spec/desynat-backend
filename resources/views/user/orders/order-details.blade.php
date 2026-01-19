@@ -648,7 +648,7 @@
                             <div>Confirmed</div>
                         </div>
                         @if($orderData->delivery_status=='2.1' || $orderData->delivery_status=='2.2' ||
-                        $orderData->delivery_status=='3')
+                        $orderData->delivery_status=='3' || $orderData->delivery_status=='7')
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/tax.svg') }}" class="img-fluid">
