@@ -466,6 +466,7 @@ $country_code=all_countrie::where('dial_code', $user_details->country_code)->fir
 $all_Banners= FullBanner::where('country_id',$country_code->id)
 ->whereDate('start_date','<=',date('Y-m-d'))
 ->whereDate('end_date','>=',date('Y-m-d'))
+->where('type',$request->type)
 ->where('status','1')->get();
 
 return [
