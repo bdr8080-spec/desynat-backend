@@ -142,7 +142,7 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
 
     $check_chatRecord=allproductchats::with('product_variation.product_details','user_details','seller_details','order_create_status')->where('user_id',$request->user_id);
 
-    if($request->filters && isset($request->filters)){
+    if(isset($request->filters) && $request->filters){
 
         if($request->filters=='2'){
             $check_chatRecord=$check_chatRecord->where('product_request','1')->where('action','0');
