@@ -497,6 +497,7 @@ $homeScreenBanner=sellerBanner::with('category_details','subcategory_details')->
 ->whereDate('start_date', '<=', now())
 ->whereDate('end_date', '>=', now())
 ->where('payment_status','1')
+->where('Admin_verify','1')
 ->where('status','1');
 
 if($request->type=='3'){
