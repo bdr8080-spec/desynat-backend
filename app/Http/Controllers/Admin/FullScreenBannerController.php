@@ -53,6 +53,7 @@ class FullScreenBannerController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'type' => 'required|',
         ], [
             'image.required' => 'Please Upload an Image',
             'image.image' => 'The uploaded file must be an image',
@@ -70,6 +71,7 @@ class FullScreenBannerController extends Controller
         $banner->country_id = $request->country_id;
         $banner->start_date = $request->start_date;
         $banner->end_date = $request->end_date;
+        $banner->type = $request->type;
 
         if($request->hasFile('image')){
             $commonController = new CommonController();
@@ -99,6 +101,7 @@ class FullScreenBannerController extends Controller
             'start_date' => 'required',
             'end_date' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'type' => 'required|',
         ]);
 
         if ($validator->fails()) {
@@ -109,6 +112,7 @@ class FullScreenBannerController extends Controller
         $banner->country_id = $request->country_id;
         $banner->start_date = $request->start_date;
         $banner->end_date = $request->end_date;
+        $banner->type = $request->type;
 
         if ($request->hasFile('image')) {
             $commonController = new CommonController();

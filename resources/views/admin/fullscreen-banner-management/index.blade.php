@@ -130,6 +130,7 @@
                                     <a href="javascript:void(0);" class="table-button edit-reason-btn"
                                         data-id="{{ $banner['id'] }}" data-title="{{ $banner['title'] }}"
                                         data-country-id="{{ $banner['country_id'] }}"
+                                        data-type="{{ $banner['type'] }}"
                                         data-start-date="{{ $banner['start_date'] }}"
                                         data-end-date="{{ $banner['end_date'] }}" data-image="{{ $banner['image'] }}"
                                         data-bs-toggle="modal" data-bs-target="#editBannerModal">
@@ -209,6 +210,20 @@
                                 <div class="text-danger" id="countryError"></div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group w-100">
+                                <label class="form-label">For</label>
+                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Type</option>
+                                    <option value="1">Mobile</option>
+                                    <option value="2">Web</option>
+                                </select>
+                                <div class="text-danger" id="forError"></div>
+                            </div>
+                        </div>
+
 
                         <!-- Dates -->
                         <div class="col-lg-12">
@@ -295,6 +310,19 @@
                                     @endforeach
                                 </select>
                                 <div class="text-danger" id="editCountryError"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group w-100">
+                                <label class="form-label">For</label>
+                                <select id="editForSelect"  class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Type</option>
+                                    <option value="1">Mobile</option>
+                                    <option value="2">Web</option>
+                                </select>
+                                <div class="text-danger" id="editForError"></div>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -402,12 +430,14 @@ document.addEventListener('DOMContentLoaded', function() {
         countrySelect.value = '';
         start_date.value = '';
         end_date.value = '';
+        forSelect.value = '';
 
         imageError.innerText = '';
         titleError.innerText = '';
         countryError.innerText = '';
         startDateError.innerText = '';
         endDateError.innerText = '';
+        forError.innerText = '';
     });
 
     fileInput.addEventListener('change', function() {
@@ -426,6 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     title.addEventListener('input', () => titleError.innerText = '');
     countrySelect.addEventListener('change', () => countryError.innerText = '');
+    forSelect.addEventListener('change', () => forError.innerText = '');
     start_date.addEventListener('change', () => startDateError.innerText = '');
     end_date.addEventListener('change', () => endDateError.innerText = '');
 
@@ -436,6 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
         countryError.innerText = '';
         startDateError.innerText = '';
         endDateError.innerText = '';
+        forError.innerText = '';
 
         let hasError = false;
         const formData = new FormData();
@@ -445,6 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('country_id', countrySelect.value);
         formData.append('start_date', start_date.value);
         formData.append('end_date', end_date.value);
+        formData.append('type', forSelect.value);
 
         if (!fileInput.files.length) {
             imageError.innerText = 'Please upload image';
@@ -464,6 +497,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (!end_date.value) {
             endDateError.innerText = 'Please select end date';
+            hasError = true;
+        }
+        if (!forSelect.value) {
+            forError.innerText = 'Please select type';
             hasError = true;
         }
 
@@ -495,14 +532,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-    const editModalElement = document.getElementById('editBannerModal');
-    const editModal = new bootstrap.Modal(editModalElement);
+    const editModalEl = document.getElementById('editBannerModal');
+    const editModal = new bootstrap.Modal(editModalEl);
 
+    // Inputs
     const editBannerId = document.getElementById('editBannerId');
     const editTitle = document.getElementById('editTitle');
     const editCountrySelect = document.getElementById('editCountrySelect');
+    const editForSelect = document.getElementById('editForSelect');
     const editStartDate = document.getElementById('editStartDate');
     const editEndDate = document.getElementById('editEndDate');
 
@@ -510,43 +549,47 @@ document.addEventListener('DOMContentLoaded', function() {
     const editPreviewImage = document.getElementById('editPreviewImage');
     const editUploadIcon = document.getElementById('editUploadIcon');
 
+    // Buttons
     const updateBannerBtn = document.getElementById('updateBannerBtn');
 
+    // Errors
     const editImageError = document.getElementById('editImageError');
     const editTitleError = document.getElementById('editTitleError');
     const editCountryError = document.getElementById('editCountryError');
+    const editForError = document.getElementById('editForError');
     const editStartDateError = document.getElementById('editStartDateError');
     const editEndDateError = document.getElementById('editEndDateError');
 
-    editFileUpload.addEventListener('change', function(e) {
+    /* ---------------- IMAGE PREVIEW ---------------- */
+    editFileUpload.addEventListener('change', function (e) {
         const file = e.target.files[0];
 
         if (file) {
             const reader = new FileReader();
-
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 editPreviewImage.src = event.target.result;
                 editPreviewImage.style.display = 'block';
                 editUploadIcon.style.display = 'none';
             };
-
             reader.readAsDataURL(file);
         }
 
         editImageError.innerText = '';
     });
 
-    document.querySelectorAll('.edit-reason-btn').forEach(function(button) {
+    /* ---------------- OPEN EDIT MODAL ---------------- */
+    document.querySelectorAll('.edit-reason-btn').forEach(function (button) {
 
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
 
-            editBannerId.value = this.getAttribute('data-id');
-            editTitle.value = this.getAttribute('data-title');
-            editCountrySelect.value = this.getAttribute('data-country-id');
-            editStartDate.value = this.getAttribute('data-start-date');
-            editEndDate.value = this.getAttribute('data-end-date');
+            editBannerId.value = this.dataset.id;
+            editTitle.value = this.dataset.title;
+            editCountrySelect.value = this.dataset.countryId;
+            editForSelect.value = this.dataset.type; // ✅ MOBILE / WEB
+            editStartDate.value = this.dataset.startDate;
+            editEndDate.value = this.dataset.endDate;
 
-            const image = this.getAttribute('data-image');
+            const image = this.dataset.image;
 
             if (image) {
                 editPreviewImage.src = image;
@@ -557,37 +600,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 editUploadIcon.style.display = 'block';
             }
 
+            // Clear errors
             editImageError.innerText = '';
             editTitleError.innerText = '';
             editCountryError.innerText = '';
+            editForError.innerText = '';
             editStartDateError.innerText = '';
             editEndDateError.innerText = '';
         });
     });
 
-    editTitle.addEventListener('input', function() {
-        editTitleError.innerText = '';
-    });
+    /* ---------------- CLEAR ERRORS ON CHANGE ---------------- */
+    editTitle.addEventListener('input', () => editTitleError.innerText = '');
+    editCountrySelect.addEventListener('change', () => editCountryError.innerText = '');
+    editForSelect.addEventListener('change', () => editForError.innerText = '');
+    editStartDate.addEventListener('change', () => editStartDateError.innerText = '');
+    editEndDate.addEventListener('change', () => editEndDateError.innerText = '');
 
-    editCountrySelect.addEventListener('change', function() {
-        editCountryError.innerText = '';
-    });
-
-    editStartDate.addEventListener('change', function() {
-        editStartDateError.innerText = '';
-    });
-
-    editEndDate.addEventListener('change', function() {
-        editEndDateError.innerText = '';
-    });
-
-    updateBannerBtn.addEventListener('click', function(e) {
+    /* ---------------- UPDATE SUBMIT ---------------- */
+    updateBannerBtn.addEventListener('click', function (e) {
 
         e.preventDefault();
 
+        // Clear errors
         editImageError.innerText = '';
         editTitleError.innerText = '';
         editCountryError.innerText = '';
+        editForError.innerText = '';
         editStartDateError.innerText = '';
         editEndDateError.innerText = '';
 
@@ -598,6 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         formData.append('title', editTitle.value.trim());
         formData.append('country_id', editCountrySelect.value);
+        formData.append('type', editForSelect.value);
         formData.append('start_date', editStartDate.value);
         formData.append('end_date', editEndDate.value);
 
@@ -605,6 +645,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('image', editFileUpload.files[0]);
         }
 
+        // Validation
         if (!editTitle.value.trim()) {
             editTitleError.innerText = 'Please enter title';
             hasError = true;
@@ -612,6 +653,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!editCountrySelect.value) {
             editCountryError.innerText = 'Please select country';
+            hasError = true;
+        }
+
+        if (!editForSelect.value) {
+            editForError.innerText = 'Please select type';
             hasError = true;
         }
 
@@ -625,42 +671,34 @@ document.addEventListener('DOMContentLoaded', function() {
             hasError = true;
         }
 
-        if (hasError) {
-            return;
-        }
+        if (hasError) return;
 
         fetch(`{{ url('/admin/updateFullBanner') }}/${id}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: formData
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toastr.success(data.message);
 
-                if (data.success) {
-                    toastr.success(data.message);
-
-                    setTimeout(function() {
-                        editModal.hide();
-                        location.reload();
-                    }, 1500);
-
-                } else {
-                    toastr.error(data.message || 'Something went wrong.');
-                }
-            })
-            .catch(function(error) {
-                toastr.error('Server error.');
-                console.error(error);
-            });
+                setTimeout(() => {
+                    editModal.hide();
+                    location.reload();
+                }, 1500);
+            } else {
+                toastr.error(data.message || 'Something went wrong.');
+            }
+        })
+        .catch(() => toastr.error('Server error.'));
     });
 
 });
 </script>
+
 
 
 <script>
