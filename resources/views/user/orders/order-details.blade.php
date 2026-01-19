@@ -664,7 +664,7 @@
                             <div>Shipped</div>
                         </div>
                         @endif
-                        @if($orderData->delivery_status=='2.2' || $orderData->delivery_status=='3')
+                        @if($orderData->delivery_status=='7' || $orderData->delivery_status=='3')
                         <div class="or-box">
                             <div class="fill-box">
                                 <img src="{{ asset('user/assets/images/order-ic/van.svg') }}" class="img-fluid">
@@ -775,7 +775,7 @@
                         <div class="giftinfo">
                             <div>Total Amount</div>
                             @if($orderData->order->order_type=='1')
-                            <div>{{($orderData->order->total_amount) + ($orderData->order->tax) }} KD</div>
+                            <div>{{$orderData->order->total_amount }} KD</div>
                             @else
                             <div>{{ rtrim(rtrim(str_replace(',', '', number_format($orderData->order->total_amount, 2)), '0'), '.') }} KD</div>
                             @endif
