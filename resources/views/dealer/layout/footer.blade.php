@@ -1,5 +1,21 @@
 </main>
 
+<!-- app story -->
+<div class="storywapper" style="display:none;">
+  <div class="container">
+    <div class="modal-content-2 pt-5">
+      <div class="story-header d-flex justify-content-between">
+        <h3>Story </h3>
+        <button type="button" id="btnclose"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body">
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Vendor JS Files -->
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -16,6 +32,16 @@
 <!-- Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
+<script>
+    $(document).on('click', '#storyModal', function (e) {
+        e.preventDefault();       
+        $('.storywapper').toggle();
+    });
+
+    $(document).on('click', '#btnclose', function () {
+        $('.storywapper').hide();
+    });
+</script>
 
 <script>
     document.querySelectorAll('.notapplyspace').forEach(function(input) {
