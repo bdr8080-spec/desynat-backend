@@ -21,19 +21,11 @@
                     <form>
                         <div class="orderfilter">
                             <label class="custom-radio mb-3">
-                                <input type="radio" name="filter" value=""
-                                {{ request('filter') == null ? 'checked' : '' }}>
-                                <span class="radio-mark"></span>
-                                <div class="label-content">
-                                    <div class="title">All</div>
-                                </div>
-                            </label>
-                            <label class="custom-radio mb-3">
                                 <input type="radio" name="filter" value="1"
                                 {{ request('filter') == '1' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title">Waiting </div>
+                                    <div class="title">All</div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
@@ -41,13 +33,21 @@
                                 {{ request('filter') == '2' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
-                                    <div class="title">Quotation Received
-                                    </div>
+                                    <div class="title">Waiting </div>
                                 </div>
                             </label>
                             <label class="custom-radio mb-3">
                                 <input type="radio" name="filter" value="3"
                                 {{ request('filter') == '3' ? 'checked' : '' }}>
+                                <span class="radio-mark"></span>
+                                <div class="label-content">
+                                    <div class="title">Quotation Received
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="custom-radio mb-3">
+                                <input type="radio" name="filter" value="4"
+                                {{ request('filter') == '4' ? 'checked' : '' }}>
                                 <span class="radio-mark"></span>
                                 <div class="label-content">
                                     <div class="title">Quotation Accepted
