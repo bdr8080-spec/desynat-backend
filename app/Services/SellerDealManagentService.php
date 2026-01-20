@@ -146,6 +146,10 @@ try{
 
     if($deal){
 
+        // Already Add Product 
+
+      $already_add_product=  SellerDealProduct::where('deal_id',$deal->id)->where('seller_id',$request->seller_id)->pluck('product_id')->toArray();
+
         $search_data=[
             "category_id"=>$deal->category_id,
             "subcategory_id"=>$deal->sub_category_id  ,
@@ -156,7 +160,9 @@ try{
         if(isset($request->search)){
             $product_data=$product_data->where('product_name_en','Like','%'.$request->search.'%');
         }
-       $product_data=$product_data->get();
+       $product_data=$product_data->whereNotIn('id',$already_add_product)->get();
+
+
     
     }else{
 
