@@ -157,6 +157,17 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
 
 
     }
+    if (!empty($request->search)) {
+
+        $search = trim($request->search);
+
+        $check_chatRecord = $check_chatRecord->whereHas('seller_details', function ($q) use ($search) {
+
+            $q->where('first_name', 'LIKE', "%{$search}%")
+            ->orWhere('last_name', 'LIKE', "%{$search}%")
+            ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+        });
+    }
     
    $check_chatRecord=$check_chatRecord->orderBy('id','desc')->get();
 
