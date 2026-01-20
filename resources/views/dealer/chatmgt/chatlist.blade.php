@@ -6,41 +6,51 @@
     </div>
 
 
+
     <div class="main-content categoryDetail mt-4">
         <div class="row">
             <div class="col-lg-4">
                 <div class="category_filter">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h3 class="mb-0">Filter</h3>
-                        <a href="#" class="link-apply">Apply</a>
-                    </div>
+                    <form method="GET" action="">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <h3 class="mb-0">Filter</h3>
+                            <input type="submit" class="link-apply " value="Apply">
 
-                    <form>
+                        </div>
+
+
                         <div class="orderfilter">
                             <div class="check_radio mb-3">
                                 <label class="radio-group">
-                                    <input type="radio" value="1" name="allcheck" checked="">
+                                    <input type="radio" value="1" name="filters" @if(request()->filters=='1') checked
+                                    @endif
+
+                                    @if(!request()->has('filters')) checked @endif
+                                    >
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">All</span>
                                 </label>
                             </div>
                             <div class="check_radio mb-3">
                                 <label class="radio-group">
-                                    <input type="radio" value="2" name="allcheck">
+                                    <input type="radio" value="2" name="filters" @if(request()->filters=='2') checked
+                                    @endif>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">New </span>
                                 </label>
                             </div>
                             <div class="check_radio mb-3">
                                 <label class="radio-group">
-                                    <input type="radio" value="3" name="allcheck">
+                                    <input type="radio" value="3" name="filters" @if(request()->filters=='3') checked
+                                    @endif>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Quotation Sent</span>
                                 </label>
                             </div>
                             <div class="check_radio">
                                 <label class="radio-group">
-                                    <input type="radio" value="4" name="allcheck">
+                                    <input type="radio" value="4" name="filters" @if(request()->filters=='4') checked
+                                    @endif>
                                     <span class="custom-radio"></span>
                                     <span class="radio-label">Quotation Accepted</span>
                                 </label>
