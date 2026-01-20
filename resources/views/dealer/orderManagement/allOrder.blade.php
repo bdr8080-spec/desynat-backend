@@ -55,32 +55,49 @@
                                         <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                             class="search-icon">
                                         <input type="search" class="dt-input tableSearch form-control"
-                                            placeholder="Search">
+                                            placeholder="Search" name="search">
                                     </div>
                                 </div>
 
                                 <form method="GET" action="">
 
+                                    <input type="hidden" name="type" value="1">
+                                    <input type="hidden" name="tabs" value="1">
+
                                     <div class="search-filter">
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from">
+                                                    <input type="date" class="form-control" name="from_date"
+                                                        @if(request()->type==1 && request()->tabs==1)
+                                                    value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to">
+                                                    <input type="date" class="form-control" name="to_date"
+                                                        onchange="this.form.submit()" @if(request()->type==1 &&
+                                                    request()->tabs==1)
+                                                    value="{{request()->to_date}}" @endif>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="from-group">
                                             <select class="form-select form-control width-50"
-                                                aria-label="Default select example">
+                                                aria-label="Default select example" onchange="this.form.submit()"
+                                                name="filters">
                                                 <option value="">Filter by status</option>
-                                                <option value="1"> Confirmed </option>
-                                                <option value="2"> Packed </option>
-                                                <option value="3"> Shipped </option>
-                                                <option value="4"> Exchange </option>
+                                                <option value="1" @if(request()->type==1 &&
+                                                    request()->tabs==1 && request()->filters==1) selected @endif>
+                                                    Confirmed </option>
+                                                <option value="2" @if(request()->type==1 &&
+                                                    request()->tabs==1 && request()->filters==2) selected @endif> Packed
+                                                </option>
+                                                <option value="3" @if(request()->type==1 &&
+                                                    request()->tabs==1 && request()->filters==3) selected @endif>
+                                                    Shipped </option>
+                                                <option value="4" @if(request()->type==1 &&
+                                                    request()->tabs==1 && request()->filters==4) selected @endif>
+                                                    Exchange </option>
                                             </select>
                                         </div>
                                     </div>
@@ -175,30 +192,48 @@
 
                                 <form method="GET" action="">
 
+                                    <input type="hidden" name="type" value="1">
+                                    <input type="hidden" name="tabs" value="2">
+
                                     <div class="search-filter">
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from">
+                                                    <input type="date" class="form-control" name="from_date"
+                                                        @if(request()->type==1 && request()->tabs==2)
+                                                    value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to">
+                                                    <input type="date" class="form-control" name="to_date"
+                                                        onchange="this.form.submit()" @if(request()->type==1 &&
+                                                    request()->tabs==2)
+                                                    value="{{request()->to_date}}" @endif>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="from-group">
                                             <select class="form-select form-control width-50"
-                                                aria-label="Default select example">
+                                                aria-label="Default select example" onchange="this.form.submit()"
+                                                name="filters">
                                                 <option value="">Filter by status</option>
-                                                <option value="1"> Confirmed </option>
-                                                <option value="2"> Packed </option>
-                                                <option value="3"> Shipped </option>
-                                                <option value="4"> Exchange </option>
+                                                <option value="1" @if(request()->type==1 &&
+                                                    request()->tabs==2 && request()->filters==1) selected @endif>
+                                                    Confirmed </option>
+                                                <option value="2" @if(request()->type==1 &&
+                                                    request()->tabs==2 && request()->filters==2) selected @endif> Packed
+                                                </option>
+                                                <option value="3" @if(request()->type==1 &&
+                                                    request()->tabs==2 && request()->filters==3) selected @endif>
+                                                    Shipped </option>
+                                                <option value="4" @if(request()->type==1 &&
+                                                    request()->tabs==2 && request()->filters==4) selected @endif>
+                                                    Exchange </option>
                                             </select>
                                         </div>
                                     </div>
                                 </form>
+
                             </div>
 
 
@@ -289,26 +324,43 @@
 
                                 <form method="GET" action="">
 
+                                    <input type="hidden" name="type" value="1">
+                                    <input type="hidden" name="tabs" value="3">
+
                                     <div class="search-filter">
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from">
+                                                    <input type="date" class="form-control" name="from_date"
+                                                        @if(request()->type==1 && request()->tabs==3)
+                                                    value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to">
+                                                    <input type="date" class="form-control" name="to_date"
+                                                        onchange="this.form.submit()" @if(request()->type==1 &&
+                                                    request()->tabs==3)
+                                                    value="{{request()->to_date}}" @endif>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="from-group">
                                             <select class="form-select form-control width-50"
-                                                aria-label="Default select example">
+                                                aria-label="Default select example" onchange="this.form.submit()"
+                                                name="filters">
                                                 <option value="">Filter by status</option>
-                                                <option value="1"> Confirmed </option>
-                                                <option value="2"> Packed </option>
-                                                <option value="3"> Shipped </option>
-                                                <option value="4"> Exchange </option>
+                                                <option value="1" @if(request()->type==1 &&
+                                                    request()->tabs==3 && request()->filters==1) selected @endif>
+                                                    Confirmed </option>
+                                                <option value="2" @if(request()->type==1 &&
+                                                    request()->tabs==3 && request()->filters==2) selected @endif> Packed
+                                                </option>
+                                                <option value="3" @if(request()->type==1 &&
+                                                    request()->tabs==3 && request()->filters==3) selected @endif>
+                                                    Shipped </option>
+                                                <option value="4" @if(request()->type==1 &&
+                                                    request()->tabs==3 && request()->filters==4) selected @endif>
+                                                    Exchange </option>
                                             </select>
                                         </div>
                                     </div>
@@ -436,26 +488,43 @@
 
                                 <form method="GET" action="">
 
+                                    <input type="hidden" name="type" value="2">
+                                    <input type="hidden" name="tabs" value="1">
+
                                     <div class="search-filter">
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from">
+                                                    <input type="date" class="form-control" name="from_date"
+                                                        @if(request()->type==2 && request()->tabs==1)
+                                                    value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to">
+                                                    <input type="date" class="form-control" name="to_date"
+                                                        onchange="this.form.submit()" @if(request()->type==2 &&
+                                                    request()->tabs==1)
+                                                    value="{{request()->to_date}}" @endif>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="from-group">
                                             <select class="form-select form-control width-50"
-                                                aria-label="Default select example">
+                                                aria-label="Default select example" onchange="this.form.submit()"
+                                                name="filters">
                                                 <option value="">Filter by status</option>
-                                                <option value="1"> Confirmed </option>
-                                                <option value="2"> Packed </option>
-                                                <option value="3"> Shipped </option>
-                                                <option value="4"> Exchange </option>
+                                                <option value="1" @if(request()->type==2 &&
+                                                    request()->tabs==1 && request()->filters==1) selected @endif>
+                                                    Confirmed </option>
+                                                <option value="2" @if(request()->type==2 &&
+                                                    request()->tabs==1 && request()->filters==2) selected @endif> Packed
+                                                </option>
+                                                <option value="3" @if(request()->type==2 &&
+                                                    request()->tabs==1 && request()->filters==3) selected @endif>
+                                                    Shipped </option>
+                                                <option value="4" @if(request()->type==2 &&
+                                                    request()->tabs==1 && request()->filters==4) selected @endif>
+                                                    Exchange </option>
                                             </select>
                                         </div>
                                     </div>
@@ -548,26 +617,43 @@
 
                                 <form method="GET" action="">
 
+                                    <input type="hidden" name="type" value="2">
+                                    <input type="hidden" name="tabs" value="2">
+
                                     <div class="search-filter">
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from">
+                                                    <input type="date" class="form-control" name="from_date"
+                                                        @if(request()->type==2 && request()->tabs==2)
+                                                    value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to">
+                                                    <input type="date" class="form-control" name="to_date"
+                                                        onchange="this.form.submit()" @if(request()->type==2 &&
+                                                    request()->tabs==2)
+                                                    value="{{request()->to_date}}" @endif>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="from-group">
                                             <select class="form-select form-control width-50"
-                                                aria-label="Default select example">
+                                                aria-label="Default select example" onchange="this.form.submit()"
+                                                name="filters">
                                                 <option value="">Filter by status</option>
-                                                <option value="1"> Confirmed </option>
-                                                <option value="2"> Packed </option>
-                                                <option value="3"> Shipped </option>
-                                                <option value="4"> Exchange </option>
+                                                <option value="1" @if(request()->type==2 &&
+                                                    request()->tabs==2 && request()->filters==1) selected @endif>
+                                                    Confirmed </option>
+                                                <option value="2" @if(request()->type==2 &&
+                                                    request()->tabs==2 && request()->filters==2) selected @endif> Packed
+                                                </option>
+                                                <option value="3" @if(request()->type==2 &&
+                                                    request()->tabs==2 && request()->filters==3) selected @endif>
+                                                    Shipped </option>
+                                                <option value="4" @if(request()->type==2 &&
+                                                    request()->tabs==2 && request()->filters==4) selected @endif>
+                                                    Exchange </option>
                                             </select>
                                         </div>
                                     </div>
@@ -661,26 +747,43 @@
 
                                 <form method="GET" action="">
 
+                                    <input type="hidden" name="type" value="2">
+                                    <input type="hidden" name="tabs" value="3">
+
                                     <div class="search-filter">
                                         <div class="from-group">
                                             <div class="show-date d-flex gap-2  flex-wrap">
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="from">
+                                                    <input type="date" class="form-control" name="from_date"
+                                                        @if(request()->type==2 && request()->tabs==3)
+                                                    value="{{request()->from_date}}" @endif>
                                                 </div>
                                                 <div class="date-form-pnl-2">
-                                                    <input type="date" class="form-control" name="to">
+                                                    <input type="date" class="form-control" name="to_date"
+                                                        onchange="this.form.submit()" @if(request()->type==2 &&
+                                                    request()->tabs==3)
+                                                    value="{{request()->to_date}}" @endif>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="from-group">
                                             <select class="form-select form-control width-50"
-                                                aria-label="Default select example">
+                                                aria-label="Default select example" onchange="this.form.submit()"
+                                                name="filters">
                                                 <option value="">Filter by status</option>
-                                                <option value="1"> Confirmed </option>
-                                                <option value="2"> Packed </option>
-                                                <option value="3"> Shipped </option>
-                                                <option value="4"> Exchange </option>
+                                                <option value="1" @if(request()->type==2 &&
+                                                    request()->tabs==3 && request()->filters==1) selected @endif>
+                                                    Confirmed </option>
+                                                <option value="2" @if(request()->type==2 &&
+                                                    request()->tabs==3 && request()->filters==2) selected @endif> Packed
+                                                </option>
+                                                <option value="3" @if(request()->type==2 &&
+                                                    request()->tabs==3 && request()->filters==3) selected @endif>
+                                                    Shipped </option>
+                                                <option value="4" @if(request()->type==2 &&
+                                                    request()->tabs==3 && request()->filters==4) selected @endif>
+                                                    Exchange </option>
                                             </select>
                                         </div>
                                     </div>

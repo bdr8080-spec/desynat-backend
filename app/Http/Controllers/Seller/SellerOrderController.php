@@ -22,33 +22,52 @@ class SellerOrderController extends Controller
 
     
 
-    public function order_management(Request $Request){
+    public function order_management(Request $request){
 
-          $seller_details=Auth::guard('seller')->user()->id;
+        $seller_details=Auth::guard('seller')->user()->id;
 
        $request_data=(object) [
         'seller_id'=>$seller_details,
         "type" =>"1",
-        "tabs"=>$request->tabs??null,
-        "from_date"=>$request->from_date??null,
-        "to_date" =>$request->to_date??null,
+         "tabs"=>$request->tabs??null,
+      
        ];
 
+       if($request->type==1){
+        $request_data->tabs=$request->tabs??null;
+        $request_data->search=$request->search??null;
+        $request_data->from_date=$request->from_date??null;
+        $request_data->to_date=$request->to_date??null;
+        $request_data->filters=$request->filters??null;
+      }
 
         $normal_data= $this->SellerOrderService->SellerGetOrders($request_data);
         $normal= $normal_data['data'];
+
 
         $request_data1=(object) [
         'seller_id'=>$seller_details,
         "type" =>"2",
         "tabs"=>$request->tabs??null,
-        "from_date"=>$request->from_date??null,
-        "to_date" =>$request->to_date??null,
+        // "search"=>$request->search,
+        // "from_date"=>$request->from_date??null,
+        // "to_date" =>$request->to_date??null,
+        // "filters"=> $request->filters??null
        ];
+
+
+        if($request->type==2){
+        $request_data1->tabs=$request->tabs??null;
+        $request_data1->search=$request->search??null;
+        $request_data1->from_date=$request->from_date??null;
+        $request_data1->to_date=$request->to_date??null;
+        $request_data1->filters=$request->filters??null;
+      }
+
 
        $custom_data= $this->SellerOrderService->SellerGetOrders($request_data1);
        $custom= $custom_data['data'];  
-       
+
         return View('dealer.orderManagement.allOrder',compact('normal','custom'));
     }
 
