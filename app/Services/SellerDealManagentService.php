@@ -13,6 +13,8 @@ use App\Models\{Brand,Deal,SellerDealProduct};
 
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 
 
 use App\Models\{ product,ProductSpecification,ProductVariant,StockInventoryRecords};
@@ -24,37 +26,65 @@ public function seller_ViewDeal($request){
         
 try{
 
-   $all_deal= Deal::with('sellerDealrecord')->where('status','1');
+  
+$today = Carbon::today();
+$all_deal = Deal::query()
+    ->where('status', '1');
 
-// listed Code Show 
-// $listed_deal= clone($all_deal)
-// //  ->whereDate('from' ,'<=',date('Y-m-d'))
-//     ->whereDate('to' ,'>=',date('Y-m-d'))
-//     ->get(); 
-
-
-// enrolled Code 
-// $enrolled = clone($all_deal)->whereHas('sellerDealrecord', function ($query) use ($request) {
-//         $query->where('seller_id', $request->seller_id)
-//           ->whereDate('from' ,'<=',date('Y-m-d'))
-//          ->whereDate('to' ,'>=',date('Y-m-d'));
-//     })
-//     ->withcount('sellerDealrecord')
-//     ->get();
-
-
-    $expired_deal = clone($all_deal)->whereHas('sellerDealrecord', function ($query) use ($request) {
-        $query->where('seller_id', $request->seller_id)
-         ->whereDate('to' ,'<',date('Y-m-d'));
-    })
-    ->withcount('sellerDealrecord')
+/**
+ * Listed Deals (active deals by date)
+ */
+$listed_deal = (clone $all_deal)
+    ->whereDate('to', '>=', $today)
+    ->with('sellerDealrecord')
     ->get();
 
+/**
+ * Enrolled Deals (seller joined + active)
+ */
+$enrolled = (clone $all_deal)
+    ->whereHas('sellerDealrecord', function ($query) use ($request, $today) {
+        $query->where('seller_id', $request->seller_id)
+              ->whereDate('from', '<=', $today)
+              ->whereDate('to', '>=', $today);
+    })
+    ->with([
+        'sellerDealrecord' => function ($query) use ($request) {
+            $query->where('seller_id', $request->seller_id);
+        }
+    ])
+    ->withCount([
+        'sellerDealrecord as seller_deal_count' => function ($query) use ($request) {
+            $query->where('seller_id', $request->seller_id);
+        }
+    ])
+    ->get();
 
+/**
+ * Expired Deals (seller enrolled but expired)
+ */
+$expired_deal = (clone $all_deal)
+    ->whereHas('sellerDealrecord', function ($query) use ($request, $today) {
+        $query->where('seller_id', $request->seller_id)
+              ->whereDate('to', '<', $today);
+    })
+    ->with([
+        'sellerDealrecord' => function ($query) use ($request) {
+            $query->where('seller_id', $request->seller_id);
+        }
+    ])
+    ->withCount([
+        'sellerDealrecord as seller_deal_count' => function ($query) use ($request) {
+            $query->where('seller_id', $request->seller_id);
+        }
+    ])
+    ->get();
 
-// $response['listed_deal']=$listed_deal;
-// $response['enrolled']=$enrolled;
-$response['expired_deal']=$expired_deal;
+$response = [
+    'listed_deal'  => $listed_deal,
+    'enrolled'    => $enrolled,
+    'expired_deal'=> $expired_deal,
+];
 
 
 return ['status'=>'success','message'=>"All deals data fetch Successfully",'data'=>$response];
@@ -182,6 +212,42 @@ catch (\Exception $e) {
 }
 
 }
+
+
+
+
+public function removeProductsFromTheDeal($request){
+        
+try{
+    
+   $deal= Deal::where('id',$request->deal_id)
+    ->first();
+
+    if($deal){
+
+          $check_data=[
+            "deal_id"=>$deal->id,
+            "id"=>$request->id,
+            "seller_id"=>$request->seller_id,
+        ];
+        SellerDealProduct::where($check_data)->delete();
+     
+    }else{
+
+        return ['status'=>'error','message'=>"deal id Is Invalid",'data'=>(object)[]];
+
+    }
+
+    return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>(object)[]];
+
+} 
+catch (\Exception $e) {
+    return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+
+}
+
+}
+
 
 
 }

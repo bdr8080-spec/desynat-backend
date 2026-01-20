@@ -117,8 +117,9 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     Route::post('/show-allproduct-deal-catgeory-subCatgory', [SellerDealManagement::class,'showAllproductOnDealTime']);
 
-
     Route::post('/Add-products-in-deal-inside', [SellerDealManagement::class,'AddProductSinDeals']);
+
+    Route::post('/remove-products-in-deal', [SellerDealManagement::class,'removeProductsInDeal']);
 
 });
 
