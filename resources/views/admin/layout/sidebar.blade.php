@@ -42,6 +42,12 @@
             User Management
         </a>
     </li>
+    <li class="nav-item {{ Request::routeIs('admin.affiliateUserManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.affiliateUserManagement') }}">
+            <span><img src="{{ asset('admin/image/users-01.svg') }}" alt="Plan Management" /></span>
+            Affiliate User Management
+        </a>
+    </li>
     <li class="nav-item {{ Request::routeIs('admin.deliveryBoyManagement') || Request::routeIs('admin.deliveryboy_reg_step1') || Request::routeIs('admin.deliveryboy_reg_step2') || Request::routeIs('admin.edit_deliveryboy_step1') || Request::routeIs('admin.edit_deliveryboy_step2') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.deliveryBoyManagement') }}">
             <span><img src="{{ asset('admin/image/image-user-check.svg') }}" alt="Plan Management" /></span>

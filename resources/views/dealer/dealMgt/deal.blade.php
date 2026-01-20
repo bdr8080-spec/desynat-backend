@@ -63,7 +63,9 @@
                                 <tr>
                                     <td>01</td>
                                     <td>
-                                        <div class="deal-img"></div>
+                                        <div class="deal-img">
+
+                                        </div>
                                     </td>
                                     <td>2nd July 2025</td>
                                     <td>02/02/2025 - 12/02/2025</td>
@@ -95,7 +97,45 @@
                     </div>
 
                     {{-- // Active product List  --}}
-                    <div class="table-responsive">
+                     <div class="table-responsive">
+                        <table class="table table-bordered datatable tablesearch" id="table1">
+                            <thead>
+                                <tr>
+                                    <th class="no-sort">S.No</th>
+                                    <th class="no-sort">Banner Image</th>
+                                    <th class="no-sort">Date</th>
+                                    <th class="no-sort">Duration</th>
+                                    <th class="no-sort">Discount</th>
+                                    <th class="no-sort">Products Added</th>
+                                    <th class="no-sort">Status</th>
+                                    <th class="no-sort">View Deatils</th>
+                                    <th class="no-sort">Add More Products</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>01</td>
+                                    <td>
+                                        <div class="deal-img">
+                                            
+                                        </div>
+                                    </td>
+                                    <td>2nd July 2025</td>
+                                    <td>02/02/2025 - 12/02/2025</td>
+                                    <td>40 % </td>
+                                    <td>20 </td>
+                                    <td><div style="color:#48DB8F;">Active </div></td>
+                                    <td> 
+                                        <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                    </td>
+                                    <td>
+                                        <a href="#" class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
 
                     </div>
                 </div>
@@ -114,6 +154,38 @@
                     </div>
 
                     <div class="table-responsive">
+                    <table class="table table-bordered datatable tablesearch" id="table1">
+                            <thead>
+                                <tr>
+                                    <th class="no-sort">S.No</th>
+                                    <th class="no-sort">Banner Image</th>
+                                    <th class="no-sort">Date</th>
+                                    <th class="no-sort">Duration</th>
+                                    <th class="no-sort">Discount</th>
+                                    <th class="no-sort">Products Added</th>
+                                    <th class="no-sort">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>01</td>
+                                    <td>
+                                        <div class="deal-img">
+                                            
+                                        </div>
+                                    </td>
+                                    <td>2nd July 2025</td>
+                                    <td>02/02/2025 - 12/02/2025</td>
+                                    <td>40 % </td>
+                                    <td>20 </td>
+                                    <td> 
+                                        <a href="#" class="btn btn-expired">Expired</a>
+                                    </td>
+                                   
+                                </tr>
+
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>

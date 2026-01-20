@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\LiveRequestController;
 use App\Http\Controllers\Admin\StoryController;
 use App\Http\Controllers\Admin\DealManagementController;
 use App\Http\Controllers\Admin\FullScreenBannerController;
+use App\Http\Controllers\Admin\AffiliateUserController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -185,6 +186,9 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/deleteFullScreenBanner/{id}', [FullScreenBannerController::class, 'deleteFullScreenBanner'])->name('admin.deleteFullScreenBanner');
         Route::post('/addFullBanner', [FullScreenBannerController::class, 'addFullBanner'])->name('admin.addFullBanner');
         Route::post('/updateFullBanner/{id}', [FullScreenBannerController::class, 'updateFullBanner'])->name('admin.updateFullBanner');
+
+        //affiliate user management
+        Route::get('/affiliate-user-management', [AffiliateUserController::class, 'affiliateUserManagement'])->name('admin.affiliateUserManagement');
         
 
     });
