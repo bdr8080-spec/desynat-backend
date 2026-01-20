@@ -844,6 +844,11 @@ table.dataTable td.dt-type-date {
     height:70px;
     margin: auto;
 }
+.deal-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
 .addPlus-btn {
     color: #fff;
     font-size: 26px;
