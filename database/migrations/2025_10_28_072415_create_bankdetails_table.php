@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bankdetails', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->enum('type',['0','1','2'])->default('1')->comment('0 user 1 seller 2 admin');
+            $table->enum('type',['0','1','2','3'])->default('1')->comment('0 user 1 seller 2 admin 3 affilated User');
             $table->enum('account_type',['0','1'])->comment('0 Personal 1 Busness');
             $table->string('iban')->nullable();
             $table->string('swift')->nullable();

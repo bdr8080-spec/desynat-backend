@@ -14,6 +14,8 @@ use App\Http\Controllers\Api\User\UserOrderController;
 
 
 use App\Http\Controllers\Api\User\UserChatController;
+use App\Http\Controllers\Api\User\UserAffilatedControlller;
+
 
 use App\Http\Controllers\CommonController;
 
@@ -151,6 +153,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/custom-order-complete-payment', [UserOrderController::class,'product_order_complete_payment']);
 
   Route::post('/popUp-Home-screen-Banner', [UserDashboardController::class,'popUpHomescreenBanner']);
+
+  // M7 Api 
+  Route::post('/create-a-affilated-account', [UserAffilatedControlller::class,'CreateAffilatedAccount']);
 
 
 });
