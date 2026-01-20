@@ -844,6 +844,11 @@ table.dataTable td.dt-type-date {
     height:70px;
     margin: auto;
 }
+.deal-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
 .addPlus-btn {
     color: #fff;
     font-size: 26px;
@@ -858,6 +863,17 @@ table.dataTable td.dt-type-date {
     color: #D53B36;
     border: 1px solid #D53B3633;
     background: #D53B3633;
+}
+.deals-box{
+    height: 270px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.deals-box img {
+    height:100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 

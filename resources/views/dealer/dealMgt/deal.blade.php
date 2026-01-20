@@ -43,7 +43,6 @@
 
                             </div>
                         </div>
-                        </form>
                     </div>
 
                     {{-- All Product show --}}
@@ -64,7 +63,7 @@
                                     <td>01</td>
                                     <td>
                                         <div class="deal-img">
-
+                                        <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
                                         </div>
                                     </td>
                                     <td>2nd July 2025</td>
@@ -86,9 +85,11 @@
             <div class="tab-pane fade" id="pills-active" role="tabpanel" aria-labelledby="pills-active-tab"
                 tabindex="0">
                 <div class="datatable-wapper">
-                    <div class="table-header">
+                    <div class="table-header mb-1">
                         <div class="search-field">
                             <div class="from-group position-relative">
+                            <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
+                            class="search-icon">
                                 <input type="search" class="form-control tableSearch" placeholder="Search"
                                     data-table="table2">
                             </div>
@@ -117,7 +118,7 @@
                                     <td>01</td>
                                     <td>
                                         <div class="deal-img">
-                                            
+                                        <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
                                         </div>
                                     </td>
                                     <td>2nd July 2025</td>
@@ -144,9 +145,11 @@
             <div class="tab-pane fade" id="pills-inactive" role="tabpanel" aria-labelledby="pills-inactive-tab"
                 tabindex="0">
                 <div class="datatable-wapper">
-                    <div class="table-header">
+                    <div class="table-header mb-1">
                         <div class="search-field">
                             <div class="from-group position-relative">
+                            <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
+                            class="search-icon">
                                 <input type="search" class="form-control tableSearch" placeholder="Search"
                                     data-table="table3">
                             </div>
@@ -171,7 +174,7 @@
                                     <td>01</td>
                                     <td>
                                         <div class="deal-img">
-                                            
+                                        <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
                                         </div>
                                     </td>
                                     <td>2nd July 2025</td>
