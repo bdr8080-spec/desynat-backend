@@ -837,6 +837,29 @@ table.dataTable td.dt-type-date {
     width: 100%;
     object-fit: cover;
 }
+.deal-img{
+    width: 105px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height:70px;
+    margin: auto;
+}
+.addPlus-btn {
+    color: #fff;
+    font-size: 26px;
+    padding: 3px 10px;
+}
+.btn-expired{
+    color: #D53B36;
+    border: 1px solid #D53B3633;
+    background: #D53B3633;
+}
+.btn-expired:hover{
+    color: #D53B36;
+    border: 1px solid #D53B3633;
+    background: #D53B3633;
+}
+
 
 
 @media (min-width: 1140px) and (max-width: 1440px) {
