@@ -122,7 +122,7 @@ try{
     }
 
     $response['deal_data']= $deal;
-    $response['products']= $product_data;
+    $response['added_products']= $product_data;
 
     return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>$response];
 
