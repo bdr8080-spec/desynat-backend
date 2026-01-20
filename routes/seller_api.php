@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Seller\SellerProductController;
 use App\Http\Controllers\Api\Seller\SellerBannerController;
 use App\Http\Controllers\Api\Seller\OrderManagement;
 
+use App\Http\Controllers\Api\Seller\SellerDealManagement;
 
 use App\Http\Controllers\CommonController;
 
@@ -93,28 +94,28 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::post('/complete-banner-payment', [SellerBannerController::class,'complete_banner_payment']);
     Route::post('/all-banners', [SellerBannerController::class,'all_banners']);
 
-
     // M6 APis
 
+  Route::post('/all-orders', [OrderManagement::class,'all_orders']);
+  Route::post('/single-orders-data', [OrderManagement::class,'single_orders_data']);
 
-   Route::post('/all-orders', [OrderManagement::class,'all_orders']);
+  Route::post('/update-single-order-status', [OrderManagement::class,'updateSingleOrderStatus']);
 
-   Route::post('/single-orders-data', [OrderManagement::class,'single_orders_data']);
+  route::Match(['get','post'],'/update-order-exchange-return-status',[OrderManagement::class,'updateOrderExchangeReturnStatus']);
 
-   Route::post('/update-single-order-status', [OrderManagement::class,'updateSingleOrderStatus']);
+  Route::post('/all-chats-records', [OrderManagement::class,'AllChatsAndOrders']);
 
-    route::Match(['get','post'],'/update-order-exchange-return-status',[OrderManagement::class,'updateOrderExchangeReturnStatus']);
-
-
-
-
-   Route::post('/all-chats-records', [OrderManagement::class,'AllChatsAndOrders']);
-
-   Route::post('/single-chats-records', [OrderManagement::class,'singleChatsRecords']);
+  Route::post('/single-chats-records', [OrderManagement::class,'singleChatsRecords']);
 
   Route::post('/Modify-single-chats-records', [OrderManagement::class,'Modifysinglechatsrecords']);
 
-    
+  // M7 APi 
+
+    Route::post('/view-deals', [SellerDealManagement::class,'view_deals']);
+    Route::post('/view-single-deals', [SellerDealManagement::class,'viewsingledeals']);
+
+    Route::post('/Add-products-in-deal-inside', [SellerDealManagement::class,'AddProductSinDeals']);
+
 });
 
 

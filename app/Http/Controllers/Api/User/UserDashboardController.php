@@ -172,10 +172,10 @@ public function HomescreenBanner(Request $request){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
     }
 
-     $user_id=$request->user()->id;
+    //  $user_id=$request->user()->id;
 
      $request_data=(object) [
-    'user_id'=>$user_id,
+    // 'user_id'=>$user_id,
     "type"=>$request->type,
     'category'=>$request->category??null,
     'subcatgory'=>$request->subcategory??null,

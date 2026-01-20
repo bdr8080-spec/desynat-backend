@@ -21,4 +21,12 @@ class Deal extends Model
     {
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
+
+
+     public function sellerDealrecord(){
+          return  $this->hasOne(SellerDealProduct::class,'deal_id','id');
+
+     }
+
+
 }
