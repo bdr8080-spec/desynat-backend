@@ -67,6 +67,36 @@ class SellerDealManagement extends Controller
 
     }
 
+    
+      public function showAllproductOnDealTime(Request $request){
+
+          $validate = Validator::make($request->all(), [
+            'deal_id' => 'required|exists:deals,id',
+        ]);
+
+        if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $seller_details=$request->user()->id;
+
+          $request_data=(object )[
+            'seller_id'=>$seller_details,
+            "deal_id"=>$request->deal_id,
+        ];
+
+         $data= $this->SellerDealManagentService->SellerProductListCatgoryAndSubcatgeoryAccording($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+          return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+
+
 
      public function AddProductSinDeals(Request $request){
 

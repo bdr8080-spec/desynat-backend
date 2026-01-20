@@ -39,7 +39,7 @@ try{
 //           ->whereDate('from' ,'<=',date('Y-m-d'))
 //          ->whereDate('to' ,'>=',date('Y-m-d'));
 //     })
-//     ->with('sellerDealrecord')
+//     ->withcount('sellerDealrecord')
 //     ->get();
 
 
@@ -47,10 +47,8 @@ try{
         $query->where('seller_id', $request->seller_id)
          ->whereDate('to' ,'<',date('Y-m-d'));
     })
-    ->with('sellerDealrecord')
+    ->withcount('sellerDealrecord')
     ->get();
-
-
 
 
 
@@ -81,6 +79,44 @@ try{
     if($deal){
 
         $search_data=[
+            "deal_id"=>$deal->id,
+            "seller_id"=>$request->seller_id 
+        ];
+        
+        $product_data=SellerDealProduct::with('product_details','product_details.category','product_details.subcategory','product_details.brand','product_details.product_specifications','product_details.product_variants.color')->where($search_data);    
+        if(isset($request->search)){
+            $product_data=$product_data->where('product_name_en','Like','%'.$request->search.'%');
+        }   
+       $product_data=$product_data->get();
+    
+    }
+
+    $response['deal_data']= $deal;
+    $response['products']= $product_data;
+
+    return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>$response];
+
+} 
+catch (\Exception $e) {
+    return ['status'=>'error','message'=>"error found1",'data'=>$e->getMessage()];
+
+}
+
+}
+
+
+
+public function SellerProductListCatgoryAndSubcatgeoryAccording($request){
+        
+try{
+
+
+   $deal= Deal::where('id',$request->deal_id)
+    ->first();
+
+    if($deal){
+
+        $search_data=[
             "category_id"=>$deal->category_id,
             "subcategory_id"=>$deal->sub_category_id  ,
             "seller_id"=>$request->seller_id 
@@ -92,12 +128,13 @@ try{
         }
        $product_data=$product_data->get();
     
+    }else{
+
+        return ['status'=>'error','message'=>"deal id Is Invalid",'data'=>(object)[]];
+
     }
 
-    $response['deal_data']= $deal;
-    $response['products']= $product_data;
-
-    return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>$response];
+    return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>$product_data];
 
 } 
 catch (\Exception $e) {

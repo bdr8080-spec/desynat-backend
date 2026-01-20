@@ -112,7 +112,11 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
   // M7 APi 
 
     Route::post('/view-deals', [SellerDealManagement::class,'view_deals']);
+    
     Route::post('/view-single-deals', [SellerDealManagement::class,'viewsingledeals']);
+
+    Route::post('/show-allproduct-deal-catgeory-subCatgory', [SellerDealManagement::class,'showAllproductOnDealTime']);
+
 
     Route::post('/Add-products-in-deal-inside', [SellerDealManagement::class,'AddProductSinDeals']);
 
