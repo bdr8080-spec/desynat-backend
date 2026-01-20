@@ -99,22 +99,22 @@
                                                     <div class="chat-user-light"> {{$chat['last_chat_time']}}</div>
                                                     @endif                                            
                                                 </div>
-                                                @if($chat['product_request'] == '1' && $chat['action'] == '0')
+                                                @if($chat['product_request'] == '1' && $chat['action'] == '0' && $chat['order_create_status'] == null)
                                                     <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">
                                                         Waiting
                                                     </div>
 
-                                                @elseif($chat['product_request'] == '1' && $chat['action'] == '4')
+                                                @elseif($chat['product_request'] == '1' && $chat['action'] == '5' && $chat['order_create_status'] == null)
                                                     <div class="yellow-bg" style="color:#17854C;background:#17854C1A;">
                                                         Quotation Accepted
                                                     </div>
 
-                                                @elseif($chat['product_request'] == '1' && in_array($chat['action'], ['3','4']))
+                                                @elseif($chat['product_request'] == '1' && $chat['order_create_status'] == null && in_array($chat['action'], ['3','4']))
                                                     <div class="yellow-bg" style="color:#D32F2F;background:#D32F2F1A;">
                                                         Quotation Rejected
                                                     </div>
 
-                                                @elseif($chat['product_request'] == '1' && $chat['action']=='3')
+                                                @elseif($chat['product_request'] == '1' && $chat['order_create_status'] == null && $chat['action']=='3')
                                                     <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
                                                     <!-- <div class="yellow-bg" style="color:#17854C;background:#17854C1A;"> -->
                                                         Quotation Received

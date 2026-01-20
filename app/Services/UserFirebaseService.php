@@ -149,12 +149,24 @@ $check_chatRecord=allproductchats::with('product_variation.product_details')->wh
         }elseif($request->filters=='3'){
             $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['1','2']);
         }elseif($request->filters=='4'){
-            $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['5']);
+            // $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['5']);
+            $check_chatRecord=$check_chatRecord->where('product_request','1')->where('action','5')->whereDoesntHave('order_create_status');
         }elseif($request->filters=='5'){ // rejectced 
             $check_chatRecord=$check_chatRecord->where('product_request','1')->whereIn('action',['4']);
         }
 
 
+    }
+    if (!empty($request->search)) {
+
+        $search = trim($request->search);
+
+        $check_chatRecord = $check_chatRecord->whereHas('seller_details', function ($q) use ($search) {
+
+            $q->where('first_name', 'LIKE', "%{$search}%")
+            ->orWhere('last_name', 'LIKE', "%{$search}%")
+            ->orWhereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"]);
+        });
     }
     
    $check_chatRecord=$check_chatRecord->orderBy('id','desc')->get();

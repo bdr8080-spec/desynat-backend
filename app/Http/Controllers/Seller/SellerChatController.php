@@ -29,9 +29,9 @@ class SellerChatController extends Controller
     
         $seller_details=Auth::guard('seller')->user()->id;
 
-
        $request_data=(object) [
         'seller_id'=>$seller_details,
+        "filters"=>$request->filters
        ];
 
        $data= $this->SellerOrderService->SellerAllChatdata($request_data);
