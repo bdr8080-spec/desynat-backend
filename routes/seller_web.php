@@ -163,6 +163,13 @@ Route::match(['get', 'post'], '/deal', function () {
 
 })->name('dealer.deal');
 
+Route::match(['get', 'post'], '/add-products', function () {
+    return view('dealer.dealMgt.dealadd');
+
+})->name('dealer.add-products');
+
+
+
 
 Route::fallback(function () {
 

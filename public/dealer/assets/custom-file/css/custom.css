@@ -859,6 +859,17 @@ table.dataTable td.dt-type-date {
     border: 1px solid #D53B3633;
     background: #D53B3633;
 }
+.deals-box{
+    height: 270px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.deals-box img {
+    height:100%;
+    width: 100%;
+    object-fit: cover;
+}
 
 
 
