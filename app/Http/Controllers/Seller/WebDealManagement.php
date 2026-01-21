@@ -38,7 +38,7 @@ class WebDealManagement extends Controller
     }
 
 
-    public function singleDealManagement(Request $request, $id){
+    public function ViewsingleDealManagement(Request $request, $id){
         
         
 
@@ -53,9 +53,26 @@ class WebDealManagement extends Controller
          $data= $this->SellerDealManagentService->SingleDealView($request_data);
 
         $single_deal=$data['data'];
-
-        dump($single_deal);
         
+        return view('dealer.dealMgt.dealViewDealsProduct',compact('single_deal'));
+        
+    }
+
+    public function singleDealManagement(Request $request, $id){
+        
+        
+
+          $seller_details=  Auth::guard('seller')->user()->id;
+
+          $request_data=(object )[
+            'seller_id'=>$seller_details,
+            "deal_id"=>$id,
+            "search"=>$request->search??null
+        ];
+
+         $data= $this->SellerDealManagentService->SingleDealView($request_data);
+
+        $single_deal=$data['data'];        
         return view('dealer.dealMgt.dealadd',compact('single_deal'));
         
     }

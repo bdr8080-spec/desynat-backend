@@ -72,7 +72,7 @@
                                     <td>{{$val->from}} - {{$val->to}}</td>
                                     <td>{{$val->discount}} % </td>
                                     <td>
-                                        <a href="{{ route('seller.single-deal-management',$val->id) }}"
+                                        <a href="{{ route('seller.add-single-deal-management',$val->id) }}"
                                             class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
                                     </td>
                                 </tr>
@@ -137,10 +137,11 @@
                                         <div style="color:#48DB8F;">Active </div>
                                     </td>
                                     <td>
-                                        <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
+                                        <a href="{{ route('seller.View-single-deal-management',$val->id) }}"
+                                            class="eyebtn"><i class="bi bi-eye"></i></a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('seller.single-deal-management',$val->id) }}"
+                                        <a href="{{ route('seller.add-single-deal-management',$val->id) }}"
                                             class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
                                     </td>
 
