@@ -103,7 +103,7 @@ public function SingleDealView($request){
 try{
 
 
-   $deal= Deal::where('id',$request->deal_id)
+   $deal= Deal::with('category_details','subCategory_details')->where('id',$request->deal_id)
     ->first();
 
     if($deal){

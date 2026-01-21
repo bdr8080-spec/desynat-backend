@@ -59,20 +59,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @foreach($deal_record['listed_deal'] as $key=>$val)
                                 <tr>
-                                    <td>01</td>
+                                    <td>{{$key+1}}</td>
                                     <td>
                                         <div class="deal-img">
-                                        <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
+                                            <img src="{{$val->image}}" alt="image" class="img-fluid">
                                         </div>
                                     </td>
-                                    <td>2nd July 2025</td>
-                                    <td>02/02/2025 - 12/02/2025</td>
-                                    <td>40 % </td>
+                                    <td>{{$val->from}} </td>
+                                    <td>{{$val->from}} - {{$val->to}}</td>
+                                    <td>{{$val->discount}} % </td>
                                     <td>
-                                        <a href="#" class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
+                                        <a href="{{ route('seller.single-deal-management',$val->id) }}"
+                                            class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
                                     </td>
                                 </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -88,8 +92,8 @@
                     <div class="table-header mb-1">
                         <div class="search-field">
                             <div class="from-group position-relative">
-                            <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
-                            class="search-icon">
+                                <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
+                                    class="search-icon">
                                 <input type="search" class="form-control tableSearch" placeholder="Search"
                                     data-table="table2">
                             </div>
@@ -98,7 +102,7 @@
                     </div>
 
                     {{-- // Active product List  --}}
-                     <div class="table-responsive">
+                    <div class="table-responsive">
                         <table class="table table-bordered datatable tablesearch" id="table1">
                             <thead>
                                 <tr>
@@ -114,25 +118,34 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @foreach($deal_record['enrolled'] as $key=>$val)
+
                                 <tr>
-                                    <td>01</td>
+                                    <td>{{$key+1}}</td>
                                     <td>
                                         <div class="deal-img">
-                                        <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
+                                            <img src="{{$val->image}}" alt="image" class="img-fluid">
                                         </div>
                                     </td>
-                                    <td>2nd July 2025</td>
-                                    <td>02/02/2025 - 12/02/2025</td>
-                                    <td>40 % </td>
-                                    <td>20 </td>
-                                    <td><div style="color:#48DB8F;">Active </div></td>
-                                    <td> 
+                                    <td>{{$val->from}} </td>
+                                    <td>{{$val->from}} - {{$val->to}}</td>
+                                    <td>{{$val->discount}} % </td>
+                                    <td>{{$val->seller_deal_count}} </td>
+
+                                    <td>
+                                        <div style="color:#48DB8F;">Active </div>
+                                    </td>
+                                    <td>
                                         <a href="#" class="eyebtn"><i class="bi bi-eye"></i></a>
                                     </td>
                                     <td>
-                                        <a href="#" class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
+                                        <a href="{{ route('seller.single-deal-management',$val->id) }}"
+                                            class="addPlus-btn btn-success"><i class="bi bi-plus-lg"></i></a>
                                     </td>
+
                                 </tr>
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -148,8 +161,8 @@
                     <div class="table-header mb-1">
                         <div class="search-field">
                             <div class="from-group position-relative">
-                            <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
-                            class="search-icon">
+                                <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
+                                    class="search-icon">
                                 <input type="search" class="form-control tableSearch" placeholder="Search"
                                     data-table="table3">
                             </div>
@@ -157,7 +170,7 @@
                     </div>
 
                     <div class="table-responsive">
-                    <table class="table table-bordered datatable tablesearch" id="table1">
+                        <table class="table table-bordered datatable tablesearch" id="table1">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -170,22 +183,28 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                @foreach($deal_record['expired_deal'] as $key=>$val)
                                 <tr>
-                                    <td>01</td>
+                                    <td>{{$key+1}}</td>
                                     <td>
                                         <div class="deal-img">
-                                        <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
+                                            <img src="{{$val->image}}" alt="image" class="img-fluid">
                                         </div>
                                     </td>
-                                    <td>2nd July 2025</td>
-                                    <td>02/02/2025 - 12/02/2025</td>
-                                    <td>40 % </td>
-                                    <td>20 </td>
-                                    <td> 
+                                    <td>{{$val->from}} </td>
+                                    <td>{{$val->from}} - {{$val->to}}</td>
+                                    <td>{{$val->discount}} % </td>
+
+                                    <td>{{$val->seller_deal_count}} </td>
+
+                                    <td>
                                         <a href="#" class="btn btn-expired">Expired</a>
                                     </td>
-                                   
+
                                 </tr>
+
+                                @endforeach
 
                             </tbody>
                         </table>
@@ -199,11 +218,30 @@
         </div>
     </div>
 
-
     </div>
 
-    <script>
 
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // 1️⃣ Restore last active tab
+        let activeTab = localStorage.getItem("active_product_tab");
+        if (activeTab) {
+            let tabEl = document.querySelector(`[data-bs-target="${activeTab}"]`);
+            if (tabEl) {
+                new bootstrap.Tab(tabEl).show();
+            }
+        }
+
+        // 2️⃣ Save clicked tab
+        document.querySelectorAll('[data-bs-toggle="pill"]').forEach(tabBtn => {
+            tabBtn.addEventListener("shown.bs.tab", function(e) {
+                localStorage.setItem("active_product_tab", e.target.getAttribute(
+                    "data-bs-target"));
+            });
+        });
+
+    });
     </script>
 
 

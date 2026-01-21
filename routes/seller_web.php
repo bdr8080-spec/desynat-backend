@@ -11,6 +11,10 @@ use App\Http\Controllers\Seller\SellerOrderController;
 use App\Http\Controllers\Seller\SellerChatController;
 
 
+use App\Http\Controllers\Seller\WebDealManagement;
+
+
+
 use App\Http\Controllers\ChatController;
 
 
@@ -147,6 +151,10 @@ Route::group(['prefix' => 'seller'], function () {
 
     Route::post('/seller/load-chat', [SellerChatController::class, 'loadChat'])->name('seller.load-chat');
 
+    Route::get('deal-management', [WebDealManagement::class, 'deal_management'])->name('seller.deal_management');
+
+    Route::get('single-deal-management/{id}', [WebDealManagement::class, 'singleDealManagement'])->name('seller.single-deal-management');
+
 
 });
 
@@ -158,10 +166,6 @@ Route::match(['get', 'post'], '/chats', function () {
 
 })->name('dealer.chats');
 
-Route::match(['get', 'post'], '/deal', function () {
-    return view('dealer.dealMgt.deal');
-
-})->name('dealer.deal');
 
 Route::match(['get', 'post'], '/add-products', function () {
     return view('dealer.dealMgt.dealadd');
