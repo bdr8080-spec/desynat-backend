@@ -1481,7 +1481,8 @@ if($checkOrder->p_orderdetails_id!=='0' && $checkOrder->p_orderdetails_id!=='nul
         }
     }
 
-    public function AddMoneyFromTheUserSide($request)
+    
+public function AddMoneyFromTheUserSide($request)
     {
 
     try {
@@ -1494,26 +1495,81 @@ $unique_id="Wal".Rand('100000','999999');
         'amount'=>$request->amount,
         'type'=>'1',
         "payment_method"=>$request->payment_method,
-        "status"=>"0"
+        "payment_status"=>"0",
+        "addedby"=>"2"
     ];
 
-    UserWalletHistory::Create($request_data);
-    
-            return [
-                'status'  => 'success',
-                'message' => 'Create add Wallet Transaction successfully',
-                'data'    => $sizes
-            ];
+   $insert_record= UserWalletHistory::Create($request_data);
+   
+    return [
+        'status'  => 'success',
+        'message' => 'add Wallet Money Transaction',
+        'data'    => $insert_record
+    ];
 
-        } catch (\Exception $e) {
-            return [
-                'status'  => 'error',
-                'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
-                'data'    => $e->getMessage()
-            ];
-        }
+} catch (\Exception $e) {
+        return [
+            'status'  => 'error',
+            'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
+            'data'    => $e->getMessage()
+        ];
+    }
+}
+
+public function CompleteAddMoneyPayment($request){
+
+try {
+
+    DB::beginTransaction();
+
+$check_record= UserWalletHistory::where('unique_id',$request->unique_id)->first();
+
+if($check_record){
+    
+    $check_record->update(['payment_status'=>$request->payment_status]);
+    if($request->payment_status=='1'){
+        // If The  Payment is Success Then insert Amount in Wallet or create New 
+     $checkUserWallet=UserWallet::where('user_id',$check_record->user_id)->first();
+
+     if($checkUserWallet){
+        $newAmount=$checkUserWallet->amount +$check_record->amount;
+        $checkUserWallet->update(['amount'=>$newAmount]);
+
+     }else{
+
+        $insert_amount_array=[
+            "user_id"=>$check_record->user_id,
+            "amount"=>$check_record->amount
+        ];
+        UserWallet::create($insert_amount_array);
+     }
+
+    $message='Add Money in Wallet Complete Successfully';
+    }elseif($request->payment_status=='2'){
+     $message='Add Money in Wallet Cancelled/ Failed';
     }
 
+     DB::commit();
+
+    return [
+        'status'  => 'success',
+        'message' => $message,
+        'data'    => $check_record
+    ];
+
+}
+
+
+ 
+
+} catch (\Exception $e) {
+        return [
+            'status'  => 'error',
+            'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
+            'data'    => $e->getMessage()
+        ];
+    }
+}
 
 
 }

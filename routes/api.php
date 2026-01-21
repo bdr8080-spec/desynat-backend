@@ -164,8 +164,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/Add-money-in-wallet', [UserWalletController::class,'AddMoneyInWallet']);
 
-
 });
+
+Route::post('user/complete-add-money-in-wallet', [UserWalletController::class,'completeAddMoneyInWallet']);
 
 // Affilated user APi 
 
