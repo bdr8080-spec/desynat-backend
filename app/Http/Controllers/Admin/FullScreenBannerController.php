@@ -66,31 +66,60 @@ class FullScreenBannerController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        // if ($request->hasFile('image')) {
+
+        //     [$width, $height] = getimagesize($request->file('image'));
+
+        //     $imageRatio = $width / $height;
+        //     $tolerance  = 0.01;
+
+        //     // Determine target ratio based on type
+        //     if ($request->type == '1') {
+        //         // Mobile → 9:16 (portrait)
+        //         $targetRatio = 9 / 16;
+        //         $ratioLabel  = '9:16';
+        //     } else {
+        //         // Web → 16:9 (landscape)
+        //         $targetRatio = 16 / 9;
+        //         $ratioLabel  = '16:9';
+        //     }
+
+        //     if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
+        //         return response()->json([
+        //             'success' => false,
+        //             'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+        //         ]);
+        //     }
+        // }
+
         if ($request->hasFile('image')) {
 
             [$width, $height] = getimagesize($request->file('image'));
 
-            $imageRatio = $width / $height;
-            $tolerance  = 0.01;
-
-            // Determine target ratio based on type
+            // Only validate aspect ratio for Mobile (type == 1)
             if ($request->type == '1') {
+
+                $imageRatio = $width / $height;
+                $tolerance  = 0.01;
+
                 // Mobile → 9:16 (portrait)
                 $targetRatio = 9 / 16;
                 $ratioLabel  = '9:16';
-            } else {
-                // Web → 16:9 (landscape)
-                $targetRatio = 16 / 9;
-                $ratioLabel  = '16:9';
+
+                if (
+                    $imageRatio < ($targetRatio - $tolerance) ||
+                    $imageRatio > ($targetRatio + $tolerance)
+                ) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+                    ]);
+                }
             }
 
-            if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
-                ]);
-            }
+            // No aspect ratio validation for Web or other types
         }
+
 
 
 
@@ -136,31 +165,60 @@ class FullScreenBannerController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        // if ($request->hasFile('image')) {
+
+        //     [$width, $height] = getimagesize($request->file('image'));
+
+        //     $imageRatio = $width / $height;
+        //     $tolerance  = 0.01;
+
+        //     // Determine target ratio based on type
+        //     if ($request->type == '1') {
+        //         // Mobile → 9:16 (portrait)
+        //         $targetRatio = 9 / 16;
+        //         $ratioLabel  = '9:16';
+        //     } else {
+        //         // Web → 16:9 (landscape)
+        //         $targetRatio = 16 / 9;
+        //         $ratioLabel  = '16:9';
+        //     }
+
+        //     if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
+        //         return response()->json([
+        //             'success' => false,
+        //             'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+        //         ]);
+        //     }
+        // }
+
         if ($request->hasFile('image')) {
 
             [$width, $height] = getimagesize($request->file('image'));
 
-            $imageRatio = $width / $height;
-            $tolerance  = 0.01;
-
-            // Determine target ratio based on type
+            // Only validate aspect ratio for Mobile (type == 1)
             if ($request->type == '1') {
+
+                $imageRatio = $width / $height;
+                $tolerance  = 0.01;
+
                 // Mobile → 9:16 (portrait)
                 $targetRatio = 9 / 16;
                 $ratioLabel  = '9:16';
-            } else {
-                // Web → 16:9 (landscape)
-                $targetRatio = 16 / 9;
-                $ratioLabel  = '16:9';
+
+                if (
+                    $imageRatio < ($targetRatio - $tolerance) ||
+                    $imageRatio > ($targetRatio + $tolerance)
+                ) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+                    ]);
+                }
             }
 
-            if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
-                ]);
-            }
+            // No aspect ratio validation for Web or other types
         }
+
 
         $banner->title = $request->title;
         $banner->country_id = $request->country_id;
