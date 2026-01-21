@@ -103,7 +103,7 @@ public function SingleDealView($request){
 try{
 
 
-   $deal= Deal::where('id',$request->deal_id)
+   $deal= Deal::with('category_details','subCategory_details')->where('id',$request->deal_id)
     ->first();
 
     if($deal){
@@ -119,10 +119,28 @@ try{
         }   
        $product_data=$product_data->get();
     
+
+    //    Remaining product 
+
+      $already_add_product=  SellerDealProduct::where('deal_id',$deal->id)->where('seller_id',$request->seller_id)->pluck('product_id')->toArray();
+
+        $search_data=[
+            "category_id"=>$deal->category_id,
+            "subcategory_id"=>$deal->sub_category_id  ,
+            "seller_id"=>$request->seller_id 
+        ];
+        
+        $remaining_Product=product::with('category','subcategory','brand','product_specifications','product_variants.color')->where($search_data);    
+        if(isset($request->search)){
+            $remaining_Product=$remaining_Product->where('product_name_en','Like','%'.$request->search.'%');
+        }
+       $remaining_Product=$remaining_Product->whereNotIn('id',$already_add_product)->get();
+
     }
 
     $response['deal_data']= $deal;
     $response['added_products']= $product_data;
+    $response['remaining_Product']= $remaining_Product;
 
     return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>$response];
 

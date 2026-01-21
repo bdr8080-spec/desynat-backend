@@ -1,31 +1,32 @@
 @include('dealer.layout.header')
 
 <section class="section dashboard">
-   <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
+    <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
         <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Details</a>
     </div>
 
     <div class="row mt-3">
         <div class="col-lg-6">
             <div class="deals-box mb-4 ">
-                <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image">
+                <img src="{{ $single_deal['deal_data']->image}}" alt="image">
             </div>
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4>Starts From - 2nd July 2025</h4>
+                <h4>Starts From - {{ $single_deal['deal_data']->from}}</h4>
                 <div class="duration-table">
                     <table class="table">
                         <tr>
-                            <td>Duration - 02/02/2025 - 27/02/2025</td>
-                            <td>Category - Men</td>
+                            <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
+                            </td>
+                            <td>Category - {{  $single_deal['deal_data']->category_details->name}}</td>
                         </tr>
                         <tr>
-                            <td>Discount% - 40%</td>
-                            <td>Sub-Category  - Shirt</td>
+                            <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
+                            <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
                         </tr>
                     </table>
-                    <p>lorem ipsum dolor sit amet, consectetur adipisici elit,  sed do eiusmod tempor incididunt ut labore et dolore  magna aliqua. Ut enim ad lorem ipsum dolor sit amet, consectetur adipisici elit,  sed do eiusmod tempor incididunt ut labore et dolore  magna aliqua. Ut enim adlorem ipsum dolor sit amet, consectetur adipisici elit,  sed do eiusmod tempor incididunt ut labore et dolore  magna aliqua. Ut enim ad</p>
+
                 </div>
             </div>
         </div>
@@ -35,8 +36,7 @@
         <h5>Select Product</h5>
         <div class="from-group position-relative">
             <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-            <input type="search" class="form-control tableSearch" placeholder="Search"
-                data-table="table2">
+            <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
         </div>
     </div>
 
@@ -54,6 +54,9 @@
                 </tr>
             </thead>
             <tbody>
+
+                @foreach($single_deal['remaining_Product'] as $key=>$val)
+
                 <tr>
                     <td>
                         <div class="d-flex justify-content-center">
@@ -62,36 +65,20 @@
                             </div>
                         </div>
                     </td>
-                    <td>01</td>
+                    <td>{{$key+1}}</td>
                     <td>
                         <div class="deal-img">
-                            <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
+                            <img src="{{$val->product_variants['0']->variant_image['0'] }}" alt="image"
+                                class="img-fluid">
                         </div>
                     </td>
-                    <td>Mens Cotton Shirt</td>
-                    <td>Levis</td>
+                    <td>{{$val->product_name_en }}</td>
+                    <td>{{$val->brand->name_english }}</td>
                     <td><i class="bi bi-star-fill"></i> 4.0</td>
-                    <td>299</td>
+                    <td>{{$val->product_variants['0']->actual_price}}</td>
                 </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox">
-                            </div>
-                        </div>
-                    </td>
-                    <td>01</td>
-                    <td>
-                        <div class="deal-img">
-                            <img src="{{ asset('dealer') }}/assets/img/banner-box.svg" alt="image" class="img-fluid">
-                        </div>
-                    </td>
-                    <td>Mens Cotton Shirt</td>
-                    <td>Levis</td>
-                    <td><i class="bi bi-star-fill"></i> 4.0</td>
-                    <td>299</td>
-                </tr>
+                @endforeach
+
             </tbody>
         </table>
     </div>
@@ -101,7 +88,7 @@
     </div>
 
 
-        
+
 </section>
 
 

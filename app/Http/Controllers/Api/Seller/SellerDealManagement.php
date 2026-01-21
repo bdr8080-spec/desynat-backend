@@ -48,7 +48,7 @@ class SellerDealManagement extends Controller
         if($validate->fails()){
             return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
         }
-
+        
         $seller_details=$request->user()->id;
 
           $request_data=(object )[
