@@ -83,21 +83,21 @@ class AffiliatedUserManagementService
                     'country_details'
                 ]);
 
-            if (!empty($request->country)) {
+            if (!empty($request->country1)) {
                 $query->whereHas('country_details', function ($q) use ($request) {
-                    $q->where('name', $request->country);
+                    $q->where('name', $request->country1);
                 });
             }
 
-            if (!empty($request->from_date) && !empty($request->to_date)) {
+            if (!empty($request->from_date1) && !empty($request->to_date1)) {
                 $query->whereBetween('created_at', [
-                    $request->from_date . ' 00:00:00',
-                    $request->to_date . ' 23:59:59'
+                    $request->from_date1 . ' 00:00:00',
+                    $request->to_date1 . ' 23:59:59'
                 ]);
-            } elseif (!empty($request->from_date)) {
-                $query->whereDate('created_at', '>=', $request->from_date);
-            } elseif (!empty($request->to_date)) {
-                $query->whereDate('created_at', '<=', $request->to_date);
+            } elseif (!empty($request->from_date1)) {
+                $query->whereDate('created_at', '>=', $request->from_date1);
+            } elseif (!empty($request->to_date1)) {
+                $query->whereDate('created_at', '<=', $request->to_date1);
             }
 
             if (!empty($request->search)) {
@@ -145,21 +145,21 @@ class AffiliatedUserManagementService
                     'country_details'
                 ]);
 
-            if (!empty($request->country)) {
+            if (!empty($request->country2)) {
                 $query->whereHas('country_details', function ($q) use ($request) {
-                    $q->where('name', $request->country);
+                    $q->where('name', $request->country2);
                 });
             }
 
-            if (!empty($request->from_date) && !empty($request->to_date)) {
+            if (!empty($request->from_date2) && !empty($request->to_date2)) {
                 $query->whereBetween('created_at', [
-                    $request->from_date . ' 00:00:00',
-                    $request->to_date . ' 23:59:59'
+                    $request->from_date2 . ' 00:00:00',
+                    $request->to_date2 . ' 23:59:59'
                 ]);
-            } elseif (!empty($request->from_date)) {
-                $query->whereDate('created_at', '>=', $request->from_date);
-            } elseif (!empty($request->to_date)) {
-                $query->whereDate('created_at', '<=', $request->to_date);
+            } elseif (!empty($request->from_date2)) {
+                $query->whereDate('created_at', '>=', $request->from_date2);
+            } elseif (!empty($request->to_date2)) {
+                $query->whereDate('created_at', '<=', $request->to_date2);
             }
 
             if (!empty($request->search)) {
@@ -315,7 +315,7 @@ class AffiliatedUserManagementService
             $user->status = $user->status == 0 ? 1 : 0;
             $user->save();
 
-            $message = $user->is_block == 1
+            $message = $user->status == 1
                 ? 'Affiliate User Unblocked Successfully'
                 : 'Affiliate User Blocked Successfully';
 

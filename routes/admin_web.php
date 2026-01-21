@@ -189,6 +189,9 @@ Route::group(['prefix'=>'admin'], function(){
 
         //affiliate user management
         Route::get('/affiliate-user-management', [AffiliateUserController::class, 'affiliateUserManagement'])->name('admin.affiliateUserManagement');
+        Route::post('/blockUnblockAffiliateUser/{id}', [AffiliateUserController::class, 'blockUnblockAffiliateUser'])->name('admin.blockUnblockAffiliateUser');
+        Route::post('/acceptAffiliateUser/{id}', [AffiliateUserController::class, 'acceptAffiliateUser'])->name('admin.acceptAffiliateUser');
+        Route::post('/rejectAffiliateUser/{id}', [AffiliateUserController::class, 'rejectAffiliateUser'])->name('admin.rejectAffiliateUser');
         
 
     });

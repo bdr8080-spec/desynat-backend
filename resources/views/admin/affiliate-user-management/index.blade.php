@@ -6,16 +6,16 @@
     <div class="d-flex justify-content-center">
         <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
             <li class="nav-item m-1" role="presentation">
-                <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
+                <button class="nav-link active customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="true">
                     New
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">
-                <button class="nav-link active customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
+                <button class="nav-link customBtn2 m-0" id="pills-home-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                    aria-selected="true">
+                    aria-selected="false">
                     Approved
                 </button>
             </li>
@@ -31,48 +31,69 @@
     </div>
     <div class="userManagecontent">
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
-                            <input type="date" id="from" class="form-control" />
+            <div class="tab-pane fade show active" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
+                <form method="GET" action="{{ route('admin.affiliateUserManagement') }}" id="filterForm">
+                    <div class="row">
+                        <!-- From Date Filter -->
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="from" class="form-label">From:</label>
+                                <input type="date" id="from" name="from_date" class="form-control"
+                                    value="{{ request()->from_date }}"
+                                    onchange="document.getElementById('filterForm').submit();" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">To:</label>
-                            <input type="date" id="from" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <select class="form-select form-select-lg mt-4" aria-label="Large select example">
 
-                                <option selected>Select country</option>
-                                <option value="1">country One</option>
-                                <option value="2">country Two</option>
-                                <option value="3">country Three</option>
-                            </select>
+                        <!-- To Date Filter -->
+                        <div class="col-lg-3 col-md-4 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="to" class="form-label">To:</label>
+                                <input type="date" id="to" name="to_date" class="form-control"
+                                    value="{{ request()->to_date }}"
+                                    onchange="document.getElementById('filterForm').submit();" />
+                            </div>
+                        </div>
+
+                        <!-- Country Filter -->
+                        <div class="col-lg-3 col-md-12 col-12">
+                            <div class="form-group mt-4 w-100">
+                                <label for="to" class="form-label">Select Country</label>
+                                <select name="country" id="country"
+                                    class="form-select form-select-lg "
+                                    onchange="document.getElementById('filterForm').submit();">
+                                    <option value="">Select country</option>
+                                    @foreach($countries as $country)
+                                    <option value="{{ $country['name'] }}"
+                                        {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                        {{ $country['name'] }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 ">
+                            <div class="d-flex gap-3 justify-content-end" >
+                                <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn"
+                                    style="margin-top: 60px">
+                                    <span>Reset</span>
+                                </a>
+                        
+                                <a class="btn btn-dark customBtn " style="margin-top: 60px">
+                                    <span>Export</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-12 col-12">
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
-                                <span>Export</span></a>
-                        </div>
-                    </div>
-                </div>
+                </form>
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table id="myTable" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Joining Date</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Mobile Number</th>
                                 <th scope="col">Email ID</th>
                                 <th scope="col">Country</th>
@@ -84,118 +105,142 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($newUsers as $index => $user)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
                                 <td>
-                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                    <img src="{{ $user['profile_image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>
-                                <td>Mayank Bana</td>
-                                <td>Bana</td>
-                                <td>+971616161</td>
-                                <td>Abc@gmail.com</td>
-                                <td>UAE</td>
-                                <td>$Lorem</td>
+                                <td>{{ $user['full_name'] }}</td>
+                                <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
+                                <td>{{ $user['email'] }}</td>
+                                <td>{{ $user['country_details']['name'] }}</td>
+                                <td>
+                                    @if(!empty($user['address_details']))
+                                     {{$user['address_details']['address1']}}
+                                     {{$user['address_details']['address2']}}
+                                     {{$user['address_details']['town']}}
+                                     {{$user['address_details']['city']}}
+                                     {{$user['address_details']['pincode']}}
+                                     {{$user['address_details']['state']}}
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                    <td>
+                                        @if(!empty($user['document1']) || !empty($user['document2']))
+                                            <a class="table-button view-owner-btn"
+                                            type="button"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#sentModal4"
+                                            data-documents='@json(array_values(array_filter([
+                                                    !empty($user["document1"]) ? ["document_path" => $user["document1"]] : null,
+                                                    !empty($user["document2"]) ? ["document_path" => $user["document2"]] : null,
+                                            ])))'>
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                        @else
+                                            N/A
+                                        @endif
+                                    </td>
 
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                <td>
+                                @if(!empty($user['bank_details']))
+                                <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#bankModal" data-bank='@json($user['bank_details'])'>
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                @else
+                                N/A
+                                @endif
+                                </td>
+                                <td>
+                                    @if(!empty($user['bank_details']['upload_proof']))
+                                    <a class="table-button view-account-proof-btn" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#sentModal3"
+                                        data-proof='{{ $user['bank_details']['upload_proof'] }}'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal4">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
+                                    </a>
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
-                                        <a class="table-button" type="button"><i
-                                                class="bi bi-check-circle-fill"></i></a>
-
-                                        <a class="table-button" data-bs-toggle="modal" data-bs-target="#rejectmodel"
-                                            type="button">
+                                        <a class="table-button acceptUser" type="button"
+                                                    data-id="{{ $user['id'] }}">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                        </a>
+                                        <a class="table-button" data-bs-toggle="modal" data-bs-target="#xcircle"
+                                            type="button" data-id="{{ $user['id'] }}">
                                             <i class="bi bi-x-circle-fill"></i>
                                         </a>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
-                                <td>
-                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
-                                </td>
-                                <td>Mayank Bana</td>
-                                <td>Bana</td>
-                                <td>+971616161</td>
-                                <td>Abc@gmail.com</td>
-                                <td>UAE</td>
-                                <td>$Lorem</td>
-
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal4">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td>
-                                    <div class="d-flex gap-3 justify-content-center">
-                                        <a class="table-button" type="button"><i
-                                                class="bi bi-check-circle-fill"></i></a>
-
-                                        <a class="table-button" data-bs-toggle="modal" data-bs-target="#rejectmodel"
-                                            type="button">
-                                            <i class="bi bi-x-circle-fill"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
             <!-- approved -->
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+            <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
                 tabindex="0">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
-                            <input type="date" id="from" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">To:</label>
-                            <input type="date" id="from" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <select class="form-select form-select-lg mt-4" aria-label="Large select example">
+                        <form method="GET" action="{{ route('admin.affiliateUserManagement') }}" id="filterForm1">
+                            <div class="row">
+                                <!-- From Date Filter -->
+                                <div class="col-lg-3 col-md-4 col-12">
+                                    <div class="form-group mt-4 w-100">
+                                        <label for="from" class="form-label">From:</label>
+                                        <input type="date" id="from" name="from_date1" class="form-control"
+                                            value="{{ request()->from_date1 }}"
+                                            onchange="document.getElementById('filterForm1').submit();" />
+                                    </div>
+                                </div>
 
-                                <option selected>Select country</option>
-                                <option value="1">country One</option>
-                                <option value="2">country Two</option>
-                                <option value="3">country Three</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-12 col-12">
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
-                                <span>Export</span></a>
-                        </div>
-                    </div>
-                </div>
+                                <!-- To Date Filter -->
+                                <div class="col-lg-3 col-md-4 col-12">
+                                    <div class="form-group mt-4 w-100">
+                                        <label for="to" class="form-label">To:</label>
+                                        <input type="date" id="to" name="to_date1" class="form-control"
+                                            value="{{ request()->to_date1 }}"
+                                            onchange="document.getElementById('filterForm1').submit();" />
+                                    </div>
+                                </div>
+
+                                <!-- Country Filter -->
+                                <div class="col-lg-3 col-md-12 col-12">
+                                    <div class="form-group mt-4 w-100">
+                                    <label for="to" class="form-label">Select Country</label>
+
+                                        <select name="country1" id="country1"
+                                            class="form-select form-select-lg "
+                                            onchange="document.getElementById('filterForm1').submit();">
+                                            <option value="">Select country</option>
+                                            @foreach($countries as $country)
+                                            <option value="{{ $country['name'] }}"
+                                                {{ request('country1') == $country['name'] ? 'selected' : '' }}>
+                                                {{ $country['name'] }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-12 col-12">
+                                    <div class="d-flex gap-3 justify-content-end" >
+                                        <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn "
+                                            style="margin-top: 70px">
+                                            <span>Reset</span>
+                                        </a>
+                                        <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                            <span>Export</span>
+                                        </a>
+                                    </div>
+                                </div>
+                              
+                            </div>
+                        </form>
 
                 <div class="table-responsive">
                     <table class="table">
@@ -204,8 +249,7 @@
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Joining Date</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Mobile Number</th>
                                 <th scope="col">Email ID</th>
                                 <th scope="col">Country</th>
@@ -219,78 +263,79 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($approvedUsers as $index => $user)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
                                 <td>
-                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                    <img src="{{ $user['profile_image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>
-                                <td>Mayank Bana</td>
-                                <td>Bana</td>
-                                <td>+971616161</td>
-                                <td>Abc@gmail.com</td>
-                                <td>UAE</td>
-                                <td>$Lorem</td>
+                                <td>{{ $user['full_name'] }}</td>
+                                <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
+                                <td>{{ $user['email'] }}</td>
+                                <td>{{ $user['country_details']['name'] }}</td>
+                                <td>
+                                    @if(!empty($user['address_details']))
+                                     {{$user['address_details']['address1']}}
+                                     {{$user['address_details']['address2']}}
+                                     {{$user['address_details']['town']}}
+                                     {{$user['address_details']['city']}}
+                                     {{$user['address_details']['pincode']}}
+                                     {{$user['address_details']['state']}}
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
 
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                <td>
+                                    @if(!empty($user['document1']) || !empty($user['document2']))
+                                        <a class="table-button view-owner-btn"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sentModal4"
+                                        data-documents='@json(array_values(array_filter([
+                                                !empty($user["document1"]) ? ["document_path" => $user["document1"]] : null,
+                                                !empty($user["document2"]) ? ["document_path" => $user["document2"]] : null,
+                                        ])))'>
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+                                <td> 
+                                    @if(!empty($user['bank_details']))
+                                    <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#bankModal" data-bank='@json($user['bank_details'])'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal">
+                                    </a>
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty($user['bank_details']['upload_proof']))
+                                    <a class="table-button view-account-proof-btn" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#sentModal3"
+                                        data-proof='{{ $user['bank_details']['upload_proof'] }}'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal4">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td>fufeg</td>
-                                <td>fufeg</td>
+                                    </a>
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                <td>0</td>
+                                <td>0 KD</td>
                                  <td>
                                 <div class="form-check form-switch" style="justify-content: center;">
-                                    <input class="form-check-input" type="checkbox" type="button" role="switch"
-                                        id="flexSwitchCheckChecked">
+                                    <input class="form-check-input toggleStatus" type="checkbox"
+                                        id="flexSwitchCheckChecked" data-id="{{ $user['id'] }}"
+                                        {{ $user['status'] == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="flexSwitchCheckChecked"></label>
                                 </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
-                                <td>
-                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
-                                </td>
-                                <td>Mayank Bana</td>
-                                <td>Bana</td>
-                                <td>+971616161</td>
-                                <td>Abc@gmail.com</td>
-                                <td>UAE</td>
-                                <td>$Lorem</td>
-                              
-
-
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal4">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                      <td>fufeg</td>
-                                <td>fufeg</td>
-                                <td>
-                                    <div class="form-check form-switch" style="justify-content: center;">
-                                        <input class="form-check-input" type="checkbox" type="button" role="switch"
-                                            id="flexSwitchCheckChecked">
-                                        <label class="form-check-label" for="flexSwitchCheckChecked"></label>
-                                    </div>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -301,37 +346,60 @@
 
             <div class="tab-pane fade" id="pills-return" role="tabpanel" aria-labelledby="pills-return-tab"
                 tabindex="0">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">From:</label>
-                            <input type="date" id="from" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <label for="from" class="form-label">To:</label>
-                            <input type="date" id="from" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="form-group mt-4 w-100">
-                            <select class="form-select form-select-lg mt-4" aria-label="Large select example">
+                       <form method="GET" action="{{ route('admin.affiliateUserManagement') }}" id="filterForm2">
+                            <div class="row">
+                                <!-- From Date Filter -->
+                                <div class="col-lg-3 col-md-4 col-12">
+                                    <div class="form-group mt-4 w-100">
+                                        <label for="from" class="form-label">From:</label>
+                                        <input type="date" id="from" name="from_date2" class="form-control"
+                                            value="{{ request()->from_date2 }}"
+                                            onchange="document.getElementById('filterForm2').submit();" />
+                                    </div>
+                                </div>
 
-                                <option selected>Select country</option>
-                                <option value="1">country One</option>
-                                <option value="2">country Two</option>
-                                <option value="3">country Three</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-12 col-12">
-                        <div class="d-dlex justify-content-end" style="text-align: end">
-                            <a class="btn btn-dark customBtn w-100" style="margin-top: 56px">
-                                <span>Export</span></a>
-                        </div>
-                    </div>
-                </div>
+                                <!-- To Date Filter -->
+                                <div class="col-lg-3 col-md-4 col-12">
+                                    <div class="form-group mt-4 w-100">
+                                        <label for="to" class="form-label">To:</label>
+                                        <input type="date" id="to" name="to_date2" class="form-control"
+                                            value="{{ request()->to_date2 }}"
+                                            onchange="document.getElementById('filterForm2').submit();" />
+                                    </div>
+                                </div>
+
+                                <!-- Country Filter -->
+                                <div class="col-lg-3 col-md-12 col-12">
+                                    <div class="form-group mt-4 w-100">
+                                        <label for="to" class="form-label">Select Country</label>
+
+                                        <select name="country2" id="country2"
+                                            class="form-select form-select-lg "
+                                            onchange="document.getElementById('filterForm2').submit();">
+                                            <option value="">Select country</option>
+                                            @foreach($countries as $country)
+                                            <option value="{{ $country['name'] }}"
+                                                {{ request('country2') == $country['name'] ? 'selected' : '' }}>
+                                                {{ $country['name'] }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-12 col-12">
+                                    <div class="d-flex gap-3 justify-content-end" style="text-align: end">
+                                        <a href="{{route('admin.affiliateUserManagement')}}" class="btn btn-dark customBtn"
+                                            style="margin-top: 70px">
+                                            <span>Reset</span>
+                                        </a>
+                                          <a class="btn btn-dark customBtn " style="margin-top: 70px">
+                                            <span>Export</span>
+                                        </a>
+                                    </div>
+                                </div>
+                             
+                            </div>
+                        </form>
 
                 <div class="table-responsive">
                     <table class="table">
@@ -340,95 +408,81 @@
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Joining Date</th>
                                 <th scope="col">Image</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Mobile Number</th>
                                 <th scope="col">Email ID</th>
                                 <th scope="col">Country</th>
-                                <th scope="col">Store Name</th>
-                                <th scope="col">Store Address</th>
-                                <th scope="col">Store Mail ID</th>
-                                <th scope="col">Bio</th>
+                                <th scope="col"> Address</th>
                                 <th scope="col">Uploaded ID</th>
-                                <th scope="col">Uploaded Store Document</th>
                                 <th scope="col">Bank Account Details</th>
                                 <th scope="col">Upload Account Proof</th>
-                                <th scope="col">Rejection Reason</th>
+                                <th scope="col">Reason</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($rejectedUsers as $index => $user)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>{{ \Carbon\Carbon::parse($user['created_at'])->format('d-m-Y') }}</td>
                                 <td>
-                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                    <img src="{{ $user['profile_image'] }}" alt="" width="40px" height="40px" class="square" />
                                 </td>
-                                <td>John</td>
-                                <td>Mayank Bana</td>
-                                <td>Bana</td>
-                                <td>+971616161</td>
-                                <td>Abc@gmail.com</td>
-                                <td>UAE</td>
-
-                                <!-- <td>Lorem</td> -->
-
-                                <td>$Lorem</td>
-                                <td>$Store@gmail.com</td>
-                                <td>Lorem Lorem Lorem</td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal3">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal4">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td>LOrem </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>298071</td>
+                                <td>{{ $user['full_name'] }}</td>
+                                <td>{{ $user['country_code'] }}{{ $user['mobile'] }}</td>
+                                <td>{{ $user['email'] }}</td>
+                                <td>{{ $user['country_details']['name'] }}</td>
                                 <td>
-                                    <img src="image/profile.jpg" alt="" width="40px" height="40px" class="square" />
+                                    @if(!empty($user['address_details']))
+                                     {{$user['address_details']['address1']}}
+                                     {{$user['address_details']['address2']}}
+                                     {{$user['address_details']['town']}}
+                                     {{$user['address_details']['city']}}
+                                     {{$user['address_details']['pincode']}}
+                                     {{$user['address_details']['state']}}
+                                    @else
+                                    N/A
+                                    @endif
                                 </td>
-                                <td>John</td>
-                                <td>Mayank Bana</td>
-                                <td>Bana</td>
-                                <td>+971616161</td>
-                                <td>Abc@gmail.com</td>
-                                <td>UAE</td>
-
-                                <!-- <td>Lorem</td> -->
-
-                                <td>$Lorem</td>
-                                <td>$Store@gmail.com</td>
-                                <td>Lorem Lorem Lorem</td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                <td>
+                                    @if(!empty($user['document1']) || !empty($user['document2']))
+                                        <a class="table-button view-owner-btn"
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#sentModal4"
+                                        data-documents='@json(array_values(array_filter([
+                                                !empty($user["document1"]) ? ["document_path" => $user["document1"]] : null,
+                                                !empty($user["document2"]) ? ["document_path" => $user["document2"]] : null,
+                                        ])))'>
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+                                <td> 
+                                    @if(!empty($user['bank_details']))
+                                    <a class="table-button view-bank-btn" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#bankModal" data-bank='@json($user['bank_details'])'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal3">
+                                    </a>
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty($user['bank_details']['upload_proof']))
+                                    <a class="table-button view-account-proof-btn" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#sentModal3"
+                                        data-proof='{{ $user['bank_details']['upload_proof'] }}'>
                                         <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#bankModal">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal4">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a></td>
-                                <td>LOrem </td>
+                                    </a>
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                <td>{{ $user['reject_reason'] ?? 'N/A' }} </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -439,78 +493,79 @@
     <!-- End of Content Wrapper -->
 </div>
 
-<div class="modal fade" id="rejectmodel" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+<!-- reject modal -->
+<div class="modal fade" id="xcircle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
             <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel">Reject Reason</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
-                    <label for="rejectReason" class="form-label">Reason For Rejection</label>
-                    <textarea class="form-control" id="rejectReason" rows="3" placeholder="Enter reason"></textarea>
-
+                     <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reject_type" id="rejectComplete" value="complete" checked>
+                                <label class="form-check-label" for="rejectComplete">Complete Reject</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="reject_type" id="rejectDocument" value="document">
+                                <label class="form-check-label" for="rejectDocument">Document Reject</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="d-flex justify-content-center mt-3">
-                    <button type="button" class="btn btn-dark customBtn" id="submitReject">Submit</button>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="div">
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Reason For Rejection</label>
+                                <textarea class="form-control" id="rejectReason" rows="3"></textarea>
+                                <div id="error-message" class="text-danger mt-2" style="display:none;">Please Enter Reason</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+             
+                  <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mt-3">
+                                        <a type="button" class="btn btn-dark customBtn" id="submitReject">Reject Seller</a>
+                                    </div>
             </div>
-
+         
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="sentModal2" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="sentModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
                 <h2 class="h2">Documents</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center">
-                <a id="accountProofLink" href="#" target="_blank">
-                    <img id="" src="image/download.jpeg" alt="Upload ID's" class="img-fluid rounded border"
-                        style="cursor:pointer;width: 200px;height: 200px;">
-                    <img id="" src="image/download.jpeg" alt="Account Proof" class="img-fluid rounded border"
-                        style="cursor:pointer;width: 200px;height: 200px;">
-                </a>
+            <div class="modal-body">
+                <div id="documentContainer" class="appointment-container d-flex flex-wrap  justify-content-center">
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- bank proof modal -->
 <div class="modal fade" id="sentModal3" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Store Details</h2>
+                <h2 class="h2">Uploaded Account Proof</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
                 <a id="accountProofLink" href="#" target="_blank">
-                    <img id="" src="image/download.jpeg" alt="Upload ID's" class="img-fluid rounded border"
-                        style="cursor:pointer;width: 200px;height: 200px;">
-                    <img id="" src="image/download.jpeg" alt="Account Proof" class="img-fluid rounded border"
-                        style="cursor:pointer;width: 200px;height: 200px;">
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="sentModal4" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header management border-0">
-                <h2 class="h2">Upload Account Proof</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <a id="accountProofLink" href="#" target="_blank">
-                    <img id="" src="image/download.jpeg" alt="Upload ID's" class="img-fluid rounded border"
-                        style="cursor:pointer;width: 200px;height: 200px;">
-                    <img id="" src="image/download.jpeg" alt="Account Proof" class="img-fluid rounded border"
+                    <img id="accountProofImage" src="" alt="Account Proof" class="img-fluid rounded border"
                         style="cursor:pointer;width: 200px;height: 200px;">
                 </a>
             </div>
@@ -518,6 +573,7 @@
     </div>
 </div>
 
+<!-- bank details modal -->
 <div class="modal fade" id="bankModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -548,5 +604,258 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    //get active tab from local storage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+    //save active tab to local storage
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
+
+<!-- block unblock seller -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            let userId = this.getAttribute('data-id');
+            let isChecked = this.checked;
+
+            fetch(`/admin/blockUnblockAffiliateUser/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        status: isChecked ? 1 : 0
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        if (isChecked) {
+                            toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                        this.checked = !isChecked;
+                    }
+                })
+                .catch(error => {
+                    toastr.error('Something went wrong while updating status.');
+                    this.checked = !isChecked;
+                });
+        });
+    });
+});
+</script>
+
+<!-- bank details -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.view-bank-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const bank = JSON.parse(this.getAttribute('data-bank') || '{}');
+            document.getElementById('modalIban').textContent = bank.iban || 'N/A';
+            document.getElementById('modalSwift').textContent = bank.swift || 'N/A';
+            document.getElementById('modalBankName').textContent = bank.bank_name || 'N/A';
+            document.getElementById('modalHolderName').textContent = bank.account_holder_name || 'N/A';
+        });
+    });
+});
+</script>
+
+<!-- bank proof -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.view-account-proof-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const proofUrl = this.getAttribute('data-proof') || '';
+            const img = document.getElementById('accountProofImage');
+            const link = document.getElementById('accountProofLink');
+
+            img.src = proofUrl;
+            link.href = proofUrl;
+        });
+    });
+});
+</script>
+
+<!-- uploaded id -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const documentContainer = document.getElementById('documentContainer');
+    const documentButtons = document.querySelectorAll('.view-owner-btn');
+
+    if (!documentContainer || documentButtons.length === 0) return;
+
+    documentButtons.forEach(button => {
+        button.addEventListener('click', function () {
+
+            // Clear previous images
+            documentContainer.innerHTML = '';
+
+            let documents = [];
+
+            // Read documents JSON
+            try {
+                documents = JSON.parse(this.getAttribute('data-documents') || '[]');
+            } catch (error) {
+                console.error('Invalid documents JSON', error);
+                documentContainer.innerHTML =
+                    '<p class="text-danger">Failed to load documents.</p>';
+                return;
+            }
+
+            // No documents case
+            if (!Array.isArray(documents) || documents.length === 0) {
+                documentContainer.innerHTML =
+                    '<p class="text-muted">No documents available.</p>';
+                return;
+            }
+
+            // Loop through documents and render images
+            documents.forEach(doc => {
+                if (!doc.document_path) return;
+
+                const img = document.createElement('img');
+                img.src = doc.document_path;
+                img.alt = 'Document';
+                img.className = 'img-fluid rounded border m-2';
+                img.style.maxWidth = '200px';
+                img.style.maxHeight = '200px';
+                img.style.cursor = 'pointer';
+
+                // Open full image on click
+                img.addEventListener('click', () => {
+                    window.open(doc.document_path, '_blank');
+                });
+
+                documentContainer.appendChild(img);
+            });
+        });
+    });
+
+});
+</script>
+
+<!-- accept user -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.acceptUser').forEach(button => {
+        button.addEventListener('click', function() {
+            let userId = this.getAttribute('data-id');
+
+            fetch(`/admin/acceptAffiliateUser/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id: userId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        toastr.success(data.message);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        toastr.error(data.message);
+                    }
+                })
+                .catch(error => {
+                    toastr.error('Something went wrong while accepting the seller.');
+                });
+        });
+    });
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let sellerId = null;
+
+    document.querySelectorAll('.table-button').forEach(button => {
+        button.addEventListener('click', function() {
+            userId = this.getAttribute('data-id');
+        });
+    });
+
+    document.getElementById('submitReject').addEventListener('click', function() {
+        var rejectReason = document.getElementById('rejectReason').value;
+        var rejectType = document.querySelector('input[name="reject_type"]:checked').value;
+        var errorMessage = document.getElementById('error-message');
+
+        if (rejectReason.trim() === '') {
+            errorMessage.style.display = 'block';
+        } else {
+            errorMessage.style.display = 'none';
+            if (userId) {
+                fetch(`/admin/rejectAffiliateUser/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            reject_reason: rejectReason,
+                            reject_type: rejectType
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            toastr.success(data.message);
+                            setTimeout(() => {
+                                $('#xcircle').modal('hide');
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        toastr.error('Something went wrong while rejecting the seller.');
+                    });
+            }
+        }
+    });
+
+    // Remove error message when typing starts
+    document.getElementById('rejectReason').addEventListener('input', function() {
+        var errorMessage = document.getElementById('error-message');
+        errorMessage.style.display = 'none'; // Hide error message when typing
+    });
+});
+</script>
+
 
 @endsection
