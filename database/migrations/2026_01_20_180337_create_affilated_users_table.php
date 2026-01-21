@@ -24,7 +24,8 @@ return new class extends Migration
             $table->longText('document1')->nullable();
             $table->longText('document2')->nullable();            
             $table->string('otp')->nullable();            
-            $table->string('otp_verify')->default('0')->comment('0 pending , 1 verify otp');            
+            $table->string('otp_verify')->default('0')->comment('0 pending , 1 verify otp'); 
+            $table->longText('reject_reason')->nullable();           
             $table->string('device_type')->default('0')->comment('0 web 1 ios 2 andriod');
             $table->longText('device_token')->nullable();
             $table->longText('let')->nullable();
