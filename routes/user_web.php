@@ -123,7 +123,8 @@ use App\Http\Controllers\User\UserAffilatedController;
 
  Route::get('/affiliate-signup', [UserAffilatedController::class,'affiliate_signup'])->name('affiliate.affiliate_signup');
  Route::get('/affiliate-verify-otp', [UserAffilatedController::class,'affiliate_otpVerify'])->name('affiliate.affiliate_otpVerify');
-
+ Route::get('/affiliate-add-address', [UserAffilatedController::class,'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
+ Route::get('/affiliate-add-Bank-details', [UserAffilatedController::class,'affiliateAddBankDetails'])->name('affiliate.affiliateAddBankDetails');
 
 
 
