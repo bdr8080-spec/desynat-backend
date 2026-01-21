@@ -229,22 +229,39 @@ class CommonController extends Controller
             $imageRatio = $width / $height;
             $tolerance  = 0.01;
 
+            // if ($request->type == 1) {
+            //     // Mobile → 9:16 (portrait)
+            //     $targetRatio = 9 / 16;
+            //     $ratioLabel  = '9:16';
+            // } else {
+            //     // Web → 16:9 (landscape)
+            //     $targetRatio = 16 / 9;
+            //     $ratioLabel  = '16:9';
+            // }
+            // if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
+            //     return ApiResponse::generateResponse(
+            //         'error',
+            //         "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio",
+            //         null,
+            //         422
+            //     );
+            // }
             if ($request->type == 1) {
                 // Mobile → 9:16 (portrait)
                 $targetRatio = 9 / 16;
                 $ratioLabel  = '9:16';
-            } else {
-                // Web → 16:9 (landscape)
-                $targetRatio = 16 / 9;
-                $ratioLabel  = '16:9';
-            }
-            if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
-                return ApiResponse::generateResponse(
-                    'error',
-                    "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio",
-                    null,
-                    422
-                );
+
+                if (
+                    $imageRatio < ($targetRatio - $tolerance) ||
+                    $imageRatio > ($targetRatio + $tolerance)
+                ) {
+                    return ApiResponse::generateResponse(
+                        'error',
+                        "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio",
+                        null,
+                        422
+                    );
+                }
             }
 
             $filename = Str::random(10) . '.' . $image->getClientOriginalExtension();
