@@ -23,5 +23,8 @@ class UserAffilatedController extends Controller
         return View('affiliatedUser.addBankInformation');
     }
     
+    public function affiliateDashboard(){
+        return View('affiliatedUser.dashboard');
+    }
 
 }
