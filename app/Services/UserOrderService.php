@@ -1516,60 +1516,76 @@ $unique_id="Wal".Rand('100000','999999');
     }
 }
 
-public function CompleteAddMoneyPayment($request){
 
-try {
-
+public function CompleteAddMoneyPayment($request)
+{
     DB::beginTransaction();
 
-$check_record= UserWalletHistory::where('unique_id',$request->unique_id)->first();
+    try {
+        $history = UserWalletHistory::where('unique_id', $request->unique_id)->first();
 
-if($check_record){
-    
-    $check_record->update(['payment_status'=>$request->payment_status]);
-    if($request->payment_status=='1'){
-        // If The  Payment is Success Then insert Amount in Wallet or create New 
-     $checkUserWallet=UserWallet::where('user_id',$check_record->user_id)->first();
+        if (!$history) {
+            return ['status' => 'error', 'message' => 'Record not found'];
+        }
 
-     if($checkUserWallet){
-        $newAmount=$checkUserWallet->amount +$check_record->amount;
-        $checkUserWallet->update(['amount'=>$newAmount]);
+        $history->update(['payment_status' => $request->payment_status]);
 
-     }else{
+        if ($request->payment_status == '1') {
+            UserWallet::updateOrCreate(
+                ['user_id' => $history->user_id],
+                ['amount' => DB::raw("amount + {$history->amount}")]
+            );
 
-        $insert_amount_array=[
-            "user_id"=>$check_record->user_id,
-            "amount"=>$check_record->amount
+            $message = 'Add Money in Wallet Complete Successfully';
+        } else {
+            $message = 'Add Money in Wallet Cancelled / Failed';
+        }
+
+        DB::commit();
+
+        return [
+            'status'  => 'success',
+            'message' => $message,
+            'data'    => $history
         ];
-        UserWallet::create($insert_amount_array);
-     }
 
-    $message='Add Money in Wallet Complete Successfully';
-    }elseif($request->payment_status=='2'){
-     $message='Add Money in Wallet Cancelled/ Failed';
-    }
+    } catch (\Exception $e) {
+        DB::rollBack();
 
-     DB::commit();
-
-    return [
-        'status'  => 'success',
-        'message' => $message,
-        'data'    => $check_record
-    ];
-
-}
-
-
- 
-
-} catch (\Exception $e) {
         return [
             'status'  => 'error',
-            'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
-            'data'    => $e->getMessage()
+            'message' => $e->getMessage()
         ];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
