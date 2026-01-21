@@ -1481,7 +1481,8 @@ if($checkOrder->p_orderdetails_id!=='0' && $checkOrder->p_orderdetails_id!=='nul
         }
     }
 
-    public function AddMoneyFromTheUserSide($request)
+    
+public function AddMoneyFromTheUserSide($request)
     {
 
     try {
@@ -1494,25 +1495,96 @@ $unique_id="Wal".Rand('100000','999999');
         'amount'=>$request->amount,
         'type'=>'1',
         "payment_method"=>$request->payment_method,
-        "status"=>"0"
+        "payment_status"=>"0",
+        "addedby"=>"2"
     ];
 
-    UserWalletHistory::Create($request_data);
-    
-            return [
-                'status'  => 'success',
-                'message' => 'Create add Wallet Transaction successfully',
-                'data'    => $sizes
-            ];
+   $insert_record= UserWalletHistory::Create($request_data);
+   
+    return [
+        'status'  => 'success',
+        'message' => 'add Wallet Money Transaction',
+        'data'    => $insert_record
+    ];
 
-        } catch (\Exception $e) {
-            return [
-                'status'  => 'error',
-                'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
-                'data'    => $e->getMessage()
-            ];
-        }
+} catch (\Exception $e) {
+        return [
+            'status'  => 'error',
+            'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
+            'data'    => $e->getMessage()
+        ];
     }
+}
+
+
+public function CompleteAddMoneyPayment($request)
+{
+    DB::beginTransaction();
+
+    try {
+        $history = UserWalletHistory::where('unique_id', $request->unique_id)->first();
+
+        if (!$history) {
+            return ['status' => 'error', 'message' => 'Record not found'];
+        }
+
+        $history->update(['payment_status' => $request->payment_status]);
+
+        if ($request->payment_status == '1') {
+            UserWallet::updateOrCreate(
+                ['user_id' => $history->user_id],
+                ['amount' => DB::raw("amount + {$history->amount}")]
+            );
+
+            $message = 'Add Money in Wallet Complete Successfully';
+        } else {
+            $message = 'Add Money in Wallet Cancelled / Failed';
+        }
+
+        DB::commit();
+
+        return [
+            'status'  => 'success',
+            'message' => $message,
+            'data'    => $history
+        ];
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return [
+            'status'  => 'error',
+            'message' => $e->getMessage()
+        ];
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

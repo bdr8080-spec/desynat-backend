@@ -48,17 +48,37 @@ public function __construct(UserOrderService $UserOrderService){
         }
 
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
-
-
-      
-
-      
-
-
-
-
-
     }
+
+
+
+
+  public function completeAddMoneyInWallet(Request $request){
+
+      $validate = Validator::make($request->all(), [
+                'unique_id' => 'required|exists:user_wallet_histories,unique_id',
+                "payment_status"=>'required|in:1,2,3'
+            ]);
+
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+        }
+
+        $request_data=(object)[
+        'unique_id'=>$request->unique_id,
+        "payment_status"=>$request->payment_status,
+        "transaction_id"=>$request->transaction_id??null
+        ];
+
+        $data=$this->UserOrderService->CompleteAddMoneyPayment($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
 
 
 
