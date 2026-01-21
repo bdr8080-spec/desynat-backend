@@ -15,6 +15,9 @@ use App\Http\Controllers\Api\User\UserOrderController;
 
 use App\Http\Controllers\Api\User\UserChatController;
 use App\Http\Controllers\Api\User\UserAffilatedControlller;
+use App\Http\Controllers\Api\User\UserWalletController;
+
+
 
 
 use App\Http\Controllers\CommonController;
@@ -157,6 +160,9 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   // M7 Api 
   Route::post('/create-a-affilated-account', [UserAffilatedControlller::class,'CreateAffilatedAccount']);
   Route::post('/affilated-verify-otp', [UserAffilatedControlller::class,'AffilatedVerifyotp']);
+
+
+  Route::post('/Add-money-in-wallet', [UserWalletController::class,'AddMoneyInWallet']);
 
 
 });

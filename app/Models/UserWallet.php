@@ -11,9 +11,12 @@ class UserWallet extends Model
 
     protected $table = 'user_wallets';
 
-    protected $fillable = [
-        'user_id',
-        'amount',
-    ];
+    // protected $fillable = [
+    //     'user_id',
+    //     'amount',
+    // ];
+
+    protected $guarded=[];
+
 
 }

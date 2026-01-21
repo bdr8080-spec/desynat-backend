@@ -7,7 +7,7 @@ use App\Models\color;
 use App\Models\ProductVariant;
 use Carbon\Carbon;
 
-use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
+use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason,UserWalletHistory};
 use App\Models\{Promocode,userAddress,country,all_countrie,allproductchats};
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 use DB;
@@ -874,8 +874,6 @@ $orders = $orders->orderBy('id', 'desc')->get();
 
       orderdetail::where('order_id',$request->order_id)->update($new_array1);
 
-
-
     }else{
 
 
@@ -1483,8 +1481,38 @@ if($checkOrder->p_orderdetails_id!=='0' && $checkOrder->p_orderdetails_id!=='nul
         }
     }
 
+    public function AddMoneyFromTheUserSide($request)
+    {
 
+    try {
 
+$unique_id="Wal".Rand('100000','999999');
+
+    $request_data=[
+        "unique_id"=>$unique_id,
+        'user_id'=>$request->user_id,
+        'amount'=>$request->amount,
+        'type'=>'1',
+        "payment_method"=>$request->payment_method,
+        "status"=>"0"
+    ];
+
+    UserWalletHistory::Create($request_data);
+    
+            return [
+                'status'  => 'success',
+                'message' => 'Create add Wallet Transaction successfully',
+                'data'    => $sizes
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch sizes: ' . $e->getMessage(),
+                'data'    => $e->getMessage()
+            ];
+        }
+    }
 
 
 
