@@ -204,59 +204,49 @@ try{
     }
 
 
-//  // User_View_Promocode_list
-//  public function RegisterAffilatedUser($request){
 
-//     try{
+    public function AffilatedloginCheck($request){
 
-
-//       $user_address_check=  userAddress::where('id',$request->delivery_address)->where('user_id',$request->user_id)->first();
-
-//       if(!$user_address_check){
-
-//         return [
-//             'status' => 'error',
-//             'message' => 'User and Address didn\'t Match',
-//             'data' => []
-//         ];
-//       }
-
-//       $getCountry_dial_code=$user_address_check->country_code;
+        // $get_user_details=  seller::where('email',$request->email_mobile)->orWhere('mobile',$request->email_mobile)->where('otp_verify','1')->first();
 
 
-//       $getCountryId= country::where('dial_code',$getCountry_dial_code)->first();
+        if($request->type=='0'){
 
-//       if(!$getCountryId){
-//         return [
-//             'status' => 'success',
-//             'message' => 'No promo Code found In',
-//             'data' => []
-//         ];
-//       }
+          $get_user_details=  AffilatedUser::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
+  
+        }else{
+          $get_user_details=  AffilatedUser::where('email',$request->email_mobile)->where('otp_verify','1')->first();
+  
+        }
 
-//      $get_all_promo_codes=Promocode::where('country_id',$getCountryId->id)
-//      ->wheredate('start_date','<=',now())
-//      ->wheredate('end_date','>=',now())
-//      ->where('status','1')->get();
+        if($get_user_details){
 
+          if($get_user_details->admin_verify=='3'){
+            return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+          }
+          
+          // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
+          //   return ['status'=>'success','message'=>"Your Profile is Under Review",'data'=>$get_user_details];                
+          // }
+          
 
-//     return ['status'=>'success','message'=>"All promcode fetch Successfully",'data'=>$get_all_promo_codes];
+            if(Hash::check($request->password,$get_user_details->password,)){
+                // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
+                
+                $get_user_details->accessToken = $get_user_details->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;
 
+                // $user->createToken('seller-token', ['seller'])->plainTextToken;
 
+                return ['status'=>'success','message'=>"Affiliate Login Successfully",'data'=>$get_user_details];                            
+            }else{
+                return ['status'=>'error','message'=>"Password Is wrong",'data'=>(object)[]];                
+            }
         
-//     } catch (\Exception $e) {
-//         return [
-//             'status' => 'error',
-//             'message' => 'Failed to update seller status: ' . $e->getMessage(),
-//             'data' => []
-//         ];
-//     }
-
+          }else{
+            return ['status'=>'error','message'=>"Affiliate User is Not Existed",'data'=>(object)[]];                
+          }
     
-//     }
-
-
-    
+        }    
 
 
 

@@ -189,4 +189,45 @@ public function affilatedAddBankDetails(Request $request){
     
     }
 
+    
+    public function affiliatedLogin(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'email_mobile' => 'required',
+            'password' => 'required',   
+            "type"=>"required|in:0,1"  
+            ]);
+
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       if($req->type=='0'){
+
+        $validate = Validator::make($req->all(), [
+            'email_mobile' => 'required',
+            'password' => 'required',   
+            "type"=>"required:in:0,1",
+            "country_code"=>"required" 
+               ]);
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+       }
+
+
+        $data= $this->UserAffilatedAuthService->AffilatedloginCheck($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+
+
 }

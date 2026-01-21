@@ -172,6 +172,9 @@ Route::post('/affilated-add-Bank-details', [UserAffilatedControlller::class,'aff
 
 });
 
+Route::post('affiliate/affiliated-login', [UserAffilatedControlller::class,'affiliatedLogin']);
+
+
 
 
 
