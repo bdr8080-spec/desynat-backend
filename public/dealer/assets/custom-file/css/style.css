@@ -416,7 +416,7 @@ label {
 }
 
 .form-group label {
-  margin: 10px 0px;
+  margin: 13px 0px 3px;
   font-size: var(--label);
   color: var(--dark-black);
 }

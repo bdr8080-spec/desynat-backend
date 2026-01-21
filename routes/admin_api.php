@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\Admin\DealController;
 use App\Http\Controllers\Api\Admin\StoryController;
 use App\Http\Controllers\Api\Admin\LiveRequestController;
 use App\Http\Controllers\Api\Admin\FullBannerController;
+use App\Http\Controllers\Api\Admin\AffiliatedUserController;
 
 
 // Admin APi M1
@@ -205,6 +206,16 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/delete_full_banner',[FullBannerController::class,'delete_full_banner']);
      Route::get('/get_full_banners',[FullBannerController::class,'get_full_banners']);
      Route::get('/get_banner_detail',[FullBannerController::class,'get_banner_detail']);
+
+     //affiliated user management
+     Route::get('/get_new_affilaited_users',[AffiliatedUserController::class,'get_new_affilaited_users']);
+     Route::get('/get_approved_affilaited_users',[AffiliatedUserController::class,'get_approved_affilaited_users']);
+     Route::get('/get_rejected_affilaited_users',[AffiliatedUserController::class,'get_rejected_affilaited_users']);
+     Route::get('/get_affiliate_user_details',[AffiliatedUserController::class,'get_affiliate_user_details']);
+     Route::post('/accept_affiliate_user',[AffiliatedUserController::class,'accept_affiliate_user']);
+     Route::post('/reject_affiliate_user',[AffiliatedUserController::class,'reject_affiliate_user']);
+     Route::post('/block_unblock_affiliate_user',[AffiliatedUserController::class,'block_unblock_affiliate_user']);
+
 
 
 
