@@ -102,11 +102,11 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#bankModal">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal4">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>
@@ -139,11 +139,11 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#bankModal">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal4">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>
@@ -237,11 +237,11 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#bankModal">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal4">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>fufeg</td>
@@ -274,11 +274,11 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#bankModal">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal4">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                       <td>fufeg</td>
@@ -380,15 +380,15 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal3">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#bankModal">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal4">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>LOrem </td>
@@ -416,15 +416,15 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal3">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#bankModal">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td> <a class="table-button" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#sentModal2">
+                                        data-bs-target="#sentModal4">
                                         <i class="bi bi-eye-fill"></i>
                                     </a></td>
                                 <td>LOrem </td>
@@ -467,7 +467,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h2 class="h2">Uploaded Account Proof</h2>
+                <h2 class="h2">Documents</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
@@ -478,6 +478,73 @@
                         style="cursor:pointer;width: 200px;height: 200px;">
                 </a>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sentModal3" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Store Details</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <a id="accountProofLink" href="#" target="_blank">
+                    <img id="" src="image/download.jpeg" alt="Upload ID's" class="img-fluid rounded border"
+                        style="cursor:pointer;width: 200px;height: 200px;">
+                    <img id="" src="image/download.jpeg" alt="Account Proof" class="img-fluid rounded border"
+                        style="cursor:pointer;width: 200px;height: 200px;">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sentModal4" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Upload Account Proof</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <a id="accountProofLink" href="#" target="_blank">
+                    <img id="" src="image/download.jpeg" alt="Upload ID's" class="img-fluid rounded border"
+                        style="cursor:pointer;width: 200px;height: 200px;">
+                    <img id="" src="image/download.jpeg" alt="Account Proof" class="img-fluid rounded border"
+                        style="cursor:pointer;width: 200px;height: 200px;">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="bankModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Bank Details</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+         
+                <table class="details-table">
+                    <tr>
+                        <th>IBAN</th>
+                        <td >dytd</td>
+                    </tr>
+                    <tr>
+                        <th>SWIFT</th>
+                        <td >yufuyf</td>
+                    </tr>
+                    <tr>
+                        <th>Bank Name</th>
+                        <td >uhoih</td>
+                    </tr>
+                    <tr>
+                        <th>Account Holder Name</th>
+                        <td >oihoi</td>
+                    </tr>
+                </table>
+
         </div>
     </div>
 </div>
