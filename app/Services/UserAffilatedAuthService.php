@@ -28,20 +28,55 @@ function RegisterAffilatedUser($request){
 
 try{
 
-        $password_hash=Hash::make($request->password);
+  $user_id=$request->user_id;
+      // $otp="123456";
 
-        // $otp="123456";
+  $checkUserAffilatedStatus=  AffilatedUser::where('user_id',$user_id)->first();
 
-       $otp= config('services.otp');
+  if($checkUserAffilatedStatus){
+    if($checkUserAffilatedStatus->otp_verify=='1'){
+        return [
+            'status' => 'error',
+            'message' => 'This User Already Apply Affilated Account',
+            'data' => (object)[]
+        ];
+    }
+  }
 
-      $insert_Data=[
-    'user_id'=>$request->user_id,
+// check emails and Mobile not register By Another User 
+
+$checkmail=AffilatedUser::where('email',$request->email)->where('user_id','!=',$user_id)->where('otp_verify','1')->first();
+if($checkmail){
+   return [
+            'status' => 'error',
+            'message' => 'This Email is Already Register By Another User',
+            'data' => (object)[]
+        ];
+}
+
+$checkphone=AffilatedUser::where(['country_code'=>$request->country_code,'mobile'=>$request->mobile])->where('user_id','!=',$user_id)->where('otp_verify','1')->first();
+if($checkphone){
+   return [
+            'status' => 'error',
+            'message' => 'This Mobile No is Already Register By Another User',
+            'data' => (object)[]
+        ];
+}
+
+
+
+  AffilatedUser::where('user_id',$user_id)->delete(); // delete Affilated user when otp is not verified
+  
+    $otp= config('services.otp');
+
+     $insert_Data=[
+    'user_id'=>$user_id,
     "profile_image"=>$request->profile_image,
     'full_name'=>$request->full_name??null,
     'country_code'=>$request->country_code??null,
     'mobile'=>$request->mobile??null,
     'email'=>$request->email??null,
-    'password'=>$request->password??null,
+    'password'=>Hash::make($request->password)??null,
     'document1'=>$request->document1??null,
     'document2'=>$request->document2??null,
     'otp'=>$otp,
@@ -50,7 +85,6 @@ try{
     "device_type"=>$request->device_type??0,
     'otp'=>$otp,
     ];
-
 
       $check=  AffilatedUser::UpdateOrCreate($insert_Data);
 
@@ -68,6 +102,107 @@ try{
 
 
     }
+
+
+    
+
+
+
+    public function AffilatedVerifyotp($request){
+
+    $get_user_details=  AffilatedUser::where('id',$request->affilated_id)->first();
+
+    if($get_user_details->otp==$request->otp){
+        $get_user_details->update(['otp_verify'=>'1']);
+
+        if($request->type=='1'){
+        $get_user_details->accessToken = $get_user_details->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;   
+      
+      }else{
+        $get_user_details->accessToken ='';  
+      }  
+        
+        return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
+    
+      }else{
+        return ['status'=>'error','message'=>"Invalid OTP",'data'=>(object)[]];                
+      }
+
+    }
+
+
+
+function affilatedAddAddress($request){
+
+try{
+
+
+  $request_data=[
+    'affiliate_id'=>$request->affilated_user,
+    "country"=>$request->country,
+    'locations'=>$request->locations,
+    'address1'=>$request->address1,
+    'address2'=>$request->address2,
+    'pincode'=>$request->pincode,
+    'town'=>$request->town,
+    'state'=>$request->state,
+    'city'=>$request->city,
+    'let'=>$request->let??null,
+    'long'=>$request->long??null
+    ];
+
+    $check=  AffilatedUserAddress::UpdateOrCreate($request_data);
+
+    if($check){
+    $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['address_update_status'=>'1']);
+     return ['status'=>'success','message'=>"Address Add succesfully",'data'=>$check];            
+    }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update Affliated status: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+
+
+    }
+
+    
+
+function affilatedAddAddBankDetails($request){
+
+try{
+
+  $request_data=[
+    "type"=>"3",
+    'user_id'=>$request->affilated_user,
+    "bank_name"=>$request->bank_name,
+    'account_holder_name'=>$request->account_holder_name,
+    'account_no'=>$request->account_no,
+    'iban'=>$request->iban,
+    'swift'=>$request->swift,
+    ];
+
+    $check=  Bankdetails::UpdateOrCreate($request_data);
+
+    if($check){
+    $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['bank_update_status'=>'1']);
+     return ['status'=>'success','message'=>"Bank details Add succesfully",'data'=>$check];            
+    }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update Affliated status: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+
+
+    }
+
 
 //  // User_View_Promocode_list
 //  public function RegisterAffilatedUser($request){

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('country_code');
             $table->string('mobile');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->longText('document1')->nullable();

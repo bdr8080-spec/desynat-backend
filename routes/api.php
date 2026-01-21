@@ -156,9 +156,30 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   // M7 Api 
   Route::post('/create-a-affilated-account', [UserAffilatedControlller::class,'CreateAffilatedAccount']);
+  Route::post('/affilated-verify-otp', [UserAffilatedControlller::class,'AffilatedVerifyotp']);
 
 
 });
+
+// Affilated user APi 
+
+Route::middleware(['auth:sanctum', 'ability:AffilatedUser'])->prefix('affiliate')->group(function () {
+  
+Route::post('/affilated-add-address', [UserAffilatedControlller::class,'affilatedAddAddress']);
+Route::post('/affilated-add-Bank-details', [UserAffilatedControlller::class,'affilatedAddBankDetails']);
+
+
+
+});
+
+
+
+
+
+
+
+
+
 
 Route::post('/user/Home-screen-Banner-catgory-banner', [UserDashboardController::class,'HomescreenBanner']);
 

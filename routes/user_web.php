@@ -12,8 +12,7 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\DashBoardController;
 use App\Http\Controllers\User\ChatController;
-
-
+use App\Http\Controllers\User\UserAffilatedController;
 
 
 
@@ -117,6 +116,16 @@ use App\Http\Controllers\User\ChatController;
   Route::post('/create_normal_chat', [ChatController::class,'create_normal_chat'])->name('user.create_normal_chat');
 
 });
+
+
+
+// M7 Code 
+
+ Route::get('/affiliate-signup', [UserAffilatedController::class,'affiliate_signup'])->name('affiliate.affiliate_signup');
+ Route::get('/affiliate-verify-otp', [UserAffilatedController::class,'affiliate_otpVerify'])->name('affiliate.affiliate_otpVerify');
+
+
+
 
 
 
