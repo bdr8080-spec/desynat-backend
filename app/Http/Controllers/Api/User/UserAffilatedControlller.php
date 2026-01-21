@@ -80,7 +80,7 @@ class UserAffilatedControlller extends Controller
         $validate = Validator::make($request->all(), [
                 'id' => 'required|exists:affilated_users,id',
                 'otp' => 'required',
-                "type"=>"required|in:1"
+                "type"=>"required|in:0,1"
                 ]);
             
     if($validate->fails()){
@@ -228,6 +228,114 @@ public function affilatedAddBankDetails(Request $request){
 
     }
 
+
+    public function affiliate_forgot_password(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'type'=>"required|In:0,1", //  0 mobile and 1 email
+               ]);
+
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       // when i use forgot password with Mobile
+       if($req->type=='0'){
+        $validate = Validator::make($req->all(), [
+            'country_code'=>"required",
+            'mobile'=>"required"
+        ]);
+
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       }
+
+    // when i use forgot password with Email
+        if($req->type=='1'){
+        $validate = Validator::make($req->all(), [
+            'email'=>"required",
+        ]);
+
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        }
+        
+        $data= $this->UserAffilatedAuthService->Affilate_mobile_or_email_forgot_password($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+
+
+    public function resend_otp(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'email_mobile' => 'required',
+            'type'=>'required|in:0,1' // -0 mobule 1 email
+           
+               ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       if($req->type=='0'){
+
+        $validate = Validator::make($req->all(), [
+            'email_mobile' => 'required',
+            "type"=>"required:in:0,1",
+            "country_code"=>"required" 
+               ]);
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+       }
+
+
+        $data= $this->UserAffilatedAuthService->resendOtp($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+
+
+
+
+    public function affiliate_create_password(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'id'=>'required|exists:affilated_users,id',
+            'password' => 'required',
+            'confirm_password'=>"required|same:password"
+               ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+        $data= $this->UserAffilatedAuthService->affiliate_create_password($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    }
 
 
 }

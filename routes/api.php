@@ -173,13 +173,10 @@ Route::post('/affilated-add-Bank-details', [UserAffilatedControlller::class,'aff
 });
 
 Route::post('affiliate/affiliated-login', [UserAffilatedControlller::class,'affiliatedLogin']);
+route::post('affiliate/forgot_password',[UserAffilatedControlller::class,'affiliate_forgot_password']);
+route::post('affiliate/create_password',[UserAffilatedControlller::class,'affiliate_create_password']);
 
-
-
-
-
-
-
+Route::post('affiliate/resend_otp',[UserAffilatedControlller::class,'resend_otp']);
 
 
 

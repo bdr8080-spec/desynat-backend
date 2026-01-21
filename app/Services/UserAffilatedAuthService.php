@@ -250,4 +250,84 @@ try{
 
 
 
+
+        public function Affilate_mobile_or_email_forgot_password($request){
+
+            if($request->type=='0'){ // when i use Mobile No
+                $get_user_details=  AffilatedUser::where('country_code',$request->country_code)->Where('mobile',$request->mobile)->where('otp_verify','1')->first();
+
+            }else{
+                $get_user_details=  AffilatedUser::where('email',$request->email)->where('otp_verify','1')->first();
+            }
+            
+            if($get_user_details){
+
+              if($get_user_details->admin_verify=='3'){
+                return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+              }
+    
+              // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
+              //   return ['status'=>'error','message'=>"Wait for Admin To Accept Your Store",'data'=>(object)[]];                
+              // }
+    
+                $otp= config('services.otp');
+
+                $get_user_details->update(['otp'=>$otp]);
+    
+                $get_user_details->accessToken ='';            
+                return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
+            
+              }else{
+                return ['status'=>'error','message'=>"Affilated user is Not Existed",'data'=>(object)[]];                
+              }
+        
+            }
+
+
+
+            public function affiliate_create_password($request){
+
+                $get_user_details=  AffilatedUser::where('id',$request->id)->where('otp_verify','1')->first();
+    
+                if($get_user_details){
+              
+                    $get_user_details->update(['password'=>hash::make($request->password)]);
+                    
+                    $get_user_details->accessToken ='';            
+                    return ['status'=>'success','message'=>"Forgot Password Password Change Successfully",'data'=>$get_user_details];            
+                
+                  }else{
+                    return ['status'=>'error','message'=>"Affilated User is Not Existed",'data'=>(object)[]];                
+                  }
+            
+                }
+
+
+
+           public function resendOtp($request){
+
+            if($request->type=='0'){ // when i use Mobile No
+                $get_user_details=  AffilatedUser::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->first();
+
+            }else{
+                $get_user_details=  AffilatedUser::where('email',$request->email_mobile)->first();
+            }
+            
+            if($get_user_details){
+
+    
+                $otp= config('services.otp');
+
+                $get_user_details->update(['otp'=>$otp]);
+    
+                $get_user_details->accessToken ='';            
+                return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
+            
+              }else{
+                return ['status'=>'error','message'=>"Affiliated user is Not Existed",'data'=>(object)[]];                
+              }
+        
+            }
+
+
 }
