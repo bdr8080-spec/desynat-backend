@@ -208,7 +208,8 @@ $(document).on('submit', '#loginWithOtp', function(e) {
             toastr.success(resp.message);
             if (resp.status == true) {
                 setTimeout(() => {
-                    location.href = `verify-otp?temp_user_id=${resp.id}&type=${resp.type}`;
+                    location.href =
+                        `affiliate-verify-otp?temp_user_id=${resp.id}&type=${resp.type}`;
                 }, 1000);
             }
 
