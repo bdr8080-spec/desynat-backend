@@ -26,8 +26,8 @@
                             </div>
                         </div>
                         <div class="total-balance-2">
-                            <button type="button" class="btn btn-top">Top-up Wallet</button>
-                            <button type="button" class="btn btn-top">Redeem Gift Card</button>
+                            <a href="/add-money" class="btn btn-top">Top-up Wallet</a>
+                            <button type="button" class="btn btn-top" data-bs-target="#RedeemModal" data-bs-toggle="modal">Redeem Gift Card</button>
                         </div>
                     </div>
 
@@ -91,13 +91,33 @@
 
 
 
+<!-- Success Modal -->
+<div class="modal fade" id="RedeemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Gift Card </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Enter Gift Card Deatils </h5>
+                <div class="form-group w-100 py-2">
+                    <label>16 Digit Gift Card Number </label>
+                    <input type="text" class="form-control pline-10" placeholder="16 Digit Gift Card Number ">
+                </div>
+                <div class="form-group w-100 py-2">
+                    <label>Enter PIN </label>
+                    <input type="text" class="form-control pline-10" placeholder="Enter PIN">
+                </div>
 
+                <div class="cmn-btn mt-4">
+                    <button type="submit" class="btn paybtn-common w-100">Redeem </button>
+                </div>
 
-
-
-
-
-
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
