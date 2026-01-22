@@ -111,7 +111,7 @@
                 <div class="row">
                     <div class="col-lg-12">
 
-                        <div class="form-group w-100">
+                        <!-- <div class="form-group w-100">
                             <label for="city_id" class="form-label">City Name</label>
                             <select name="city_id" id="city_id" class="form-select form-select-lg" aria-label="Select City">
                                 <option value="" selected disabled>Select City</option>
@@ -120,7 +120,30 @@
                                 @endforeach
                             </select>
                             <span class="text-danger error-text city_id_err"></span>
+                        </div> -->
+                        <div class="form-group w-100">
+                            <label for="city_id" class="form-label">City Name</label>
+
+                            <select name="city_id"
+                                    id="city_id"
+                                    class="form-select form-select-lg"
+                                    aria-label="Select City"
+                                    {{ $allAdded ? 'disabled' : '' }}>
+
+                                @if ($allAdded)
+                                    <option selected disabled>All cities already added</option>
+                                @else
+                                    <option value="" selected disabled>Select City</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
+                                @endif
+
+                            </select>
+
+                            <span class="text-danger error-text city_id_err"></span>
                         </div>
+
 
 
                     </div>
