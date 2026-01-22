@@ -357,7 +357,7 @@
                     <h6>Pickup Address</h6>
 
                     @else
-                    <h6>Shipping Address</h6>
+                    <h6>Delivery Address</h6>
 
                     @endif
 
