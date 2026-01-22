@@ -46,13 +46,14 @@
         <table class="table table-bordered datatable tablesearch" id="table1">
             <thead>
                 <tr>
-                    <th class="no-sort">Add</th>
+
                     <th class="no-sort">S.No</th>
                     <th class="no-sort">Banner Image</th>
                     <th class="no-sort">Name</th>
                     <th class="no-sort">Brand</th>
                     <th class="no-sort">Rating</th>
                     <th class="no-sort">KD</th>
+                    <th class="no-sort">Remove</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,13 +61,6 @@
                 @foreach($single_deal['added_products'] as $key=>$val)
 
                 <tr>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox">
-                            </div>
-                        </div>
-                    </td>
                     <td>{{$key+1}}</td>
                     <td>
                         <div class="deal-img">
@@ -78,6 +72,9 @@
                     <td>{{$val->product_details->brand->name_english }}</td>
                     <td><i class="bi bi-star-fill"></i> 4.0</td>
                     <td>{{$val->product_details->product_variants['0']->actual_price}}</td>
+
+                    <td> <i class="bi bi-star-fill removeProductFromList" ref="{{$val->id }}"> Remove </i></td>
+
                 </tr>
                 @endforeach
 
@@ -94,8 +91,59 @@
 </section>
 
 
+<script>
+$(document).ready(function() {
+
+    $('.removeProductFromList').on('click', function() {
 
 
+        const id = this.ref();
+
+        alert(id);
+
+
+
+        let productIds = [];
+
+        $('input[name="product_ids[]"]:checked').each(function() {
+            productIds.push($(this).val());
+        });
+
+        if (productIds.length === 0) {
+            // alert('Please select at least one product.');
+            toastr.error("Please select at least one product.");
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('seller.add-single-deal-management',Request()->id ) }}", // your Laravel route
+            type: "POST",
+            data: {
+                product_ids: productIds,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                // alert('Products added to deals successfully!');
+                console.log(response);
+
+                toastr.success(response.message);
+
+                window.setTimeout(function() {
+                    window.location =
+                        "{{ route('seller.View-single-deal-management',request()->id)}}";
+                }, 1000);
+
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+                toastr.error("Something went wrong");
+                // alert('Something went wrong.');
+            }
+        });
+    });
+
+});
+</script>
 
 
 @include('dealer.layout.custom_code');
