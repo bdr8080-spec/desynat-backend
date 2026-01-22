@@ -33,12 +33,12 @@ $all_deal = Deal::query()
 
 /**
  * Listed Deals (active deals by date)
- */
-$listed_deal = (clone $all_deal)
+ */$listed_deal = (clone $all_deal)
     ->whereDate('to', '>=', $today)
-    ->with('sellerDealrecord')
+    ->whereDoesntHave('sellerDealrecord')
     ->get();
 
+    
 /**
  * Enrolled Deals (seller joined + active)
  */
