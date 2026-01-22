@@ -164,6 +164,11 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
+Route::match(['get', 'post'], '/my-wallet', function () {
+     return view('user.mywallet.wallet');
+
+})->name('user.my-wallet');
+
 // Route::match(['get', 'post'], '/chat', function () {
 //      return view('user.chat.chatlists');
 

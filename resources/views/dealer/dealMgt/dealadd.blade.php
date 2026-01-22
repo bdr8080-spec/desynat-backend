@@ -55,44 +55,94 @@
             </thead>
             <tbody>
 
-                @foreach($single_deal['remaining_Product'] as $key=>$val)
+                <form id="addToDealsForm">
 
-                <tr>
-                    <td>
-                        <div class="d-flex justify-content-center">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox">
+                    @foreach($single_deal['remaining_Product'] as $key=>$val)
+
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="product_ids[]"
+                                        value="{{$val->id}}">
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>{{$key+1}}</td>
-                    <td>
-                        <div class="deal-img">
-                            <img src="{{$val->product_variants['0']->variant_image['0'] }}" alt="image"
-                                class="img-fluid">
-                        </div>
-                    </td>
-                    <td>{{$val->product_name_en }}</td>
-                    <td>{{$val->brand->name_english }}</td>
-                    <td><i class="bi bi-star-fill"></i> 4.0</td>
-                    <td>{{$val->product_variants['0']->actual_price}}</td>
-                </tr>
-                @endforeach
+                        </td>
+                        <td>{{$key+1}}</td>
+                        <td>
+                            <div class="deal-img">
+                                <img src="{{$val->product_variants['0']->variant_image['0'] }}" alt="image"
+                                    class="img-fluid">
+                            </div>
+                        </td>
+                        <td>{{$val->product_name_en }}</td>
+                        <td>{{$val->brand->name_english }}</td>
+                        <td><i class="bi bi-star-fill"></i> 4.0</td>
+                        <td>{{$val->product_variants['0']->actual_price}}</td>
+                    </tr>
+                    @endforeach
+
 
             </tbody>
         </table>
     </div>
 
     <div class="dashboard-button mt-4">
-        <button type="submit" class="btn add-fillbtn w-100">Add to Deals</button>
+        <button type="submit" id="addToDealsBtn" class="btn add-fillbtn w-100">Add to Deals</button>
     </div>
 
-
+    </form>
 
 </section>
 
 
 
+<script>
+$(document).ready(function() {
+
+    $('#addToDealsBtn').on('click', function() {
+
+        let productIds = [];
+
+        $('input[name="product_ids[]"]:checked').each(function() {
+            productIds.push($(this).val());
+        });
+
+        if (productIds.length === 0) {
+            // alert('Please select at least one product.');
+            toastr.error("Please select at least one product.");
+            return;
+        }
+
+        $.ajax({
+            url: "{{ route('seller.add-single-deal-management',Request()->id ) }}", // your Laravel route
+            type: "POST",
+            data: {
+                product_ids: productIds,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response) {
+                // alert('Products added to deals successfully!');
+                console.log(response);
+
+                toastr.success(response.message);
+
+                window.setTimeout(function() {
+                    window.location =
+                        "{{ route('seller.View-single-deal-management',request()->id)}}";
+                }, 1000);
+
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+                toastr.error("Something went wrong");
+                // alert('Something went wrong.');
+            }
+        });
+    });
+
+});
+</script>
 
 
 
