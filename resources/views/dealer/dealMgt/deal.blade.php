@@ -38,16 +38,16 @@
                             <div class="from-group position-relative">
                                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                     class="search-icon">
-                                <input type="search" class="form-control tableSearch" placeholder="Search"
-                                    data-table="table1">
-
+                                <input type="search"
+                                    class="form-control  @if(count($deal_record['listed_deal']) > 0)) tableSearch @endif"
+                                    placeholder="Search" data-table="table1">
                             </div>
                         </div>
                     </div>
 
                     {{-- All Product show --}}
                     <div class="table-responsive">
-                        <table class="table table-bordered datatable tablesearch" id="table1">
+                        <table class="table table-bordered datatable" id="table1">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -94,16 +94,16 @@
                             <div class="from-group position-relative">
                                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                     class="search-icon">
-                                <input type="search" class="form-control tableSearch" placeholder="Search"
-                                    data-table="table2">
+                                <input type="search"
+                                    class="form-control @if(count($deal_record['enrolled']) > 0)) tableSearch @endif"
+                                    placeholder="Search" data-table="table2">
                             </div>
                         </div>
-
                     </div>
 
                     {{-- // Active product List  --}}
                     <div class="table-responsive">
-                        <table class="table table-bordered datatable tablesearch" id="table1">
+                        <table class="table table-bordered datatable" id="table2">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -171,14 +171,15 @@
                             <div class="from-group position-relative">
                                 <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search"
                                     class="search-icon">
-                                <input type="search" class="form-control tableSearch" placeholder="Search"
-                                    data-table="table3">
+                                <input type="search"
+                                    class="form-control  @if(count($deal_record['expired_deal']) > 0)) tableSearch @endif"
+                                    placeholder="Search" data-table="table3">
                             </div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered datatable tablesearch" id="table1">
+                        <table class="table table-bordered datatable" id="table3">
                             <thead>
                                 <tr>
                                     <th class="no-sort">S.No</th>
@@ -247,6 +248,41 @@
                 localStorage.setItem("active_product_tab", e.target.getAttribute(
                     "data-bs-target"));
             });
+        });
+
+    });
+
+
+    // Data Table search Code 
+
+
+    $(document).ready(function() {
+
+        let dataTables = {};
+
+        $('.tableSearch').each(function() {
+
+            let tableId = $(this).data('table');
+
+            // Initialize table only once
+            if (!$.fn.DataTable.isDataTable('#' + tableId)) {
+                dataTables[tableId] = $('#' + tableId).DataTable({
+                    paging: true,
+                    ordering: true,
+                    info: true,
+                    searching: true
+                });
+            } else {
+                dataTables[tableId] = $('#' + tableId).DataTable();
+            }
+        });
+
+        // Search handler
+        $('.tableSearch').on('keyup', function() {
+            let tableId = $(this).data('table');
+            let value = $(this).val();
+
+            dataTables[tableId].search(value).draw();
         });
 
     });
