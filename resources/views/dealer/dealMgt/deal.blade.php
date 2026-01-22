@@ -134,8 +134,15 @@
                                     <td>{{$val->seller_deal_count}} </td>
 
                                     <td>
-                                        <div style="color:#48DB8F;">Active </div>
+                                        @if($val->from <= Date('Y-m-d') && $val->to >= Date('Y-m-d') ) <div
+                                                style="color:#48DB8F;">Active
+                                            </div>
+                                            @elseif($val->from > Date('Y-m-d') )
+                                            <div style="color:#48DB8F;">Upcoming </div>
+                                            @endif
                                     </td>
+
+
                                     <td>
                                         <a href="{{ route('seller.View-single-deal-management',$val->id) }}"
                                             class="eyebtn"><i class="bi bi-eye"></i></a>
