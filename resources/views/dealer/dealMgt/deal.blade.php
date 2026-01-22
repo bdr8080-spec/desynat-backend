@@ -267,9 +267,9 @@
             // Initialize table only once
             if (!$.fn.DataTable.isDataTable('#' + tableId)) {
                 dataTables[tableId] = $('#' + tableId).DataTable({
-                    paging: true,
+                    paging: false,
                     ordering: true,
-                    info: true,
+                    info: false,
                     searching: true
                 });
             } else {
