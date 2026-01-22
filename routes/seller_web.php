@@ -155,7 +155,7 @@ Route::group(['prefix' => 'seller'], function () {
 
     Route::get('View-single-deal-management/{id}', [WebDealManagement::class, 'ViewsingleDealManagement'])->name('seller.View-single-deal-management');
     
-      Route::get('add-single-deal-management/{id}', [WebDealManagement::class, 'singleDealManagement'])->name('seller.add-single-deal-management');
+    Route::match(['get','post'],'add-single-deal-management/{id}', [WebDealManagement::class, 'singleDealManagement'])->name('seller.add-single-deal-management');
 
 });
 

@@ -32,6 +32,8 @@
         </div>
     </div>
 
+    <a href="{{ route('seller.add-single-deal-management',request()->id)}}" class="btn btn-info">Add Product </a>
+
     <div class="search-field d-flex justify-content-between align-item-center">
         <h5>Select Product</h5>
         <div class="from-group position-relative">
