@@ -39,51 +39,100 @@ class CountryService
         }
     }
 
+    // public function getCities($countryId)
+    // {
+    //     try {
+    //         $cities = City::where('country_id', $countryId)
+    //                     ->orderBy('name', 'asc')
+    //                     ->get();
+
+    //         if ($cities->isEmpty()) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => 'No cities found for this country',
+    //                 'data' =>  []
+    //             ];
+    //         }
+
+    //         $excludedCities = $cities->filter(function ($city) use ($countryId) {
+    //             return !ServiceCity::where('country_id', $countryId)
+    //                             ->where('city_id', $city->id)
+    //                             ->exists(); 
+    //         });
+
+    //         if ($excludedCities->isEmpty()) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => 'All cities are already added',
+    //                 'data' =>  []
+    //             ];
+    //         }
+
+    //         $excludedCities = $excludedCities->values();
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Cities fetched successfully',
+    //             'data' => $excludedCities
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch cities: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
     public function getCities($countryId)
     {
         try {
             $cities = City::where('country_id', $countryId)
-                        ->orderBy('name', 'asc')
-                        ->get();
+                ->orderBy('name', 'asc')
+                ->get();
 
             if ($cities->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No cities found for this country',
-                    'data' =>  []
+                    'all_added' => false,
+                    'data' => []
                 ];
             }
 
             $excludedCities = $cities->filter(function ($city) use ($countryId) {
                 return !ServiceCity::where('country_id', $countryId)
-                                ->where('city_id', $city->id)
-                                ->exists(); 
-            });
+                    ->where('city_id', $city->id)
+                    ->exists();
+            })->values();
 
             if ($excludedCities->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'All cities are already added in the Service Cities table',
-                    'data' =>  []
+                    'message' => 'All cities are already added',
+                    'all_added' => true,
+                    'data' => []
                 ];
             }
-
-            $excludedCities = $excludedCities->values();
 
             return [
                 'status' => 'success',
                 'message' => 'Cities fetched successfully',
+                'all_added' => false,
                 'data' => $excludedCities
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch cities: ' . $e->getMessage(),
+                'message' => 'Failed to fetch cities',
+                'all_added' => false,
                 'data' => []
             ];
         }
     }
+
 
 
 
@@ -156,6 +205,7 @@ class CountryService
             ];
         }
     }
+
 
     public function changeServiceCityStatus($cityId)
     {

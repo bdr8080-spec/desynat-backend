@@ -24,9 +24,12 @@ class CountryController extends Controller
 
     public function manageCities($id, Request $request){
         $country = country::find($id);
-        $cities = $this->CountryService->getCities($id)['data'];
+        // $cities = $this->CountryService->getCities($id)['data'];
+        $response = $this->CountryService->getCities($id);
+        $cities = $response['data'];
+        $allAdded = $response['all_added'];
         $serviceCities = $this->CountryService->getServiceCities($id)['data'];
-        return view('admin.country-management.manage-cities',compact('country','cities','serviceCities'));
+        return view('admin.country-management.manage-cities',compact('country','cities','serviceCities','allAdded'));
     }
 
     public function manageZones($id, Request $request){
