@@ -132,7 +132,7 @@
                     </div>
                     <div class="cust-deatils">
                         <div class="order-cont">
-                            <div class="title-light">Shipping Address</div>
+                            <div class="title-light">Delivery Address</div>
                             <p>{{$order_details->order->delivery_details->address}} </p>
                         </div>
                     </div>
