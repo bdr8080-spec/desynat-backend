@@ -45,7 +45,7 @@ $all_deal = Deal::query()
 $enrolled = (clone $all_deal)
     ->whereHas('sellerDealrecord', function ($query) use ($request, $today) {
         $query->where('seller_id', $request->seller_id)
-              ->whereDate('from', '<=', $today)
+            //   ->whereDate('from', '<=', $today)
               ->whereDate('to', '>=', $today);
     })
     ->with([
@@ -115,10 +115,11 @@ try{
         
         $product_data=SellerDealProduct::with('product_details','product_details.category','product_details.subcategory','product_details.brand','product_details.product_specifications','product_details.product_variants.color')->where($search_data);    
         if(isset($request->search)){
-            $product_data=$product_data->where('product_name_en','Like','%'.$request->search.'%');
+            $product_data=$product_data->whereHas('product_details', function($query)use ($request){
+                $query->where('product_name_en','Like','%'.$request->search.'%');
+            });
         }   
        $product_data=$product_data->get();
-    
 
     //    Remaining product 
 
@@ -252,9 +253,12 @@ try{
           $check_data=[
             "deal_id"=>$deal->id,
             "id"=>$request->id,
-            "seller_id"=>$request->seller_id,
+            // "seller_id"=>$request->seller_id,
         ];
         SellerDealProduct::where($check_data)->delete();
+
+        return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>(object)[]];
+
      
     }else{
 

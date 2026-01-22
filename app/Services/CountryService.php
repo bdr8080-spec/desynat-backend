@@ -107,6 +107,7 @@ class CountryService
                     ->exists();
             })->values();
 
+            // ✅ When all cities are already added
             if ($excludedCities->isEmpty()) {
                 return [
                     'status' => 'success',

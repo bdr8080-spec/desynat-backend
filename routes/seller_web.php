@@ -157,6 +157,9 @@ Route::group(['prefix' => 'seller'], function () {
     
     Route::match(['get','post'],'add-single-deal-management/{id}', [WebDealManagement::class, 'singleDealManagement'])->name('seller.add-single-deal-management');
 
+        Route::match(['post'],'remove-product-deal-management', [WebDealManagement::class, 'RemovesingleDealManagement'])->name('seller.Remove-product-single-deal');
+
+
 });
 
 Route::post('/send-message-in-chats', [ChatController::class,'SendMessageInChats'])->name("seller.send-chat");
