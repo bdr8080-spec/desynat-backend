@@ -6,7 +6,8 @@
  
     </div> -->
     <div class="d-flex justify-content-between mt-4">
-        <a href="{{route('seller.show_banner')}}" class="title24 alink"> <i class="bi bi-chevron-left"></i>Add New Banner</a>
+        <a href="{{route('seller.show_banner')}}" class="title24 alink"> <i class="bi bi-chevron-left"></i>Add New
+            Banner</a>
     </div>
 
     <form id="addBanner" action="{{ route('seller.add_banner') }}" method="post">
@@ -120,11 +121,12 @@
                                 </div>
 
                                 <!-- Uploaded Image -->
-                                <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
+                                <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr"
+                                    style="display:none;">
 
                                 <!-- SINGLE IMAGE -->
-                                <input type="file" accept="image/*" id="banner_image_upload" style="opacity:0;position: absolute;"
-                                    name="upload_banner">
+                                <input type="file" accept="image/*" id="banner_image_upload"
+                                    style="opacity:0;position: absolute;" name="upload_banner">
 
                                 <p class="text-danger" id="error-upload_banner"></p>
 
@@ -135,7 +137,7 @@
                 </div>
 
             </div>
-        </div>php -S localhost:8000
+        </div>
 
         <div class="mb-5">
             <div class="dashboard-button d-flex mt-5 gap-5">
