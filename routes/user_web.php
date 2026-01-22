@@ -169,6 +169,12 @@ Route::match(['get', 'post'], '/my-wallet', function () {
 
 })->name('user.my-wallet');
 
+Route::match(['get', 'post'], '/add-money', function () {
+     return view('user.mywallet.addmoney');
+
+})->name('user.add-money');
+
+
 // Route::match(['get', 'post'], '/chat', function () {
 //      return view('user.chat.chatlists');
 

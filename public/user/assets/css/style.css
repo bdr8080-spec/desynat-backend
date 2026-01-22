@@ -9,11 +9,13 @@ body{
   display: flex;
   flex-direction: column; 
 }
+::placeholder {
+    font-size: 15px;
+}
 
 .mid-content{
     flex: 1;
 }
-
 .header-main{
     position: fixed;
     top: 0;
@@ -2842,4 +2844,16 @@ img.img-fluid.circle-image {
 }
 .balance-title{
     color: #fff;
+}
+.min-width-100 {
+    width: 100px;
+    line-height: 24px;
+}
+.addheight{
+    height: 50vh;
+}
+.added-modal {
+    max-width: 370px;
+    margin: auto;
+    border-radius: 20px;
 }
