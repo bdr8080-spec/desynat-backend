@@ -39,8 +39,7 @@
             $statusCode = Seller_orderItemViewData($order_details);
             @endphp
 
-            <div class="btn-outline1 btn-outline-red" style="color:{{ $statusCode['statusColor'] }};
-             background: {{ $statusCode['bgColor'] }}">{{ $statusCode['statusText'] }}</div>
+            <div class="btn-outline1 btn-outline-red" style="color:{{ $statusCode['statusColor'] }};">{{ $statusCode['statusText'] }}</div>
 
             <!-- @if($order_details->payment_status == '2' || $order_details->payment_status == '3')
             <div class="btn-outline1 btn-outline-red" style="color:#D53B36;">Cancelled</div>
@@ -132,7 +131,7 @@
                     </div>
                     <div class="cust-deatils">
                         <div class="order-cont">
-                            <div class="title-light">Shipping Address</div>
+                            <div class="title-light">Delivery Address</div>
                             <p>{{$order_details->order->delivery_details->address}} </p>
                         </div>
                     </div>

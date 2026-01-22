@@ -627,6 +627,8 @@ table.dataTable td.dt-type-date {
 
 .link-apply {
     color: #8E6E56;
+    border: none;
+    background: transparent;
 }
 
 .chat-odr {
