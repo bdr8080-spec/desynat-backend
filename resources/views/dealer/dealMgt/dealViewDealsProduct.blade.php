@@ -96,30 +96,15 @@ $(document).ready(function() {
 
     $('.removeProductFromList').on('click', function() {
 
-
-        const id = this.ref();
-
-        alert(id);
-
-
-
-        let productIds = [];
-
-        $('input[name="product_ids[]"]:checked').each(function() {
-            productIds.push($(this).val());
-        });
-
-        if (productIds.length === 0) {
-            // alert('Please select at least one product.');
-            toastr.error("Please select at least one product.");
-            return;
-        }
+        let refId = $(this).attr('ref');
+        let deal_id = "{{Request()->id}}";
 
         $.ajax({
-            url: "{{ route('seller.add-single-deal-management',Request()->id ) }}", // your Laravel route
+            url: "{{ route('seller.Remove-product-single-deal')}}", // your Laravel route
             type: "POST",
             data: {
-                product_ids: productIds,
+                id: refId,
+                deal_id: deal_id,
                 _token: "{{ csrf_token() }}"
             },
             success: function(response) {

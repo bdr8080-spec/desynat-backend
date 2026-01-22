@@ -252,9 +252,12 @@ try{
           $check_data=[
             "deal_id"=>$deal->id,
             "id"=>$request->id,
-            "seller_id"=>$request->seller_id,
+            // "seller_id"=>$request->seller_id,
         ];
         SellerDealProduct::where($check_data)->delete();
+
+        return ['status'=>'success','message'=>"Single deals data fetch Successfully",'data'=>(object)[]];
+
      
     }else{
 
