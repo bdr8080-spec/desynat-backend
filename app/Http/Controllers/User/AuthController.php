@@ -419,7 +419,7 @@ class AuthController extends Controller
 
             if ($user) {
                 $user->update([
-                    'password' => $request->password,
+                    'password' => bcrypt($request->password),
                 ]);
 
                 return response()->json([

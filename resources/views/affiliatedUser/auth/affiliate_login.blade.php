@@ -201,7 +201,7 @@ $(document).on('submit', '#userLogin', function(e) {
             if (resp.status == true) {
                 toastr.success(resp.message);
                 setTimeout(() => {
-                    location.href = "/";
+                    location.href = "{{route('affiliate.affiliateDashboard')}}";
                 }, 1000);
             }
 

@@ -78,7 +78,7 @@ class UserAffilatedController extends Controller
                 ], 401);
             }
 
-            if (Auth::guard('affilated_users')->attempt($credentials, $request->boolean('remember'))) {
+            if (Auth::guard('affilated_user')->attempt($credentials, $request->boolean('remember'))) {
                 $request->session()->regenerate();
 
                 return response()->json([
@@ -312,7 +312,7 @@ class UserAffilatedController extends Controller
                     'message' => $request->type == 1 
                         ? 'Login successfully' 
                         : 'Affilated User registered successfully',
-                    'redirect_url' => route('dashboard'),
+                    'redirect_url' => route('affiliate.affiliateDashboard'),
                 ]);
 
                 }
@@ -377,7 +377,7 @@ class UserAffilatedController extends Controller
 
             if ($user) {
                 $user->update([
-                    'password' => $request->password,
+                    'password' => bcrypt($request->password),
                 ]);
 
                 return response()->json([

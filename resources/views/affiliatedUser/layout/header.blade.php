@@ -29,8 +29,10 @@
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
 </head>
 
@@ -45,15 +47,16 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center">
-            <a href="{{ route('seller.dashboard') }}" class="logo" >
-                <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid" id="storyModal">
+            <a href="{{ route('seller.dashboard') }}" class="logo">
+                <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid"
+                    id="storyModal">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div>
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
-               
+
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                         <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
@@ -73,14 +76,16 @@
 
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
+                            class="rounded-circle">
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li>
                             <div class="seller-profile">
                                 <div class="p-grid1 d-flex gap-3">
-                                    <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                                    <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
+                                        class="rounded-circle">
                                     <div>
                                         <h6>User Name</h6>
                                         <div class="h-email">abc@gmail.com </div>
@@ -91,9 +96,8 @@
                                 </a>
                             </div>
                         </li>
-
                         <li>
-                            <a class="dropdown-item d-flex align-items-center gap-3" href="#">
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="{{route('userLogout')}}">
                                 <img src="{{ asset('dealer') }}/assets/img/logout.svg">
                                 <span class="text-red">Sign Out</span>
                             </a>
@@ -120,6 +124,3 @@
 
     @include('affiliatedUser.layout.sideBar')
     <main id="main" class="main">
-     
-
-    
