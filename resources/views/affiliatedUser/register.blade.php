@@ -56,7 +56,12 @@
                     <div class="col-lg-6">
                         <div class="login-content pt-40">
                             <div class="login-grid-2 signup-scroll pagescroll p-3">
-                                <form action="{{ route('seller.register') }}" method="post">
+
+                                <form id="Affiliate_CreateAccountForm"
+                                    action="{{ route('affiliate.affiliate_signup') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+
                                     <h1>Sign Up <br><span class="gold-color">Create your account !</span></h1>
                                     <div class="step-progress py-4">
                                         <div class="progress pro-1" role="progressbar" aria-label="Basic example"
@@ -84,6 +89,7 @@
                                             <div class="text-color-upload">Upload Profile Photo</div>
                                             <input type="file" name="profile_image" accept="image/*" hidden
                                                 onchange="showPreview(event,3)">
+                                            <p class="text-danger" id="error-profile_image"></p>
                                         </label>
                                         <div class="imgshow">
                                             <img id="preview-3"
@@ -98,16 +104,75 @@
                                         <label for="name">First Name</label>
                                         <input type="text" class="form-control" placeholder="Enter First Name"
                                             name="full_name">
+
+                                        <p class="text-danger" id="error-full_name"></p>
                                     </div>
-                                    <div class="form-group phone-pnl">
-                                        <label for="name">Mobile Number</label>
-                                        <input type="text" class="form-control" placeholder="Enter Mobile Number"
-                                            name="mobile">
+
+                                    <div class="form-group mt-3">
+                                        <label class="d-block" for="">Mobile Number</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="">
+                                                {{-- <select name="country_code" id="" class="country" class="form-control">
+                                @foreach ($country as $item)                       
+                                    <option value="{{$item->dial_code}}">{{$item->dial_code}}</option>
+                                                @endforeach
+                                                </select> --}}
+
+                                                <div class="dropdown">
+                                                    <button
+                                                        class="btn btn-light border dropdown-toggle d-flex align-items-center justify-content-between w-100 form-control"
+                                                        type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+
+                                                        <span id="selected-flag">
+                                                            {{ old('country_flag', $country[0]->flag1) }}
+                                                        </span>
+
+                                                        <span id="selected-code" class="ms-2">
+                                                            {{ old('country_code', $country[0]->dial_code) }}
+                                                        </span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu p-2 newcountrybox"
+                                                        aria-labelledby="countryDropdown">
+
+                                                        @foreach ($country as $index => $item)
+                                                        <li>
+                                                            <label
+                                                                class="dropdown-item d-flex align-items-center gap-2 country-option"
+                                                                style="cursor: pointer;">
+                                                                <input type="radio" name="country_code"
+                                                                    value="{{ $item->dial_code }}"
+                                                                    data-flag="{{ $item->flag1 }}"
+                                                                    data-name="{{ $item->name }}" class="country-radio"
+                                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                    hidden>
+
+                                                                <div width="25" height="16">
+                                                                    <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                                        ({{ $item->name }})
+                                                                    </span>
+                                                                </div>
+
+                                                            </label>
+                                                        </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                            <div class="w-100">
+                                                <input type="number" class="form-control" value=""
+                                                    placeholder="Enter Mobile Number" name="mobile"
+                                                    oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Email Address</label>
                                         <input type="text" class="form-control" placeholder="Enter Email Address"
                                             name="email">
+                                        <p class="text-danger" id="error-email"></p>
                                     </div>
 
                                     <div class="form-group">
@@ -129,6 +194,7 @@
                                                             style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                             onclick="removeImg(1)">&times;</span>
                                                     </div>
+                                                    <p class="text-danger" id="error-document1"></p>
                                                 </div>
                                             </div>
 
@@ -148,6 +214,7 @@
                                                             style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                             onclick="removeImg(2)">&times;</span>
                                                     </div>
+                                                    <p class="text-danger" id="error-document2"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,31 +223,33 @@
                                     <div class="form-group position-relative">
                                         <label for="password">Create Password</label>
                                         <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter Password" name="password" value="{{ old('password') }}">
+                                            placeholder="Enter Password" name="password" value="">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
+
+                                        <p class="text-danger" id="error-password"></p>
                                     </div>
                                     <div class="form-group position-relative">
                                         <label for="password">Confirm Password</label>
-                                        <input type="password" class="form-control notapplyspace" id="password"
-                                            placeholder="Enter Confirm Password" name="confirm_password"
-                                            value="{{ old('confirm_password') }}">
+                                        <input type="password" class="form-control notapplyspace" id="confirm_password"
+                                            placeholder="Enter Confirm Password" name="confirm_password" value="">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
+                                        <p class="text-danger" id="error-confirm_password"></p>
                                     </div>
 
                                     <div class="form-check py-4">
                                         <input class="form-check-input" type="checkbox" value="1" id="checkChecked"
-                                            name="accept" {{ old('accept_terms') ? 'checked' : '' }}>
+                                            name="accept" {{ old('accept') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="checkChecked">
-                                            I accept the <span class="title-color">Terms & Conditions </span> and <span
-                                                class="title-color">Policies</span>
+                                            I accept the <span class="title-color">Terms & Conditions </span> and
+                                            <span class="title-color">Policies</span>
                                         </label>
-
+                                        <p class="text-danger" id="error-accept"></p>
                                     </div>
 
-
                                     <div class="login-btn">
-                                        <input type="submit" name="submit" class="btn btn-success w-100"
-                                            value="Continue">
+
+                                        <button type="submit"
+                                            class="btn add-fillbtn w-100 btn btn-success w-100">Continue</button>
                                     </div>
                                 </form>
 
@@ -202,14 +271,35 @@
 </body>
 
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- Vendor JS Files -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/bootstrap.bundle.min.js"></script>
 
 <!--Main JS File -->
-<script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
+<!-- <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script> -->
 
 <script>
+$(document).ready(function() {
+    $(document).on('click', '.country-option', function() {
+        let radio = $(this).find('.country-radio');
+        let flag = radio.data('flag');
+        let code = radio.val();
+        let name = radio.data('name');
+        $('#selected-flag').html(flag);
+        $('#selected-code').text(code);
+
+        radio.prop('checked', true);
+
+        // Close the dropdown (Bootstrap 5)
+        $('#countryDropdown').dropdown('hide');
+    });
+});
+
+
+
 $(".toggle-password").click(function() {
     $(this).toggleClass("bi-eye bi-eye-slash");
     input = $(this).parent().find("input");
@@ -235,7 +325,7 @@ function showPreview(e, i) {
     label.style.display = "none";
 
     // 👇 allow same image re-upload
-    input.value = "";
+    // input.value = "";
 }
 
 function removeImg(i) {
@@ -247,15 +337,110 @@ function removeImg(i) {
     img.style.display = rm.style.display = "none";
     label.style.display = "block";
 }
+
+$(document).on('submit', 'form#Affiliate_CreateAccountForm', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $(".text-danger").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            //     // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                toastr.success(response.message);
+
+                $('.submit').attr('disabled', true);
+
+                setTimeout(() => {
+                    location.href =
+                        `affiliate-verify-otp?temp_user_id=${response.id}&forget_password=two`;
+                }, 1000);
+
+            }
+        },
+        error: function(xhr) {
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
+
+                } else {
+
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
+                    }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+
+    });
+
+    return false;
+});
 </script>
 
 
-
-
-{{-- @include('dealer.custom_code'); --}}
-
 @include('dealer.layout.custom_code')
-
 
 
 </html>

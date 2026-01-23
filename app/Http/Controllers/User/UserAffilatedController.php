@@ -4,18 +4,28 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\{all_countrie,AffilatedUser };
-
 use Illuminate\Support\Facades\Crypt;
-
 use Illuminate\Validation\Rule;
 use Auth;
 use Validator;
 use Session;
 
+use App\Helpers\ApiResponse;
+
+use App\Services\UserAffilatedAuthService;
+
 class UserAffilatedController extends Controller
 {
+
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService)
+    {
+        $this->UserAffilatedAuthService = $UserAffilatedAuthService;
+    }
+
+
+
+
     public function affiliate_startPage(){
         return View('affiliatedUser.startPage');
     }
@@ -244,6 +254,7 @@ class UserAffilatedController extends Controller
 
 
     public function affiliate_otpVerify(Request $request){
+        
         if($request->isMethod('get')){
 
                   return view('affiliatedUser.auth.otpVerify'); 
@@ -304,7 +315,15 @@ class UserAffilatedController extends Controller
                         'redirect_url' => route('affiliate.userCreatePassword', ['temp_user_id' => $request->id]),
                     ]);
                     
-                } else {
+                }elseif ($request->forget_password == 'two') { // Register otp Verify
+                    
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'OTP verified successfully',
+                        'redirect_url' => route('affiliate.affiliate_addaddress', ['temp_user_id' => $request->id]),
+                    ]);
+
+                }else {
                     Auth::guard('web')->login($user);
                     Session::forget('verify-password');
                     return response()->json([
@@ -396,12 +415,147 @@ class UserAffilatedController extends Controller
         }
 
 
-    public function affiliate_signup(){
-        return View('affiliatedUser.register');
+    public function affiliate_signup(Request $request){
+        
+        if($request->isMethod('get')){
+
+            $country =   all_countrie::all();
+            return View('affiliatedUser.register',compact('country'));
     }
 
-     public function affiliate_addaddress(){
+     $user = $request->user()->id;
+     
+        $validate = Validator::make($request->all(), [
+                'profile_image' => 'required',
+                'full_name' => 'required',
+                'country_code' => 'required',
+                "mobile" =>"required",
+                 'email' => [
+                    'required',
+                    'email',
+                ],
+                "password"=>"required",
+                "confirm_password"=>"required|same:password",
+                "document1"=>"required",
+                "document2"=>"required",
+                "accept" =>"required|In:1"
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+
+       if ($request->hasFile('profile_image')) {
+            $dir = "document";
+            $profile_image = image_upload($request->profile_image, $dir);
+
+       }else{
+        $profile_image=null;
+       }
+
+       if ($request->hasFile('document1')) {
+            $dir = "document";
+            $document1 = image_upload($request->profile_image, $dir);
+       }else{
+        $document1=null;
+       }
+
+       if ($request->hasFile('document1')) {
+            $dir = "document";
+            $document1 = image_upload($request->document1, $dir);
+       } else{
+        $document1=null;
+       }
+
+     $request_data=(object) [
+    'user_id'=>$user,
+    "profile_image"=>$profile_image,
+    'full_name'=>$request->full_name??null,
+    'country_code'=>$request->country_code??null,
+    'mobile'=>$request->mobile??null,
+    'email'=>$request->email??null,
+    'password'=>$request->password??null,
+    'document1'=>$document1??null,
+    'document2'=>$document2??null,
+
+    'let'=>$request->let??null,
+    'long'=>$request->long??null,
+    "device_type"=>$request->device_type??null
+    ];
+
+  $data=$this->UserAffilatedAuthService->RegisterAffilatedUser($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+        $id = Crypt::encryptString($data['data']->id);
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message'],
+            'id' => $id,
+        ]);
+
+    
+    // return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
+     public function affiliate_addaddress(Request $request){
+
+        if($request->isMethod('get')){
+          $id = Crypt::decryptString($request->temp_user_id);
         return View('affiliatedUser.addaddress');
+
+        }
+        
+         $validate = Validator::make($request->all(), [
+                'country' => 'required',
+                'locations' => 'required',
+                'address1' => 'required',
+                "address2" =>"required",
+                "pincode" =>"required",
+                "town"=>"required",
+                "state"=>"required",
+                "city"=>"required",
+                "let"=>"required",
+                "long" =>"required"
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $affilated_user = $request->user()->id;
+
+     $request_data=(object) [
+    'affilated_user'=>$affilated_user,
+    "country"=>$request->country,
+    'locations'=>$request->locations,
+    'address1'=>$request->address1,
+    'address2'=>$request->address2,
+    'pincode'=>$request->pincode,
+    'town'=>$request->town,
+    'state'=>$request->state,
+    'city'=>$request->city,
+    'let'=>$request->let??null,
+    'long'=>$request->long??null
+    ];
+
+  $data=$this->UserAffilatedAuthService->affilatedAddAddress($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+
+
+
+
     }
 
      public function affiliateAddBankDetails(){

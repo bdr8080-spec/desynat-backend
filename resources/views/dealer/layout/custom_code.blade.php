@@ -89,10 +89,10 @@ $(document).ready(function() {
             //     $(this).remove();
             // });
 
-            // $(this)
-            //     .closest('.form-group')
-            //     .find('.text-danger')
-            //     .text('');
+            $(this)
+                .closest('.form-group')
+                .find('.text-danger')
+                .text('');
 
             // For dynamic product fields
             $(this)
