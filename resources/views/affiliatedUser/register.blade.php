@@ -82,8 +82,8 @@
                                             style="cursor:pointer;text-align:center;">
                                             <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                                             <div class="text-color-upload">Upload Profile Photo</div>
-                                            <input type="file" name="owner_document[]" accept="image/*"
-                                                hidden onchange="showPreview(event,3)">
+                                            <input type="file" name="profile_image" accept="image/*" hidden
+                                                onchange="showPreview(event,3)">
                                         </label>
                                         <div class="imgshow">
                                             <img id="preview-3"
@@ -96,15 +96,18 @@
 
                                     <div class="form-group">
                                         <label for="name">First Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter First Name">
+                                        <input type="text" class="form-control" placeholder="Enter First Name"
+                                            name="full_name">
                                     </div>
                                     <div class="form-group phone-pnl">
                                         <label for="name">Mobile Number</label>
-                                        <input type="text" class="form-control" placeholder="Enter Mobile Number">
+                                        <input type="text" class="form-control" placeholder="Enter Mobile Number"
+                                            name="mobile">
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Email Address</label>
-                                        <input type="text" class="form-control" placeholder="Enter Email Address">
+                                        <input type="text" class="form-control" placeholder="Enter Email Address"
+                                            name="email">
                                     </div>
 
                                     <div class="form-group">
@@ -116,8 +119,8 @@
                                                         style="cursor:pointer;text-align:center;">
                                                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                                                         <div class="text-color-upload">Document 1</div>
-                                                        <input type="file" name="owner_document[]" accept="image/*"
-                                                            hidden onchange="showPreview(event,1)">
+                                                        <input type="file" name="document1" accept="image/*" hidden
+                                                            onchange="showPreview(event,1)">
                                                     </label>
                                                     <div class="imgshow">
                                                         <img id="preview-1"
@@ -135,8 +138,8 @@
                                                         style="cursor:pointer;text-align:center;">
                                                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg">
                                                         <div class="text-color-upload">Document 2</div>
-                                                        <input type="file" name="owner_document[]" accept="image/*"
-                                                            hidden onchange="showPreview(event,2)">
+                                                        <input type="file" name="document2" accept="image/*" hidden
+                                                            onchange="showPreview(event,2)">
                                                     </label>
                                                     <div class="imgshow">
                                                         <img id="preview-2"
@@ -166,7 +169,7 @@
 
                                     <div class="form-check py-4">
                                         <input class="form-check-input" type="checkbox" value="1" id="checkChecked"
-                                            name="accept_terms" {{ old('accept_terms') ? 'checked' : '' }}>
+                                            name="accept" {{ old('accept_terms') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="checkChecked">
                                             I accept the <span class="title-color">Terms & Conditions </span> and <span
                                                 class="title-color">Policies</span>
@@ -219,31 +222,31 @@ $(".toggle-password").click(function() {
 </script>
 
 <script>
-    function showPreview(e, i) {
-        const input = e.target;
-        const img = document.getElementById(`preview-${i}`);
-        const rm  = document.getElementById(`remove-${i}`);
-        const label = document.getElementById(`label-${i}`);
+function showPreview(e, i) {
+    const input = e.target;
+    const img = document.getElementById(`preview-${i}`);
+    const rm = document.getElementById(`remove-${i}`);
+    const label = document.getElementById(`label-${i}`);
 
-        if (!input.files.length) return;
+    if (!input.files.length) return;
 
-        img.src = URL.createObjectURL(input.files[0]);
-        img.style.display = rm.style.display = "block";
-        label.style.display = "none";
+    img.src = URL.createObjectURL(input.files[0]);
+    img.style.display = rm.style.display = "block";
+    label.style.display = "none";
 
-        // 👇 allow same image re-upload
-        input.value = "";
-    }
+    // 👇 allow same image re-upload
+    input.value = "";
+}
 
-    function removeImg(i) {
-        const img = document.getElementById(`preview-${i}`);
-        const rm  = document.getElementById(`remove-${i}`);
-        const label = document.getElementById(`label-${i}`);
+function removeImg(i) {
+    const img = document.getElementById(`preview-${i}`);
+    const rm = document.getElementById(`remove-${i}`);
+    const label = document.getElementById(`label-${i}`);
 
-        img.src = "";
-        img.style.display = rm.style.display = "none";
-        label.style.display = "block";
-    }
+    img.src = "";
+    img.style.display = rm.style.display = "none";
+    label.style.display = "block";
+}
 </script>
 
 

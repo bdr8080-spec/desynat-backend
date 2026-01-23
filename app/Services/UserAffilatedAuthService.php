@@ -188,7 +188,9 @@ try{
     $check=  Bankdetails::UpdateOrCreate($request_data);
 
     if($check){
-    $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['bank_update_status'=>'1']);
+    $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['bank_update_status'=>'1','admin_verify'=>'1']);
+
+
      return ['status'=>'success','message'=>"Bank details Add succesfully",'data'=>$check];            
     }
     
