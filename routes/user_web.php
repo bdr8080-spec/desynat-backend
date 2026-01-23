@@ -15,8 +15,7 @@ use App\Http\Controllers\User\ChatController;
 use App\Http\Controllers\User\UserAffilatedController;
 
 
-
-  Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
+Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
 
  Route::group(['prefix' => 'user'], function () { 
 
@@ -144,8 +143,6 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
  
  Route::match(['get','post'],'/review_submit_page', [UserAffilatedController::class,'affiliatereview_submit_page'])->name('affiliate.affiliatereview_submit_page');
    
- 
-
  Route::get('/affiliate-dashboard', [UserAffilatedController::class,'affiliateDashboard'])->name('affiliate.affiliateDashboard');
 
 

@@ -439,7 +439,23 @@ class UserAffilatedController extends Controller
                 "document1"=>"required",
                 "document2"=>"required",
                 "accept" =>"required|In:1"
-                ]);
+                ],
+            [
+        'profile_image.required'    => 'Profile image is required.',
+        'full_name.required'        => 'Full name is required.',
+        'country_code.required'     => 'Country code is required.',
+        'mobile.required'           => 'Mobile number is required.',
+        'email.required'            => 'Email address is required.',
+        'email.email'               => 'Please enter a valid email address.',
+        'password.required'         => 'Password is required.',
+        'confirm_password.required' => 'Please confirm your password.',
+        'confirm_password.same'     => 'Password and confirm password must match.',
+        'document1.required'        => 'Document 1 is required.',
+        'document2.required'        => 'Document 2 is required.',
+        'accept.required'           => 'You must accept the terms and conditions.',
+        'accept.in'                 => 'You must accept the terms and conditions.',
+    ]
+);
             
     if($validate->fails()){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
@@ -526,7 +542,19 @@ class UserAffilatedController extends Controller
                 "city"=>"required",
                 "let"=>"required",
                 "long" =>"required"
-                ]);
+                ],
+             [
+        'country.required'   => 'Please select a country.',
+        'locations.required' => 'Please select a location.',
+        'address1.required'  => 'Address line 1 is required.',
+        'address2.required'  => 'Address line 2 is required.',
+        'pincode.required'   => 'Pincode is required.',
+        'town.required'      => 'Town is required.',
+        'state.required'     => 'State is required.',
+        'city.required'      => 'City is required.',
+        'let.required'       => 'Latitude is required.',
+        'long.required'      => 'Longitude is required.',
+    ]);
             
     if($validate->fails()){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
@@ -582,7 +610,16 @@ class UserAffilatedController extends Controller
                 "confirm_account_no" =>"required|same:account_no",
                 "iban" =>"required",
                 "swift"=>"required",
-                ]);
+                ],
+                 [
+        'bank_name.required'           => 'Bank name is required.',
+        'account_holder_name.required' => 'Account holder name is required.',
+        'account_no.required'          => 'Account number is required.',
+        'confirm_account_no.required'  => 'Please confirm your account number.',
+        'confirm_account_no.same'      => 'Account number and confirm account number must match.',
+        'iban.required'                => 'IBAN number is required.',
+        'swift.required'               => 'SWIFT code is required.',
+    ]);
             
     if($validate->fails()){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
