@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{all_countrie,AffilatedUser };
+use App\Models\{all_countrie,AffilatedUser,country };
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use Auth;
@@ -505,9 +505,13 @@ class UserAffilatedController extends Controller
 
      public function affiliate_addaddress(Request $request){
 
+         $country= country::all();
+
         if($request->isMethod('get')){
-          $id = Crypt::decryptString($request->temp_user_id);
-        return View('affiliatedUser.addaddress');
+
+        $id = Crypt::decryptString($request->temp_user_id);
+        
+        return View('affiliatedUser.auth.addaddress',compact('country','id'));
 
         }
         
@@ -525,11 +529,11 @@ class UserAffilatedController extends Controller
                 ]);
             
     if($validate->fails()){
-    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
     }
 
-     $affilated_user = $request->user()->id;
-
+    $affilated_user = $request->affilated_id;
+     
      $request_data=(object) [
     'affilated_user'=>$affilated_user,
     "country"=>$request->country,
@@ -550,16 +554,72 @@ class UserAffilatedController extends Controller
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
     }
 
-    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
-    
+      $id = Crypt::encryptString($data['data']->user_id);
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message'],
+            'id' => $id,
+        ]);
 
-
+    // return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
 
     }
 
-     public function affiliateAddBankDetails(){
-        return View('affiliatedUser.addBankInformation');
+     public function affiliateAddBankDetails(Request $request){
+
+        if($request->isMethod('get')){
+        $id = Crypt::decryptString($request->temp_user_id);
+
+        return View('affiliatedUser.auth.addBankInformation',compact('id'));
+        }
+
+
+         $validate = Validator::make($request->all(), [
+                'bank_name' => 'required',
+                'account_holder_name' => 'required',
+                'account_no' => 'required',
+                "confirm_account_no" =>"required|same:account_no",
+                "iban" =>"required",
+                "swift"=>"required",
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+     $affilated_user = $request->affilated_id;
+     
+     $request_data=(object) [
+    'affilated_user'=>$affilated_user,
+    "bank_name"=>$request->bank_name,
+    'account_holder_name'=>$request->account_holder_name,
+    'account_no'=>$request->account_no,
+    'iban'=>$request->iban,
+    'swift'=>$request->swift,
+    ];
+
+  $data=$this->UserAffilatedAuthService->affilatedAddAddBankDetails($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+     $id = Crypt::encryptString($data['data']->user_id);
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message'],
+            'id' => $id,
+        ]);
+
+    // return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+        
+
+    }
+
+    public function affiliatereview_submit_page(){
+        
+         return view('affiliatedUser.auth.signup-review'); 
     }
     
     public function affiliateDashboard(){
