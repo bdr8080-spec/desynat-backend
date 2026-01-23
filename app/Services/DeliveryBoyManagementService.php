@@ -387,7 +387,7 @@ class DeliveryBoyManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No zone found.',
-                    'data' => (object) []
+                    'data' =>  []
                 ];
             }
 
@@ -401,7 +401,7 @@ class DeliveryBoyManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch zones: ' . $e->getMessage(),
-                'data' => (object)[]
+                'data' => []
             ];
         }
     }
