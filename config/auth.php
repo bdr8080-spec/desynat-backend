@@ -53,6 +53,12 @@ return [
             'provider' => 'sellers',
         ],
 
+        'affilated_user' => [
+        'driver' => 'session',
+        'provider' => 'affilated_users',
+    ],
+
+    
         
     ],
 
@@ -88,6 +94,11 @@ return [
         'sellers' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\seller::class),
+        ],
+        
+         'affilated_users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\AffilatedUser::class),
         ],
 
         // 'users' => [

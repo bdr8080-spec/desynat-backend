@@ -16,9 +16,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
- 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"/>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
     <style>
     .pac-container {
@@ -55,7 +57,7 @@
                     class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
                         <a class="navbar-brand" href="{{route('dashboard')}}">
-                            <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid"/>
+                            <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" />
                         </a>
 
                         <div class="header_nav_button_dropdown d-flex">
@@ -182,7 +184,7 @@
                                                     Support
                                                     <i class="fa-solid fa-chevron-right i_icon"></i>
                                                 </a></li>
-                                            <li><a href="">
+                                            <li><a href="{{route('affiliate.affiliate_startPage')}}">
                                                     <img
                                                         src="{{asset('user/assets/images/profile-icon/becom-affilit.svg')}}" />
                                                     Become An Affiliate
@@ -542,8 +544,8 @@
         </nav>
     </header>
 
-   
-   
+
+
 
     <!-- Modal -->
     <div class="modal fade location" id="changeLocation" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -583,9 +585,3 @@
             </div>
         </div>
     </div>
-
-
-    
-
-
-

@@ -9,11 +9,13 @@ body{
   display: flex;
   flex-direction: column; 
 }
+::placeholder {
+    font-size: 15px;
+}
 
 .mid-content{
     flex: 1;
 }
-
 .header-main{
     position: fixed;
     top: 0;
@@ -2800,4 +2802,58 @@ img.img-fluid.circle-image {
     bottom: 10px;
     right: 30px;
     width: 90px;
+}
+.total-balance-2 {
+    display: flex;
+    flex-direction: column;
+}
+.bg-multiple{
+    background: var(--wallet-bg);
+}
+.btn-top {
+    color: #fff;
+    border: 1px solid #fff;
+    margin: 10px 0px;
+    border-radius: 12px;
+    width: 210px;
+    line-height: 28px;
+    font-size: 14px;
+}
+.btn-top:hover{
+    color: #000;
+    border: 1px solid #fff;
+    margin: 10px 0px;
+    border-radius: 12px;
+    width: 210px;
+    line-height: 28px;
+    font-size: 14px;
+    background-color: #fff;
+}
+.wallet-ic {
+    height: 40px;
+    width: 40px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+.walletic h5 {
+    color: #fff;
+    margin-bottom: 0;
+}
+.balance-title{
+    color: #fff;
+}
+.min-width-100 {
+    width: 100px;
+    line-height: 24px;
+}
+.addheight{
+    height: 50vh;
+}
+.added-modal {
+    max-width: 370px;
+    margin: auto;
+    border-radius: 20px;
 }

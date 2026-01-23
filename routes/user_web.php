@@ -115,14 +115,32 @@ use App\Http\Controllers\User\UserAffilatedController;
   Route::post('/create_custom_order', [ChatController::class,'create_custom_order'])->name('user.create_custom_order');
   Route::post('/create_normal_chat', [ChatController::class,'create_normal_chat'])->name('user.create_normal_chat');
 
+
+
+//   M7 APis 
+Route::get('/affiliate-start-page', [UserAffilatedController::class,'affiliate_startPage'])->name('affiliate.affiliate_startPage');
+
+
+Route::match(['get','post'],'/affiliate-login', [UserAffilatedController::class,'affiliate_login'])->name('affiliate.affiliate_login');
+Route::match(['get', 'post'], '/affiliate-login-with-otp', [UserAffilatedController::class, 'affiliate_loginWithOtp'])->name('affiliate_loginWithOtp');
+
+Route::match(['get','post'],'/affiliate-verify-otp', [UserAffilatedController::class,'affiliate_otpVerify'])->name('affiliate.affiliate_otpVerify');
+
+Route::match(['get', 'post'], '/affiliate-forgot-password', [UserAffilatedController::class, 'affiliate_forgotpassword'])->name('affiliate_forgotpassword');
+
+Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedController::class, 'userCreatePassword'])->name('affiliate.userCreatePassword');
+  
+
+
+Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
+
+
+
+
 });
-
-
 
 // M7 Code 
 
- Route::get('/affiliate-signup', [UserAffilatedController::class,'affiliate_signup'])->name('affiliate.affiliate_signup');
- Route::get('/affiliate-verify-otp', [UserAffilatedController::class,'affiliate_otpVerify'])->name('affiliate.affiliate_otpVerify');
  Route::get('/affiliate-add-address', [UserAffilatedController::class,'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
  Route::get('/affiliate-add-Bank-details', [UserAffilatedController::class,'affiliateAddBankDetails'])->name('affiliate.affiliateAddBankDetails');
  Route::get('/affiliate-dashboard', [UserAffilatedController::class,'affiliateDashboard'])->name('affiliate.affiliateDashboard');
@@ -137,7 +155,6 @@ Route::get('/getSearchData', [DashBoardController::class, 'getSearchData'])->nam
 Route::get('/getRecommandedlatestSearch', [DashBoardController::class, 'getRecommandedlatestSearch'])->name('user.getRecommandedlatestSearch');
 
 Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])->name('user.getlatestSearch');
-
 
 
 
@@ -168,6 +185,12 @@ Route::match(['get', 'post'], '/my-wallet', function () {
      return view('user.mywallet.wallet');
 
 })->name('user.my-wallet');
+
+Route::match(['get', 'post'], '/add-money', function () {
+     return view('user.mywallet.addmoney');
+
+})->name('user.add-money');
+
 
 // Route::match(['get', 'post'], '/chat', function () {
 //      return view('user.chat.chatlists');

@@ -32,7 +32,9 @@
         </div>
     </div>
 
-    <a href="{{ route('seller.add-single-deal-management',request()->id)}}" class="btn btn-info">Add Product </a>
+    <a href="{{ route('seller.add-single-deal-management',request()->id)}}">
+        <img src="{{ asset('dealer') }}/assets/img/add.svg" alt="add">
+    </a>
 
     <div class="search-field d-flex justify-content-between align-item-center">
         <h5>Select Product</h5>
@@ -43,7 +45,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered datatable tablesearch" id="table1">
+        <table class="table table-bordered datatable tablesearch" id="table2">
             <thead>
                 <tr>
 
@@ -73,8 +75,7 @@
                     <td><i class="bi bi-star-fill"></i> 4.0</td>
                     <td>{{$val->product_details->product_variants['0']->actual_price}}</td>
 
-                    <td> <i class="bi bi-star-fill removeProductFromList" ref="{{$val->id }}"> Remove </i></td>
-
+                    <td> <i class="bi bi-trash removeProductFromList fas-5" ref="{{$val->id }}"> </i></td>
                 </tr>
                 @endforeach
 
@@ -128,8 +129,26 @@ $(document).ready(function() {
     });
 
 });
-</script>
 
+// Data Table Search Code 
+$(document).ready(function() {
+    let table2;
+    if (!$.fn.DataTable.isDataTable('#table2')) {
+        table2 = $('#table2').DataTable({
+            paging: true,
+            ordering: true,
+            info: true,
+            searching: true
+        });
+    } else {
+        table2 = $('#table2').DataTable();
+    }
+
+    $('.tableSearch').on('keyup', function() {
+        table2.search(this.value).draw();
+    });
+});
+</script>
 
 @include('dealer.layout.custom_code');
 

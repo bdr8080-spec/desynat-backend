@@ -41,7 +41,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered datatable tablesearch" id="table1">
+        <table class="table table-bordered datatable tablesearch" id="table2">
             <thead>
                 <tr>
                     <th class="no-sort">Add</th>
@@ -80,6 +80,8 @@
                         <td><i class="bi bi-star-fill"></i> 4.0</td>
                         <td>{{$val->product_variants['0']->actual_price}}</td>
                     </tr>
+
+
                     @endforeach
 
 
@@ -142,7 +144,33 @@ $(document).ready(function() {
     });
 
 });
+
+
+
+// Data Tbale Search Code 
+
+$(document).ready(function() {
+
+    let table2;
+
+    if (!$.fn.DataTable.isDataTable('#table2')) {
+        table2 = $('#table2').DataTable({
+            paging: true,
+            ordering: true,
+            info: true,
+            searching: true
+        });
+    } else {
+        table2 = $('#table2').DataTable();
+    }
+
+    $('.tableSearch').on('keyup', function() {
+        table2.search(this.value).draw();
+    });
+
+});
 </script>
+
 
 
 

@@ -72,7 +72,7 @@
                             <small class="text-danger d-none" id="detailsError">Please enter custom details</small>
                         </div>
 
-                        <h6>Delivering Address</h6> 
+                        <h6>Delivery Address</h6> 
                         <div class="border-1 d-flex justify-content-between category_filter">
                             <div class="address-title">{{ $userAddress->address }}</div>
                             <a href="{{ route('user.view_address', ['chat' => $chatData['record']['unique_id']]) }}"> Change <i class="bi bi-arrow-right"></i></a>
