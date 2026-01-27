@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('seller_deal_products', function (Blueprint $table) {
             $table->id();
             $table->integer('deal_id');
-            $table->integer('seller_id');
+            $table->string('seller_id');
             $table->integer('product_id');
             $table->string('discount')->nullable();
             $table->timestamps();

@@ -42,11 +42,11 @@ exit();
                 @php
 
                 use Illuminate\Support\Facades\Crypt;
-                use App\Models\User;
+                use App\Models\AffilatedUser;
 
                 try {
                 $id = Crypt::decryptString(request()->temp_user_id);
-                $user = User::where('id', $id)->first();
+                $user = AffilatedUser::where('id', $id)->first();
                 } catch (\Exception $e) {
                 return response()->json(
                 [

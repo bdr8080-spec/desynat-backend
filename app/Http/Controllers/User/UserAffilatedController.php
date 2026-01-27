@@ -256,9 +256,10 @@ class UserAffilatedController extends Controller
     public function affiliate_otpVerify(Request $request){
         
         if($request->isMethod('get')){
+            
+        return view('affiliatedUser.auth.otpVerify'); 
 
-                  return view('affiliatedUser.auth.otpVerify'); 
-        }else{
+    }else{
                  
             $validator = Validator::make($request->all(), [
                 'id'=>'required',

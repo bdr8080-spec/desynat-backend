@@ -1562,6 +1562,34 @@ public function CompleteAddMoneyPayment($request)
 
 
 
+public function UserWalletHistory($request)
+{
+
+    try {
+
+       $response['wallet_balance']=UserWallet::where('user_id',$request->user_id)->value('amount')??'0';
+       $response['history']= UserWalletHistory::where('user_id', $request->user_id)->get();
+
+        return [
+            'status'  => 'success',
+            'message' => "User Wallet History get Successfully",
+            'data'    => $response
+        ];
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return [
+            'status'  => 'error',
+            'message' => $e->getMessage()
+        ];
+    }
+}
+
+
+
+
+
 
 
 

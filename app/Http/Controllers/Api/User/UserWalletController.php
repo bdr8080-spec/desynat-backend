@@ -80,6 +80,27 @@ public function __construct(UserOrderService $UserOrderService){
     }
 
 
+    
+
+
+  public function walletHistory(Request $request){
+
+      $user_id= $request->user()->id;
+
+        $request_data=(object)[
+        'user_id'=>$user_id,
+        ];
+        
+        $data=$this->UserOrderService->UserWalletHistory($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
+
 
 
 

@@ -162,8 +162,10 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/create-a-affilated-account', [UserAffilatedControlller::class,'CreateAffilatedAccount']);
   Route::post('/affilated-verify-otp', [UserAffilatedControlller::class,'AffilatedVerifyotp']);
 
-
   Route::post('/Add-money-in-wallet', [UserWalletController::class,'AddMoneyInWallet']);
+
+  Route::get('/wallet-history', [UserWalletController::class,'walletHistory']);
+
 
 });
 
