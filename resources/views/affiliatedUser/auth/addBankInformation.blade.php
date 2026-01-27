@@ -88,35 +88,41 @@
                                     <div class="form-group">
                                         <label for="name">Bank Name</label>
                                         <input type="text" class="form-control" placeholder="Enter Bank Name"
-                                            name="bank_name">
+                                            name="bank_name"
+                                            value="{{ old('bank_name', @$affiliate_bank->bank_name) }}">
                                         <p class="text-danger" id="error-bank_name"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Account Holder Name </label>
                                         <input type="text" class="form-control" placeholder="Enter Account Holder Name"
-                                            name="account_holder_name">
+                                            name="account_holder_name"
+                                            value="{{ old('account_holder_name', @$affiliate_bank->account_holder_name) }}">
                                         <p class="text-danger" id="error-account_holder_name"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="name"> Account Number </label>
                                         <input type="text" class="form-control" placeholder="Enter Account Number"
-                                            name="account_no">
+                                            name="account_no"
+                                            value="{{ old('account_no', @$affiliate_bank->account_no) }}">
                                         <p class="text-danger" id="error-account_no"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Confirm Account Number </label>
                                         <input type="text" class="form-control" placeholder="Re-Enter Account Number"
-                                            name="confirm_account_no">
+                                            name="confirm_account_no"
+                                            value="{{ old('confirm_account_no', @$affiliate_bank->account_no) }}">
                                         <p class="text-danger" id="error-confirm_account_no"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">IBAN</label>
-                                        <input type="text" class="form-control" placeholder="Enter IBAN" name="iban">
+                                        <input type="text" class="form-control" placeholder="Enter IBAN" name="iban"
+                                            value="{{ old('iban', @$affiliate_bank->iban) }}">
                                         <p class="text-danger" id="error-iban"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="name"> SWIFT/BIC</label>
-                                        <input type="text" class="form-control" placeholder="Enter Swift" name="swift">
+                                        <input type="text" class="form-control" placeholder="Enter Swift" name="swift"
+                                            value="{{ old('swift', @$affiliate_bank->swift) }}">
                                         <p class="text-danger" id="error-swift"></p>
                                     </div>
                                     <div class="login-btn mt-5">

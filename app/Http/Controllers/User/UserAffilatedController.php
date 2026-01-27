@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{all_countrie,AffilatedUser,country };
+use App\Models\{all_countrie,AffilatedUser,country,AffilatedUserAddress,Bankdetails };
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use Auth;
@@ -423,9 +423,9 @@ class UserAffilatedController extends Controller
 
             $country =   all_countrie::all();
             return View('affiliatedUser.register',compact('country'));
-    }
+        }
 
-     $user = $request->user()->id;
+        $user = $request->user()->id;
      
         $validate = Validator::make($request->all(), [
                 'profile_image' => 'required',
@@ -528,8 +528,11 @@ class UserAffilatedController extends Controller
         if($request->isMethod('get')){
 
         $id = Crypt::decryptString($request->temp_user_id);
+
+
+      $affiliate_address=AffilatedUserAddress::where('affiliate_id',$id)->first();
         
-        return View('affiliatedUser.auth.addaddress',compact('country','id'));
+        return View('affiliatedUser.auth.addaddress',compact('country','id','affiliate_address'));
 
         }
         
@@ -602,7 +605,9 @@ class UserAffilatedController extends Controller
         if($request->isMethod('get')){
         $id = Crypt::decryptString($request->temp_user_id);
 
-        return View('affiliatedUser.auth.addBankInformation',compact('id'));
+      $affiliate_bank=Bankdetails::where('user_id',$id)->where('type','3')->first();
+        
+        return View('affiliatedUser.auth.addBankInformation',compact('id','affiliate_bank'));
         }
 
 
