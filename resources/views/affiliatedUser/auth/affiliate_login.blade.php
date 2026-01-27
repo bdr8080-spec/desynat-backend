@@ -4,7 +4,7 @@
 @section('content')
 <div class="login_contenar">
     <header class="inner-header">
-        <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
+        <a href="#"><img src="assets/images/logo.svg" class="img-fluid" /></a>
         <div class="d-flex align-items-center becomSeller">
 
             <div class="dropdown">
@@ -17,7 +17,7 @@
                     <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                 </ul>
             </div>
-            <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
+            <!-- <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a> -->
         </div>
     </header>
     <div class="login_content login_content_left">

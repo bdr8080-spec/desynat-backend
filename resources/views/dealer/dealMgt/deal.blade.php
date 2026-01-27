@@ -208,7 +208,8 @@
                                     <td>{{$val->seller_deal_count}} </td>
 
                                     <td>
-                                        <a href="#" class="btn btn-expired">Expired</a>
+                                        <a href="{{route('seller.expire-single-deal-management',$val->id) }}"
+                                            class="btn btn-expired">Expired</a>
                                     </td>
 
                                 </tr>

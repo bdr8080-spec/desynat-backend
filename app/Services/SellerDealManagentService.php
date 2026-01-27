@@ -113,13 +113,26 @@ try{
             "seller_id"=>$request->seller_id 
         ];
         
-        $product_data=SellerDealProduct::with('product_details','product_details.category','product_details.subcategory','product_details.brand','product_details.product_specifications','product_details.product_variants.color')->where($search_data);    
-        if(isset($request->search)){
-            $product_data=$product_data->whereHas('product_details', function($query)use ($request){
-                $query->where('product_name_en','Like','%'.$request->search.'%');
-            });
-        }   
-       $product_data=$product_data->get();
+        $product_data=SellerDealProduct::
+        with([
+      'product_details' => function ($q) {
+        $q->with([
+            'category',
+            'subcategory',
+            'brand',
+            'product_specifications',
+            'product_variants.color',
+            'review.user_details',
+        ])
+        ->withAvg('review as avg_product_rating', 'product_rating');
+    }
+])->where($search_data);    
+    if(isset($request->search)){
+        $product_data=$product_data->whereHas('product_details', function($query)use ($request){
+            $query->where('product_name_en','Like','%'.$request->search.'%');
+        });
+    }   
+    $product_data=$product_data->get();
 
     //    Remaining product 
 
@@ -130,11 +143,20 @@ try{
             "subcategory_id"=>$deal->sub_category_id  ,
             "seller_id"=>$request->seller_id 
         ];
-        
-        $remaining_Product=product::with('category','subcategory','brand','product_specifications','product_variants.color')->where($search_data);    
+
+$remaining_Product = Product::with([
+    'category',
+    'subcategory',
+    'brand',
+    'product_specifications',
+    'product_variants.color',
+    'review.user_details',
+])
+->withAvg('review as avg_product_rating', 'product_rating')->where($search_data);    
         if(isset($request->search)){
             $remaining_Product=$remaining_Product->where('product_name_en','Like','%'.$request->search.'%');
         }
+
        $remaining_Product=$remaining_Product->whereNotIn('id',$already_add_product)->get();
 
     }
