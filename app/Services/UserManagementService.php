@@ -174,6 +174,7 @@ class UserManagementService
                 'type'           => 1, 
                 'transaction_id' => $transaction,
                 'amount'         => $amount,
+                'payment_status' => '1'
             ]);
 
             DB::commit();
