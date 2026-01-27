@@ -75,7 +75,7 @@
                     <td>{{$val->product_details->product_name_en }}</td>
                     <td>{{$val->product_details->brand->name_english }}</td>
                     <td><i class="bi bi-star-fill"></i> {{$val->avg_product_rating }}</td>
-                    <td>{{$val->product_details->product_variants['0']->actual_price}}</td>
+                    <td>{{$val->product_details->product_variants['0']->final_price}}</td>
                     <!-- <td> <i class="bi bi-trash removeProductFromList fas-5" ref="{{$val->id }}"> </i></td> -->
                 </tr>
                 @endforeach
