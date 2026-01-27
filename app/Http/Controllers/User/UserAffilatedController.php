@@ -665,6 +665,32 @@ class UserAffilatedController extends Controller
     public function affiliateDashboard(){
         
     $affilatedUser=Auth::guard('affilated_user')->user();
+
+    $id = Crypt::encryptString($affilatedUser->id);
+
+      if($affilatedUser->address_update_status=='0'){
+
+     return redirect()->route('affiliate.affiliate_addaddress', ['temp_user_id' => $id]);
+        
+        
+        // return View('affiliatedUser.auth.addaddress',compact('id'));
+
+        }
+
+      if($affilatedUser->bank_update_status=='0'){
+
+        return redirect()->route('affiliate.affiliateAddBankDetails', ['temp_user_id' => $id]);
+        
+        // return View('affiliatedUser.auth.addBankInformation',compact('id'));
+        }
+
+     if($affilatedUser->admin_verify=='1'){
+
+        return redirect()->route('affiliate.affiliatereview_submit_page', ['temp_user_id' => $id]);        
+        // return view('affiliatedUser.auth.signup-review'); 
+        }
+
+   
     return View('affiliatedUser.dashboard',compact('affilatedUser'));
 
 }
