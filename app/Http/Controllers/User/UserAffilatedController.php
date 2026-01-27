@@ -257,6 +257,7 @@ class UserAffilatedController extends Controller
         
         if($request->isMethod('get')){
             
+
         return view('affiliatedUser.auth.otpVerify'); 
 
                }else{
@@ -583,7 +584,8 @@ class UserAffilatedController extends Controller
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
     }
 
-      $id = Crypt::encryptString($data['data']->user_id);
+      $id = Crypt::encryptString($data['data']->affiliate_id);
+
         return response()->json([
             'status' => 'success',
             'message' => $data['message'],
