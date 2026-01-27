@@ -215,6 +215,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/accept_affiliate_user',[AffiliatedUserController::class,'accept_affiliate_user']);
      Route::post('/reject_affiliate_user',[AffiliatedUserController::class,'reject_affiliate_user']);
      Route::post('/block_unblock_affiliate_user',[AffiliatedUserController::class,'block_unblock_affiliate_user']);
+     
 
 
 

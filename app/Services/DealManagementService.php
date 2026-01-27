@@ -18,7 +18,8 @@ class DealManagementService
 
             $query = Deal::with([
                 'category_details',
-                'subCategory_details'
+                'subCategory_details',
+                'seller_enrolled'
             ]);
             $query->whereDate('to', '>=', Carbon::today());
 
@@ -30,6 +31,7 @@ class DealManagementService
             $query->orderBy('id', 'desc');
 
             $deal_details = $query->paginate($limit);
+           // dd($deal_details);
 
             if ($deal_details->isEmpty()) {
                 return [
@@ -62,7 +64,8 @@ class DealManagementService
 
             $query = Deal::with([
                 'category_details',
-                'subCategory_details'
+                'subCategory_details',
+                'seller_enrolled'
             ]);
             $query->whereDate('to', '<=', Carbon::today());
 
@@ -236,7 +239,14 @@ class DealManagementService
     public function dealDetails($dealId)
     {
         try {
-           $data = Deal::with('category_details','subCategory_details')->find($dealId);
+           $data = Deal::with(
+            'category_details',
+            'subCategory_details',
+            'seller_enrolled',
+            'sellerDealrecord.seller_details',
+            'sellerDealrecord.seller_details.country_details',
+            'sellerDealrecord.product_details'
+            )->find($dealId);
 
             if (!$data) {
                 return [

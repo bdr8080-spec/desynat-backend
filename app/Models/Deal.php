@@ -24,9 +24,21 @@ class Deal extends Model
 
 
      public function sellerDealrecord(){
-          return  $this->hasOne(SellerDealProduct::class,'deal_id','id');
+          return  $this->hasMany(SellerDealProduct::class,'deal_id','id');
 
      }
+
+    public function seller_enrolled()
+    {
+        return $this->hasOne(SellerDealProduct::class, 'deal_id', 'id')
+            ->selectRaw('deal_id, COUNT(DISTINCT seller_id) as seller_count')
+            ->groupBy('deal_id')
+            ->withDefault([
+                'seller_count' => 0
+            ]);
+    }
+
+
 
 
 }
