@@ -167,7 +167,9 @@ class UserManagementService
             }
 
             $transaction = random_int(10000000, 99999999);
+            $unique_id="Wal".Rand('100000','999999');
             UserWalletHistory::create([
+                "unique_id"      => $unique_id,
                 'user_id'        => $userId,
                 'type'           => 1, 
                 'transaction_id' => $transaction,
