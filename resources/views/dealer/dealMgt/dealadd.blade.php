@@ -17,7 +17,7 @@
 
                 </h4>
                 <div class="duration-table">
-                    <table class="table">
+                    <table class="table table-borderless">
                         <tr>
                             <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
                             </td>
@@ -27,12 +27,8 @@
                             <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
                             <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
                         </tr>
-
-                        <tr>
-                            <td>{{  $single_deal['deal_data']->name_english }}</td>
-                        </tr>
-
                     </table>
+                    <p class="single-pad">{{  $single_deal['deal_data']->name_english }}</p>
 
                 </div>
             </div>
@@ -84,7 +80,7 @@
                         </td>
                         <td>{{$val->product_name_en }}</td>
                         <td>{{$val->brand->name_english }}</td>
-                        <td><i class="bi bi-star-fill"></i> {{$val->avg_product_rating }}</td>
+                        <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating }}</td>
                         <td>{{$val->product_variants['0']->final_price}}</td>
                     </tr>
 

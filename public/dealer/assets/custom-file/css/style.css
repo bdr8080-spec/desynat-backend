@@ -154,6 +154,15 @@ label {
   width: 60%;
 } */
 
+.yellow-star {
+  color: #FFA41B !important;
+}
+
+.single-pad {
+  padding: 0px 9px;
+  margin-bottom: 0px;
+}
+
 .seller-profile {
   display: flex;
   justify-content: space-between;
