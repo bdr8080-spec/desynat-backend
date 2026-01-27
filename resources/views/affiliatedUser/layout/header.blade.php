@@ -76,19 +76,21 @@
 
                 <li class="nav-item dropdown pe-3">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
-                            class="rounded-circle">
+                        <img src="{{ Auth::guard('affilated_user')->user()->profile_image ?? asset('user/assets/images/user.png') }}"
+                            alt="Profile" class="rounded-circle">
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li>
                             <div class="seller-profile">
                                 <div class="p-grid1 d-flex gap-3">
-                                    <img src="{{ asset('dealer') }}/assets/img/profile-img.jpg" alt="Profile"
-                                        class="rounded-circle">
+                                    <img src="{{ Auth::guard('affilated_user')->user()->profile_image ?? asset('user/assets/images/user.png') }}"
+                                        alt="Profile" class="rounded-circle">
                                     <div>
-                                        <h6>User Name</h6>
-                                        <div class="h-email">abc@gmail.com </div>
+
+                                        <h6>{{Auth::guard('affilated_user')->user()->full_name ?? ''}}</h6>
+                                        <div class="h-email">{{Auth::guard('affilated_user')->user()->email ?? ''}}
+                                        </div>
                                     </div>
                                 </div>
                                 <a class="drop-profile" href="#">

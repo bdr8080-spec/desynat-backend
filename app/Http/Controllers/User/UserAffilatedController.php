@@ -661,7 +661,10 @@ class UserAffilatedController extends Controller
     }
     
     public function affiliateDashboard(){
-        return View('affiliatedUser.dashboard');
-    }
+        
+    $affilatedUser=Auth::guard('affilated_user')->user();
+    return View('affiliatedUser.dashboard',compact('affilatedUser'));
+
+}
 
 }
