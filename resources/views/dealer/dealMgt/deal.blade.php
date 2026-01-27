@@ -138,7 +138,7 @@
                                                 style="color:#48DB8F;">Active
                                             </div>
                                             @elseif($val->from > Date('Y-m-d') )
-                                            <div style="color:#8a9c13;">Upcoming </div>
+                                            <div style="color:#dcaf15;">Upcoming </div>
                                             @endif
                                     </td>
 

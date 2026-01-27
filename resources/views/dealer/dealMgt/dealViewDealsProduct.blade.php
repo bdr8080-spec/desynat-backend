@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
-        <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Details</a>
+        <a class="title24 alink" href="{{ url()->previous() }} "> <i class="bi bi-chevron-left"></i> Details</a>
     </div>
 
     <div class="row mt-3">
@@ -25,6 +25,11 @@
                             <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
                             <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
                         </tr>
+
+                        <tr>
+                            <td>{{  $single_deal['deal_data']->name_english }}</td>
+                        </tr>
+
                     </table>
 
                 </div>
@@ -54,7 +59,7 @@
                     <th class="no-sort">Name</th>
                     <th class="no-sort">Brand</th>
                     <th class="no-sort">Rating</th>
-                    <th class="no-sort">KD</th>
+                    <th class="no-sort">Price</th>
                     <th class="no-sort">Remove</th>
                 </tr>
             </thead>
@@ -91,6 +96,23 @@
 </section>
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="succesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-4 text-center">
+                    <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                    <h5 class="mt-3">Products Remove Successfully!</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <script>
 $(document).ready(function() {
 
@@ -111,7 +133,9 @@ $(document).ready(function() {
                 // alert('Products added to deals successfully!');
                 console.log(response);
 
-                toastr.success(response.message);
+                // toastr.success(response.message);
+
+                $('#succesModal').modal('show');
 
                 window.setTimeout(function() {
                     window.location =

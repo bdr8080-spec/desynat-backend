@@ -36,6 +36,7 @@ $all_deal = Deal::query()
  */$listed_deal = (clone $all_deal)
     ->whereDate('to', '>=', $today)
     ->whereDoesntHave('sellerDealrecord')
+    ->orderBy('id','desc')
     ->get();
 
     
@@ -58,6 +59,8 @@ $enrolled = (clone $all_deal)
             $query->where('seller_id', $request->seller_id);
         }
     ])
+
+    ->orderBy('id','desc')
     ->get();
 
 /**
@@ -78,6 +81,8 @@ $expired_deal = (clone $all_deal)
             $query->where('seller_id', $request->seller_id);
         }
     ])
+
+    ->orderBy('id','desc')
     ->get();
 
 $response = [
