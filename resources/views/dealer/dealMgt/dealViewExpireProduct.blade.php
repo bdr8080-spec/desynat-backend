@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
-        <a class="title24 alink" href="#"> <i class="bi bi-chevron-left"></i> Details</a>
+        <a class="title24 alink" href="{{ url()->previous() }} "> <i class="bi bi-chevron-left"></i> Details</a>
     </div>
 
     <div class="row mt-3">
@@ -56,7 +56,7 @@
                     <th class="no-sort">Name</th>
                     <th class="no-sort">Brand</th>
                     <th class="no-sort">Rating</th>
-                    <th class="no-sort">KD</th>
+                    <th class="no-sort">Price</th>
                     <!-- <th class="no-sort">Remove</th> -->
                 </tr>
             </thead>
