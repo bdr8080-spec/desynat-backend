@@ -19,6 +19,13 @@ class SellerDealProduct extends Model
 
      }
 
+     public function seller_details()
+    {
+        return $this->belongsTo(seller::class, 'seller_id', 'id');
+    }
+
+
+
 
 
 
