@@ -13,7 +13,9 @@
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4>Starts From - {{ $single_deal['deal_data']->from}}</h4>
+                <h4 class="greentitle">Starts From -{{ date('d M Y', strtotime($single_deal['deal_data']->from)) }}
+
+                </h4>
                 <div class="duration-table">
                     <table class="table">
                         <tr>

@@ -13,7 +13,7 @@
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4>Starts From - {{ $single_deal['deal_data']->from}}</h4>
+                <h4>Starts From - {{ date('d M Y', strtotime($single_deal['deal_data']->from)) }}</h4>
                 <div class="duration-table">
                     <table class="table">
                         <tr>
@@ -156,12 +156,17 @@ $(document).ready(function() {
 // Data Table Search Code 
 $(document).ready(function() {
     let table2;
+
     if (!$.fn.DataTable.isDataTable('#table2')) {
         table2 = $('#table2').DataTable({
             paging: true,
             ordering: true,
             info: true,
-            searching: true
+            searching: true,
+            language: {
+                emptyTable: "No Product found in this category",
+                zeroRecords: "No Product found in this category"
+            }
         });
     } else {
         table2 = $('#table2').DataTable();

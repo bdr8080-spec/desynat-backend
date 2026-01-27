@@ -13,7 +13,7 @@
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4 style="color:red">Expire On - {{ $single_deal['deal_data']->to}}</h4>
+                <h4 style="color:red">Expire On - {{ date('d M Y', strtotime($single_deal['deal_data']->to)) }}</h4>
                 <div class="duration-table">
                     <table class="table">
                         <tr>
