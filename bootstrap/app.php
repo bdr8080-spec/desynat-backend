@@ -13,6 +13,7 @@ use App\Http\Middleware\DisableBackBtn;
 use App\Http\Middleware\SellerAuthenticated;
 
 use App\Http\Middleware\ForceLowercaseUrl;
+use App\Http\Middleware\AffiliateLoginCheck;
 
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -31,7 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'prevent-back-history' => DisableBackBtn::class, // Add this line
             'seller_login' =>SellerAuthenticated::class,
             'LowerUrl' => ForceLowercaseUrl::class,
-                           
+            'Affiliate_user' => AffiliateLoginCheck::class,              
         ]);
     })
 
