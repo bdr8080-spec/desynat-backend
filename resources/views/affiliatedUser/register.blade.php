@@ -391,41 +391,51 @@ $(document).on('submit', 'form#Affiliate_CreateAccountForm', function(event) {
         error: function(xhr) {
             $('.text-danger').empty(); // Clear previous errors
 
-            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+            if (xhr.status == 400) {
 
-            $.each(errors, function(field, messages) {
-
-                // 1️⃣ Handle array fields with index → product_spe_en.0
-                if (field.includes(".")) {
-
-                    let parts = field.split(".");
-                    let fieldName = parts[0];
-                    let index = parts[1];
-                    let index1 = parts[2];
+                toastr.error(xhr.responseJSON.message);
+            } else {
 
 
-                    // Example → #error-product_spe_en_0
+                let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
 
-                    let errorId = "#error-" + fieldName + "_" + index;
+                $.each(errors, function(field, messages) {
 
-                    // If second index exists, append it
-                    if (typeof index1 !== "undefined" && index1 !== "") {
-                        errorId += "_" + index1;
+                    // 1️⃣ Handle array fields with index → product_spe_en.0
+                    if (field.includes(".")) {
+
+                        let parts = field.split(".");
+                        let fieldName = parts[0];
+                        let index = parts[1];
+                        let index1 = parts[2];
+
+
+                        // Example → #error-product_spe_en_0
+
+                        let errorId = "#error-" + fieldName + "_" + index;
+
+                        // If second index exists, append it
+                        if (typeof index1 !== "undefined" && index1 !== "") {
+                            errorId += "_" + index1;
+                        }
+                        $(errorId).html(messages[0]);
+
+
+                    } else {
+
+                        // 2️⃣ File special case
+                        if (field === "file") {
+                            $("#file-error").html(messages[0]);
+                        }
+
+                        // 3️⃣ Handle whole array errors (custom rule)
+                        $("#error-" + field).html(messages[0]);
                     }
-                    $(errorId).html(messages[0]);
+                });
 
 
-                } else {
+            }
 
-                    // 2️⃣ File special case
-                    if (field === "file") {
-                        $("#file-error").html(messages[0]);
-                    }
-
-                    // 3️⃣ Handle whole array errors (custom rule)
-                    $("#error-" + field).html(messages[0]);
-                }
-            });
         },
         complete: function() {
             // Hide loader (after success or error)
