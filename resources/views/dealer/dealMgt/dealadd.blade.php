@@ -66,7 +66,7 @@
                         <td>
                             <div class="d-flex justify-content-center">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="product_ids[]"
+                                    <input class="form-check-input productCheckbox" type="checkbox" name="product_ids[]"
                                         value="{{$val->id}}">
                                 </div>
                             </div>
@@ -188,6 +188,23 @@ $(document).ready(function() {
         table2.search(this.value).draw();
     });
 
+});
+
+
+$(document).ready(function() {
+
+    function toggleAddButton() {
+        const anyChecked = $('.productCheckbox:checked').length > 0;
+        $('#addToDealsBtn').prop('disabled', !anyChecked);
+    }
+
+    // Run on checkbox change
+    $(document).on('change', '.productCheckbox', function() {
+        toggleAddButton();
+    });
+
+    // Initial state
+    toggleAddButton();
 });
 </script>
 
