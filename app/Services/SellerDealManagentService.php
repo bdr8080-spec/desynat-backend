@@ -156,6 +156,7 @@ $remaining_Product = Product::with([
         if(isset($request->search)){
             $remaining_Product=$remaining_Product->where('product_name_en','Like','%'.$request->search.'%');
         }
+
        $remaining_Product=$remaining_Product->whereNotIn('id',$already_add_product)->get();
 
     }
