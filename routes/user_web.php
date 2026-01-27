@@ -13,6 +13,7 @@ use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\DashBoardController;
 use App\Http\Controllers\User\ChatController;
 use App\Http\Controllers\User\UserAffilatedController;
+use App\Http\Controllers\User\WalletController;
 
 
 Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
@@ -132,6 +133,9 @@ Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedContro
 
 Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
 
+Route::get('/my-wallet', [WalletController::class,'myWallet'])->name('user.myWallet');
+Route::get('/add-wallet-money', [WalletController::class,'addWalletMoney'])->name('user.addWalletMoney');
+
 
 });
 
@@ -181,15 +185,15 @@ Route::match(['get', 'post'], '/order-place', function () {
 
 })->name('user.order-place');
 
-Route::match(['get', 'post'], '/my-wallet', function () {
-     return view('user.mywallet.wallet');
+// Route::match(['get', 'post'], '/my-wallet', function () {
+//      return view('user.mywallet.wallet');
 
-})->name('user.my-wallet');
+// })->name('user.my-wallet');
 
-Route::match(['get', 'post'], '/add-money', function () {
-     return view('user.mywallet.addmoney');
+// Route::match(['get', 'post'], '/add-money', function () {
+//      return view('user.mywallet.addmoney');
 
-})->name('user.add-money');
+// })->name('user.add-money');
 
 
 // Route::match(['get', 'post'], '/chat', function () {
