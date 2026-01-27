@@ -96,6 +96,23 @@
 </section>
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="succesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-4 text-center">
+                    <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                    <h5 class="mt-3">Products Remove Successfully!</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 <script>
 $(document).ready(function() {
 
@@ -116,7 +133,9 @@ $(document).ready(function() {
                 // alert('Products added to deals successfully!');
                 console.log(response);
 
-                toastr.success(response.message);
+                // toastr.success(response.message);
+
+                $('#succesModal').modal('show');
 
                 window.setTimeout(function() {
                     window.location =
