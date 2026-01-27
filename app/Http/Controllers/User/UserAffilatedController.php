@@ -259,7 +259,7 @@ class UserAffilatedController extends Controller
             
         return view('affiliatedUser.auth.otpVerify'); 
 
-    }else{
+               }else{
                  
             $validator = Validator::make($request->all(), [
                 'id'=>'required',
@@ -504,7 +504,7 @@ class UserAffilatedController extends Controller
   $data=$this->UserAffilatedAuthService->RegisterAffilatedUser($request_data);
     
     if(isset($data['status']) && $data['status']=='error' ){
-        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
     }
 
         $id = Crypt::encryptString($data['data']->id);
