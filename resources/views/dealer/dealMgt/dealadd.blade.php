@@ -81,12 +81,9 @@
                         <td>{{$val->product_name_en }}</td>
                         <td>{{$val->brand->name_english }}</td>
                         <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating }}</td>
-                        <td>{{$val->product_variants['0']->final_price}}</td>
+                        <td>{{$val->product_variants['0']->final_price}} KD</td>
                     </tr>
-
-
                     @endforeach
-
 
             </tbody>
         </table>
