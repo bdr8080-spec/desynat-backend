@@ -36,6 +36,16 @@ $all_deal = Deal::query()
  */$listed_deal = (clone $all_deal)
     ->whereDate('to', '>=', $today)
     ->whereDoesntHave('sellerDealrecord')
+    ->when($request->tab == "1", function ($q) use ($request) {
+
+    $q->when($request->from, function ($qq) use ($request) {
+        $qq->whereDate('from', '<=', $request->from);
+    });
+    $q->when($request->to, function ($qq) use ($request) {
+        $qq->whereDate('to', '>=', $request->to);
+    });
+    })
+
     ->orderBy('id','desc')
     ->get();
 
@@ -44,6 +54,18 @@ $all_deal = Deal::query()
  * Enrolled Deals (seller joined + active)
  */
 $enrolled = (clone $all_deal)
+    ->when($request->tab == "2", function ($q) use ($request) {
+
+    $q->when($request->from, function ($qq) use ($request) {
+        $qq->whereDate('from', '<=', $request->from);
+    });
+    $q->when($request->to, function ($qq) use ($request) {
+        $qq->whereDate('to', '>=', $request->to);
+    });
+
+
+    })
+
     ->whereHas('sellerDealrecord', function ($query) use ($request, $today) {
         $query->where('seller_id', $request->seller_id)
             //   ->whereDate('from', '<=', $today)
@@ -67,6 +89,17 @@ $enrolled = (clone $all_deal)
  * Expired Deals (seller enrolled but expired)
  */
 $expired_deal = (clone $all_deal)
+    ->when($request->tab == "3", function ($q) use ($request) {
+
+    $q->when($request->from, function ($qq) use ($request) {
+        $qq->whereDate('from', '<=', $request->from);
+    });
+    $q->when($request->to, function ($qq) use ($request) {
+        $qq->whereDate('to', '>=', $request->to);
+    });
+
+
+    })
     ->whereHas('sellerDealrecord', function ($query) use ($request, $today) {
         $query->where('seller_id', $request->seller_id)
               ->whereDate('to', '<', $today);

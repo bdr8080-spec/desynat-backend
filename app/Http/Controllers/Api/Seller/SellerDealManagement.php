@@ -26,6 +26,9 @@ class SellerDealManagement extends Controller
 
           $request_data=(object )[
             'seller_id'=>$seller_details,
+            "tab"=>$request->tab??null,
+            "from"=>$request->from??null,
+            "to"=>$request->to??null,
         ];
 
     $data= $this->SellerDealManagentService->seller_ViewDeal($request_data);
