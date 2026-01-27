@@ -122,7 +122,7 @@
                                         <div class="profile_buttons">
                                             <div class="row">
                                                 <div class="col-lg-6 my-2">
-                                                    <button class="custom-btn3">My wallet</button>
+                                                    <a href="{{route('user.myWallet')}}" class="custom-btn3">My wallet</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.myOrders')}}" class="custom-btn3">My
