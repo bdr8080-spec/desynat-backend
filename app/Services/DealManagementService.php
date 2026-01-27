@@ -242,10 +242,10 @@ class DealManagementService
            $data = Deal::with(
             'category_details',
             'subCategory_details',
-            'seller_enrolled',
+            'sellerDealrecord.product_added',
             'sellerDealrecord.seller_details',
             'sellerDealrecord.seller_details.country_details',
-            'sellerDealrecord.product_details'
+            'sellerDealrecord.product_details',
             )->find($dealId);
 
             if (!$data) {
