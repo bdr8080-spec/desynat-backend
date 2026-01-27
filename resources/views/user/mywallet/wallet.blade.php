@@ -22,63 +22,59 @@
                                 <div class="wallet-ic">
                                     <img src="{{asset('user/assets/images/wallet-ic.svg')}}" class="img-fluid">
                                 </div>
-                                <h5>28392.98 KD</h5>
+                                <h5>{{ rtrim(rtrim(number_format($walletData['wallet_balance'], 2, '.', ''), '0'), '.') }} KD</h5>
                             </div>
                         </div>
                         <div class="total-balance-2">
-                            <a href="/add-money" class="btn btn-top">Top-up Wallet</a>
+                            <a href="{{route('user.addWalletMoney')}}" class="btn btn-top">Top-up Wallet</a>
                             <button type="button" class="btn btn-top" data-bs-target="#RedeemModal" data-bs-toggle="modal">Redeem Gift Card</button>
                         </div>
                     </div>
 
                 </div>
 
-                <div class="border-1 mb-3 mt-3">
-                    <div class="giftinfo">
-                        <div style="color: #48DB8F;">Credit</div>
-                        <div>+100 KD</div>
+                @if($walletData['history']->count())
+                    @foreach($walletData['history'] as $history)
+                        <div class="border-1 mb-3 mt-3">
+                            <div class="giftinfo">
+                                @php
+                                    $isCredit = in_array($history->type, [1, 3]);
+                                @endphp
+
+                                <div style="color: {{ $isCredit ? '#48DB8F' : '#FF6B6B' }}">
+                                    @if($history->type == 1)
+                                        Credit
+                                    @elseif($history->type == 3)
+                                        Reedem Gift Card
+                                    @else
+                                        Debit
+                                    @endif
+                                </div>
+
+                                <div>
+                                    {{ $isCredit ? '+' : '-' }}
+                                    {{ rtrim(rtrim(number_format($history->amount, 2), '0'), '.') }} KD
+                                </div>
+                            </div>
+
+                            <div class="giftinfo">
+                                <div>Transaction Id</div>
+                                <div>{{ $history->transaction_id }}</div>
+                            </div>
+
+                            <div class="giftinfo">
+                                <div>Credited On</div>
+                                <div>
+                                    {{ \Carbon\Carbon::parse($history->created_at)->timezone('Asia/Kolkata')->format('d/m/Y, h:i A') }}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="text-center text-muted mt-3">
+                        No wallet history found
                     </div>
-                    <div class="giftinfo">
-                        <div>Transaction Id</div>
-                        <div>45625</div>
-                    </div>
-                    <div class="giftinfo">
-                        <div>Credited On</div>
-                        <div>22/02/2025, 10:00 AM</div>
-                    </div>
-                </div>
-                <div class="border-1 mb-3">
-                    <div class="giftinfo">
-                        <div style="color:#E63946;">Debit</div>
-                        <div>+100 KD</div>
-                    </div>
-                    <div class="giftinfo">
-                        <div>Transaction Id</div>
-                        <div>45625</div>
-                    </div>
-                    <div class="giftinfo">
-                        <div>Order Id</div>
-                        <div>45625435345</div>
-                    </div>
-                    <div class="giftinfo">
-                        <div>Credited On</div>
-                        <div>22/02/2025, 10:00 AM</div>
-                    </div>
-                </div>
-                <div class="border-1">
-                    <div class="giftinfo">
-                        <div>Redeem Gift Card</div>
-                        <div>+100 KD</div>
-                    </div>
-                    <div class="giftinfo">
-                        <div>Gift Card No.</div>
-                        <div>45625</div>
-                    </div>
-                    <div class="giftinfo">
-                        <div>Redeemed On</div>
-                        <div>22/02/2025, 10:00 AM</div>
-                    </div>
-                </div>
+                @endif
 
             </div>
 
