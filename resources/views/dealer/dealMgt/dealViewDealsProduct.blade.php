@@ -2,7 +2,8 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
-        <a class="title24 alink" href="{{ url()->previous() }} "> <i class="bi bi-chevron-left"></i> Details</a>
+        <a class="title24 alink" href="{{ route('seller.deal_management') }} "> <i class="bi bi-chevron-left"></i>
+            Details</a>
     </div>
 
     <div class="row mt-3">
