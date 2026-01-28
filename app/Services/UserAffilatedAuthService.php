@@ -155,7 +155,7 @@ try{
 
     if($check){
     $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['address_update_status'=>'1']);
-     return ['status'=>'success','message'=>"Address Add succesfully",'data'=>$check];            
+     return ['status'=>'success','message'=>"Address Save succesfully",'data'=>$check];            
     }
     
     } catch (\Exception $e) {
@@ -191,7 +191,7 @@ try{
     $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['bank_update_status'=>'1','admin_verify'=>'1']);
 
 
-     return ['status'=>'success','message'=>"Bank details Add succesfully",'data'=>$check];            
+     return ['status'=>'success','message'=>"Bank details Submit succesfully",'data'=>$check];            
     }
     
     } catch (\Exception $e) {

@@ -655,7 +655,7 @@ if ($validator->fails()) {
         'account_holder_name.required' => 'Account holder name is required.',
         'account_no.required'          => 'Account number is required.',
         'confirm_account_no.required'  => 'Please confirm your account number.',
-        'confirm_account_no.same'      => 'Account number and confirm account number must match.',
+        'confirm_account_no.same'      => 'Account number and confirm account do not match.',
         'iban.required'                => 'IBAN number is required.',
         'swift.required'               => 'SWIFT code is required.',
     ]);

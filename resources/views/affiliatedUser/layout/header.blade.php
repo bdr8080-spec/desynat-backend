@@ -102,7 +102,7 @@
                             <a class="dropdown-item d-flex align-items-center gap-3"
                                 href="{{route('affiliateLogout')}}">
                                 <img src="{{ asset('dealer') }}/assets/img/logout.svg">
-                                <span class="text-red">Sign Out</span>
+                                <span class="text-red">LogOut</span>
                             </a>
                         </li>
                     </ul>
