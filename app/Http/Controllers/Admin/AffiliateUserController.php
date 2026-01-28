@@ -21,6 +21,7 @@ class AffiliateUserController extends Controller
     public function affiliateUserManagement(Request $request){
         $countries = $this->CountryService->getCountries()['data'];
         $newUsers = $this->AffiliatedUserManagementService->getNewAffiliatedUers($request)['data'];
+        //dd($newUsers);
         $approvedUsers = $this->AffiliatedUserManagementService->getApprovedAffiliatedUers($request)['data'];
         $rejectedUsers = $this->AffiliatedUserManagementService->getRejectedAffiliatedUers($request)['data'];
         return view('admin.affiliate-user-management.index',compact('countries','newUsers','approvedUsers','rejectedUsers'));
