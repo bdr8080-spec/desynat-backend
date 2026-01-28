@@ -143,7 +143,7 @@
 
             <div class="form-group position-relative password_icon mt-3 d-none emailInput">
                 <label for="">Enter Email Id</label>
-                <input class="form-control notapplyspace" type="email" placeholder="Enter Mobile Number" name="email">
+                <input class="form-control notapplyspace" type="email" placeholder="Enter email Address" name="email">
                 <p class="text-danger" id="error-email"></p>
             </div>
             <button type="submit" class="customBtn customBtn5 mt-4">Continue</button>
