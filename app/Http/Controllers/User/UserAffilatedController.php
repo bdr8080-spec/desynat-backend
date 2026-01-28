@@ -100,6 +100,15 @@ class UserAffilatedController extends Controller
                     'message' => 'Your profile is rejected By Admin',
                 ], 401);
             }
+
+
+              if ($user->status == '0') {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Account is blocked by admin',
+                ], 401);
+            }
+            
             
             if ($user->otp_verify == '0') {
                 return response()->json([
