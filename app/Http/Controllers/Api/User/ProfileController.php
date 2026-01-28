@@ -77,7 +77,7 @@ class ProfileController extends Controller
 
         if($user){
 
-        $user->affilated_User=AffilatedUser::where('user_id',$user->id)->where('otp_verify','1')->first();
+        $user->affiliated_userdetails=AffilatedUser::where('user_id',$user->id)->where('otp_verify','1')->first();
         }
 
 
