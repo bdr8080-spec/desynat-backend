@@ -24,6 +24,17 @@ class SellerDealProduct extends Model
         return $this->belongsTo(seller::class, 'seller_id', 'id');
     }
 
+    public function products()
+    {
+        return $this->hasMany(
+            self::class,
+            'seller_id',
+            'seller_id'
+        )->whereColumn('deal_id', 'deal_id')
+        ->with('product_details');
+    }
+
+
     public function product_added()
     {
         return $this->hasOne(self::class, 'seller_id', 'seller_id')
