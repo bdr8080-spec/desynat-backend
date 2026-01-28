@@ -1528,7 +1528,7 @@ public function CompleteAddMoneyPayment($request)
             return ['status' => 'error', 'message' => 'Record not found'];
         }
 
-        $history->update(['payment_status' => $request->payment_status]);
+        $history->update(['payment_status' => $request->payment_status,'transaction_id'=>$request->transaction_id]);
 
         if ($request->payment_status == '1') {
             UserWallet::updateOrCreate(
