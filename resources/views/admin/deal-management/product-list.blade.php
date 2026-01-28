@@ -20,10 +20,10 @@
              @php
                 $sellerRecord = $products->sellerDealrecords->first();
             @endphp
-            <h2 class="h2 text-start">{{ $sellerRecord->seller_details->first_name }} {{ $sellerRecord->seller_details->last_name }}</h2>
-
+            
         </div>
-
+        
+        <h1 class="h2 text-start" style="font-size: 27px;margin-left: 13px;margin: 26px;">{{ $sellerRecord->seller_details->first_name }} {{ $sellerRecord->seller_details->last_name }}</h1>
 
     <div class="userManagecontent">
         <div class="mt-4">
@@ -31,7 +31,7 @@
             <div class="row">
 
                 <div class="col-lg-3 col-md-4 col-12">
-                    <div class="form-group mb-5 w-100">
+                    <div class="form-group   w-100">
                         <select name="filter" id="filter"
                             class="form-select form-select-lg "
                             onchange="document.getElementById('filterForm').submit();">
@@ -49,7 +49,7 @@
             </div>
             </form>
 
-            <div class="table-responsive mt-5 w-100">
+            <div class="table-responsive mt-3 w-100">
                 <table id="myTable" class="table w-100">
                     <thead>
                         <tr>

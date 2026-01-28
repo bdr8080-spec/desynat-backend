@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="inner-content management">
-    <h2 class="h2">Afflicate User management</h2>
+    <h2 class="h2">Affiliate User Management</h2>
     <div class="d-flex justify-content-center">
         <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
             <li class="nav-item m-1" role="presentation">
@@ -86,7 +86,7 @@
                     </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                     <table id="myTable" class="table">
                         <thead>
                             <tr>
@@ -242,7 +242,7 @@
                             </div>
                         </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                     <table id="myTable1" class="table">
                         <thead>
                             <tr>
@@ -401,7 +401,7 @@
                             </div>
                         </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-3">
                     <table id="myTable2" class="table">
                         <thead>
                             <tr>
