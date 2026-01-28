@@ -162,10 +162,15 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/create-a-affilated-account', [UserAffilatedControlller::class,'CreateAffilatedAccount']);
   Route::post('/affilated-verify-otp', [UserAffilatedControlller::class,'AffilatedVerifyotp']);
 
+
+
+
   Route::post('/Add-money-in-wallet', [UserWalletController::class,'AddMoneyInWallet']);
 
   Route::get('/wallet-history', [UserWalletController::class,'walletHistory']);
 
+  Route::post('/redeem-gift-card-in-wallet', [UserWalletController::class,'Redeemgiftcardinwallet']);
+  
 
 });
 
@@ -178,9 +183,13 @@ Route::middleware(['auth:sanctum', 'ability:AffilatedUser'])->prefix('affiliate'
 Route::post('/affilated-add-address', [UserAffilatedControlller::class,'affilatedAddAddress']);
 Route::post('/affilated-add-Bank-details', [UserAffilatedControlller::class,'affilatedAddBankDetails']);
 
-
+Route::post('/affilated-dashboard', [UserAffilatedControlller::class,'affilatedDashboard']);
 
 });
+
+
+route::post('affiliate/affiliate-login-with-otp',[UserAffilatedControlller::class,'affiliateloginwithotp']);
+
 
 Route::post('affiliate/affiliated-login', [UserAffilatedControlller::class,'affiliatedLogin']);
 route::post('affiliate/forgot_password',[UserAffilatedControlller::class,'affiliate_forgot_password']);

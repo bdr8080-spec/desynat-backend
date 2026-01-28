@@ -338,4 +338,63 @@ public function affilatedAddBankDetails(Request $request){
     }
 
 
+
+
+    public function affiliateloginwithotp(Request $req){
+
+        $validate = Validator::make($req->all(), [
+            'type'=>"required|In:0,1", //  0 mobile and 1 email
+               ]);
+
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       // when i use forgot password with Mobile
+       if($req->type=='0'){
+        $validate = Validator::make($req->all(), [
+            'country_code'=>"required",
+            'mobile'=>"required"
+        ]);
+
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       }
+
+    // when i use forgot password with Email
+        if($req->type=='1'){
+        $validate = Validator::make($req->all(), [
+            'email'=>"required",
+        ]);
+
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        }
+        
+        $data= $this->UserAffilatedAuthService->Affilate_mobile_or_email_forgot_password($req);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', 'otp send successfully',$data['data'], 200);
+
+    }
+
+
+
+    public function affilatedDashboard(Request $req){
+
+         return ApiResponse::generateResponse('success', 'Affiliated User details fetch successfully',$req->user(), 200);
+
+    }
+
+
+
+     
+
 }

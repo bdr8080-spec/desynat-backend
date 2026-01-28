@@ -27,7 +27,19 @@ class UserAffilatedController extends Controller
 
 
     public function affiliate_startPage(){
-        return View('affiliatedUser.startPage');
+
+        $user_id=Auth::guard('web')->user()->id;
+        $affilated_User=AffilatedUser::where('user_id',$user_id)->where('otp_verify','1')->first();
+
+        if($affilated_User){
+            return redirect()->route('affiliate.affiliate_login');
+        
+        }else{
+            return redirect()->route('affiliate.affiliate_signup');
+        }
+        
+        // return View('affiliatedUser.startPage');
+        
     }
     
     public function affiliate_login(Request $request){
@@ -699,5 +711,21 @@ class UserAffilatedController extends Controller
     return View('affiliatedUser.dashboard',compact('affilatedUser'));
 
 }
+
+
+
+    public function userLogout()
+        {
+
+            $affilatedUser=Auth::guard('affilated_user')->user();
+            
+            Auth::guard('affilated_user')->logout();
+            
+            // request()->session()->invalidate();
+            // request()->session()->regenerateToken();
+
+            return redirect('user/affiliate-login');
+        }
+
 
 }

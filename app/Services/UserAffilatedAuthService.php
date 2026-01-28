@@ -116,10 +116,10 @@ if($checkphone){
         $get_user_details->update(['otp_verify'=>'1']);
 
         if($request->type=='1'){
-        $get_user_details->accessToken = $get_user_details->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;   
+        $get_user_details->affiliated_accessToken = $get_user_details->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;   
       
       }else{
-        $get_user_details->accessToken ='';  
+        $get_user_details->affiliated_accessToken ='';  
       }  
         
         return ['status'=>'success','message'=>"Otp Verified Successfully",'data'=>$get_user_details];            
@@ -235,7 +235,7 @@ try{
             if(Hash::check($request->password,$get_user_details->password,)){
                 // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
                 
-                $get_user_details->accessToken = $get_user_details->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;
+                $get_user_details->affiliated_accessToken = $get_user_details->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;
 
                 // $user->createToken('seller-token', ['seller'])->plainTextToken;
 
@@ -276,7 +276,7 @@ try{
 
                 $get_user_details->update(['otp'=>$otp]);
     
-                $get_user_details->accessToken ='';            
+                $get_user_details->affiliated_accessToken ='';            
                 return ['status'=>'success','message'=>"Forgot Password Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
@@ -295,7 +295,7 @@ try{
               
                     $get_user_details->update(['password'=>hash::make($request->password)]);
                     
-                    $get_user_details->accessToken ='';            
+                    $get_user_details->affiliated_accessToken ='';            
                     return ['status'=>'success','message'=>"Forgot Password Password Change Successfully",'data'=>$get_user_details];            
                 
                   }else{
@@ -322,7 +322,7 @@ try{
 
                 $get_user_details->update(['otp'=>$otp]);
     
-                $get_user_details->accessToken ='';            
+                $get_user_details->affiliated_accessToken ='';            
                 return ['status'=>'success','message'=>"Otp Send Successfully",'data'=>$get_user_details];            
             
               }else{
