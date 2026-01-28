@@ -217,7 +217,7 @@ class UserAffilatedController extends Controller
 
         public function affiliate_forgotpassword(Request $request){
                if ($request->isMethod('get')) {
-                $country =   all_countrie::all();
+                $country =   country::all();
                 return view('affiliatedUser.auth.forgetPassword', compact('country'));
             }else{   
             
@@ -400,17 +400,17 @@ if ($validator->fails()) {
                 $rules = [
                     'password' => [
                         'required',
-                        // 'string',
-                        // 'min:8',
-                        // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                        'string',
+                        'min:8',
+                        'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
                     ],
                     'confirm_password' => 'required|same:password',
                     ];
 
                 $messages = [
                  'password.required' => 'Please Enter New password',
-                // 'password.min' => 'Password must be at least 8 characters long',
-                // 'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
+                'password.min' => 'Password must be at least 8 characters long',
+                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
                 'confirm_password.required' => 'Please enter confirm password',
                 'confirm_password.same' => 'Passwords do not match',
                 ];

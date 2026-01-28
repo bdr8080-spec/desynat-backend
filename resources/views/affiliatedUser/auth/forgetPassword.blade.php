@@ -88,7 +88,7 @@
                                         aria-expanded="false">
 
                                         <span id="selected-flag">
-                                            {{ old('country_flag', $country[0]->flag1) }}
+                                            {{ old('country_flag', $country[0]->flag) }}
 
 
                                         </span>
@@ -105,7 +105,7 @@
                                             <label class="dropdown-item d-flex align-items-center gap-2 country-option"
                                                 style="cursor: pointer;">
                                                 <input type="radio" name="country_code" value="{{ $item->dial_code }}"
-                                                    data-flag="{{ $item->flag1 }}" data-name="{{ $item->name }}"
+                                                    data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
                                                     class="country-radio"
                                                     {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                     hidden>
@@ -119,7 +119,7 @@
                                                     </span> -->
 
                                                 <div width="25" height="16">
-                                                    <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                    <span>{{ $item->flag }} {{ $item->dial_code }}
                                                         ({{ $item->name }})
                                                     </span>
                                                 </div>
