@@ -599,6 +599,10 @@
                         <th>Account Holder Name</th>
                         <td id="modalHolderName">N/A</td>
                     </tr>
+                    <tr>
+                        <th>Account Number</th>
+                        <td id="modalAccountNumber">N/A</td>
+                    </tr>
                 </table>
 
         </div>
@@ -680,6 +684,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('modalSwift').textContent = bank.swift || 'N/A';
             document.getElementById('modalBankName').textContent = bank.bank_name || 'N/A';
             document.getElementById('modalHolderName').textContent = bank.account_holder_name || 'N/A';
+            document.getElementById('modalAccountNumber').textContent = bank.account_no || 'N/A';
         });
     });
 });

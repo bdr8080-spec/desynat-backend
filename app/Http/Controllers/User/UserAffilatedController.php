@@ -47,7 +47,7 @@ class UserAffilatedController extends Controller
     public function affiliate_login(Request $request){
 
          if ($request->isMethod('get')) {
-                $country = all_countrie::all();
+                $country = country::all();
                 return view('affiliatedUser.auth.affiliate_login', compact('country'));
             }
 
@@ -140,56 +140,99 @@ class UserAffilatedController extends Controller
         public function affiliate_loginWithOtp(Request $request){
 
                    if ($request->isMethod('get')) {
-                        $country =   all_countrie::all();
+                        $country =   country::all();
                         return view('affiliatedUser.auth.loginWithOtp', compact('country'));
             }else{
 
-              
-                $rules = [];
-                $messages = [];
 
-                if ($request->forgetPassword == '1') {
-                    $rules = [
-                        'country_code' => 'required',
-                        'mobile' => 'required|digits_between:7,15',
-                    ];
+            $validator = Validator::make($request->all(), [
+                'mobileOrEmail' => 'required',
+            ], [
+                'mobileOrEmail.required' => 'Please enter your mobile number or email address',
+            ]);
 
-                    $messages = [
-                        'country_code.required' => 'Please select your country code',
-                        'mobile.required' => 'Please enter your mobile number',
-                        'mobile.digits' => 'Mobile number must be between 7 and 15 digits',
-                    ];
-                } else {
-                    $rules = [
-                        'email' => 'required|email',
-                    ];
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors(),
+                ]);
+            }
 
-                    $messages = [
-                        'email.required' => 'Please enter your email address',
-                        'email.email' => 'Please enter a valid email address',
-                    ];
-                }
+           $loginField = filter_var($request->mobileOrEmail, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
 
-                $validator = Validator::make($request->all(), $rules, $messages);
+            if ($loginField === 'mobile') {
+                $credentials = [
+                    'country_code' => $request->country_code,
+                    'mobile'       => $request->mobileOrEmail,
+                    'password'     => $request->password,
+                ];
 
-                if ($validator->fails()) {
-                    return response()->json([
-                        'status' => false,
-                        'errors' => $validator->errors()
-                    ]);
-                }
+                $user = AffilatedUser::where('mobile', $request->mobileOrEmail)
+                            ->where('country_code', $request->country_code)
+                            ->first();
+            } else {
+                $credentials = [
+                    'email'    => $request->mobileOrEmail,
+                    'password' => $request->password,
+                ];
+
+                $user = AffilatedUser::where('email', $request->mobileOrEmail)->first();
+            }
+
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Affiliate User is not Regsiter',
+                ], 401);
+            }
+            
+
+                // // new code 
+                // $rules = [];
+                // $messages = [];
+
+                // if ($request->forgetPassword == '1') {
+                //     $rules = [
+                //         'country_code' => 'required',
+                //         'mobile' => 'required|digits_between:7,15',
+                //     ];
+
+                //     $messages = [
+                //         'country_code.required' => 'Please select your country code',
+                //         'mobile.required' => 'Please enter your mobile number',
+                //         'mobile.digits' => 'Mobile number must be between 7 and 15 digits',
+                //     ];
+                // } else {
+                //     $rules = [
+                //         'email' => 'required|email',
+                //     ];
+
+                //     $messages = [
+                //         'email.required' => 'Please enter your email address',
+                //         'email.email' => 'Please enter a valid email address',
+                //     ];
+                // }
+
+                // $validator = Validator::make($request->all(), $rules, $messages);
+
+                // if ($validator->fails()) {
+                //     return response()->json([
+                //         'status' => false,
+                //         'errors' => $validator->errors()
+                //     ]);
+                // }
 
                 // OTP value
                 $otp = config('services.otp');
 
-                if ($request->forgetPassword == '1') {
-                    $user = AffilatedUser::where([
-                        ['country_code', $request->country_code],
-                        ['mobile', $request->mobile],
-                    ])->first();
-                } else {
-                    $user = AffilatedUser::where('email', $request->email)->first();
-                }
+                // if ($request->forgetPassword == '1') {
+                //     $user = AffilatedUser::where([
+                //         ['country_code', $request->country_code],
+                //         ['mobile', $request->mobile],
+                //     ])->first();
+                // } else {
+                //     $user = AffilatedUser::where('email', $request->email)->first();
+                // }
 
                 if ($user) {
                     $user->otp = $otp;
