@@ -93,6 +93,14 @@ class UserAffilatedController extends Controller
                 ], 401);
             }
 
+
+            if ($user->admin_verify == '3') {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Your profile is rejected By Admin',
+                ], 401);
+            }
+            
             if ($user->otp_verify == '0') {
                 return response()->json([
                     'status' => false,
