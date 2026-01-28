@@ -94,7 +94,7 @@
                                             <div class="text-color-upload">Upload Profile Photo</div>
                                             <input type="file" name="profile_image" accept="image/*" hidden
                                                 onchange="showPreview(event,3)">
-                                            <p class="text-danger" id="error-profile_image"></p>
+                                            <p class="text-danger ImageError3" id="error-profile_image"></p>
                                         </label>
                                         <div class="imgshow">
                                             <img id="preview-3"
@@ -170,8 +170,12 @@
                                                 <input type="number" class="form-control" value=""
                                                     placeholder="Enter Mobile Number" name="mobile"
                                                     oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+
+
                                             </div>
                                         </div>
+
+                                        <p class="text-danger" id="error-mobile"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Email Address</label>
@@ -199,7 +203,7 @@
                                                             style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                             onclick="removeImg(1)">&times;</span>
                                                     </div>
-                                                    <p class="text-danger" id="error-document1"></p>
+                                                    <p class="text-danger ImageError1" id="error-document1"></p>
                                                 </div>
                                             </div>
 
@@ -219,7 +223,7 @@
                                                             style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                             onclick="removeImg(2)">&times;</span>
                                                     </div>
-                                                    <p class="text-danger" id="error-document2"></p>
+                                                    <p class="text-danger ImageError2" id="error-document2"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -328,6 +332,8 @@ function showPreview(e, i) {
     img.src = URL.createObjectURL(input.files[0]);
     img.style.display = rm.style.display = "block";
     label.style.display = "none";
+
+    $('.ImageError' + i).html('');
 
     // 👇 allow same image re-upload
     // input.value = "";
