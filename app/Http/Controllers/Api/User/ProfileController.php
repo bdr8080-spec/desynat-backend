@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use Hash;
-use App\Models\User;
+use App\Models\{User,AffilatedUser};
 use App\Models\UserContactChangeHistory;
 use App\Helpers\ApiResponse;
 use App\Services\UserProfileService;
@@ -74,6 +74,14 @@ class ProfileController extends Controller
      public function viewProfile(Request $request)
     {
         $user = $request->user();
+
+        if($user){
+
+        $user->affilated_User=AffilatedUser::where('user_id',$user->id)->where('otp_verify','1')->first();
+        }
+
+
+
 
         if (!$user) {
             return ApiResponse::generateResponse('error', 'User not found', (object)[], 404);
