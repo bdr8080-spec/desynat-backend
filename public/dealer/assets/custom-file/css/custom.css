@@ -1078,3 +1078,35 @@ table.dataTable td.dt-type-date {
     }
 
 }
+
+/* Affiliate */
+.kwdrop-panel h5 {
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+
+.topDropdonw{
+    background: #FFF7EA;
+    padding: 14px 10px;
+}
+.kwdrop-panel.show {
+    width: 250px;
+    padding: 0px;
+}
+.country-space {
+    margin: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px;
+}
+.country-space .radio-label {
+    font-size: 15px;
+    color: #000;
+    cursor: pointer;
+    font-weight: 500;
+}
+.affiliate-btn{
+    background: var(--all-btn-bg) !important;
+    color: #fff !important;
+    border: none !important;
+}
