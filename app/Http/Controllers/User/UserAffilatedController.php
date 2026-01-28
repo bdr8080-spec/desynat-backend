@@ -11,6 +11,8 @@ use Auth;
 use Validator;
 use Session;
 
+use Illuminate\Support\Facades\Hash;
+
 use App\Helpers\ApiResponse;
 
 use App\Services\UserAffilatedAuthService;
@@ -427,6 +429,7 @@ if ($validator->fails()) {
 
             try {
                 $id = Crypt::decryptString($request->id);
+
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
@@ -435,6 +438,21 @@ if ($validator->fails()) {
             }
 
             $user = AffilatedUser::find($id);
+
+            if (Hash::check($request->password, $user->password)) {
+                
+                $validator->after(function ($validator) use ($request) {
+                        $validator->errors()->add('password', "You can't use old password as new password");
+                });
+                $validator->validate();
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false,
+                        'error' => $validator->errors()->first()
+                    ]);
+                }
+            }
 
             if ($user) {
                 $user->update([
