@@ -134,7 +134,7 @@ Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedContro
 Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
 
 Route::get('/my-wallet', [WalletController::class,'myWallet'])->name('user.myWallet');
-Route::get('/add-wallet-money', [WalletController::class,'addWalletMoney'])->name('user.addWalletMoney');
+Route::match(['get','post'],'/add-wallet-money', [WalletController::class,'addWalletMoney'])->name('user.addWalletMoney');
 
 
 });

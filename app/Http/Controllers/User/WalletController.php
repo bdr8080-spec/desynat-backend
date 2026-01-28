@@ -36,16 +36,22 @@ class WalletController extends Controller
 
     public function addWalletMoney(Request $request){ 
 
-         $user=  $request->user();
+        $user=  $request->user();
 
+        if($request->isMethod('get')){
         $data = (object)[
             'user_id' => $user->id,
         ];
-
         $walletData = $this->UserOrderService->AddMoneyFromTheUserSide($data)['data'];
          //dd($chatData);
-
         return view('user.mywallet.addmoney',compact('walletData'));
+    }
+
+    if($request->isMethod('post')){
+        dd($request->all());
+    }
+
+
 
     }
 
