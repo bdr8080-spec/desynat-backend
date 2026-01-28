@@ -433,7 +433,7 @@ class UserAffilatedController extends Controller
         
         if($request->isMethod('get')){
 
-            $country =   all_countrie::all();
+            $country =   country::all();
             return View('affiliatedUser.register',compact('country'));
         }
 
@@ -455,8 +455,8 @@ class UserAffilatedController extends Controller
                 "accept" =>"required|In:1"
                 ],
             [
-        'profile_image.required'    => 'Profile image is required.',
-        'full_name.required'        => 'Full name is required.',
+        'profile_image.required'    => 'Please Upload Profile Picture.',
+        'full_name.required'        => 'Please Enter Field Name.',
         'country_code.required'     => 'Country code is required.',
         'mobile.required'           => 'Mobile number is required.',
         'email.required'            => 'Email address is required.',

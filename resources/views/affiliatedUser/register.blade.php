@@ -130,7 +130,7 @@
                                                         aria-expanded="false">
 
                                                         <span id="selected-flag">
-                                                            {{ old('country_flag', $country[0]->flag1) }}
+                                                            {{ old('country_flag', $country[0]->flag) }}
                                                         </span>
 
                                                         <span id="selected-code" class="ms-2">
@@ -148,13 +148,13 @@
                                                                 style="cursor: pointer;">
                                                                 <input type="radio" name="country_code"
                                                                     value="{{ $item->dial_code }}"
-                                                                    data-flag="{{ $item->flag1 }}"
+                                                                    data-flag="{{ $item->flag }}"
                                                                     data-name="{{ $item->name }}" class="country-radio"
                                                                     {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                                     hidden>
 
                                                                 <div width="25" height="16">
-                                                                    <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                                    <span>{{ $item->flag }} {{ $item->dial_code }}
                                                                         ({{ $item->name }})
                                                                     </span>
                                                                 </div>
