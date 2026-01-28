@@ -1588,6 +1588,52 @@ public function UserWalletHistory($request)
 
 
 
+public function RedeemGiftCardMoneyToWallet($request)
+{
+    DB::beginTransaction();
+
+    try {
+        $history = UserWalletHistory::where('unique_id', $request->unique_id)->first();
+
+        if (!$history) {
+            return ['status' => 'error', 'message' => 'Record not found'];
+        }
+
+        $history->update(['payment_status' => $request->payment_status,'transaction_id'=>$request->transaction_id]);
+
+        if ($request->payment_status == '1') {
+            UserWallet::updateOrCreate(
+                ['user_id' => $history->user_id],
+                ['amount' => DB::raw("amount + {$history->amount}")]
+            );
+
+            $message = 'Add Money in Wallet Complete Successfully';
+        } else {
+            $message = 'Add Money in Wallet Cancelled / Failed';
+        }
+
+        DB::commit();
+
+        return [
+            'status'  => 'success',
+            'message' => $message,
+            'data'    => $history
+        ];
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return [
+            'status'  => 'error',
+            'message' => $e->getMessage()
+        ];
+    }
+}
+
+
+
+
+
 
 
 

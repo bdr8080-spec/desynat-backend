@@ -103,6 +103,36 @@ public function __construct(UserOrderService $UserOrderService){
 
 
 
+  public function Redeemgiftcardinwallet(Request $request){
+
+      $validate = Validator::make($request->all(), [
+                'card_no' => 'required|min:16|max:16',
+                "pin"=>'required'
+            ]);
+
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+        }
+
+      $user_id= $request->user()->id;
+
+        $request_data=(object)[
+        'user_id'=>$user_id,
+        'card_no'=>$request->card_no,
+        "pin"=>$request->pin,
+        ];
+
+        $data=$this->UserOrderService->RedeemGiftCardMoneyToWallet($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
+
+
 
 
 
