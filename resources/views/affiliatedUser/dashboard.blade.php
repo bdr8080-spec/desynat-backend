@@ -52,7 +52,7 @@
             <div class="py-4">
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
-                        <h5>Active</h5>
+                        <h5>Total Products Added</h5>
                         <div class="title30">120</div>
                     </div>
                     <div class="dash-circle">
@@ -83,7 +83,7 @@
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-4">
                     <div class="dash-content">
-                        <h5>New</h5>
+                        <h5>Ongoing </h5>
                         <div class="title30">120</div>
                     </div>
                     <div class="dash-circle">
@@ -93,17 +93,6 @@
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-3">
-                    <div class="dash-content">
-                        <h5>Ongoing</h5>
-                        <div class="title30">50</div>
-                    </div>
-                    <div class="dash-circle">
-                        <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
                         <h5>Completed</h5>
                         <div class="title30">50</div>
@@ -116,7 +105,18 @@
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
-                        <h5>Cancelled</h5>
+                        <h5>Returned </h5>
+                        <div class="title30">50</div>
+                    </div>
+                    <div class="dash-circle">
+                        <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="dash-box border20 shadow20 p20 pnl-flex">
+                    <div class="dash-content">
+                        <h5 style="color:#CD0E26;">Cancelled</h5>
                         <div class="title30">51</div>
                     </div>
                     <div class="dash-circle">

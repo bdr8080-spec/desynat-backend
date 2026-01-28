@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\{User,AffilatedUser};
 
 use Hash;
 
@@ -75,8 +75,18 @@ class UserAuthService
             if(Hash::check($request->password,$get_user_details->password,)){
               // $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;   
               $get_user_details->accessToken = $get_user_details->createToken('user-token', ['user'])->plainTextToken;   
-                
-               
+              
+              $affilated_User=AffilatedUser::where('user_id',$get_user_details->id)->where('otp_verify','1')->first();
+
+              if($affilated_User){
+
+                $get_user_details->affiliated_userdetails= $affilated_User;
+                $get_user_details->affiliated_accessToken = $affilated_User->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;
+              }else{
+                $get_user_details->affiliated_userdetails= (object)[];
+                $get_user_details->affiliated_accessToken ='';
+              }
+              
                 
                 return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
             }else{

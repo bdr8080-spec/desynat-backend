@@ -115,10 +115,10 @@ class UserAffilatedControlller extends Controller
                 'locations' => 'required',
                 'address1' => 'required',
                 "address2" =>"required",
-                "pincode" =>"required",
-                "town"=>"required",
-                "state"=>"required",
-                "city"=>"required",
+                // "pincode" =>"required",
+                // "town"=>"required",
+                // "state"=>"required",
+                // "city"=>"required",
                 "let"=>"required",
                 "long" =>"required"
                 ]);
@@ -135,10 +135,10 @@ class UserAffilatedControlller extends Controller
     'locations'=>$request->locations,
     'address1'=>$request->address1,
     'address2'=>$request->address2,
-    'pincode'=>$request->pincode,
-    'town'=>$request->town,
-    'state'=>$request->state,
-    'city'=>$request->city,
+    'pincode'=>$request->pincode??null,
+    'town'=>$request->town??null,
+    'state'=>$request->state??null,
+    'city'=>$request->city??null,
     'let'=>$request->let??null,
     'long'=>$request->long??null
     ];

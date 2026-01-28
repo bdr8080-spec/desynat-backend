@@ -55,10 +55,10 @@
         </div>
 
         <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center">
+            <ul class="d-flex align-items-center gap-3">
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
                         <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
                         <!-- <span class="badge bg-primary badge-number">4</span> -->
                     </a>
@@ -71,10 +71,11 @@
                     </ul> -->
                 </li>
 
+                
 
                 <!-- End Messages Nav -->
 
-                <li class="nav-item dropdown pe-3">
+                <li class="nav-item dropdown">
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="{{ Auth::guard('affilated_user')->user()->profile_image ?? asset('user/assets/images/user.png') }}"
                             alt="Profile" class="rounded-circle">
@@ -102,11 +103,143 @@
                             <a class="dropdown-item d-flex align-items-center gap-3"
                                 href="{{route('affiliateLogout')}}">
                                 <img src="{{ asset('dealer') }}/assets/img/logout.svg">
-                                <span class="text-red">Sign Out</span>
+                                <span class="text-red">Logout</span>
                             </a>
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <div class="des-language">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}"
+                                class="img-fluid" />
+                            </button>
+                            <ul class="dropdown-menu kwdrop-panel">
+                                <li class="d-flex align-self-center justify-content-between topDropdonw">
+                                    <h5>Change Country </h5>
+                                    <div class="data-close"><i class="bi bi-x-lg"></i></div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio d-flex align-self-center justify-content-between">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">Kuwait</span>
+                                        </label>
+                                        <img src="{{asset('user/assets/images/flags/kuwait.svg')}}" />
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio d-flex align-self-center justify-content-between">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">Bahrain</span>
+                                        </label>
+                                        <img src="{{asset('user/assets/images/flags/bahrain.svg')}}" />
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio d-flex align-self-center justify-content-between">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">Qatar</span>
+                                        </label>
+                                        <img src="{{asset('user/assets/images/flags/qatar.svg')}}" />
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio d-flex align-self-center justify-content-between">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">Saudi Arabia</span>
+                                        </label>
+                                        <img src="{{asset('user/assets/images/flags/saudi-arabia.svg')}}" />
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio d-flex align-self-center justify-content-between">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">UAE</span>
+                                        </label>
+                                        <img src="{{asset('user/assets/images/flags/uae.svg')}}" />
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio d-flex align-self-center justify-content-between">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">Oman</span>
+                                        </label>
+                                        <img src="{{asset('user/assets/images/flags/oman.svg')}}" />
+                                    </div>
+                                </li>
+
+                                <li class="country-mt p-3 mt-4">
+                                    <button type="button" class="btn affiliate-btn w-100">Save</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="des-language">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                KWD
+                            </button>
+                            <ul class="dropdown-menu kwdrop-panel">
+                                <li class="d-flex align-self-center justify-content-between topDropdonw">
+                                    <h5>Change Currency </h5>
+                                    <div class="data-close"><i class="bi bi-x-lg"></i></div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">KWD</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">BHD</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">QAR</span>
+                                        </label>
+                                    </div>
+                                </li>
+                              
+
+                                <li class="country-mt p-3 mt-4">
+                                    <button type="button" class="btn affiliate-btn w-100">Save</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
                 <li>
                     <div class="des-language">
                         <div class="dropdown">

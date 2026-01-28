@@ -94,7 +94,7 @@
                                             <div class="text-color-upload">Upload Profile Photo</div>
                                             <input type="file" name="profile_image" accept="image/*" hidden
                                                 onchange="showPreview(event,3)">
-                                            <p class="text-danger" id="error-profile_image"></p>
+                                            <p class="text-danger ImageError3" id="error-profile_image"></p>
                                         </label>
                                         <div class="imgshow">
                                             <img id="preview-3"
@@ -130,7 +130,7 @@
                                                         aria-expanded="false">
 
                                                         <span id="selected-flag">
-                                                            {{ old('country_flag', $country[0]->flag1) }}
+                                                            {{ old('country_flag', $country[0]->flag) }}
                                                         </span>
 
                                                         <span id="selected-code" class="ms-2">
@@ -148,13 +148,13 @@
                                                                 style="cursor: pointer;">
                                                                 <input type="radio" name="country_code"
                                                                     value="{{ $item->dial_code }}"
-                                                                    data-flag="{{ $item->flag1 }}"
+                                                                    data-flag="{{ $item->flag }}"
                                                                     data-name="{{ $item->name }}" class="country-radio"
                                                                     {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                                     hidden>
 
                                                                 <div width="25" height="16">
-                                                                    <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                                    <span>{{ $item->flag }} {{ $item->dial_code }}
                                                                         ({{ $item->name }})
                                                                     </span>
                                                                 </div>
@@ -170,8 +170,12 @@
                                                 <input type="number" class="form-control" value=""
                                                     placeholder="Enter Mobile Number" name="mobile"
                                                     oninput="if(this.value.length > 15) this.value = this.value.slice(0, 15);">
+
+
                                             </div>
                                         </div>
+
+                                        <p class="text-danger" id="error-mobile"></p>
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Email Address</label>
@@ -199,7 +203,7 @@
                                                             style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                             onclick="removeImg(1)">&times;</span>
                                                     </div>
-                                                    <p class="text-danger" id="error-document1"></p>
+                                                    <p class="text-danger ImageError1" id="error-document1"></p>
                                                 </div>
                                             </div>
 
@@ -219,7 +223,7 @@
                                                             style="display:none;cursor:pointer;font-size:24px;color:red;"
                                                             onclick="removeImg(2)">&times;</span>
                                                     </div>
-                                                    <p class="text-danger" id="error-document2"></p>
+                                                    <p class="text-danger ImageError2" id="error-document2"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -241,7 +245,7 @@
                                         <p class="text-danger" id="error-confirm_password"></p>
                                     </div>
 
-                                    <div class="form-check py-4">
+                                    <div class="form-check py-4 form-group">
                                         <input class="form-check-input" type="checkbox" value="1" id="checkChecked"
                                             name="accept" {{ old('accept') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="checkChecked">
@@ -328,6 +332,8 @@ function showPreview(e, i) {
     img.src = URL.createObjectURL(input.files[0]);
     img.style.display = rm.style.display = "block";
     label.style.display = "none";
+
+    $('.ImageError' + i).html('');
 
     // 👇 allow same image re-upload
     // input.value = "";

@@ -25,6 +25,12 @@ document.querySelectorAll('.applynumberOnly').forEach(function(input) {
 });
 
 
+document.querySelectorAll('.applyAlphabetSpaceOnly').forEach(function(input) {
+    input.addEventListener('input', function() {
+        this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+    });
+});
+
 
 document.querySelectorAll('.notapplyspace').forEach(function(input) {
     input.addEventListener('keydown', function(e) {

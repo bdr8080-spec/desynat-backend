@@ -180,7 +180,7 @@
                                         <p class="text-danger" id="error-address2"></p>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="display:none">
                                         <label for="name">Pin Code</label>
                                         <input type="text" class="form-control blockFirstTime applynumberOnly"
                                             placeholder="Enter Pincode" name="pincode"
@@ -189,7 +189,7 @@
 
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="display:none">
                                         <label for="name">Locality Town</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter town name" name="town"
@@ -198,7 +198,7 @@
                                         <p class="text-danger" id="error-town"></p>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="display:none">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
@@ -320,18 +320,17 @@
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk1iHVph8nvXAn0uigTvPzKDpb9cslR18&libraries=places">
-</script>
 
-
-
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
+<script
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places"
+    async defer>
 </script>
 
 <script>
 let map, marker, circle, autocomplete;
 let mapInitialized = false;
+
+debugger;
 
 // IDs of input fields
 const address1Id = "address_line1";
@@ -346,6 +345,7 @@ const selectedAddressId = "selectedAddress";
 const selectedAddressStore_address = "store_address";
 
 // selectedAddress
+debugger;
 
 function initMap() {
     if (navigator.geolocation) {
@@ -366,6 +366,8 @@ function initMap() {
                 maximumAge: 0
             }
         );
+        debugger;
+
     } else {
         loadMap({
             lat: 0,
@@ -402,7 +404,7 @@ function loadMap(loc) {
     // Clear input fields on map load
     // cityId, pincodeId, countryId
     [latId, lngId, address1Id, address2Id].forEach(id => {
-        document.getElementById(id).value = "";
+        // document.getElementById(id).value = "";
     });
     input.value = "";
     document.getElementById(selectedAddressId).textContent = "";
