@@ -13,9 +13,9 @@
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4 style="color:red">Expire On - {{ $single_deal['deal_data']->to}}</h4>
+                <h4 style="color:red">Expired On - {{ date('d M Y', strtotime($single_deal['deal_data']->to)) }}</h4>
                 <div class="duration-table">
-                    <table class="table">
+                    <table class="table table-borderless">
                         <tr>
                             <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
                             </td>
@@ -25,24 +25,26 @@
                             <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
                             <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
                         </tr>
-
-                        <tr>
-                            <td>{{  $single_deal['deal_data']->name_english }}</td>
-                        </tr>
-
-
                     </table>
 
+                    <p class="single-pad">{{  $single_deal['deal_data']->name_english }}</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="search-field d-flex justify-content-between align-item-center">
-        <h5>Select Product</h5>
-        <div class="from-group position-relative">
-            <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-            <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
+        <!-- <h5>Select Product</h5> -->
+        <div>
+            <div class="from-group position-relative">
+                <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
+                <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
+            </div>
+        </div>
+
+        <div class="total-bg d-flex gap-3">
+            <h6>Total Revenue</h6>
+            <h2><strong>0 KD</strong></h2>
         </div>
     </div>
 
@@ -57,7 +59,7 @@
                     <th class="no-sort">Brand</th>
                     <th class="no-sort">Rating</th>
                     <th class="no-sort">Price</th>
-                    <!-- <th class="no-sort">Remove</th> -->
+                    <th class="no-sort">Total Sold</th>
                 </tr>
             </thead>
             <tbody>
@@ -74,9 +76,9 @@
                     </td>
                     <td>{{$val->product_details->product_name_en }}</td>
                     <td>{{$val->product_details->brand->name_english }}</td>
-                    <td><i class="bi bi-star-fill"></i> {{$val->avg_product_rating }}</td>
-                    <td>{{$val->product_details->product_variants['0']->final_price}}</td>
-                    <!-- <td> <i class="bi bi-trash removeProductFromList fas-5" ref="{{$val->id }}"> </i></td> -->
+                    <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating }}</td>
+                    <td>{{$val->product_details->product_variants['0']->final_price}} KD</td>
+                    <td> 0 </td>
                 </tr>
                 @endforeach
 

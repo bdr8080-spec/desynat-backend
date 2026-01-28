@@ -94,9 +94,10 @@
 
                                     <input type="hidden" name="affilated_id" value="{{$id}}">
 
-                                    <input type="hidden" id="lat" name="let">
-                                    <input type="hidden" id="lng" name="long">
-
+                                    <input type="hidden" id="lat" name="let"
+                                        value="{{ old('let', @$affiliate_address->let) }}">
+                                    <input type="hidden" id="lng" name="long"
+                                        value="{{ old('long', @$affiliate_address->long) }}">
 
                                     <div class="step-progress py-4">
                                         <div class="progress pro-1" role="progressbar" aria-label="Basic example"
@@ -127,7 +128,7 @@
                                             <option value=""> Please Select Country </option>
                                             @foreach ($country as $val)
                                             <option value="{{ $val->id }}"
-                                                {{ old('country', @$store_info->country) == $val->id ? 'selected' : '' }}>
+                                                {{ old('country', @$affiliate_address->country) == $val->id ? 'selected' : '' }}>
                                                 {{ $val->name }}
                                             </option>
                                             @endforeach
@@ -141,7 +142,8 @@
                                         <label for="name">Choose Location</label>
                                         <div class="store-map  position-relative">
                                             <input type="text" class="form-control blockFirstTime"
-                                                placeholder="Locations" name="locations" value="{{ old('locations') }}"
+                                                placeholder="Locations" name="locations"
+                                                value="{{ old('locations' , @$affiliate_address->locations) }}"
                                                 id="store_address">
                                             {{-- <div class="mapIcon" data-bs-toggle="offcanvas"
                                                 data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i
@@ -163,7 +165,7 @@
                                         <label for="name">Address line 1</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 1" name="address1"
-                                            value="{{ old('address1', @$store_info->address_line1) }}"
+                                            value="{{ old('address1', @$affiliate_address->address1) }}"
                                             id="address_line1">
 
                                         <p class="text-danger" id="error-address1"></p>
@@ -173,7 +175,7 @@
                                         <label for="name">Address line 2</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 2" name="address2"
-                                            value="{{ old('address2', @$store_info->address_line2) }}"
+                                            value="{{ old('address2', @$affiliate_address->address2) }}"
                                             id="address_line2">
                                         <p class="text-danger" id="error-address2"></p>
                                     </div>
@@ -182,7 +184,7 @@
                                         <label for="name">Pin Code</label>
                                         <input type="text" class="form-control blockFirstTime applynumberOnly"
                                             placeholder="Enter Pincode" name="pincode"
-                                            value="{{ old('pincode', @$store_info->store_name) }}">
+                                            value="{{ old('pincode', @$affiliate_address->pincode) }}">
                                         <p class="text-danger" id="error-pincode"></p>
 
                                     </div>
@@ -191,7 +193,7 @@
                                         <label for="name">Locality Town</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter town name" name="town"
-                                            value="{{ old('town', @$store_info->store_name) }}">
+                                            value="{{ old('town', @$affiliate_address->town) }}">
 
                                         <p class="text-danger" id="error-town"></p>
                                     </div>
@@ -202,7 +204,8 @@
                                                 <div class="form-group">
                                                     <label for="name"> State </label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Enter State Name" name="state">
+                                                        placeholder="Enter State Name" name="state"
+                                                        value="{{ old('town', @$affiliate_address->state) }}">
                                                     <p class="text-danger" id="error-state"></p>
                                                 </div>
                                             </div>
@@ -210,7 +213,8 @@
                                                 <div class="form-group">
                                                     <label for="name"> City </label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Enter City Name" name="city">
+                                                        placeholder="Enter City Name" name="city"
+                                                        value="{{ old('town', @$affiliate_address->city) }}">
                                                     <p class="text-danger" id="error-city"></p>
                                                 </div>
                                             </div>

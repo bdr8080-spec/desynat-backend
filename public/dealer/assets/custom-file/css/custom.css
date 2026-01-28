@@ -459,6 +459,13 @@ table.dataTable {
     object-fit: contain;
 }
 
+.total-bg {
+    background: linear-gradient(99.65deg, rgba(97, 255, 105, 0.08) -23.79%, rgba(23, 133, 76, 0.08) 123.4%);
+    padding: 13px;
+    border-radius: 25px;
+    align-items: center;
+}
+
 /*--------------------------------------------------------------
 # Order management page
 --------------------------------------------------------------*/
@@ -562,11 +569,13 @@ table.dataTable td.dt-type-date {
 .link-content:hover .linkgold {
     color: #8E6E56;
 }
-.request-title{
+
+.request-title {
     color: #8E6E56;
 }
-.rightline{
-    border-right:1px solid #666;
+
+.rightline {
+    border-right: 1px solid #666;
 }
 
 /*--------------------------------------------------------------
@@ -661,16 +670,18 @@ table.dataTable td.dt-type-date {
     margin: 10px 0px 0px !important;
 
 }
-.user-box1{
+
+.user-box1 {
     height: 50px;
     width: 50px;
     border: 1px solid #ddd;
     border-radius: 50px;
     overflow: hidden;
 }
-.user-box1 img{
-    height:100%;
-    width:100%;
+
+.user-box1 img {
+    height: 100%;
+    width: 100%;
     object-fit: cover;
 }
 
@@ -807,16 +818,18 @@ table.dataTable td.dt-type-date {
 .chatfull .msg {
     max-width: 100%;
 }
+
 /* Add story banner */
 .storywapper {
     background: #fff;
     position: fixed;
     bottom: 0;
-    z-index:99999;
+    z-index: 99999;
     left: 0;
     width: 100%;
     height: calc(100vh - 65px);
 }
+
 #btnclose {
     border: none;
     background: transparent;
@@ -829,51 +842,60 @@ table.dataTable td.dt-type-date {
     width: 100%;
     margin: auto;
 }
-.sellerstatus{
+
+.sellerstatus {
     height: 600px;
     overflow: hidden;
     border-radius: 20px;
 }
-.sellerstatus img{
+
+.sellerstatus img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
-.deal-img{
+
+.deal-img {
     width: 105px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    height:70px;
+    height: 70px;
     margin: auto;
 }
+
 .deal-img img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
+
 .addPlus-btn {
     color: #fff;
     font-size: 26px;
     padding: 3px 10px;
 }
-.btn-expired{
+
+.btn-expired {
     color: #D53B36;
     border: 1px solid #D53B3633;
     background: #D53B3633;
 }
-.btn-expired:hover{
+
+.btn-expired:hover {
     color: #D53B36;
     border: 1px solid #D53B3633;
     background: #D53B3633;
 }
-.deals-box{
+
+.deals-box {
     height: 270px;
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 12px;
 }
+
 .deals-box img {
-    height:100%;
+    height: 100%;
     width: 100%;
     object-fit: cover;
 }
@@ -926,16 +948,20 @@ table.dataTable td.dt-type-date {
         padding: 0px;
         margin-right: 10px;
     }
+
     .dash-circle {
         height: 70px;
         width: 70px;
     }
+
     .p20 {
         padding: 10px;
     }
+
     .padding-top-40 {
         padding-top: 20px;
     }
+
     :root {
         --h1: 22px;
         --h2: 20px;
@@ -953,13 +979,16 @@ table.dataTable td.dt-type-date {
         --title30: 22px;
         --font-34: 23px;
     }
+
     .dash-content h5 {
         font-size: 13px;
-    } 
+    }
+
     .radio-label {
         font-size: 14px;
         color: #000;
     }
+
     .table-header {
         display: flex;
         justify-content: space-between;
@@ -967,8 +996,9 @@ table.dataTable td.dt-type-date {
         margin-bottom: 25px;
         flex-wrap: wrap;
     }
+
     .search-filter {
-        display: flex ;
+        display: flex;
         gap: 0px;
         flex-wrap: wrap;
         margin-top: 12px;
@@ -994,49 +1024,57 @@ table.dataTable td.dt-type-date {
         --title30: 22px;
         --font-34: 23px;
     }
+
     .header-nav .nav-profile img {
         height: 25px;
         width: 25px;
     }
+
     .header-nav .nav-icon {
         margin-right: 7px;
         height: 40px;
         width: 27px;
     }
+
     .support-chat-btn button {
         width: 50px;
         height: 50px;
         padding: 0px;
     }
+
     .support-chat-btn img {
         width: 35px;
     }
+
     .banner-text {
         font-size: 14px;
         font-weight: 600;
     }
+
     .banner-texts {
         font-size: 14px;
         font-weight: 600;
     }
+
     .brand-banner {
         height: 260px !important;
         width: 100%;
         border-radius: 0px;
     }
+
     .tabs-panel .nav-link {
         line-height: 28px;
         font-size: 15px;
     }
+
     .form-control {
         padding: 8px;
         font-size: 14px;
     }
+
     .logo img {
         margin-right: -4px;
         width: 140px;
     }
 
 }
-
-

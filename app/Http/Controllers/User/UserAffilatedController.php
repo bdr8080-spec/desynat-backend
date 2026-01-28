@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{all_countrie,AffilatedUser,country };
+use App\Models\{all_countrie,AffilatedUser,country,AffilatedUserAddress,Bankdetails };
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Validation\Rule;
 use Auth;
@@ -257,6 +257,7 @@ class UserAffilatedController extends Controller
         
         if($request->isMethod('get')){
             
+
         return view('affiliatedUser.auth.otpVerify'); 
 
                }else{
@@ -422,9 +423,9 @@ class UserAffilatedController extends Controller
 
             $country =   all_countrie::all();
             return View('affiliatedUser.register',compact('country'));
-    }
+        }
 
-     $user = $request->user()->id;
+        $user = $request->user()->id;
      
         $validate = Validator::make($request->all(), [
                 'profile_image' => 'required',
@@ -527,8 +528,11 @@ class UserAffilatedController extends Controller
         if($request->isMethod('get')){
 
         $id = Crypt::decryptString($request->temp_user_id);
+
+
+      $affiliate_address=AffilatedUserAddress::where('affiliate_id',$id)->first();
         
-        return View('affiliatedUser.auth.addaddress',compact('country','id'));
+        return View('affiliatedUser.auth.addaddress',compact('country','id','affiliate_address'));
 
         }
         
@@ -583,7 +587,8 @@ class UserAffilatedController extends Controller
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
     }
 
-      $id = Crypt::encryptString($data['data']->user_id);
+      $id = Crypt::encryptString($data['data']->affiliate_id);
+
         return response()->json([
             'status' => 'success',
             'message' => $data['message'],
@@ -600,7 +605,9 @@ class UserAffilatedController extends Controller
         if($request->isMethod('get')){
         $id = Crypt::decryptString($request->temp_user_id);
 
-        return View('affiliatedUser.auth.addBankInformation',compact('id'));
+      $affiliate_bank=Bankdetails::where('user_id',$id)->where('type','3')->first();
+        
+        return View('affiliatedUser.auth.addBankInformation',compact('id','affiliate_bank'));
         }
 
 
@@ -663,6 +670,32 @@ class UserAffilatedController extends Controller
     public function affiliateDashboard(){
         
     $affilatedUser=Auth::guard('affilated_user')->user();
+
+    $id = Crypt::encryptString($affilatedUser->id);
+
+      if($affilatedUser->address_update_status=='0'){
+
+     return redirect()->route('affiliate.affiliate_addaddress', ['temp_user_id' => $id]);
+        
+        
+        // return View('affiliatedUser.auth.addaddress',compact('id'));
+
+        }
+
+      if($affilatedUser->bank_update_status=='0'){
+
+        return redirect()->route('affiliate.affiliateAddBankDetails', ['temp_user_id' => $id]);
+        
+        // return View('affiliatedUser.auth.addBankInformation',compact('id'));
+        }
+
+     if($affilatedUser->admin_verify=='1'){
+
+        return redirect()->route('affiliate.affiliatereview_submit_page', ['temp_user_id' => $id]);        
+        // return view('affiliatedUser.auth.signup-review'); 
+        }
+
+   
     return View('affiliatedUser.dashboard',compact('affilatedUser'));
 
 }

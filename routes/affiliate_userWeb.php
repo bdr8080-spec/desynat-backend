@@ -3,7 +3,7 @@
 use App\Http\Controllers\User\UserAffilatedController;
 
 
- Route::group(['prefix' => 'user'], function () { 
+ Route::group(['prefix' => 'user','middleware'=>['Affiliate_user']  ], function () { 
 
 //   M7 APis 
 Route::get('/affiliate-start-page', [UserAffilatedController::class,'affiliate_startPage'])->name('affiliate.affiliate_startPage');
@@ -25,4 +25,7 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
  
  Route::match(['get','post'],'/review_submit_page', [UserAffilatedController::class,'affiliatereview_submit_page'])->name('affiliate.affiliatereview_submit_page');
    
+
+//  Affiliate_user
+
  Route::get('/affiliate-dashboard', [UserAffilatedController::class,'affiliateDashboard'])->name('affiliate.affiliateDashboard');

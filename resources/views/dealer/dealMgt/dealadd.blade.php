@@ -13,9 +13,11 @@
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4>Starts From - {{ $single_deal['deal_data']->from}}</h4>
+                <h4 class="greentitle">Starts From -{{ date('d M Y', strtotime($single_deal['deal_data']->from)) }}
+
+                </h4>
                 <div class="duration-table">
-                    <table class="table">
+                    <table class="table table-borderless">
                         <tr>
                             <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
                             </td>
@@ -25,12 +27,8 @@
                             <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
                             <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
                         </tr>
-
-                        <tr>
-                            <td>{{  $single_deal['deal_data']->name_english }}</td>
-                        </tr>
-
                     </table>
+                    <p class="single-pad">{{  $single_deal['deal_data']->name_english }}</p>
 
                 </div>
             </div>
@@ -68,7 +66,7 @@
                         <td>
                             <div class="d-flex justify-content-center">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="product_ids[]"
+                                    <input class="form-check-input productCheckbox" type="checkbox" name="product_ids[]"
                                         value="{{$val->id}}">
                                 </div>
                             </div>
@@ -82,13 +80,10 @@
                         </td>
                         <td>{{$val->product_name_en }}</td>
                         <td>{{$val->brand->name_english }}</td>
-                        <td><i class="bi bi-star-fill"></i> {{$val->avg_product_rating }}</td>
-                        <td>{{$val->product_variants['0']->final_price}}</td>
+                        <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating }}</td>
+                        <td>{{$val->product_variants['0']->final_price}} KD</td>
                     </tr>
-
-
                     @endforeach
-
 
             </tbody>
         </table>
@@ -193,6 +188,23 @@ $(document).ready(function() {
         table2.search(this.value).draw();
     });
 
+});
+
+
+$(document).ready(function() {
+
+    function toggleAddButton() {
+        const anyChecked = $('.productCheckbox:checked').length > 0;
+        $('#addToDealsBtn').prop('disabled', !anyChecked);
+    }
+
+    // Run on checkbox change
+    $(document).on('change', '.productCheckbox', function() {
+        toggleAddButton();
+    });
+
+    // Initial state
+    toggleAddButton();
 });
 </script>
 

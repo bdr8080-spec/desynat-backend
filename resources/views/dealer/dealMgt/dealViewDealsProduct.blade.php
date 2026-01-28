@@ -2,7 +2,8 @@
 
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center mb-5">
-        <a class="title24 alink" href="{{ url()->previous() }} "> <i class="bi bi-chevron-left"></i> Details</a>
+        <a class="title24 alink" href="{{ route('seller.deal_management') }} "> <i class="bi bi-chevron-left"></i>
+            Details</a>
     </div>
 
     <div class="row mt-3">
@@ -13,9 +14,9 @@
         </div>
         <div class="col-lg-6">
             <div class="deal-deatils">
-                <h4>Starts From - {{ $single_deal['deal_data']->from}}</h4>
+                <h4>Starts From - {{ date('d M Y', strtotime($single_deal['deal_data']->from)) }}</h4>
                 <div class="duration-table">
-                    <table class="table">
+                    <table class="table table-borderless">
                         <tr>
                             <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
                             </td>
@@ -26,27 +27,27 @@
                             <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
                         </tr>
 
-                        <tr>
-                            <td>{{  $single_deal['deal_data']->name_english }}</td>
-                        </tr>
-
                     </table>
+                    <p class="single-pad">{{  $single_deal['deal_data']->name_english }}</p>
 
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="{{ route('seller.add-single-deal-management',request()->id)}}">
-        <img src="{{ asset('dealer') }}/assets/img/add.svg" alt="add">
-    </a>
+
 
     <div class="search-field d-flex justify-content-between align-item-center">
-        <h5>Select Product</h5>
-        <div class="from-group position-relative">
-            <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-            <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
+        <div class="d-flex gap-3" style=" align-items: baseline;">
+            <h5>Select Product</h5>
+            <div class="from-group position-relative">
+                <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
+                <input type="search" class="form-control tableSearch" placeholder="Search" data-table="table2">
+            </div>
         </div>
+        <a href="{{ route('seller.add-single-deal-management',request()->id)}}">
+            <img src="{{ asset('dealer') }}/assets/img/add.svg" alt="add" height="50px">
+        </a>
     </div>
 
     <div class="table-responsive">
@@ -77,8 +78,8 @@
                     </td>
                     <td>{{$val->product_details->product_name_en }}</td>
                     <td>{{$val->product_details->brand->name_english }}</td>
-                    <td><i class="bi bi-star-fill"></i> {{$val->avg_product_rating }}</td>
-                    <td>{{$val->product_details->product_variants['0']->final_price}}</td>
+                    <td><i class="bi bi-star-fill yellow-star"></i> {{$val->avg_product_rating }}</td>
+                    <td>{{$val->product_details->product_variants['0']->final_price}} KD</td>
                     <td> <i class="bi bi-trash removeProductFromList fas-5" ref="{{$val->id }}"> </i></td>
                 </tr>
                 @endforeach
@@ -156,12 +157,17 @@ $(document).ready(function() {
 // Data Table Search Code 
 $(document).ready(function() {
     let table2;
+
     if (!$.fn.DataTable.isDataTable('#table2')) {
         table2 = $('#table2').DataTable({
             paging: true,
             ordering: true,
             info: true,
-            searching: true
+            searching: true,
+            language: {
+                emptyTable: "No Product found in this category",
+                zeroRecords: "No Product found in this category"
+            }
         });
     } else {
         table2 = $('#table2').DataTable();
