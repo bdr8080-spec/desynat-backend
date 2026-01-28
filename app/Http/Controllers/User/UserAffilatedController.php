@@ -448,7 +448,12 @@ class UserAffilatedController extends Controller
                     'required',
                     'email',
                 ],
-                "password"=>"required",
+                 'password' => [
+                            'required',
+                            'string',
+                            'min:8',
+                            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                        ],
                 "confirm_password"=>"required|same:password",
                 "document1"=>"required",
                 "document2"=>"required",
@@ -468,6 +473,9 @@ class UserAffilatedController extends Controller
         'document2.required'        => 'Document 2 is required.',
         'accept.required'           => 'You must accept the terms and conditions.',
         'accept.in'                 => 'You must accept the terms and conditions.',
+        'password.required'     => 'Please enter your password',
+        'password.min' => 'Password must be at least 8 characters long',
+        'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
     ]
 );
             
