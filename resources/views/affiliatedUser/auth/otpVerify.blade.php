@@ -156,7 +156,7 @@ function resendOtp() {
     startOtpTimer();
 
     $.ajax({
-        url: "{{ route('userResendOtp') }}",
+        url: "{{ route('affiliate_signupResendOtp') }}",
         type: "POST",
         data: {
             id: id,

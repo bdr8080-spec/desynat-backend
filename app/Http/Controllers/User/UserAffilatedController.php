@@ -282,12 +282,23 @@ class UserAffilatedController extends Controller
                 'otp.*.required' => 'Please enter OTP',
             ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'error' => $validator->errors()->first()
-            ]);
-        }
+
+
+$validator->after(function ($validator) use ($request) {
+    if (empty(array_filter($request->otp))) {
+        $validator->errors()->add('otp', 'Please enter OTP');
+    }
+});
+$validator->validate();
+
+if ($validator->fails()) {
+    return response()->json([
+        'status' => false,
+        'error' => $validator->errors()->first()
+    ]);
+}
+
+
 
             try {
                 $id = Crypt::decryptString($request->id);
@@ -734,6 +745,40 @@ class UserAffilatedController extends Controller
 
             return redirect('user/affiliate-login');
         }
+
+
+         public function resendOtp(Request $request)
+        {
+            try {
+                $id = Crypt::decryptString($request->id);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid user reference',
+                ], 400);
+            }
+
+            // Find user
+            $user = AffilatedUser::find($id);
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User not found',
+                ], 404);
+            }
+
+            $otp= config('services.otp');
+            $user->otp = $otp;
+            $user->save();
+
+       
+            return response()->json([
+                'status' => true,
+                'message' => 'OTP resent successfully',
+            ]);
+        }
+
+
 
 
 }
