@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Services\DealManagementService;
 use App\Services\CategoryService;
+use App\Services\CountryService;
+use App\Services\BrandService;
 use App\Models\Deal;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Log;
@@ -15,10 +17,12 @@ use Illuminate\Support\Facades\Log;
 class DealManagementController extends Controller
 {
 
-    public function __construct(DealManagementService $DealManagementService, CategoryService $CategoryService)
+    public function __construct(DealManagementService $DealManagementService, CategoryService $CategoryService, CountryService $CountryService, BrandService $BrandService)
     {
         $this->DealManagementService = $DealManagementService;
         $this->CategoryService = $CategoryService;
+        $this->CountryService = $CountryService;
+        $this->BrandService = $BrandService;
     }
 
     public function dealManagement(Request $request){
@@ -31,19 +35,25 @@ class DealManagementController extends Controller
     }
 
     public function sellerList(Request $request, $id){
-        $request->merge(['deal_id' => $id]);
-        $sellers = $this->DealManagementService->dealDetails($request)['data'];
+        $countries = $this->CountryService->getCountries()['data'];
+         $request->merge([
+            'deal_id' => $id,
+            'country' => $request->country,
+        ]);
+        $sellers = $this->DealManagementService->dealDetails($request,$id)['data'];
        //dd($sellers);
-        return view('admin.deal-management.seller-list',compact('sellers'));
+        return view('admin.deal-management.seller-list',compact('sellers','countries'));
     }
 
     public function productList(Request $request, $deal_id, $seller_id){
+        $brands = $this->BrandService->getBrand($request)['data'];
         $request->merge([
             'deal_id' => $deal_id,
             'seller_id' => $seller_id,
         ]);
         $products = $this->DealManagementService->dealDetailsSellerProductList($request)['data'];
-        return view('admin.deal-management.product-list',compact('products'));
+        //dd($products);
+        return view('admin.deal-management.product-list',compact('products','brands'));
     }
 
     public function getSubCategories($categoryId)

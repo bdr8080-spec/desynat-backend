@@ -236,33 +236,77 @@ class DealManagementService
         }
     }
 
-    public function dealDetails($dealId)
+    // public function dealDetails($dealId)
+    // {
+    //     try {
+            
+    //     //    $data = Deal::with(
+    //     //     'category_details',
+    //     //     'subCategory_details',
+    //     //     'sellerDealrecord.product_added',
+    //     //     'sellerDealrecord.seller_details',
+    //     //     'sellerDealrecord.seller_details.country_details',
+    //     //     'sellerDealrecord.product_details',
+    //     //     )->find($dealId);
+
+    //     $data = Deal::with(
+    //             'category_details',
+    //             'subCategory_details',
+    //             'sellerDealrecords.seller_details.country_details',
+    //             // 'sellerDealrecords.products.product_details.product_variants',
+    //             // 'sellerDealrecords.products.product_details.brand'
+    //         )->find($dealId);
+
+    //         if (!$data) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'Deal not found',
+    //                 'data' => (object)[]
+    //             ];
+    //         }
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Deal details fetched successfully',
+    //             'data' => $data
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch deal details',
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+    public function dealDetails(Request $request, $dealId)
     {
         try {
-            
-        //    $data = Deal::with(
-        //     'category_details',
-        //     'subCategory_details',
-        //     'sellerDealrecord.product_added',
-        //     'sellerDealrecord.seller_details',
-        //     'sellerDealrecord.seller_details.country_details',
-        //     'sellerDealrecord.product_details',
-        //     )->find($dealId);
-
-        $data = Deal::with(
+            $data = Deal::with([
                 'category_details',
                 'subCategory_details',
-                'sellerDealrecords.seller_details.country_details',
-                // 'sellerDealrecords.products.product_details.product_variants',
-                // 'sellerDealrecords.products.product_details.brand'
-            )->find($dealId);
+                'sellerDealrecords.seller_details.country_details'
+            ])->find($dealId);
 
             if (!$data) {
                 return [
                     'status' => 'error',
                     'message' => 'Deal not found',
-                    'data' => (object)[]
+                    'data' => (object)[] // return empty object, NOT false
                 ];
+            }
+
+            // Only apply filter if country is present in the request
+            if ($request->filled('country')) {
+                $country = $request->country;
+
+                $data->sellerDealrecords = $data->sellerDealrecords->filter(function ($record) use ($country) {
+                    if (!$record->seller_details || !$record->seller_details->country_details) {
+                        return false;
+                    }
+                    return stripos($record->seller_details->country_details->name, $country) !== false;
+                })->values();
             }
 
             return [
@@ -274,11 +318,18 @@ class DealManagementService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to fetch deal details',
-                'data' => []
+                'message' => 'Failed to fetch deal details: ' . $e->getMessage(),
+                'data' => (object)[] 
             ];
         }
     }
+
+
+
+
+
+
+
 
 
     public function dealDetailsSellerProductList(Request $request)

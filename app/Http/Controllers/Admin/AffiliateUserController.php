@@ -19,7 +19,7 @@ class AffiliateUserController extends Controller
     }
 
     public function affiliateUserManagement(Request $request){
-        $countries = $this->CountryService->getUserAllCountries()['data'];
+        $countries = $this->CountryService->getCountries()['data'];
         $newUsers = $this->AffiliatedUserManagementService->getNewAffiliatedUers($request)['data'];
         $approvedUsers = $this->AffiliatedUserManagementService->getApprovedAffiliatedUers($request)['data'];
         $rejectedUsers = $this->AffiliatedUserManagementService->getRejectedAffiliatedUers($request)['data'];
