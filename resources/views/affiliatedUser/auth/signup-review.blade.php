@@ -58,7 +58,8 @@
                                     </div>
 
                                     <div class="login-btn padding-top-60">
-                                        <a href="{{ route('userLogout') }}" class="btn btn-success w-100">Logout</a>
+                                        <a href="{{ route('affiliateLogout') }}"
+                                            class="btn btn-success w-100">Logout</a>
                                     </div>
                                 </form>
                             </div>

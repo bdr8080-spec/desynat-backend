@@ -19,6 +19,9 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
 
 // M7 Code 
 
+ Route::get('/logout',[UserAffilatedController::class,'userLogout'])->name('affiliateLogout');
+
+
  Route::match(['get','post'],'/affiliate-add-address', [UserAffilatedController::class,'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
 
  Route::match(['get','post'],'/affiliate-add-Bank-details', [UserAffilatedController::class,'affiliateAddBankDetails'])->name('affiliate.affiliateAddBankDetails');

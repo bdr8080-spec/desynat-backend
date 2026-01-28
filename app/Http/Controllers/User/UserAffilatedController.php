@@ -700,4 +700,20 @@ class UserAffilatedController extends Controller
 
 }
 
+
+
+    public function userLogout()
+        {
+
+            $affilatedUser=Auth::guard('affilated_user')->user();
+            
+            Auth::guard('affilated_user')->logout();
+            
+            // request()->session()->invalidate();
+            // request()->session()->regenerateToken();
+
+            return redirect('user/affiliate-login');
+        }
+
+
 }
