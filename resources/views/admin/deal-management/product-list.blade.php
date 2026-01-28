@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="inner-content management">
-    <div class="row align-items-center justify-content-between">
+    <!-- <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
             @php
                 $sellerRecord = $products->sellerDealrecords->first();
@@ -10,7 +10,20 @@
             <h2 class="h2">{{ $sellerRecord->seller_details->first_name }} {{ $sellerRecord->seller_details->last_name }}</h2>
         </div>
 
-    </div>
+    </div> -->
+     <div class="d-flex align-items-center gap-3 mt-2">
+            <div class="arrow">
+                <a href="{{ route('admin.sellerList', ['id' => $products->id]) }}" class="table-button " type="button">
+                    <i class="fas fa-angle-left"></i>
+                </a>
+            </div>
+             @php
+                $sellerRecord = $products->sellerDealrecords->first();
+            @endphp
+            <h2 class="h2 text-start">{{ $sellerRecord->seller_details->first_name }} {{ $sellerRecord->seller_details->last_name }}</h2>
+
+        </div>
+
 
     <div class="userManagecontent">
         <div class="mt-4">

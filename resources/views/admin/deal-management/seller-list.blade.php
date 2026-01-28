@@ -2,12 +2,21 @@
 @section('content')
 
 <div class="inner-content management">
-    <div class="row align-items-center justify-content-between">
+    <!-- <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
             <h2 class="h2">{{ $sellers->name_english }}</h2>
         </div>
 
-    </div>
+    </div> -->
+      <div class="d-flex align-items-center gap-3 mt-2">
+            <div class="arrow">
+                <a href="{{route('admin.dealManagement')}}" class="table-button " type="button">
+                    <i class="fas fa-angle-left"></i>
+                </a>
+            </div>
+            <h2 class="h2 text-start">{{ $sellers->name_english }}</h2>
+
+        </div>
 
     <div class="userManagecontent">
         <div class="mt-4">
@@ -54,7 +63,7 @@
                                         <a href="{{ route('admin.productList', [
                                                 'deal_id' => $sellerRecord->deal_id, 
                                                 'seller_id' => $sellerRecord->seller_id
-                                            ]) }}">
+                                            ]) }}" class="text">
                                             {{ $sellerRecord->product_count ?? 0 }} products
                                         </a>
                                     </td>

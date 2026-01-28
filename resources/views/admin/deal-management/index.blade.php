@@ -128,7 +128,7 @@
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
-                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
+                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
                                 </td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
@@ -223,7 +223,7 @@
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
-                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
+                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
                                 </td>
 
                                 <td>0 KD</td>
