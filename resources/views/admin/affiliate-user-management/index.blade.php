@@ -585,19 +585,19 @@
                 <table class="details-table">
                     <tr>
                         <th>IBAN</th>
-                        <td >dytd</td>
+                        <td id="modalIban">N/A</td>
                     </tr>
                     <tr>
                         <th>SWIFT</th>
-                        <td >yufuyf</td>
+                        <td id="modalSwift">N/A</td>
                     </tr>
                     <tr>
                         <th>Bank Name</th>
-                        <td >uhoih</td>
+                        <td id="modalBankName">N/A</td>
                     </tr>
                     <tr>
                         <th>Account Holder Name</th>
-                        <td >oihoi</td>
+                        <td id="modalHolderName">N/A</td>
                     </tr>
                 </table>
 
