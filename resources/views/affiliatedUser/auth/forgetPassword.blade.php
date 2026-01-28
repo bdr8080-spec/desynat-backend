@@ -15,7 +15,7 @@
                     <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                 </ul>
             </div>
-            <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
+
         </div>
     </header>
     <div class="login_content login_content_left">
