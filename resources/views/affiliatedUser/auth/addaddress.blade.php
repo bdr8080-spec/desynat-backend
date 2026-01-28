@@ -165,7 +165,8 @@
                                         <label for="name">Address line 1</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 1" name="address1"
-                                            value="{{ old('address1', @$affiliate_address->address1) }}" id="">
+                                            value="{{ old('address1', @$affiliate_address->address1) }}"
+                                            id="address_line1">
 
                                         <p class="text-danger" id="error-address1"></p>
                                     </div>
@@ -179,7 +180,7 @@
                                         <p class="text-danger" id="error-address2"></p>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="display:none">
                                         <label for="name">Pin Code</label>
                                         <input type="text" class="form-control blockFirstTime applynumberOnly"
                                             placeholder="Enter Pincode" name="pincode"
@@ -188,7 +189,7 @@
 
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="display:none">
                                         <label for="name">Locality Town</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter town name" name="town"
@@ -197,7 +198,7 @@
                                         <p class="text-danger" id="error-town"></p>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="display:none">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
@@ -403,7 +404,7 @@ function loadMap(loc) {
     // Clear input fields on map load
     // cityId, pincodeId, countryId
     [latId, lngId, address1Id, address2Id].forEach(id => {
-        document.getElementById(id).value = "";
+        // document.getElementById(id).value = "";
     });
     input.value = "";
     document.getElementById(selectedAddressId).textContent = "";

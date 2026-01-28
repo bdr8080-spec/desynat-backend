@@ -15,6 +15,10 @@ Route::match(['get', 'post'], '/affiliate-forgot-password', [UserAffilatedContro
 Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedController::class, 'userCreatePassword'])->name('affiliate.userCreatePassword');  
 Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
 
+
+ Route::post('/resend-otp', [UserAffilatedController::class, 'resendOtp'])->name('affiliate_signupResendOtp');
+
+
 });
 
 // M7 Code 

@@ -15,7 +15,7 @@
                     <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                 </ul>
             </div>
-            <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
+
         </div>
     </header>
     <div class="login_content login_content_left">
@@ -88,7 +88,7 @@
                                         aria-expanded="false">
 
                                         <span id="selected-flag">
-                                            {{ old('country_flag', $country[0]->flag1) }}
+                                            {{ old('country_flag', $country[0]->flag) }}
 
 
                                         </span>
@@ -105,7 +105,7 @@
                                             <label class="dropdown-item d-flex align-items-center gap-2 country-option"
                                                 style="cursor: pointer;">
                                                 <input type="radio" name="country_code" value="{{ $item->dial_code }}"
-                                                    data-flag="{{ $item->flag1 }}" data-name="{{ $item->name }}"
+                                                    data-flag="{{ $item->flag }}" data-name="{{ $item->name }}"
                                                     class="country-radio"
                                                     {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
                                                     hidden>
@@ -119,7 +119,7 @@
                                                     </span> -->
 
                                                 <div width="25" height="16">
-                                                    <span>{{ $item->flag1 }} {{ $item->dial_code }}
+                                                    <span>{{ $item->flag }} {{ $item->dial_code }}
                                                         ({{ $item->name }})
                                                     </span>
                                                 </div>
@@ -143,7 +143,7 @@
 
             <div class="form-group position-relative password_icon mt-3 d-none emailInput">
                 <label for="">Enter Email Id</label>
-                <input class="form-control notapplyspace" type="email" placeholder="Enter Mobile Number" name="email">
+                <input class="form-control notapplyspace" type="email" placeholder="Enter email Address" name="email">
                 <p class="text-danger" id="error-email"></p>
             </div>
             <button type="submit" class="customBtn customBtn5 mt-4">Continue</button>

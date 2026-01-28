@@ -155,7 +155,7 @@ try{
 
     if($check){
     $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['address_update_status'=>'1']);
-     return ['status'=>'success','message'=>"Address Add succesfully",'data'=>$check];            
+     return ['status'=>'success','message'=>"Address Save succesfully",'data'=>$check];            
     }
     
     } catch (\Exception $e) {
@@ -191,7 +191,7 @@ try{
     $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['bank_update_status'=>'1','admin_verify'=>'1']);
 
 
-     return ['status'=>'success','message'=>"Bank details Add succesfully",'data'=>$check];            
+     return ['status'=>'success','message'=>"Bank details Submit succesfully",'data'=>$check];            
     }
     
     } catch (\Exception $e) {
@@ -224,9 +224,13 @@ try{
         if($get_user_details){
 
           if($get_user_details->admin_verify=='3'){
-            return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Your Account is reject By Admin Reason $get_user_details->reject_reason ",'data'=>(object)[]];                
           }
-          
+
+          if ($get_user_details->status == '0') {
+            return ['status'=>'error','message'=>"Account is blocked by admin",'data'=>(object)[]];                
+          }
+        
           // if($get_user_details->admin_verify=='0' || $get_user_details->admin_verify=='1'){
           //   return ['status'=>'success','message'=>"Your Profile is Under Review",'data'=>$get_user_details];                
           // }

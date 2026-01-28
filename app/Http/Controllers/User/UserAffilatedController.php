@@ -11,6 +11,8 @@ use Auth;
 use Validator;
 use Session;
 
+use Illuminate\Support\Facades\Hash;
+
 use App\Helpers\ApiResponse;
 
 use App\Services\UserAffilatedAuthService;
@@ -93,6 +95,23 @@ class UserAffilatedController extends Controller
                 ], 401);
             }
 
+
+            if ($user->admin_verify == '3') {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Your profile is rejected By Admin',
+                ], 401);
+            }
+
+
+              if ($user->status == '0') {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Account is blocked by admin',
+                ], 401);
+            }
+            
+            
             if ($user->otp_verify == '0') {
                 return response()->json([
                     'status' => false,
@@ -200,7 +219,7 @@ class UserAffilatedController extends Controller
 
         public function affiliate_forgotpassword(Request $request){
                if ($request->isMethod('get')) {
-                $country =   all_countrie::all();
+                $country =   country::all();
                 return view('affiliatedUser.auth.forgetPassword', compact('country'));
             }else{   
             
@@ -282,12 +301,23 @@ class UserAffilatedController extends Controller
                 'otp.*.required' => 'Please enter OTP',
             ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'error' => $validator->errors()->first()
-            ]);
-        }
+
+
+$validator->after(function ($validator) use ($request) {
+    if (empty(array_filter($request->otp))) {
+        $validator->errors()->add('otp', 'Please enter OTP');
+    }
+});
+$validator->validate();
+
+if ($validator->fails()) {
+    return response()->json([
+        'status' => false,
+        'error' => $validator->errors()->first()
+    ]);
+}
+
+
 
             try {
                 $id = Crypt::decryptString($request->id);
@@ -372,17 +402,17 @@ class UserAffilatedController extends Controller
                 $rules = [
                     'password' => [
                         'required',
-                        // 'string',
-                        // 'min:8',
-                        // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
+                        'string',
+                        'min:8',
+                        'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/'
                     ],
                     'confirm_password' => 'required|same:password',
                     ];
 
                 $messages = [
                  'password.required' => 'Please Enter New password',
-                // 'password.min' => 'Password must be at least 8 characters long',
-                // 'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
+                'password.min' => 'Password must be at least 8 characters long',
+                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
                 'confirm_password.required' => 'Please enter confirm password',
                 'confirm_password.same' => 'Passwords do not match',
                 ];
@@ -399,6 +429,7 @@ class UserAffilatedController extends Controller
 
             try {
                 $id = Crypt::decryptString($request->id);
+
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => false,
@@ -407,6 +438,21 @@ class UserAffilatedController extends Controller
             }
 
             $user = AffilatedUser::find($id);
+
+            if (Hash::check($request->password, $user->password)) {
+                
+                $validator->after(function ($validator) use ($request) {
+                        $validator->errors()->add('password', "You can't use old password as new password");
+                });
+                $validator->validate();
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false,
+                        'error' => $validator->errors()->first()
+                    ]);
+                }
+            }
 
             if ($user) {
                 $user->update([
@@ -644,7 +690,7 @@ class UserAffilatedController extends Controller
         'account_holder_name.required' => 'Account holder name is required.',
         'account_no.required'          => 'Account number is required.',
         'confirm_account_no.required'  => 'Please confirm your account number.',
-        'confirm_account_no.same'      => 'Account number and confirm account number must match.',
+        'confirm_account_no.same'      => 'Account number and confirm account do not match.',
         'iban.required'                => 'IBAN number is required.',
         'swift.required'               => 'SWIFT code is required.',
     ]);
@@ -734,6 +780,40 @@ class UserAffilatedController extends Controller
 
             return redirect('user/affiliate-login');
         }
+
+
+         public function resendOtp(Request $request)
+        {
+            try {
+                $id = Crypt::decryptString($request->id);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid user reference',
+                ], 400);
+            }
+
+            // Find user
+            $user = AffilatedUser::find($id);
+            if (!$user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User not found',
+                ], 404);
+            }
+
+            $otp= config('services.otp');
+            $user->otp = $otp;
+            $user->save();
+
+       
+            return response()->json([
+                'status' => true,
+                'message' => 'OTP resent successfully',
+            ]);
+        }
+
+
 
 
 }
