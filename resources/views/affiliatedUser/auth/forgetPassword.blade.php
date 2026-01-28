@@ -3,7 +3,7 @@
 @section('content')
 <div class="login_contenar">
     <header class="inner-header">
-        <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
+        <a href=""><img src="assets/images/logo.svg" class="img-fluid" /></a>
         <div class="d-flex align-items-center becomSeller">
             <div class="dropdown ms-3">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"

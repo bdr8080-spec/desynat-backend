@@ -6,7 +6,7 @@
 
 <div class="login_contenar">
     <header class="inner-header">
-        <a href="{{route('dashboard')}}"><img src="assets/images/logo.svg" class="img-fluid" /></a>
+        <a href=""><img src="assets/images/logo.svg" class="img-fluid" /></a>
         <div class="d-flex align-items-center becomSeller">
             <div class="dropdown ms-3">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -18,7 +18,6 @@
                     <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
                 </ul>
             </div>
-            <a href="{{url('/seller/login')}}" class="customBtn1">Become a seller</a>
         </div>
     </header>
     <div class="login_content login_content_left">
@@ -29,7 +28,7 @@
     <div class="login_content login_content_right">
         <div class="login_content_content align-self-center">
             <div class="otp-page">
-                <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i
+                <h3 class="h3-heading"><span><a href="{{ route('affiliate.affiliate_login') }}"><i
                                 class="fa-solid fa-chevron-left"></i></a></span> Login Via OTP</h3>
 
                 <form id="loginWithOtp">
