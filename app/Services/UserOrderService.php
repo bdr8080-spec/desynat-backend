@@ -1593,32 +1593,52 @@ public function RedeemGiftCardMoneyToWallet($request)
     DB::beginTransaction();
 
     try {
-        $history = UserWalletHistory::where('unique_id', $request->unique_id)->first();
 
-        if (!$history) {
-            return ['status' => 'error', 'message' => 'Record not found'];
-        }
+        $checkGiftCard=  UserGiftCards::where('giftCardNo',$request->giftCardNo)
+        ->where('giftCardPin',$request->giftCardPin)
+        ->where('payment_status','1')
+        ->where('giftCardUse','0')
+        ->first();
 
-        $history->update(['payment_status' => $request->payment_status,'transaction_id'=>$request->transaction_id]);
+        if($checkGiftCard){
 
-        if ($request->payment_status == '1') {
-            UserWallet::updateOrCreate(
-                ['user_id' => $history->user_id],
-                ['amount' => DB::raw("amount + {$history->amount}")]
+$unique_id="Wal".Rand('100000','999999');
+
+    $request_data=[
+        "unique_id"=>$unique_id,
+        'user_id'=>$request->user_id,
+        'amount'=>$checkGiftCard->amount,
+        'type'=>'3',
+        "payment_method"=>'1',
+        "payment_status"=>"1",
+        "addedby"=>"2"
+    ];
+$insert_record= UserWalletHistory::Create($request_data);
+
+UserWallet::updateOrCreate(
+                ['user_id' => $request->user_id],
+                ['amount' => DB::raw("amount + {$checkGiftCard->amount}")]
             );
 
-            $message = 'Add Money in Wallet Complete Successfully';
-        } else {
-            $message = 'Add Money in Wallet Cancelled / Failed';
-        }
+$checkGiftCard->update(['giftCardUse'=>'1']);
 
-        DB::commit();
+    DB::commit();
+        return [
+        'status'  => 'success',
+        'message' => "Gift card reddem Successfully",
+        'data'    => $checkGiftCard
+    ];
+
+
+}else{
 
         return [
-            'status'  => 'success',
-            'message' => $message,
-            'data'    => $history
+            'status'  => 'error',
+            'message' => "Invalid Gift card and Expired",
+            'data'    => (object)[]
         ];
+
+        }
 
     } catch (\Exception $e) {
         DB::rollBack();

@@ -106,8 +106,8 @@ public function __construct(UserOrderService $UserOrderService){
   public function Redeemgiftcardinwallet(Request $request){
 
       $validate = Validator::make($request->all(), [
-                'card_no' => 'required|min:16|max:16',
-                "pin"=>'required'
+                'giftCardNo' => 'required|min:16|max:16',
+                "giftCardPin"=>'required'
             ]);
 
         if($validate->fails()){
@@ -118,8 +118,8 @@ public function __construct(UserOrderService $UserOrderService){
 
         $request_data=(object)[
         'user_id'=>$user_id,
-        'card_no'=>$request->card_no,
-        "pin"=>$request->pin,
+        'giftCardNo'=>$request->giftCardNo,
+        "giftCardPin"=>$request->giftCardPin,
         ];
 
         $data=$this->UserOrderService->RedeemGiftCardMoneyToWallet($request_data);

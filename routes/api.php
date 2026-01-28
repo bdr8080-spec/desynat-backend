@@ -166,6 +166,8 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::get('/wallet-history', [UserWalletController::class,'walletHistory']);
 
+  Route::post('/redeem-gift-card-in-wallet', [UserWalletController::class,'Redeemgiftcardinwallet']);
+  
 
 });
 
