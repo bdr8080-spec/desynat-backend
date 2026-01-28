@@ -4,42 +4,37 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Product List</h2>
+            @php
+                $sellerRecord = $products->sellerDealrecords->first();
+            @endphp
+            <h2 class="h2">{{ $sellerRecord->seller_details->first_name }} {{ $sellerRecord->seller_details->last_name }}</h2>
         </div>
 
     </div>
 
     <div class="userManagecontent">
         <div class="mt-4">
+            <form method="GET" action="{{ route('admin.productList', ['deal_id' => $products->id, 'seller_id' => $sellerRecord->seller_id]) }}" id="filterForm">
             <div class="row">
-                <!-- <div class="col-lg-3 col-md-4 col-12">
-                    <div class="search-box" style="position: relative;">
-                        <i class="bi bi-search" style="
-                        position: absolute;
-                        left: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        font-size: 16px;
-                        color: #888;
-                      ">
-                        </i>
-                        <input type="text" class="form-control" placeholder="Search for..."
-                            style="padding-left: 35px" />
-                    </div>
-                </div> -->
 
-                <!-- <div class="col-lg-3 col-md-4 col-12">
+                <div class="col-lg-3 col-md-4 col-12">
                     <div class="form-group mb-5 w-100">
-                        <select class="form-select form-select-lg" aria-label="Large select example">
-                            <option selected>Select Brand</option>
-                            <option value="1">Brand One</option>
-                            <option value="2">Brand Two</option>
-                            <option value="3">Brand Three</option>
+                        <select name="filter" id="filter"
+                            class="form-select form-select-lg "
+                            onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Select brand</option>
+                            @foreach($brands as $brand)
+                            <option value="{{ $brand['name_english'] }}"
+                                {{ request('filter') == $brand['name_english'] ? 'selected' : '' }}>
+                                {{ $brand['name_english'] }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
-                </div> -->
+                </div>
 
             </div>
+            </form>
 
             <div class="table-responsive mt-5 w-100">
                 <table id="myTable" class="table w-100">

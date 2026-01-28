@@ -100,7 +100,7 @@
                                 <th scope="col"> Address</th>
                                 <th scope="col">Uploaded ID</th>
                                 <th scope="col">Bank Account Details</th>
-                                <th scope="col">Upload Account Proof</th>
+                                <!-- <th scope="col">Upload Account Proof</th> -->
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -155,7 +155,7 @@
                                 N/A
                                 @endif
                                 </td>
-                                <td>
+                                <!-- <td>
                                     @if(!empty($user['bank_details']['upload_proof']))
                                     <a class="table-button view-account-proof-btn" type="button"
                                         data-bs-toggle="modal" data-bs-target="#sentModal3"
@@ -165,7 +165,7 @@
                                     @else
                                     N/A
                                     @endif
-                                </td>
+                                </td> -->
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a class="table-button acceptUser" type="button"
@@ -243,7 +243,7 @@
                         </form>
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table id="myTable1" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -256,7 +256,7 @@
                                 <th scope="col"> Address</th>
                                 <th scope="col">Uploaded ID</th>
                                 <th scope="col">Bank Account Details</th>
-                                <th scope="col">Upload Account Proof</th>
+                                <!-- <th scope="col">Upload Account Proof</th> -->
                                 <th scope="col">Total Number of Orders</th>
                                 <th scope="col">Total Earning</th>
                                 <th scope="col">Block/Unblock</th>
@@ -313,7 +313,7 @@
                                     N/A
                                     @endif
                                 </td>
-                                <td>
+                                <!-- <td>
                                     @if(!empty($user['bank_details']['upload_proof']))
                                     <a class="table-button view-account-proof-btn" type="button"
                                         data-bs-toggle="modal" data-bs-target="#sentModal3"
@@ -323,7 +323,7 @@
                                     @else
                                     N/A
                                     @endif
-                                </td>
+                                </td> -->
                                 <td>0</td>
                                 <td>0 KD</td>
                                  <td>
@@ -402,7 +402,7 @@
                         </form>
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table id="myTable2" class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
@@ -415,7 +415,7 @@
                                 <th scope="col"> Address</th>
                                 <th scope="col">Uploaded ID</th>
                                 <th scope="col">Bank Account Details</th>
-                                <th scope="col">Upload Account Proof</th>
+                                <!-- <th scope="col">Upload Account Proof</th> -->
                                 <th scope="col">Reason</th>
                             </tr>
                         </thead>
@@ -469,7 +469,7 @@
                                     N/A
                                     @endif
                                 </td>
-                                <td>
+                                <!-- <td>
                                     @if(!empty($user['bank_details']['upload_proof']))
                                     <a class="table-button view-account-proof-btn" type="button"
                                         data-bs-toggle="modal" data-bs-target="#sentModal3"
@@ -479,7 +479,7 @@
                                     @else
                                     N/A
                                     @endif
-                                </td>
+                                </td> -->
                                 <td>{{ $user['reject_reason'] ?? 'N/A' }} </td>
                             </tr>
                             @endforeach
@@ -853,6 +853,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('rejectReason').addEventListener('input', function() {
         var errorMessage = document.getElementById('error-message');
         errorMessage.style.display = 'none'; // Hide error message when typing
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('xcircle');
+    modal.addEventListener('hidden.bs.modal', function () {
+        location.reload(); 
     });
 });
 </script>
