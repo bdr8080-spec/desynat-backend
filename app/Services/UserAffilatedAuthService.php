@@ -224,7 +224,7 @@ try{
         if($get_user_details){
 
           if($get_user_details->admin_verify=='3'){
-            return ['status'=>'error','message'=>"Your Account is reject By Admin",'data'=>(object)[]];                
+            return ['status'=>'error','message'=>"Your Account is reject By Admin Reason $get_user_details->reject_reason ",'data'=>(object)[]];                
           }
 
           if ($get_user_details->status == '0') {
