@@ -173,8 +173,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //deal management
         Route::get('/deal-management', [DealManagementController::class, 'dealManagement'])->name('admin.dealManagement');
-        Route::get('/seller-list', [DealManagementController::class, 'sellerList'])->name('admin.sellerList');
-        Route::get('/product-list', [DealManagementController::class, 'productList'])->name('admin.productList');
+        Route::get('/seller-list/{id}', [DealManagementController::class, 'sellerList'])->name('admin.sellerList');
+        Route::get('/product-list/{deal_id}/{seller_id}', [DealManagementController::class, 'productList'])->name('admin.productList');
         Route::get('/getSubCategories/{id}', [DealManagementController::class, 'getSubCategories'])->name('admin.getSubCategories');
         Route::post('/updateDeal/{id}', [DealManagementController::class, 'updateDeal'])->name('admin.updateDeal');
         Route::post('/submitDeal', [DealManagementController::class, 'submitDeal'])->name('admin.submitDeal');

@@ -189,6 +189,32 @@ class DealController extends Controller
         }
     }
 
+    public function get_deal_seller_product_list(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'deal_id' => 'required|exists:deals,id',
+            'seller_id' => 'required|exists:sellers,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            // $result = $this->DealManagementService->dealDetails($request->deal_id);
+            $result = $this->DealManagementService->dealDetailsSellerProductList($request);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

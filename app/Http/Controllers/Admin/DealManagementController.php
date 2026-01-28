@@ -30,12 +30,20 @@ class DealManagementController extends Controller
         return view('admin.deal-management.index',compact('activeDeals','expiredDeals','categories'));
     }
 
-    public function sellerList(Request $request){
-        return view('admin.deal-management.seller-list');
+    public function sellerList(Request $request, $id){
+        $request->merge(['deal_id' => $id]);
+        $sellers = $this->DealManagementService->dealDetails($request)['data'];
+       //dd($sellers);
+        return view('admin.deal-management.seller-list',compact('sellers'));
     }
 
-    public function productList(Request $request){
-        return view('admin.deal-management.product-list');
+    public function productList(Request $request, $deal_id, $seller_id){
+        $request->merge([
+            'deal_id' => $deal_id,
+            'seller_id' => $seller_id,
+        ]);
+        $products = $this->DealManagementService->dealDetailsSellerProductList($request)['data'];
+        return view('admin.deal-management.product-list',compact('products'));
     }
 
     public function getSubCategories($categoryId)
