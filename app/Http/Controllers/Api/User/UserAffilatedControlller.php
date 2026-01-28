@@ -67,7 +67,7 @@ class UserAffilatedControlller extends Controller
   $data=$this->UserAffilatedAuthService->RegisterAffilatedUser($request_data);
     
     if(isset($data['status']) && $data['status']=='error' ){
-        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
     }
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
