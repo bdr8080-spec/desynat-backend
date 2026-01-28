@@ -31,6 +31,7 @@
             <div class="otp-page">
                 <h3 class="h3-heading">
                     <span><a href="{{ url()->previous() }}"><i class="fa-solid fa-chevron-left"></i></a></span> OTP
+                    Verification
                 </h3>
                 @php
 

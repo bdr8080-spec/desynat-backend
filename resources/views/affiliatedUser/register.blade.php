@@ -245,7 +245,7 @@
                                         <p class="text-danger" id="error-confirm_password"></p>
                                     </div>
 
-                                    <div class="form-check py-4">
+                                    <div class="form-check py-4 form-group">
                                         <input class="form-check-input" type="checkbox" value="1" id="checkChecked"
                                             name="accept" {{ old('accept') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="checkChecked">
