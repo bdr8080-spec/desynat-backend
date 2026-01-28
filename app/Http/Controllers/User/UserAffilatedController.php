@@ -338,7 +338,7 @@ class UserAffilatedController extends Controller
                     ]);
 
                 }else {
-                    Auth::guard('web')->login($user);
+                    Auth::guard('affilated_user')->login($user);
                     Session::forget('verify-password');
                     return response()->json([
                     'status' => true,

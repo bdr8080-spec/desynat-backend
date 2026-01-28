@@ -165,8 +165,7 @@
                                         <label for="name">Address line 1</label>
                                         <input type="text" class="form-control blockFirstTime"
                                             placeholder="Enter Address line 1" name="address1"
-                                            value="{{ old('address1', @$affiliate_address->address1) }}"
-                                            id="address_line1">
+                                            value="{{ old('address1', @$affiliate_address->address1) }}" id="">
 
                                         <p class="text-danger" id="error-address1"></p>
                                     </div>
@@ -320,18 +319,17 @@
 
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBk1iHVph8nvXAn0uigTvPzKDpb9cslR18&libraries=places">
-</script>
 
-
-
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places">
+<script
+    src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_map_key.key') }}&callback=initMap&libraries=places"
+    async defer>
 </script>
 
 <script>
 let map, marker, circle, autocomplete;
 let mapInitialized = false;
+
+debugger;
 
 // IDs of input fields
 const address1Id = "address_line1";
@@ -346,6 +344,7 @@ const selectedAddressId = "selectedAddress";
 const selectedAddressStore_address = "store_address";
 
 // selectedAddress
+debugger;
 
 function initMap() {
     if (navigator.geolocation) {
@@ -366,6 +365,8 @@ function initMap() {
                 maximumAge: 0
             }
         );
+        debugger;
+
     } else {
         loadMap({
             lat: 0,
