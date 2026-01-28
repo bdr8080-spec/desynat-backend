@@ -236,115 +236,26 @@ class DealManagementService
         }
     }
 
-    // public function dealDetails($dealId)
-    // {
-    //     try {
-            
-    //     //    $data = Deal::with(
-    //     //     'category_details',
-    //     //     'subCategory_details',
-    //     //     'sellerDealrecord.product_added',
-    //     //     'sellerDealrecord.seller_details',
-    //     //     'sellerDealrecord.seller_details.country_details',
-    //     //     'sellerDealrecord.product_details',
-    //     //     )->find($dealId);
-
-    //     $data = Deal::with(
-    //             'category_details',
-    //             'subCategory_details',
-    //             'sellerDealrecords.seller_details.country_details',
-    //             'sellerDealrecords.products.product_details.product_variants',
-    //             'sellerDealrecords.products.product_details.brand'
-    //         )->find($dealId);
-
-    //         if (!$data) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'Deal not found',
-    //                 'data' => (object)[]
-    //             ];
-    //         }
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Deal details fetched successfully',
-    //             'data' => $data
-    //         ];
-
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to fetch deal details',
-    //             'data' => []
-    //         ];
-    //     }
-    // }
-
-
-
-    public function dealDetails(Request $request)
+    public function dealDetails($dealId)
     {
         try {
-            $dealId = $request->input('deal_id');
+            
+        //    $data = Deal::with(
+        //     'category_details',
+        //     'subCategory_details',
+        //     'sellerDealrecord.product_added',
+        //     'sellerDealrecord.seller_details',
+        //     'sellerDealrecord.seller_details.country_details',
+        //     'sellerDealrecord.product_details',
+        //     )->find($dealId);
 
-            // Base query
-            $query = Deal::with([
+        $data = Deal::with(
                 'category_details',
                 'subCategory_details',
                 'sellerDealrecords.seller_details.country_details',
-                'sellerDealrecords.products' => function ($q) use ($request, $dealId) {
-                    // Only products of this deal
-                    $q->where('deal_id', $dealId);
-
-                    // Filter by search
-                    if ($request->filled('search')) {
-                        $search = $request->input('search');
-                        $q->whereHas('product_details', function ($qq) use ($search) {
-                            $qq->where('product_name_en', 'like', '%' . $search . '%');
-                        });
-                    }
-
-                    // Filter by brand
-                    if ($request->filled('filter')) {
-                        $brand = $request->input('filter');
-                        $q->whereHas('product_details.brand', function ($qq) use ($brand) {
-                            $qq->where('name_english', 'like', '%' . $brand . '%');
-                        });
-                    }
-
-                    // Eager load details & variants
-                    $q->with([
-                        'product_details.product_variants',
-                        'product_details.brand'
-                    ]);
-                }
-            ]);
-
-            // Filter sellerDealrecords to only include sellers who have matching products
-            if ($request->filled('search') || $request->filled('filter')) {
-                $query->with(['sellerDealrecords' => function ($q) use ($request, $dealId) {
-                    $q->whereHas('products', function ($qq) use ($request, $dealId) {
-                        $qq->where('deal_id', $dealId);
-
-                        if ($request->filled('search')) {
-                            $search = $request->input('search');
-                            $qq->whereHas('product_details', function ($q) use ($search) {
-                                $q->where('product_name_en', 'like', '%' . $search . '%');
-                            });
-                        }
-
-                        if ($request->filled('filter')) {
-                            $brand = $request->input('filter');
-                            $qq->whereHas('product_details.brand', function ($q) use ($brand) {
-                                $q->where('name_english', 'like', '%' . $brand . '%');
-                            });
-                        }
-                    });
-                }]);
-            }
-
-            // Find the deal
-            $data = $query->find($dealId);
+                // 'sellerDealrecords.products.product_details.product_variants',
+                // 'sellerDealrecords.products.product_details.brand'
+            )->find($dealId);
 
             if (!$data) {
                 return [
@@ -363,11 +274,97 @@ class DealManagementService
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
+                'message' => 'Failed to fetch deal details',
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function dealDetailsSellerProductList(Request $request)
+    {
+        try {
+            $dealId = $request->input('deal_id');
+            $sellerId = $request->input('seller_id');
+
+            if (!$dealId || !$sellerId) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Deal ID and Seller ID are required',
+                    'data' => (object)[]
+                ];
+            }
+
+            // Fetch deal with only the requested seller
+            $deal = Deal::with([
+                'category_details',
+                'subCategory_details',
+                'sellerDealrecords' => function ($q) use ($sellerId, $dealId, $request) {
+                    $q->where('seller_id', $sellerId)
+                    ->where('deal_id', $dealId)
+                    ->with(['seller_details.country_details'])
+                    ->with(['products' => function ($q) use ($dealId, $sellerId, $request) {
+                        $q->where('deal_id', $dealId)
+                            ->where('seller_id', $sellerId);
+
+                        // Search filter
+                        if ($request->filled('search')) {
+                            $search = $request->input('search');
+                            $q->whereHas('product_details', function ($qq) use ($search) {
+                                $qq->where('product_name_en', 'like', '%' . $search . '%');
+                            });
+                        }
+
+                        // Brand filter
+                        if ($request->filled('filter')) {
+                            $brand = $request->input('filter');
+                            $q->whereHas('product_details.brand', function ($qq) use ($brand) {
+                                $qq->where('name_english', 'like', '%' . $brand . '%');
+                            });
+                        }
+
+                        // Eager load product details, variants, brand
+                        $q->with(['product_details.product_variants', 'product_details.brand']);
+                    }]);
+                }
+            ])->find($dealId);
+
+            if (!$deal) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Deal not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            // Apply deal discount to each variant
+            $dealDiscount = $deal->discount; // e.g., 15 for 15%
+            foreach ($deal->sellerDealrecords as $sellerRecord) {
+                foreach ($sellerRecord->products as $product) {
+                    foreach ($product->product_details->product_variants as $variant) {
+                        $finalPrice = floatval($variant->final_price);
+                        $variant->deal_discount_price = round($finalPrice - ($finalPrice * $dealDiscount / 100), 2);
+                    }
+                }
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Deal details fetched successfully',
+                'data' => $deal
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
                 'message' => 'Failed to fetch deal details: ' . $e->getMessage(),
                 'data' => []
             ];
         }
     }
+
+
+
 
 
 
