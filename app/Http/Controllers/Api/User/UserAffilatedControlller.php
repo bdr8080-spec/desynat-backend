@@ -387,6 +387,14 @@ public function affilatedAddBankDetails(Request $request){
 
 
 
+    public function affilatedDashboard(Request $req){
+
+         return ApiResponse::generateResponse('success', 'Affiliated User details fetch successfully',$req->user(), 200);
+
+    }
+
+
+
      
 
 }

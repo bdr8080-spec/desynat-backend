@@ -183,6 +183,7 @@ Route::middleware(['auth:sanctum', 'ability:AffilatedUser'])->prefix('affiliate'
 Route::post('/affilated-add-address', [UserAffilatedControlller::class,'affilatedAddAddress']);
 Route::post('/affilated-add-Bank-details', [UserAffilatedControlller::class,'affilatedAddBankDetails']);
 
+Route::post('/affilated-dashboard', [UserAffilatedControlller::class,'affilatedDashboard']);
 
 });
 
