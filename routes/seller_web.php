@@ -126,7 +126,6 @@ Route::group(['prefix' => 'seller'], function () {
 
     route::Match(['get','post'],'/update-order-exchange-return-status',[SellerOrderController::class,'updateOrderExchangeReturnStatus'])->name('seller.update-return-exchange');
 
-    });
 
  
     route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
@@ -158,9 +157,10 @@ Route::group(['prefix' => 'seller'], function () {
     Route::match(['get','post'],'add-single-deal-management/{id}', [WebDealManagement::class, 'singleDealManagement'])->name('seller.add-single-deal-management');
 
    Route::match(['post'],'remove-product-deal-management', [WebDealManagement::class, 'RemovesingleDealManagement'])->name('seller.Remove-product-single-deal');
-
-
     Route::get('expire-single-deal-management/{id}', [WebDealManagement::class, 'expireViewsingleDealManagement'])->name('seller.expire-single-deal-management');
+
+
+    });
 
 });
 
