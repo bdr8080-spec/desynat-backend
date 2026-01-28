@@ -176,7 +176,7 @@ class DealController extends Controller
 
         try {
             // $result = $this->DealManagementService->dealDetails($request->deal_id);
-            $result = $this->DealManagementService->dealDetails($request);
+            $result = $this->DealManagementService->dealDetails($request,$request->deal_id);
 
             if ($result['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $result['message'], [], 400);
