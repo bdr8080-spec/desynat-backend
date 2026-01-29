@@ -116,8 +116,8 @@
             <a class="customBtn2" style="text-decoration: none;" href="{{route('affiliate_loginWithOtp')}}">Login Via
                 OTP</a>
 
-            <!-- <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('affiliate.affiliate_signup')}}">Sign
-                    up</a></p> -->
+            <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('affiliate.affiliate_signup')}}">Sign
+                    up</a></p>
 
         </div>
     </div>
