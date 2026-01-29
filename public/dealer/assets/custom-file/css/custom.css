@@ -1090,14 +1090,16 @@ table.dataTable td.dt-type-date {
     padding: 14px 10px;
 }
 .kwdrop-panel.show {
-    width: 250px;
+    width: 350px;
     padding: 0px;
+    height: calc(80vh - 50px);
+    overflow-y: auto;
 }
 .country-space {
-    margin: 9px 10px;
+    margin: 10px 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 8px;
+    padding: 11px 10px;
 }
 .country-space .radio-label {
     font-size: 15px;
@@ -1109,4 +1111,10 @@ table.dataTable td.dt-type-date {
     background: var(--all-btn-bg) !important;
     color: #fff !important;
     border: none !important;
+    line-height: 2;
+    position: absolute;
+    bottom: 40px;
+    max-width: 90%;
+    margin: auto;
 }
+
