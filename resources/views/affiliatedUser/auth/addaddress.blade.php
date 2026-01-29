@@ -151,12 +151,11 @@
 
                                                         <span id="selected-flag">
                                                             {{ old('country_flag', $country[0]->flag) }}
-
-
                                                         </span>
 
                                                         <span id="selected-code" class="ms-2">
                                                             {{ old('country_code', $country[0]->dial_code) }}
+                                                            {{ old('country_code', $country[0]->name) }}
                                                         </span>
                                                     </button>
 
@@ -168,10 +167,11 @@
                                                                 class="dropdown-item align-items-center gap-2 country-option"
                                                                 style="cursor: pointer;">
                                                                 <input type="radio" name="country"
-                                                                    value="{{ $item->dial_code }}"
+                                                                    value="{{ $item->id }}"
                                                                     data-flag="{{ $item->flag }}"
+                                                                    data-dial_code="{{ $item->dial_code }}"
                                                                     data-name="{{ $item->name }}" class="country-radio"
-                                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                    {{ old('country', @$affiliate_address->country) == $item->id ? 'checked' : '' }}
                                                                     hidden>
 
                                                                 <div width="25" height="16">
@@ -736,6 +736,30 @@ $(document).on('submit', 'form#Affiliate_AddAddress', function(event) {
     });
 
     return false;
+});
+
+
+$(document).ready(function() {
+    // When a user selects a country (clicks a label)
+    $(document).on('click', '.country-option', function() {
+        let radio = $(this).find('.country-radio');
+        let flag = radio.data('flag');
+
+        let dial_code = radio.data('dial_code');
+
+        let code = radio.val();
+        let name = radio.data('name');
+
+        // Update the flag and code shown on the button
+        $('#selected-flag').html(flag);
+        $('#selected-code').text(dial_code + ' ' + name);
+
+        // Set the radio input as checked
+        radio.prop('checked', true);
+
+        // Close the dropdown (Bootstrap 5)
+        $('#countryDropdown').dropdown('hide');
+    });
 });
 </script>
 
