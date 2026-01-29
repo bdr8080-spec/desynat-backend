@@ -165,7 +165,6 @@ $(document).on('submit', 'form#ReddemgiftCardMoney', function(event) {
             $('#loader').show();
         },
         success: function(response) {
-            console.log(response);
 
             window.setTimeout(function() {
                 $('.customBtn, .form-control').attr('disabled', false).removeClass(
