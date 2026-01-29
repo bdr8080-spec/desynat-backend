@@ -154,7 +154,6 @@
                                                         </span>
 
                                                         <span id="selected-code" class="ms-2">
-                                                            {{ old('country_code', $country[0]->dial_code) }}
                                                             {{ old('country_code', $country[0]->name) }}
                                                         </span>
                                                     </button>
@@ -752,7 +751,7 @@ $(document).ready(function() {
 
         // Update the flag and code shown on the button
         $('#selected-flag').html(flag);
-        $('#selected-code').text(dial_code + ' ' + name);
+        $('#selected-code').text(name);
 
         // Set the radio input as checked
         radio.prop('checked', true);
