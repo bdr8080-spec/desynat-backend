@@ -11,16 +11,19 @@ use App\Helpers\ApiResponse;
 use Validator;
 
 
+use App\Services\GoogletranslateService;
+
 
 class ChatController extends Controller
 {
 
     protected $firebase;
 
-    public function __construct(FirebaseService $firebase,UserFirebaseService $UserFirebaseService)
+    public function __construct(FirebaseService $firebase,UserFirebaseService $UserFirebaseService,GoogletranslateService $GoogletranslateService)
     {
         $this->firebase = $firebase;
          $this->UserFirebaseService = $UserFirebaseService;
+         $this->GoogletranslateService = $GoogletranslateService;
     }
 
 
@@ -35,6 +38,8 @@ class ChatController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
+       $TextInArbic='';
+
         if ($request->hasFile('image')) {
             $dir = "image";
             $upload = image_upload($request->image, $dir);
@@ -45,11 +50,14 @@ class ChatController extends Controller
         }else{
             $type="0";
             $message=$request->message;
+            
+            $TextInArbic= $this->GoogletranslateService->translate($message,'ar');
         }
 
        $request_data=(object)[
         "unique_id"=>$request->unique_id,
         "message"=>$message,
+        "message_ar" => $TextInArbic,
         "type"=>$type , // 0 message and 1 for Image 
         'by'=>$request->by,
        ];

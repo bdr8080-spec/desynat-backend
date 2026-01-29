@@ -11,15 +11,19 @@ use App\Http\Controllers\CommonController;
 use App\Models\userAddress;
 use App\Services\UserOrderService;
 
+
+use App\Services\GoogletranslateService;
+
 use Validator;
 
 class ChatController extends Controller
 {
  
-    public function __construct(UserFirebaseService $UserFirebaseService, UserOrderService $UserOrderService)
+    public function __construct(UserFirebaseService $UserFirebaseService, UserOrderService $UserOrderService,GoogletranslateService $GoogletranslateService)
     {
         $this->UserFirebaseService = $UserFirebaseService;
         $this->UserOrderService = $UserOrderService;
+        $this->GoogletranslateService = $GoogletranslateService;
     }
 
     public function allChats(Request $request){ 
@@ -123,6 +127,9 @@ class ChatController extends Controller
 
             } else {
                 $message = $request->message;
+
+                 $TextInArbic= $this->GoogletranslateService->translate($message,'ar');
+
             }
 
             $chatData = (object)[
@@ -138,6 +145,7 @@ class ChatController extends Controller
                 'seller_id' => $sellerId,
                 'type'      => $type,
                 'message'   => $message,
+                "message_ar" => $TextInArbic,
                 'by'        => 'user',
             ]);
 

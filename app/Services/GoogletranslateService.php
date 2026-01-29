@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Http;
 class GoogletranslateService
 {
 
-public function translate_words($text,$lang)
+public function translate($text,$lang)
 {     
     $text = $text;
     

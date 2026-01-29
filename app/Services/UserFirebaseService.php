@@ -267,13 +267,13 @@ foreach ($check_chatRecord as $key => $val) {
         'user_id'=>$check_chatRecord->user_id,
         "unique_id"=>$request->unique_id,
         "message"=>$request->message,
+        "message_ar" => $request->message_ar,
         "type"=>strVal($request->type) , // 0 message and 1 for Image 
-        'by'=>$request->by ,
+        'by'=>$request->by,
          "times"=>Now(),
          "read"=>0 // 0 un read and 1 read 
        ];
-
-
+       
        $room=$request->unique_id;
        $message=$request_data;
 

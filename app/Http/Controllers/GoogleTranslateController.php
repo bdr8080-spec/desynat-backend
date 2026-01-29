@@ -8,25 +8,41 @@ use Illuminate\Support\Facades\Http;
 
 use Google\Cloud\Translate\V3\TranslationServiceClient;
 
+
+use App\Services\GoogletranslateService;
+
 class GoogleTranslateController extends Controller
 {
 
+    public function __construct(GoogletranslateService $GoogletranslateService)
+{
+    $this->GoogletranslateService = $GoogletranslateService;
+}
+
+
+
 public function translate_words()
 {     
-    $text = 'Hello how are you';
+    $text = 'Hello rahul My Name is Manoj Chauhan';
     
-        $response = Http::post(
-            'https://translation.googleapis.com/language/translate/v2?key=' . env('GOOGLE_TRANSLATE_API_KEY'),
-            [
-                'q' => $text,
-                'target' => 'ar'
-            ]
-        );
+   $data= $this->GoogletranslateService->translate($text,'ar');
 
-        if ($response->failed()) {
-            return $response->json(); // shows error if any
-        }
-        return $response['data']['translations'][0]['translatedText'];
+   echo $data;
+
+        // $response = Http::post(
+        //     'https://translation.googleapis.com/language/translate/v2?key=' . env('GOOGLE_TRANSLATE_API_KEY'),
+        //     [
+        //         'q' => $text,
+        //         'target' => 'ar'
+        //     ]
+        // );
+
+        // if ($response->failed()) {
+        //     return $response->json(); // shows error if any
+        // }
+        // return $response['data']['translations'][0]['translatedText'];
+
+
     }
 
 
