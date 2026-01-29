@@ -23,6 +23,10 @@
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/custom.css" rel="stylesheet">
 
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+
     <style>
     .country-option:hover {
         background-color: #f8f9fa;
@@ -122,14 +126,13 @@
 
                                     <div class="form-group">
                                         <label for="name">Choose Country</label>
-                                        <!-- <input type="text" class="form-control" placeholder="Enter Last Name" name="country" value="{{ old('country') }}"> -->
 
                                         <select name="country" class="form-control form-select">
                                             <option value=""> Please Select Country </option>
                                             @foreach ($country as $val)
                                             <option value="{{ $val->id }}"
                                                 {{ old('country', @$affiliate_address->country) == $val->id ? 'selected' : '' }}>
-                                                {{ $val->name }}
+                                                <img src="{{ $val->flag }}"> {{ $val->name }}
                                             </option>
                                             @endforeach
                                         </select>
@@ -684,6 +687,12 @@ $(document).on('submit', 'form#Affiliate_AddAddress', function(event) {
     });
 
     return false;
+});
+
+
+
+$(document).ready(function() {
+    $('.selectpicker').selectpicker();
 });
 </script>
 

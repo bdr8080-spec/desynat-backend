@@ -67,7 +67,7 @@
                 <div class="total-revenu-box pnl-flex">
                     <div class="dash-content">
                         <h5>Total Revenue Generated</h5>
-                        <h1 class="font-34 py-3">KD 12,542</h1>
+                        <h1 class="font-34 py-3">12,542 KD</h1>
                     </div>
                     <div class="total-revenu-image">
                         <img src="{{ asset('dealer') }}/assets/img/profit.svg" alt="icon" class="img-fluid">

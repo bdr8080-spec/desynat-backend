@@ -110,7 +110,7 @@
                     <i class="fa-solid fa-eye toggle-passwordone" id="toggleIcon"></i>
                 </div>
                 <span class="text-danger" id="error-password"></span>
-                <p class=" mt-3 mb-4"><a href="{{route('affiliate_forgotpassword')}}">Forgot password</a></p>
+                <p class=" mt-3 mb-4"><a href="{{route('affiliate_forgotpassword')}}">Forgot password ?</a></p>
                 <button type="submit" class="customBtn mb-3" id="loginButtom">Login</button>
             </form>
             <a class="customBtn2" style="text-decoration: none;" href="{{route('affiliate_loginWithOtp')}}">Login Via
