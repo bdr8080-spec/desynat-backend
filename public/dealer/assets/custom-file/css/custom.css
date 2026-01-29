@@ -1125,3 +1125,6 @@ table.dataTable td.dt-type-date {
 .cursor-pointer{
     cursor: pointer;
 }
+.text-danger {
+    margin-bottom: 4px;
+}
