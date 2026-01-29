@@ -230,6 +230,42 @@
                                         </label>
                                     </div>
                                 </li>
+                                <li class="country-space">
+                                    <div class="check_radio">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">SAR</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">AED</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">OMR</span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li class="country-space">
+                                    <div class="check_radio">
+                                        <label class="radio-group">
+                                            <input type="radio" name="today">
+                                            <span class="custom-radio"></span>
+                                            <span class="radio-label">USD</span>
+                                        </label>
+                                    </div>
+                                </li>
                               
 
                                 <li class="country-mt p-3 mt-4">
