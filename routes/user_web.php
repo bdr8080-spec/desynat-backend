@@ -27,7 +27,7 @@ Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
     Route::match(['get', 'post'], '/verify-otp', [AuthController::class, 'userVerifyOtp'])->name('userVerifyOtp');
     Route::match(['get', 'post'], '/create-password', [AuthController::class, 'userCreatePassword'])->name('userCreatePassword');
     Route::match(['get', 'post'], '/login-with-otp', [AuthController::class, 'loginWithOtp'])->name('loginWithOtp');
-    Route::post('/resend-otp', [AuthController::class, 'resendOtp'])->name('userResendOtp');
+    Route::match(['get','post'],'/resend-otp', [AuthController::class, 'resendOtp'])->name('userResendOtp');
 });
 
    
