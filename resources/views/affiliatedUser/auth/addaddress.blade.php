@@ -23,10 +23,6 @@
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/style.css" rel="stylesheet">
     <link href="{{ asset('/dealer') }}/assets/custom-file/css/custom.css" rel="stylesheet">
 
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
-
     <style>
     .country-option:hover {
         background-color: #f8f9fa;
@@ -124,7 +120,7 @@
 
                                     @csrf
 
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="name">Choose Country</label>
 
                                         <select name="country" class="form-control form-select">
@@ -139,6 +135,59 @@
 
                                         <p class="text-danger" id="error-country"></p>
 
+                                    </div> -->
+
+                                    <div class="form-group">
+                                        <label for="">Choose Country</label>
+
+                                        <div class="align-items-center">
+                                            <div class="">
+
+                                                <div class="dropdown">
+                                                    <button
+                                                        class="btn btn-light border dropdown-toggle align-items-center justify-content-between w-100 form-control"
+                                                        type="button" id="countryDropdown" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+
+                                                        <span id="selected-flag">
+                                                            {{ old('country_flag', $country[0]->flag) }}
+
+
+                                                        </span>
+
+                                                        <span id="selected-code" class="ms-2">
+                                                            {{ old('country_code', $country[0]->dial_code) }}
+                                                        </span>
+                                                    </button>
+
+                                                    <ul class="dropdown-menu p-2 " aria-labelledby="countryDropdown">
+
+                                                        @foreach ($country as $index => $item)
+                                                        <li>
+                                                            <label
+                                                                class="dropdown-item align-items-center gap-2 country-option"
+                                                                style="cursor: pointer;">
+                                                                <input type="radio" name="country"
+                                                                    value="{{ $item->dial_code }}"
+                                                                    data-flag="{{ $item->flag }}"
+                                                                    data-name="{{ $item->name }}" class="country-radio"
+                                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                    hidden>
+
+                                                                <div width="25" height="16">
+                                                                    <span>{{ $item->flag }} {{ $item->dial_code }}
+                                                                        ({{ $item->name }})
+                                                                    </span>
+                                                                </div>
+
+                                                            </label>
+                                                        </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
@@ -687,12 +736,6 @@ $(document).on('submit', 'form#Affiliate_AddAddress', function(event) {
     });
 
     return false;
-});
-
-
-
-$(document).ready(function() {
-    $('.selectpicker').selectpicker();
 });
 </script>
 
