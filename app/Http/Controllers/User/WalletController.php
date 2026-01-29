@@ -9,6 +9,8 @@ use App\Services\UserOrderService;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\CommonController;
 
+use Session;
+
 use Validator;
 
 class WalletController extends Controller
@@ -43,12 +45,56 @@ class WalletController extends Controller
             'user_id' => $user->id,
         ];
         $walletData = $this->UserOrderService->AddMoneyFromTheUserSide($data)['data'];
+
+        if($request->payment=='yes'){
+        $msg="Payment Paid Successfully";
+        $status='success';
+
+        Session::flash('message', $msg);
+        Session::flash('status', $status);
+         return redirect()->route('user.addWalletMoney');
+
+        }elseif($request->payment=='no'){
+
+        $msg="Payment Cancalled";
+        $status='error';
+
+        Session::flash('message', $msg);
+        Session::flash('status', $status);
+         return redirect()->route('user.addWalletMoney');
+        }
+
+
          //dd($chatData);
         return view('user.mywallet.addmoney',compact('walletData'));
     }
 
     if($request->isMethod('post')){
-        dd($request->all());
+
+          $validate = Validator::make($request->all(), [
+                'amount' => 'required|integer',
+                "payment_method"=>'required|in:1'
+            ]);
+
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+        }
+        
+        $request_data=(object)[
+        'user_id'=>$user->id,
+        'amount'=>$request->amount,
+        "payment_method"=>$request->payment_method,
+        ];
+
+        $data=$this->UserOrderService->AddMoneyFromTheUserSide($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+   
+
     }
 
 

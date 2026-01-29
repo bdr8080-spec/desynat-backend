@@ -2,6 +2,27 @@
 
 @section('content')
 
+@if (session('status') === 'success')
+<div class="alert alert-success">
+    {{ session('message') }}
+</div>
+
+
+@push('scripts')
+<script>
+$(function() {
+    $('#addMoneyInWalletSuccessModal').modal('show');
+});
+</script>
+@endpush
+
+
+@elseif (session('status') === 'error')
+<div class="alert alert-danger">
+    {{ session('message') }}
+</div>
+@endif
+
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
@@ -23,6 +44,7 @@
                         <input type="text" class="form-control pline-10" name="amount" placeholder="Enter Amount"
                             id="customAmount">
                     </div>
+                    <p class="text-danger" id="error-amount"></p>
                 </div>
             </div>
 
@@ -40,7 +62,7 @@
                 </div> -->
                     <div class="payment-option">
                         <label class="custom-radio">
-                            <input type="radio" name="payment" id="onlinePayment" value="1" checked>
+                            <input type="radio" name="payment_method" id="onlinePayment" value="1" checked>
                             <span class="radio-mark"></span>
                             <div class="label-content d-flex gap-2">
                                 <span class="cod-box">Online</span>
@@ -52,8 +74,7 @@
                 </div>
 
                 <div class="cmn-btn mt-4">
-                    <button type="submit" class="btn paybtn-common w-100" data-bs-target="#addamountModal"
-                        data-bs-toggle="modal">Pay Now</button>
+                    <button type="submit" class="btn paybtn-common w-100">Pay Now</button>
                 </div>
             </div>
         </div>
@@ -62,7 +83,8 @@
 </div>
 
 <!-- Success Modal -->
-<div class="modal fade" id="addamountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addMoneyInWalletSuccessModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content added-modal">
             <div class="modal-body">
@@ -130,14 +152,16 @@ $(document).on('submit', 'form#AddMoneyForm', function(event) {
             }, 2000);
 
             if (response.status === 'success') {
-                toastr.success(response.message);
+                // toastr.success(response.message);
 
                 $('.submit').attr('disabled', true);
 
-                setTimeout(() => {
-                    location.href =
-                        `affiliate-add-Bank-details?temp_user_id=${response.id}`;
-                }, 1000);
+                var orderid = response.data.unique_id;
+
+                var url = "/myfatoorah/" + orderid + "?type=addMoneyinWallet";
+                setTimeout(function() {
+                    window.location.href = url;
+                }, 2000);
 
             }
         },
@@ -191,4 +215,8 @@ $(document).on('submit', 'form#AddMoneyForm', function(event) {
     return false;
 });
 </script>
+
+
+
+
 @endsection

@@ -15,7 +15,7 @@ use Exception;
 
 Use Auth;
 use Validator;
-use App\Models\{seller,UserGiftCards,Order,Addtocart,sellerBanner};
+use App\Models\{seller,UserGiftCards,Order,Addtocart,sellerBanner,UserWalletHistory};
 use Illuminate\Support\Facades\Cache;
 use App\Models\SellerSubcriptionPlanBuy;
 
@@ -50,6 +50,28 @@ class MyFatoorahController extends Controller {
      */
     public function index(request $request,$id) {
         try {
+
+      if($request->type=='addMoneyinWallet'){
+
+         $checkOrder=UserWalletHistory::with('user_details')->where('unique_id', $id)->first();
+
+            //For example: pmid=0 for MyFatoorah invoice or pmid=1 for Knet in test mode
+            $paymentId = request('pmid') ?: 0;
+            $sessionId = request('sid') ?: null;
+            $orderId  = $id ?: 147;
+
+            $order_array=[
+                'amount'=>$checkOrder->amount,
+                'CustomerName'       => $checkOrder->user_details->full_name,
+                'InvoiceValue'       => $checkOrder->amount,
+                'CustomerEmail'      => $checkOrder->user_details->email,
+                'MobileCountryCode'  => $checkOrder->user_details->country_code,
+                'CustomerMobile'     => $checkOrder->user_details->mobile,
+                'Language'           => 'en',
+                'CustomerReference'  => $orderId,
+            ];
+            
+        }
 
      if($request->type=='bannerBuy'){
 
@@ -356,6 +378,35 @@ class MyFatoorahController extends Controller {
                 ]);
                 
             }
+
+            // Wallet Add to Money Code 
+
+            $CheckAddMoneyInWalletStatus=UserWalletHistory::with('user_details')->where('unique_id', $transaction_id)->first();
+
+
+            if($CheckAddMoneyInWalletStatus){
+
+                if($data->InvoiceStatus=='Paid'){
+                    $CheckAddMoneyInWalletStatus->update(['payment_status'=>'1','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Add Money in Wallet Successfully";
+                    $url="user/add-wallet-money?payment=yes";
+
+                }else{
+                    
+                    $CheckAddMoneyInWalletStatus->update(['payment_status'=>'2','transaction_id'=>$onlineReturnTransaction_id]);
+                    $msg="Banner Payment Cancelled Successfully";
+                    $url="user/add-wallet-money?payment=no";
+                }
+                
+                // return  redirect()->to($url);
+
+                return redirect()->to($url)->with([
+                'message' => $msg,
+                'status' => $data->InvoiceStatus == 'Paid' ? 'success' : 'error'
+                ]);
+                
+            }
+
 
 
 
