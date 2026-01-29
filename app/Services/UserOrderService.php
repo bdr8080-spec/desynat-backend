@@ -1611,7 +1611,8 @@ $unique_id="Wal".Rand('100000','999999');
         'type'=>'3',
         "payment_method"=>'1',
         "payment_status"=>"1",
-        "addedby"=>"2"
+        "addedby"=>"2",
+        "giftcardno"=>$checkGiftCard->giftCardNo
     ];
 $insert_record= UserWalletHistory::Create($request_data);
 
