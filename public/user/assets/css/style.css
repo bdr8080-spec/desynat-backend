@@ -628,13 +628,13 @@ h3.mid-headng {
 
 .header_nav_button_dropdown .dropdown-menu.show {
     padding: 10px;
-    max-height: 600px;
-    height: fit-content;
-    width: 300px;
+    max-height: calc(100vh - 270px);
+    width: 350px;
 }
 
 .header_nav_button_dropdown .profileDropdown.show {
-    min-height: 100%;
+    /* min-height: 100%; */
+    max-height: calc(100vh - 70px);
     width: 400px;
     overflow-y: scroll;
 }
@@ -1140,7 +1140,7 @@ h3.mid-headng {
 
 .profileContenar {
     background: #FFF7EA;
-    padding: 30px 30px;
+    padding: 20px 30px;
 }
 
 .profileContenar_img {
