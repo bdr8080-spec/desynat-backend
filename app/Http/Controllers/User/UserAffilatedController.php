@@ -125,6 +125,7 @@ class UserAffilatedController extends Controller
                 return response()->json([
                     'status' => true,
                     'message' => 'Affiliate User Login successfully',
+                    'data'=>$user
                 ]);
             }
 

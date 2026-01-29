@@ -199,7 +199,11 @@ $(document).on('submit', '#userLogin', function(e) {
         contentType: false,
         success: function(resp) {
             if (resp.status == true) {
-                toastr.success(resp.message);
+
+                if (resp.data.admin_verify == '2') {
+                    toastr.success(resp.message);
+                }
+
                 setTimeout(() => {
                     location.href = "{{route('affiliate.affiliateDashboard')}}";
                 }, 1000);
