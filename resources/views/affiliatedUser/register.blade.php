@@ -234,21 +234,20 @@
                                         <input type="password" class="form-control notapplyspace" id="password"
                                             placeholder="Enter Password" name="password" value="">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
-
-                                        <p class="text-danger" id="error-password"></p>
                                     </div>
+                                    <p class="text-danger" id="error-password"></p>
                                     <div class="form-group position-relative">
                                         <label for="password">Confirm Password</label>
                                         <input type="password" class="form-control notapplyspace" id="confirm_password"
                                             placeholder="Enter Confirm Password" name="confirm_password" value="">
                                         <i class="toggle-password  bi bi-eye-slash "></i>
-                                        <p class="text-danger" id="error-confirm_password"></p>
                                     </div>
+                                    <p class="text-danger" id="error-confirm_password"></p>
 
-                                    <div class="form-check py-4 form-group">
+                                    <div class="form-check py-3 form-group">
                                         <input class="form-check-input" type="checkbox" value="1" id="checkChecked"
                                             name="accept" {{ old('accept') ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="checkChecked">
+                                        <label class="form-check-label mt-0" for="checkChecked">
                                             I accept the <span class="title-color">Terms & Conditions </span> and
                                             <span class="title-color">Policies</span>
                                         </label>
