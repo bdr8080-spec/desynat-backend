@@ -10,39 +10,39 @@ use Google\Cloud\Translate\V3\TranslationServiceClient;
 
 class GoogleTranslateController extends Controller
 {
-//     public function translate_words()
-//     {     
-        
-// $projectId = 'your-project-id';
-// $location  = 'global';
 
-// $response = Http::withToken(
-//     trim(shell_exec('gcloud auth application-default print-access-token'))
-// )->post(
-//     "https://translation.googleapis.com/v3/projects/{$projectId}/locations/{$location}:translateText",
-//     [
-//         'contents' => ['Hello how are you'],
-//         'targetLanguageCode' => 'ar'
-//     ]
-// );
+public function translate_words()
+{     
+    $text = 'Hello how are you';
 
-// return $response->json();
+        $response = Http::post(
+            'https://translation.googleapis.com/language/translate/v2?key=' . env('GOOGLE_TRANSLATE_API_KEY'),
+            [
+                'q' => $text,
+                'target' => 'ar'
+            ]
+        );
+
+        if ($response->failed()) {
+            return $response->json(); // shows error if any
+        }
+
+        return $response['data']['translations'][0]['translatedText'];
+
+    }
 
 
-//     }
+//  public function translate_words()
+//     {
 
+// $client = new TranslationServiceClient();
 
- public function translate_words()
-    {
+// $response = $client->translateText(
+//     ['Hello how are you'],
+//     'ar');
 
-$client = new TranslationServiceClient();
+// return $response;
 
-$response = $client->translateText(
-    ['Hello how are you'],
-    'ar');
-
-return $response;
-
-}
+// }
 
 }
