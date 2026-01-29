@@ -24,6 +24,22 @@ document.querySelectorAll('.applynumberOnly').forEach(function(input) {
     });
 });
 
+document.querySelectorAll('.applyAlphaNumeric').forEach(function(input) {
+    input.addEventListener('input', function() {
+        // Remove anything that is NOT a letter or number
+        this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
+    });
+
+    // Optional: prevent space key explicitly
+    input.addEventListener('keydown', function(e) {
+        if (e.key === ' ') {
+            e.preventDefault();
+        }
+    });
+});
+
+
+
 
 document.querySelectorAll('.applyAlphabetSpaceOnly').forEach(function(input) {
     input.addEventListener('input', function() {

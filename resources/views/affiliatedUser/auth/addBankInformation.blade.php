@@ -117,7 +117,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="name">IBAN</label>
-                                        <input type="text" class="form-control applyAlphabetSpaceOnly"
+                                        <input type="text" class="form-control applyAlphaNumeric"
                                             placeholder="Enter IBAN" name="iban"
                                             value="{{ old('iban', @$affiliate_bank->iban) }}">
                                         <p class="text-danger" id="error-iban"></p>

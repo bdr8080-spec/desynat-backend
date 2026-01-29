@@ -16,6 +16,8 @@ use App\Http\Controllers\User\UserAffilatedController;
 use App\Http\Controllers\User\WalletController;
 
 
+use App\Http\Controllers\GoogleTranslateController;
+
 Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
 
  Route::group(['prefix' => 'user'], function () { 
@@ -161,6 +163,15 @@ Route::get('/getSearchData', [DashBoardController::class, 'getSearchData'])->nam
 Route::get('/getRecommandedlatestSearch', [DashBoardController::class, 'getRecommandedlatestSearch'])->name('user.getRecommandedlatestSearch');
 
 Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])->name('user.getlatestSearch');
+
+
+
+Route::get('/translate-words', [GoogleTranslateController::class, 'translate_words'])->name('user.translate');
+
+
+
+
+
 
 
 
