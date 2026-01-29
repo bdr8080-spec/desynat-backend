@@ -634,9 +634,9 @@ h3.mid-headng {
 
 .header_nav_button_dropdown .profileDropdown.show {
     /* min-height: 100%; */
-    max-height: calc(100vh - 70px);
+    max-height: calc(100vh - 50px);
     width: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .header_nav_button_dropdown .dropdown-menu .dropdown-item {
