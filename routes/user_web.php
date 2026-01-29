@@ -136,6 +136,8 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
 Route::get('/my-wallet', [WalletController::class,'myWallet'])->name('user.myWallet');
 Route::match(['get','post'],'/add-wallet-money', [WalletController::class,'addWalletMoney'])->name('user.addWalletMoney');
 
+Route::match(['post'],'/redeem-giftCard-in-User', [WalletController::class,'redeemgiftCardinUser'])->name('user.redeemgiftCardinUser');
+
 
 });
 

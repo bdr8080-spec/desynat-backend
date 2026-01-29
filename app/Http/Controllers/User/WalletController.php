@@ -102,6 +102,51 @@ class WalletController extends Controller
     }
 
 
+    
+    public function redeemgiftCardinUser(Request $request){ 
+
+        try {
+   
+        $validate = Validator::make($request->all(), [
+                'giftCardNo' => 'required|min:16|max:16',
+                "giftCardPin"=>'required'
+            ]);
+
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+        }
+
+      $user_id= $request->user()->id;
+
+        $request_data=(object)[
+        'user_id'=>$user_id,
+        'giftCardNo'=>$request->giftCardNo,
+        "giftCardPin"=>$request->giftCardPin,
+        ];
+
+        $data=$this->UserOrderService->RedeemGiftCardMoneyToWallet($request_data);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+   
+
+        
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Failed to send message',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+
+    }
+
+
+
     public function sendNormalMessage(Request $request)
     {
         try {
