@@ -143,9 +143,9 @@
                                         <div class="align-items-center">
                                             <div class="">
 
-                                                <div class="dropdown">
-                                                    <button
-                                                        class="btn btn-light border dropdown-toggle align-items-center justify-content-between w-100 form-control"
+                                                <div class="dropdown country-arrow">
+                                                    <div
+                                                        class="border dropdown-toggle align-items-center justify-content-between w-100 form-control"
                                                         type="button" id="countryDropdown" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
 
@@ -156,7 +156,7 @@
                                                         <span id="selected-code" class="ms-2">
                                                             {{ old('country_code', $country[0]->name) }}
                                                         </span>
-                                                    </button>
+                                                    </div>
 
                                                     <ul class="dropdown-menu p-2 " aria-labelledby="countryDropdown">
 
@@ -174,8 +174,8 @@
                                                                     hidden>
 
                                                                 <div width="25" height="16">
-                                                                    <span>{{ $item->flag }} {{ $item->dial_code }}
-                                                                        ({{ $item->name }})
+                                                                    <span>{{ $item->flag }}
+                                                                        {{ $item->name }}
                                                                     </span>
                                                                 </div>
 
@@ -336,7 +336,7 @@
 
                     <div id="googleMap" style="width: 100%; height: 500px;"></div>
 
-                    <div id="useCurrentLocation">
+                    <div id="useCurrentLocation" class="mt-3 cursor-pointer">
                         <i class="bi bi-crosshair"></i> Use Current Location
                     </div>
                 </div>

@@ -1117,4 +1117,11 @@ table.dataTable td.dt-type-date {
     max-width: 90%;
     margin: auto;
 }
-
+.country-arrow .dropdown-toggle::after {
+    position: absolute;
+    right: 10px;
+    bottom: 50%;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
