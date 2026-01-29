@@ -99,7 +99,7 @@ class UserAffilatedController extends Controller
             if ($user->admin_verify == '3') {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Your profile is rejected By Admin',
+                    'message' => "Your Registration request is rejected ($user->reject_reason) ",
                 ], 401);
             }
 
