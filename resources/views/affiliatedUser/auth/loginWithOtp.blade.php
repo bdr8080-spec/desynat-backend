@@ -112,6 +112,11 @@
                 Password</a>
             </div>
 
+            <div class="sign-new mt-4 text-center">
+                <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('affiliate.affiliate_signup')}}">Sign
+                up</a></p>
+            </div>
+
         </div>
     </div>
 </div>
