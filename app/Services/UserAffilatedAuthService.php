@@ -296,7 +296,13 @@ try{
                 $get_user_details=  AffilatedUser::where('id',$request->id)->where('otp_verify','1')->first();
     
                 if($get_user_details){
+
+               if (Hash::check($request->password, $get_user_details->password)) {
               
+                return ['status'=>'error','message'=>"When Enter the old password then validation error should be display Old Password can not use as new password",'data'=>(object)[]];                 
+             
+               }
+               
                     $get_user_details->update(['password'=>hash::make($request->password)]);
                     
                     $get_user_details->affiliated_accessToken ='';            
