@@ -82,6 +82,7 @@ if($checkphone){
     'long'=>$request->long??null,
     "device_type"=>$request->device_type??0,
     'otp'=>$otp,
+    'lang'=>$request->lang??null
     ];
 
       $check=  AffilatedUser::UpdateOrCreate($insert_Data);
@@ -236,9 +237,12 @@ try{
 
             if(Hash::check($request->password,$get_user_details->password,)){
                 // $get_user_details->accessToken = $get_user_details->createToken('seller')->plainTextToken;   
-                
+                $get_user_details->update(['lang'=>$request->lang??null]);// add lang in page 
+
+
                 $get_user_details->affiliated_accessToken = $get_user_details->createToken('affilated-token', ['AffilatedUser'])->plainTextToken;
 
+                
                 // $user->createToken('seller-token', ['seller'])->plainTextToken;
 
                 return ['status'=>'success','message'=>"Affiliate Login Successfully",'data'=>$get_user_details];                            

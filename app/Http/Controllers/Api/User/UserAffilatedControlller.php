@@ -61,7 +61,8 @@ class UserAffilatedControlller extends Controller
 
     'let'=>$request->let??null,
     'long'=>$request->long??null,
-    "device_type"=>$request->device_type??null
+    "device_type"=>$request->device_type??null,
+    'lang'=>$request->lang??null
     ];
 
   $data=$this->UserAffilatedAuthService->RegisterAffilatedUser($request_data);

@@ -43,6 +43,8 @@ class AuthController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
+       $req->lang=$req->lang??null; // add language
+
         $data= $this->UserAuthService->register($req);
 
         if(isset($data['status']) && $data['status']=='error' ){
@@ -103,9 +105,8 @@ class AuthController extends Controller
         }
        }
 
-
-
-
+       $req->lang=$req->lang??null; // add language
+       
         $data= $this->UserAuthService->loginCheck($req);
 
         if(isset($data['status']) && $data['status']=='error' ){

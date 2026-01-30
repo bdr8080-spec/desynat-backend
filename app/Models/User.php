@@ -31,7 +31,8 @@ class User extends Authenticatable
         'device_type',
         'fcm_token',
         'profile_image',
-        'banner_view'
+        'banner_view',
+        'lang'
     ];
 
     /**

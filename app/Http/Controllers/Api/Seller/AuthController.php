@@ -62,6 +62,9 @@ class AuthController extends Controller
             return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
            }
 
+         $request->lang=$request->lang??null;// add language 
+
+
         $data=$this->SellerAuthService->register($request); // seller insert Code
 
         if(isset($data['status']) && $data['status']=='error' ){

@@ -32,6 +32,8 @@ return new class extends Migration
 
             $table->string('lang')->nullable()->comment('Language ');
             $table->tinyInteger('is_block')->default(0)->comment('0 no, 1 yes');
+            $table->string('lang')->default('en')->comment(' en ar');
+         
 
             
 

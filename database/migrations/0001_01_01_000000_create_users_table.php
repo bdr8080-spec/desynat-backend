@@ -30,6 +30,9 @@ return new class extends Migration
             $table->longText('long')->nullable();
             $table->rememberToken();
             $table->string('status')->default('1')->comment('0 inactive,1 active');
+
+            $table->string('lang')->default('en')->comment(' en ar');
+            
             $table->timestamps();
         });
 

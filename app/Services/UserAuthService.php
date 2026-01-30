@@ -23,7 +23,8 @@ class UserAuthService
             'mobile'=>$request->mobile,
             'email'=>$request->email,
             'password'=>$password_hash ,
-            'otp'=>$otp
+            'otp'=>$otp,
+            'lang' =>$request->lang
         ];
 
        $check=  User::create($record);
@@ -66,6 +67,7 @@ class UserAuthService
         $get_user_details=  User::where('country_code',$request->country_code)->Where('mobile',$request->email_mobile)->where('otp_verify','1')->first();
 
       }else{
+
         $get_user_details=  User::where('email',$request->email_mobile)->where('otp_verify','1')->first();
 
       }
@@ -86,9 +88,11 @@ class UserAuthService
                 $get_user_details->affiliated_userdetails= (object)[];
                 $get_user_details->affiliated_accessToken ='';
               }
+
+              $get_user_details->update(['lang'=> $request->lang??null]);// update code in language 
               
-                
-                return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
+              
+            return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
             }else{
                 return ['status'=>'error','message'=>"Please enter correct password",'data'=>(object)[]];                
             }

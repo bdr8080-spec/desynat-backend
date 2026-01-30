@@ -240,6 +240,8 @@ class SellerAuthService
                   $get_user_details->subcription_plan_check ='0';
                 }
 
+                $get_user_details->lang=$request->lang??null; // add lanuage 
+
 
                 // $user->createToken('seller-token', ['seller'])->plainTextToken;
 
