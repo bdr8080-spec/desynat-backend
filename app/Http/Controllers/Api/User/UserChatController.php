@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Services\UserFirebaseService;
+use App\Services\GoogletranslateService;
 use App\Helpers\ApiResponse;
 
 use Validator;
@@ -14,9 +15,10 @@ use Validator;
 class UserChatController extends Controller
 {
 
-    public function __construct(UserFirebaseService $UserFirebaseService)
+    public function __construct(UserFirebaseService $UserFirebaseService,GoogletranslateService $GoogletranslateService)
     {
         $this->UserFirebaseService = $UserFirebaseService;
+        $this->GoogletranslateService = $GoogletranslateService;
     }
 
 
@@ -155,10 +157,21 @@ class UserChatController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
+          $TextInArbic='';
+
+        if ($request->type=='0') {
+            $message=$request->message;
+            
+            $TextInArbic= $this->GoogletranslateService->translate($message,'ar');
+        }
+
+        
+
        $request_data=(object)[
         "unique_id"=>$request->unique_id,
         "message"=>$request->message,
         "type"=>strval($request->type), // 0 message and 1 for Image 
+        "messageAr" => $TextInArbic,
         'by'=>$request->by,
        ];
 
