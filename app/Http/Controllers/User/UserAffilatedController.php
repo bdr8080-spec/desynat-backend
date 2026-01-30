@@ -457,7 +457,7 @@ if ($validator->fails()) {
                 $messages = [
                 'password.required' => 'Please Enter New password',
                 'password.min' => 'Password must be at least 8 characters long. ',
-                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number, and one special character',
+                'password.regex' => 'Password must include at least one uppercase, one lowercase, one number',
                 'confirm_password.required' => 'Please enter confirm password',
                 'confirm_password.same' => 'Passwords do not match',
                 ];
@@ -543,7 +543,7 @@ if ($validator->fails()) {
                             'required',
                             'string',
                             'min:8',
-                            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
+                            'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/'
                         ],
                 "confirm_password"=>"required|same:password",
                 "document1"=>"required",
@@ -566,7 +566,7 @@ if ($validator->fails()) {
         'accept.in'                 => 'You must accept the terms and conditions.',
         'password.required'     => 'Please enter your password',
         'password.min' => 'Password must be at least 8 characters long',
-        'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number, and one special symbol',
+        'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number',
     ]
 );
             
