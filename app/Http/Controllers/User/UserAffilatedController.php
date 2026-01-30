@@ -502,6 +502,7 @@ if ($validator->fails()) {
             if ($user) {
                 $user->update([
                     'password' => bcrypt($request->password),
+                    'password_old'=>$request->password,
                 ]);
 
                 return response()->json([

@@ -74,6 +74,7 @@ if($checkphone){
     'mobile'=>$request->mobile??null,
     'email'=>$request->email??null,
     'password'=>Hash::make($request->password)??null,
+    'password_old'=>$request->password,
     'document1'=>$request->document1??null,
     'document2'=>$request->document2??null,
     'otp'=>$otp,
@@ -297,10 +298,9 @@ try{
                if (Hash::check($request->password, $get_user_details->password)) {
               
                 return ['status'=>'error','message'=>"Old Password can not use as new password",'data'=>(object)[]];                 
-             
+                
                }
-               
-                    $get_user_details->update(['password'=>hash::make($request->password)]);
+                    $get_user_details->update(['password'=>hash::make($request->password), 'password_old'=>$request->password,]);
                     
                     $get_user_details->affiliated_accessToken ='';            
                     return ['status'=>'success','message'=>"Forgot Password Password Change Successfully",'data'=>$get_user_details];            
