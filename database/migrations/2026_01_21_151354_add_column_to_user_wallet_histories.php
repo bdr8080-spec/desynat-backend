@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('payment_method')->nullable()->comment('1 online');
             $table->enum('payment_status',['0','1','2'])->default('0')->comment('0 pending 1 success 2 cancelled/failed');
             $table->enum('addedby',['1','2'])->default('1')->comment("1 admin 2 User");
-            $table->string('giftcardno')->nullable()->comment('only recived when gift card redeem');            
+            $table->string('giftcardno')->nullable()->comment('only received when gift card redeem');    
+            $table->string('order_id')->nullable()->comment('only received when order Pay with Wallet');            
         });
     }
     

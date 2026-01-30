@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('password_old');
+                        
             $table->string('otp')->nullable();            
             $table->string('otp_verify')->default('0')->comment('0 pending , 1 verify otp');            
             $table->string('device_type')->default('0')->comment('0 web 1 ios 2 andriod');
