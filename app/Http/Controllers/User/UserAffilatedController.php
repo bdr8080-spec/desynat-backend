@@ -329,7 +329,7 @@ class UserAffilatedController extends Controller
 
 
     public function affiliate_otpVerify(Request $request){
-        
+
         if($request->isMethod('get')){
             
 
