@@ -2537,7 +2537,7 @@ i.bi.icons {
 }
 
 .amount-btn.active {
-    background: #b68d5c;
+    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
     color: #fff;
 }
 

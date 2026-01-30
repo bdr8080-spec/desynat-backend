@@ -38,8 +38,10 @@ $(function() {
                 <div class="gift-pnl addheight">
                     <h6>Amount</h6>
                     <div class="occasion-buttons mb-3">
-                        <button type="button" class="amount-btn min-width-100 active" data-value="50">50 KD</button>
-                        <button type="button" class="amount-btn min-width-100" data-value="100">100 KD</button>
+                        <button type="button" class="amount-btn min-width-100 active" data-value="100">100 KD</button>
+                        <button type="button" class="amount-btn min-width-100" data-value="500">500 KD</button>
+                        <button type="button" class="amount-btn min-width-100" data-value="1000">1000 KD</button>
+
                     </div>
                     <div class="form-group w-100 py-2 amountpnl">
                         <input type="text" class="form-control pline-10" name="amount" placeholder="Enter Amount"
@@ -50,7 +52,7 @@ $(function() {
             </div>
 
             <div class="col-lg-4 col-md-6">
-                <div class="paycard">
+                <div class="paycard mt-4">
                     <!-- <div class="payment-option mb-3">
                     <label class="custom-radio">
                         <input type="radio" name="payment">
@@ -61,13 +63,13 @@ $(function() {
                         </div>
                     </label>
                 </div> -->
-                    <div class="payment-option">
+                    <div class="payment-option py-1">
                         <label class="custom-radio">
                             <input type="radio" name="payment_method" id="onlinePayment" value="1" checked>
                             <span class="radio-mark"></span>
                             <div class="label-content d-flex gap-2">
-                                <span class="cod-box">Online</span>
-                                <div class="title">Online</div>
+                                <span class="cod-box-2"><i class="bi bi-credit-card fs-5"></i></span>
+                                <div class="title">Online Payment</div>
 
                             </div>
                         </label>
