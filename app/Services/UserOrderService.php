@@ -421,6 +421,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
        $userBalance= $this->userBalanceget($request_data);
 
        if($userBalance['data']['balance'] < round($OrderPayAmount)){
+
         // check Wallet AMount 
         return [
             'status' => 'error',
@@ -431,6 +432,22 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
        //    Cut Amount From The Wallet Amount 
         $this->UserBalancePayOrder($userid,$OrderPayAmount);
+
+        // Create Wallet Transaction history 
+        $unique_id="Wal".Rand('100000','999999');
+            $request_wallet_transaction=[
+                "unique_id"=>$unique_id,
+                'user_id'=>$userid,
+                'amount'=>$OrderPayAmount,
+                'type'=>'2',
+                "payment_method"=>null,
+                "payment_status"=>"1",
+                "addedby"=>"2",
+                "order_id"=>$checkOrder->id,
+                "transaction_id"=>"Tra".$unique_id
+            ];
+        UserWalletHistory::Create($request_wallet_transaction);
+
 
         $this->AddtocartRemoveData($checkOrder->id);
 
