@@ -103,11 +103,19 @@
                 </div>
                 <span class="text-danger" id="error-mobileOrEmail"></span>
                 <br />
-
-                <button type="submit" class="customBtn mb-3" id="loginButtom">Login</button>
+                <div class="mt-3">
+                    <button type="submit" class="customBtn mb-3" id="loginButtom">Login</button>
+                </div>
             </form>
-            <a class="customBtn2" style="text-decoration: none;" href="{{route('affiliate.affiliate_login')}}">Login Via
+            <div class="mt-2">
+                <a class="customBtn2" style="text-decoration: none;" href="{{route('affiliate.affiliate_login')}}">Login Via
                 Password</a>
+            </div>
+
+            <div class="sign-new mt-4 text-center">
+                <p class="mt-3 dontAccount">Don’t have an account? <a href="{{route('affiliate.affiliate_signup')}}">Sign
+                up</a></p>
+            </div>
 
         </div>
     </div>
