@@ -286,7 +286,25 @@
     </div>
 
 
+    <div class="modal fade" id="addDocuemnttoverify" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content added-modal">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <img src="{{ asset('dealer') }}/assets/img/success.svg" alt="icon" class="img-fluid">
+                        <h5 class="title24 py-3">Document Rejected. Please Reupload it.
+                            {{@$affilatedUser->reject_reason}} </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -297,6 +315,14 @@
 
 <!--Main JS File -->
 <!-- <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script> -->
+
+
+<script>
+$(document).ready(function() {
+    $('#addDocuemnttoverify').modal('show');
+});
+</script>
+
 
 <script>
 $(document).ready(function() {

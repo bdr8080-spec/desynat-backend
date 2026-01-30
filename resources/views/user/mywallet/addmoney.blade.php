@@ -2,27 +2,11 @@
 
 @section('content')
 
-@if (session('status') === 'success')
-<div class="alert alert-success">
-    {{ session('message') }}
-</div>
-
-
-@push('scripts')
-<script>
-$(function() {
-    $('#addMoneyInWalletSuccessModal').modal('show');
-});
-</script>
-@endpush
-
-
-@elseif (session('status') === 'error')
+@if (session('status') === 'error')
 <div class="alert alert-danger">
     {{ session('message') }}
 </div>
 @endif
-
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
@@ -102,6 +86,17 @@ $(function() {
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+@if (session('status') === 'success')
+<script>
+$(function() {
+    $('#addMoneyInWalletSuccessModal').modal('show');
+});
+</script>
+@endif
+
+
 
 <script>
 $(document).ready(function() {
