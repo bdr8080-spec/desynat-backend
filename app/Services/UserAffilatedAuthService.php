@@ -11,10 +11,7 @@ use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
 use App\Models\{Promocode,userAddress,country,all_countrie,allproductchats};
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 
-
 use Hash;
-
-
 
 use App\Models\{AffilatedUser,AffilatedUserAddress,Bankdetails};
 
