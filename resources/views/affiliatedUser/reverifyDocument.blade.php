@@ -133,11 +133,10 @@
                                                         aria-expanded="false">
 
                                                         <span id="selected-flag">
-                                                            {{ old('country_flag', $country[0]->flag) }}
+                                                            {{ old($country[0]->flag, @$affilatedUser->country_details->flag1 ) }}
                                                         </span>
-
                                                         <span id="selected-code" class="ms-2">
-                                                            {{ old('country_code', $country[0]->dial_code) }}
+                                                            {{ old($country[0]->dial_code,@$affilatedUser->country_code) }}
                                                         </span>
                                                     </button>
 
@@ -153,7 +152,7 @@
                                                                     value="{{ $item->dial_code }}"
                                                                     data-flag="{{ $item->flag }}"
                                                                     data-name="{{ $item->name }}" class="country-radio"
-                                                                    {{ old('country_code', $country[0]->dial_code) == $item->dial_code ? 'checked' : '' }}
+                                                                    {{ old('country_code', $affilatedUser->country_code) == $item->dial_code ? 'checked' : '' }}
                                                                     hidden>
 
                                                                 <div width="25" height="16">

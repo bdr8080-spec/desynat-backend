@@ -870,6 +870,8 @@ if ($validator->fails()) {
         
         if($request->isMethod('get')){
 
+             $affilatedUser = AffilatedUser::with('country_details')->where('id',$user)->first();
+            
             $country =   country::all();
             return View('affiliatedUser.reverifyDocument',compact('country','affilatedUser'));
         }
