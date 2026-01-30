@@ -15,7 +15,6 @@ Route::match(['get', 'post'], '/affiliate-forgot-password', [UserAffilatedContro
 Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedController::class, 'userCreatePassword'])->name('affiliate.userCreatePassword');  
 Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
 
-
  Route::post('/resend-otp', [UserAffilatedController::class, 'resendOtp'])->name('affiliate_signupResendOtp');
 
 
@@ -24,7 +23,6 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
 // M7 Code 
 
  Route::get('/logout',[UserAffilatedController::class,'userLogout'])->name('affiliateLogout');
-
 
  Route::match(['get','post'],'/affiliate-add-address', [UserAffilatedController::class,'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
 
@@ -36,3 +34,4 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
 //  Affiliate_user
 
  Route::get('/affiliate-dashboard', [UserAffilatedController::class,'affiliateDashboard'])->name('affiliate.affiliateDashboard');
+ Route::match(['get', 'post'], '/affiliate-reverify-Document', [UserAffilatedController::class, 'affiliatereverifyDocument'])->name('affiliate.affiliatereverifyDocument');

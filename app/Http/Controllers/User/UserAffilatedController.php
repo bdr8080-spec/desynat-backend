@@ -586,16 +586,16 @@ if ($validator->fails()) {
 
        if ($request->hasFile('document1')) {
             $dir = "document";
-            $document1 = image_upload($request->profile_image, $dir);
+            $document1 = image_upload($request->document1, $dir);
        }else{
         $document1=null;
        }
 
-       if ($request->hasFile('document1')) {
+       if ($request->hasFile('document2')) {
             $dir = "document";
-            $document1 = image_upload($request->document1, $dir);
+            $document2 = image_upload($request->document2, $dir);
        } else{
-        $document1=null;
+        $document2=null;
        }
 
      $request_data=(object) [
@@ -858,6 +858,125 @@ if ($validator->fails()) {
                 'message' => 'OTP resent successfully',
             ]);
         }
+
+
+
+
+    public function affiliatereverifyDocument(Request $request){
+
+        $affilatedUser=Auth::guard('affilated_user')->user();
+            
+        $user = $affilatedUser->id;
+        
+        if($request->isMethod('get')){
+
+            $country =   country::all();
+            return View('affiliatedUser.reverifyDocument',compact('country','affilatedUser'));
+        }
+        
+        
+     
+        $validate = Validator::make($request->all(), [
+                // 'profile_image' => 'required',
+                // 'full_name' => 'required',
+                // 'country_code' => 'required',
+                // "mobile" =>"required",
+                //  'email' => [
+                //     'required',
+                //     'email',
+                // ],
+                //  'password' => [
+                //             'required',
+                //             'string',
+                //             'min:8',
+                //             'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/'
+                //         ],
+                // "confirm_password"=>"required|same:password",
+                "document1"=>"required",
+                "document2"=>"required",
+                // "accept" =>"required|In:1"
+                ],
+            [
+        // 'profile_image.required'    => 'Please Upload Profile Picture.',
+        // 'full_name.required'        => 'Please Enter First Name.',
+        // 'country_code.required'     => 'Country code is required.',
+        // 'mobile.required'           => 'Please Enter Mobile number.',
+        // 'email.required'            => 'Please Enter Email address.',
+        // 'email.email'               => 'Please enter a valid email address.',
+        // 'password.required'         => 'Password is required.',
+        // 'confirm_password.required' => 'Please confirm your password.',
+        // 'confirm_password.same'     => 'Password and confirm password must match.',
+        'document1.required'        => 'Please Upload Document 1.',
+        'document2.required'        => 'Please Upload Document 2',
+        // 'accept.required'           => 'You must accept the terms and conditions.',
+        // 'accept.in'                 => 'You must accept the terms and conditions.',
+        // 'password.required'     => 'Please enter your password',
+        // 'password.min' => 'Password must be at least 8 characters long',
+        // 'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number',
+    ]
+);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+
+    //    if ($request->hasFile('profile_image')) {
+    //         $dir = "document";
+    //         $profile_image = image_upload($request->profile_image, $dir);
+
+    //    }else{
+    //     $profile_image=null;
+    //    }
+
+       if ($request->hasFile('document1')) {
+            $dir = "document";
+            $document1 = doc_upload($request->document1, $dir);
+       }else{
+        $document1=null;
+       }
+
+       if ($request->hasFile('document2')) {
+            $dir = "document";
+            $document2 = doc_upload($request->document2, $dir);
+       } else{
+        $document1=null;
+       }
+
+     $request_data=(object) [
+    'user_id'=>$user,
+    // "profile_image"=>$profile_image,
+    // 'full_name'=>$request->full_name??null,
+    // 'country_code'=>$request->country_code??null,
+    // 'mobile'=>$request->mobile??null,
+    // 'email'=>$request->email??null,
+    // 'password'=>$request->password??null,
+    'document1'=>$document1??null,
+    'document2'=>$document2??null,
+
+    // 'let'=>$request->let??null,
+    // 'long'=>$request->long??null,
+    // "device_type"=>$request->device_type??null
+    ];
+
+  $data=$this->UserAffilatedAuthService->uploadReverifydocument($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+    }
+
+        $id = Crypt::encryptString($data['data']->id);
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message'],
+            'id' => $id,
+        ]);
+
+    
+    // return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
 
 
 

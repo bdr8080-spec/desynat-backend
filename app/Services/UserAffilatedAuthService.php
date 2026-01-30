@@ -345,8 +345,7 @@ try{
 function uploadReverifydocument($request){
 
 try{
-
-
+  
   $user_id=$request->user_id;
       // $otp="123456";
 

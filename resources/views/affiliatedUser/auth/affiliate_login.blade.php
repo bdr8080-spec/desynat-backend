@@ -204,6 +204,16 @@ $(document).on('submit', '#userLogin', function(e) {
                     toastr.success(resp.message);
                 }
 
+                if (resp.data.admin_verify == '4') {
+                    toastr.success("Your Document is rejected By Admin Please Upload Again");
+
+                    setTimeout(() => {
+                        location.href = "{{route('affiliate.affiliatereverifyDocument')}}";
+                    }, 1000);
+
+                    return false;
+                }
+
                 setTimeout(() => {
                     location.href = "{{route('affiliate.affiliateDashboard')}}";
                 }, 1000);
