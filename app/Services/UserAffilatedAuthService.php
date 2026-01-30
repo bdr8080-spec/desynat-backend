@@ -296,7 +296,7 @@ try{
 
                if (Hash::check($request->password, $get_user_details->password)) {
               
-                return ['status'=>'error','message'=>"When Enter the old password then validation error should be display Old Password can not use as new password",'data'=>(object)[]];                 
+                return ['status'=>'error','message'=>"Old Password can not use as new password",'data'=>(object)[]];                 
              
                }
                
