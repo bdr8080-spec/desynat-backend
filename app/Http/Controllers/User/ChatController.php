@@ -110,6 +110,8 @@ class ChatController extends Controller
 
             $message = null;
 
+            $TextInArbic='';
+
             if ($type === 1) {
 
                 $commonController = new CommonController();

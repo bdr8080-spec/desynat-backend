@@ -27,8 +27,8 @@ public function translate_words()
     
    $data= $this->GoogletranslateService->translate($text,'ar');
 
-   echo $data;
-
+   dd($data);
+   
         // $response = Http::post(
         //     'https://translation.googleapis.com/language/translate/v2?key=' . env('GOOGLE_TRANSLATE_API_KEY'),
         //     [
