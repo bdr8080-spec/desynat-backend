@@ -57,7 +57,7 @@ class ChatController extends Controller
        $request_data=(object)[
         "unique_id"=>$request->unique_id,
         "message"=>$message,
-        "message_ar" => $TextInArbic,
+        "messageAr" => $TextInArbic,
         "type"=>$type , // 0 message and 1 for Image 
         'by'=>$request->by,
        ];

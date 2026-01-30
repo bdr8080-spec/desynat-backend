@@ -147,7 +147,7 @@ class ChatController extends Controller
                 'seller_id' => $sellerId,
                 'type'      => $type,
                 'message'   => $message,
-                "message_ar" => $TextInArbic,
+                "messageAr" => $TextInArbic,
                 'by'        => 'user',
             ]);
 
