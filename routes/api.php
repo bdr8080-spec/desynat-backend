@@ -185,6 +185,9 @@ Route::post('/affilated-add-Bank-details', [UserAffilatedControlller::class,'aff
 
 Route::post('/affilated-dashboard', [UserAffilatedControlller::class,'affilatedDashboard']);
 
+Route::post('/upload-Reverify-document', [UserAffilatedControlller::class,'uploadReverifydocument']);
+
+
 });
 
 

@@ -339,4 +339,44 @@ try{
             }
 
 
+
+
+
+function uploadReverifydocument($request){
+
+try{
+
+
+  $user_id=$request->user_id;
+      // $otp="123456";
+
+  $checkUserAffilatedStatus=  AffilatedUser::where('id',$user_id)->first();
+  
+     $insert_Data=[
+    'document1'=>$request->document1??null,
+    'document2'=>$request->document2??null,
+    "admin_verify"=>"1"
+    ];
+
+
+    $checkUserAffilatedStatus->update($insert_Data);
+
+    if($checkUserAffilatedStatus){
+        return ['status'=>'success','message'=>"document Upload Successfully",'data'=>$checkUserAffilatedStatus];            
+    }
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update Affliated status: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+
+
+    }
+
+
+
+
 }

@@ -394,6 +394,36 @@ public function affilatedAddBankDetails(Request $request){
     }
 
 
+    public function uploadReverifydocument(Request $request){
+
+        $user = $request->user()->id;
+
+        $validate = Validator::make($request->all(), [
+               "document1"=>"required",
+                "document2"=>"required",
+            ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $request_data=(object) [
+    'user_id'=>$user,
+    'document1'=>$request->document1??null,
+    'document2'=>$request->document2??null,
+    ];
+
+  $data=$this->UserAffilatedAuthService->uploadReverifydocument($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+}
+
+
 
      
 
