@@ -14,8 +14,8 @@ use App\Http\Controllers\Seller\SellerChatController;
 use App\Http\Controllers\Seller\WebDealManagement;
 
 
-
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\LanguageController;
 
 
 Route::group(['prefix' => 'seller'], function () {
@@ -165,6 +165,9 @@ Route::group(['prefix' => 'seller'], function () {
 });
 
 Route::post('/send-message-in-chats', [ChatController::class,'SendMessageInChats'])->name("seller.send-chat");
+
+
+ Route::get('/seller_langauge', [LanguageController::class, 'seller_lang'])->name('seller_lang');
 
 
 Route::match(['get', 'post'], '/chats', function () {
