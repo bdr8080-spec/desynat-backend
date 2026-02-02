@@ -710,10 +710,13 @@ $(document)
 
         return false;
     });
+</script>
 
+<script>
+const appLocale = "{{ app()->getLocale() }}";
+</script>
 
-
-
+<script>
 // <!-------- -->
 // Firebase Chat Code Upload 
 
@@ -893,6 +896,8 @@ var lastMessageId = null;
 
 let isLoadingChat = false;
 
+
+
 function loadChatMessages() {
 
     if (isLoadingChat) return;
@@ -930,19 +935,42 @@ function loadChatMessages() {
                     minute: '2-digit'
                 });
 
+                // if (msg.by === 'user') {
+                //     appendLeftMessage({
+                //         message: msg.type == '0' ?
+                //             if (App::getLocale() == 'ar') {
+                //                 msg.message
+                //             } else {
+                //                 msg.messageAr
+                //             } : '',
+                //         image: msg.type == '1' ? msg.message : '',
+                //         time: time
+                //     });
+                // } else {
+                //     appendRightMessage({
+                //         message: msg.type == '0' ? msg.message : '',
+                //         image: msg.type == '1' ? msg.message : '',
+                //         time: time
+                //     });
+                // }
+
                 if (msg.by === 'user') {
                     appendLeftMessage({
-                        message: msg.type == '0' ? msg.message : '',
-                        image: msg.type == '1' ? msg.message : '',
+                        message: msg.type === '0' ?
+                            (appLocale === 'ar' ? msg.messageAr : msg.message) : '',
+                        image: msg.type === '1' ? msg.message : '',
                         time: time
                     });
                 } else {
                     appendRightMessage({
-                        message: msg.type == '0' ? msg.message : '',
-                        image: msg.type == '1' ? msg.message : '',
+                        message: msg.type === '0' ?
+                            (appLocale === 'ar' ? msg.messageAr : msg.message) : '',
+                        image: msg.type === '1' ? msg.message : '',
                         time: time
                     });
                 }
+
+
             });
 
 

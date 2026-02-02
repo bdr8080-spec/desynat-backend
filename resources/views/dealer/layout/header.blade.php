@@ -162,15 +162,32 @@
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <img src="{{ asset('dealer') }}/assets/img/global.svg" class="img-fluid" /> EN
+                                <img src="{{ asset('dealer') }}/assets/img/global.svg" class="img-fluid" />
+
+                                @if(App::getLocale()=='en')
+                                EN
+                                @elseif(App::getLocale()=='ar')
+                                AR
+                                @else
+                                EN
+                                @endif
+
                             </button>
                             <ul class="dropdown-menu">
 
-                                <li><a class="dropdown-item" href="{{ route('seller_lang') }}?lang=ar"><span>AR</span>
-                                        Arabic</a> @if (app()->getLocale() === 'ar') Active @endif</li>
+                                <li
+                                    style="@if (app()->getLocale() === 'ar') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
+                                    <a class="dropdown-item" href="{{ route('seller_lang') }}?lang=ar"><span>AR</span>
+                                        Arabic</a>
+                                    <!-- @if (app()->getLocale() === 'ar') Active @endif -->
+                                </li>
 
-                                <li><a class="dropdown-item" href="{{ route('seller_lang') }}?lang=en"><span>EN</span>
-                                        English</a> @if (app()->getLocale() === 'en') Active @endif </li>
+                                <li
+                                    style="@if (app()->getLocale() === 'en') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
+                                    <a class="dropdown-item" href="{{ route('seller_lang') }}?lang=en"><span>EN</span>
+                                        English</a>
+                                    <!-- @if (app()->getLocale() === 'en') Active @endif  -->
+                                </li>
 
                             </ul>
                         </div>

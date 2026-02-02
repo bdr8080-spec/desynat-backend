@@ -15,6 +15,7 @@ use App\Http\Middleware\SellerAuthenticated;
 use App\Http\Middleware\ForceLowercaseUrl;
 use App\Http\Middleware\AffiliateLoginCheck;
 
+use App\Http\Middleware\SetLanguage;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -51,4 +52,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ];
          
         //
-    })->create();
+    })->withMiddleware(function ($middleware) {
+    $middleware->web(append: [
+        SetLanguage::class,
+    ]);
+})->create();
