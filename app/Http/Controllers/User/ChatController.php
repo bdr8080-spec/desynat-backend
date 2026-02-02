@@ -11,6 +11,8 @@ use App\Http\Controllers\CommonController;
 use App\Models\userAddress;
 use App\Services\UserOrderService;
 
+use App;
+
 
 use App\Services\GoogletranslateService;
 
@@ -127,10 +129,51 @@ class ChatController extends Controller
 
                 $message = $uploadResultArray['data']['url'];
 
-            } else {
-                $message = $request->message;
 
-                 $TextInArbic= $this->GoogletranslateService->translate($message,'ar');
+              $SendchatDataArray=(object)[
+                'unique_id' => $uniqueId,
+                'user_id'   => $userId,
+                'seller_id' => $sellerId,
+                'type'      => $type,
+                'message'   => $message,
+                "messageAr" => '',
+                'by'        => 'user',
+              ];
+
+            } else {
+
+                if(App::getLocale()=='en'){
+
+                $message = $request->message;
+                $TextInArbic= $this->GoogletranslateService->translate($message,'ar');
+
+            $SendchatDataArray=(object)[
+                'unique_id' => $uniqueId,
+                'user_id'   => $userId,
+                'seller_id' => $sellerId,
+                'type'      => $type,
+                'message'   => $message,
+                "messageAr" => $TextInArbic,
+                'by'        => 'user',
+              ];
+
+                }else{
+
+                $message = $request->message;
+                $TextInenglish= $this->GoogletranslateService->translate($message,'en');
+
+                 $SendchatDataArray=(object)[
+                'unique_id' => $uniqueId,
+                'user_id'   => $userId,
+                'seller_id' => $sellerId,
+                'type'      => $type,
+                'message'   => $TextInenglish,
+                "messageAr" => $message,
+                'by'        => 'user',
+              ];
+
+                }
+
 
             }
 
@@ -141,15 +184,7 @@ class ChatController extends Controller
 
             $this->UserFirebaseService->CreateNormalChatFirebase($chatData);
 
-            $this->UserFirebaseService->userSendChatsMessage((object)[
-                'unique_id' => $uniqueId,
-                'user_id'   => $userId,
-                'seller_id' => $sellerId,
-                'type'      => $type,
-                'message'   => $message,
-                "messageAr" => $TextInArbic,
-                'by'        => 'user',
-            ]);
+            $this->UserFirebaseService->userSendChatsMessage($SendchatDataArray);
 
             return response()->json([
                 'status'    => 'success',
