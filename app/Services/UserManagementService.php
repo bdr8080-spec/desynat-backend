@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart,allproductchats};
+use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart,allproductchats,orderdetail};
 
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
 
@@ -1174,7 +1174,7 @@ public function addtoCart_Increment_decrement($request)
             ];
         }
 
-        if($chat_order->action!=='5'){
+        if($chat_order->action!=="5"){
 
          return [
                 'status'  => 'error',
@@ -1182,6 +1182,40 @@ public function addtoCart_Increment_decrement($request)
                 'data'    => (object)[]
             ];
         }
+
+
+      $checkOrderAlreadyPaid=orderdetail::with('order_details')->where('unique_id',$request->unique_id)->first();
+
+      if($checkOrderAlreadyPaid){
+
+        if(in_array($checkOrderAlreadyPaid->payment_status,['0','1'])){
+
+
+            if($checkOrderAlreadyPaid->order_details->payment_method=='3' && in_array($checkOrderAlreadyPaid->payment_status,['0','1'])){
+
+              return [
+                'status'  => 'error',
+                'message' => 'This Chat Order Is Already proceed 0',
+                'data'    => (object)[]
+            ];
+            }
+
+            if($checkOrderAlreadyPaid->order_details->payment_method!=='3' && $checkOrderAlreadyPaid->payment_status !== '1' ){
+                
+              return [
+                'status'  => 'error',
+                'message' => 'This Chat Order Is Already proceed1',
+                'data'    => (object)[]
+            ];
+            }
+        }
+
+
+
+      }
+
+
+
          $match=[
             "user_id"=>$chat_order->user_id,
             "order_type"=>"2",
