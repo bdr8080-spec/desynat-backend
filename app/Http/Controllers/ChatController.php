@@ -10,6 +10,8 @@ use App\Helpers\ApiResponse;
 
 use Validator;
 
+use App;
+
 
 use App\Services\GoogletranslateService;
 
@@ -49,9 +51,16 @@ class ChatController extends Controller
 
         }else{
             $type="0";
-            $message=$request->message;
             
-            $TextInArbic= $this->GoogletranslateService->translate($message,'ar');
+              if(App::getLocale()=='en'){
+
+                $message=$request->message;            
+                $TextInArbic= $this->GoogletranslateService->translate($message,'ar');
+
+              }else{
+                $TextInArbic=$request->message;            
+                $message= $this->GoogletranslateService->translate($TextInArbic,'en');
+              }
         }
 
        $request_data=(object)[

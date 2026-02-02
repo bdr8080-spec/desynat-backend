@@ -793,7 +793,12 @@ $(document).ready(function() {
                         if (type == "1") {
                             image = response.data.message;
                         } else {
-                            msg = response.data.message;
+
+                            if (appLocale == 'ar') {
+                                msg = response.data.messageAr;
+                            } else {
+                                msg = response.data.message;
+                            }
                         }
 
                         let time = response.data.times;
