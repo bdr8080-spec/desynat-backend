@@ -9,12 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart};
+use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart,allproductchats};
 
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
-
-
-
 
 
 
@@ -656,12 +653,21 @@ public function product_view_cart_details($request)
                 $val->check_stock='Stock_Availble';
             }
 
-            $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
+            if($val->order_type=='2'){ // when Cutom Order Show in card
+                
+            $ItemAmounttotal=$val->amount * $val->quantity ;
+            
             $total_amount+=$ItemAmounttotal;
-            // $discount_on_mrp+=$val->product_variants->discount_value * $val->quantity;
-            $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
+            $discount_on_mrp+=($val->product_variants->final_price-$val->amount)* $val->quantity;            
             $total_mrp=$total_amount+$discount_on_mrp;
 
+            }else{
+
+            $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
+            $total_amount+=$ItemAmounttotal;
+            $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
+            $total_mrp=$total_amount+$discount_on_mrp;
+            }
 
          // discount Amount Code Apply 
         if($val->product->store){
@@ -733,13 +739,11 @@ public function product_view_cart_details($request)
 
         $response['total_mrp']=$total_mrp;
 
-       
-
         $response['discount_on_mrp']=$discount_on_mrp;
         $response['discount_coupon']=$discount_coupon;
         $response['shipping_fees']=$shipping_fees;
         $response['tax']=round($tax);
-        $response['total_amount']=$total_amount+$shipping_fees;
+        $response['total_amount']=$total_amount+$shipping_fees+$tax;
 
         $response['user_address']=$user_address;
         
@@ -821,6 +825,14 @@ public function addtoCart_Increment_decrement($request)
                $cart_details=Addtocart::with('product_variants')->where('id',$request->cart_id)->first();
 
                if($cart_details){
+
+                if($cart_details->order_type=='2'){
+                     return [
+                        'status'  => 'error',
+                        'message' => "You can't increment and decrease Custom Order Quantity",
+                        'data'    => (object)[]
+                    ];
+                }
 
                 $current_quntity=$cart_details->quantity;
                 if($request->type=='increment'){
@@ -1144,6 +1156,89 @@ public function addtoCart_Increment_decrement($request)
     }
 
 
+
+    
+
+      public function CustomorderAddToCard($request)
+    {
+        try {
+         
+        $chat_order=allproductchats::where('unique_id',$request->unique_id)->first();
+
+         if($chat_order->type!=='2'){
+
+         return [
+                'status'  => 'error',
+                'message' => 'this is Not a Custom Order',
+                'data'    => (object)[]
+            ];
+        }
+
+        if($chat_order->action!=='5'){
+
+         return [
+                'status'  => 'error',
+                'message' => 'Order is Not Accepted By seller or User Side',
+                'data'    => (object)[]
+            ];
+        }
+         $match=[
+            "user_id"=>$chat_order->user_id,
+            "order_type"=>"2",
+            "product_id"=>$chat_order->product_id,
+            "quantity" =>$chat_order->quantity,
+            "unique_id"=>$chat_order->unique_id
+        ];
+        
+
+        
+        $cardData=[
+            "user_id"=>$chat_order->user_id,
+            "order_type"=>"2",
+            "product_id"=>$chat_order->product_id,
+            "variants_id"=>$chat_order->variation_id,
+            "quantity" =>$chat_order->quantity,
+            "amount" =>$chat_order->price,
+            "tax" =>$chat_order->tax,
+            "shipping_fees"=>$chat_order->shipping ,
+             "unique_id"=>$chat_order->unique_id
+        ];
+        
+      $checkAddToCard=Addtocart::Updateorcreate($match,$cardData);
+
+        if ($checkAddToCard->wasRecentlyCreated) {
+            // New record inserted
+            return [
+                'status' => "success",
+                'message' => 'Custom Product added to cart successfully',
+                'data'    => $chat_order
+            ];
+        } else {
+            // Existing record updated
+            return [
+                'status' => "error",
+                'message' => 'Product already exists in cart',
+                'data'    => $chat_order
+            ];
+        }
+            
+
+
+        return [
+            'status'  => 'success',
+            'message' => $msg,
+            'data'    => $cartItem
+        ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+        
+    }
 
 
 

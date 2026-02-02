@@ -294,7 +294,38 @@ class UserStoreController extends Controller
         }
     }
 
-       
+
+       public function CustomorderAddToCard(Request $request)
+    {
+        $user_id=$request->user()->id;
+
+        try {
+
+        $validate = Validator::make($request->all(), [
+            'unique_id' => 'required|exists:allproductchats,unique_id',
+         ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+        $request_data=(object)[
+          'user_id'=>$user_id,
+          'unique_id'=>$request->unique_id,
+         ];
+
+            $data = $this->UserManagementService->CustomorderAddToCard($request_data);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }       
 
     
 }

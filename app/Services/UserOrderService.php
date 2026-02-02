@@ -273,6 +273,7 @@ foreach($checkDataInCart as $key=>$val){
     $cart_data=[
         "order_id"=>$order_id,
         "user_id"=>$val->user_id,
+        "order_type"=>$val->order_type, 
         "seller_id"=>$val->product->seller_details->id,
         "product_id"=>$val->product_id,
         "variants_id"=>$val->variants_id,
@@ -282,9 +283,9 @@ foreach($checkDataInCart as $key=>$val){
         "shipping_fees"=>$val->shipping_fees,
         "giftcard_id"=>$giftcard,
         "giftcard_amount"=>$giftCardAmountDivide,
-
         "promocode_id"=>$promoCodeId,
         "promocode_value"=>$PrmocodeCardAmountDivide,
+        "unique_id"=>$val->unique_id,
     ];
     orderdetail::create($cart_data);
 }

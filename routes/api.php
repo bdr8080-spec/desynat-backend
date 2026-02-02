@@ -158,12 +158,17 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
   Route::post('/popUp-Home-screen-Banner', [UserDashboardController::class,'popUpHomescreenBanner']);
 
+  // Client Cr Points
+  
+  Route::post('/custom-order-add-to-card', [UserStoreController::class,'CustomorderAddToCard']);
+
+
+
+
+  
   // M7 Api 
   Route::post('/create-a-affilated-account', [UserAffilatedControlller::class,'CreateAffilatedAccount']);
   Route::post('/affilated-verify-otp', [UserAffilatedControlller::class,'AffilatedVerifyotp']);
-
-
-
 
   Route::post('/Add-money-in-wallet', [UserWalletController::class,'AddMoneyInWallet']);
 
@@ -176,8 +181,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
 Route::post('user/complete-add-money-in-wallet', [UserWalletController::class,'completeAddMoneyInWallet']);
 
-// Affilated user APi 
-
+// Affilated user APi  M7 
 Route::middleware(['auth:sanctum', 'ability:AffilatedUser'])->prefix('affiliate')->group(function () {
   
 Route::post('/affilated-add-address', [UserAffilatedControlller::class,'affilatedAddAddress']);
