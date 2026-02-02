@@ -5,7 +5,8 @@
 
 <div class="customContainer common-padding">
     <div class="common-title d-flex gap-3 mb-4">
-        <a href="{{route('user.allChats')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}" class="img-fluid"></a>
+        <a href="{{route('user.allChats')}}"> <img src="{{asset('user/assets/images/left-ic.svg')}}"
+                class="img-fluid"></a>
         @if($chatData['record']['product_request'] == '0' && $chatData['record']['action'] == '0')
         <h3>Chat Request</h3>
         @else
@@ -14,7 +15,7 @@
     </div>
 
     <div class="main-content">
-       @if($chatData['record']->type == '2')
+        @if($chatData['record']->type == '2')
         <div class="row">
             <div class="col-lg-4">
                 <div class="cart-panel position-relative">
@@ -23,17 +24,20 @@
                             <div class="card-left mb-2 d-flex">
                                 <div>
                                     <div class="chat-odr me-3">
-                                        <img src="{{$chatData['record']['product_variation']['variant_image'][0]}}" alt="Product"
-                                            class="img-fluid">
+                                        <img src="{{$chatData['record']['product_variation']['variant_image'][0]}}"
+                                            alt="Product" class="img-fluid">
                                     </div>
                                 </div>
 
                                 <div class="w-100">
                                     <div class="card-right d-flex w-100 justify-content-between">
                                         <div class="product-info">
-                                            <h5 class="product-title">{{$chatData['record']['product_variation']['product_details']['product_name_en']}}</h5>
+                                            <h5 class="product-title">
+                                                {{$chatData['record']['product_variation']['product_details']['product_name_en']}}
+                                            </h5>
                                             <div class="psize d-flex gap-4 mt-2">
-                                                <span>Size: {{$chatData['record']['product_variation']['size']['name']}}</span>
+                                                <span>Size:
+                                                    {{$chatData['record']['product_variation']['size']['name']}}</span>
                                                 <span class="d-flex align-items-center gap-2">
                                                     Color:
                                                     <div class="colorbox"
@@ -42,9 +46,11 @@
                                                 </span>
                                                 <!-- <span>Qnt: {{$chatData['record']['quantity']}}</span> -->
                                             </div>
-                                            <h6 class="product-title mt-2"> {{$chatData['record']['product_variation']['final_price']}} KD</h6>
+                                            <h6 class="product-title mt-2">
+                                                {{$chatData['record']['product_variation']['final_price']}} KD</h6>
                                         </div>
-                                        @if($chatData['record']['action'] == '0' && $chatData['record']['product_request'] == '1')
+                                        @if($chatData['record']['action'] == '0' &&
+                                        $chatData['record']['product_request'] == '1')
                                         <div class="yellow-bg" style="color:#EA9413;background:#EA94131A;">Waiting</div>
                                         @endif
                                     </div>
@@ -68,14 +74,16 @@
 
                         <div class="form-group mb-3">
                             <label>Custom Details</label>
-                            <textarea rows="4" name="custom_details" class="form-control" placeholder="Write Here"></textarea>
+                            <textarea rows="4" name="custom_details" class="form-control"
+                                placeholder="Write Here"></textarea>
                             <small class="text-danger d-none" id="detailsError">Please enter custom details</small>
                         </div>
 
-                        <h6>Delivery Address</h6> 
+                        <h6>Delivery Address</h6>
                         <div class="border-1 d-flex justify-content-between category_filter">
                             <div class="address-title">{{ $userAddress->address }}</div>
-                            <a href="{{ route('user.view_address', ['chat' => $chatData['record']['unique_id']]) }}"> Change <i class="bi bi-arrow-right"></i></a>
+                            <a href="{{ route('user.view_address', ['chat' => $chatData['record']['unique_id']]) }}">
+                                Change <i class="bi bi-arrow-right"></i></a>
                         </div>
 
                         <div class="pt-4">
@@ -89,18 +97,20 @@
 
                 <!-----------End Add Request ---------------->
 
-               @if($chatData['record']['product_request'] == '1' && in_array($chatData['record']['action'], ['0','1','2','4','5']))
+                @if($chatData['record']['product_request'] == '1' && in_array($chatData['record']['action'],
+                ['0','1','2','4','5']))
                 <div class="gift-pnl mt-4">
                     <div class="border-12">
                         <div class="accordion" id="accordionPanelsStayOpenExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#viewRequest" aria-expanded="true" aria-controls="viewRequest">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#viewRequest" aria-expanded="true" aria-controls="viewRequest">
                                         View Request
                                     </button>
                                 </h2>
                                 <div id="viewRequest" class="accordion-collapse collapse p-3 show">
-                                     <table class="table table-borderless table-font">
+                                    <table class="table table-borderless table-font">
                                         <tr>
                                             <td>
                                                 <div class="width-120">Total Quantity</div>
@@ -131,7 +141,7 @@
 
                                 </div>
                             </div>
-                        </div>                       
+                        </div>
                     </div>
                 </div>
                 @endif
@@ -143,10 +153,12 @@
                             <table class="table table-borderless table-font">
                                 <tr>
                                     <td>
-                                        <div class="width-120">Item Price({{ $chatData['record']['price']}} KD *{{$chatData['record']['quantity']}})</div>
+                                        <div class="width-120">Item Price({{ $chatData['record']['price']}} KD
+                                            *{{$chatData['record']['quantity']}})</div>
                                     </td>
                                     <td>
-                                        <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD</div>
+                                        <div>{{ $chatData['record']['price'] * $chatData['record']['quantity'] }} KD
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -180,7 +192,7 @@
                                     </td>
                                 </tr>
                             </table>
-                                   
+
                         </div>
                     </div>
                     @if($chatData['record']['action'] == '1' || $chatData['record']['action'] == '2')
@@ -192,7 +204,8 @@
                     @endif
                     @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null)
                     <div class="mt-3">
-                        <a href="{{ route('user.chatDetails', ['id' => $chatData['record']['unique_id']]) }}" class="btn customBtn w-100">Pay Now</a>
+                        <a href="{{ route('user.chatDetails', ['id' => $chatData['record']['unique_id']]) }}"
+                            class="btn customBtn w-100">Pay Now</a>
                     </div>
                     @endif
                 </div>
@@ -204,9 +217,11 @@
                     <div class="msger card">
                         <header class="msger-header d-flex gap-2 align-items-center">
                             <div class="chat-user-1 me-3">
-                                <img src="{{$chatData['record']['seller_details']['profile_pic']}}" alt="Product" class="img-fluid">
+                                <img src="{{$chatData['record']['seller_details']['profile_pic']}}" alt="Product"
+                                    class="img-fluid">
                             </div>
-                            <h5 class="msger-header-title">{{$chatData['record']['seller_details']['first_name']}} {{$chatData['record']['seller_details']['last_name']}}</h5>
+                            <h5 class="msger-header-title">{{$chatData['record']['seller_details']['first_name']}}
+                                {{$chatData['record']['seller_details']['last_name']}}</h5>
                         </header>
 
                         <main class="msger-chat1">
@@ -245,7 +260,8 @@
                                 <input type="file" name="image" id="imageUpload1" accept="image/*">
                             </div>
 
-                            <input type="text" name="message" class="form-control msger-input1" placeholder="Type Message here...">
+                            <input type="text" name="message" class="form-control msger-input1"
+                                placeholder="Type Message here...">
                             <small class="text-danger d-none" id="chatError1">
                                 Please enter a message or upload an image
                             </small>
@@ -268,13 +284,15 @@
                     <div class="msger card">
                         <header class="msger-header d-flex gap-2 align-items-center">
                             <div class="chat-user-1 me-3">
-                                <img src="{{$chatData['record']['seller_details']['profile_pic']}}" alt="Product" class="img-fluid">
+                                <img src="{{$chatData['record']['seller_details']['profile_pic']}}" alt="Product"
+                                    class="img-fluid">
                             </div>
-                            <h5 class="msger-header-title">{{$chatData['record']['seller_details']['first_name']}} {{$chatData['record']['seller_details']['last_name']}} </h5>
+                            <h5 class="msger-header-title">{{$chatData['record']['seller_details']['first_name']}}
+                                {{$chatData['record']['seller_details']['last_name']}} </h5>
                         </header>
 
                         <main class="msger-chat">
-                                 <div class="msg left-msg">
+                            <div class="msg left-msg">
                                 <div class="msg-bubble">
                                     <!-- <div class="msg-text">
                                         Hi, welcome to SimpleChat! Go ahead and send me a message.
@@ -309,7 +327,8 @@
                                 <input type="file" name="image" id="imageUpload" accept="image/*">
                             </div>
 
-                            <input type="text" name="message" class="form-control msger-input" placeholder="Type Message here...">
+                            <input type="text" name="message" class="form-control msger-input"
+                                placeholder="Type Message here...">
                             <small class="text-danger d-none" id="chatError">
                                 Please enter a message or upload an image
                             </small>
@@ -345,31 +364,31 @@
 
 <!-- send normal chat -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
-    const chatForm  = document.getElementById('chatFormNormal');
-    const chatBox   = document.querySelector('.msger-chat');
+    const chatForm = document.getElementById('chatFormNormal');
+    const chatBox = document.querySelector('.msger-chat');
     const messageEl = chatForm.querySelector('.msger-input');
-    const imageEl   = chatForm.querySelector('#imageUpload');
-    const errorEl   = document.getElementById('chatError');
-    const sendBtn   = chatForm.querySelector('.msger-send-btn');
+    const imageEl = chatForm.querySelector('#imageUpload');
+    const errorEl = document.getElementById('chatError');
+    const sendBtn = chatForm.querySelector('.msger-send-btn');
 
     // Remove error on typing or image select
     messageEl.addEventListener('input', hideError);
     imageEl.addEventListener('change', hideError);
 
     // 🔹 Automatically send image when selected
-    imageEl.addEventListener('change', function () {
+    imageEl.addEventListener('change', function() {
         if (imageEl.files[0]) {
             chatForm.requestSubmit(); // triggers the form submit
         }
     });
 
-    chatForm.addEventListener('submit', function (e) {
+    chatForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const message = messageEl.value.trim();
-        const image   = imageEl.files[0] ?? null;
+        const image = imageEl.files[0] ?? null;
 
         // Validation
         if (!message && !image) {
@@ -386,34 +405,34 @@ document.addEventListener("DOMContentLoaded", function () {
         sendBtn.disabled = true;
 
         fetch("{{ route('user.sendNormalMessage') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status === 'success') {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
 
-                if (type === 0) {
-                    appendTextMessage(res.message);
+                    if (type === 0) {
+                        appendTextMessage(res.message);
+                    } else {
+                        appendImageMessage(res.message);
+                    }
+
+                    chatForm.reset(); // clears text input and file input
+                    hideError();
+                    scrollToBottom();
                 } else {
-                    appendImageMessage(res.message);
+                    toastr.error(res.message || 'Failed to send message');
                 }
-
-                chatForm.reset(); // clears text input and file input
-                hideError();
-                scrollToBottom();
-            } else {
-                toastr.error(res.message || 'Failed to send message');
-            }
-        })
-        .catch(() => toastr.error('Something went wrong'))
-        .finally(() => {
-            sendBtn.disabled = false;
-            sendBtn.innerHTML = '<i class="bi bi-send-fill"></i>';
-        });
+            })
+            .catch(() => toastr.error('Something went wrong'))
+            .finally(() => {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '<i class="bi bi-send-fill"></i>';
+            });
     });
 
     function showError() {
@@ -434,7 +453,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // content = HTML, side = 'right-msg' or 'left-msg'
     function appendMessage(content, side = 'right-msg') {
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const time = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
 
         chatBox.insertAdjacentHTML('beforeend', `
             <div class="msg ${side}">
@@ -457,12 +479,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
 <!-- fetch normal chat -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
-    const chatBox  = document.querySelector('.msger-chat');
+    const chatBox = document.querySelector('.msger-chat');
     const uniqueId = document.querySelector('input[name="unique_id"]').value;
 
     function formatISOTime(isoString) {
@@ -474,7 +495,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Date part
         const day = String(date.getDate()).padStart(2, '0');
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
         const month = monthNames[date.getMonth()];
         const year = date.getFullYear();
 
@@ -519,7 +541,7 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function appendMessage(msg) {
         const isUser = msg.by === 'user';
-        const side   = isUser ? 'right-msg' : 'left-msg';
+        const side = isUser ? 'right-msg' : 'left-msg';
 
         let content = '';
 
@@ -672,31 +694,31 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script> -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
-    const chatForm  = document.getElementById('chatFormCustom');
-    const chatBox   = document.querySelector('.msger-chat1');
+    const chatForm = document.getElementById('chatFormCustom');
+    const chatBox = document.querySelector('.msger-chat1');
     const messageEl = chatForm.querySelector('.msger-input1');
-    const imageEl   = chatForm.querySelector('#imageUpload1');
-    const errorEl   = document.getElementById('chatError1');
-    const sendBtn   = chatForm.querySelector('.msger-send-btn1');
+    const imageEl = chatForm.querySelector('#imageUpload1');
+    const errorEl = document.getElementById('chatError1');
+    const sendBtn = chatForm.querySelector('.msger-send-btn1');
 
     // Remove error on typing or image select
     messageEl.addEventListener('input', hideError);
     imageEl.addEventListener('change', hideError);
 
     // 🔹 Automatically send image when selected
-    imageEl.addEventListener('change', function () {
+    imageEl.addEventListener('change', function() {
         if (imageEl.files[0]) {
             chatForm.requestSubmit(); // triggers the form submit
         }
     });
 
-    chatForm.addEventListener('submit', function (e) {
+    chatForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
         const message = messageEl.value.trim();
-        const image   = imageEl.files[0] ?? null;
+        const image = imageEl.files[0] ?? null;
 
         // Validation
         if (!message && !image) {
@@ -713,36 +735,36 @@ document.addEventListener("DOMContentLoaded", function () {
         if (sendBtn) sendBtn.disabled = true;
 
         fetch("{{ route('user.sendNormalMessage') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status === 'success') {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
 
-                if (type === 0) {
-                    appendTextMessage(res.message);
+                    if (type === 0) {
+                        appendTextMessage(res.message);
+                    } else {
+                        appendImageMessage(res.message);
+                    }
+
+                    chatForm.reset(); // clears text and file inputs
+                    hideError();
+                    scrollToBottom();
                 } else {
-                    appendImageMessage(res.message);
+                    toastr.error(res.message || 'Failed to send message');
                 }
-
-                chatForm.reset(); // clears text and file inputs
-                hideError();
-                scrollToBottom();
-            } else {
-                toastr.error(res.message || 'Failed to send message');
-            }
-        })
-        .catch(() => toastr.error('Something went wrong'))
-        .finally(() => {
-            if (sendBtn) {
-                sendBtn.disabled = false;
-                sendBtn.innerHTML = '<i class="bi bi-send-fill"></i>';
-            }
-        });
+            })
+            .catch(() => toastr.error('Something went wrong'))
+            .finally(() => {
+                if (sendBtn) {
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = '<i class="bi bi-send-fill"></i>';
+                }
+            });
     });
 
     function showError() {
@@ -762,7 +784,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function appendMessage(content) {
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const time = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
 
         chatBox.insertAdjacentHTML('beforeend', `
             <div class="msg right-msg">
@@ -784,11 +809,16 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
+
+<script>
+const appLocale = "{{ app()->getLocale() }}";
+</script>
+
 <!-- fetch custom chat -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
-    const chatBox  = document.querySelector('.msger-chat1');
+    const chatBox = document.querySelector('.msger-chat1');
     const uniqueId = document.querySelector('input[name="unique_id"]').value;
 
     // Format ISO8601 date string to "hh:mm AM/PM"
@@ -801,7 +831,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Date part
         const day = String(date.getDate()).padStart(2, '0');
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
         const month = monthNames[date.getMonth()];
         const year = date.getFullYear();
 
@@ -846,12 +877,13 @@ document.addEventListener("DOMContentLoaded", function () {
      */
     function appendMessage(msg) {
         const isUser = msg.by === 'user';
-        const side   = isUser ? 'right-msg' : 'left-msg';
+        const side = isUser ? 'right-msg' : 'left-msg';
 
         let content = '';
 
         // IMAGE MESSAGE
         if (msg.type == 1 && msg.message) {
+
             content = `
                 <img src="${msg.message}"
                      class="img-fluid rounded chat-image"
@@ -861,7 +893,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         // TEXT MESSAGE
         else {
-            content = `<div class="msg-text">${msg.message ?? ''}</div>`;
+
+            if (appLocale == 'ar') {
+                var FireMsg = msg.messageAr;
+            } else {
+                var FireMsg = msg.message;
+            }
+
+            content = `<div class="msg-text">${FireMsg ?? ''}</div>`;
         }
 
         const timeString = formatISOTime(msg.times);
@@ -898,7 +937,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- send custom order request -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
     const formContainer = document.getElementById('customOrderFormContainer');
     const btnSend = document.getElementById('sendCustomOrderBtn');
@@ -914,7 +953,7 @@ document.addEventListener("DOMContentLoaded", function () {
     quantityEl.addEventListener('input', () => quantityError.classList.add('d-none'));
     detailsEl.addEventListener('input', () => detailsError.classList.add('d-none'));
 
-    btnSend.addEventListener('click', function () {
+    btnSend.addEventListener('click', function() {
         const quantity = quantityEl.value.trim();
         const customDetails = detailsEl.value.trim();
         const deliveryAddress = deliveryAddressEl.value;
@@ -941,29 +980,28 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append('unique_id', uniqueId);
 
         fetch("{{ route('user.sendCustomOrderRequest') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status === 'success') {
-                toastr.success(res.message || 'Request sent successfully!');
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
+                    toastr.success(res.message || 'Request sent successfully!');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
 
-            } else {
-                toastr.error(res.message || 'Failed to send request');
-            }
-        })
-        .catch(() => toastr.error('Something went wrong'));
+                } else {
+                    toastr.error(res.message || 'Failed to send request');
+                }
+            })
+            .catch(() => toastr.error('Something went wrong'));
     });
 
 });
-
 </script>
 
 <!-- accept-reject -->
@@ -1012,7 +1050,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script> -->
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 
     const uniqueId = document.getElementById('chatUniqueId').value;
     const acceptBtn = document.getElementById('acceptBtn');
@@ -1028,31 +1066,31 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append('status', status);
 
         fetch("{{ route('user.acceptRejectCustOrder') }}", {
-            method: "POST",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status === 'success') {
-                // Show different message based on status
-                if(status == 5){
-                    toastr.success('Quotation Accepted Successfully');
-                } else if(status == 4){
-                    toastr.success('Quotation Rejected Successfully');
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(res => {
+                if (res.status === 'success') {
+                    // Show different message based on status
+                    if (status == 5) {
+                        toastr.success('Quotation Accepted Successfully');
+                    } else if (status == 4) {
+                        toastr.success('Quotation Rejected Successfully');
+                    }
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+
+                } else {
+                    toastr.error(res.message || 'Action failed');
                 }
-
-                setTimeout(() => {
-                    location.reload();
-                }, 1500);
-
-            } else {
-                toastr.error(res.message || 'Action failed');
-            }
-        })
-        .catch(() => toastr.error('Something went wrong'));
+            })
+            .catch(() => toastr.error('Something went wrong'));
     }
 
 });

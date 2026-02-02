@@ -17,6 +17,9 @@ use App\Http\Controllers\User\WalletController;
 
 
 use App\Http\Controllers\GoogleTranslateController;
+use App\Http\Controllers\LanguageController;
+
+
 
 Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
 
@@ -168,6 +171,7 @@ Route::get('/getlatestSearch', [DashBoardController::class, 'getlatestSearch'])-
 
 Route::get('/translate-words', [GoogleTranslateController::class, 'translate_words'])->name('user.translate');
 
+ Route::get('/user_langauge', [LanguageController::class, 'user_lang'])->name('user_lang');
 
 
 

@@ -41,9 +41,30 @@ public function seller_lang(Request $req)
 
     session(['lang' => $language]);
     App::setLocale($language);
+
+    dump(App::getLocale());
     
     return back()->with('message', 'Language changed successfully');
 }
 
+
+
+public function user_lang(Request $req)
+{
+    $req->validate([
+        'lang' => 'required|in:en,ar,fr' // adjust languages
+    ]);
+
+    $language = $req->lang;
+
+    $seller = Auth::guard('web')->user();
+    $seller->update(['lang' => $language]);
+
+    session(['lang' => $language]);
+    App::setLocale($language);
+
+    
+    return back()->with('message', 'Language changed successfully');
+}
 
 }

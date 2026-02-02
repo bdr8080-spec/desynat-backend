@@ -37,7 +37,7 @@ class ChatController extends Controller
         ];
 
         $chatData = $this->UserFirebaseService->userGetAllChatsRecords($data)['data'];
-         //dd($chatData);
+        //  dd($chatData);
 
         return view('user.chat.chatlists',compact('chatData'));
 
@@ -52,7 +52,7 @@ class ChatController extends Controller
         ];
 
         $chatData = $this->UserFirebaseService->userGetSingleChatsRecords($data)['data'];
-        //dd($chatData);
+        // dd($chatData);
         $userAddress = userAddress::where('user_id', $user->id)
                               ->where('set_as_default', '1')
                               ->first();

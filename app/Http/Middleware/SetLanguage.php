@@ -23,10 +23,11 @@ class SetLanguage
             App::setLocale(session('lang'));
         } elseif (Auth::guard('seller')->check()) {
             App::setLocale(Auth::guard('seller')->user()->lang);
+        }elseif (Auth::guard('web')->check()) {
+            App::setLocale(Auth::guard('web')->user()->lang);
         }else {
             App::setLocale(config('app.locale'));
         }
-        
         return $next($request);
     }
 }

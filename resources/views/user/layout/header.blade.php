@@ -122,7 +122,8 @@
                                         <div class="profile_buttons">
                                             <div class="row">
                                                 <div class="col-lg-6 my-2">
-                                                    <a href="{{route('user.myWallet')}}" class="custom-btn3">My wallet</a>
+                                                    <a href="{{route('user.myWallet')}}" class="custom-btn3">My
+                                                        wallet</a>
                                                 </div>
                                                 <div class="col-lg-6 my-2">
                                                     <a href="{{route('user.myOrders')}}" class="custom-btn3">My
@@ -402,11 +403,29 @@
                                 <button class="btn btn-secondary dropdown-toggle customBtn1" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="{{asset('user/assets/images/global.svg')}}" class="img-fluid"
-                                        style="width: 15px !important;" /> EN
+                                        style="width: 15px !important;" />
+                                    @if(App::getLocale()=='en')
+                                    EN
+                                    @elseif(App::getLocale()=='ar')
+                                    AR
+                                    @else
+                                    EN
+                                    @endif
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end langu">
-                                    <li><a class="dropdown-item" href="#"><span>AR</span> Arabic</a></li>
-                                    <li><a class="dropdown-item" href="#"><span>EN</span> English</a></li>
+
+                                    <li
+                                        style="@if (app()->getLocale() === 'ar') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
+                                        <a class="dropdown-item" href="{{ route('user_lang') }}?lang=ar"><span>AR</span>
+                                            Arabic</a>
+                                        <!-- @if (app()->getLocale() === 'ar') Active @endif -->
+                                    </li>
+                                    <li
+                                        style="@if (app()->getLocale() === 'en') Background:linear-gradient(73.47deg, #F9DBAB 0%, #7D532F 132.99%);  @endif ">
+                                        <a class="dropdown-item" href="{{ route('user_lang') }}?lang=en"><span>EN</span>
+                                            English</a>
+                                        <!-- @if (app()->getLocale() === 'en') Active @endif  -->
+                                    </li>
                                 </ul>
                             </div>
                         </div>
