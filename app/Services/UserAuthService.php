@@ -80,6 +80,8 @@ class UserAuthService
               
               $affilated_User=AffilatedUser::where('user_id',$get_user_details->id)->where('otp_verify','1')->first();
 
+            $get_user_details->update(['lang'=> $request->lang??null]);// update code in language 
+            
               if($affilated_User){
 
                 $get_user_details->affiliated_userdetails= $affilated_User;
@@ -89,7 +91,6 @@ class UserAuthService
                 $get_user_details->affiliated_accessToken ='';
               }
 
-              $get_user_details->update(['lang'=> $request->lang??null]);// update code in language 
               
               
             return ['status'=>'success','message'=>"User Login Successfully",'data'=>$get_user_details];                            
