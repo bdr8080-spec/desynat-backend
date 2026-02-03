@@ -967,7 +967,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
     }
     
     // Cutom Order if The Order create before 3 Hours then Don't Cancel Order in Custom Order 
-    if($checkOrder->order->order_type=='2'){
+    if($checkOrder->order_type=='2'){
        $orderCreatedDate = $checkOrder->order->created_at;
        $orderCreatedFutureDate = $orderCreatedDate->copy()->addHours(3);
        $nowDateTime = now();
@@ -1028,8 +1028,13 @@ if($checkOrder->p_orderdetails_id!=='0' && $checkOrder->p_orderdetails_id!=='nul
 
 }
 
+// If The Order Is custom Then All chat order go to ols state 
 
-    // Cancel Order In Order Table if i have 1 varient
+if($checkOrder->order_type=='2'){
+  allproductchats::where('unique_id',$checkOrder->unique_id)->update(['addtocardStatus'=>'0','product_buy_status'=>'0']);
+}
+
+    // Cancel Order In Order Table if i have 1 varient remain then cod order cancel and paid order go to refund state
 
     if($AllOrderCheck ==1){
 
