@@ -566,7 +566,7 @@ if ($validator->fails()) {
         'accept.in'                 => 'You must accept the terms and conditions.',
         'password.required'     => 'Please enter your password',
         'password.min' => 'Password must be at least 8 characters long',
-        'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number',
+        'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one number No special Symbal Allowed',
     ]
 );
             
