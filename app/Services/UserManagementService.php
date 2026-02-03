@@ -635,7 +635,7 @@ public function product_view_cart_details($request)
         $tax=0;
         $total_amount=0;
 
-        $add_to_cart= Addtocart::with('product.seller_details','product.store','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
+        $add_to_cart= Addtocart::with('chatroom_data','product.seller_details','product.store','product_variants.color','product_variants.size')->where('user_id',$request->user_id)->get();
 
         if($add_to_cart->isEmpty()){
             return [
