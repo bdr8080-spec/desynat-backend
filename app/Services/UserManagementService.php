@@ -263,12 +263,11 @@ class UserManagementService
                 ];
             }
 
-            if(isset($data->user_id)){
             $wishlistIds = wishlist::where('user_id', $data->user_id)
                        ->pluck('product_id')
                        ->toArray();
-            }
-            // Step 2: Product query
+
+                    // Step 2: Product query
             $products = $store_information->All_product()
                 ->with([
                     'brand',
