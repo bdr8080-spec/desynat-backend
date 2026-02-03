@@ -730,7 +730,6 @@ $orders = $orders->orderBy('id', 'desc')->get();
      ->whereNOT('id',$request->orderdetails_id)
     ->get();
 
-
         if($checkOrder->order_type=='2'){
             $checkOrder->ChatroomRecordtable=allproductchats::where('unique_id',$checkOrder->unique_id)->first();
         }else{
