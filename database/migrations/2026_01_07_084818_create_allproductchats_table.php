@@ -30,7 +30,9 @@ return new class extends Migration
             $table->enum('product_request',['0','1'])->default('0')->comment(' 0 not request 1 order send request');
 
             $table->enum('action',['0','1','2','3','4'])->default('0')->comment(' 0 pending 1 seller accept 2 seller modify  3 seller cancel 4 User cancel');
-            
+            $table->enum('addtocardStatus',['0','1'])->default('0')->comment(' 0 mean not in card 1 in card');
+            $table->enum('product_buy_status',['0','1'])->default('0')->comment('0 not buy 1 buy ');
+          
             $table->timestamps();
         });
     }

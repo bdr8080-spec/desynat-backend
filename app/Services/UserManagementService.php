@@ -1240,6 +1240,8 @@ public function addtoCart_Increment_decrement($request)
         ];
         
       $checkAddToCard=Addtocart::Updateorcreate($match,$cardData);
+      
+      $chat_order->update(['addtocardStatus'=>'1']); // Update code in card product
 
         if ($checkAddToCard->wasRecentlyCreated) {
             // New record inserted
@@ -1286,7 +1288,9 @@ public function addtoCart_Increment_decrement($request)
         $AddToCardCheck=Addtocart::where('id',$request->id)->first();
 
          if($AddToCardCheck){
+            allproductchats::where('unique_id',$AddToCardCheck->unique_id)->update(['addtocardStatus'=>'0']);
             $AddToCardCheck->delete();
+
             return [
                 'status' => "success",
                 'message' => 'Custom Product Remove from The Card successfully',
