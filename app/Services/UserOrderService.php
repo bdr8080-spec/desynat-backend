@@ -1589,10 +1589,10 @@ public function UserWalletHistory($request)
 {
 
     try {
-
+        
        $response['wallet_balance']=UserWallet::where('user_id',$request->user_id)->value('amount')??'0';
-       $response['history']= UserWalletHistory::where('user_id', $request->user_id)->orderBy('id','desc')->get();
-
+       $response['history']= UserWalletHistory::where('user_id', $request->user_id)->where('payment_status','1')->orderBy('id','desc')->get();
+       
         return [
             'status'  => 'success',
             'message' => "User Wallet History get Successfully",
