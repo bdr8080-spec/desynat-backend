@@ -314,7 +314,7 @@
                             <div class="form-group w-100">
                                 <label for="subCategory" class="form-label">Select Sub-Category</label>
                                 <select class="form-select form-select-lg" id="subCategorySelect"
-                                    aria-label="Large select example" multiple>
+                                    aria-label="Large select example">
                                     <option selected>Select Sub-Category</option>
                                 </select>
                                 <div class="text-danger" id="subCategoryError"></div>
