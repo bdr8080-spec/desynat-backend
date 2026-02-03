@@ -531,6 +531,7 @@ public function product_add_to_cart($request)
                 'user_id'=>$request->user_id,
                 'product_id'=>$request->product_id,
                 'variants_id'=>$request->variants_id,
+                'order_type'=>'1',
                ];
 
             $data=[
@@ -1285,9 +1286,7 @@ public function addtoCart_Increment_decrement($request)
         $AddToCardCheck=Addtocart::where('id',$request->id)->first();
 
          if($AddToCardCheck){
-            
             $AddToCardCheck->delete();
-
             return [
                 'status' => "success",
                 'message' => 'Custom Product Remove from The Card successfully',
