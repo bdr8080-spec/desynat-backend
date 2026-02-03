@@ -53,11 +53,13 @@ route::post('/create_password',[AuthController::class,'create_password']);
 
 // Auth Code check
 
+  // M3 Api User  
+Route::post('user/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
 
-  // M3 Api User
+Route::post('user/single-store-details', [UserStoreController::class,'single_store_details']);
+Route::post('user/single-product-details', [UserStoreController::class,'single_product_details']);
+
   
-  Route::post('user/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
-
 
 Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(function () {
 
@@ -81,8 +83,11 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/set_default_address',[AddressController::class, 'set_default_address']);
 
 
-  Route::post('/single-store-details', [UserStoreController::class,'single_store_details']);
-  Route::post('/single-product-details', [UserStoreController::class,'single_product_details']);
+  // M3 Api User
+  
+  // Route::post('/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
+  // Route::post('/single-store-details', [UserStoreController::class,'single_store_details']);
+  // Route::post('/single-product-details', [UserStoreController::class,'single_product_details']);
 
   
   Route::post('/product-add-to-wishlist', [UserStoreController::class,'product_add_to_wishlist']);
