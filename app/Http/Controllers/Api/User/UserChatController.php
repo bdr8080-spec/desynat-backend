@@ -134,7 +134,6 @@ class UserChatController extends Controller
         "unique_id"=>$request->unique_id
        ];
 
-
     $data=$this->UserFirebaseService->userGetSingleChatsRecords($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){

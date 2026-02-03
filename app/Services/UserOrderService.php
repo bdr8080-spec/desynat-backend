@@ -706,7 +706,8 @@ $orders = $orders->orderBy('id', 'desc')->get();
         'variation_details.color',
         'variation_details.size',
         'UserRatingReviewProvide',
-        'exchange_order_details'
+        'exchange_order_details',
+        "chatRoomrecords"
     ])
     ->where('order_id', $request->order_id)
     ->where('id',$request->orderdetails_id)
