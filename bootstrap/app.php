@@ -17,6 +17,8 @@ use App\Http\Middleware\AffiliateLoginCheck;
 
 use App\Http\Middleware\SetLanguage;
 
+use App\Http\Middleware\OptionalAuth;
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
@@ -33,7 +35,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'prevent-back-history' => DisableBackBtn::class, // Add this line
             'seller_login' =>SellerAuthenticated::class,
             'LowerUrl' => ForceLowercaseUrl::class,
-            'Affiliate_user' => AffiliateLoginCheck::class,              
+            'Affiliate_user' => AffiliateLoginCheck::class,    
+            'optional.auth' => OptionalAuth::class,          
         ]);
     })
 

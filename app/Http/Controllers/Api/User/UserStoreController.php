@@ -11,6 +11,7 @@ use App\Services\UserManagementService;
 
 use Validator;
 
+use Auth;
 
 class UserStoreController extends Controller
 {
@@ -68,7 +69,8 @@ class UserStoreController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
-       $user_id=$request->user()->id??'';
+       $user_id=$request->user->id??null;
+
       
        $request_data=(object)[
         'user_id'=>$user_id,
@@ -110,7 +112,8 @@ class UserStoreController extends Controller
         return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
        }
 
-       $user_id=$request->user()->id??null;
+       $user_id=$request->user->id??null;
+
       
        $request_data=(object)[
         'user_id'=>$user_id,
