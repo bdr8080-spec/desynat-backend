@@ -285,11 +285,9 @@
                                     @if($item->order_type!=='2')
                                     <button class="qty-btn plus">+</button>
                                     @endif
-                                    <span id="removeCustomProduct" rel="{{$item->id}}" class="btn">Remove
+                                    <span class="removeCustomProduct" data-id="{{$item->id}}" class="btn">Remove
                                     </span>
-
                                 </div>
-
 
                             </div>
                         </div>
@@ -1076,5 +1074,37 @@ $(document).ready(function() {
         });
     });
 
+});
+
+
+// remove Custom product from The Card
+
+$(document).on('click', '.removeCustomProduct', function() {
+    let id = $(this).data('id');
+
+
+    // Example AJAX call
+    $.ajax({
+        url: "{{Route('remove_custom_addtocard')}}",
+        type: 'get',
+        data: {
+            id: id
+        },
+        success: function(res) {
+
+            if (res.status == 'success') {
+
+
+                toastr.success(res.message);
+
+                setTimeout(() => {
+                    window.location.href = window.location.href;
+                }, 1000);
+
+
+            }
+            // handle success
+        }
+    });
 });
 </script>

@@ -174,7 +174,10 @@ Route::get('/translate-words', [GoogleTranslateController::class, 'translate_wor
  Route::get('/user_langauge', [LanguageController::class, 'user_lang'])->name('user_lang');
 
 
+//  Cr Points 
 
+Route::post('/custom-order-add-to-card', [UserStoreController::class,'CustomorderAddToCard'])->name('custom_add_to_card');
+Route::get('/remove-custom-product-add-to-card', [UserStoreController::class,'RemoveCustomProductAddToCard'])->name('remove_custom_addtocard');
 
 
 
