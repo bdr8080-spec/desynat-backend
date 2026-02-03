@@ -325,7 +325,40 @@ class UserStoreController extends Controller
         } catch (\Exception $e) {
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
-    }       
+    }      
+    
+    
+       public function RemoveCustomProductAddToCard(Request $request)
+    {
+        $user_id=$request->user()->id;
+
+        try {
+
+        $validate = Validator::make($request->all(), [
+            'id' => 'required|exists:addtocarts,id',
+         ]);
+
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+        $request_data=(object)[
+          'user_id'=>$user_id,
+          'id'=>$request->id,
+         ];
+
+            $data = $this->UserManagementService->RemoveCustomProductAddToCard($request_data);
+
+            if (isset($data['status']) && $data['status'] == 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }      
 
     
 }

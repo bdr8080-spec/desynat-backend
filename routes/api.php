@@ -161,8 +161,7 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   // Client Cr Points
   
   Route::post('/custom-order-add-to-card', [UserStoreController::class,'CustomorderAddToCard']);
-
-
+  Route::post('/remove-custom-product-add-to-card', [UserStoreController::class,'RemoveCustomProductAddToCard']);
 
 
   

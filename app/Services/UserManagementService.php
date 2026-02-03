@@ -1278,6 +1278,35 @@ public function addtoCart_Increment_decrement($request)
 
     
 
+      public function RemoveCustomProductAddToCard($request)
+    {
+        try {
+         
+        $AddToCardCheck=Addtocart::where('id',$request->id)->first();
+
+         if($AddToCardCheck){
+            
+            $AddToCardCheck->delete();
+
+            return [
+                'status' => "success",
+                'message' => 'Custom Product Remove from The Card successfully',
+                'data'    => $AddToCardCheck
+            ];
+        } 
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+        
+    }
+
+
+
 
     
 }
