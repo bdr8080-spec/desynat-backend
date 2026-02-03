@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 @section('content')
- <style>
+<style>
 #editPreviewImage {
     display: block;
 }
@@ -128,27 +128,24 @@
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
-                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
+                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"
+                                        class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
                                 </td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
-                                        <a href="javascript:void(0);"
-                                            class="table-button edit-deal-btn"
-                                            data-id="{{ $deal->id }}"
-                                            data-name-english="{{ $deal->name_english }}"
+                                        <a href="javascript:void(0);" class="table-button edit-deal-btn"
+                                            data-id="{{ $deal->id }}" data-name-english="{{ $deal->name_english }}"
                                             data-name-arabic="{{ $deal->name_arabic }}"
                                             data-category-id="{{ $deal->category_id }}"
                                             data-sub-category-id="{{ $deal->sub_category_id }}"
-                                            data-discount="{{ $deal->discount }}"
-                                            data-from="{{ $deal->from }}"
-                                            data-to="{{ $deal->to }}"
-                                            data-image="{{ $deal->image }}"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#editModalDeal">
+                                            data-discount="{{ $deal->discount }}" data-from="{{ $deal->from }}"
+                                            data-to="{{ $deal->to }}" data-image="{{ $deal->image }}"
+                                            data-bs-toggle="modal" data-bs-target="#editModalDeal">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
-                                        <a href="javascript:void(0);" class="table-button text-danger deleteDeal mb-1 mt-1"
+                                        <a href="javascript:void(0);"
+                                            class="table-button text-danger deleteDeal mb-1 mt-1"
                                             data-id="{{ $deal->id }}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>
@@ -157,7 +154,8 @@
                                             <input class="form-check-input toggleStatus" type="checkbox"
                                                 id="flexSwitchCheckChecked{{ $deal['id'] }}" data-id="{{ $deal['id'] }}"
                                                 {{ $deal['status'] == 1 ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="flexSwitchCheckChecked{{ $deal['id'] }}"></label>
+                                            <label class="form-check-label"
+                                                for="flexSwitchCheckChecked{{ $deal['id'] }}"></label>
                                         </div>
                                     </div>
                                 </td>
@@ -223,7 +221,8 @@
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
-                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
+                                    <a href="{{ route('admin.sellerList', ['id' => $deal['id']]) }}"
+                                        class="text">{{ $deal['seller_enrolled']['seller_count'] ?? 0 }} Seller</a>
                                 </td>
 
                                 <td>0 KD</td>
@@ -276,7 +275,8 @@
                             <div class="form-group">
                                 <label class="form-label" for="name">Name (English)</label>
                                 <input type="text" name="name_english" class="form-control"
-                                    placeholder="Enter Deal Name in English" oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
+                                    placeholder="Enter Deal Name in English"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="nameEnError"></div>
                             </div>
                         </div>
@@ -286,7 +286,8 @@
                             <div class="form-group">
                                 <label class="form-label" for="name">Name (Arabic)</label>
                                 <input type="text" name="name_arabic" class="form-control"
-                                    placeholder="Enter Deal Name in Arabic" oninput="this.value=this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"/>
+                                    placeholder="Enter Deal Name in Arabic"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="nameArError"></div>
                             </div>
                         </div>
@@ -296,15 +297,13 @@
                             <label for="category" class="form-label">Select Category</label>
                             <div class="d-flex gap-4 align-items-center">
                                 @foreach($categories as $index => $category)
-                                    <div class="form-check">
-                                        <input class="form-check-input category-radio" type="radio" 
-                                            name="category" 
-                                            id="category{{ $index }}" 
-                                            value="{{ $category->id }}">
-                                        <label class="form-check-label" for="category{{ $index }}">
-                                            {{ $category->name }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input category-radio" type="radio" name="category"
+                                        id="category{{ $index }}" value="{{ $category->id }}">
+                                    <label class="form-check-label" for="category{{ $index }}">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="text-danger" id="categoryError"></div>
@@ -314,7 +313,8 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label for="subCategory" class="form-label">Select Sub-Category</label>
-                                <select class="form-select form-select-lg" id="subCategorySelect" aria-label="Large select example">
+                                <select class="form-select form-select-lg" id="subCategorySelect"
+                                    aria-label="Large select example" multiple>
                                     <option selected>Select Sub-Category</option>
                                 </select>
                                 <div class="text-danger" id="subCategoryError"></div>
@@ -325,8 +325,8 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label class="form-label" for="discount">Discount %</label>
-                                <input type="text" name="discount" class="form-control"
-                                    placeholder="Enter Discount" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^\s+|^0+/,'');if(this.value>100)this.value=100;"/>
+                                <input type="text" name="discount" class="form-control" placeholder="Enter Discount"
+                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^\s+|^0+/,'');if(this.value>100)this.value=100;" />
                                 <div class="text-danger" id="discountError"></div>
                             </div>
                         </div>
@@ -366,7 +366,7 @@
 </div>
 
 <!-- edit modal -->
- <div class="modal fade" id="editModalDeal" tabindex="-1" aria-labelledby="editModalDealLabel" aria-hidden="true">
+<div class="modal fade" id="editModalDeal" tabindex="-1" aria-labelledby="editModalDealLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
@@ -396,7 +396,8 @@
                             <div class="form-group">
                                 <label class="form-label" for="editNameEnglish">Name (English)</label>
                                 <input type="text" name="name_english" class="form-control" id="editNameEnglish"
-                                    placeholder="Enter Deal Name in English" oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')"/>
+                                    placeholder="Enter Deal Name in English"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="editNameEnError"></div>
                             </div>
                         </div>
@@ -406,7 +407,8 @@
                             <div class="form-group">
                                 <label class="form-label" for="editNameArabic">Name (Arabic)</label>
                                 <input type="text" name="name_arabic" class="form-control" id="editNameArabic"
-                                    placeholder="Enter Deal Name in Arabic" oninput="this.value=this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                    placeholder="Enter Deal Name in Arabic"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="editNameArError"></div>
                             </div>
                         </div>
@@ -416,15 +418,13 @@
                             <label class="form-label">Select Category</label>
                             <div class="d-flex gap-4 align-items-center" id="editCategories">
                                 @foreach($categories as $index => $category)
-                                    <div class="form-check">
-                                        <input class="form-check-input edit-category-radio" type="radio" 
-                                            name="edit_category" 
-                                            id="editCategory{{ $index }}" 
-                                            value="{{ $category->id }}">
-                                        <label class="form-check-label" for="editCategory{{ $index }}">
-                                            {{ $category->name }}
-                                        </label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input edit-category-radio" type="radio"
+                                        name="edit_category" id="editCategory{{ $index }}" value="{{ $category->id }}">
+                                    <label class="form-check-label" for="editCategory{{ $index }}">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
                                 @endforeach
                             </div>
                             <div class="text-danger" id="editCategoryError"></div>
@@ -434,7 +434,8 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label for="editSubCategorySelect" class="form-label">Select Sub-Category</label>
-                                <select class="form-select form-select-lg" id="editSubCategorySelect" aria-label="Large select example">
+                                <select class="form-select form-select-lg" id="editSubCategorySelect"
+                                    aria-label="Large select example">
                                     <option selected>Select Sub-Category</option>
                                 </select>
                                 <div class="text-danger" id="editSubCategoryError"></div>
@@ -446,7 +447,8 @@
                             <div class="form-group w-100">
                                 <label class="form-label" for="editDiscount">Discount %</label>
                                 <input type="text" name="discount" class="form-control" id="editDiscount"
-                                    placeholder="Enter Discount" oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^\s+|^0+/,'');if(this.value>100)this.value=100;"/>
+                                    placeholder="Enter Discount"
+                                    oninput="this.value=this.value.replace(/[^0-9]/g,'').replace(/^\s+|^0+/,'');if(this.value>100)this.value=100;" />
                                 <div class="text-danger" id="editDiscountError"></div>
                             </div>
                         </div>
@@ -520,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const uploadIcon = document.getElementById('uploadIcon');
     const fileUpload = document.getElementById('fileUpload');
     const submitBtn = document.getElementById('submitDealBtn');
-   // console.log(submitBtn);
+    // console.log(submitBtn);
 
     const nameEnError = document.getElementById('nameEnError');
     const nameArError = document.getElementById('nameArError');
@@ -536,9 +538,9 @@ document.addEventListener('DOMContentLoaded', function() {
     /* ===== Image Preview ===== */
     fileUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
-        if(file){
+        if (file) {
             const reader = new FileReader();
-            reader.onload = function(e){
+            reader.onload = function(e) {
                 previewImage.src = e.target.result;
                 previewImage.style.display = 'block';
                 uploadIcon.style.display = 'none';
@@ -549,10 +551,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ===== Clear errors on input/change ===== */
-    document.querySelector('input[name="name_english"]').addEventListener('input', () => nameEnError.innerText = '');
-    document.querySelector('input[name="name_arabic"]').addEventListener('input', () => nameArError.innerText = '');
+    document.querySelector('input[name="name_english"]').addEventListener('input', () => nameEnError.innerText =
+        '');
+    document.querySelector('input[name="name_arabic"]').addEventListener('input', () => nameArError.innerText =
+        '');
     subCategorySelect.addEventListener('change', () => subCategoryError.innerText = '');
-    document.querySelector('input[name="discount"]').addEventListener('input', () => discountError.innerText = '');
+    document.querySelector('input[name="discount"]').addEventListener('input', () => discountError.innerText =
+        '');
     document.getElementById('fromDate').addEventListener('change', () => fromDateError.innerText = '');
     document.getElementById('toDate').addEventListener('change', () => toDateError.innerText = '');
     fileUpload.addEventListener('change', () => imageError.innerText = '');
@@ -568,12 +573,12 @@ document.addEventListener('DOMContentLoaded', function() {
             subCategorySelect.innerHTML = '<option selected>Select Sub-Category</option>';
             subCategoryError.innerText = '';
 
-            if(!categoryId) return;
+            if (!categoryId) return;
 
             fetch(`/admin/getSubCategories/${categoryId}`)
                 .then(res => res.json())
                 .then(data => {
-                    if(data.status === 'success' && data.data.data.length > 0){
+                    if (data.status === 'success' && data.data.data.length > 0) {
                         data.data.data.forEach(sub => {
                             const option = document.createElement('option');
                             option.value = sub.id;
@@ -581,18 +586,20 @@ document.addEventListener('DOMContentLoaded', function() {
                             subCategorySelect.appendChild(option);
                         });
                     } else {
-                        subCategorySelect.innerHTML = '<option selected>No subcategories found</option>';
+                        subCategorySelect.innerHTML =
+                            '<option selected>No subcategories found</option>';
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    subCategorySelect.innerHTML = '<option selected>Error fetching subcategories</option>';
+                    subCategorySelect.innerHTML =
+                        '<option selected>Error fetching subcategories</option>';
                 });
         });
     });
 
     /* ===== Submit Form ===== */
-    submitBtn.addEventListener('click', function () {
+    submitBtn.addEventListener('click', function() {
 
         nameEnError.innerText = '';
         nameArError.innerText = '';
@@ -613,16 +620,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const fromDate = document.getElementById('fromDate').value;
         const toDate = document.getElementById('toDate').value;
 
-        if(!nameEnglish){ nameEnError.innerText = 'Please enter name in English'; hasError = true; }
-        if(!nameArabic){ nameArError.innerText = 'Please enter name in Arabic'; hasError = true; }
-        if(!category){ categoryError.innerText = 'Please select a category'; hasError = true; }
-        if(!subCategory || subCategory === 'Select Sub-Category'){ subCategoryError.innerText = 'Please select a subcategory'; hasError = true; }
-        if(!discount){ discountError.innerText = 'Please enter discount'; hasError = true; }
-        if(!fromDate){ fromDateError.innerText = 'Please select from date'; hasError = true; }
-        if(!toDate){ toDateError.innerText = 'Please select to date'; hasError = true; }
-        if(fileUpload.files.length === 0){ imageError.innerText = 'Please upload an image'; hasError = true; }
+        if (!nameEnglish) {
+            nameEnError.innerText = 'Please enter name in English';
+            hasError = true;
+        }
+        if (!nameArabic) {
+            nameArError.innerText = 'Please enter name in Arabic';
+            hasError = true;
+        }
+        if (!category) {
+            categoryError.innerText = 'Please select a category';
+            hasError = true;
+        }
+        if (!subCategory || subCategory === 'Select Sub-Category') {
+            subCategoryError.innerText = 'Please select a subcategory';
+            hasError = true;
+        }
+        if (!discount) {
+            discountError.innerText = 'Please enter discount';
+            hasError = true;
+        }
+        if (!fromDate) {
+            fromDateError.innerText = 'Please select from date';
+            hasError = true;
+        }
+        if (!toDate) {
+            toDateError.innerText = 'Please select to date';
+            hasError = true;
+        }
+        if (fileUpload.files.length === 0) {
+            imageError.innerText = 'Please upload an image';
+            hasError = true;
+        }
 
-        if(hasError) return;
+        if (hasError) return;
 
         const formData = new FormData();
         formData.append('name_english', nameEnglish);
@@ -633,32 +664,32 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('from', fromDate);
         formData.append('to', toDate);
         formData.append('image', fileUpload.files[0]);
-       // console.log(formData);
+        // console.log(formData);
 
 
         fetch('{{ url("admin/submitDeal") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                toastr.success(data.message);
-                setTimeout(() => {
-                    $('#sentModal2').modal('hide');
-                    location.reload();
-                }, 1500);
-            } else {
-                toastr.error(data.message || 'Something went wrong.');
-            }
-        })
-        //.catch((error) => toastr.error('Server error'));
-        .catch((error) => {
-         console.log(error);
-        });
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        $('#sentModal2').modal('hide');
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(data.message || 'Something went wrong.');
+                }
+            })
+            //.catch((error) => toastr.error('Server error'));
+            .catch((error) => {
+                console.log(error);
+            });
 
     });
 
@@ -709,7 +740,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('editToDate').value = to;
 
         // Image preview
-        if(image){
+        if (image) {
             editPreviewImage.src = image;
             editPreviewImage.style.display = 'block';
             editUploadIcon.style.display = 'none';
@@ -728,16 +759,17 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(data => {
                 editSubCategorySelect.innerHTML = '';
-                if(data.status === 'success' && data.data.data.length > 0){
+                if (data.status === 'success' && data.data.data.length > 0) {
                     data.data.data.forEach(sub => {
                         const option = document.createElement('option');
                         option.value = sub.id;
                         option.textContent = sub.name_english;
-                        if(sub.id == subCategoryId) option.selected = true;
+                        if (sub.id == subCategoryId) option.selected = true;
                         editSubCategorySelect.appendChild(option);
                     });
                 } else {
-                    editSubCategorySelect.innerHTML = '<option selected>No subcategories found</option>';
+                    editSubCategorySelect.innerHTML =
+                        '<option selected>No subcategories found</option>';
                 }
             });
 
@@ -758,9 +790,9 @@ document.addEventListener('DOMContentLoaded', function() {
     /* ===== Image Preview ===== */
     editFileUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
-        if(file){
+        if (file) {
             const reader = new FileReader();
-            reader.onload = function(e){
+            reader.onload = function(e) {
                 editPreviewImage.src = e.target.result;
                 editPreviewImage.style.display = 'block';
                 editUploadIcon.style.display = 'none';
@@ -793,7 +825,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(res => res.json())
                 .then(data => {
                     editSubCategorySelect.innerHTML = '';
-                    if(data.status === 'success' && data.data.data.length > 0){
+                    if (data.status === 'success' && data.data.data.length > 0) {
                         data.data.data.forEach(sub => {
                             const option = document.createElement('option');
                             option.value = sub.id;
@@ -801,18 +833,20 @@ document.addEventListener('DOMContentLoaded', function() {
                             editSubCategorySelect.appendChild(option);
                         });
                     } else {
-                        editSubCategorySelect.innerHTML = '<option selected>No subcategories found</option>';
+                        editSubCategorySelect.innerHTML =
+                            '<option selected>No subcategories found</option>';
                     }
                 })
                 .catch(err => {
                     console.error(err);
-                    editSubCategorySelect.innerHTML = '<option selected>Error fetching subcategories</option>';
+                    editSubCategorySelect.innerHTML =
+                        '<option selected>Error fetching subcategories</option>';
                 });
         });
     });
 
     /* ===== Submit Edit Deal ===== */
-    submitEditBtn.addEventListener('click', function () {
+    submitEditBtn.addEventListener('click', function() {
         const id = this.dataset.id;
 
         // Reset errors
@@ -836,15 +870,36 @@ document.addEventListener('DOMContentLoaded', function() {
         const from = document.getElementById('editFromDate').value;
         const to = document.getElementById('editToDate').value;
 
-        if(!nameEnglish){ editNameEnError.innerText = 'Please enter name in English'; hasError = true; }
-        if(!nameArabic){ editNameArError.innerText = 'Please enter name in Arabic'; hasError = true; }
-        if(!categoryId){ editCategoryError.innerText = 'Please select a category'; hasError = true; }
-        if(!subCategoryId || subCategoryId === 'Select Sub-Category'){ editSubCategoryError.innerText = 'Please select a subcategory'; hasError = true; }
-        if(!discount){ editDiscountError.innerText = 'Please enter discount'; hasError = true; }
-        if(!from){ editFromDateError.innerText = 'Please select from date'; hasError = true; }
-        if(!to){ editToDateError.innerText = 'Please select to date'; hasError = true; }
+        if (!nameEnglish) {
+            editNameEnError.innerText = 'Please enter name in English';
+            hasError = true;
+        }
+        if (!nameArabic) {
+            editNameArError.innerText = 'Please enter name in Arabic';
+            hasError = true;
+        }
+        if (!categoryId) {
+            editCategoryError.innerText = 'Please select a category';
+            hasError = true;
+        }
+        if (!subCategoryId || subCategoryId === 'Select Sub-Category') {
+            editSubCategoryError.innerText = 'Please select a subcategory';
+            hasError = true;
+        }
+        if (!discount) {
+            editDiscountError.innerText = 'Please enter discount';
+            hasError = true;
+        }
+        if (!from) {
+            editFromDateError.innerText = 'Please select from date';
+            hasError = true;
+        }
+        if (!to) {
+            editToDateError.innerText = 'Please select to date';
+            hasError = true;
+        }
 
-        if(hasError) return;
+        if (hasError) return;
 
         const formData = new FormData();
         formData.append('name_english', nameEnglish);
@@ -854,31 +909,31 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('discount', discount);
         formData.append('from', from);
         formData.append('to', to);
-        if(editFileUpload.files[0]) formData.append('image', editFileUpload.files[0]);
+        if (editFileUpload.files[0]) formData.append('image', editFileUpload.files[0]);
 
         fetch(`/admin/updateDeal/${id}`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                toastr.success(data.message);
-                setTimeout(() => {
-                    $('#editModalDeal').modal('hide');
-                    location.reload();
-                }, 1500);
-            } else {
-                toastr.error(data.message || 'Something went wrong.');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            toastr.error('Server error');
-        });
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        $('#editModalDeal').modal('hide');
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                toastr.error('Server error');
+            });
     });
 
 });
@@ -973,48 +1028,48 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-    function updateToDate() {
-        const fromDate = document.getElementById('fromDate').value;
-        const toDateInput = document.getElementById('toDate');
-        
-        if (fromDate) {
-            const minDate = new Date(fromDate);
-            minDate.setDate(minDate.getDate() + 1); 
-            toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
+function updateToDate() {
+    const fromDate = document.getElementById('fromDate').value;
+    const toDateInput = document.getElementById('toDate');
+
+    if (fromDate) {
+        const minDate = new Date(fromDate);
+        minDate.setDate(minDate.getDate() + 1);
+        toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
+    } else {
+        toDateInput.removeAttribute('min');
     }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate(); 
-        document.getElementById('fromDate').addEventListener('input', updateToDate);
-    });
+}
+document.addEventListener('DOMContentLoaded', function() {
+    updateToDate();
+    document.getElementById('fromDate').addEventListener('input', updateToDate);
+});
 </script>
 
 <script>
-    function updateToDate1() {
-        const fromDate = document.getElementById('editFromDate').value;
-        const toDateInput = document.getElementById('editToDate');
-        
-        if (fromDate) {
-            const minDate = new Date(fromDate);
-            minDate.setDate(minDate.getDate() + 1); 
-            toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
-        } else {
-            toDateInput.removeAttribute('min');
-        }
+function updateToDate1() {
+    const fromDate = document.getElementById('editFromDate').value;
+    const toDateInput = document.getElementById('editToDate');
+
+    if (fromDate) {
+        const minDate = new Date(fromDate);
+        minDate.setDate(minDate.getDate() + 1);
+        toDateInput.setAttribute('min', minDate.toISOString().split('T')[0]);
+    } else {
+        toDateInput.removeAttribute('min');
     }
-    document.addEventListener('DOMContentLoaded', function() {
-        updateToDate1(); 
-        document.getElementById('editFromDate').addEventListener('input', updateToDate1);
-    });
+}
+document.addEventListener('DOMContentLoaded', function() {
+    updateToDate1();
+    document.getElementById('editFromDate').addEventListener('input', updateToDate1);
+});
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('sentModal2');
-    modal.addEventListener('hidden.bs.modal', function () {
-        location.reload(); 
+    modal.addEventListener('hidden.bs.modal', function() {
+        location.reload();
     });
 });
 </script>

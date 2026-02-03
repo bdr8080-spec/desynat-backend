@@ -27,30 +27,18 @@
 
             <!-- Orders tab -->
             <li class="nav-item" role="presentation">
-                <button
-                    class="nav-link w-100 {{ $type == 'normal' ? 'active' : '' }}"
-                    id="pills-orders-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-orders"
-                    type="button"
-                    role="tab"
-                    aria-controls="pills-orders"
-                    aria-selected="{{ $type == 'normal' ? 'true' : 'false' }}">
+                <button class="nav-link w-100 {{ $type == 'normal' ? 'active' : '' }}" id="pills-orders-tab"
+                    data-bs-toggle="pill" data-bs-target="#pills-orders" type="button" role="tab"
+                    aria-controls="pills-orders" aria-selected="{{ $type == 'normal' ? 'true' : 'false' }}">
                     Orders
                 </button>
             </li>
 
             <!-- Custom Orders tab -->
             <li class="nav-item" role="presentation">
-                <button
-                    class="nav-link w-100 {{ $type == 'custom' ? 'active' : '' }}"
-                    id="pills-ordercustom-tab"
-                    data-bs-toggle="pill"
-                    data-bs-target="#pills-ordercustom"
-                    type="button"
-                    role="tab"
-                    aria-controls="pills-ordercustom"
-                    aria-selected="{{ $type == 'custom' ? 'true' : 'false' }}">
+                <button class="nav-link w-100 {{ $type == 'custom' ? 'active' : '' }}" id="pills-ordercustom-tab"
+                    data-bs-toggle="pill" data-bs-target="#pills-ordercustom" type="button" role="tab"
+                    aria-controls="pills-ordercustom" aria-selected="{{ $type == 'custom' ? 'true' : 'false' }}">
                     Custom Orders
                 </button>
             </li>
