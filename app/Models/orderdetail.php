@@ -72,6 +72,30 @@ class orderdetail extends Model
       public function exchange_order_details(){
         return $this->hasOne(orderdetail::class,'p_orderdetails_id','id');
     }
+
+
+
+        public function scopeOrderCreateStatus($query)
+    {
+        return $query->where(function ($q) {
+
+            // payment_method = 3 → payment_status NOT IN (2,3)
+            $q->where(function ($q1) {
+                $q1->whereHas('order', function ($o) {
+                    $o->where('payment_method', 3);
+                })
+                ->whereNotIn('payment_status', [2, 3]);
+            })
+
+            // OR payment_method != 3 → payment_status = 1
+            ->orWhere(function ($q2) {
+                $q2->whereHas('order', function ($o) {
+                    $o->where('payment_method', '!=', 3);
+                })
+                ->where('payment_status', 1);
+            });
+        });
+    }
     
 
 }

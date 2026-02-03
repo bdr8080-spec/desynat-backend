@@ -218,9 +218,16 @@ foreach ($check_chatRecord as $key => $val) {
 
  public function userGetSingleChatsRecords($request){
 
-    $check_chatRecord=allproductchats::with('product_variation.product_details', 'product_variation.size','product_variation.color','user_details','seller_details','delivery_details','order_create_status')->where('unique_id',$request->unique_id)->first();
+    $check_chatRecord=allproductchats::with('product_variation.product_details', 'product_variation.size','product_variation.color','user_details','seller_details','delivery_details')->where('unique_id',$request->unique_id)->first();
 
    if($check_chatRecord){
+
+    // check order Payment paid status
+      $check_order=OrderDetail::with('order')
+      ->where('unique_id',$check_chatRecord->unique_id)
+        ->orderCreateStatus()
+        ->first();
+    $check_chatRecord->order_create_status=$check_order;
 
      $firbase_chat= $this->getMessages($check_chatRecord->unique_id);
 
