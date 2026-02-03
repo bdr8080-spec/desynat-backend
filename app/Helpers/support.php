@@ -1,13 +1,12 @@
 <?php
 
 
-use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail,OrderDeliveryAddress};
+use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail,OrderDeliveryAddress,allproductchats};
 use App\Models\Zone;
 use App\Models\DeliveryBoy;
 use App\Models\SellerSubcriptionPlanBuy;
 use App\Models\Plan;
 use Carbon\Carbon;
-
 
 // Function to calculate the distance using the Haversine formula
 function calculateDistance($lat1, $lon1, $lat2, $lon2) {
@@ -189,12 +188,19 @@ function OrderGiftCardConditionCheck($orderid,$amount=null){
         
         foreach ($checkOrder->order_details as $key => $val) {
         
-            Addtocart::where([
+           $addtoCardData= Addtocart::where([
                 'product_id' => $val->product_id,
                 'variants_id' => $val->variants_id,
                 'user_id'     => $userId
-            ])->delete();
-        
+            ])->first();
+
+
+            if($addtoCardData->unique_id!==''){
+            allproductchats::where('unique_id',$addtoCardData->unique_id)->update(['product_buy_status'=>'1']);
+            }
+
+            $addtoCardData->delete();
+                    
         }
 
         

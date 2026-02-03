@@ -404,7 +404,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
         $checkOrder->update(['payment_status'=>'0','delivery_status'=>'2']);
 
-        $this->AddtocartRemoveData($checkOrder->id);
+        AddtocartRemoveData($checkOrder->id);
 
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
@@ -450,7 +450,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         UserWalletHistory::Create($request_wallet_transaction);
 
 
-        $this->AddtocartRemoveData($checkOrder->id);
+        AddtocartRemoveData($checkOrder->id);
 
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
@@ -473,7 +473,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         if($request->payment_status=='1'){
         $msg="Order Payment Paid Successfully";
 
-        $this->AddtocartRemoveData($checkOrder->id);
+        AddtocartRemoveData($checkOrder->id);
 
          OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
 
@@ -661,25 +661,25 @@ $orders = $orders->orderBy('id', 'desc')->get();
     }
 
 
-    // delete Data from Add to cart
-    public function AddtocartRemoveData($orderid){
+    // // delete Data from Add to cart
+    // public function AddtocartRemoveData($orderid){
 
-        $checkOrder = Order::with('order_details.product_details')->where('id', $orderid)->first();
+    //     $checkOrder = Order::with('order_details.product_details')->where('id', $orderid)->first();
 
-        $userId = $checkOrder->user_id;  // ← correct source of user_id
+    //     $userId = $checkOrder->user_id;  // ← correct source of user_id
         
-        foreach ($checkOrder->order_details as $key => $val) {
+    //     foreach ($checkOrder->order_details as $key => $val) {
         
-            Addtocart::where([
-                'product_id' => $val->product_id,
-                'variants_id' => $val->variants_id,
-                'user_id'     => $userId
-            ])->delete();
+    //         Addtocart::where([
+    //             'product_id' => $val->product_id,
+    //             'variants_id' => $val->variants_id,
+    //             'user_id'     => $userId
+    //         ])->delete();
         
-        }
+    //     }
 
         
-    }
+    // }
 
 
       public function Order_detailsPaidStatusChange($orderid,$paymentstatus){
