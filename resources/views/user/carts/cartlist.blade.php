@@ -87,6 +87,11 @@
             {{-- LEFT SIDE CART --}}
             <div class="col-lg-8">
                 @foreach($cartData['cart_data'] as $item)
+
+                @if($item->order_type=='2')
+                @php continue @endphp
+                @endif
+
                 <div class="cart-panel">
                     <div class="cart-card">
                         <div class="card-left mb-2 d-flex">
@@ -152,13 +157,17 @@
 
 
 
+                                    @if($item->order_type!=='2')
                                     <button class="qty-btn minus">−</button>
+                                    @endif
 
                                     <span class="qty-number">
                                         {{ $item->quantity < 10 ? '0'.$item->quantity : $item->quantity }}
                                     </span>
 
+                                    @if($item->order_type!=='2')
                                     <button class="qty-btn plus">+</button>
+                                    @endif
                                 </div>
 
                             </div>
@@ -190,6 +199,128 @@
                     </div>
                 </div>
                 @endforeach
+
+                <!-- Custom Product SHow In screen  -->
+
+                <h6> Custom Product</h6>
+
+                @foreach($cartData['cart_data'] as $item)
+
+                @if($item->order_type=='1')
+                @php continue @endphp
+                @endif
+                <div class="cart-panel">
+                    <div class="cart-card">
+                        <div class="card-left mb-2 d-flex">
+
+                            {{-- Product Image --}}
+                            <div>
+                                <div class="cart-products me-3">
+                                    <img src="{{ $item->product_variants->variant_image[0] }}" alt="Product"
+                                        class="img-fluid">
+                                </div>
+                            </div>
+                            {{-- Product Details --}}
+                            <div class="card-right d-flex w-100 justify-content-between">
+
+                                <div class="product-info">
+
+                                    <h5 class="product-title">{{ $item->product->product_name_en}}</h5>
+
+                                    <div class="psize d-flex gap-4">
+                                        <span>Size: {{ $item->product_variants->size->name ?? '-' }}</span>
+
+                                        <span class="d-flex align-items-center gap-2">
+                                            Color:
+                                            <div class="colorbox" style="width:15px;height:15px;border-radius:3px;
+                                                    background: {{ $item->product_variants->color->hex_code }};">
+                                            </div>
+                                        </span>
+
+                                        <span>Qnt: {{ $item->quantity }}</span>
+                                    </div>
+
+                                    {{-- Price --}}
+                                    <div class="price">
+                                        <span class="price-current">
+                                            {{ $item->product_variants->final_price }} KD
+                                        </span>
+
+                                        @if($item->product_variants->discount_value!=="0")
+
+
+                                        @if(!empty($item->product_variants->actual_price))
+                                        <span class="price-old">
+                                            {{ $item->product_variants->actual_price }} KD
+                                        </span>
+                                        @endif
+                                        <span class="discount ms-2">
+                                            @if($item->product_variants->discount_type == 1)
+                                            {{ $item->product_variants->discount_value }}% Off
+                                            @elseif($item->product_variants->discount_type == 2)
+                                            {{ $item->product_variants->discount_value }} KD Off
+                                            @endif
+                                        </span>
+
+                                        @endif
+
+                                    </div>
+
+                                </div>
+
+                                {{-- Quantity Buttons --}}
+                                <div class="qty-box d-flex gap-4" data-product-id="{{ $item->product_id }}"
+                                    data-variant-id="{{ $item->variants_id }}">
+
+
+
+                                    @if($item->order_type!=='2')
+                                    <button class="qty-btn minus">−</button>
+                                    @endif
+
+                                    <span class="qty-number">
+                                        {{ $item->quantity < 10 ? '0'.$item->quantity : $item->quantity }}
+                                    </span>
+
+                                    @if($item->order_type!=='2')
+                                    <button class="qty-btn plus">+</button>
+                                    @endif
+                                    <span class="removeCustomProduct" data-id="{{$item->id}}" class="btn">Remove
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @if($item->product->product_return == 1)
+                        <p class="return-text mb-2">{{ $item->product->return_days }} days return available</p>
+                        @else
+                        <p class="return-text mb-2">Non Returnable</p>
+                        @endif
+
+                        <div class="d-flex justify-content-between">
+                            <p class="delivery-label mb-2">Delivery by</p>
+                            <p class="delivery-date mb-2">3-5 Working Days</p>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <p class="seller d-flex gap-4 mb-2">
+                                <span>Seller</span>
+                                {{ $item->product->seller_details->first_name }}
+                                {{ $item->product->seller_details->last_name }}
+                            </p>
+
+                            <a href="{{ route('user.store_details', $item->product->store_id) }}" class="moreshop">
+                                Shop More <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+                @endforeach
+
+                <!-- custom code End here  -->
+
 
                 {{-- DELIVERY ADDRESS --}}
                 <div class="gift-pnl mt-4">
@@ -253,7 +384,8 @@
                         </div>
                         <div class="giftinfo d-none" id="couponDiscountRow">
                             <div>Coupon Discount</div>
-                            <div class="red-color" id="couponDiscountAmount">{{ $cartData['discount_coupon'] }} KD</div>
+                            <div class="red-color" id="couponDiscountAmount">{{ $cartData['discount_coupon'] }} KD
+                            </div>
                         </div>
                         <div class="giftinfo d-none" id="giftCardDiscountRow">
                             <div>Gift Card Discount</div>
@@ -581,7 +713,8 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.status === 'success' && response.data) {
-                    var promoData = response.data.data ? response.data.data : response.data;
+                    var promoData = response.data.data ? response.data.data : response
+                        .data;
                     if (promoData && promoData.discount_code) {
                         $('#promoModal').modal('hide');
                         $('#applyPromoText').text(promoData.discount_code + ' applied');
@@ -907,7 +1040,8 @@ $(document).ready(function() {
                     setTimeout(() => {
 
                         // Redirect To Online Pyament gateway 
-                        if (response.data && response.data.data.order_id && response
+                        if (response.data && response.data.data.order_id &&
+                            response
                             .data.data.Payment_method == '1') {
 
                             var orderid = response.data.data.order_id;
@@ -940,5 +1074,37 @@ $(document).ready(function() {
         });
     });
 
+});
+
+
+// remove Custom product from The Card
+
+$(document).on('click', '.removeCustomProduct', function() {
+    let id = $(this).data('id');
+
+
+    // Example AJAX call
+    $.ajax({
+        url: "{{Route('remove_custom_addtocard')}}",
+        type: 'get',
+        data: {
+            id: id
+        },
+        success: function(res) {
+
+            if (res.status == 'success') {
+
+
+                toastr.success(res.message);
+
+                setTimeout(() => {
+                    window.location.href = window.location.href;
+                }, 1000);
+
+
+            }
+            // handle success
+        }
+    });
 });
 </script>

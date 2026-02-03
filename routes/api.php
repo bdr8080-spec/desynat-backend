@@ -53,13 +53,18 @@ route::post('/create_password',[AuthController::class,'create_password']);
 
 // Auth Code check
 
-  // M3 Api User  
-Route::post('user/category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
+// // M3 Api User  
+// middleware('auth:api')
 
-Route::post('user/single-store-details', [UserStoreController::class,'single_store_details']);
-Route::post('user/single-product-details', [UserStoreController::class,'single_product_details']);
+Route::middleware(['optional.auth'])->prefix('user')->group(function () {
 
-  
+Route::post('category-Wise-Store-List', [UserStoreController::class,'category_Wise_Store_List']);
+Route::post('single-store-details', [UserStoreController::class,'single_store_details']);
+Route::post('single-product-details', [UserStoreController::class,'single_product_details']);
+
+});  
+
+
 
 Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(function () {
 

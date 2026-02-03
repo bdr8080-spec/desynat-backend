@@ -75,12 +75,14 @@ class UserAuthService
         if($get_user_details){
 
             if(Hash::check($request->password,$get_user_details->password,)){
+         
+                 $get_user_details->update(['lang'=> $request->lang??null]);// update code in language 
+         
               // $get_user_details->accessToken = $get_user_details->createToken('user')->plainTextToken;   
               $get_user_details->accessToken = $get_user_details->createToken('user-token', ['user'])->plainTextToken;   
               
               $affilated_User=AffilatedUser::where('user_id',$get_user_details->id)->where('otp_verify','1')->first();
 
-            $get_user_details->update(['lang'=> $request->lang??null]);// update code in language 
             
               if($affilated_User){
 
