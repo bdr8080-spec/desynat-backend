@@ -204,8 +204,11 @@
                     @endif
                     @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null)
                     <div class="mt-3">
-                        <a href="{{ route('user.chatDetails', ['id' => $chatData['record']['unique_id']]) }}"
-                            class="btn customBtn w-100">Pay Now</a>
+                        <span class="btn customBtn w-100"
+                            onclick="custom_ProductAdd_to_bag(`{{ $chatData['record']['unique_id'] }}`)">
+                            Add To Cart
+                        </span>
+
                     </div>
                     @endif
                 </div>
@@ -1094,6 +1097,40 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 });
+
+
+function custom_ProductAdd_to_bag(val) {
+
+    // $(document).on('click', '.custom_ProductAdd_to_bag', function() {
+    let id = val;
+    // Example AJAX call
+    $.ajax({
+        url: "{{Route('custom_add_to_card')}}",
+        type: 'get',
+        data: {
+            unique_id: id
+        },
+        success: function(res) {
+
+            if (res.status == 'success') {
+
+
+                toastr.success(res.message);
+
+                setTimeout(() => {
+                    window.location.href = window.location.href;
+                }, 1000);
+
+
+            }
+            // handle success
+        },
+        error: function(xhr) {
+            toastr.error(xhr.responseJSON.message);
+        }
+    });
+};
+// });
 </script>
 
 

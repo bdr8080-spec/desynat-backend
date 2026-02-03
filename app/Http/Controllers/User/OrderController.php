@@ -25,7 +25,7 @@ class OrderController extends Controller
 
         $data = (object)[
             'user_id' => $user->id,
-            'order_type' => '1',
+            // 'order_type' => '1',
             'search' => $request->search ?? null,
             'filter' => $request->filter ?? null
         ];
