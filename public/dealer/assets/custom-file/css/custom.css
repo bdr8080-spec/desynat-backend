@@ -1128,3 +1128,65 @@ table.dataTable td.dt-type-date {
 .text-danger {
     margin-bottom: 4px !important;
 }
+
+/* live request */
+.choose-date .date-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 100%;
+}
+.choose-date .date-header {
+    background: linear-gradient(90deg, #c9a26d, #8a623c);
+    color: #fff;
+    padding: 15px 20px;
+}
+.choose-date .date-header .small {
+    font-size: 14px;
+    opacity: .9;
+}
+.choose-date .date-header h3 {
+    margin: 5px 0 0;
+}
+.choose-date .month-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 20px;
+    font-weight: 600;
+}
+.choose-date .days-row {
+    display: flex;
+    gap: 15px;
+    padding: 15px 20px;
+    overflow-x: auto;
+}
+.choose-date .day {
+    text-align: center;
+    cursor: pointer;
+    min-width: 55px;
+}
+.choose-date .day span {
+    display: block;
+    font-size: 14px;
+    color: #666;
+}
+.choose-date .day b {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-top: 4px;
+    font-weight: 400;
+}
+.choose-date .day.active b {
+    background: #8a623c;
+    color: #fff;
+}
+.choose-date .day.disabled {
+    opacity: .4;
+    pointer-events: none;
+}
