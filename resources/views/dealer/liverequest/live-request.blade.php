@@ -35,20 +35,30 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="from-group">
-                        <select class="form-select form-control width-50" aria-label="Default select example"
-                            name="banner_filter" onchange="this.form.submit()">
+                        <select class="form-select form-control width-50" aria-label="Default select example">
                             <option value="">Filter by status</option>
-                            
+
                         </select>
                     </div>
-
-
                 </div>
-
             </form>
+        </div>
+
+        <div class="choose-date">
+            <div class="date-card">
+                <div class="date-header">
+                    <span>Select Date</span>
+                    <h3 id="selectedDate"></h3>
+                </div>
+                <div class="month-row date-form-pnl">
+                    <!-- <button id="prevMonth">‹</button> -->
+                    <select id="monthSelect" class="form-select form-control"></select>
+                    <select id="yearSelect" class="form-select form-control"></select>
+                    <!-- <button id="nextMonth">›</button> -->
+                </div>
+                <div class="days-row" id="daysContainer"></div>
+            </div>
         </div>
 
 
@@ -67,15 +77,12 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
+                        <td>#5558566</td>
+                        <td>03/02/2026 at 07:30pm</td>
+                        <td>03/02/2026 at 07:30pm</td>
+                        <td>Pending </td>
+                        <td>Remove</td>
                     </tr>
-
-                
-
 
                 </tbody>
             </table>
@@ -83,7 +90,7 @@
     </div>
 
 
-   
+
 
 
 
@@ -96,6 +103,76 @@
 @include('dealer.layout.footer');
 
 <script>
+    const months = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
 
+    let m = new Date().getMonth();
+    let y = new Date().getFullYear();
 
+    function render() {
+    $('#daysContainer').html('');
+    $('#monthSelect').val(m);
+    $('#yearSelect').val(y);
+
+    const today = new Date();
+
+    for (let d = 1; d <= new Date(y, m + 1, 0).getDate(); d++) {
+
+        const dateObj = new Date(y, m, d);
+        const day = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+
+        const active =
+            d === today.getDate() &&
+            m === today.getMonth() &&
+            y === today.getFullYear()
+            ? 'active' : '';
+
+        $('#daysContainer').append(
+            `<div class="day ${active}">
+                <span>${day}</span>
+                <b>${d}</b>
+             </div>`
+        );
+        
+    }
+}
+
+    // init
+    months.forEach((x, i) => $('#monthSelect').append(`<option value="${i}">${x}</option>`));
+    for (let i = y - 0; i <= y + 0; i++) $('#yearSelect').append(`<option>${i}</option>`);
+    render();
+
+    // events
+    $('#monthSelect,#yearSelect').change(() => {
+        m = +$('#monthSelect').val();
+        y = +$('#yearSelect').val();
+        render();
+    });
+
+    $('#prevMonth').click(() => {
+        m--;
+        if (m < 0) {
+            m = 11;
+            y--
+        }
+        render();
+    });
+    $('#nextMonth').click(() => {
+        m++;
+        if (m > 11) {
+            m = 0;
+            y++
+        }
+        render();
+    });
+
+    $(document).on('click', '.day', function() {
+        $('.day').removeClass('active');
+        $(this).addClass('active');
+        $('#selectedDate').text(
+            `${$(this).find('span').text()}, ${months[m]} ${y}`
+        );
+    });
 </script>
