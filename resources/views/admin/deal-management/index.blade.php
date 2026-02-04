@@ -248,13 +248,13 @@
 <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header management border-0">
+            <div class="modal-header management border-0 p-2">
                 <h2 class="h2">Add Deals</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <div class="appointment-container">
+                <div class="appointment-container dealheight">
                     <div class="row">
 
                         <!-- Image Upload -->
@@ -313,10 +313,15 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label for="subCategory" class="form-label">Select Sub-Category</label>
-                                <select class="form-select form-select-lg" id="subCategorySelect"
+                                <!-- <select class="form-select form-select-lg" id="subCategorySelect"
                                     aria-label="Large select example">
                                     <option selected>Select Sub-Category</option>
+                                </select> -->
+                              
+                                <select id="subCategorySelect" multiple="multiple" class="form-select">
+                                    <!-- <option selected>Select Sub-Category</option> -->
                                 </select>
+
                                 <div class="text-danger" id="subCategoryError"></div>
                             </div>
                         </div>
@@ -336,7 +341,7 @@
                             <div class="d-flex gap-2">
 
                                 <div class="col-lg-6">
-                                    <div class="form-group mt-4 w-100">
+                                    <div class="form-group mt-0 w-100">
                                         <label for="fromDate" class="form-label">From:</label>
                                         <input type="date" id="fromDate" class="form-control" />
                                         <div class="text-danger" id="fromDateError"></div>
@@ -344,7 +349,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="form-group mt-4 w-100">
+                                    <div class="form-group mt-0 w-100">
                                         <label for="toDate" class="form-label">To:</label>
                                         <input type="date" id="toDate" class="form-control" />
                                         <div class="text-danger" id="toDateError"></div>
@@ -487,9 +492,21 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
+<!-- <script>
+    $(document).ready(function () {
+        $('#subCategorySelect').multiselect({
+            includeSelectAllOption: true,   
+            onInitialized: function (select, container) {
+            container.find('button.multiselect')
+                .attr('data-bs-toggle', 'dropdown');                                    
+            }
+        });
+    });
 
+</script> -->
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -566,37 +583,83 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* ===== Fetch Subcategories on Category Select ===== */
-    document.querySelectorAll('.category-radio').forEach(radio => {
-        radio.addEventListener('change', function() {
-            const categoryId = this.value;
+        // document.querySelectorAll('.category-radio').forEach(radio => {
+        //     radio.addEventListener('change', function() {
+        //         const categoryId = this.value;
 
-            subCategorySelect.innerHTML = '<option selected>Select Sub-Category</option>';
-            subCategoryError.innerText = '';
+        //         subCategorySelect.innerHTML = '<option selected>Select Sub-Category</option>';
+        //         subCategoryError.innerText = '';
 
-            if (!categoryId) return;
+        //         if (!categoryId) return;
 
-            fetch(`/admin/getSubCategories/${categoryId}`)
+        //         fetch(`/admin/getSubCategories/${categoryId}`)
+        //             .then(res => res.json())
+        //             .then(data => {
+        //                 if (data.status === 'success' && data.data.data.length > 0) {
+        //                     data.data.data.forEach(sub => {
+        //                         const option = document.createElement('option');
+        //                         option.value = sub.id;
+        //                         option.textContent = sub.name_english;
+        //                         subCategorySelect.appendChild(option);
+        //                     });
+        //                 } else {
+        //                     subCategorySelect.innerHTML =
+        //                         '<option selected>No subcategories found</option>';
+        //                 }
+        //             })
+        //             .catch(err => {
+        //                 console.error(err);
+        //                 subCategorySelect.innerHTML =
+        //                     '<option selected>Error fetching subcategories</option>';
+        //             });
+        //     });
+        // });
+
+        $(function () {
+            const $subCategory = $('#subCategorySelect').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: 'Select Sub-Category',
+            onInitialized: function (_, c) {
+                c.find('button.multiselect')
+                .attr('data-bs-toggle', 'dropdown');
+            }
+        });
+
+        document.querySelectorAll('.category-radio').forEach(radio => {
+            radio.addEventListener('change', function () {
+                const categoryId = this.value;
+                // clear old options
+                $('#subCategorySelect').empty();
+                $('#subCategorySelect').multiselect('rebuild');
+
+                if (!categoryId) return;
+
+                fetch(`/admin/getSubCategories/${categoryId}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data.status === 'success' && data.data.data.length > 0) {
-                        data.data.data.forEach(sub => {
-                            const option = document.createElement('option');
-                            option.value = sub.id;
-                            option.textContent = sub.name_english;
-                            subCategorySelect.appendChild(option);
-                        });
+                    if (data.status === 'success' && data.data.data.length) {
+                    data.data.data.forEach(sub => {
+                        $('#subCategorySelect').append(
+                        `<option value="${sub.id}">${sub.name_english}</option>`
+                        );
+                    });
+
                     } else {
-                        subCategorySelect.innerHTML =
-                            '<option selected>No subcategories found</option>';
+                    $('#subCategorySelect')
+                        .append('<option disabled>No subcategories found</option>');
                     }
+                    $('#subCategorySelect').multiselect('rebuild');
                 })
-                .catch(err => {
-                    console.error(err);
-                    subCategorySelect.innerHTML =
-                        '<option selected>Error fetching subcategories</option>';
+                .catch(() => {
+                    $('#subCategorySelect')
+                    .append('<option disabled>Error fetching subcategories</option>')
+                    .multiselect('rebuild');
                 });
+            });
         });
-    });
+
+        });
+
 
     /* ===== Submit Form ===== */
     submitBtn.addEventListener('click', function() {

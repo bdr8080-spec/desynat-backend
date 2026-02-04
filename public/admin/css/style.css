@@ -2584,3 +2584,21 @@ select {
 a.text {
     color: #a78159;
 }
+
+.dealheight {
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 10px;
+}
+.multiselect-container.dropdown-menu.show {
+    width: 100%;
+}   
+.multiselect.dropdown-toggle {
+    border: 1px solid #926c48;
+    line-height: 27px;
+    font-size: 15px;
+}   
+.multiselect.dropdown-toggle:hover {
+    border: 1px solid #926c48;  
+}
