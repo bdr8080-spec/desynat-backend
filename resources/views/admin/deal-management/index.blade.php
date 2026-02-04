@@ -445,10 +445,15 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label for="editSubCategorySelect" class="form-label">Select Sub-Category</label>
-                                <select class="form-select form-select-lg" id="editSubCategorySelect"
+                                <!-- <select class="form-select form-select-lg" id="editSubCategorySelect"
                                     aria-label="Large select example">
                                     <option selected>Select Sub-Category</option>
+                                </select> -->   
+
+                                <select id="editSubCategorySelect" multiple="multiple" class="form-select">
+                                    <!-- <option selected>Select Sub-Category</option> -->
                                 </select>
+
                                 <div class="text-danger" id="editSubCategoryError"></div>
                             </div>
                         </div>
