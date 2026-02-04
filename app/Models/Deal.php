@@ -17,9 +17,15 @@ class Deal extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    // public function subCategory_details()
+    // {
+    //     return $this->belongsTo(SubCategory::class, 'sub_category_id');
+    // }
     public function subCategory_details()
     {
-        return $this->belongsTo(SubCategory::class, 'sub_category_id');
+        $ids = $this->sub_category_id ? explode(',', $this->sub_category_id) : [];
+
+        return SubCategory::whereIn('id', $ids)->get();
     }
 
 
