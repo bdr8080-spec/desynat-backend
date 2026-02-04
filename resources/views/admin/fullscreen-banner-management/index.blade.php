@@ -187,7 +187,7 @@
                     </div>
                 </form>
                 <div class="d-flex justify-content-end">
-                    <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
+                    <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#addPromotional">
                         <span>Add Promotional</span>
                     </a>
                 </div>
@@ -229,7 +229,7 @@
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" class="table-button edit-reason-btn"
                                            data-bs-toggle="modal"
-                                            data-bs-target="#editBannerModal">
+                                            data-bs-target="#editPromotional">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
@@ -249,6 +249,244 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Add Promotional -->
+
+<div class="modal fade" id="addPromotional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Add Promotional</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="row">
+                        <!-- Image Upload -->
+                        <div class="col-lg-12">
+                            <div class="upload-title text-center">Upload Image</div>
+
+                            <label for="fileUpload" class="upload-box" style="cursor:pointer;">
+                                <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
+                                <img id="previewImage" class="preview-image"
+                                    style="display:none; max-width:216px; margin-top:-2px;" />
+                                <div class="upload-text">Upload Image</div>
+                                <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
+                            </label>
+                            <div class="text-danger text-center" id="imageError"></div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="title">Title</label>
+                                <input type="text" id="title" name="title" class="form-control"
+                                    placeholder="Enter Title"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
+                                <div class="text-danger" id="titleError"></div>
+                            </div>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group w-100">
+                                <label class="form-label">Select Country</label>
+                                <select id="countrySelect" name="country_id" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Country</option>
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="text-danger" id="countryError"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group w-100">
+                                <label class="form-label">Banner Position</label>
+                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Type</option>
+                                    <option value="1">Home Top</option>
+                                    <option value="2">Home Bottom</option>
+                                    <option value="3">Category</option>
+                                </select>
+                                <div class="text-danger" id="forError"></div>
+                            </div>
+
+                            <div class="form-group w-100 mb-2">
+                                <label class="form-label">Category name</label>
+                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Category name</option>
+                                    <option value="1">Home Top</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group w-100 mb-2">
+                                <label class="form-label">Sub-category name</label>
+                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Sub-category</option>
+                                    <option value="1">Home Top</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Dates -->
+                        <div class="col-lg-12">
+                            <div class="d-flex gap-2">
+                                <div class="col-lg-6">
+                                    <div class="form-group  w-100">
+                                        <label class="form-label">From:</label>
+                                        <input type="date" id="start_date" name="start_date" class="form-control" />
+                                        <div class="text-danger" id="startDateError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group  w-100">
+                                        <label class="form-label">To:</label>
+                                        <input type="date" id="end_date" name="end_date" class="form-control" />
+                                        <div class="text-danger" id="endDateError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Submit -->
+                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <a type="button" id="submitBannerBtn" class="btn btn-dark customBtn mt-3">
+                                Submit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Add Promotional -->
+
+<div class="modal fade" id="editPromotional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Edit Promotional</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="row">
+
+                        <!-- Image Upload -->
+                        <div class="col-lg-12">
+                            <div class="upload-title text-center">Upload Image</div>
+
+                            <label for="fileUpload" class="upload-box" style="cursor:pointer;">
+                                <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
+                                <img id="previewImage" class="preview-image"
+                                    style="display:none; max-width:216px; margin-top:-2px;" />
+                                <div class="upload-text">Upload Image</div>
+                                <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
+                            </label>
+                            <div class="text-danger text-center" id="imageError"></div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group">
+                                <label class="form-label" for="title">Title</label>
+                                <input type="text" id="title" name="title" class="form-control"
+                                    placeholder="Enter Title"
+                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
+                                <div class="text-danger" id="titleError"></div>
+                            </div>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group w-100">
+                                <label class="form-label">Select Country</label>
+                                <select id="countrySelect" name="country_id" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Country</option>
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="text-danger" id="countryError"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="form-group w-100">
+                                <label class="form-label">Banner Position</label>
+                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Type</option>
+                                    <option value="1">Home Top</option>
+                                    <option value="2">Home Bottom</option>
+                                    <option value="3">Category</option>
+                                </select>
+                                <div class="text-danger" id="forError"></div>
+                            </div>
+
+                            <div class="form-group w-100 mb-2">
+                                <label class="form-label">Category name</label>
+                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Category name</option>
+                                    <option value="1">Home Top</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group w-100 mb-2">
+                                <label class="form-label">Sub-category name</label>
+                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                    aria-label="Large select example">
+                                    <option value="">Select Sub-category</option>
+                                    <option value="1">Home Top</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Dates -->
+                        <div class="col-lg-12">
+                            <div class="d-flex gap-2">
+                                <div class="col-lg-6">
+                                    <div class="form-group  w-100">
+                                        <label class="form-label">From:</label>
+                                        <input type="date" id="start_date" name="start_date" class="form-control" />
+                                        <div class="text-danger" id="startDateError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group  w-100">
+                                        <label class="form-label">To:</label>
+                                        <input type="date" id="end_date" name="end_date" class="form-control" />
+                                        <div class="text-danger" id="endDateError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Submit -->
+                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <a type="button" id="submitBannerBtn" class="btn btn-dark customBtn mt-3">
+                                Submit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
