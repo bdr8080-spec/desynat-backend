@@ -140,7 +140,7 @@
                                             data-id="{{ $deal->id }}" data-name-english="{{ $deal->name_english }}"
                                             data-name-arabic="{{ $deal->name_arabic }}"
                                             data-category-id="{{ $deal->category_id }}"
-                                            data-sub-category-id="{{ implode(',', $deal->sub_category_id) }}"
+                                            data-sub-category-id='@json($deal->sub_category_id)'
                                             data-discount="{{ $deal->discount }}" data-from="{{ $deal->from }}"
                                             data-to="{{ $deal->to }}" data-image="{{ $deal->image }}"
                                             data-bs-toggle="modal" data-bs-target="#editModalDeal">
@@ -1193,28 +1193,59 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const editSubCategorySelect = document.getElementById('editSubCategorySelect');
 
-    /* ===== Initialize Bootstrap Multiselect (Checkboxes + Select All) ===== */
+    /* ===== Initialize Bootstrap Multiselect ===== */
     $(editSubCategorySelect).multiselect({
         includeSelectAllOption: true,
-        enableFiltering: true,
-        enableCaseInsensitiveFiltering: true,
         nonSelectedText: 'Select Sub-Category',
-        buttonWidth: '100%',
         onInitialized: function(_, c) {
             c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
         }
     });
 
+    /* ===== Function to Load Subcategories ===== */
+    function loadSubCategories(categoryId, selectedSubCategories = []) {
+        editSubCategorySelect.innerHTML = '<option>Loading...</option>';
+
+        fetch(`/admin/getSubCategories/${categoryId}`)
+            .then(res => res.json())
+            .then(data => {
+                editSubCategorySelect.innerHTML = '';
+                if (data.status === 'success' && data.data.data.length > 0) {
+                    data.data.data.forEach(sub => {
+                        const option = document.createElement('option');
+                        option.value = sub.id;
+                        option.textContent = sub.name_english;
+
+                        if (selectedSubCategories.includes(sub.id.toString())) {
+                            option.selected = true;
+                        }
+
+                        editSubCategorySelect.appendChild(option);
+                    });
+                } else {
+                    editSubCategorySelect.innerHTML =
+                        '<option disabled>No subcategories found</option>';
+                }
+
+                $(editSubCategorySelect).multiselect('rebuild');
+            })
+            .catch(err => {
+                console.error(err);
+                editSubCategorySelect.innerHTML =
+                    '<option disabled>Error fetching subcategories</option>';
+                $(editSubCategorySelect).multiselect('rebuild');
+            });
+    }
+
     /* ===== Populate Modal on Open ===== */
     editModal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
 
-        // Deal data from button
         const id = button.getAttribute('data-id');
         const nameEnglish = button.getAttribute('data-name-english');
         const nameArabic = button.getAttribute('data-name-arabic');
         const categoryId = button.getAttribute('data-category-id');
-        const subCategoryIdJson = button.getAttribute('data-sub-category-id'); // JSON string: ["32","31"]
+        const subCategoryIdJson = button.getAttribute('data-sub-category-id'); // JSON string
         const discount = button.getAttribute('data-discount');
         const from = button.getAttribute('data-from');
         const to = button.getAttribute('data-to');
@@ -1250,35 +1281,8 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedSubCategories = [];
         }
 
-        // Fetch subcategories and mark selected ones
-        fetch(`/admin/getSubCategories/${categoryId}`)
-            .then(res => res.json())
-            .then(data => {
-                editSubCategorySelect.innerHTML = '';
-                if (data.status === 'success' && data.data.data.length > 0) {
-                    data.data.data.forEach(sub => {
-                        const option = document.createElement('option');
-                        option.value = sub.id;
-                        option.textContent = sub.name_english;
-                        if (selectedSubCategories.includes(sub.id.toString())) {
-                            option.selected = true;
-                        }
-                        editSubCategorySelect.appendChild(option);
-                    });
-                } else {
-                    editSubCategorySelect.innerHTML =
-                        '<option disabled>No subcategories found</option>';
-                }
-
-                // Rebuild Bootstrap Multiselect to show checkboxes and select all
-                $(editSubCategorySelect).multiselect('rebuild');
-            })
-            .catch(err => {
-                console.error(err);
-                editSubCategorySelect.innerHTML =
-                    '<option disabled>Error fetching subcategories</option>';
-                $(editSubCategorySelect).multiselect('rebuild');
-            });
+        // Load subcategories with selected ones checked
+        loadSubCategories(categoryId, selectedSubCategories);
 
         // Store deal ID in submit button
         submitEditBtn.dataset.id = id;
@@ -1325,32 +1329,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.edit-category-radio').forEach(radio => {
         radio.addEventListener('change', function() {
             const categoryId = this.value;
-            editSubCategorySelect.innerHTML = '<option selected>Loading...</option>';
-            editSubCategoryError.innerText = '';
-
-            fetch(`/admin/getSubCategories/${categoryId}`)
-                .then(res => res.json())
-                .then(data => {
-                    editSubCategorySelect.innerHTML = '';
-                    if (data.status === 'success' && data.data.data.length > 0) {
-                        data.data.data.forEach(sub => {
-                            const option = document.createElement('option');
-                            option.value = sub.id;
-                            option.textContent = sub.name_english;
-                            editSubCategorySelect.appendChild(option);
-                        });
-                    } else {
-                        editSubCategorySelect.innerHTML =
-                            '<option disabled>No subcategories found</option>';
-                    }
-                    $(editSubCategorySelect).multiselect('rebuild');
-                })
-                .catch(err => {
-                    console.error(err);
-                    editSubCategorySelect.innerHTML =
-                        '<option disabled>Error fetching subcategories</option>';
-                    $(editSubCategorySelect).multiselect('rebuild');
-                });
+            loadSubCategories(categoryId, []); // no pre-selected for new category
         });
     });
 
@@ -1379,34 +1358,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const from = document.getElementById('editFromDate').value;
         const to = document.getElementById('editToDate').value;
 
-        if (!nameEnglish) {
-            editNameEnError.innerText = 'Please enter name in English';
-            hasError = true;
-        }
-        if (!nameArabic) {
-            editNameArError.innerText = 'Please enter name in Arabic';
-            hasError = true;
-        }
-        if (!categoryId) {
-            editCategoryError.innerText = 'Please select a category';
-            hasError = true;
-        }
-        if (!subCategoryIds.length) {
-            editSubCategoryError.innerText = 'Please select at least one subcategory';
-            hasError = true;
-        }
-        if (!discount) {
-            editDiscountError.innerText = 'Please enter discount';
-            hasError = true;
-        }
-        if (!from) {
-            editFromDateError.innerText = 'Please select from date';
-            hasError = true;
-        }
-        if (!to) {
-            editToDateError.innerText = 'Please select to date';
-            hasError = true;
-        }
+        if (!nameEnglish) { editNameEnError.innerText = 'Please enter name in English'; hasError = true; }
+        if (!nameArabic) { editNameArError.innerText = 'Please enter name in Arabic'; hasError = true; }
+        if (!categoryId) { editCategoryError.innerText = 'Please select a category'; hasError = true; }
+        if (!subCategoryIds.length) { editSubCategoryError.innerText = 'Please select at least one subcategory'; hasError = true; }
+        if (!discount) { editDiscountError.innerText = 'Please enter discount'; hasError = true; }
+        if (!from) { editFromDateError.innerText = 'Please select from date'; hasError = true; }
+        if (!to) { editToDateError.innerText = 'Please select to date'; hasError = true; }
 
         if (hasError) return;
 
@@ -1414,35 +1372,37 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('name_english', nameEnglish);
         formData.append('name_arabic', nameArabic);
         formData.append('category_id', categoryId);
-        formData.append('sub_category_id', JSON.stringify(subCategoryIds)); // JSON string
+        subCategoryIds.forEach(id => {
+            formData.append('sub_category_id[]', id);
+        });
         formData.append('discount', discount);
         formData.append('from', from);
         formData.append('to', to);
         if (editFileUpload.files[0]) formData.append('image', editFileUpload.files[0]);
 
         fetch(`/admin/updateDeal/${id}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    toastr.success(data.message);
-                    setTimeout(() => {
-                        $('#editModalDeal').modal('hide');
-                        location.reload();
-                    }, 1500);
-                } else {
-                    toastr.error(data.message || 'Something went wrong.');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                toastr.error('Server error');
-            });
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toastr.success(data.message);
+                setTimeout(() => {
+                    $('#editModalDeal').modal('hide');
+                    location.reload();
+                }, 1500);
+            } else {
+                toastr.error(data.message || 'Something went wrong.');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastr.error('Server error');
+        });
     });
 
 });
@@ -1584,17 +1544,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
 
 @endsection
