@@ -1188,10 +1188,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const editSubCategorySelect = document.getElementById('editSubCategorySelect');
 
-    /* ===== Initialize Bootstrap Multiselect ===== */
+    /* ===== Initialize Bootstrap Multiselect (Checkboxes + Select All) ===== */
     $(editSubCategorySelect).multiselect({
         includeSelectAllOption: true,
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
         nonSelectedText: 'Select Sub-Category',
+        buttonWidth: '100%',
         onInitialized: function(_, c) {
             c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
         }
@@ -1206,7 +1209,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const nameEnglish = button.getAttribute('data-name-english');
         const nameArabic = button.getAttribute('data-name-arabic');
         const categoryId = button.getAttribute('data-category-id');
-        const subCategoryIdJson = button.getAttribute('data-sub-category-id'); // JSON string
+        const subCategoryIdJson = button.getAttribute('data-sub-category-id'); // JSON string: ["32","31"]
         const discount = button.getAttribute('data-discount');
         const from = button.getAttribute('data-from');
         const to = button.getAttribute('data-to');
@@ -1242,7 +1245,7 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedSubCategories = [];
         }
 
-        // Fetch subcategories and select saved ones
+        // Fetch subcategories and mark selected ones
         fetch(`/admin/getSubCategories/${categoryId}`)
             .then(res => res.json())
             .then(data => {
@@ -1259,16 +1262,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 } else {
                     editSubCategorySelect.innerHTML =
-                        '<option selected disabled>No subcategories found</option>';
+                        '<option disabled>No subcategories found</option>';
                 }
 
-                // Rebuild Bootstrap Multiselect to reflect selected options
+                // Rebuild Bootstrap Multiselect to show checkboxes and select all
                 $(editSubCategorySelect).multiselect('rebuild');
             })
             .catch(err => {
                 console.error(err);
                 editSubCategorySelect.innerHTML =
-                    '<option selected disabled>Error fetching subcategories</option>';
+                    '<option disabled>Error fetching subcategories</option>';
+                $(editSubCategorySelect).multiselect('rebuild');
             });
 
         // Store deal ID in submit button
@@ -1332,14 +1336,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     } else {
                         editSubCategorySelect.innerHTML =
-                            '<option selected disabled>No subcategories found</option>';
+                            '<option disabled>No subcategories found</option>';
                     }
                     $(editSubCategorySelect).multiselect('rebuild');
                 })
                 .catch(err => {
                     console.error(err);
                     editSubCategorySelect.innerHTML =
-                        '<option selected disabled>Error fetching subcategories</option>';
+                        '<option disabled>Error fetching subcategories</option>';
                     $(editSubCategorySelect).multiselect('rebuild');
                 });
         });
@@ -1405,7 +1409,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('name_english', nameEnglish);
         formData.append('name_arabic', nameArabic);
         formData.append('category_id', categoryId);
-        formData.append('sub_category_id', JSON.stringify(subCategoryIds)); // Send as JSON string
+        formData.append('sub_category_id', JSON.stringify(subCategoryIds)); // JSON string
         formData.append('discount', discount);
         formData.append('from', from);
         formData.append('to', to);
@@ -1438,6 +1442,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
+
 
 
 <script>
