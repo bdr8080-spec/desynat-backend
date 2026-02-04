@@ -380,7 +380,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="appointment-container">
+                <div class="appointment-container dealheight">
                     <div class="row">
 
                         <!-- Image Upload -->
@@ -463,7 +463,7 @@
                             <div class="d-flex gap-2">
 
                                 <div class="col-lg-6">
-                                    <div class="form-group mt-4 w-100">
+                                    <div class="form-group mt-0  w-100">
                                         <label for="editFromDate" class="form-label">From:</label>
                                         <input type="date" id="editFromDate" class="form-control" />
                                         <div class="text-danger" id="editFromDateError"></div>
@@ -471,7 +471,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="form-group mt-4 w-100">
+                                    <div class="form-group mt-0 w-100">
                                         <label for="editToDate" class="form-label">To:</label>
                                         <input type="date" id="editToDate" class="form-control" />
                                         <div class="text-danger" id="editToDateError"></div>
