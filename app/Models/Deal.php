@@ -10,6 +10,9 @@ class Deal extends Model
     use HasFactory;
 
     protected $guarded=[];
+    protected $casts = [
+        'sub_category_id' => 'array',
+    ];
 
 
     public function category_details()
@@ -23,9 +26,7 @@ class Deal extends Model
     // }
     public function subCategory_details()
     {
-        $ids = $this->sub_category_id ? explode(',', $this->sub_category_id) : [];
-
-        return SubCategory::whereIn('id', $ids)->get();
+        return SubCategory::whereIn('id', $this->sub_category_id)->get();
     }
 
 
