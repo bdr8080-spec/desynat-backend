@@ -46,121 +46,205 @@
 <div class="inner-content management">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
-            <h2 class="h2">Full Screen Banner Management</h2>
-        </div>
-
-        <div class="col-lg-3 col-md-4 col-12">
-            <div class="d-flex justify-content-end">
-                <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
-                    <span>Add Advertisement</span>
-                </a>
-            </div>
+            <h2 class="h2">Banner Management</h2>
         </div>
     </div>
 
 
-    <div class="userManagecontent">
-        <div class="">
-            <form method="GET" action="{{ route('admin.fullScreenBannerManagement') }}" id="filterForm">
-                <div class="row">
-                    <!-- <div class="col-lg-3 col-md-4 col-12">
-                    <div class="search-box" style="position: relative;">
-                        <i class="bi bi-search" style="
-                        position: absolute;
-                        left: 10px;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        font-size: 16px;
-                        color: #888;
-                      ">
-                        </i>
-                        <input type="text" class="form-control" placeholder="Search for..."
-                            style="padding-left: 35px" />
-                    </div>
-                </div> -->
+    <div class="d-flex justify-content-center">
+        <ul class="nav nav-pills mb-3 tabs-pnl custom" id="pills-tab" role="tablist">
+            <li class="nav-item m-1" role="presentation">
+                <button class="nav-link customBtn2 m-0 active" id="pills-fullscreen-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-fullscreen" type="button" role="tab" aria-controls="pills-fullscreen"
+                    aria-selected="true">
+                    Full Screen
+                </button>
+            </li>
+            <li class="nav-item m-1" role="presentation">
+                <button class="nav-link  customBtn2 m-0" id="pills-promo-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-promo" type="button" role="tab" aria-controls="pills-promo"
+                    aria-selected="true">
+                    Promotional
+                </button>
+            </li>
+        </ul>
+    </div>
 
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="form-group mb-5 ">
-                            <label for="from" class="form-label">Country Name</label>
-                            <select name="country" class="form-select form-select-lg w-50 "
-                                onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Select country</option>
-                                @foreach($countries as $country)
-                                <option value="{{ $country['name'] }}"
-                                    {{ request('country') == $country['name'] ? 'selected' : '' }}>
-                                    {{ $country['name'] }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
 
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-fullscreen" role="tabpanel"
+            aria-labelledby="pills-fullscreen-tab" tabindex="0">
+            <div class="d-flex justify-content-between align-items-center">
+                <form method="GET" action="{{ route('admin.fullScreenBannerManagement') }}" id="filterForm">
+                    <div class="form-group mb-3">
+                        <label for="from" class="form-label">Country Name</label>
+                        <select name="country" class="form-select form-select-lg"
+                            onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Select country</option>
+                            @foreach($countries as $country)
+                            <option value="{{ $country['name'] }}"
+                                {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                {{ $country['name'] }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
+                        <span>Add Advertisement</span>
+                    </a>
                 </div>
-            </form>
+            </div>
 
-            <div class="table-responsive mb-5 w-100">
-                <table id="myTable" class="table w-100">
-                    <thead>
-                        <tr>
-                            <th scope="col">SR No.</th>
-                            <th scope="col">Banner</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Action</th>
+            <div class="userManagecontent">
+                <div class="">
+                    <div class="table-responsive mb-5 w-100">
+                        <table id="myTable" class="table w-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SR No.</th>
+                                    <th scope="col">Banner</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Country</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Action</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($banners as $index => $banner)
-                        <tr>
-                            <th scope="row">{{ $index + 1 }}</th>
-                            <td>
-                                <a href="{{ $banner['image'] }}" target="_blank">
-                                    <img src="{{ $banner['image'] }}" alt="" width="40" height="40" class="square">
-                                </a>
-                            </td>
-                            <td>{{ $banner['title'] }}</td>
-                            <td>
-                                @if($banner['type'] == '1')
-                                    Mobile
-                                @else
-                                    Web
-                                @endif
-                            </td>
-                            <td>{{ $banner['country_info']['name'] }}</td>
-                            <td>{{ $banner['start_date'] }}</td>
-                            <td>{{ $banner['end_date'] }}</td>
-                            <td>
-                                <div class="d-flex gap-3 justify-content-center">
-                                    <a href="javascript:void(0);" class="table-button edit-reason-btn"
-                                        data-id="{{ $banner['id'] }}" data-title="{{ $banner['title'] }}"
-                                        data-country-id="{{ $banner['country_id'] }}"
-                                        data-type="{{ $banner['type'] }}"
-                                        data-start-date="{{ $banner['start_date'] }}"
-                                        data-end-date="{{ $banner['end_date'] }}" data-image="{{ $banner['image'] }}"
-                                        data-bs-toggle="modal" data-bs-target="#editBannerModal">
-                                        <i class="bi bi-pencil-square"></i>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($banners as $index => $banner)
+                                <tr>
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td>
+                                        <a href="{{ $banner['image'] }}" target="_blank">
+                                            <img src="{{ $banner['image'] }}" alt="" width="40" height="40"
+                                                class="square">
+                                        </a>
+                                    </td>
+                                    <td>{{ $banner['title'] }}</td>
+                                    <td>
+                                        @if($banner['type'] == '1')
+                                        Mobile
+                                        @else
+                                        Web
+                                        @endif
+                                    </td>
+                                    <td>{{ $banner['country_info']['name'] }}</td>
+                                    <td>{{ $banner['start_date'] }}</td>
+                                    <td>{{ $banner['end_date'] }}</td>
+                                    <td>
+                                        <div class="d-flex gap-3 justify-content-center">
+                                            <a href="javascript:void(0);" class="table-button edit-reason-btn"
+                                                data-id="{{ $banner['id'] }}" data-title="{{ $banner['title'] }}"
+                                                data-country-id="{{ $banner['country_id'] }}"
+                                                data-type="{{ $banner['type'] }}"
+                                                data-start-date="{{ $banner['start_date'] }}"
+                                                data-end-date="{{ $banner['end_date'] }}"
+                                                data-image="{{ $banner['image'] }}" data-bs-toggle="modal"
+                                                data-bs-target="#editBannerModal">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+
+                                            <a href="javascript:void(0);"
+                                                class="table-button text-danger deleteBanner mb-1 mt-1"
+                                                data-id="{{ $banner->id }}">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">No data found</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="pills-promo" role="tabpanel" aria-labelledby="pills-promo-tab" tabindex="0">
+            <div class="d-flex justify-content-between align-items-center">
+                <form method="GET" action="{{ route('admin.fullScreenBannerManagement') }}" id="filterForm">
+                    <div class="form-group mb-3">
+                        <label for="from" class="form-label">Country Name</label>
+                        <select name="country" class="form-select form-select-lg"
+                            onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Select country</option>
+                            @foreach($countries as $country)
+                            <option value="{{ $country['name'] }}"
+                                {{ request('country') == $country['name'] ? 'selected' : '' }}>
+                                {{ $country['name'] }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
+                        <span>Add Promotional</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="userManagecontent">
+                <div class="table-responsive mb-5 w-100">
+                    <table id="myTable" class="table w-100 comyTable3">
+                        <thead>
+                            <tr>
+                                <th scope="col">SR No.</th>
+                                <th scope="col">Banner</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Position</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>
+                                    <a href="#" target="_blank">
+                                        <img src="" alt="image" width="40" height="40" class="square">
                                     </a>
+                                </td>
+                                <td>rreg</td>
+                                <td>Mobile</td>
+                                <td>Top</td>
+                                <td>India</td>
+                                <td>2026-01-21</td>
+                                <td>2026-01-21</td>
+                                <td>
+                                    <div class="d-flex gap-3 justify-content-center">
+                                        <a href="javascript:void(0);" class="table-button edit-reason-btn"
+                                           data-bs-toggle="modal"
+                                            data-bs-target="#editBannerModal">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
 
-                                    <a href="javascript:void(0);"
-                                        class="table-button text-danger deleteBanner mb-1 mt-1"
-                                        data-id="{{ $banner->id }}">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </a>
-                                </div>
-                            </td>
+                                        <a href="javascript:void(0);"
+                                            class="table-button text-danger deleteBanner mb-1 mt-1">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+                                    </div>
+                                </td>
 
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" class="text-center">No data found</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -324,7 +408,7 @@
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label class="form-label">For</label>
-                                <select id="editForSelect"  class="form-select form-select-lg"
+                                <select id="editForSelect" class="form-select form-select-lg"
                                     aria-label="Large select example">
                                     <option value="">Select Type</option>
                                     <option value="1">Mobile</option>
@@ -540,7 +624,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 
     const editModalEl = document.getElementById('editBannerModal');
     const editModal = new bootstrap.Modal(editModalEl);
@@ -569,12 +653,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const editEndDateError = document.getElementById('editEndDateError');
 
     /* ---------------- IMAGE PREVIEW ---------------- */
-    editFileUpload.addEventListener('change', function (e) {
+    editFileUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
 
         if (file) {
             const reader = new FileReader();
-            reader.onload = function (event) {
+            reader.onload = function(event) {
                 editPreviewImage.src = event.target.result;
                 editPreviewImage.style.display = 'block';
                 editUploadIcon.style.display = 'none';
@@ -586,9 +670,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     /* ---------------- OPEN EDIT MODAL ---------------- */
-    document.querySelectorAll('.edit-reason-btn').forEach(function (button) {
+    document.querySelectorAll('.edit-reason-btn').forEach(function(button) {
 
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
 
             editBannerId.value = this.dataset.id;
             editTitle.value = this.dataset.title;
@@ -626,7 +710,7 @@ document.addEventListener('DOMContentLoaded', function () {
     editEndDate.addEventListener('change', () => editEndDateError.innerText = '');
 
     /* ---------------- UPDATE SUBMIT ---------------- */
-    updateBannerBtn.addEventListener('click', function (e) {
+    updateBannerBtn.addEventListener('click', function(e) {
 
         e.preventDefault();
 
@@ -682,26 +766,26 @@ document.addEventListener('DOMContentLoaded', function () {
         if (hasError) return;
 
         fetch(`{{ url('/admin/updateFullBanner') }}/${id}`, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                toastr.success(data.message);
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
 
-                setTimeout(() => {
-                    editModal.hide();
-                    location.reload();
-                }, 1500);
-            } else {
-                toastr.error(data.message || 'Something went wrong.');
-            }
-        })
-        .catch(() => toastr.error('Server error.'));
+                    setTimeout(() => {
+                        editModal.hide();
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(() => toastr.error('Server error.'));
     });
 
 });
