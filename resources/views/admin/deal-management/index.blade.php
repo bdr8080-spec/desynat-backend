@@ -124,7 +124,10 @@
                                 <td>{{ $deal['name_english'] }}</td>
                                 <td>{{ $deal['discount'] }}%</td>
                                 <td>{{ $deal['category_details']['name'] }}</td>
-                                <td>{{ $deal['subCategory_details']['name_english'] }}</td>
+                                <td>
+                                    {{ collect($deal['subCategory_details'])->pluck('name_english')->implode(', ') }}
+                                </td>
+
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
@@ -137,7 +140,7 @@
                                             data-id="{{ $deal->id }}" data-name-english="{{ $deal->name_english }}"
                                             data-name-arabic="{{ $deal->name_arabic }}"
                                             data-category-id="{{ $deal->category_id }}"
-                                            data-sub-category-id="{{ $deal->sub_category_id }}"
+                                            data-sub-category-id="{{ implode(',', $deal->sub_category_id) }}"
                                             data-discount="{{ $deal->discount }}" data-from="{{ $deal->from }}"
                                             data-to="{{ $deal->to }}" data-image="{{ $deal->image }}"
                                             data-bs-toggle="modal" data-bs-target="#editModalDeal">
@@ -217,7 +220,10 @@
                                 <td>{{ $deal['name_english'] }}</td>
                                 <td>{{ $deal['discount'] }}%</td>
                                 <td>{{ $deal['category_details']['name'] }}</td>
-                                <td>{{ $deal['subCategory_details']['name_english'] }}</td>
+                                <td>
+                                    {{ collect($deal['subCategory_details'])->pluck('name_english')->implode(', ') }}
+                                </td>
+
                                 <td>{{ $deal['from'] }}</td>
                                 <td>{{ $deal['to'] }}</td>
                                 <td class="short-title">
@@ -532,7 +538,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <!-- add deal -->
-<script>
+<!-- <script>
 document.addEventListener('DOMContentLoaded', function() {
 
     const previewImage = document.getElementById('previewImage');
@@ -757,10 +763,170 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+</script> -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const previewImage = document.getElementById('previewImage');
+    const uploadIcon = document.getElementById('uploadIcon');
+    const fileUpload = document.getElementById('fileUpload');
+    const submitBtn = document.getElementById('submitDealBtn');
+
+    const nameEnError = document.getElementById('nameEnError');
+    const nameArError = document.getElementById('nameArError');
+    const categoryError = document.getElementById('categoryError');
+    const subCategoryError = document.getElementById('subCategoryError');
+    const discountError = document.getElementById('discountError');
+    const fromDateError = document.getElementById('fromDateError');
+    const toDateError = document.getElementById('toDateError');
+    const imageError = document.getElementById('imageError');
+
+    const subCategorySelect = document.getElementById('subCategorySelect');
+
+    /* ===== Image Preview ===== */
+    fileUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+                uploadIcon.style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        }
+        imageError.innerText = '';
+    });
+
+    /* ===== Clear errors on input/change ===== */
+    document.querySelector('input[name="name_english"]').addEventListener('input', () => nameEnError.innerText = '');
+    document.querySelector('input[name="name_arabic"]').addEventListener('input', () => nameArError.innerText = '');
+    subCategorySelect.addEventListener('change', () => subCategoryError.innerText = '');
+    document.querySelector('input[name="discount"]').addEventListener('input', () => discountError.innerText = '');
+    document.getElementById('fromDate').addEventListener('change', () => fromDateError.innerText = '');
+    document.getElementById('toDate').addEventListener('change', () => toDateError.innerText = '');
+    fileUpload.addEventListener('change', () => imageError.innerText = '');
+    document.querySelectorAll('.category-radio').forEach(radio => {
+        radio.addEventListener('change', () => categoryError.innerText = '');
+    });
+
+    /* ===== Fetch Subcategories on Category Select (with multiselect rebuild) ===== */
+    $(function () {
+        const $subCategory = $('#subCategorySelect').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: 'Select Sub-Category',
+            onInitialized: function (_, c) {
+                c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
+            }
+        });
+
+        document.querySelectorAll('.category-radio').forEach(radio => {
+            radio.addEventListener('change', function () {
+                const categoryId = this.value;
+
+                // Clear old options
+                $('#subCategorySelect').empty();
+                $('#subCategorySelect').multiselect('rebuild');
+
+                if (!categoryId) return;
+
+                fetch(`/admin/getSubCategories/${categoryId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success' && data.data.data.length) {
+                            data.data.data.forEach(sub => {
+                                $('#subCategorySelect').append(
+                                    `<option value="${sub.id}">${sub.name_english}</option>`
+                                );
+                            });
+                        } else {
+                            $('#subCategorySelect').append('<option disabled>No subcategories found</option>');
+                        }
+                        $('#subCategorySelect').multiselect('rebuild');
+                    })
+                    .catch(() => {
+                        $('#subCategorySelect')
+                            .append('<option disabled>Error fetching subcategories</option>')
+                            .multiselect('rebuild');
+                    });
+            });
+        });
+    });
+
+    /* ===== Submit Form ===== */
+    submitBtn.addEventListener('click', function() {
+
+        // Reset errors
+        nameEnError.innerText = '';
+        nameArError.innerText = '';
+        categoryError.innerText = '';
+        subCategoryError.innerText = '';
+        discountError.innerText = '';
+        fromDateError.innerText = '';
+        toDateError.innerText = '';
+        imageError.innerText = '';
+
+        let hasError = false;
+
+        const nameEnglish = document.querySelector('input[name="name_english"]').value.trim();
+        const nameArabic = document.querySelector('input[name="name_arabic"]').value.trim();
+        const category = document.querySelector('input[name="category"]:checked');
+        const subCategory = Array.from(subCategorySelect.selectedOptions).map(option => option.value); // <-- Array
+        const discount = document.querySelector('input[name="discount"]').value.trim();
+        const fromDate = document.getElementById('fromDate').value;
+        const toDate = document.getElementById('toDate').value;
+
+        // Validation
+        if (!nameEnglish) { nameEnError.innerText = 'Please enter name in English'; hasError = true; }
+        if (!nameArabic) { nameArError.innerText = 'Please enter name in Arabic'; hasError = true; }
+        if (!category) { categoryError.innerText = 'Please select a category'; hasError = true; }
+        if (!subCategory.length) { subCategoryError.innerText = 'Please select a subcategory'; hasError = true; }
+        if (!discount) { discountError.innerText = 'Please enter discount'; hasError = true; }
+        if (!fromDate) { fromDateError.innerText = 'Please select from date'; hasError = true; }
+        if (!toDate) { toDateError.innerText = 'Please select to date'; hasError = true; }
+        if (fileUpload.files.length === 0) { imageError.innerText = 'Please upload an image'; hasError = true; }
+
+        if (hasError) return;
+
+        // Build FormData
+        const formData = new FormData();
+        formData.append('name_english', nameEnglish);
+        formData.append('name_arabic', nameArabic);
+        formData.append('category_id', category.value);
+        subCategory.forEach(id => formData.append('sub_category_id[]', id)); // <-- Send as array
+        formData.append('discount', discount);
+        formData.append('from', fromDate);
+        formData.append('to', toDate);
+        formData.append('image', fileUpload.files[0]);
+
+        // Submit form via fetch
+        fetch('{{ url("admin/submitDeal") }}', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toastr.success(data.message);
+                setTimeout(() => {
+                    $('#sentModal2').modal('hide');
+                    location.reload();
+                }, 1500);
+            } else {
+                toastr.error(data.message || 'Something went wrong.');
+            }
+        })
+        .catch(error => { console.log(error); });
+
+    });
+
+});
 </script>
 
+
 <!-- edit deal -->
-<script>
+<!-- <script>
 document.addEventListener('DOMContentLoaded', function() {
 
     const editModal = document.getElementById('editModalDeal');
@@ -1000,7 +1166,279 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+</script> -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const editModal = document.getElementById('editModalDeal');
+    const editPreviewImage = document.getElementById('editPreviewImage');
+    const editUploadIcon = document.getElementById('editUploadIcon');
+    const editFileUpload = document.getElementById('editFileUpload');
+    const submitEditBtn = document.getElementById('submitEditDealBtn');
+
+    const editNameEnError = document.getElementById('editNameEnError');
+    const editNameArError = document.getElementById('editNameArError');
+    const editCategoryError = document.getElementById('editCategoryError');
+    const editSubCategoryError = document.getElementById('editSubCategoryError');
+    const editDiscountError = document.getElementById('editDiscountError');
+    const editFromDateError = document.getElementById('editFromDateError');
+    const editToDateError = document.getElementById('editToDateError');
+    const editImageError = document.getElementById('editImageError');
+
+    const editSubCategorySelect = document.getElementById('editSubCategorySelect');
+
+    /* ===== Initialize Bootstrap Multiselect ===== */
+    $(editSubCategorySelect).multiselect({
+        includeSelectAllOption: true,
+        nonSelectedText: 'Select Sub-Category',
+        onInitialized: function(_, c) {
+            c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
+        }
+    });
+
+    /* ===== Populate Modal on Open ===== */
+    editModal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+
+        // Deal data from button
+        const id = button.getAttribute('data-id');
+        const nameEnglish = button.getAttribute('data-name-english');
+        const nameArabic = button.getAttribute('data-name-arabic');
+        const categoryId = button.getAttribute('data-category-id');
+        const subCategoryIdJson = button.getAttribute('data-sub-category-id'); // JSON string
+        const discount = button.getAttribute('data-discount');
+        const from = button.getAttribute('data-from');
+        const to = button.getAttribute('data-to');
+        const image = button.getAttribute('data-image');
+
+        // Fill inputs
+        document.getElementById('editNameEnglish').value = nameEnglish;
+        document.getElementById('editNameArabic').value = nameArabic;
+        document.getElementById('editDiscount').value = discount;
+        document.getElementById('editFromDate').value = from;
+        document.getElementById('editToDate').value = to;
+
+        // Image preview
+        if (image) {
+            editPreviewImage.src = image;
+            editPreviewImage.style.display = 'block';
+            editUploadIcon.style.display = 'none';
+        } else {
+            editPreviewImage.style.display = 'none';
+            editUploadIcon.style.display = 'block';
+        }
+
+        // Select category radio
+        document.querySelectorAll('.edit-category-radio').forEach(radio => {
+            radio.checked = radio.value == categoryId;
+        });
+
+        // Parse subcategories JSON
+        let selectedSubCategories = [];
+        try {
+            selectedSubCategories = JSON.parse(subCategoryIdJson); // ["32","31","30"]
+        } catch (e) {
+            selectedSubCategories = [];
+        }
+
+        // Fetch subcategories and select saved ones
+        fetch(`/admin/getSubCategories/${categoryId}`)
+            .then(res => res.json())
+            .then(data => {
+                editSubCategorySelect.innerHTML = '';
+                if (data.status === 'success' && data.data.data.length > 0) {
+                    data.data.data.forEach(sub => {
+                        const option = document.createElement('option');
+                        option.value = sub.id;
+                        option.textContent = sub.name_english;
+                        if (selectedSubCategories.includes(sub.id.toString())) {
+                            option.selected = true;
+                        }
+                        editSubCategorySelect.appendChild(option);
+                    });
+                } else {
+                    editSubCategorySelect.innerHTML =
+                        '<option selected disabled>No subcategories found</option>';
+                }
+
+                // Rebuild Bootstrap Multiselect to reflect selected options
+                $(editSubCategorySelect).multiselect('rebuild');
+            })
+            .catch(err => {
+                console.error(err);
+                editSubCategorySelect.innerHTML =
+                    '<option selected disabled>Error fetching subcategories</option>';
+            });
+
+        // Store deal ID in submit button
+        submitEditBtn.dataset.id = id;
+
+        // Clear errors
+        editNameEnError.innerText = '';
+        editNameArError.innerText = '';
+        editCategoryError.innerText = '';
+        editSubCategoryError.innerText = '';
+        editDiscountError.innerText = '';
+        editFromDateError.innerText = '';
+        editToDateError.innerText = '';
+        editImageError.innerText = '';
+    });
+
+    /* ===== Image Preview ===== */
+    editFileUpload.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                editPreviewImage.src = e.target.result;
+                editPreviewImage.style.display = 'block';
+                editUploadIcon.style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        }
+        editImageError.innerText = '';
+    });
+
+    /* ===== Clear errors on input/change ===== */
+    document.getElementById('editNameEnglish').addEventListener('input', () => editNameEnError.innerText = '');
+    document.getElementById('editNameArabic').addEventListener('input', () => editNameArError.innerText = '');
+    editSubCategorySelect.addEventListener('change', () => editSubCategoryError.innerText = '');
+    document.getElementById('editDiscount').addEventListener('input', () => editDiscountError.innerText = '');
+    document.getElementById('editFromDate').addEventListener('change', () => editFromDateError.innerText = '');
+    document.getElementById('editToDate').addEventListener('change', () => editToDateError.innerText = '');
+    editFileUpload.addEventListener('change', () => editImageError.innerText = '');
+    document.querySelectorAll('.edit-category-radio').forEach(radio => {
+        radio.addEventListener('change', () => editCategoryError.innerText = '');
+    });
+
+    /* ===== Update Subcategories on Category Change ===== */
+    document.querySelectorAll('.edit-category-radio').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const categoryId = this.value;
+            editSubCategorySelect.innerHTML = '<option selected>Loading...</option>';
+            editSubCategoryError.innerText = '';
+
+            fetch(`/admin/getSubCategories/${categoryId}`)
+                .then(res => res.json())
+                .then(data => {
+                    editSubCategorySelect.innerHTML = '';
+                    if (data.status === 'success' && data.data.data.length > 0) {
+                        data.data.data.forEach(sub => {
+                            const option = document.createElement('option');
+                            option.value = sub.id;
+                            option.textContent = sub.name_english;
+                            editSubCategorySelect.appendChild(option);
+                        });
+                    } else {
+                        editSubCategorySelect.innerHTML =
+                            '<option selected disabled>No subcategories found</option>';
+                    }
+                    $(editSubCategorySelect).multiselect('rebuild');
+                })
+                .catch(err => {
+                    console.error(err);
+                    editSubCategorySelect.innerHTML =
+                        '<option selected disabled>Error fetching subcategories</option>';
+                    $(editSubCategorySelect).multiselect('rebuild');
+                });
+        });
+    });
+
+    /* ===== Submit Edit Deal ===== */
+    submitEditBtn.addEventListener('click', function() {
+        const id = this.dataset.id;
+
+        // Reset errors
+        editNameEnError.innerText = '';
+        editNameArError.innerText = '';
+        editCategoryError.innerText = '';
+        editSubCategoryError.innerText = '';
+        editDiscountError.innerText = '';
+        editFromDateError.innerText = '';
+        editToDateError.innerText = '';
+        editImageError.innerText = '';
+
+        let hasError = false;
+
+        const nameEnglish = document.getElementById('editNameEnglish').value.trim();
+        const nameArabic = document.getElementById('editNameArabic').value.trim();
+        const categoryRadio = document.querySelector('.edit-category-radio:checked');
+        const categoryId = categoryRadio ? categoryRadio.value : '';
+        const subCategoryIds = Array.from(editSubCategorySelect.selectedOptions).map(opt => opt.value);
+        const discount = document.getElementById('editDiscount').value.trim();
+        const from = document.getElementById('editFromDate').value;
+        const to = document.getElementById('editToDate').value;
+
+        if (!nameEnglish) {
+            editNameEnError.innerText = 'Please enter name in English';
+            hasError = true;
+        }
+        if (!nameArabic) {
+            editNameArError.innerText = 'Please enter name in Arabic';
+            hasError = true;
+        }
+        if (!categoryId) {
+            editCategoryError.innerText = 'Please select a category';
+            hasError = true;
+        }
+        if (!subCategoryIds.length) {
+            editSubCategoryError.innerText = 'Please select at least one subcategory';
+            hasError = true;
+        }
+        if (!discount) {
+            editDiscountError.innerText = 'Please enter discount';
+            hasError = true;
+        }
+        if (!from) {
+            editFromDateError.innerText = 'Please select from date';
+            hasError = true;
+        }
+        if (!to) {
+            editToDateError.innerText = 'Please select to date';
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        const formData = new FormData();
+        formData.append('name_english', nameEnglish);
+        formData.append('name_arabic', nameArabic);
+        formData.append('category_id', categoryId);
+        formData.append('sub_category_id', JSON.stringify(subCategoryIds)); // Send as JSON string
+        formData.append('discount', discount);
+        formData.append('from', from);
+        formData.append('to', to);
+        if (editFileUpload.files[0]) formData.append('image', editFileUpload.files[0]);
+
+        fetch(`/admin/updateDeal/${id}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    toastr.success(data.message);
+                    setTimeout(() => {
+                        $('#editModalDeal').modal('hide');
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(data.message || 'Something went wrong.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                toastr.error('Server error');
+            });
+    });
+
+});
 </script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

@@ -73,17 +73,67 @@ class DealManagementController extends Controller
         }
     }
 
+    // public function submitDeal(Request $request)
+    // {
+    //    //dd($request->all());
+    //     $validator = Validator::make($request->all(), [
+    //         'name_english' => 'required',
+    //         'name_arabic' => 'required',
+    //         'category_id' => 'required',
+    //         'sub_category_id' => 'required',
+    //         'discount' => 'required',
+    //         'from' => 'required',
+    //         'to' => 'required',
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+    //     ], [
+    //         'image.required' => 'Please Upload an Image',
+    //         'image.image' => 'The uploaded file must be an image',
+    //         'image.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
+    //         'image.max' => 'Image size should not exceed 5MB',
+    //     ]);
+
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     $deal = new Deal();
+    //     $deal->name_english = $request->name_english;
+    //     $deal->name_arabic = $request->name_arabic;
+    //     $deal->category_id = $request->category_id;
+    //     $deal->sub_category_id = $request->sub_category_id;
+    //     $deal->discount = $request->discount;
+    //     $deal->from = $request->from;
+    //     $deal->to = $request->to;
+
+    //     if($request->hasFile('image')){
+    //         $commonController = new CommonController();
+    //         $uploadResult = $commonController->upload($request);
+    //         $uploadResultArray = $uploadResult->getData(true); 
+
+    //         if ($uploadResultArray['status'] === 'error') {
+    //             return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+    //         }
+
+    //         $imageUrl = $uploadResultArray['data']['url'];
+    //         $deal->image = $imageUrl; 
+    //     }
+
+    //     $deal->save();
+
+    //     return response()->json(['success' => true, 'message' => 'Deal Added Successfully!']);
+    // }
+
     public function submitDeal(Request $request)
     {
-       //dd($request->all());
         $validator = Validator::make($request->all(), [
             'name_english' => 'required',
             'name_arabic' => 'required',
             'category_id' => 'required',
-            'sub_category_id' => 'required',
+            'sub_category_id' => 'required|array',
             'discount' => 'required',
-            'from' => 'required',
-            'to' => 'required',
+            'from' => 'required|date',
+            'to' => 'required|date',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ], [
             'image.required' => 'Please Upload an Image',
@@ -91,7 +141,6 @@ class DealManagementController extends Controller
             'image.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
             'image.max' => 'Image size should not exceed 5MB',
         ]);
-
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -101,28 +150,28 @@ class DealManagementController extends Controller
         $deal->name_english = $request->name_english;
         $deal->name_arabic = $request->name_arabic;
         $deal->category_id = $request->category_id;
-        $deal->sub_category_id = $request->sub_category_id;
+        $deal->sub_category_id = $request->sub_category_id; 
         $deal->discount = $request->discount;
         $deal->from = $request->from;
         $deal->to = $request->to;
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $commonController = new CommonController();
             $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
+            $uploadResultArray = $uploadResult->getData(true);
 
             if ($uploadResultArray['status'] === 'error') {
                 return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
             }
 
-            $imageUrl = $uploadResultArray['data']['url'];
-            $deal->image = $imageUrl; 
+            $deal->image = $uploadResultArray['data']['url'];
         }
 
         $deal->save();
 
         return response()->json(['success' => true, 'message' => 'Deal Added Successfully!']);
     }
+
 
     public function updateDeal(Request $request, $id)
     {
@@ -133,7 +182,7 @@ class DealManagementController extends Controller
             'name_english' => 'required',
             'name_arabic' => 'required',
             'category_id' => 'required',
-            'sub_category_id' => 'required',
+            'sub_category_id' => 'required|array',
             'discount' => 'required',
             'from' => 'required',
             'to' => 'required',
