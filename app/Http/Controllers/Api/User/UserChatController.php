@@ -63,7 +63,7 @@ class UserChatController extends Controller
             'unique_id' => 'required|exists:allproductchats,unique_id',
             'quantity' => 'required',
             "custom_details"=>'required',
-            "delivery_address"=>'required',
+            //"delivery_address"=>'required',
         ]);
         
        if($validate->fails()){
