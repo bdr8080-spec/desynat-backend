@@ -305,6 +305,30 @@ class FullBannerController extends Controller
         }
     }
 
+    public function block_unblock_promotional_banner(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'banner_id' => 'required|exists:seller_banners,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $result = $this->FullBannerService->blockUnblockPromotionalBanner($request->banner_id);
+
+            if ($result['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $result['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $result['message'], $result['data'], 200);
+            
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

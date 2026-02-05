@@ -212,6 +212,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/delete_promotional_banner',[FullBannerController::class,'delete_promotional_banner']);
      Route::get('/get_promotional_banners',[FullBannerController::class,'get_promotional_banners']);
      Route::get('/get_promotional_banner_detail',[FullBannerController::class,'get_promotional_banner_detail']);
+     Route::post('/block_unblock_promotional_banner',[FullBannerController::class,'block_unblock_promotional_banner']);
 
      //affiliated user management
      Route::get('/get_new_affilaited_users',[AffiliatedUserController::class,'get_new_affilaited_users']);
