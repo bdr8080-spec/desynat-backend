@@ -318,17 +318,17 @@ class FullBannerService
             ])
             ->where('added_by', '1');
 
-            // if ($request->filled('category')) {
-            //     $categoryId = $request->input('category');
 
-            //     $query->where('category', $categoryId);
-            // }
-
-            // if ($request->filled('sub_category')) {
-            //     $subCategoryId = $request->input('sub_category');
-
-            //     $query->where('subcatgory', $subCategoryId);
-            // }
+           if (!empty($request->start_date) && !empty($request->end_date)) {
+                $query->whereRaw(
+                    "STR_TO_DATE(start_date, '%Y-%m-%d') >= ? AND STR_TO_DATE(end_date, '%Y-%m-%d') <= ?",
+                    [$request->start_date, $request->end_date]
+                );
+            } elseif (!empty($request->start_date)) {
+                $query->whereRaw("STR_TO_DATE(start_date, '%Y-%m-%d') >= ?", [$request->start_date]);
+            } elseif (!empty($request->end_date)) {
+                $query->whereRaw("STR_TO_DATE(end_date, '%Y-%m-%d') <= ?", [$request->end_date]);
+            }
 
             $query->orderBy('id', 'desc');
 
