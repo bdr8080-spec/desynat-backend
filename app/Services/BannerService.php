@@ -157,7 +157,7 @@ class BannerService
         try {
             $limit = (int)($request->input('limit'));
 
-            $data = sellerBanner::with('category_details','subcategory_details','seller_details.country_details','seller_details.seller_bank_details')->where('Admin_verify', $request->type);
+            $data = sellerBanner::with('category_details','subcategory_details','seller_details.country_details','seller_details.seller_bank_details')->where('Admin_verify', $request->type)->where('added_by', '0');
             
             if ($request->search) {
                 $search = $request->search;

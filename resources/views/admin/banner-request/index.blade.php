@@ -256,13 +256,13 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $data['order_id'] }}</td>
 
-                                <td>{{ $data['seller_details']['first_name'] }}
-                                    {{ $data['seller_details']['last_name'] }}</td>
-                                <td>
+                                <td>{{ $data['seller_details']['first_name'] ?? 'N/A' }}
+                                    {{ $data['seller_details']['last_name'] ?? '' }}</td>
+                               <td>
                                     {{
                                         \App\Models\Country::where(
                                             'dial_code',
-                                            $data['seller_details']['country_code']
+                                            optional($data['seller_details'])->country_code
                                         )->value('name') ?? 'N/A'
                                     }}
                                 </td>

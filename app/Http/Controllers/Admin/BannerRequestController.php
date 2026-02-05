@@ -36,7 +36,7 @@ class BannerRequestController extends Controller
             $approvedRequestParams['country_name'] = $country;
         }
         $approvedRequest = $this->BannerService->getBannersReq(new Request($approvedRequestParams))['data'];
-
+        //dd($approvedRequest);
         // Rejected Requests
         $rejectedRequestParams = ['type' => '2'];
         if ($type === 'rejected' && $country) {
