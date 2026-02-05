@@ -7,24 +7,29 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Services\FullBannerService;
 use App\Services\CountryService;
+use App\Services\CategoryService;
 use App\Models\FullBanner;
+use App\Models\sellerBanner;
 use App\Http\Controllers\CommonController;
+use Carbon\Carbon;
 
  
 class FullScreenBannerController extends Controller
 {
 
-    public function __construct(FullBannerService $FullBannerService, CountryService $CountryService)
+    public function __construct(FullBannerService $FullBannerService, CountryService $CountryService, CategoryService $CategoryService)
     {
         $this->FullBannerService = $FullBannerService;
         $this->CountryService = $CountryService;
+        $this->CategoryService = $CategoryService;
     }
 
     public function fullScreenBannerManagement(Request $request){
         $banners = $this->FullBannerService->getFullBanners($request)['data'];
+        $promotionalBanners = $this->FullBannerService->getPromotionalBanners($request)['data'];
        // dd($banners);
         $countries = $this->CountryService->getUserAllCountries()['data'];
-        return view('admin.fullscreen-banner-management.index',compact('banners','countries'));
+        return view('admin.fullscreen-banner-management.index',compact('banners','countries','promotionalBanners'));
     }
 
     public function deleteFullScreenBanner($id)
@@ -243,6 +248,130 @@ class FullScreenBannerController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Banner Updated Successfully!']);
     }
+
+    public function deletePromotionalBanner($id)
+    {
+        $result = $this->FullBannerService->deletePromotionalBanner($id);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function addPromotionalBanner(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'upload_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'banner_position' => 'required|in:1,2,3',
+            'category'        => 'nullable|required_if:banner_position,3|exists:categories,id',
+            'subcatgory'      => 'nullable|required_if:banner_position,3|exists:sub_categories,id',
+        ], [
+            'upload_banner.required' => 'Please Upload an Image',
+            'upload_banner.image' => 'The uploaded file must be an image',
+            'upload_banner.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
+            //'image.max' => 'Image size should not exceed 5MB',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $banner = new sellerBanner();
+        $banner->start_date = $request->start_date;
+        $banner->end_date = $request->end_date;
+        $banner->banner_position = $request->banner_position;
+        $banner->category = $request->category;
+        $banner->subcatgory = $request->subcatgory;
+        $start = Carbon::parse($request->start_date);
+        $end   = Carbon::parse($request->end_date);
+        $banner->total_days = $start->diffInDays($end) + 1; 
+
+        if($request->hasFile('upload_banner')){
+            $commonController = new CommonController();
+            $uploadResult = $commonController->upload($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+            $banner->upload_banner = $imageUrl; 
+        }
+
+        $banner->save();
+
+        return response()->json(['success' => true, 'message' => 'Promotional Banner Added Successfully!']);
+    }
+
+    public function getCategories(Request $req)
+    {
+        try {
+            $data = $this->CategoryService->getCategory($req);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $data['message'],
+                    'data' => []
+                ], 400);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $data['message'],
+                'data' => $data['data']
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+                'data' => []
+            ], 500);
+        }
+    }
+
+    public function getSubCategories($id)
+    {
+        try {
+            $data = $this->CategoryService->getSubCategoriesByCategoryId($id);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $data['message'],
+                    'data' => []
+                ], 400);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $data['message'],
+                'data' => $data['data']
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+                'data' => []
+            ], 500);
+        }
+    }
+
 
 
 
