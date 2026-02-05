@@ -4,7 +4,7 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Live Coverage Requests</div>
-        <a href="#" class="btn btn-success">Export</a>
+        <a href="#" class="btn btn-success exportbtn">Export</a>
 
     </div>
     <div class="datatable-wapper mt-4">
@@ -108,7 +108,22 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+                <div class="from-group py-3">
+                    <label for="">Total Coverages - 03</label>
+                    <input type="date" class="form-control">
+                </div>   
+                <div class="from-group mb-4">
+                    <label for="time">Select Time</label>
+                    <div class="time-slot mt-2">
+                        <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
+                        <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
+                    </div>
+                </div>    
+
+                <div class="py-3">
+                    <button type="submit" class="btn add-fillbtn w-100">Send Request </button>
+                </div>
+
             </div>
         </div>
     </div>

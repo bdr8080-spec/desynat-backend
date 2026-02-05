@@ -1134,6 +1134,15 @@ table.dataTable td.dt-type-date {
 .text-red{
     color: #E70000;
 }
+.exportbtn{
+    width: 130px;
+    line-height: 24px;
+}
+.btn-time-outline {
+    border: 1px solid #cba97d;
+    padding: 8px;
+    font-size: 15px;
+}
 /* live request */
 .choose-date .date-card {
     background: #fff;
