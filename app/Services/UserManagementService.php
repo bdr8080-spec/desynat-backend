@@ -677,6 +677,8 @@ public function product_view_cart_details($request)
             $total_amount+=$ItemAmounttotal;
             $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
             $total_mrp=$total_amount+$discount_on_mrp;
+            }else{
+                $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
             }
 
          // discount Amount Code Apply 
