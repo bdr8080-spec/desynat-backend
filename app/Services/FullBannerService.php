@@ -385,6 +385,40 @@ class FullBannerService
         }
     }
 
+    public function blockUnblockPromotionalBanner($id)
+    {
+        try {
+            $data = sellerBanner::find($id);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Banner Req not found',
+                    'data' => []
+                ];
+            }
+
+            $data->status = $data->status == 1 ? 0 : 1;
+            $data->save();
+
+            $message = $data->status == 1
+                ? 'Promotional Banner Unblocked Successfully'
+                : 'Promotional Banner blocked Successfully';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ];
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch banner: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 

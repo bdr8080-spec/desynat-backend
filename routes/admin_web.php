@@ -191,6 +191,7 @@ Route::group(['prefix'=>'admin'], function(){
         Route::get('/getCategories', [FullScreenBannerController::class, 'getCategories'])->name('admin.getCategories');
         Route::get('/getSubCategories/{id}', [FullScreenBannerController::class, 'getSubCategories'])->name('admin.getSubCategories');
         Route::post('/updatePromotionalBanner/{id}', [FullScreenBannerController::class, 'updatePromotionalBanner'])->name('admin.updatePromotionalBanner');
+        Route::post('/blockUnblockPromotionalBanner/{id}', [FullScreenBannerController::class, 'blockUnblockPromotionalBanner'])->name('admin.blockUnblockPromotionalBanner');
 
         //affiliate user management
         Route::get('/affiliate-user-management', [AffiliateUserController::class, 'affiliateUserManagement'])->name('admin.affiliateUserManagement');

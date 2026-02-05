@@ -204,6 +204,8 @@
                                 <th scope="col">Type</th> -->
                                 <th scope="col">Position</th>
                                 <!-- <th scope="col">Country</th> -->
+                                 <th scope="col">Category</th>
+                                 <th scope="col">Sub-Category</th>
                                 <th scope="col">Start Date</th>
                                 <th scope="col">End Date</th>
                                 <th scope="col">Action</th>
@@ -231,6 +233,20 @@
                                     Category
                                     @endif
                                 </td>
+                                <td>
+                                    @if(!empty($banner['category_details']))
+                                    {{$banner['category_details']['name']}}
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(!empty($banner['subcategory_details']))
+                                    {{$banner['subcategory_details']['name_english']}}
+                                    @else
+                                    N/A
+                                    @endif
+                                </td>
                                 <!-- <td>India</td> -->
                                 <td>{{ $banner['start_date'] }}</td>
                                 <td>{{ $banner['end_date'] }}</td>
@@ -256,6 +272,16 @@
                                             class="table-button text-danger deletePromotionalBanner mb-1 mt-1" data-id="{{ $banner->id }}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>
+                                         <div class="form-check form-switch d-flex justify-content-center align-items-center"">
+                                            <input
+                                                class="form-check-input toggleStatus"
+                                                type="checkbox"
+                                                role="switch"
+                                                id="switch{{ $banner['id'] }}"
+                                                data-id="{{ $banner['id'] }}"
+                                                {{ $banner['status'] == 1 ? 'checked' : '' }}
+                                            />
+                                        </div>
                                     </div>
                                 </td>
 
@@ -1243,7 +1269,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- add promotional banner -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    // =========================
     // DOM elements
+    // =========================
     const bannerPosition = document.getElementById('bannerPosition');
     const categorySelect = document.getElementById('categorySelect');
     const subCategorySelect = document.getElementById('subCategorySelect');
@@ -1256,7 +1285,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const end_date = document.getElementById('end_date_promotional');
     const submitBtn = document.getElementById('submitPromotionalBannerBtn');
 
+    // =========================
+    // Helper: clear error on change/input
+    // =========================
+    function clearErrorOnChange(element, errorElementId) {
+        if (!element) return;
+
+        const eventType = element.tagName === 'INPUT' ? 'input' : 'change';
+
+        element.addEventListener(eventType, function () {
+            const errorEl = document.getElementById(errorElementId);
+            if (errorEl) {
+                errorEl.innerText = '';
+            }
+        });
+    }
+
+    // =========================
+    // Attach error clearing
+    // =========================
+    clearErrorOnChange(fileInput, 'imagePromotionalError');
+    clearErrorOnChange(bannerPosition, 'positionError');
+    clearErrorOnChange(categorySelect, 'categoryError');
+    clearErrorOnChange(subCategorySelect, 'subcategoryError');
+    clearErrorOnChange(start_date, 'startDatePromotionalError');
+    clearErrorOnChange(end_date, 'endDatePromotionalError');
+
+    // =========================
     // Show preview when image selected
+    // =========================
     fileInput.addEventListener('change', function() {
         if (this.files[0]) {
             const reader = new FileReader();
@@ -1269,34 +1326,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Show category select only when position = 3
+    // =========================
+    // Show category only when position = 3
+    // =========================
     bannerPosition.addEventListener('change', function() {
+        document.getElementById('categoryError').innerText = '';
+        document.getElementById('subcategoryError').innerText = '';
+
         if (this.value == 3) {
             categoryWrapper.style.display = 'block';
             fetchCategories();
         } else {
             categoryWrapper.style.display = 'none';
             subCategoryWrapper.style.display = 'none';
+            categorySelect.value = '';
+            subCategorySelect.value = '';
         }
     });
 
-    // Fetch categories from server
+    // =========================
+    // Fetch categories
+    // =========================
     function fetchCategories() {
         fetch('/admin/getCategories')
             .then(res => res.json())
             .then(data => {
-                if(data.status === 'success') {
+                if (data.status === 'success') {
                     categorySelect.innerHTML = '<option value="">Select Category</option>';
                     data.data.forEach(cat => {
-                        categorySelect.innerHTML += `<option value="${cat.id}">${cat.name_english || cat.name}</option>`;
+                        categorySelect.innerHTML +=
+                            `<option value="${cat.id}">${cat.name_english || cat.name}</option>`;
                     });
                 }
             })
             .catch(err => console.error('Error fetching categories:', err));
     }
 
-    // Fetch subcategories when category changes
+    // =========================
+    // Fetch subcategories
+    // =========================
     categorySelect.addEventListener('change', function() {
+        document.getElementById('subcategoryError').innerText = '';
+
         const categoryId = this.value;
         if (!categoryId) {
             subCategoryWrapper.style.display = 'none';
@@ -1307,11 +1378,12 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/admin/getSubCategories/${categoryId}`)
             .then(res => res.json())
             .then(data => {
-                if(data.status === 'success' && data.data && data.data.data) {
+                if (data.status === 'success' && data.data && data.data.data) {
                     subCategoryWrapper.style.display = 'block';
                     subCategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
                     data.data.data.forEach(sub => {
-                        subCategorySelect.innerHTML += `<option value="${sub.id}">${sub.name_english}</option>`;
+                        subCategorySelect.innerHTML +=
+                            `<option value="${sub.id}">${sub.name_english}</option>`;
                     });
                 } else {
                     subCategoryWrapper.style.display = 'none';
@@ -1325,8 +1397,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
-    // Submit Promotional Banner form
+    // =========================
+    // Submit form
+    // =========================
     submitBtn.addEventListener('click', function() {
+
         // Clear previous errors
         document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
 
@@ -1336,22 +1411,27 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('imagePromotionalError').innerText = 'Please upload banner';
             hasError = true;
         }
+
         if (!bannerPosition.value) {
             document.getElementById('positionError').innerText = 'Please select banner position';
             hasError = true;
         }
+
         if (bannerPosition.value == 3 && !categorySelect.value) {
             document.getElementById('categoryError').innerText = 'Please select category';
             hasError = true;
         }
+
         if (bannerPosition.value == 3 && !subCategorySelect.value) {
             document.getElementById('subcategoryError').innerText = 'Please select subcategory';
             hasError = true;
         }
+
         if (!start_date.value) {
             document.getElementById('startDatePromotionalError').innerText = 'Please select start date';
             hasError = true;
         }
+
         if (!end_date.value) {
             document.getElementById('endDatePromotionalError').innerText = 'Please select end date';
             hasError = true;
@@ -1359,7 +1439,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (hasError) return;
 
+        // =========================
         // Build FormData
+        // =========================
         const formData = new FormData();
         formData.append('image', fileInput.files[0]);
         formData.append('banner_position', bannerPosition.value);
@@ -1368,14 +1450,16 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('start_date', start_date.value);
         formData.append('end_date', end_date.value);
 
-        // Fetch POST request with session cookies
+        // =========================
+        // Submit via fetch
+        // =========================
         fetch('{{ route("admin.addPromotionalBanner") }}', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'   
+                'Accept': 'application/json'
             },
-            credentials: 'same-origin', 
+            credentials: 'same-origin',
             body: formData
         })
         .then(res => res.json())
@@ -1390,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.errors) {
                     Object.keys(data.errors).forEach(key => {
                         const el = document.getElementById(key + 'Error');
-                        if(el) el.innerText = data.errors[key][0];
+                        if (el) el.innerText = data.errors[key][0];
                     });
                 } else {
                     toastr.error(data.message || 'Something went wrong');
@@ -1399,11 +1483,13 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(err => {
             console.error('Server error:', err);
-            //.error('Server error');
         });
+
     });
+
 });
 </script>
+
 
 <!-- update promotional modal -->
 
@@ -1412,22 +1498,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let currentBannerId = null;
 
-    // CLICK EDIT BUTTON
+    // ===============================
+    // EDIT BUTTON CLICK
+    // ===============================
     document.querySelectorAll('.edit-promotional-btn').forEach(btn => {
         btn.addEventListener('click', function () {
 
             currentBannerId = this.dataset.id;
             document.getElementById('editBannerId').value = currentBannerId;
 
-            // Dates
             document.getElementById('editStartDatePromotional').value = this.dataset.startDate;
             document.getElementById('editEndDatePromotional').value   = this.dataset.endDate;
 
-            // Position
-            const position = this.dataset.position;
-            document.getElementById('editBannerPosition').value = position;
+            document.getElementById('editBannerPosition').value = this.dataset.position;
 
-            // Image
             const preview = document.getElementById('editPreviewImagePromotional');
             const icon    = document.getElementById('editUploadIconPromotional');
 
@@ -1440,34 +1524,84 @@ document.addEventListener('DOMContentLoaded', function () {
                 icon.style.display = 'block';
             }
 
-            // Category logic
-            if (position == 3) {
+            resetCategorySection();
+
+            if (this.dataset.position == 3) {
                 document.getElementById('editCategoryWrapper').style.display = 'block';
                 fetchEditCategories(this.dataset.category, this.dataset.subcategory);
-            } else {
-                document.getElementById('editCategoryWrapper').style.display = 'none';
-                document.getElementById('editSubCategoryWrapper').style.display = 'none';
             }
         });
     });
 
-    // IMAGE PREVIEW CHANGE
+    // ===============================
+    // IMAGE PREVIEW
+    // ===============================
     document.getElementById('editFileUploadPromotional')
         .addEventListener('change', function () {
+            if (this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('editPreviewImagePromotional').src = e.target.result;
+                    document.getElementById('editPreviewImagePromotional').style.display = 'block';
+                    document.getElementById('editUploadIconPromotional').style.display = 'none';
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
 
-        if (this.files[0]) {
-            const reader = new FileReader();
-            reader.onload = e => {
-                document.getElementById('editPreviewImagePromotional').src = e.target.result;
-                document.getElementById('editPreviewImagePromotional').style.display = 'block';
-                document.getElementById('editUploadIconPromotional').style.display = 'none';
-            };
-            reader.readAsDataURL(this.files[0]);
-        }
-    });
+    // ===============================
+    // POSITION CHANGE
+    // ===============================
+    document.getElementById('editBannerPosition')
+        .addEventListener('change', function () {
 
+            resetCategorySection();
+
+            if (this.value == 3) {
+                document.getElementById('editCategoryWrapper').style.display = 'block';
+                fetchEditCategories();
+            }
+        });
+
+    // ===============================
+    // CATEGORY CHANGE
+    // ===============================
+    document.getElementById('editCategorySelect')
+        .addEventListener('change', function () {
+
+            const subWrapper = document.getElementById('editSubCategoryWrapper');
+            const subSelect  = document.getElementById('editSubCategorySelect');
+
+            // Clear previous errors on category change
+            document.getElementById('editCategoryError').innerText = '';
+            document.getElementById('editSubcategoryError').innerText = '';
+
+            subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+
+            if (!this.value) {
+                subWrapper.style.display = 'none';
+                return;
+            }
+
+            // Show subcategory wrapper and fetch subcategories
+            subWrapper.style.display = 'block';
+
+            fetchEditSubCategories(this.value);
+        });
+
+    // ===============================
+    // SUBCATEGORY CHANGE (CLEAR ERROR)
+    // ===============================
+    document.getElementById('editSubCategorySelect')
+        .addEventListener('change', function () {
+            document.getElementById('editSubcategoryError').innerText = '';
+        });
+
+    // ===============================
     // FETCH CATEGORIES
-    function fetchEditCategories(selectedCategory, selectedSub) {
+    // ===============================
+    function fetchEditCategories(selectedCategory = null, selectedSub = null) {
+
         fetch('/admin/getCategories')
             .then(res => res.json())
             .then(data => {
@@ -1477,21 +1611,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 data.data.forEach(cat => {
                     catSelect.innerHTML += `
-                        <option value="${cat.id}"
-                            ${cat.id == selectedCategory ? 'selected' : ''}>
+                        <option value="${cat.id}" ${cat.id == selectedCategory ? 'selected' : ''}>
                             ${cat.name_english || cat.name}
                         </option>`;
                 });
 
-                document.getElementById('editCategoryWrapper').style.display = 'block';
-
                 if (selectedCategory) {
+                    document.getElementById('editSubCategoryWrapper').style.display = 'block';
                     fetchEditSubCategories(selectedCategory, selectedSub);
                 }
             });
     }
 
-    function fetchEditSubCategories(categoryId, selectedSub) {
+    // ===============================
+    // FETCH SUBCATEGORIES
+    // ===============================
+    function fetchEditSubCategories(categoryId, selectedSub = null) {
+
         fetch(`/admin/getSubCategories/${categoryId}`)
             .then(res => res.json())
             .then(data => {
@@ -1501,38 +1637,66 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 data.data.data.forEach(sub => {
                     subSelect.innerHTML += `
-                        <option value="${sub.id}"
-                            ${sub.id == selectedSub ? 'selected' : ''}>
+                        <option value="${sub.id}" ${sub.id == selectedSub ? 'selected' : ''}>
                             ${sub.name_english}
                         </option>`;
                 });
-
-                document.getElementById('editSubCategoryWrapper').style.display = 'block';
             });
     }
 
-    document.getElementById('editCategorySelect')
-        .addEventListener('change', function () {
-            fetchEditSubCategories(this.value);
-        });
+    // ===============================
+    // RESET CATEGORY SECTION
+    // ===============================
+    function resetCategorySection() {
+        document.getElementById('editCategoryWrapper').style.display = 'none';
+        document.getElementById('editSubCategoryWrapper').style.display = 'none';
+        document.getElementById('editCategorySelect').innerHTML = '<option value="">Select Category</option>';
+        document.getElementById('editSubCategorySelect').innerHTML = '<option value="">Select Subcategory</option>';
+        // Clear errors when resetting
+        document.getElementById('editCategoryError').innerText = '';
+        document.getElementById('editSubcategoryError').innerText = '';
+    }
 
-    // UPDATE
+    // ===============================
+    // UPDATE SUBMIT
+    // ===============================
     document.getElementById('updatePromotionalBannerBtn')
         .addEventListener('click', function () {
 
+        let hasError = false;
+
+        const position = document.getElementById('editBannerPosition').value;
+        const category = document.getElementById('editCategorySelect').value;
+        const subcat   = document.getElementById('editSubCategorySelect').value;
+
+        // Clear all previous errors on submit attempt
+        document.getElementById('editPositionError').innerText = '';
+        document.getElementById('editCategoryError').innerText = '';
+        document.getElementById('editSubcategoryError').innerText = '';
+
+        if (position == 3) {
+            if (!category) {
+                document.getElementById('editCategoryError').innerText = 'Please select category';
+                hasError = true;
+            }
+            if (!subcat) {
+                document.getElementById('editSubcategoryError').innerText = 'Please select subcategory';
+                hasError = true;
+            }
+        }
+
+        if (hasError) return;
+
         const formData = new FormData();
-        formData.append('image',
-            document.getElementById('editFileUploadPromotional').files[0] ?? '');
-        formData.append('banner_position',
-            document.getElementById('editBannerPosition').value);
-        formData.append('category',
-            document.getElementById('editCategorySelect').value);
-        formData.append('subcatgory',
-            document.getElementById('editSubCategorySelect').value);
-        formData.append('start_date',
-            document.getElementById('editStartDatePromotional').value);
-        formData.append('end_date',
-            document.getElementById('editEndDatePromotional').value);
+
+        const imageFile = document.getElementById('editFileUploadPromotional').files[0];
+        if (imageFile) formData.append('image', imageFile);
+
+        formData.append('banner_position', position);
+        formData.append('category', category);
+        formData.append('subcatgory', subcat);
+        formData.append('start_date', document.getElementById('editStartDatePromotional').value);
+        formData.append('end_date', document.getElementById('editEndDatePromotional').value);
 
         fetch(`/admin/updatePromotionalBanner/${currentBannerId}`, {
             method: 'POST',
@@ -1555,6 +1719,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+
 
 <script>
 function getTodayLocal1() {
@@ -1666,6 +1831,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('editEndDatePromotional')
         .addEventListener('change', updateEditStartDate1);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.toggleStatus').forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            let Id = this.getAttribute('data-id');
+
+            fetch(`/admin/blockUnblockPromotionalBanner/${Id}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // toastr.success(data.message);
+                     if(data.status == 1){
+                        toastr.success(data.message); // Green for active
+                    } else {
+                        toastr.error(data.message);   // Red for deactivated
+                    }
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(data.message);
+                }
+            })
+            .catch(error => {
+                //console.error(error);
+                toastr.error('Something went wrong while updating status.');
+            });
+        });
+    });
 });
 </script>
 
