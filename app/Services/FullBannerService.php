@@ -273,6 +273,114 @@ class FullBannerService
         }
     }
 
+    public function deletePromotionalBanner($bannerId)
+    {
+        try {
+            $data = sellerBanner::find($bannerId);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Banner not found',
+                    'data' => []
+                ];
+            }
+            $data->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Promotional Banner deleted successfully',
+                'data' => []
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete banner',
+                'data' => []
+            ];
+        }
+    }
+
+    public function getPromotionalBanners($request)
+    {
+        try {
+            $limit = (int) $request->input('limit', 10);
+
+            $query = sellerBanner::with([
+                'category_details',
+                'subcategory_details'
+            ])
+            ->where('added_by', '1');
+
+            // if ($request->filled('category')) {
+            //     $categoryId = $request->input('category');
+
+            //     $query->where('category', $categoryId);
+            // }
+
+            // if ($request->filled('sub_category')) {
+            //     $subCategoryId = $request->input('sub_category');
+
+            //     $query->where('subcatgory', $subCategoryId);
+            // }
+
+            $query->orderBy('id', 'desc');
+
+            $banner_details = $query->paginate($limit);
+
+            if ($banner_details->isEmpty()) {
+                return [
+                    'status'  => 'success',
+                    'message' => 'No Banner found',
+                    'data'    => (object)[]
+                ];
+            }
+
+            return [
+                'status'  => 'success',
+                'message' => 'Banners fetched successfully',
+                'data'    => $banner_details
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch banners: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+    public function promotionalBannerDetails($bannerId)
+    {
+        try {
+           $data = sellerBanner::with('category_details','subcategory_details')->find($bannerId);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Banner not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Banner details fetched successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch banne details',
+                'data' => []
+            ];
+        }
+    }
+
+
 
 
 
