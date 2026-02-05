@@ -34,6 +34,11 @@ class FullBannerService
                 });
             }
 
+            if ($request->filled('type')) {
+                $type = $request->input('type');
+                $query->where('type', $type);
+            }
+
             $query->orderBy('id', 'desc');
 
             $banner_details = $query->paginate($limit);
