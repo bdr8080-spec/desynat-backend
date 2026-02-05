@@ -172,7 +172,7 @@
         <div class="tab-pane fade" id="pills-promo" role="tabpanel" aria-labelledby="pills-promo-tab" tabindex="0">
             <div class="d-flex justify-content-between align-items-center">
                 <form method="GET" action="{{ route('admin.fullScreenBannerManagement') }}" id="filterForm">
-                    <div class="form-group mb-3">
+                    <!-- <div class="form-group mb-3">
                         <label for="from" class="form-label">Country Name</label>
                         <select name="country" class="form-select form-select-lg"
                             onchange="document.getElementById('filterForm').submit();">
@@ -184,7 +184,7 @@
                             </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> -->
                 </form>
                 <div class="d-flex justify-content-end">
                     <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#addPromotional">
@@ -195,15 +195,15 @@
 
             <div class="userManagecontent">
                 <div class="table-responsive mb-5 w-100">
-                    <table id="myTable" class="table w-100 comyTable3">
+                    <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
                                 <th scope="col">SR No.</th>
                                 <th scope="col">Banner</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Type</th>
+                                <!-- <th scope="col">Title</th>
+                                <th scope="col">Type</th> -->
                                 <th scope="col">Position</th>
-                                <th scope="col">Country</th>
+                                <!-- <th scope="col">Country</th> -->
                                 <th scope="col">Start Date</th>
                                 <th scope="col">End Date</th>
                                 <th scope="col">Action</th>
@@ -211,20 +211,29 @@
                             </tr>
                         </thead>
                         <tbody>
-                           
+                           @forelse($promotionalBanners as $index => $banner)
                             <tr>
-                                <th scope="row">1</th>
+                                <th scope="row">{{ $index + 1 }}</th>
                                 <td>
-                                    <a href="#" target="_blank">
-                                        <img src="" alt="image" width="40" height="40" class="square">
+                                    <a href="{{ $banner['upload_banner'] }}" target="_blank">
+                                            <img src="{{ $banner['upload_banner'] }}" alt="" width="40" height="40"
+                                                class="square">
                                     </a>
                                 </td>
-                                <td>rreg</td>
-                                <td>Mobile</td>
-                                <td>Top</td>
-                                <td>India</td>
-                                <td>2026-01-21</td>
-                                <td>2026-01-21</td>
+                                <!-- <td>rreg</td>
+                                <td>Mobile</td> -->
+                                <td>
+                                    @if($banner['banner_position'] == '1')
+                                    Home Top
+                                    @elseif($banner['banner_position'] == '2')
+                                    Home Bottom
+                                    @elseif($banner['banner_position'] == '3')
+                                    Category
+                                    @endif
+                                </td>
+                                <!-- <td>India</td> -->
+                                <td>{{ $banner['start_date'] }}</td>
+                                <td>{{ $banner['end_date'] }}</td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a href="javascript:void(0);" class="table-button edit-reason-btn"
@@ -234,13 +243,18 @@
                                         </a>
 
                                         <a href="javascript:void(0);"
-                                            class="table-button text-danger deleteBanner mb-1 mt-1">
+                                            class="table-button text-danger deletePromotionalBanner mb-1 mt-1" data-id="{{ $banner->id }}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>
                                     </div>
                                 </td>
 
                             </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">No data found</td>
+                                </tr>
+                            @endforelse
                             
                         </tbody>
                     </table>
@@ -254,7 +268,7 @@
 
 <!-- Add Promotional -->
 
-<div class="modal fade" id="addPromotional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="addPromotional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
@@ -265,57 +279,30 @@
             <div class="modal-body">
                 <div class="appointment-container">
                     <div class="row">
-                        <!-- Image Upload -->
                         <div class="col-lg-12">
                             <div class="upload-title text-center">Upload Image</div>
 
-                            <label for="fileUpload" class="upload-box" style="cursor:pointer;">
-                                <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
+                            <label for="fileUploadPromotional" class="upload-box" style="cursor:pointer;">
+                                <img src="/admin/image/imge-upload.svg" id="uploadIconPromotional" />
                                 <img id="previewImage" class="preview-image"
                                     style="display:none; max-width:216px; margin-top:-2px;" />
                                 <div class="upload-text">Upload Image</div>
-                                <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
+                                <input type="file" id="fileUploadPromotional" name="upload_banner" accept="image/*" hidden />
                             </label>
-                            <div class="text-danger text-center" id="imageError"></div>
-                        </div>
-
-                        <!-- Title -->
-                        <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group">
-                                <label class="form-label" for="title">Title</label>
-                                <input type="text" id="title" name="title" class="form-control"
-                                    placeholder="Enter Title"
-                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
-                                <div class="text-danger" id="titleError"></div>
-                            </div>
-                        </div>
-
-                        <!-- Country -->
-                        <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group w-100">
-                                <label class="form-label">Select Country</label>
-                                <select id="countrySelect" name="country_id" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Country</option>
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="text-danger" id="countryError"></div>
-                            </div>
+                            <div class="text-danger text-center" id="imagePromotionalError"></div>
                         </div>
 
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group w-100">
                                 <label class="form-label">Banner Position</label>
-                                <select id="forSelect" name="type" class="form-select form-select-lg"
+                                <select id="forSelect" name="banner_position" class="form-select form-select-lg"
                                     aria-label="Large select example">
                                     <option value="">Select Type</option>
                                     <option value="1">Home Top</option>
                                     <option value="2">Home Bottom</option>
                                     <option value="3">Category</option>
                                 </select>
-                                <div class="text-danger" id="forError"></div>
+                                <div class="text-danger" id="positionError"></div>
                             </div>
 
                             <div class="form-group w-100 mb-2">
@@ -325,6 +312,7 @@
                                     <option value="">Select Category name</option>
                                     <option value="1">Home Top</option>
                                 </select>
+                                <div class="text-danger" id="categoryError"></div>
                             </div>
 
                             <div class="form-group w-100 mb-2">
@@ -334,33 +322,121 @@
                                     <option value="">Select Sub-category</option>
                                     <option value="1">Home Top</option>
                                 </select>
+                                <div class="text-danger" id="subcategoryError"></div>
                             </div>
                         </div>
-                        <!-- Dates -->
                         <div class="col-lg-12">
                             <div class="d-flex gap-2">
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
                                         <label class="form-label">From:</label>
-                                        <input type="date" id="start_date" name="start_date" class="form-control" />
-                                        <div class="text-danger" id="startDateError"></div>
+                                        <input type="date" id="start_date_promotional" name="start_date_promotional" class="form-control" />
+                                        <div class="text-danger" id="startDatePromotionalError"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="form-group  w-100">
                                         <label class="form-label">To:</label>
-                                        <input type="date" id="end_date" name="end_date" class="form-control" />
-                                        <div class="text-danger" id="endDateError"></div>
+                                        <input type="date" id="end_date_promotional" name="end_date_promotional" class="form-control" />
+                                        <div class="text-danger" id="endDatePromotionalError"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Submit -->
                         <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <a type="button" id="submitBannerBtn" class="btn btn-dark customBtn mt-3">
+                            <a type="button" id="submitPromotionalBannerBtn" class="btn btn-dark customBtn mt-3">
                                 Submit
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="modal fade" id="addPromotional" tabindex="-1" aria-labelledby="addPromotionalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Add Promotional Banner</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="row">
+                        <!-- Image Upload -->
+                        <div class="col-lg-12">
+                            <div class="upload-title text-center">Upload Image</div>
+                            <label for="fileUploadPromotional" class="upload-box" style="cursor:pointer;">
+                                <img src="/admin/image/imge-upload.svg" id="uploadIconPromotional" />
+                                <img id="previewImagePromotional" class="preview-image"
+                                    style="display:none; max-width:216px; margin-top:-2px;" />
+                                <div class="upload-text">Upload Image</div>
+                                <input type="file" id="fileUploadPromotional" name="upload_banner" accept="image/*" hidden />
+                            </label>
+                            <div class="text-danger text-center" id="imagePromotionalError"></div>
+                        </div>
+
+                        <!-- Banner Position -->
+                        <div class="col-lg-12 mt-3">
+                            <div class="form-group w-100">
+                                <label class="form-label">Banner Position</label>
+                                <select id="bannerPosition" name="banner_position" class="form-select form-select-lg">
+                                    <option value="">Select Position</option>
+                                    <option value="1">Home Top</option>
+                                    <option value="2">Home Bottom</option>
+                                    <option value="3">Category</option>
+                                </select>
+                                <div class="text-danger" id="positionError"></div>
+                            </div>
+
+                            <!-- Category Dropdown (shown only if position = 3) -->
+                            <div class="form-group w-100 mt-2" id="categoryWrapper" style="display:none;">
+                                <label class="form-label">Category</label>
+                                <select id="categorySelect" name="category" class="form-select form-select-lg">
+                                    <option value="">Select Category</option>
+                                </select>
+                                <div class="text-danger" id="categoryError"></div>
+                            </div>
+
+                            <!-- Subcategory Dropdown (shown after category selection) -->
+                            <div class="form-group w-100 mt-2" id="subCategoryWrapper" style="display:none;">
+                                <label class="form-label">Subcategory</label>
+                                <select id="subCategorySelect" name="subcatgory" class="form-select form-select-lg">
+                                    <option value="">Select Subcategory</option>
+                                </select>
+                                <div class="text-danger" id="subcategoryError"></div>
+                            </div>
+                        </div>
+
+                        <!-- Start and End Dates -->
+                        <div class="col-lg-12 mt-3">
+                            <div class="d-flex gap-2">
+                                <div class="col-lg-6">
+                                    <div class="form-group w-100">
+                                        <label class="form-label">From</label>
+                                        <input type="date" id="start_date_promotional" name="start_date_promotional" class="form-control" />
+                                        <div class="text-danger" id="startDatePromotionalError"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group w-100">
+                                        <label class="form-label">To</label>
+                                        <input type="date" id="end_date_promotional" name="end_date_promotional" class="form-control" />
+                                        <div class="text-danger" id="endDatePromotionalError"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="col-lg-12 mt-3 d-flex justify-content-center">
+                            <button type="button" id="submitPromotionalBannerBtn" class="btn btn-dark customBtn">
+                                Submit
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1144,6 +1220,226 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get last active tab from localStorage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+
+    // Save active tab to localStorage when switched
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
+
+ <!-- Delete promotional banner -->
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.deletePromotionalBanner').forEach(button => {
+        button.addEventListener('click', function() {
+            let bannerId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/admin/deletePromotionalBanner/${bannerId}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                toastr.success(data.message);
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2000);
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
+                }
+            });
+        });
+    });
+});
+</script>
+
+<!-- add promotional banner -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const bannerPosition = document.getElementById('bannerPosition');
+    const categorySelect = document.getElementById('categorySelect');
+    const subCategorySelect = document.getElementById('subCategorySelect');
+    const categoryWrapper = document.getElementById('categoryWrapper');
+    const subCategoryWrapper = document.getElementById('subCategoryWrapper');
+    const fileInput = document.getElementById('fileUploadPromotional');
+    const preview = document.getElementById('previewImagePromotional');
+    const uploadIcon = document.getElementById('uploadIconPromotional');
+    const start_date = document.getElementById('start_date_promotional');
+    const end_date = document.getElementById('end_date_promotional');
+    const submitBtn = document.getElementById('submitPromotionalBannerBtn');
+
+    // Show preview on image select
+    fileInput.addEventListener('change', function() {
+        if (this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                uploadIcon.style.display = 'none';
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    // Show category if position = 3
+    bannerPosition.addEventListener('change', function() {
+        if (this.value == 3) {
+            categoryWrapper.style.display = 'block';
+            fetchCategories();
+        } else {
+            categoryWrapper.style.display = 'none';
+            subCategoryWrapper.style.display = 'none';
+        }
+    });
+
+    // Fetch categories
+    function fetchCategories() {
+        fetch('/admin/getCategories')
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success') {
+                    categorySelect.innerHTML = '<option value="">Select Category</option>';
+                    data.data.forEach(cat => {
+                        categorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                    });
+                }
+            });
+    }
+
+    // Fetch subcategories on category change
+    categorySelect.addEventListener('change', function() {
+        const categoryId = this.value;
+        if (!categoryId) {
+            subCategoryWrapper.style.display = 'none';
+            return;
+        }
+
+        fetch(`/admin/getSubCategories/${categoryId}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === 'success' && data.data && data.data.data) {
+                    subCategoryWrapper.style.display = 'block';
+                    subCategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+                    
+                    data.data.data.forEach(sub => {
+                        subCategorySelect.innerHTML += `<option value="${sub.id}">${sub.name_english}</option>`;
+                    });
+                } else {
+                    subCategoryWrapper.style.display = 'none';
+                    subCategorySelect.innerHTML = '';
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching subcategories:', err);
+                subCategoryWrapper.style.display = 'none';
+                subCategorySelect.innerHTML = '';
+            });
+    });
+
+
+    // Submit form
+    submitBtn.addEventListener('click', function() {
+        let hasError = false;
+        document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+
+        if (!fileInput.files.length) {
+            document.getElementById('imagePromotionalError').innerText = 'Please upload banner';
+            hasError = true;
+        }
+        if (!bannerPosition.value) {
+            document.getElementById('positionError').innerText = 'Please select banner position';
+            hasError = true;
+        }
+        if (bannerPosition.value == 3 && !categorySelect.value) {
+            document.getElementById('categoryError').innerText = 'Please select category';
+            hasError = true;
+        }
+        if (bannerPosition.value == 3 && !subCategorySelect.value) {
+            document.getElementById('subcategoryError').innerText = 'Please select subcategory';
+            hasError = true;
+        }
+        if (!start_date.value) {
+            document.getElementById('startDatePromotionalError').innerText = 'Please select start date';
+            hasError = true;
+        }
+        if (!end_date.value) {
+            document.getElementById('endDatePromotionalError').innerText = 'Please select end date';
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        const formData = new FormData();
+        formData.append('upload_banner', fileInput.files[0]);
+        formData.append('banner_position', bannerPosition.value);
+        formData.append('category', categorySelect.value);
+        formData.append('subcatgory', subCategorySelect.value);
+        formData.append('start_date', start_date.value);
+        formData.append('end_date', end_date.value);
+
+        fetch('{{ route("admin.addPromotionalBanner") }}', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toastr.success(data.message);
+                setTimeout(() => {
+                    $('#addPromotional').modal('hide');
+                    location.reload();
+                }, 1500);
+            } else {
+                if(data.errors) {
+                    Object.keys(data.errors).forEach(key => {
+                        const el = document.getElementById(key+'Error');
+                        if(el) el.innerText = data.errors[key][0];
+                    });
+                } else {
+                    toastr.error(data.message || 'Something went wrong');
+                }
+            }
+        })
+        .catch(() => toastr.error('Server error'));
+    });
+});
+</script>
 
 
 

@@ -654,15 +654,24 @@ public function product_view_cart_details($request)
                 $val->check_stock='Stock_Availble';
             }
 
-            if($val->order_type=='2'){ // when Cutom Order Show in card
+            // if($val->order_type=='2'){ // when Cutom Order Show in card
                 
-            $ItemAmounttotal=$val->amount * $val->quantity ;
+            // $ItemAmounttotal=$val->amount * $val->quantity ;
             
-            $total_amount+=$ItemAmounttotal;
-            $discount_on_mrp+=($val->product_variants->final_price-$val->amount)* $val->quantity;            
-            $total_mrp=$total_amount+$discount_on_mrp;
+            // $total_amount+=$ItemAmounttotal;
+            // $discount_on_mrp+=($val->product_variants->final_price-$val->amount)* $val->quantity;            
+            // $total_mrp=$total_amount+$discount_on_mrp;
 
-            }else{
+            // }
+            // else{
+
+            // $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
+            // $total_amount+=$ItemAmounttotal;
+            // $discount_on_mrp+=($val->product_variants->actual_price - $val->product_variants->final_price)* $val->quantity;
+            // $total_mrp=$total_amount+$discount_on_mrp;
+            // }
+            if($val->order_type=='1'){ 
+                
 
             $ItemAmounttotal=$val->product_variants->final_price * $val->quantity ;
             $total_amount+=$ItemAmounttotal;
