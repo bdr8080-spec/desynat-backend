@@ -94,7 +94,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a class="drop-profile" href="#">
+                                <a class="drop-profile" href="/profile">
                                     <span>View Profile</span>
                                 </a>
                             </div>

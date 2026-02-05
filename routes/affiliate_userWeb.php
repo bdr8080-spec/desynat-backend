@@ -35,3 +35,10 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
 
  Route::get('/affiliate-dashboard', [UserAffilatedController::class,'affiliateDashboard'])->name('affiliate.affiliateDashboard');
  Route::match(['get', 'post'], '/affiliate-reverify-Document', [UserAffilatedController::class, 'affiliatereverifyDocument'])->name('affiliate.affiliatereverifyDocument');
+
+//  Affiliate_user profile
+
+Route::match(['get', 'post'], '/profile', function () {
+    return view('affiliatedUser.profiles.profile');
+
+})->name('affiliatedUser.profile');
