@@ -47,7 +47,7 @@
 
         <div class="choose-date">
             <div class="date-card">
-                <div class="date-header">
+                <div class="date-header" data-bs-toggle="modal" data-bs-target="#sendlives">
                     <span>Select Date</span>
                     <h3 id="selectedDate"></h3>
                 </div>
@@ -81,7 +81,13 @@
                         <td>03/02/2026 at 07:30pm</td>
                         <td>03/02/2026 at 07:30pm</td>
                         <td>Pending </td>
-                        <td>Remove</td>
+                        <td>
+                            <a href="javascript:void(0)" class="eyebtn" data-bs-toggle="modal"
+                            data-bs-target="#Addreason"><i class="bi bi-eye"></i></a>
+
+                            <a href="javascript:void(0)" class="eyebtn" data-bs-toggle="modal"
+                            data-bs-target="#reasonDialog"><i class="bi bi-trash3"></i></a>
+                        </td>
                     </tr>
 
                 </tbody>
@@ -89,14 +95,82 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
 </section>
+
+
+
+<!-- Send New live request -->
+<div class="modal fade" id="sendlives" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h3>Send new live request </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Reason -->
+<div class="modal fade" id="Addreason" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h3>Reason  </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-red text-end">Cancelled on - 21/02/2026</div>
+                <div class="reason-lists py-3">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab aliquid dolores at sequi deserunt corrupti soluta doloremque quia aut! Atque quis architecto nisi laborum ut error illo quidem praesentium laboriosam?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select Reason Dialog -->
+<div class="modal fade" id="reasonDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h3>Select Reason </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="reason-lists">
+                    <div class="check_radio mb-2">
+                        <label class="radio-group">
+                            <input type="radio" value="reason" name="reason">
+                            <span class="custom-radio"></span>
+                            <span class="radio-label font-thin">Reason 1</span>
+                        </label>
+                    </div>
+                    <div class="check_radio mb-2">
+                        <label class="radio-group">
+                            <input type="radio" value="reason" name="reason">
+                            <span class="custom-radio"></span>
+                            <span class="radio-label font-thin">Reason 1</span>
+                        </label>
+                    </div>
+                    <div class="form-group mt-4">
+                        <textarea class="form-control" rows="4" placeholder="Write Here"></textarea>
+                    </div>
+                    <div class="py-3">
+                        <button type="submit" class="btn add-fillbtn w-100">Submit</button>
+                    </div>
+                </div>    
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 @include('dealer.layout.custom_code');
