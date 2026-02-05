@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\FullBanner;
+use App\Models\sellerBanner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Carbon\Carbon;
@@ -183,6 +184,95 @@ class FullBannerService
             ];
         }
     }
+
+    public function addPromotionalBanner($request){
+
+        try{
+
+            $order_id = substr(time() . rand(100, 999), 0, 9);
+            
+            $request_data=[
+                'order_id'=>$order_id,
+                'banner_position'=>$request->banner_position,
+                'category'=>$request->category,
+                'subcatgory'=>$request->subcatgory,
+                'start_date'=>$request->start_date,
+                'end_date'=>$request->end_date,
+                'total_days'=>$request->total_days,
+                'upload_banner'=>$request->upload_banner,
+                'added_by' => '1',
+                'Admin_verify' => '1',
+                'payment_status' => '1',
+            ];
+
+        
+
+            $createBanner=sellerBanner::Create($request_data);
+
+            if($createBanner){
+                
+                return [
+                        'status'  => 'success',
+                        'message' => 'Promotional Banner Added Successfully',
+                        'data'    => $createBanner
+                    ];
+
+            }
+
+        }catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ];
+        }
+    }
+
+    public function updatePromotionalBanner($request)
+    {
+        try {
+            $banner = sellerBanner::find($request->id);
+
+            if (!$banner) {
+                return [
+                    'status'  => 'error',
+                    'message' => 'Promotional Banner not found',
+                ];
+            }
+
+            $updateData = [
+                'banner_position' => $request->banner_position,
+                'category'        => $request->category,
+                'subcatgory'      => $request->subcatgory,
+                'start_date'      => $request->start_date,
+                'end_date'        => $request->end_date,
+                'total_days'      => $request->total_days,
+            ];
+
+            // update banner image only if provided
+            if (!empty($request->upload_banner)) {
+                $updateData['upload_banner'] = $request->upload_banner;
+            }
+
+            $banner->update($updateData);
+
+            return [
+                'status'  => 'success',
+                'message' => 'Promotional Banner Updated Successfully',
+                'data'    => $banner
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+            ];
+        }
+    }
+
 
 
 
