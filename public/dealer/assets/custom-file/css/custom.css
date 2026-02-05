@@ -1128,7 +1128,12 @@ table.dataTable td.dt-type-date {
 .text-danger {
     margin-bottom: 4px !important;
 }
-
+.font-thin {
+    font-weight: 300;
+}
+.text-red{
+    color: #E70000;
+}
 /* live request */
 .choose-date .date-card {
     background: #fff;
