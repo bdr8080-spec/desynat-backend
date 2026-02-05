@@ -236,11 +236,21 @@
                                 <td>{{ $banner['end_date'] }}</td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
-                                        <a href="javascript:void(0);" class="table-button edit-reason-btn"
-                                           data-bs-toggle="modal"
-                                            data-bs-target="#editPromotional">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
+                                        <a href="javascript:void(0);"
+                                            class="table-button edit-promotional-btn"
+                                            data-id="{{ $banner['id'] }}"
+                                            data-image="{{ $banner['upload_banner'] }}"
+                                            data-position="{{ $banner['banner_position'] }}"
+                                            data-category="{{ $banner['category'] }}"
+                                            data-subcategory="{{ $banner['subcatgory'] }}"
+                                            data-start-date="{{ $banner['start_date'] }}"
+                                            data-end-date="{{ $banner['end_date'] }}"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#editPromotionalBannerModal">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+
+
 
                                         <a href="javascript:void(0);"
                                             class="table-button text-danger deletePromotionalBanner mb-1 mt-1" data-id="{{ $banner->id }}">
@@ -268,93 +278,6 @@
 
 <!-- Add Promotional -->
 
-<!-- <div class="modal fade" id="addPromotional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header management border-0">
-                <h2 class="h2">Add Promotional</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <div class="appointment-container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="upload-title text-center">Upload Image</div>
-
-                            <label for="fileUploadPromotional" class="upload-box" style="cursor:pointer;">
-                                <img src="/admin/image/imge-upload.svg" id="uploadIconPromotional" />
-                                <img id="previewImage" class="preview-image"
-                                    style="display:none; max-width:216px; margin-top:-2px;" />
-                                <div class="upload-text">Upload Image</div>
-                                <input type="file" id="fileUploadPromotional" name="upload_banner" accept="image/*" hidden />
-                            </label>
-                            <div class="text-danger text-center" id="imagePromotionalError"></div>
-                        </div>
-
-                        <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group w-100">
-                                <label class="form-label">Banner Position</label>
-                                <select id="forSelect" name="banner_position" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Type</option>
-                                    <option value="1">Home Top</option>
-                                    <option value="2">Home Bottom</option>
-                                    <option value="3">Category</option>
-                                </select>
-                                <div class="text-danger" id="positionError"></div>
-                            </div>
-
-                            <div class="form-group w-100 mb-2">
-                                <label class="form-label">Category name</label>
-                                <select id="forSelect" name="type" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Category name</option>
-                                    <option value="1">Home Top</option>
-                                </select>
-                                <div class="text-danger" id="categoryError"></div>
-                            </div>
-
-                            <div class="form-group w-100 mb-2">
-                                <label class="form-label">Sub-category name</label>
-                                <select id="forSelect" name="type" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Sub-category</option>
-                                    <option value="1">Home Top</option>
-                                </select>
-                                <div class="text-danger" id="subcategoryError"></div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="d-flex gap-2">
-                                <div class="col-lg-6">
-                                    <div class="form-group  w-100">
-                                        <label class="form-label">From:</label>
-                                        <input type="date" id="start_date_promotional" name="start_date_promotional" class="form-control" />
-                                        <div class="text-danger" id="startDatePromotionalError"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="form-group  w-100">
-                                        <label class="form-label">To:</label>
-                                        <input type="date" id="end_date_promotional" name="end_date_promotional" class="form-control" />
-                                        <div class="text-danger" id="endDatePromotionalError"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <a type="button" id="submitPromotionalBannerBtn" class="btn btn-dark customBtn mt-3">
-                                Submit
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 <div class="modal fade" id="addPromotional" tabindex="-1" aria-labelledby="addPromotionalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -445,123 +368,152 @@
     </div>
 </div>
 
-<!-- Edit Add Promotional -->
+<!-- Edit  Promotional -->
+<div class="modal fade" id="editPromotionalBannerModal" tabindex="-1"
+     aria-labelledby="editPromotionalLabel" aria-hidden="true">
 
-<div class="modal fade" id="editPromotional" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+
+            <!-- Header -->
             <div class="modal-header management border-0">
-                <h2 class="h2">Edit Promotional</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="h2">Edit Promotional Banner</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
 
+            <!-- Body -->
             <div class="modal-body">
                 <div class="appointment-container">
                     <div class="row">
+
+                        <!-- hidden id -->
+                        <input type="hidden" id="editBannerId">
 
                         <!-- Image Upload -->
                         <div class="col-lg-12">
                             <div class="upload-title text-center">Upload Image</div>
 
-                            <label for="fileUpload" class="upload-box" style="cursor:pointer;">
-                                <img src="/admin/image/imge-upload.svg" id="uploadIcon" />
-                                <img id="previewImage" class="preview-image"
-                                    style="display:none; max-width:216px; margin-top:-2px;" />
+                            <label for="editFileUploadPromotional"
+                                   class="upload-box"
+                                   style="cursor:pointer;">
+
+                                <img src="/admin/image/imge-upload.svg"
+                                     id="editUploadIconPromotional" />
+
+                                <img id="editPreviewImagePromotional"
+                                     class="preview-image"
+                                     style="display:none; max-width:216px; margin-top:-2px;" />
+
                                 <div class="upload-text">Upload Image</div>
-                                <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
+
+                                <input type="file"
+                                       id="editFileUploadPromotional"
+                                       accept="image/*"
+                                       hidden />
                             </label>
-                            <div class="text-danger text-center" id="imageError"></div>
+
+                            <div class="text-danger text-center"
+                                 id="editImagePromotionalError"></div>
                         </div>
 
-                        <!-- Title -->
-                        <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group">
-                                <label class="form-label" for="title">Title</label>
-                                <input type="text" id="title" name="title" class="form-control"
-                                    placeholder="Enter Title"
-                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9 ]/g,'').replace(/^\s+/,'')" />
-                                <div class="text-danger" id="titleError"></div>
-                            </div>
-                        </div>
-
-                        <!-- Country -->
-                        <div class="col-lg-12 col-md-12 col-12">
-                            <div class="form-group w-100">
-                                <label class="form-label">Select Country</label>
-                                <select id="countrySelect" name="country_id" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Country</option>
-                                    @foreach ($countries as $country)
-                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="text-danger" id="countryError"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-md-12 col-12">
+                        <!-- Banner Position -->
+                        <div class="col-lg-12 mt-3">
                             <div class="form-group w-100">
                                 <label class="form-label">Banner Position</label>
-                                <select id="forSelect" name="type" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Type</option>
+
+                                <select id="editBannerPosition"
+                                        class="form-select form-select-lg">
+                                    <option value="">Select Position</option>
                                     <option value="1">Home Top</option>
                                     <option value="2">Home Bottom</option>
                                     <option value="3">Category</option>
                                 </select>
-                                <div class="text-danger" id="forError"></div>
+
+                                <div class="text-danger"
+                                     id="editPositionError"></div>
                             </div>
 
-                            <div class="form-group w-100 mb-2">
-                                <label class="form-label">Category name</label>
-                                <select id="forSelect" name="type" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Category name</option>
-                                    <option value="1">Home Top</option>
+                            <!-- Category -->
+                            <div class="form-group w-100 mt-2"
+                                 id="editCategoryWrapper"
+                                 style="display:none;">
+                                <label class="form-label">Category</label>
+
+                                <select id="editCategorySelect"
+                                        class="form-select form-select-lg">
+                                    <option value="">Select Category</option>
                                 </select>
+
+                                <div class="text-danger"
+                                     id="editCategoryError"></div>
                             </div>
 
-                            <div class="form-group w-100 mb-2">
-                                <label class="form-label">Sub-category name</label>
-                                <select id="forSelect" name="type" class="form-select form-select-lg"
-                                    aria-label="Large select example">
-                                    <option value="">Select Sub-category</option>
-                                    <option value="1">Home Top</option>
+                            <!-- Sub Category -->
+                            <div class="form-group w-100 mt-2"
+                                 id="editSubCategoryWrapper"
+                                 style="display:none;">
+                                <label class="form-label">Subcategory</label>
+
+                                <select id="editSubCategorySelect"
+                                        class="form-select form-select-lg">
+                                    <option value="">Select Subcategory</option>
                                 </select>
+
+                                <div class="text-danger"
+                                     id="editSubcategoryError"></div>
                             </div>
                         </div>
+
                         <!-- Dates -->
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 mt-3">
                             <div class="d-flex gap-2">
+
                                 <div class="col-lg-6">
-                                    <div class="form-group  w-100">
-                                        <label class="form-label">From:</label>
-                                        <input type="date" id="start_date" name="start_date" class="form-control" />
-                                        <div class="text-danger" id="startDateError"></div>
+                                    <div class="form-group w-100">
+                                        <label class="form-label">From</label>
+                                        <input type="date"
+                                               id="editStartDatePromotional"
+                                               class="form-control" />
+                                        <div class="text-danger"
+                                             id="editStartDateError"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="form-group  w-100">
-                                        <label class="form-label">To:</label>
-                                        <input type="date" id="end_date" name="end_date" class="form-control" />
-                                        <div class="text-danger" id="endDateError"></div>
+                                    <div class="form-group w-100">
+                                        <label class="form-label">To</label>
+                                        <input type="date"
+                                               id="editEndDatePromotional"
+                                               class="form-control" />
+                                        <div class="text-danger"
+                                             id="editEndDateError"></div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
-                        <!-- Submit -->
-                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
-                            <a type="button" id="submitBannerBtn" class="btn btn-dark customBtn mt-3">
-                                Submit
-                            </a>
+
+                        <!-- Update Button -->
+                        <div class="col-lg-12 mt-3 d-flex justify-content-center">
+                            <button type="button"
+                                    id="updatePromotionalBannerBtn"
+                                    class="btn btn-dark customBtn">
+                                Update
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+
+
+
+
 
 
 
@@ -1291,6 +1243,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- add promotional banner -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // DOM elements
     const bannerPosition = document.getElementById('bannerPosition');
     const categorySelect = document.getElementById('categorySelect');
     const subCategorySelect = document.getElementById('subCategorySelect');
@@ -1303,7 +1256,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const end_date = document.getElementById('end_date_promotional');
     const submitBtn = document.getElementById('submitPromotionalBannerBtn');
 
-    // Show preview on image select
+    // Show preview when image selected
     fileInput.addEventListener('change', function() {
         if (this.files[0]) {
             const reader = new FileReader();
@@ -1316,7 +1269,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Show category if position = 3
+    // Show category select only when position = 3
     bannerPosition.addEventListener('change', function() {
         if (this.value == 3) {
             categoryWrapper.style.display = 'block';
@@ -1327,7 +1280,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Fetch categories
+    // Fetch categories from server
     function fetchCategories() {
         fetch('/admin/getCategories')
             .then(res => res.json())
@@ -1335,17 +1288,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(data.status === 'success') {
                     categorySelect.innerHTML = '<option value="">Select Category</option>';
                     data.data.forEach(cat => {
-                        categorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
+                        categorySelect.innerHTML += `<option value="${cat.id}">${cat.name_english || cat.name}</option>`;
                     });
                 }
-            });
+            })
+            .catch(err => console.error('Error fetching categories:', err));
     }
 
-    // Fetch subcategories on category change
+    // Fetch subcategories when category changes
     categorySelect.addEventListener('change', function() {
         const categoryId = this.value;
         if (!categoryId) {
             subCategoryWrapper.style.display = 'none';
+            subCategorySelect.innerHTML = '';
             return;
         }
 
@@ -1355,7 +1310,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 if(data.status === 'success' && data.data && data.data.data) {
                     subCategoryWrapper.style.display = 'block';
                     subCategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-                    
                     data.data.data.forEach(sub => {
                         subCategorySelect.innerHTML += `<option value="${sub.id}">${sub.name_english}</option>`;
                     });
@@ -1371,11 +1325,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
-
-    // Submit form
+    // Submit Promotional Banner form
     submitBtn.addEventListener('click', function() {
-        let hasError = false;
+        // Clear previous errors
         document.querySelectorAll('.text-danger').forEach(el => el.innerText = '');
+
+        let hasError = false;
 
         if (!fileInput.files.length) {
             document.getElementById('imagePromotionalError').innerText = 'Please upload banner';
@@ -1404,17 +1359,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (hasError) return;
 
+        // Build FormData
         const formData = new FormData();
-        formData.append('upload_banner', fileInput.files[0]);
+        formData.append('image', fileInput.files[0]);
         formData.append('banner_position', bannerPosition.value);
         formData.append('category', categorySelect.value);
         formData.append('subcatgory', subCategorySelect.value);
         formData.append('start_date', start_date.value);
         formData.append('end_date', end_date.value);
 
+        // Fetch POST request with session cookies
         fetch('{{ route("admin.addPromotionalBanner") }}', {
             method: 'POST',
-            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'   
+            },
+            credentials: 'same-origin', 
             body: formData
         })
         .then(res => res.json())
@@ -1426,9 +1387,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     location.reload();
                 }, 1500);
             } else {
-                if(data.errors) {
+                if (data.errors) {
                     Object.keys(data.errors).forEach(key => {
-                        const el = document.getElementById(key+'Error');
+                        const el = document.getElementById(key + 'Error');
                         if(el) el.innerText = data.errors[key][0];
                     });
                 } else {
@@ -1436,10 +1397,282 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         })
-        .catch(() => toastr.error('Server error'));
+        .catch(err => {
+            console.error('Server error:', err);
+            //.error('Server error');
+        });
     });
 });
 </script>
+
+<!-- update promotional modal -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    let currentBannerId = null;
+
+    // CLICK EDIT BUTTON
+    document.querySelectorAll('.edit-promotional-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+
+            currentBannerId = this.dataset.id;
+            document.getElementById('editBannerId').value = currentBannerId;
+
+            // Dates
+            document.getElementById('editStartDatePromotional').value = this.dataset.startDate;
+            document.getElementById('editEndDatePromotional').value   = this.dataset.endDate;
+
+            // Position
+            const position = this.dataset.position;
+            document.getElementById('editBannerPosition').value = position;
+
+            // Image
+            const preview = document.getElementById('editPreviewImagePromotional');
+            const icon    = document.getElementById('editUploadIconPromotional');
+
+            if (this.dataset.image) {
+                preview.src = this.dataset.image;
+                preview.style.display = 'block';
+                icon.style.display = 'none';
+            } else {
+                preview.style.display = 'none';
+                icon.style.display = 'block';
+            }
+
+            // Category logic
+            if (position == 3) {
+                document.getElementById('editCategoryWrapper').style.display = 'block';
+                fetchEditCategories(this.dataset.category, this.dataset.subcategory);
+            } else {
+                document.getElementById('editCategoryWrapper').style.display = 'none';
+                document.getElementById('editSubCategoryWrapper').style.display = 'none';
+            }
+        });
+    });
+
+    // IMAGE PREVIEW CHANGE
+    document.getElementById('editFileUploadPromotional')
+        .addEventListener('change', function () {
+
+        if (this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                document.getElementById('editPreviewImagePromotional').src = e.target.result;
+                document.getElementById('editPreviewImagePromotional').style.display = 'block';
+                document.getElementById('editUploadIconPromotional').style.display = 'none';
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    // FETCH CATEGORIES
+    function fetchEditCategories(selectedCategory, selectedSub) {
+        fetch('/admin/getCategories')
+            .then(res => res.json())
+            .then(data => {
+
+                const catSelect = document.getElementById('editCategorySelect');
+                catSelect.innerHTML = '<option value="">Select Category</option>';
+
+                data.data.forEach(cat => {
+                    catSelect.innerHTML += `
+                        <option value="${cat.id}"
+                            ${cat.id == selectedCategory ? 'selected' : ''}>
+                            ${cat.name_english || cat.name}
+                        </option>`;
+                });
+
+                document.getElementById('editCategoryWrapper').style.display = 'block';
+
+                if (selectedCategory) {
+                    fetchEditSubCategories(selectedCategory, selectedSub);
+                }
+            });
+    }
+
+    function fetchEditSubCategories(categoryId, selectedSub) {
+        fetch(`/admin/getSubCategories/${categoryId}`)
+            .then(res => res.json())
+            .then(data => {
+
+                const subSelect = document.getElementById('editSubCategorySelect');
+                subSelect.innerHTML = '<option value="">Select Subcategory</option>';
+
+                data.data.data.forEach(sub => {
+                    subSelect.innerHTML += `
+                        <option value="${sub.id}"
+                            ${sub.id == selectedSub ? 'selected' : ''}>
+                            ${sub.name_english}
+                        </option>`;
+                });
+
+                document.getElementById('editSubCategoryWrapper').style.display = 'block';
+            });
+    }
+
+    document.getElementById('editCategorySelect')
+        .addEventListener('change', function () {
+            fetchEditSubCategories(this.value);
+        });
+
+    // UPDATE
+    document.getElementById('updatePromotionalBannerBtn')
+        .addEventListener('click', function () {
+
+        const formData = new FormData();
+        formData.append('image',
+            document.getElementById('editFileUploadPromotional').files[0] ?? '');
+        formData.append('banner_position',
+            document.getElementById('editBannerPosition').value);
+        formData.append('category',
+            document.getElementById('editCategorySelect').value);
+        formData.append('subcatgory',
+            document.getElementById('editSubCategorySelect').value);
+        formData.append('start_date',
+            document.getElementById('editStartDatePromotional').value);
+        formData.append('end_date',
+            document.getElementById('editEndDatePromotional').value);
+
+        fetch(`/admin/updatePromotionalBanner/${currentBannerId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toastr.success(data.message);
+                setTimeout(() => location.reload(), 1200);
+            } else {
+                toastr.error(data.message || 'Update failed');
+            }
+        });
+    });
+
+});
+</script>
+
+<script>
+function getTodayLocal1() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function setTodayMinDate1() {
+    const fromInput = document.getElementById('start_date_promotional');
+    fromInput.min = getTodayLocal1();
+}
+
+function updateToDate1() {
+    const fromInput = document.getElementById('start_date_promotional');
+    const toInput = document.getElementById('end_date_promotional');
+
+    if (fromInput.value) {
+        const minToDate = new Date(fromInput.value);
+        minToDate.setDate(minToDate.getDate() + 1);
+
+        const yyyy = minToDate.getFullYear();
+        const mm = String(minToDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(minToDate.getDate()).padStart(2, '0');
+
+        toInput.min = `${yyyy}-${mm}-${dd}`;
+    } else {
+        toInput.removeAttribute('min');
+    }
+}
+
+function updateFromDate1() {
+    const fromInput = document.getElementById('start_date_promotional');
+    const toInput = document.getElementById('end_date_promotional');
+
+    if (toInput.value) {
+        const maxFromDate = new Date(toInput.value);
+        maxFromDate.setDate(maxFromDate.getDate() - 1);
+
+        const yyyy = maxFromDate.getFullYear();
+        const mm = String(maxFromDate.getMonth() + 1).padStart(2, '0');
+        const dd = String(maxFromDate.getDate()).padStart(2, '0');
+
+        fromInput.max = `${yyyy}-${mm}-${dd}`;
+    } else {
+        fromInput.removeAttribute('max');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setTodayMinDate1();
+    updateToDate1();
+    updateFromDate1();
+
+    document.getElementById('start_date_promotional').addEventListener('change', updateToDate1);
+    document.getElementById('end_date_promotional').addEventListener('change', updateFromDate1);
+});
+</script>
+
+<script>
+function formatDateLocal1(date) {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function setEditStartMinToday1() {
+    const startInput = document.getElementById('editStartDatePromotional');
+    const today = new Date();
+    startInput.min = formatDateLocal1(today);
+}
+
+function updateEditEndDate1() {
+    const fromInput = document.getElementById('editStartDatePromotional');
+    const toInput = document.getElementById('editEndDatePromotional');
+
+    if (fromInput.value) {
+        const minToDate = new Date(fromInput.value);
+        minToDate.setDate(minToDate.getDate() + 1);
+        toInput.min = formatDateLocal1(minToDate);
+    } else {
+        toInput.removeAttribute('min');
+    }
+}
+
+function updateEditStartDate1() {
+    const fromInput = document.getElementById('editStartDatePromotional');
+    const toInput = document.getElementById('editEndDatePromotional');
+
+    if (toInput.value) {
+        const maxFromDate = new Date(toInput.value);
+        maxFromDate.setDate(maxFromDate.getDate() - 1);
+        fromInput.max = formatDateLocal1(maxFromDate);
+    } else {
+        fromInput.removeAttribute('max');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setEditStartMinToday1();
+    updateEditEndDate1();
+    updateEditStartDate1();
+
+    document.getElementById('editStartDatePromotional')
+        .addEventListener('change', updateEditEndDate1);
+
+    document.getElementById('editEndDatePromotional')
+        .addEventListener('change', updateEditStartDate1);
+});
+</script>
+
+
+
+
+
 
 
 

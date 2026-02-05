@@ -272,14 +272,14 @@ class FullScreenBannerController extends Controller
         $validator = Validator::make($request->all(), [
             'start_date' => 'required',
             'end_date' => 'required',
-            'upload_banner' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
             'banner_position' => 'required|in:1,2,3',
             'category'        => 'nullable|required_if:banner_position,3|exists:categories,id',
             'subcatgory'      => 'nullable|required_if:banner_position,3|exists:sub_categories,id',
         ], [
-            'upload_banner.required' => 'Please Upload an Image',
-            'upload_banner.image' => 'The uploaded file must be an image',
-            'upload_banner.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
+            'image.required' => 'Please Upload an Image',
+            'image.image' => 'The uploaded file must be an image',
+            'image.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
             //'image.max' => 'Image size should not exceed 5MB',
         ]);
 
@@ -287,8 +287,10 @@ class FullScreenBannerController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+        
+        $order_id = substr(time() . rand(100, 999), 0, 9);
         $banner = new sellerBanner();
+        $banner->order_id = $order_id;
         $banner->start_date = $request->start_date;
         $banner->end_date = $request->end_date;
         $banner->banner_position = $request->banner_position;
@@ -297,8 +299,11 @@ class FullScreenBannerController extends Controller
         $start = Carbon::parse($request->start_date);
         $end   = Carbon::parse($request->end_date);
         $banner->total_days = $start->diffInDays($end) + 1; 
+        $banner->added_by = '1';
+        $banner->Admin_verify = '1';
+        $banner->payment_status = '1';
 
-        if($request->hasFile('upload_banner')){
+        if($request->hasFile('image')){
             $commonController = new CommonController();
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true); 
@@ -371,6 +376,49 @@ class FullScreenBannerController extends Controller
             ], 500);
         }
     }
+
+    public function updatePromotionalBanner(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'banner_position' => 'required|in:1,2,3',
+            'category' => 'nullable|required_if:banner_position,3',
+            'subcatgory' => 'nullable|required_if:banner_position,3',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $banner = sellerBanner::findOrFail($id);
+
+        $banner->start_date = $request->start_date;
+        $banner->end_date = $request->end_date;
+        $banner->banner_position = $request->banner_position;
+        $banner->category = $request->category;
+        $banner->subcatgory = $request->subcatgory;
+
+        $start = Carbon::parse($request->start_date);
+        $end = Carbon::parse($request->end_date);
+        $banner->total_days = $start->diffInDays($end) + 1;
+
+        if ($request->hasFile('image')) {
+            $commonController = new CommonController();
+            $uploadResult = $commonController->upload($request);
+            $uploadData = $uploadResult->getData(true);
+            $banner->upload_banner = $uploadData['data']['url'];
+        }
+
+        $banner->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Promotional Banner Updated Successfully'
+        ]);
+    }
+
 
 
 

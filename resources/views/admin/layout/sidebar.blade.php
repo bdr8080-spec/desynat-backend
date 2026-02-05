@@ -123,7 +123,7 @@
     <li class="nav-item {{ Request::routeIs('admin.fullScreenBannerManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.fullScreenBannerManagement') }}">
             <span><img src="{{ asset('admin/image/browser.svg') }}" alt="Full Screen Banner Management" /></span>
-            Full Screen Banner Management
+            Banner Management
         </a>
     </li>
      
