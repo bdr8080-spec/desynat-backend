@@ -37,10 +37,8 @@
 
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
                 <div class="row align-items-end justify-content-end">
-
-
                     <div class="col-lg-6 col-md-4 col-12">
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="1" data-bs-toggle="modal" data-bs-target="#sentModal2">
                                 <span>Add</span>
                             </a>
@@ -108,7 +106,7 @@
 
 
                     <div class="col-lg-6 col-md-4 col-12">
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="2" data-bs-toggle="modal" data-bs-target="#sentModal2">
                                 <span>Add</span>
                             </a>
@@ -144,7 +142,7 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
-                                        <a href="javascript:void(0);" class="table-button text-danger deleteReason"
+                                        <a href="javascript:void(0);" class="table-button text-danger1 deleteReason"
                                             data-id="{{ $reason->id }}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>
@@ -177,7 +175,7 @@
 
 
                     <div class="col-lg-6 col-md-4 col-12">
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end mb-3">
                             <a class="btn btn-dark customBtn button add-reason-btn" data-type="3" data-bs-toggle="modal" data-bs-target="#sentModal2">
                                 <span>Add</span>
                             </a>
@@ -213,7 +211,7 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
 
-                                        <a href="javascript:void(0);" class="table-button text-danger deleteReason"
+                                        <a href="javascript:void(0);" class="table-button text-danger1 deleteReason"
                                             data-id="{{ $reason->id }}">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>

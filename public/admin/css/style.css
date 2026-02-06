@@ -2598,7 +2598,11 @@ a.text {
     border: 1px solid #926c48;
     line-height: 27px;
     font-size: 15px;
+   text-align: left;
 }   
 .multiselect.dropdown-toggle:hover {
     border: 1px solid #926c48;  
+}
+.multiselect-container>li>a>label {
+    padding: 8px 10px 3px 15px !important;
 }

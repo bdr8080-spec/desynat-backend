@@ -186,7 +186,7 @@
                         </select>
                     </div> -->
                 </form>
-                <div class="d-flex justify-content-end">
+                <div class="d-flex justify-content-end mb-3">
                     <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#addPromotional">
                         <span>Add Promotional</span>
                     </a>
@@ -329,7 +329,7 @@
                         </div>
 
                         <!-- Banner Position -->
-                        <div class="col-lg-12 mt-3">
+                        <div class="col-lg-12 mt-0">
                             <div class="form-group w-100">
                                 <label class="form-label">Banner Position</label>
                                 <select id="bannerPosition" name="banner_position" class="form-select form-select-lg">
@@ -342,7 +342,7 @@
                             </div>
 
                             <!-- Category Dropdown (shown only if position = 3) -->
-                            <div class="form-group w-100 mt-2" id="categoryWrapper" style="display:none;">
+                            <div class="form-group w-100 mt-1" id="categoryWrapper" style="display:none;">
                                 <label class="form-label">Category</label>
                                 <select id="categorySelect" name="category" class="form-select form-select-lg">
                                     <option value="">Select Category</option>
@@ -351,7 +351,7 @@
                             </div>
 
                             <!-- Subcategory Dropdown (shown after category selection) -->
-                            <div class="form-group w-100 mt-2" id="subCategoryWrapper" style="display:none;">
+                            <div class="form-group w-100 mt-1" id="subCategoryWrapper" style="display:none;">
                                 <label class="form-label">Subcategory</label>
                                 <select id="subCategorySelect" name="subcatgory" class="form-select form-select-lg">
                                     <option value="">Select Subcategory</option>
@@ -361,7 +361,7 @@
                         </div>
 
                         <!-- Start and End Dates -->
-                        <div class="col-lg-12 mt-3">
+                        <div class="col-lg-12 mt-2">
                             <div class="d-flex gap-2">
                                 <div class="col-lg-6">
                                     <div class="form-group w-100">
