@@ -715,6 +715,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
     ->first();
 
     if($checkOrder){
+        //dd('123');
 
        $checkOrder->allOtherOrderVarient = orderdetail::with([   
         'product_details.brand',
@@ -725,8 +726,11 @@ $orders = $orders->orderBy('id', 'desc')->get();
         'variation_details.size',
     ]) 
      ->where('order_id', $request->order_id)
-     ->where('order_id', $request->order_id)
-     ->where('order_status','!=','exchange')     
+    //  ->where('order_status','!=','exchange')
+    ->where(function ($query) {
+        $query->where('order_status', '!=', 'exchange')
+              ->orWhereNull('order_status');
+    })     
      ->whereNOT('id',$request->orderdetails_id)
     ->get();
 
