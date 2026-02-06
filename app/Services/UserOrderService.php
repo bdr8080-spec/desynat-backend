@@ -737,9 +737,19 @@ $orders = $orders->orderBy('id', 'desc')->get();
         if($checkOrder->order_type=='2'){
             $checkOrder->ChatroomRecordtable=allproductchats::where('unique_id',$checkOrder->unique_id)->first();
         }else{
-            //  $checkOrder->ChatroomRecordtable=(object)[];
-            $checkOrder->ChatroomRecordtable=allproductchats::where('unique_id',$checkOrder->unique_id)->first();
+             $checkOrder->ChatroomRecordtable=(object)[];
         }
+
+        if ($checkOrder->allOtherOrderVarient && $checkOrder->allOtherOrderVarient->count() > 0) {
+            foreach ($checkOrder->allOtherOrderVarient as $variant) {
+                if ($variant->order_type == '2') {
+                    $variant->ChatroomRecordtable = allproductchats::where('unique_id', $variant->unique_id)->first();
+                } else {
+                    $variant->ChatroomRecordtable = (object)[];
+                }
+            }
+        }
+
 
 
     }else{
