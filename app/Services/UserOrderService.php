@@ -737,7 +737,8 @@ $orders = $orders->orderBy('id', 'desc')->get();
         if($checkOrder->order_type=='2'){
             $checkOrder->ChatroomRecordtable=allproductchats::where('unique_id',$checkOrder->unique_id)->first();
         }else{
-             $checkOrder->ChatroomRecordtable=(object)[];
+            //  $checkOrder->ChatroomRecordtable=(object)[];
+            $checkOrder->ChatroomRecordtable=allproductchats::where('unique_id',$checkOrder->unique_id)->first();
         }
 
 
