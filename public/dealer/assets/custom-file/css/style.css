@@ -2090,3 +2090,19 @@ storeClient_profile_img {
   padding: 0 15px;
   cursor: pointer;
 }
+
+.topremove {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 18px;
+  color: #fff;
+  background: #ff0000;
+  height: 25px;
+  width: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  cursor: pointer;
+}
