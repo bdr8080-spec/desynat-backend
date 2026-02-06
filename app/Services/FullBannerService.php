@@ -318,6 +318,11 @@ class FullBannerService
             ])
             ->where('added_by', '1');
 
+            if ($request->filled('banner_position')) {
+                $position = $request->input('banner_position');
+                $query->where('banner_position', $position);
+            }
+
 
            if (!empty($request->start_date) && !empty($request->end_date)) {
                 $query->whereRaw(
