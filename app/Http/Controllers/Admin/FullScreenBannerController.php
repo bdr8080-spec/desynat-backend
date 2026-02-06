@@ -49,205 +49,311 @@ class FullScreenBannerController extends Controller
         ], 200);
     }
 
+    // public function addFullBanner(Request $request)
+    // {
+
+    //     $validator = Validator::make($request->all(), [
+    //         'title' => 'required',
+    //         'country_id' => 'required',
+    //         'start_date' => 'required',
+    //         'end_date' => 'required',
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+    //         'type' => 'required',
+    //     ], [
+    //         'image.required' => 'Please Upload an Image',
+    //         'image.image' => 'The uploaded file must be an image',
+    //         'image.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
+    //         //'image.max' => 'Image size should not exceed 5MB',
+    //     ]);
+
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     if ($request->hasFile('image')) {
+
+    //         [$width, $height] = getimagesize($request->file('image'));
+
+    //         // Only validate aspect ratio for Mobile (type == 1)
+    //         if ($request->type == '1') {
+
+    //             $imageRatio = $width / $height;
+    //             $tolerance  = 0.01;
+
+    //             // Mobile → 9:16 (portrait)
+    //             $targetRatio = 9 / 16;
+    //             $ratioLabel  = '9:16';
+
+    //             if (
+    //                 $imageRatio < ($targetRatio - $tolerance) ||
+    //                 $imageRatio > ($targetRatio + $tolerance)
+    //             ) {
+    //                 return response()->json([
+    //                     'success' => false,
+    //                     'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+    //                 ]);
+    //             }
+    //         }
+
+    //         // No aspect ratio validation for Web or other types
+    //     }
+
+
+
+
+    //     $banner = new FullBanner();
+    //     $banner->title = $request->title;
+    //     $banner->country_id = $request->country_id;
+    //     $banner->start_date = $request->start_date;
+    //     $banner->end_date = $request->end_date;
+    //     $banner->type = $request->type;
+
+    //     if($request->hasFile('image')){
+    //         $commonController = new CommonController();
+    //         $uploadResult = $commonController->upload($request);
+    //         $uploadResultArray = $uploadResult->getData(true); 
+
+    //         if ($uploadResultArray['status'] === 'error') {
+    //             return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+    //         }
+
+    //         $imageUrl = $uploadResultArray['data']['url'];
+    //         $banner->image = $imageUrl; 
+    //     }
+
+    //     $banner->save();
+
+    //     return response()->json(['success' => true, 'message' => 'Banner Added Successfully!']);
+    // }
     public function addFullBanner(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'country_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'type' => 'required',
+            'title'       => 'required',
+            'country_id'  => 'required',
+            'start_date'  => 'required',
+            'end_date'    => 'required',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,gif',
+            'type'        => 'required',
         ], [
             'image.required' => 'Please Upload an Image',
-            'image.image' => 'The uploaded file must be an image',
-            'image.mimes' => 'Image must be in JPEG, PNG, JPG, or GIF format',
-            //'image.max' => 'Image size should not exceed 5MB',
+            'image.image'    => 'The uploaded file must be an image',
+            'image.mimes'    => 'Image must be in JPEG, PNG, JPG, or GIF format',
         ]);
-
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
 
-        //     [$width, $height] = getimagesize($request->file('image'));
+            $file = $request->file('image');
 
-        //     $imageRatio = $width / $height;
-        //     $tolerance  = 0.01;
+            /**
+             * Step 4: Skip aspect ratio validation for GIF images
+             */
+            if ($file->getClientOriginalExtension() !== 'gif') {
 
-        //     // Determine target ratio based on type
-        //     if ($request->type == '1') {
-        //         // Mobile → 9:16 (portrait)
-        //         $targetRatio = 9 / 16;
-        //         $ratioLabel  = '9:16';
-        //     } else {
-        //         // Web → 16:9 (landscape)
-        //         $targetRatio = 16 / 9;
-        //         $ratioLabel  = '16:9';
-        //     }
+                [$width, $height] = getimagesize($file);
 
-        //     if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
-        //         return response()->json([
-        //             'success' => false,
-        //             'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
-        //         ]);
-        //     }
-        // }
+                if ($request->type == '1') {
+
+                    $imageRatio = $width / $height;
+                    $targetRatio = 9 / 16; // Mobile ratio
+                    $tolerance = 0.01;
+                    $ratioLabel = '9:16';
+
+                    if (
+                        $imageRatio < ($targetRatio - $tolerance) ||
+                        $imageRatio > ($targetRatio + $tolerance)
+                    ) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+                        ]);
+                    }
+                }
+            }
+        }
+        $banner = new FullBanner();
+        $banner->title      = $request->title;
+        $banner->country_id = $request->country_id;
+        $banner->start_date = $request->start_date;
+        $banner->end_date   = $request->end_date;
+        $banner->type       = $request->type;
 
         if ($request->hasFile('image')) {
 
-            [$width, $height] = getimagesize($request->file('image'));
-
-            // Only validate aspect ratio for Mobile (type == 1)
-            if ($request->type == '1') {
-
-                $imageRatio = $width / $height;
-                $tolerance  = 0.01;
-
-                // Mobile → 9:16 (portrait)
-                $targetRatio = 9 / 16;
-                $ratioLabel  = '9:16';
-
-                if (
-                    $imageRatio < ($targetRatio - $tolerance) ||
-                    $imageRatio > ($targetRatio + $tolerance)
-                ) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
-                    ]);
-                }
-            }
-
-            // No aspect ratio validation for Web or other types
-        }
-
-
-
-
-        $banner = new FullBanner();
-        $banner->title = $request->title;
-        $banner->country_id = $request->country_id;
-        $banner->start_date = $request->start_date;
-        $banner->end_date = $request->end_date;
-        $banner->type = $request->type;
-
-        if($request->hasFile('image')){
             $commonController = new CommonController();
             $uploadResult = $commonController->upload($request);
-            $uploadResultArray = $uploadResult->getData(true); 
+            $uploadResultArray = $uploadResult->getData(true);
 
             if ($uploadResultArray['status'] === 'error') {
-                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+                return response()->json([
+                    'success' => false,
+                    'message' => $uploadResultArray['message']
+                ]);
             }
 
-            $imageUrl = $uploadResultArray['data']['url'];
-            $banner->image = $imageUrl; 
+            $banner->image = $uploadResultArray['data']['url'];
         }
 
         $banner->save();
 
-        return response()->json(['success' => true, 'message' => 'Banner Added Successfully!']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Banner Added Successfully!'
+        ]);
     }
+
+
+    // public function updateFullBanner(Request $request, $id)
+    // {
+    //     $banner = FullBanner::findOrFail($id);
+
+    //     $validator = Validator::make($request->all(), [
+    //         'title' => 'required',
+    //         'country_id' => 'required',
+    //         'start_date' => 'required',
+    //         'end_date' => 'required',
+    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+    //         'type' => 'required|',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 422);
+    //     }
+
+    //     if ($request->hasFile('image')) {
+
+    //         [$width, $height] = getimagesize($request->file('image'));
+
+    //         // Only validate aspect ratio for Mobile (type == 1)
+    //         if ($request->type == '1') {
+
+    //             $imageRatio = $width / $height;
+    //             $tolerance  = 0.01;
+
+    //             // Mobile → 9:16 (portrait)
+    //             $targetRatio = 9 / 16;
+    //             $ratioLabel  = '9:16';
+
+    //             if (
+    //                 $imageRatio < ($targetRatio - $tolerance) ||
+    //                 $imageRatio > ($targetRatio + $tolerance)
+    //             ) {
+    //                 return response()->json([
+    //                     'success' => false,
+    //                     'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+    //                 ]);
+    //             }
+    //         }
+
+    //         // No aspect ratio validation for Web or other types
+    //     }
+
+
+    //     $banner->title = $request->title;
+    //     $banner->country_id = $request->country_id;
+    //     $banner->start_date = $request->start_date;
+    //     $banner->end_date = $request->end_date;
+    //     $banner->type = $request->type;
+
+    //     if ($request->hasFile('image')) {
+    //         $commonController = new CommonController();
+    //         $uploadResult = $commonController->upload($request);
+    //         $uploadResultArray = $uploadResult->getData(true);
+
+    //         if ($uploadResultArray['status'] === 'error') {
+    //             return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+    //         }
+
+    //         $imageUrl = $uploadResultArray['data']['url'];
+    //         $banner->image = $imageUrl;
+    //     }
+
+    //     $banner->save();
+
+    //     return response()->json(['success' => true, 'message' => 'Banner Updated Successfully!']);
+    // }
 
     public function updateFullBanner(Request $request, $id)
     {
         $banner = FullBanner::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'title' => 'required',
-            'country_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'type' => 'required|',
+            'title'       => 'required',
+            'country_id'  => 'required',
+            'start_date'  => 'required',
+            'end_date'    => 'required',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'type'        => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // if ($request->hasFile('image')) {
-
-        //     [$width, $height] = getimagesize($request->file('image'));
-
-        //     $imageRatio = $width / $height;
-        //     $tolerance  = 0.01;
-
-        //     // Determine target ratio based on type
-        //     if ($request->type == '1') {
-        //         // Mobile → 9:16 (portrait)
-        //         $targetRatio = 9 / 16;
-        //         $ratioLabel  = '9:16';
-        //     } else {
-        //         // Web → 16:9 (landscape)
-        //         $targetRatio = 16 / 9;
-        //         $ratioLabel  = '16:9';
-        //     }
-
-        //     if ($imageRatio < ($targetRatio - $tolerance) || $imageRatio > ($targetRatio + $tolerance)) {
-        //         return response()->json([
-        //             'success' => false,
-        //             'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
-        //         ]);
-        //     }
-        // }
-
         if ($request->hasFile('image')) {
 
-            [$width, $height] = getimagesize($request->file('image'));
+            $file = $request->file('image');
 
-            // Only validate aspect ratio for Mobile (type == 1)
-            if ($request->type == '1') {
+            // Skip ratio validation for GIF images
+            if ($file->getClientOriginalExtension() !== 'gif') {
 
-                $imageRatio = $width / $height;
-                $tolerance  = 0.01;
+                [$width, $height] = getimagesize($file);
 
-                // Mobile → 9:16 (portrait)
-                $targetRatio = 9 / 16;
-                $ratioLabel  = '9:16';
+                // Validate only for Mobile banners
+                if ($request->type == '1') {
 
-                if (
-                    $imageRatio < ($targetRatio - $tolerance) ||
-                    $imageRatio > ($targetRatio + $tolerance)
-                ) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
-                    ]);
+                    $imageRatio  = $width / $height;
+                    $targetRatio = 9 / 16;
+                    $tolerance   = 0.01;
+                    $ratioLabel  = '9:16';
+
+                    if (
+                        $imageRatio < ($targetRatio - $tolerance) ||
+                        $imageRatio > ($targetRatio + $tolerance)
+                    ) {
+                        return response()->json([
+                            'success' => false,
+                            'message' => "Image upload failed. Please upload an image with a {$ratioLabel} aspect ratio"
+                        ]);
+                    }
                 }
             }
-
-            // No aspect ratio validation for Web or other types
         }
 
-
-        $banner->title = $request->title;
+        $banner->title      = $request->title;
         $banner->country_id = $request->country_id;
         $banner->start_date = $request->start_date;
-        $banner->end_date = $request->end_date;
-        $banner->type = $request->type;
+        $banner->end_date   = $request->end_date;
+        $banner->type       = $request->type;
 
         if ($request->hasFile('image')) {
+
             $commonController = new CommonController();
             $uploadResult = $commonController->upload($request);
             $uploadResultArray = $uploadResult->getData(true);
 
             if ($uploadResultArray['status'] === 'error') {
-                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+                return response()->json([
+                    'success' => false,
+                    'message' => $uploadResultArray['message']
+                ]);
             }
 
-            $imageUrl = $uploadResultArray['data']['url'];
-            $banner->image = $imageUrl;
+            $banner->image = $uploadResultArray['data']['url'];
         }
 
         $banner->save();
 
-        return response()->json(['success' => true, 'message' => 'Banner Updated Successfully!']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Banner Updated Successfully!'
+        ]);
     }
+
 
     public function deletePromotionalBanner($id)
     {
