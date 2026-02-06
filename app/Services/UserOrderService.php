@@ -693,7 +693,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
     try{
 
 
-         $checkOrder = OrderDetail::with([
+         $checkOrder = orderdetail::with([
         'order.delivery_details',
         'order.giftCard_details',
         'order.promocode_details',
@@ -716,7 +716,7 @@ $orders = $orders->orderBy('id', 'desc')->get();
 
     if($checkOrder){
 
-       $checkOrder->allOtherOrderVarient = OrderDetail::with([   
+       $checkOrder->allOtherOrderVarient = orderdetail::with([   
         'product_details.brand',
         'product_details.category',
         'product_details.subcategory',
