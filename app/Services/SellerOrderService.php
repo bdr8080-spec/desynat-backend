@@ -426,7 +426,7 @@ try{
 
     $firbase_chat = $this->getMessages($val->unique_id);
 
-    if (is_array($firbase_chat) && !empty($firbase_chat)) {
+    if (!empty($firbase_chat)) {
         // Ensure array order
         $lastMessage = end($firbase_chat);
 
