@@ -67,6 +67,7 @@ class SellerOrderController extends Controller
 
        $custom_data= $this->SellerOrderService->SellerGetOrders($request_data1);
        $custom= $custom_data['data'];  
+      // dd($normal);
 
         return View('dealer.orderManagement.allOrder',compact('normal','custom'));
     }

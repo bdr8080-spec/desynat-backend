@@ -161,22 +161,22 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>
                                         <div class="width-120">Shipping Fees</div>
                                     </td>
                                     <td>
                                         <div>{{$chatData['record']['shipping']}} KD</div>
                                     </td>
-                                </tr>
-                                <tr>
+                                </tr> -->
+                                <!-- <tr>
                                     <td>
                                         <div class="width-120">Tax</div>
                                     </td>
                                     <td>
                                         <div>{{$chatData['record']['tax']}} KD</div>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td>
                                         <div class="width-120">Total Amount </div>

@@ -12,11 +12,11 @@
                     data-bs-target="#pills-Normal-Order" type="button" role="tab" aria-controls="pills-allproduct"
                     aria-selected="true">Normal Orders </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <!-- <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-active-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-Custom-Order" type="button" role="tab" aria-controls="pills-Custom-Order"
                     aria-selected="false">Customised Orders</button>
-            </li>
+            </li> -->
         </ul>
     </div>
 
@@ -114,6 +114,7 @@
                                             <th class="no-sort">Order ID</th>
                                             <th class="no-sort">Date & Time</th>
                                             <th class="no-sort">Product Name</th>
+                                            <th class="no-sort">Order Type</th>
                                             <th class="no-sort">Quantity</th>
                                             <th class="no-sort">Customer Name</th>
                                             <th class="no-sort">Location</th>
@@ -137,6 +138,13 @@
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
                                             <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>
+                                                @if($val->order_type=='1')
+                                                Normal
+                                                @elseif($val->order_type=='2')
+                                                Custom
+                                                @endif
+                                            </td>
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
@@ -246,6 +254,7 @@
                                             <th class="no-sort">Order ID</th>
                                             <th class="no-sort">Date & Time</th>
                                             <th class="no-sort">Product Name</th>
+                                            <th class="no-sort">Order Type</th>
                                             <th class="no-sort">Quantity</th>
                                             <th class="no-sort">Customer Name</th>
                                             <th class="no-sort">Location</th>
@@ -269,6 +278,13 @@
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
                                             <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>
+                                                @if($val->order_type=='1')
+                                                Normal
+                                                @elseif($val->order_type=='2')
+                                                Custom
+                                                @endif
+                                            </td>
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
@@ -377,6 +393,7 @@
                                             <th class="no-sort">Order ID</th>
                                             <th class="no-sort">Date & Time</th>
                                             <th class="no-sort">Product Name</th>
+                                            <th class="no-sort">Order Type</th>
                                             <th class="no-sort">Quantity</th>
                                             <th class="no-sort">Customer Name</th>
                                             <th class="no-sort">Location</th>
@@ -399,6 +416,13 @@
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
                                             <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>
+                                                @if($val->order_type=='1')
+                                                Normal
+                                                @elseif($val->order_type=='2')
+                                                Custom
+                                                @endif
+                                            </td>
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>

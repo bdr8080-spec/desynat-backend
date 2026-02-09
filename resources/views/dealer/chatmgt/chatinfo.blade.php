@@ -191,15 +191,15 @@
                             <p class="text-danger mb-0" id="error1-price"></p>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="form-group sub-form">
                                     <label for="item" class="size14">Shipping Fees </label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
                                         placeholder="Eg 20 KD" name="shipping" id="shipping1">
                                     <p class="text-danger mb-0" id="error1-shipping"></p>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
+                            </div> -->
+                            <!-- <div class="col-lg-6">
                                 <div class="form-group sub-form">
                                     <label for="item" class="size14">Tax</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
@@ -207,7 +207,7 @@
 
                                     <p class="text-danger mb-0" id="error1-tax"></p>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-lg-12">
                                 <div class="form-group sub-form">
                                     <label for="item" class="size14">Total Amount</label>
@@ -228,8 +228,8 @@
                 <script>
                 // Row 1
                 document.getElementById('price1').addEventListener('input', () => calculateTotal(1));
-                document.getElementById('shipping1').addEventListener('input', () => calculateTotal(1));
-                document.getElementById('tax1').addEventListener('input', () => calculateTotal(1));
+                // document.getElementById('shipping1').addEventListener('input', () => calculateTotal(1));
+                // document.getElementById('tax1').addEventListener('input', () => calculateTotal(1));
                 document.getElementById('quantity1').addEventListener('input', () => calculateTotal(1));
                 </script>
 
@@ -255,22 +255,22 @@
                                         <div>{{ $single_chats['record']->price}} KD</div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td>
                                         <div class="width-120">Shipping Fees</div>
                                     </td>
                                     <td>
                                         <div>{{ $single_chats['record']->shipping}} KD</div>
                                     </td>
-                                </tr>
-                                <tr>
+                                </tr> -->
+                                <!-- <tr>
                                     <td>
                                         <div class="width-120">Tax</div>
                                     </td>
                                     <td>
                                         <div>{{ $single_chats['record']->tax}} KD</div>
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td>
                                         <div class="width-120">Total Amount </div>
@@ -400,7 +400,7 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <div class="form-group sub-form">
                                     <label for="item" class="size14">Shipping Fees </label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
@@ -408,8 +408,8 @@
                                         name="shipping" id="shipping0">
                                     <p class="text-danger mb-0" id="error0-shipping"></p>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
+                            </div> -->
+                            <!-- <div class="col-lg-6">
                                 <div class="form-group sub-form">
                                     <label for="item" class="size14">Tax</label>
                                     <input type="text" class="form-control notapplyspace applynumberOnly"
@@ -417,7 +417,7 @@
                                         id="tax0">
                                     <p class="text-danger mb-0" id="error0-tax"></p>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-lg-12">
                                 <div class="form-group sub-form">
@@ -478,19 +478,20 @@
 <script>
 function calculateTotal(val) {
     let price = parseFloat(document.getElementById('price' + val).value) || 0;
-    let shipping = parseFloat(document.getElementById('shipping' + val).value) || 0;
-    let tax = parseFloat(document.getElementById('tax' + val).value) || 0;
+    // let shipping = parseFloat(document.getElementById('shipping' + val).value) || 0;
+    // let tax = parseFloat(document.getElementById('tax' + val).value) || 0;
     let quantity = parseFloat(document.getElementById('quantity' + val).value) || 1;
 
-    let total = (price * quantity) + shipping + tax;
+    // let total = (price * quantity) + shipping + tax;
+    let total = (price * quantity);
 
     document.getElementById('total_amount' + val).value = total.toFixed(2);
 }
 
 // Row 0
 document.getElementById('price0').addEventListener('input', () => calculateTotal(0));
-document.getElementById('shipping0').addEventListener('input', () => calculateTotal(0));
-document.getElementById('tax0').addEventListener('input', () => calculateTotal(0));
+// document.getElementById('shipping0').addEventListener('input', () => calculateTotal(0));
+// document.getElementById('tax0').addEventListener('input', () => calculateTotal(0));
 document.getElementById('quantity0').addEventListener('input', () => calculateTotal(0));
 
 

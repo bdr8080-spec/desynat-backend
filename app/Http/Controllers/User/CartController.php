@@ -33,6 +33,7 @@ class CartController extends Controller
         ];
 
         $cartData = $this->UserManagementService->product_view_cart_details($data)['data'];
+        //dd($cartData);
     
 
         $userAddressId = userAddress::where('user_id',$user->id)->where('set_as_default','1')->value('id');
@@ -148,8 +149,8 @@ class CartController extends Controller
 
             $request_data = (object)[
                 'user_id'           => $userId,
-                'total_mrp'         => $request->cartSummary['totalMRP'] ?? null,
-                'discount_mrp'      => $request->cartSummary['discountOnMRP'] ?? null,
+                'total_mrp'         => $request->cartSummary['totalMRP'] ?? 0,
+                'discount_mrp'      => $request->cartSummary['discountOnMRP'] ?? 0,
                 'promocode_status' => $request->promo ? 'yes' : 'no',
                 'promocode_id'      => $request->promo['promoId'] ?? null,
                 'promocode_value'   => $request->promo['discountValue'] ?? null,

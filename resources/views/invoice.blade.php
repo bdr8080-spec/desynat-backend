@@ -336,7 +336,12 @@
                             <td>{{$val->variation_details->size->name}}</td>
                             <td>{{$val->variation_details->color->name}}</td>
                             <td>{{$val->quantity}}</td>
-                            <td>{{$val->variation_details->actual_price}} KD</td>
+                            <td>@if($val->order_type=='1')
+                                {{$val->variation_details->actual_price}} KD
+                                @elseif($val->order_type=='2')
+                                {{$val->amount}} KD
+                                @endif
+                            </td>
                         </tr>
 
                         @endforeach

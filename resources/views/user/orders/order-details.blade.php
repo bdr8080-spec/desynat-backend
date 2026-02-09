@@ -85,7 +85,7 @@
                                     </div>
 
                                     {{-- Price --}}
-                                    @if($orderData->order->order_type=='1')
+                                    @if($orderData->order_type=='1')
                                     <div class="price">
                                         <span
                                             class="price-current">{{ number_format($orderData->variation_details->final_price ?? 0, 2) }}
@@ -103,7 +103,7 @@
                                         @endif
                                     </div>
                                     @endif
-                                    @if($orderData->order->order_type=='2')
+                                    @if($orderData->order_type=='2')
                                     <div class="price">
                                         <span class="price-current">{{ $orderData->amount ?? 0 }}
                                             KD</span>
@@ -309,6 +309,7 @@
                                 </div>
 
                                 {{-- Price --}}
+                                @if($val->order_type=='1')
                                 <div class="price">
                                     <span
                                         class="price-current">{{ number_format($val->variation_details->final_price ?? 0, 2) }}
@@ -325,6 +326,14 @@
                                     @endif
                                     @endif
                                 </div>
+                                @endif
+                                @if($val->order_type=='2')
+                                <div class="price">
+                                    <span
+                                        class="price-current">{{ number_format($val->ChatroomRecordtable->total_amount ?? 0, 2) }}
+                                        KD</span>
+                                </div>
+                                @endif
 
                             </div>
                         </div>
@@ -343,7 +352,7 @@
                             <div>Total Quantity</div>
                             <div>{{$orderData->quantity}}</div>
                         </div>
-                        @if($orderData->order->order_type == '2')
+                        @if($orderData->order_type == '2')
                         <div class="giftinfo">
                             <div>Address </div>
                             <div>
@@ -752,7 +761,7 @@
 
                 <h6>Billing Details</h6>
                 <div class="gift-pnl mt-0">
-                    <div class="border-1">
+                    <!-- <div class="border-1">
                         <div class="giftinfo">
                             @if($orderData->order->order_type=='1')
                             <div>Total MRP</div>
@@ -803,7 +812,85 @@
                             @endif
 
                         </div>
+                    </div> -->
+                    @php
+                        $allItems = collect([$orderData])
+                                        ->merge($orderData->allOtherOrderVarient);
+
+                        $hasOrderType1 = $allItems->contains('order_type', '1');
+                        $hasOrderType2 = $allItems->contains('order_type', '2');
+
+                        // Total custom price (order_type = 2)
+                        $customAmount = $allItems
+                            ->where('order_type', '2')
+                            ->sum(fn ($item) => $item->amount * $item->quantity);
+
+                        // Total MRP items (order_type = 1)
+                        $totalMrp = $allItems
+                            ->where('order_type', '1')
+                            ->sum(fn ($item) => $item->amount * $item->quantity);
+
+                        $discountMrp = $orderData->order->discount_mrp ?? 0;
+                    @endphp
+                    <div class="border-1">
+
+                        {{-- ORDER TYPE 1 --}}
+                        @if($hasOrderType1)
+                            <div class="giftinfo">
+                                <div>Total MRP</div>
+                                <div>{{ $totalMrp }} KD</div>
+                            </div>
+
+                            <div class="giftinfo">
+                                <div>Discount on MRP</div>
+                                <div class="discount">{{ $discountMrp }} KD</div>
+                            </div>
+                        @endif
+
+                        {{-- ORDER TYPE 2 --}}
+                        @if($hasOrderType2)
+                            <div class="giftinfo">
+                                <div>Custom Item price</div>
+                                <div>{{ $customAmount }} KD</div>
+                            </div>
+                        @endif
+
+                        {{-- COUPON --}}
+                        @if(!empty($orderData->order->promocode_value))
+                            <div class="giftinfo">
+                                <div>Coupon Discount</div>
+                                <div class="discount">{{ $orderData->order->promocode_value }} KD</div>
+                            </div>
+                        @endif
+
+                        {{-- GIFT CARD --}}
+                        @if(!empty($orderData->order->giftcard_amount))
+                            <div class="giftinfo">
+                                <div>Gift Card Discount</div>
+                                <div class="discount">{{ $orderData->order->giftcard_amount }} KD</div>
+                            </div>
+                        @endif
+
+                        <div class="giftinfo">
+                            <div>Shipping Fee</div>
+                            <div>{{ $orderData->order->shipping_fees }} KD</div>
+                        </div>
+
+                        <div class="giftinfo">
+                            <div>Tax (if any)</div>
+                            <div>{{ $orderData->order->tax }} KD</div>
+                        </div>
+
+                        <div class="giftinfo">
+                            <div>Total Amount</div>
+                            <div>
+                                {{ rtrim(rtrim(number_format($orderData->order->total_amount, 2), '0'), '.') }} KD
+                            </div>
+                        </div>
+
                     </div>
+
+
                 </div>
                 @php
                 $discountMRP = $orderData->order->discount_mrp ?? 0;

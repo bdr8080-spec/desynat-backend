@@ -107,8 +107,8 @@ class SellerChatController extends Controller
             'unique_id' => 'required|exists:allproductchats,unique_id',
             "price"=>"required",
             'quantity' => 'required',
-            "shipping"=>'required',
-            "tax"=>'required',
+            // "shipping"=>'required',
+            // "tax"=>'required',
             "total_amount"=>"required",
         ]);
         

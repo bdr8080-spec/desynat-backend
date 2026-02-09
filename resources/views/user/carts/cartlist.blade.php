@@ -243,10 +243,10 @@
                                     {{-- Price --}}
                                     <div class="price">
                                         <span class="price-current">
-                                            {{ $item->product_variants->final_price }} KD
+                                            {{ $item->chatroom_data->total_amount }} KD
                                         </span>
 
-                                        @if($item->product_variants->discount_value!=="0")
+                                        <!-- @if($item->product_variants->discount_value!=="0")
 
 
                                         @if(!empty($item->product_variants->actual_price))
@@ -262,7 +262,7 @@
                                             @endif
                                         </span>
 
-                                        @endif
+                                        @endif -->
 
                                     </div>
 
@@ -373,15 +373,35 @@
                 {{-- BILLING DETAILS --}}
                 <div class="gift-pnl mt-4">
                     <h6>Billing Details</h6>
+                    @php
+                        $hasOrderType1 = $cartData['cart_data']->contains('order_type', '1');
+                        $hasOrderType2 = $cartData['cart_data']->contains('order_type', '2');
+
+                        $customAmount = $cartData['cart_data']
+                            ->where('order_type', '2')
+                            ->sum(function ($item) {
+                                return $item->amount * $item->quantity;
+                            });
+                    @endphp
                     <div class="border-1">
+                        @if($hasOrderType1)
                         <div class="giftinfo">
                             <div>Total MRP</div>
                             <div>{{ $cartData['total_mrp'] }} KD</div>
                         </div>
+                        @endif
+                        @if($hasOrderType1)
                         <div class="giftinfo">
                             <div>Discount on MRP</div>
                             <div class="red-color">{{ $cartData['discount_on_mrp'] }} KD</div>
                         </div>
+                        @endif
+                        @if($hasOrderType2)
+                        <div class="giftinfo">
+                            <div>Custom Item price</div>
+                            <div>{{ $customAmount }} KD</div>
+                        </div>
+                        @endif
                         <div class="giftinfo d-none" id="couponDiscountRow">
                             <div>Coupon Discount</div>
                             <div class="red-color" id="couponDiscountAmount">{{ $cartData['discount_coupon'] }} KD
@@ -907,11 +927,14 @@ function refreshDiscountUI() {
     var tax = parseFloat($('.giftinfo').filter(function() {
         return $(this).find('div').first().text().trim() === 'TAX (if any)';
     }).find('div').last().text().replace(' KD', '')) || 0;
+    var custom = parseFloat($('.giftinfo').filter(function() {
+        return $(this).find('div').first().text().trim() === 'Custom Item price';
+    }).find('div').last().text().replace(' KD', '')) || 0;
 
     var promoDiscount = savedPromo ? savedPromo.discountValue : 0;
     var giftCardDiscount = savedGiftCard ? savedGiftCard.giftCardAmount : 0;
 
-    var finalTotal = baseTotal - discountOnMRP - promoDiscount - giftCardDiscount + shippingFee + tax;
+    var finalTotal = baseTotal - discountOnMRP - promoDiscount - giftCardDiscount + shippingFee + tax + custom;
     $('.giftinfo').filter(function() {
             return $(this).find('div').first().text().trim() === 'Total Amount';
         })
