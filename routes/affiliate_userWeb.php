@@ -42,3 +42,13 @@ Route::match(['get', 'post'], '/profile', function () {
     return view('affiliatedUser.profiles.profile');
 
 })->name('affiliatedUser.profile');
+
+Route::match(['get', 'post'], '/change-password', function () {
+    return view('affiliatedUser.profiles.change-pwd');
+
+})->name('affiliatedUser.change-password');
+
+Route::match(['get', 'post'], '/category', function () {
+    return view('affiliatedUser.category.categorys');
+
+})->name('affiliatedUser.category');

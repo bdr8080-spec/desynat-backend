@@ -32,13 +32,20 @@
                 aria-labelledby="pills-allproduct-tab" tabindex="0">
                 <div class="personl-wapper">
                     <div class="store-panel py-3 d-flex justify-content-between align-items-center">
-                        <div class="showcircle">
-                            <img id="previewProfile" src="{{ asset('/dealer') }}/assets/img/profile-img.jpg" class="img-fluid">
+                        <div class="d-flex gap-3 align-items-center">
+                            <div class="showcircle">
+                                <img id="profileShow" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
+                                <img id="demoProfile" src="{{ asset('/dealer') }}/assets/img/profile-img.jpg" class="img-fluid">
+                            </div>
+                            <label class="change-title position-relative">
+                                <h6>Change Image </h6>
+                                <input type="file" accept="image/*" id="profileUpload" style="opacity:0;position: absolute;">
+                            </label>
                         </div>
-                        <label class="img_changes">
-                            <h6>Change Image</h6>
-                            <input type="file" id="uploadImage2" class="form-control" accept="image/*">
-                        </label>
+                        <a class="drop-profile" href="/change-password">
+                            <span>Change Password</span>
+                        </a>
+                       
                     </div>
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
@@ -50,19 +57,25 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <div class="sub-form">
+                            <div class="sub-form position-relative">
                                 <div class="label-flex">
                                     <label>Mobile No.</label>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter Mobile Number">
+                                <a class="drop-profile mob-change" href="#">
+                                    <span>Change</span>
+                                </a>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12">
-                            <div class="sub-form">
+                            <div class="sub-form position-relative">
                                 <div class="label-flex">
                                     <label>Mobile No.</label>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter Mobile Number">
+                                <a class="drop-profile mob-change" href="#">
+                                    <span>Change</span>
+                                </a>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12">
@@ -168,10 +181,15 @@
             <div class="tab-pane fade" id="pills-bank" role="tabpanel" aria-labelledby="pills-bank-tab" tabindex="0">
 
                 <div class="p-2 rounded-4 desc-box bg-white">
-                    <div class="bankpnl d-flex justify-content-between">
-                        <h6>AE6675656566</h6>
+                    <div class="bankpnl d-flex justify-content-between p-2 align-items-center">
+                        <div class="account-no">AE6675656566</div>
                         <div class="banktool">
-
+                            <a href="#">
+                                <img src="{{ asset('/dealer') }}/assets/img/b-edit.svg" alt="edit icon" class="img-fluid"> 
+                            </a>
+                            <a href="#">
+                                <img src="{{ asset('/dealer') }}/assets/img/b-delete.svg" alt="delete icon" class="img-fluid"> 
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -189,6 +207,20 @@
 @include('affiliatedUser.layout.footer');
 
 <script>
+$('#profileUpload').on('change', function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        $('#profileShow').attr('src', e.target.result).show();
+        $('#demoProfile').hide();
+    };
+    reader.readAsDataURL(file);
+});
+
+
+
 $('#imageUpload').on('change', function () {
     const file = this.files[0];
     if (!file) return;

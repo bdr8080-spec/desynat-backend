@@ -11,9 +11,9 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="#">
+                <a class="nav-link border-radious-9 margin-20" href="/category">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon" class="asideicon">
-                    <span>My Product</span>
+                    <span>Category</span>
                 </a>
             </li>
 

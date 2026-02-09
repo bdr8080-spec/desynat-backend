@@ -2,13 +2,21 @@
     width: 2.8em;
     height: 20px;
 }
-
+.mob-change {
+    position: absolute;
+    right: 9px;
+    bottom: 9px;
+    line-height: 15px;
+    background: #fff;
+}
 .cancel-outline {
     border: 1px solid #6E4527;
     color: #6E4527;
     line-height: 35px;
 }
-
+.bankpnl{
+    border:1px solid #ccc;
+}
 .cancel-outline:hover {
     border: 1px solid #6E4527;
     color: #916b47;
