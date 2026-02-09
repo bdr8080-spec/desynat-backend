@@ -314,6 +314,12 @@
                                 Shop More <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
+                        @if($item->order_type=='2')
+                        <div class="giftinfo">
+                            <div>Custom details</div>
+                            <div>{{$item->chatroom_data->custom_details}}</div>
+                        </div>
+                        @endif
 
                     </div>
                 </div>
