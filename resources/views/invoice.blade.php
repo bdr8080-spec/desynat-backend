@@ -311,6 +311,7 @@
                             <th>Sr.</th>
                             <th>Product Image</th>
                             <th>Product Name</th>
+                            <th>Order Type</th>
                             <th>Size</th>
                             <th>Color</th>
                             <th>Quantity</th>
@@ -325,6 +326,13 @@
                             <td>{{$key+1}}</td>
                             <td><img src="{{$val->variation_details->variant_image[0]}}" width="70px"> </td>
                             <td>{{$val->product_details->product_name_en}}</td>
+                            <td>
+                                @if($val->order_type=='1')
+                                Normal
+                                @elseif($val->order_type=='2')
+                                Custom
+                                @endif
+                            </td>
                             <td>{{$val->variation_details->size->name}}</td>
                             <td>{{$val->variation_details->color->name}}</td>
                             <td>{{$val->quantity}}</td>

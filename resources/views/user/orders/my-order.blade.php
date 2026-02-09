@@ -35,13 +35,13 @@
             </li>
 
             <!-- Custom Orders tab -->
-            <li class="nav-item" role="presentation">
+            <!-- <li class="nav-item" role="presentation">
                 <button class="nav-link w-100 {{ $type == 'custom' ? 'active' : '' }}" id="pills-ordercustom-tab"
                     data-bs-toggle="pill" data-bs-target="#pills-ordercustom" type="button" role="tab"
                     aria-controls="pills-ordercustom" aria-selected="{{ $type == 'custom' ? 'true' : 'false' }}">
                     Custom Orders
                 </button>
-            </li>
+            </li> -->
 
         </ul>
     </div>

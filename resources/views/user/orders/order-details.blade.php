@@ -135,7 +135,29 @@
                                             Cancel Order
                                         </button>
                                     </div>
-                                    @elseif($orderData->payment_status == '2')
+                                    @else@if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
+                                            $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
+                                    <!-- @php
+                                    $cancelDays = 3; 
+                                    $orderCreated = \Carbon\Carbon::parse($orderData->order->created_at);
+                                    $cancelLastDate = $orderCreated->copy()->addDays($cancelDays);
+                                    $cancelAllowed = \Carbon\Carbon::today()->lte($cancelLastDate);
+                                    @endphp -->
+                                    @php
+                                        $cancelHours = 3;
+                                        $orderCreated = \Carbon\Carbon::parse($orderData->order->created_at);
+                                        $cancelLastTime = $orderCreated->copy()->addHours($cancelHours);
+                                        $cancelAllowed = now()->lte($cancelLastTime);
+                                    @endphp
+                                    @if($cancelAllowed)
+                                     <div class="d-none-1">
+                                        <button class="btn btn-outline-red w-100 cancelBtn" data-bs-toggle="modal"
+                                            data-bs-target="#cancelModal" data-order-id="{{ $orderData->order_id }}"
+                                            data-order-details-id="{{ $orderData->id }}">
+                                            Cancel Order
+                                        </button>
+                                    </div>
+                                    @endif
                                     <!-- <div class="d-none-1">
                                             <button
                                                 class="btn btn-outline-red w-100 cancelBtn">
@@ -831,15 +853,15 @@
                     </div>
                 </div>
 
-                @if($orderData->order->order_type == '1')
+                <!-- @if($orderData->order->order_type == '1') -->
                 <div class="mt-4 text-center">
                     <a href="{{ url('Invoice', ['order_id' => $orderData->order->order_id]) }}" target="_blank"
                         class="customBtn8 mb-3 text-decoration-none">
                         Download Invoice
                     </a>
                 </div>
-                @endif
-                @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
+                <!-- @endif -->
+                <!-- @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
                         $orderData->payment_status !== '3' && $orderData->order->order_type == '2')
                 @php
                  $cancelDays = 3; 
@@ -856,7 +878,7 @@
                     </button>
                 </div>
                 @endif
-                @endif
+                @endif -->
             </div>
         </div>
     </div>
