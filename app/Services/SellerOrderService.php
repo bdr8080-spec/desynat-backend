@@ -481,6 +481,11 @@ try{
    if($check_chatRecord){
 
     $chatRoom_id=$check_chatRecord->unique_id;
+    $check_order=OrderDetail::with('order.delivery_details')
+      ->where('unique_id',$check_chatRecord->unique_id)
+        ->orderCreateStatus()
+        ->first();
+    $check_chatRecord->order_create_status=$check_order;
 
     $firbase_chat= $this->getMessages($chatRoom_id);
 
