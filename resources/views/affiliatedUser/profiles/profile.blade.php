@@ -181,10 +181,15 @@
             <div class="tab-pane fade" id="pills-bank" role="tabpanel" aria-labelledby="pills-bank-tab" tabindex="0">
 
                 <div class="p-2 rounded-4 desc-box bg-white">
-                    <div class="bankpnl d-flex justify-content-between">
-                        <h6>AE6675656566</h6>
+                    <div class="bankpnl d-flex justify-content-between p-2 align-items-center">
+                        <div class="account-no">AE6675656566</div>
                         <div class="banktool">
-
+                            <a href="#">
+                                <img src="{{ asset('/dealer') }}/assets/img/b-edit.svg" alt="edit icon" class="img-fluid"> 
+                            </a>
+                            <a href="#">
+                                <img src="{{ asset('/dealer') }}/assets/img/b-delete.svg" alt="delete icon" class="img-fluid"> 
+                            </a>
                         </div>
                     </div>
                 </div>
