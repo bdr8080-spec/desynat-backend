@@ -82,7 +82,7 @@
                     <div class="order-cont">
                         <div class="title-light">Order Type</div>
                         <p>
-                            @if($order_details->order->order_type=='1')
+                            @if($order_details->order_type=='1')
                             Normal Order
                             @else
                             Custom Order
@@ -291,7 +291,7 @@
                     <div class="w-100">
                         <div class="pay-sum">
                             <div class="summary-title-1">{{ $order_details->product_details->product_name_en }}</div>
-                            <div class="summary-value">{{$order_details->variation_details->final_price }} KD</div>
+                            <div class="summary-value">{{ $order_details->amount * $order_details->quantity }} KD</div>
                         </div>
                         <div class="pay-sum">
                             <div class="summary-title-1">Size</div>
