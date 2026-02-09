@@ -481,7 +481,7 @@ try{
    if($check_chatRecord){
 
     $chatRoom_id=$check_chatRecord->unique_id;
-    $check_order=OrderDetail::with('order.delivery_details')
+    $check_order=orderdetail::with('order.delivery_details')
       ->where('unique_id',$check_chatRecord->unique_id)
         ->orderCreateStatus()
         ->first();
