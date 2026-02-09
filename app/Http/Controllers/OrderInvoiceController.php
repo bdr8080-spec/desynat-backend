@@ -25,7 +25,7 @@ class OrderInvoiceController extends Controller
             )->where('order_id', $id)->first();
 
             
-           dd($checkOrder);
+           //dd($checkOrder);
             if($checkOrder){
                 return view('invoice',compact('checkOrder'));
             }else{
