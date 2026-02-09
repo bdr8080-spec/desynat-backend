@@ -48,3 +48,7 @@ Route::match(['get', 'post'], '/change-password', function () {
 
 })->name('affiliatedUser.change-password');
 
+Route::match(['get', 'post'], '/category', function () {
+    return view('affiliatedUser.category.categorys');
+
+})->name('affiliatedUser.category');
