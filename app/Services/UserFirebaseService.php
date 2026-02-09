@@ -223,7 +223,7 @@ foreach ($check_chatRecord as $key => $val) {
    if($check_chatRecord){
 
     // check order Payment paid status
-      $check_order=OrderDetail::with('order')
+      $check_order=OrderDetail::with('order.delivery_details')
       ->where('unique_id',$check_chatRecord->unique_id)
         ->orderCreateStatus()
         ->first();
