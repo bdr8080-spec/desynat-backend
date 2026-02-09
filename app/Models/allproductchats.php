@@ -41,7 +41,7 @@ class allproductchats extends Model
                   ->orWhere(function ($q2) {
                         // payment_method != 3 → payment_status = 1
                         $q2->where('payment_method', '!=', '3')
-                        ->whereIN('payment_status', ['1','0']);
+                        ->whereIN('payment_status', '1');
                   });
             });
       
