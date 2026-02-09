@@ -23,9 +23,8 @@
     @endphp
 
     <div class="tabs-panel py-4">
-        <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+        <!-- <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
 
-            <!-- Orders tab -->
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100 {{ $type == 'normal' ? 'active' : '' }}" id="pills-orders-tab"
                     data-bs-toggle="pill" data-bs-target="#pills-orders" type="button" role="tab"
@@ -34,16 +33,15 @@
                 </button>
             </li>
 
-            <!-- Custom Orders tab -->
-            <!-- <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation">
                 <button class="nav-link w-100 {{ $type == 'custom' ? 'active' : '' }}" id="pills-ordercustom-tab"
                     data-bs-toggle="pill" data-bs-target="#pills-ordercustom" type="button" role="tab"
                     aria-controls="pills-ordercustom" aria-selected="{{ $type == 'custom' ? 'true' : 'false' }}">
                     Custom Orders
                 </button>
-            </li> -->
+            </li>
 
-        </ul>
+        </ul> -->
     </div>
 
 

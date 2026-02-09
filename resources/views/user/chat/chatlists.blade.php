@@ -114,7 +114,7 @@
                                                         Quotation Rejected
                                                     </div>
 
-                                                @elseif($chat['product_request'] == '1' && $chat['order_create_status'] == null && $chat['action']=='3')
+                                                @elseif($chat['product_request'] == '1' && $chat['order_create_status'] == null && in_array($chat['action'], ['1','2']))
                                                     <div class="yellow-bg" style="color:#172B85;background:#172B851A;">
                                                     <!-- <div class="yellow-bg" style="color:#17854C;background:#17854C1A;"> -->
                                                         Quotation Received

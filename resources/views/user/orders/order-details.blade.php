@@ -113,6 +113,7 @@
 
                                 <div class="return-view">
                                     <!-- <div class="return-green">7 day return policy available</div> -->
+                                     @if($orderData->order_type=='1')
                                     <div class="return-green">
                                         @if(isset($orderData->product_details))
                                         @if($orderData->product_details->product_return == '1')
@@ -126,6 +127,7 @@
                                         @endif
                                         @endif
                                     </div>
+                                    @endif
                                     @if($orderData->delivery_status !== '3' && $orderData->payment_status !== '2' &&
                                     $orderData->payment_status !== '3' && $orderData->order->order_type == '1')
                                     <div class="d-none-1">

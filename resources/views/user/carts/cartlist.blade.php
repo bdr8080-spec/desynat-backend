@@ -278,9 +278,9 @@
                                     <button class="qty-btn minus">−</button>
                                     @endif
 
-                                    <span class="qty-number">
+                                    <!-- <span class="qty-number">
                                         {{ $item->quantity < 10 ? '0'.$item->quantity : $item->quantity }}
-                                    </span>
+                                    </span> -->
 
                                     @if($item->order_type!=='2')
                                     <button class="qty-btn plus">+</button>
@@ -292,11 +292,11 @@
                             </div>
                         </div>
 
-                        @if($item->product->product_return == 1)
+                        <!-- @if($item->product->product_return == 1)
                         <p class="return-text mb-2">{{ $item->product->return_days }} days return available</p>
                         @else
                         <p class="return-text mb-2">Non Returnable</p>
-                        @endif
+                        @endif -->
 
                         <div class="d-flex justify-content-between">
                             <p class="delivery-label mb-2">Delivery by</p>
@@ -431,10 +431,11 @@
                         </div>
                     </div>
                 </div>
-
+                @if($hasOrderType1)
                 <p id="promoSavingsText" class="return-text mb-2">
                     You will save {{ $cartData['discount_on_mrp'] }} KD on this
                 </p>
+                @endif
             </div>
 
             {{-- RIGHT SIDE --}}

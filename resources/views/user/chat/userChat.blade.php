@@ -202,7 +202,7 @@
                         <button type="button" class="customBtn" id="acceptBtn">Accept</button>
                     </div>
                     @endif
-                    @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null)
+                    <!-- @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null)
                     <div class="mt-3">
                         <span class="btn customBtn w-100"
                             onclick="custom_ProductAdd_to_bag(`{{ $chatData['record']['unique_id'] }}`)">
@@ -210,7 +210,7 @@
                         </span>
 
                     </div>
-                    @endif
+                    @endif -->
                 </div>
                 @endif
             </div>
@@ -1052,7 +1052,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script> -->
 
-<script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
 
     const uniqueId = document.getElementById('chatUniqueId').value;
@@ -1131,7 +1131,83 @@ function custom_ProductAdd_to_bag(val) {
     });
 };
 // });
+</script> -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    const uniqueId = document.getElementById('chatUniqueId').value;
+    const acceptBtn = document.getElementById('acceptBtn');
+    const rejectBtn = document.getElementById('rejectBtn');
+
+    acceptBtn.addEventListener('click', () => sendAction(5)); // Accept
+    rejectBtn.addEventListener('click', () => sendAction(4)); // Reject
+
+    function sendAction(status) {
+
+        const formData = new FormData();
+        formData.append('unique_id', uniqueId);
+        formData.append('status', status);
+
+        fetch("{{ route('user.acceptRejectCustOrder') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+
+            if (res.status === 'success') {
+
+                if (status == 5) {
+                    //toastr.success('Quotation Accepted Successfully');
+
+                    // ✅ AUTO ADD TO CART
+                    custom_ProductAdd_to_bag(uniqueId);
+                }
+
+                if (status == 4) {
+                    toastr.success('Quotation Rejected Successfully');
+                    setTimeout(() => location.reload(), 1500);
+                }
+
+            } else {
+                toastr.error(res.message || 'Action failed');
+            }
+
+        })
+        .catch(() => toastr.error('Something went wrong'));
+    }
+});
+
+function custom_ProductAdd_to_bag(val) {
+
+    $.ajax({
+        url: "{{ Route('custom_add_to_card') }}",
+        type: 'get',
+        data: {
+            unique_id: val
+        },
+        success: function(res) {
+
+            if (res.status == 'success') {
+                toastr.success(res.message);
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        },
+        error: function(xhr) {
+            toastr.error(xhr.responseJSON.message);
+        }
+    });
+}
+
 </script>
+
 
 
 
