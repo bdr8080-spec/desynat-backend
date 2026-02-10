@@ -1,0 +1,41 @@
+.sub-grid figure {
+    height: 330px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+.sub-grid figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    
+    display: block;
+}
+.sub-category-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 20px;
+}
+.sub-category-pnl{
+    text-align: center;
+}
+.sub-category-pnl {
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+.sub-title{
+    font-size: 20px;
+    font-weight: 500;
+}
+.sub-category-pnl a {
+    color: #000;
+}
+.search-icon2 {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+}
+.searchlin {
+    padding: 11px 23px;
+}
