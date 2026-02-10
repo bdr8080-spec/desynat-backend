@@ -34,7 +34,7 @@
                     <div class="title24">Sub Category </div>
                     <div class="sub-category-wrapper py-4">
                         <div class="sub-category-pnl">
-                            <a href="#">
+                            <a href="/all-product">
                                 <div class="sub-grid">
                                     <figure>
                                         <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image"
@@ -129,5 +129,3 @@
 
 @include('affiliatedUser.layout.footer');
 
-
-</script>
