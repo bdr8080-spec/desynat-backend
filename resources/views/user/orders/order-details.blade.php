@@ -355,7 +355,7 @@
                             <div>{{$orderData->quantity}}</div>
                         </div>
                         @if($orderData->order_type == '2')
-                        <div class="giftinfo">
+                        <!-- <div class="giftinfo">
                             <div>Address </div>
                             <div>
                               {{$orderData->order->delivery_details->address}}
@@ -363,7 +363,7 @@
                                 {{$orderData->order->delivery_details->postal_code}}
                                 {{$orderData->order->delivery_details->country_name}}
                             </div>
-                        </div>
+                        </div> -->
                         <div class="giftinfo">
                             <div>Custom details</div>
                             <div>{{$orderData->ChatroomRecordtable->custom_details}}</div>
