@@ -31,3 +31,11 @@
 .sub-category-pnl a {
     color: #000;
 }
+.search-icon2 {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+}
+.searchlin {
+    padding: 11px 23px;
+}
