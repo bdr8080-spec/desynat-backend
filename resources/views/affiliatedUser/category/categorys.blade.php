@@ -31,24 +31,92 @@
             <div class="tab-pane fade show active" id="pills-allproduct" role="tabpanel"
                 aria-labelledby="pills-allproduct-tab" tabindex="0">
                 <div class="personl-wapper">
-                   
-                   
+                    <div class="title24">Sub Category </div>
+                    <div class="sub-category-wrapper py-4">
+                        <div class="sub-category-pnl">
+                            <a href="#">
+                                <div class="sub-grid">
+                                    <figure>
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image"
+                                            class="img-fluid">
+                                    </figure>
+                                </div>
+                                <div class="sub-title">Casual Wear</div>
+                            </a>
+                        </div>
+                        <div class="sub-category-pnl">
+                            <a href="#">
+                                <div class="sub-grid">
+                                    <figure>
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
+                                            class="img-fluid">
+                                    </figure>
+                                </div>
+                                <div class="sub-title">Casual Wear</div>
+                            </a>
+                        </div>
+                        <div class="sub-category-pnl">
+                            <a href="#">
+                                <div class="sub-grid">
+                                    <figure>
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
+                                            class="img-fluid">
+                                    </figure>
+                                </div>
+                                <div class="sub-title">Casual Wear</div>
+                            </a>
+                        </div>
+                        <div class="sub-category-pnl">
+                            <a href="#">
+                                <div class="sub-grid">
+                                    <figure>
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
+                                            class="img-fluid">
+                                    </figure>
+                                </div>
+                                <div class="sub-title">Casual Wear</div>
+                            </a>
+                        </div>
+                        <div class="sub-category-pnl">
+                            <a href="#">
+                                <div class="sub-grid">
+                                    <figure>
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
+                                            class="img-fluid">
+                                    </figure>
+                                </div>
+                                <div class="sub-title">Casual Wear</div>
+                            </a>
+                        </div>
+                        <div class="sub-category-pnl">
+                            <a href="#">
+                                <div class="sub-grid">
+                                    <figure>
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
+                                            class="img-fluid">
+                                    </figure>
+                                </div>
+                                <div class="sub-title">Casual Wear</div>
+                            </a>
+                        </div>
 
-                   
+
+                    </div>
+
                 </div>
 
             </div>
 
             <div class="tab-pane fade" id="pills-address" role="tabpanel" aria-labelledby="pills-address-tab"
                 tabindex="0">
-               
+
 
 
             </div>
 
             <div class="tab-pane fade" id="pills-bank" role="tabpanel" aria-labelledby="pills-bank-tab" tabindex="0">
 
-            
+
 
             </div>
         </div>
