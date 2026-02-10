@@ -79,12 +79,12 @@
                             <small class="text-danger d-none" id="detailsError">Please enter custom details</small>
                         </div>
 
-                        <h6>Delivery Address</h6>
+                        <!-- <h6>Delivery Address</h6>
                         <div class="border-1 d-flex justify-content-between category_filter">
                             <div class="address-title">{{ $userAddress->address }}</div>
                             <a href="{{ route('user.view_address', ['chat' => $chatData['record']['unique_id']]) }}">
                                 Change <i class="bi bi-arrow-right"></i></a>
-                        </div>
+                        </div> -->
 
                         <div class="pt-4">
                             <button type="button" class="customBtn w-100" id="sendCustomOrderBtn">Send Request</button>
@@ -119,14 +119,14 @@
                                                 <div>{{$chatData['record']['quantity']}}</div>
                                             </td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <td>
                                                 <div class="width-120">Address</div>
                                             </td>
                                             <td>
                                                 <div>{{@$chatData['record']['delivery_details']['address']}}</div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                         @if(!empty($chatData['record']['custom_details']))
                                         <tr>
                                             <td>
@@ -946,7 +946,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const btnSend = document.getElementById('sendCustomOrderBtn');
     const quantityEl = formContainer.querySelector('input[name="quantity"]');
     const detailsEl = formContainer.querySelector('textarea[name="custom_details"]');
-    const deliveryAddressEl = formContainer.querySelector('input[name="delivery_address"]');
+   // const deliveryAddressEl = formContainer.querySelector('input[name="delivery_address"]');
     const uniqueIdEl = formContainer.querySelector('input[name="unique_id"]');
 
     const quantityError = document.getElementById('quantityError');
@@ -959,7 +959,7 @@ document.addEventListener("DOMContentLoaded", function() {
     btnSend.addEventListener('click', function() {
         const quantity = quantityEl.value.trim();
         const customDetails = detailsEl.value.trim();
-        const deliveryAddress = deliveryAddressEl.value;
+        //const deliveryAddress = deliveryAddressEl.value;
         const uniqueId = uniqueIdEl.value;
 
         let hasError = false;
@@ -979,7 +979,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const formData = new FormData();
         formData.append('quantity', quantity);
         formData.append('custom_details', customDetails);
-        formData.append('delivery_address', deliveryAddress);
+       // formData.append('delivery_address', deliveryAddress);
         formData.append('unique_id', uniqueId);
 
         fetch("{{ route('user.sendCustomOrderRequest') }}", {
