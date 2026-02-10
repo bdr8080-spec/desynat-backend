@@ -26,7 +26,11 @@ Route::group(['prefix' => 'seller'], function () {
     route::Match(['get','post'],'/login',[LoginController::class,'login'])->name('seller.login');
     route::Match(['get','post'],'/register',[LoginController::class,'register'])->name('seller.register');
 
-    route::Match(['get','post'],'/otp-verify/{id}',[LoginController::class,'register_otp_verify'])->name('seller.register_otp_verify');;
+    route::Match(['get','post'],'/otp-verify/{id}',[LoginController::class,'register_otp_verify'])->name('seller.register_otp_verify');
+
+    route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
+    route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
+    route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
 
     });
  
@@ -128,9 +132,9 @@ Route::group(['prefix' => 'seller'], function () {
 
 
  
-    route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
-    route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
-    route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
+    // route::Match(['get','post'],'/verify-otp',[LoginController::class,'verify_otp']);
+    // route::Match(['get','post'],'/forgot_password',[LoginController::class,'forgot_password'])->name('seller.forgot');
+    // route::Match(['get','post'],'/reset_password/{id}',[LoginController::class,'reset_password'])->name('seller.create_password');
 
     route::Match(['get','post'],'/removeImage',[LoginController::class,'removeImage'])->name('seller.removeImage');    
 
