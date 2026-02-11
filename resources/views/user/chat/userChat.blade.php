@@ -202,7 +202,7 @@
                         <button type="button" class="customBtn" id="acceptBtn">Accept</button>
                     </div>
                     @endif
-                    <!-- @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null)
+                    @if($chatData['record']['action'] == '5' && $chatData['record']['order_create_status'] == null && $chatData['record']['addtocardStatus'] == '0')
                     <div class="mt-3">
                         <span class="btn customBtn w-100"
                             onclick="custom_ProductAdd_to_bag(`{{ $chatData['record']['unique_id'] }}`)">
@@ -210,7 +210,7 @@
                         </span>
 
                     </div>
-                    @endif -->
+                    @endif
                 </div>
                 @endif
             </div>

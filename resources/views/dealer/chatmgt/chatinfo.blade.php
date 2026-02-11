@@ -93,7 +93,7 @@
                                                     <div> {{ $single_chats['record']->quantity }}</div>
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td>
                                                     <div class="width-120">Address</div>
                                                 </td>
@@ -101,7 +101,7 @@
                                                     <div> {{ @$single_chats['record']->delivery_details->address}}
                                                     </div>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <tr>
                                                 <td>
                                                     <div class="width-120">Custom details</div>
