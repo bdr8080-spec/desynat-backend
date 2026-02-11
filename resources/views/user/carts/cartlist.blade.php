@@ -201,8 +201,9 @@
                 @endforeach
 
                 <!-- Custom Product SHow In screen  -->
-
+                @if($item->order_type=='2')
                 <h6> Custom Product</h6>
+                @endif
 
                 @foreach($cartData['cart_data'] as $item)
 
