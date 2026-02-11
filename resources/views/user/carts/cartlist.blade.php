@@ -285,8 +285,12 @@
                                     @if($item->order_type!=='2')
                                     <button class="qty-btn plus">+</button>
                                     @endif
-                                    <span class="removeCustomProduct" data-id="{{$item->id}}" class="btn">Remove
+                                    <!-- <span class="removeCustomProduct" data-id="{{$item->id}}" class="btn">Remove
+                                    </span> -->
+                                    <span class="removeCustomProduct btn text-danger" data-id="{{ $item->id }}">
+                                        <i class="fa fa-trash"></i>
                                     </span>
+
                                 </div>
 
                             </div>
