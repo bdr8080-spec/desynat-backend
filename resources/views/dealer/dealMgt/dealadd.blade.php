@@ -6,12 +6,12 @@
     </div>
 
     <div class="row mt-3">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <div class="deals-box mb-4 ">
                 <img src="{{ $single_deal['deal_data']->image}}" alt="image">
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-7">
             <div class="deal-deatils">
                 <h4 class="greentitle">Starts From -{{ date('d M Y', strtotime($single_deal['deal_data']->from)) }}
 
@@ -19,25 +19,24 @@
                 <div class="duration-table">
                     <table class="table table-borderless">
                         <tr>
-                            <td>Duration - {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}}
-                            </td>
-                            <td>Category - {{  $single_deal['deal_data']->category_details->name}}</td>
+                            <td class="durationwidth"><span class="strong-title">Duration -</span> {{ $single_deal['deal_data']->from}} - {{ $single_deal['deal_data']->to}} </td>
+                            <td><span class="strong-title">Category - </span> {{  $single_deal['deal_data']->category_details->name}}</td>
                         </tr>
                         <tr>
-                            <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
+                            <td><span class="strong-title">Discount% -</span> {{  $single_deal['deal_data']->discount }} %</td>
                             @php
                                 $deal = $single_deal['deal_data'];
                             @endphp
 
                             <td>
-                                Sub-Category -
+                                <span class="strong-title">Sub-Category - </span>
                                 @foreach($deal->subCategory_details as $subCategory)
                                     {{ $subCategory->name_english }}@if(!$loop->last), @endif
                                 @endforeach
                             </td>
                         </tr>
                     </table>
-                    <p class="single-pad">{{  $single_deal['deal_data']->name_english }}</p>
+                    <p class="single-pad ps-0">{{  $single_deal['deal_data']->name_english }}</p>
 
                 </div>
             </div>
