@@ -287,7 +287,7 @@
                                     @endif
                                     <!-- <span class="removeCustomProduct" data-id="{{$item->id}}" class="btn">Remove
                                     </span> -->
-                                    <span class="removeCustomProduct btn text-danger" data-id="{{ $item->id }}">
+                                    <span class="removeCustomProduct text-danger" style="cursor: pointer;" data-id="{{ $item->id }}">
                                         <i class="fa fa-trash"></i>
                                     </span>
 
