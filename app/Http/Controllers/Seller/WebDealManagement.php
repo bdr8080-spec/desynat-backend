@@ -77,7 +77,8 @@ class WebDealManagement extends Controller
 
          $data= $this->SellerDealManagentService->SingleDealView($request_data);
 
-        $single_deal=$data['data'];        
+        $single_deal=$data['data'];
+       // dd($single_deal);        
         return view('dealer.dealMgt.dealadd',compact('single_deal'));
     }
 

@@ -6,18 +6,18 @@
     </div>
 
     <div class="tabs-panel py-4">
-        <ul class="nav nav-pills mb-3 nav-justified maintabs" id="pills-tab-Main" role="tablist">
+        <!-- <ul class="nav nav-pills mb-3 nav-justified maintabs" id="pills-tab-Main" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-Normal-Order" type="button" role="tab" aria-controls="pills-allproduct"
                     aria-selected="true">Normal Orders </button>
             </li>
-            <!-- <li class="nav-item" role="presentation">
+            <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-active-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-Custom-Order" type="button" role="tab" aria-controls="pills-Custom-Order"
                     aria-selected="false">Customised Orders</button>
-            </li> -->
-        </ul>
+            </li>
+        </ul> -->
     </div>
 
     <div class="tab-body-wapper">

@@ -25,7 +25,16 @@
                         </tr>
                         <tr>
                             <td>Discount% - {{  $single_deal['deal_data']->discount }} %</td>
-                            <td>Sub-Category - {{  $single_deal['deal_data']->subCategory_details->name_english}}</td>
+                            @php
+                                $deal = $single_deal['deal_data'];
+                            @endphp
+
+                            <td>
+                                Sub-Category -
+                                @foreach($deal->subCategory_details as $subCategory)
+                                    {{ $subCategory->name_english }}@if(!$loop->last), @endif
+                                @endforeach
+                            </td>
                         </tr>
                     </table>
                     <p class="single-pad">{{  $single_deal['deal_data']->name_english }}</p>
