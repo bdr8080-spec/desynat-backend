@@ -39,6 +39,19 @@
     left: 0;
     display: none;
 }
+
+/* Make the button flex container */
+button.multiselect {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center;
+}
+
+/* Keep the arrow on the far right */
+button.multiselect .caret {
+    margin-left: auto;
+}
+
 </style>
 
 
