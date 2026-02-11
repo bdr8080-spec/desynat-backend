@@ -293,7 +293,7 @@
                                 <label class="form-label" for="name">Name (Arabic)</label>
                                 <input type="text" name="name_arabic" class="form-control"
                                     placeholder="Enter Deal Name in Arabic"
-                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="nameArError"></div>
                             </div>
                         </div>
@@ -305,7 +305,7 @@
                                 @foreach($categories as $index => $category)
                                 <div class="form-check">
                                     <input class="form-check-input category-radio" type="radio" name="category"
-                                        id="category{{ $index }}" value="{{ $category->id }}">
+                                        id="category{{ $index }}" value="{{ $category->id }}" {{ $index == 0 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="category{{ $index }}">
                                         {{ $category->name }}
                                     </label>
@@ -419,7 +419,7 @@
                                 <label class="form-label" for="editNameArabic">Name (Arabic)</label>
                                 <input type="text" name="name_arabic" class="form-control" id="editNameArabic"
                                     placeholder="Enter Deal Name in Arabic"
-                                    oninput="this.value=this.value.replace(/[^A-Za-z0-9\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
+                                    oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" />
                                 <div class="text-danger" id="editNameArError"></div>
                             </div>
                         </div>
@@ -543,233 +543,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <!-- add deal -->
+
 <!-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-
-    const previewImage = document.getElementById('previewImage');
-    const uploadIcon = document.getElementById('uploadIcon');
-    const fileUpload = document.getElementById('fileUpload');
-    const submitBtn = document.getElementById('submitDealBtn');
-    // console.log(submitBtn);
-
-    const nameEnError = document.getElementById('nameEnError');
-    const nameArError = document.getElementById('nameArError');
-    const categoryError = document.getElementById('categoryError');
-    const subCategoryError = document.getElementById('subCategoryError');
-    const discountError = document.getElementById('discountError');
-    const fromDateError = document.getElementById('fromDateError');
-    const toDateError = document.getElementById('toDateError');
-    const imageError = document.getElementById('imageError');
-
-    const subCategorySelect = document.getElementById('subCategorySelect');
-
-    /* ===== Image Preview ===== */
-    fileUpload.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block';
-                uploadIcon.style.display = 'none';
-            }
-            reader.readAsDataURL(file);
-        }
-        imageError.innerText = '';
-    });
-
-    /* ===== Clear errors on input/change ===== */
-    document.querySelector('input[name="name_english"]').addEventListener('input', () => nameEnError.innerText =
-        '');
-    document.querySelector('input[name="name_arabic"]').addEventListener('input', () => nameArError.innerText =
-        '');
-    subCategorySelect.addEventListener('change', () => subCategoryError.innerText = '');
-    document.querySelector('input[name="discount"]').addEventListener('input', () => discountError.innerText =
-        '');
-    document.getElementById('fromDate').addEventListener('change', () => fromDateError.innerText = '');
-    document.getElementById('toDate').addEventListener('change', () => toDateError.innerText = '');
-    fileUpload.addEventListener('change', () => imageError.innerText = '');
-    document.querySelectorAll('.category-radio').forEach(radio => {
-        radio.addEventListener('change', () => categoryError.innerText = '');
-    });
-
-    /* ===== Fetch Subcategories on Category Select ===== */
-        // document.querySelectorAll('.category-radio').forEach(radio => {
-        //     radio.addEventListener('change', function() {
-        //         const categoryId = this.value;
-
-        //         subCategorySelect.innerHTML = '<option selected>Select Sub-Category</option>';
-        //         subCategoryError.innerText = '';
-
-        //         if (!categoryId) return;
-
-        //         fetch(`/admin/getSubCategories/${categoryId}`)
-        //             .then(res => res.json())
-        //             .then(data => {
-        //                 if (data.status === 'success' && data.data.data.length > 0) {
-        //                     data.data.data.forEach(sub => {
-        //                         const option = document.createElement('option');
-        //                         option.value = sub.id;
-        //                         option.textContent = sub.name_english;
-        //                         subCategorySelect.appendChild(option);
-        //                     });
-        //                 } else {
-        //                     subCategorySelect.innerHTML =
-        //                         '<option selected>No subcategories found</option>';
-        //                 }
-        //             })
-        //             .catch(err => {
-        //                 console.error(err);
-        //                 subCategorySelect.innerHTML =
-        //                     '<option selected>Error fetching subcategories</option>';
-        //             });
-        //     });
-        // });
-
-        $(function () {
-            const $subCategory = $('#subCategorySelect').multiselect({
-            includeSelectAllOption: true,
-            nonSelectedText: 'Select Sub-Category',
-            onInitialized: function (_, c) {
-                c.find('button.multiselect')
-                .attr('data-bs-toggle', 'dropdown');
-            }
-        });
-
-        document.querySelectorAll('.category-radio').forEach(radio => {
-            radio.addEventListener('change', function () {
-                const categoryId = this.value;
-                // clear old options
-                $('#subCategorySelect').empty();
-                $('#subCategorySelect').multiselect('rebuild');
-
-                if (!categoryId) return;
-
-                fetch(`/admin/getSubCategories/${categoryId}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === 'success' && data.data.data.length) {
-                    data.data.data.forEach(sub => {
-                        $('#subCategorySelect').append(
-                        `<option value="${sub.id}">${sub.name_english}</option>`
-                        );
-                    });
-
-                    } else {
-                    $('#subCategorySelect')
-                        .append('<option disabled>No subcategories found</option>');
-                    }
-                    $('#subCategorySelect').multiselect('rebuild');
-                })
-                .catch(() => {
-                    $('#subCategorySelect')
-                    .append('<option disabled>Error fetching subcategories</option>')
-                    .multiselect('rebuild');
-                });
-            });
-        });
-
-        });
-
-
-    /* ===== Submit Form ===== */
-    submitBtn.addEventListener('click', function() {
-
-        nameEnError.innerText = '';
-        nameArError.innerText = '';
-        categoryError.innerText = '';
-        subCategoryError.innerText = '';
-        discountError.innerText = '';
-        fromDateError.innerText = '';
-        toDateError.innerText = '';
-        imageError.innerText = '';
-
-        let hasError = false;
-
-        const nameEnglish = document.querySelector('input[name="name_english"]').value.trim();
-        const nameArabic = document.querySelector('input[name="name_arabic"]').value.trim();
-        const category = document.querySelector('input[name="category"]:checked');
-        const subCategory = subCategorySelect.value;
-        const discount = document.querySelector('input[name="discount"]').value.trim();
-        const fromDate = document.getElementById('fromDate').value;
-        const toDate = document.getElementById('toDate').value;
-
-        if (!nameEnglish) {
-            nameEnError.innerText = 'Please enter name in English';
-            hasError = true;
-        }
-        if (!nameArabic) {
-            nameArError.innerText = 'Please enter name in Arabic';
-            hasError = true;
-        }
-        if (!category) {
-            categoryError.innerText = 'Please select a category';
-            hasError = true;
-        }
-        if (!subCategory || subCategory === 'Select Sub-Category') {
-            subCategoryError.innerText = 'Please select a subcategory';
-            hasError = true;
-        }
-        if (!discount) {
-            discountError.innerText = 'Please enter discount';
-            hasError = true;
-        }
-        if (!fromDate) {
-            fromDateError.innerText = 'Please select from date';
-            hasError = true;
-        }
-        if (!toDate) {
-            toDateError.innerText = 'Please select to date';
-            hasError = true;
-        }
-        if (fileUpload.files.length === 0) {
-            imageError.innerText = 'Please upload an image';
-            hasError = true;
-        }
-
-        if (hasError) return;
-
-        const formData = new FormData();
-        formData.append('name_english', nameEnglish);
-        formData.append('name_arabic', nameArabic);
-        formData.append('category_id', category.value);
-        formData.append('sub_category_id', subCategory);
-        formData.append('discount', discount);
-        formData.append('from', fromDate);
-        formData.append('to', toDate);
-        formData.append('image', fileUpload.files[0]);
-        // console.log(formData);
-
-
-        fetch('{{ url("admin/submitDeal") }}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    toastr.success(data.message);
-                    setTimeout(() => {
-                        $('#sentModal2').modal('hide');
-                        location.reload();
-                    }, 1500);
-                } else {
-                    toastr.error(data.message || 'Something went wrong.');
-                }
-            })
-            //.catch((error) => toastr.error('Server error'));
-            .catch((error) => {
-                console.log(error);
-            });
-
-    });
-
-});
-</script> -->
-<script>
 document.addEventListener('DOMContentLoaded', function() {
 
     const previewImage = document.getElementById('previewImage');
@@ -927,251 +702,183 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
-</script>
-
-
-<!-- edit deal -->
-<!-- <script>
+</script> -->
+<script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    const editModal = document.getElementById('editModalDeal');
-    const editPreviewImage = document.getElementById('editPreviewImage');
-    const editUploadIcon = document.getElementById('editUploadIcon');
-    const editFileUpload = document.getElementById('editFileUpload');
-    const submitEditBtn = document.getElementById('submitEditDealBtn');
+    const previewImage = document.getElementById('previewImage');
+    const uploadIcon = document.getElementById('uploadIcon');
+    const fileUpload = document.getElementById('fileUpload');
+    const submitBtn = document.getElementById('submitDealBtn');
 
-    const editNameEnError = document.getElementById('editNameEnError');
-    const editNameArError = document.getElementById('editNameArError');
-    const editCategoryError = document.getElementById('editCategoryError');
-    const editSubCategoryError = document.getElementById('editSubCategoryError');
-    const editDiscountError = document.getElementById('editDiscountError');
-    const editFromDateError = document.getElementById('editFromDateError');
-    const editToDateError = document.getElementById('editToDateError');
-    const editImageError = document.getElementById('editImageError');
+    const nameEnError = document.getElementById('nameEnError');
+    const nameArError = document.getElementById('nameArError');
+    const categoryError = document.getElementById('categoryError');
+    const subCategoryError = document.getElementById('subCategoryError');
+    const discountError = document.getElementById('discountError');
+    const fromDateError = document.getElementById('fromDateError');
+    const toDateError = document.getElementById('toDateError');
+    const imageError = document.getElementById('imageError');
 
-    const editSubCategorySelect = document.getElementById('editSubCategorySelect');
-
-    /* ===== Populate Modal on Open ===== */
-    editModal.addEventListener('show.bs.modal', function(event) {
-        const button = event.relatedTarget;
-
-        // Deal data from button
-        const id = button.getAttribute('data-id');
-        const nameEnglish = button.getAttribute('data-name-english');
-        const nameArabic = button.getAttribute('data-name-arabic');
-        const categoryId = button.getAttribute('data-category-id');
-        const subCategoryId = button.getAttribute('data-sub-category-id');
-        const discount = button.getAttribute('data-discount');
-        const from = button.getAttribute('data-from');
-        const to = button.getAttribute('data-to');
-        const image = button.getAttribute('data-image');
-
-        // Fill inputs
-        document.getElementById('editNameEnglish').value = nameEnglish;
-        document.getElementById('editNameArabic').value = nameArabic;
-        document.getElementById('editDiscount').value = discount;
-        document.getElementById('editFromDate').value = from;
-        document.getElementById('editToDate').value = to;
-
-        // Image preview
-        if (image) {
-            editPreviewImage.src = image;
-            editPreviewImage.style.display = 'block';
-            editUploadIcon.style.display = 'none';
-        } else {
-            editPreviewImage.style.display = 'none';
-            editUploadIcon.style.display = 'block';
-        }
-
-        // Select category radio
-        document.querySelectorAll('.edit-category-radio').forEach(radio => {
-            radio.checked = radio.value == categoryId;
-        });
-
-        // Fetch subcategories
-        fetch(`/admin/getSubCategories/${categoryId}`)
-            .then(res => res.json())
-            .then(data => {
-                editSubCategorySelect.innerHTML = '';
-                if (data.status === 'success' && data.data.data.length > 0) {
-                    data.data.data.forEach(sub => {
-                        const option = document.createElement('option');
-                        option.value = sub.id;
-                        option.textContent = sub.name_english;
-                        if (sub.id == subCategoryId) option.selected = true;
-                        editSubCategorySelect.appendChild(option);
-                    });
-                } else {
-                    editSubCategorySelect.innerHTML =
-                        '<option selected>No subcategories found</option>';
-                }
-            });
-
-        // Store deal ID in submit button
-        submitEditBtn.dataset.id = id;
-
-        // Clear errors
-        editNameEnError.innerText = '';
-        editNameArError.innerText = '';
-        editCategoryError.innerText = '';
-        editSubCategoryError.innerText = '';
-        editDiscountError.innerText = '';
-        editFromDateError.innerText = '';
-        editToDateError.innerText = '';
-        editImageError.innerText = '';
-    });
+    const subCategorySelect = document.getElementById('subCategorySelect');
 
     /* ===== Image Preview ===== */
-    editFileUpload.addEventListener('change', function(e) {
+    fileUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                editPreviewImage.src = e.target.result;
-                editPreviewImage.style.display = 'block';
-                editUploadIcon.style.display = 'none';
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+                uploadIcon.style.display = 'none';
             }
             reader.readAsDataURL(file);
         }
-        editImageError.innerText = '';
+        imageError.innerText = '';
     });
 
     /* ===== Clear errors on input/change ===== */
-    document.getElementById('editNameEnglish').addEventListener('input', () => editNameEnError.innerText = '');
-    document.getElementById('editNameArabic').addEventListener('input', () => editNameArError.innerText = '');
-    editSubCategorySelect.addEventListener('change', () => editSubCategoryError.innerText = '');
-    document.getElementById('editDiscount').addEventListener('input', () => editDiscountError.innerText = '');
-    document.getElementById('editFromDate').addEventListener('change', () => editFromDateError.innerText = '');
-    document.getElementById('editToDate').addEventListener('change', () => editToDateError.innerText = '');
-    editFileUpload.addEventListener('change', () => editImageError.innerText = '');
-    document.querySelectorAll('.edit-category-radio').forEach(radio => {
-        radio.addEventListener('change', () => editCategoryError.innerText = '');
+    document.querySelector('input[name="name_english"]').addEventListener('input', () => nameEnError.innerText = '');
+    document.querySelector('input[name="name_arabic"]').addEventListener('input', () => nameArError.innerText = '');
+    subCategorySelect.addEventListener('change', () => subCategoryError.innerText = '');
+    document.querySelector('input[name="discount"]').addEventListener('input', () => discountError.innerText = '');
+    document.getElementById('fromDate').addEventListener('change', () => fromDateError.innerText = '');
+    document.getElementById('toDate').addEventListener('change', () => toDateError.innerText = '');
+    fileUpload.addEventListener('change', () => imageError.innerText = '');
+    document.querySelectorAll('.category-radio').forEach(radio => {
+        radio.addEventListener('change', () => categoryError.innerText = '');
     });
 
-    /* ===== Update Subcategories on Category Change ===== */
-    document.querySelectorAll('.edit-category-radio').forEach(radio => {
-        radio.addEventListener('change', function() {
-            const categoryId = this.value;
-            editSubCategorySelect.innerHTML = '<option selected>Loading...</option>';
-            editSubCategoryError.innerText = '';
-
-            fetch(`/admin/getSubCategories/${categoryId}`)
-                .then(res => res.json())
-                .then(data => {
-                    editSubCategorySelect.innerHTML = '';
-                    if (data.status === 'success' && data.data.data.length > 0) {
-                        data.data.data.forEach(sub => {
-                            const option = document.createElement('option');
-                            option.value = sub.id;
-                            option.textContent = sub.name_english;
-                            editSubCategorySelect.appendChild(option);
-                        });
-                    } else {
-                        editSubCategorySelect.innerHTML =
-                            '<option selected>No subcategories found</option>';
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    editSubCategorySelect.innerHTML =
-                        '<option selected>Error fetching subcategories</option>';
-                });
+    /* ===== Fetch Subcategories on Category Select (with multiselect rebuild) ===== */
+    $(function () {
+        const $subCategory = $('#subCategorySelect').multiselect({
+            includeSelectAllOption: true,
+            nonSelectedText: 'Select Sub-Category',
+            onInitialized: function (_, c) {
+                c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
+            },
+            // ✅ This fires when any subcategory is selected/deselected
+            onChange: function(option, checked) {
+                subCategoryError.innerText = '';
+            }
         });
+
+        document.querySelectorAll('.category-radio').forEach(radio => {
+            radio.addEventListener('change', function () {
+                const categoryId = this.value;
+
+                // Clear old options
+                $('#subCategorySelect').empty();
+                $('#subCategorySelect').multiselect('rebuild');
+
+                if (!categoryId) return;
+
+                fetch(`/admin/getSubCategories/${categoryId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success' && data.data.data.length) {
+                            data.data.data.forEach(sub => {
+                                $('#subCategorySelect').append(
+                                    `<option value="${sub.id}">${sub.name_english}</option>`
+                                );
+                            });
+                        } else {
+                            $('#subCategorySelect').append('<option disabled>No subcategories found</option>');
+                        }
+                        $('#subCategorySelect').multiselect('rebuild');
+                    })
+                    .catch(() => {
+                        $('#subCategorySelect')
+                            .append('<option disabled>Error fetching subcategories</option>')
+                            .multiselect('rebuild');
+                    });
+            });
+        });
+
+        // ✅ Trigger default selected category on page load
+        const defaultSelected = document.querySelector('.category-radio:checked');
+        if (defaultSelected) {
+            defaultSelected.dispatchEvent(new Event('change'));
+        }
+
     });
 
-    /* ===== Submit Edit Deal ===== */
-    submitEditBtn.addEventListener('click', function() {
-        const id = this.dataset.id;
+    /* ===== Submit Form ===== */
+    submitBtn.addEventListener('click', function() {
 
         // Reset errors
-        editNameEnError.innerText = '';
-        editNameArError.innerText = '';
-        editCategoryError.innerText = '';
-        editSubCategoryError.innerText = '';
-        editDiscountError.innerText = '';
-        editFromDateError.innerText = '';
-        editToDateError.innerText = '';
-        editImageError.innerText = '';
+        nameEnError.innerText = '';
+        nameArError.innerText = '';
+        categoryError.innerText = '';
+        subCategoryError.innerText = '';
+        discountError.innerText = '';
+        fromDateError.innerText = '';
+        toDateError.innerText = '';
+        imageError.innerText = '';
 
         let hasError = false;
 
-        const nameEnglish = document.getElementById('editNameEnglish').value.trim();
-        const nameArabic = document.getElementById('editNameArabic').value.trim();
-        const categoryRadio = document.querySelector('.edit-category-radio:checked');
-        const categoryId = categoryRadio ? categoryRadio.value : '';
-        const subCategoryId = editSubCategorySelect.value;
-        const discount = document.getElementById('editDiscount').value.trim();
-        const from = document.getElementById('editFromDate').value;
-        const to = document.getElementById('editToDate').value;
+        const nameEnglish = document.querySelector('input[name="name_english"]').value.trim();
+        const nameArabic = document.querySelector('input[name="name_arabic"]').value.trim();
+        const category = document.querySelector('input[name="category"]:checked');
+        const subCategory = Array.from(subCategorySelect.selectedOptions).map(option => option.value);
+        const discount = document.querySelector('input[name="discount"]').value.trim();
+        const fromDate = document.getElementById('fromDate').value;
+        const toDate = document.getElementById('toDate').value;
 
-        if (!nameEnglish) {
-            editNameEnError.innerText = 'Please enter name in English';
-            hasError = true;
-        }
-        if (!nameArabic) {
-            editNameArError.innerText = 'Please enter name in Arabic';
-            hasError = true;
-        }
-        if (!categoryId) {
-            editCategoryError.innerText = 'Please select a category';
-            hasError = true;
-        }
-        if (!subCategoryId || subCategoryId === 'Select Sub-Category') {
-            editSubCategoryError.innerText = 'Please select a subcategory';
-            hasError = true;
-        }
-        if (!discount) {
-            editDiscountError.innerText = 'Please enter discount';
-            hasError = true;
-        }
-        if (!from) {
-            editFromDateError.innerText = 'Please select from date';
-            hasError = true;
-        }
-        if (!to) {
-            editToDateError.innerText = 'Please select to date';
-            hasError = true;
-        }
+        // Validation
+        if (!nameEnglish) { nameEnError.innerText = 'Please enter name in English'; hasError = true; }
+        if (!nameArabic) { nameArError.innerText = 'Please enter name in Arabic'; hasError = true; }
+        if (!category) { categoryError.innerText = 'Please select a category'; hasError = true; }
+        if (!subCategory.length) { subCategoryError.innerText = 'Please select a subcategory'; hasError = true; }
+        if (!discount) { discountError.innerText = 'Please enter discount'; hasError = true; }
+        if (!fromDate) { fromDateError.innerText = 'Please select from date'; hasError = true; }
+        if (!toDate) { toDateError.innerText = 'Please select to date'; hasError = true; }
+        if (fileUpload.files.length === 0) { imageError.innerText = 'Please upload an image'; hasError = true; }
 
         if (hasError) return;
 
+        // Build FormData
         const formData = new FormData();
         formData.append('name_english', nameEnglish);
         formData.append('name_arabic', nameArabic);
-        formData.append('category_id', categoryId);
-        formData.append('sub_category_id', subCategoryId);
+        formData.append('category_id', category.value);
+        subCategory.forEach(id => formData.append('sub_category_id[]', id));
         formData.append('discount', discount);
-        formData.append('from', from);
-        formData.append('to', to);
-        if (editFileUpload.files[0]) formData.append('image', editFileUpload.files[0]);
+        formData.append('from', fromDate);
+        formData.append('to', toDate);
+        formData.append('image', fileUpload.files[0]);
 
-        fetch(`/admin/updateDeal/${id}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    toastr.success(data.message);
-                    setTimeout(() => {
-                        $('#editModalDeal').modal('hide');
-                        location.reload();
-                    }, 1500);
-                } else {
-                    toastr.error(data.message || 'Something went wrong.');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                toastr.error('Server error');
-            });
+        // Submit form via fetch
+        fetch('{{ url("admin/submitDeal") }}', {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                toastr.success(data.message);
+                setTimeout(() => {
+                    $('#sentModal2').modal('hide');
+                    location.reload();
+                }, 1500);
+            } else {
+                toastr.error(data.message || 'Something went wrong.');
+            }
+        })
+        .catch(error => { console.log(error); });
+
     });
 
 });
-</script> -->
+</script>
+
+
+
+
+
+<!-- edit deal -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1199,6 +906,10 @@ document.addEventListener('DOMContentLoaded', function() {
         nonSelectedText: 'Select Sub-Category',
         onInitialized: function(_, c) {
             c.find('button.multiselect').attr('data-bs-toggle', 'dropdown');
+        },
+        // ✅ Clear error instantly when a subcategory is selected/deselected
+        onChange: function(option, checked) {
+            editSubCategoryError.innerText = '';
         }
     });
 
