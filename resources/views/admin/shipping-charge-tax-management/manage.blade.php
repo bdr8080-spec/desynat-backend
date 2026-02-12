@@ -246,7 +246,7 @@
                             <div class="form-group mt-2">
                                 <label class="form-label">Delivery Price </label>
                                 <input type="text" name="shipping_fee"
-                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
                                     class="form-control" placeholder="Enter Delivery price" />
                                 <span id="shippingFeeError" class="text-danger" style="display:none"></span>
                             </div>
@@ -409,9 +409,9 @@
                         <!-- Shipping Fee -->
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group mt-2">
-                                <label class="form-label">Shipping Price</label>
+                                <label class="form-label">Delivery Price</label>
                                 <input type="text" id="edit_shipping_fee"
-                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/^0+$/,'').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
+                                    oninput="this.value=this.value.replace(/[^0-9.]/g,'').replace(/^0+([1-9])/,'$1').replace(/(\..*?)\..*/,'$1').replace(/(\.\d{2}).*/,'$1').replace(/^(\d{7})\d*/,'$1').replace(/^(\d{7}\.\d{2})\d*/,'$1')"
                                     class="form-control" placeholder="Enter Shipping price">
 
                                 <span id="editShippingFeeError" class="text-danger" style="display:none"></span>
@@ -645,7 +645,7 @@ document.addEventListener("DOMContentLoaded", function() {
         this.value = this.value
             .replace(/[^0-9.]/g, '')
             .replace(/^0+([1-9])/, '$1')
-            .replace(/^0+$/, '')
+            // .replace(/^0+$/, '')
             .replace(/(\..*?)\..*/, '$1')
             .replace(/(\.\d{2}).*/, '$1')
             .replace(/^(\d{7})\d*/, '$1')

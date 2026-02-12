@@ -422,14 +422,23 @@
                             <div>Gift Card Discount</div>
                             <div class="red-color" id="giftCardDiscountAmount">0 KD</div>
                         </div>
+                        @if(!empty($cartData['shipping_fees']) && $cartData['shipping_fees'] > 0)
                         <div class="giftinfo">
                             <div>Shipping Fee</div>
                             <div>{{ $cartData['shipping_fees'] }} KD</div>
                         </div>
+                        @else
+                        <div class="giftinfo">
+                            <div>Shipping Fee</div>
+                            <div>Free Shipping</div>
+                        </div>
+                        @endif
+                        @if(!empty($cartData['tax']) && $cartData['tax'] > 0)
                         <div class="giftinfo">
                             <div>TAX (if any)</div>
                             <div>{{ $cartData['tax'] }} KD</div>
                         </div>
+                        @endif
                         <div class="giftinfo">
                             <div>Total Amount</div>
                             <div>{{ $cartData['total_amount'] }} KD</div>

@@ -873,15 +873,26 @@
                             </div>
                         @endif
 
-                        <div class="giftinfo">
-                            <div>Shipping Fee</div>
-                            <div>{{ $orderData->order->shipping_fees }} KD</div>
-                        </div>
+                        @if(($orderData->order->shipping_fees ?? 0) > 0)
+                            <div class="giftinfo">
+                                <div>Shipping Fee</div>
+                                <div>{{ $orderData->order->shipping_fees }} KD</div>
+                            </div>
+                        @else
+                            <div class="giftinfo">
+                                <div>Shipping Fee</div>
+                                <div>Free Shipping</div>
+                            </div>
+                        @endif
 
-                        <div class="giftinfo">
-                            <div>Tax (if any)</div>
-                            <div>{{ $orderData->order->tax }} KD</div>
-                        </div>
+
+                        {{-- Tax --}}
+                        @if(($orderData->order->tax ?? 0) > 0)
+                            <div class="giftinfo">
+                                <div>Tax (if any)</div>
+                                <div>{{ $orderData->order->tax }} KD</div>
+                            </div>
+                        @endif
 
                         <div class="giftinfo">
                             <div>Total Amount</div>
