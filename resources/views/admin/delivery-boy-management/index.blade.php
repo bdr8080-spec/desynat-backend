@@ -102,7 +102,7 @@
                             <td>{{ $deliveryBoy['country_code'] }}{{ $deliveryBoy['mobile'] }}</td>
                             <td>{{ $deliveryBoy['email'] }}</td>
 
-                            <td>{{$deliveryBoy['zone_info']['name_english']}}</td>
+                            <td>{{$deliveryBoy['zone_info']['name_english'] ?? 'N/A'}}</td>
                             <td>{{ $deliveryBoy['address_line1'] }}{{ $deliveryBoy['address_line2'] }}{{ $deliveryBoy['city'] }}{{ $deliveryBoy['state'] }}</td>
                             <td>{{ $deliveryBoy['vehicle_name'] }}</td>
                             <td>{{ $deliveryBoy['vehicle_reg_no'] }}</td>
