@@ -64,14 +64,19 @@ class UserFirebaseService
     ];
 
 
-$check_chatRecord=allproductchats::with('product_variation.product_details')->where($match)->first();
+// $check_chatRecord=allproductchats::with('product_variation.product_details')->where($match)->first();
 
-if(!$check_chatRecord){
-  $check_record=allproductchats::UpdateOrCreate($match,$request_data);
+// if(!$check_chatRecord){
+//   $check_record=allproductchats::UpdateOrCreate($match,$request_data);
 
-$check_chatRecord=allproductchats::with('product_variation.product_details')->where('id',$check_record->id)->first();
+// $check_chatRecord=allproductchats::with('product_variation.product_details')->where('id',$check_record->id)->first();
     
-}
+// }
+$check_record = allproductchats::create($request_data);
+
+    $check_chatRecord = allproductchats::with('product_variation.product_details')
+        ->where('id',$check_record->id)
+        ->first();
 
     return [
         'status'  => 'success',
