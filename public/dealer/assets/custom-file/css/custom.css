@@ -36,6 +36,16 @@
 .alink:hover {
     color: #9f7a54;
 }
+.durationwidth {
+    width: 330px;
+}
+.duration-table tr td{
+    line-height: 26px;
+    padding: 0px !important;
+}
+.strong-title {
+    font-weight: 600;
+}
 
 .label-flex {
     display: flex;
