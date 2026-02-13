@@ -8,6 +8,7 @@ use App\Models\all_countrie;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\DB;
+use App\Models\DefaultShippingFee;
 
 use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart,allproductchats,orderdetail};
 
@@ -694,6 +695,7 @@ public function product_view_cart_details($request)
 
             // Calculate the distance
             $distance = calculateDistance($user_let, $user_long, $store_let, $store_long);
+            //dd($distance);
            
             // $distance = 10;
 
@@ -702,18 +704,22 @@ public function product_view_cart_details($request)
             ->where('range_to','>=',$distance)
             ->where('status','1')->first();
 
+            $defaultShipping = DefaultShippingFee::first();
+            $defaultFee = $defaultShipping->shipping_fee ?? 2;
+            //dd($defaultFee);
+
             if($shipping_charges){
                 $get_shipping_charge=$shipping_charges->shipping_fee *$val->quantity ;
 
                 $shipping_fees+=$get_shipping_charge;
 
             }else{
-                $get_shipping_charge=100 *$val->quantity;
+                $get_shipping_charge=$defaultFee*$val->quantity;
                 $shipping_fees+=$get_shipping_charge;
             }
 
             }else{
-                $get_shipping_charge=100 *$val->quantity;
+                $get_shipping_charge=$defaultFee*$val->quantity;
                 $shipping_fees+=$get_shipping_charge;
            
             }
