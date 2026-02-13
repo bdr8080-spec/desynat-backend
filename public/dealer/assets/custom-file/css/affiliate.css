@@ -2,6 +2,10 @@
     height: 330px;
     overflow: hidden;
     margin-bottom: 6px;
+    transition: all 0.5s ease;
+}
+.sub-grid figure:hover{
+    transform: translateX(20px);
 }
 .sub-grid figure img {
     width: 100%;
@@ -38,4 +42,54 @@
 }
 .searchlin {
     padding: 11px 23px;
+}
+.af-content {
+    text-align: left;
+    line-height: 31.5px;
+}
+.af-price {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+.af-price-line {
+    font-size: 18px;
+    font-weight: 300;
+    color: #E70000;
+}
+.af-price-line span {
+    color: #00000099;
+}
+.af-rating i {
+    color: #FFA41B;
+    margin: 1px;
+    font-size: 17px;
+}
+.af-commission {
+    background: #fff;
+    position: absolute;
+    bottom: 7px;
+    left: 10px;
+    padding: 0px 7px;
+    color: #48DB8F;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.af-box {
+    height: 75px;
+    width: 75px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    border-radius: 50px;
+}
+.af-box img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.all-product-lists {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 15px 0px;
 }

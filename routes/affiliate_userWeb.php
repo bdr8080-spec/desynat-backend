@@ -57,3 +57,8 @@ Route::match(['get', 'post'], '/all-product', function () {
     return view('affiliatedUser.category.allproducts');
 
 })->name('affiliatedUser.all-product');
+
+Route::match(['get', 'post'], '/my-product', function () {
+    return view('affiliatedUser.myproducts.my-products');
+
+})->name('affiliatedUser.my-product');

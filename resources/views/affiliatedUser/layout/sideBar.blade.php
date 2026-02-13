@@ -1,7 +1,6 @@
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
-
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20  {{ Request::is('affiliate-dashboard') ? 'sidebar-active' : '' }}"
                     href="{{ route('affiliate.affiliateDashboard') }}">
@@ -9,13 +8,20 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="/my-product">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/my-product.svg" alt="icon" class="asideicon">
+                    <span>My Product</span>
+                </a>
+            </li>
+            
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20" href="/category">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/product.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/categary-ic.svg" alt="icon" class="asideicon">
                     <span>Category</span>
                 </a>
             </li>
+           
 
 
             <!-- <li class="nav-item">
