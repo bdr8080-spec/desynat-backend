@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="d-flex justify-content-between mt-4 mb-5">
-        <a href="/category" class="title24 alink"> 
+        <a href="/category" class="title24 alink">
             <i class="bi bi-chevron-left"></i> My Product
         </a>
     </div>
@@ -13,13 +13,13 @@
         </div>
         <button type="button" class="btn btn-success searchlin">Search</button>
     </div>
-    
+
     <div class="tabs-panel py-3">
         <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-allproduct" type="button" role="tab" aria-controls="pills-allproduct"
-                    aria-selected="true">All  </button>
+                    aria-selected="true">All </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link w-100" id="pills-mentab-tab" data-bs-toggle="pill"
@@ -47,10 +47,119 @@
                 aria-labelledby="pills-allproduct-tab" tabindex="0">
 
                 <div class="personl-wapper">
-                    
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="all-tabs">
+                                <div class="all-product-lists">
+                                    <div class="af-box">
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image" class="img-fluid">
+                                    </div>
+                                    <div class="af-title">All</div>
+                                </div>
+                                <div class="all-product-lists">
+                                    <div class="af-box">
+                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image" class="img-fluid">
+                                    </div>
+                                    <div class="af-title">T-shirts</div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="col-lg-9">
+                            <div class="allproduct-wapper pt-5">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="sub-category-pnl mb-3 pb-1">
+                                            <div class="sub-grid position-relative">
+                                                <figure>
+                                                    <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
+                                                        class="img-fluid">
+                                                </figure>
+                                                <div class="af-commission">5% Commission</div>
+                                            </div>
+                                            <div class="af-content p-2">
+                                                <div class="sub-title">3pcs Set (by Abaya)</div>
+                                                <div class="af-rating">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                        <span>(123K)</span>
+                                                </div>
+                                                <div class="af-price">239 KD</div>
+                                                <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
+                                                <div class="text-center mt-2">
+                                                    <button type="button" class="btn btn-success w-100 lh-sm">Track Performance</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="sub-category-pnl mb-3 pb-1">
+                                            <div class="sub-grid position-relative">
+                                                <figure>
+                                                    <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
+                                                        class="img-fluid">
+                                                </figure>
+                                                <div class="af-commission">5% Commission</div>
+                                            </div>
+                                            <div class="af-content p-2">
+                                                <div class="sub-title">3pcs Set (by Abaya)</div>
+                                                <div class="af-rating">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                        <span>(123K)</span>
+                                                </div>
+                                                <div class="af-price">239 KD</div>
+                                                <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
+                                                <div class="text-center mt-2">
+                                                    <button type="button" class="btn btn-success w-100 lh-sm">Track Performance</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="sub-category-pnl mb-3 pb-1">
+                                            <div class="sub-grid position-relative">
+                                                <figure>
+                                                    <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
+                                                        class="img-fluid">
+                                                </figure>
+                                                <div class="af-commission">5% Commission</div>
+                                            </div>
+                                            <div class="af-content p-2">
+                                                <div class="sub-title">3pcs Set (by Abaya)</div>
+                                                <div class="af-rating">
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-half"></i>
+                                                        <span>(123K)</span>
+                                                </div>
+                                                <div class="af-price">239 KD</div>
+                                                <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
+                                                <div class="text-center mt-2">
+                                                    <button type="button" class="btn btn-success w-100 lh-sm">Track Performance</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
 
             <div class="tab-pane fade" id="pills-mentab" role="tabpanel" aria-labelledby="pills-mentab-tab"
                 tabindex="0">
@@ -58,11 +167,13 @@
 
             </div>
 
-            <div class="tab-pane fade" id="pills-womentab" role="tabpanel" aria-labelledby="pills-womentab-tab" tabindex="0">
+            <div class="tab-pane fade" id="pills-womentab" role="tabpanel" aria-labelledby="pills-womentab-tab"
+                tabindex="0">
 
             </div>
 
-            <div class="tab-pane fade" id="pills-kidstab" role="tabpanel" aria-labelledby="pills-kidstab-tab" tabindex="0">
+            <div class="tab-pane fade" id="pills-kidstab" role="tabpanel" aria-labelledby="pills-kidstab-tab"
+                tabindex="0">
 
             </div>
 
@@ -71,129 +182,11 @@
 
 
 
-    <!-- <div class="allproduct-wapper pt-5">
-
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="sub-category-pnl mb-3 pb-1">
-                    <div class="sub-grid position-relative">
-                        <figure>
-                            <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image"
-                                class="img-fluid">
-                        </figure>
-                        <div class="af-commission">5% Commission</div>
-                    </div>
-                    <div class="af-content p-2">
-                        <div class="sub-title">3pcs Set (by Abaya)</div>
-                        <div class="af-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                                <span>(123K)</span>
-                        </div>
-                        <div class="af-price">239 KD</div>
-                        <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
-                        <div class="text-center mt-2">
-                             <button type="button" class="btn btn-success w-100 lh-sm" data-bs-toggle="modal" data-bs-target="#getlink">Get Link</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="sub-category-pnl mb-3 pb-1">
-                    <div class="sub-grid position-relative">
-                        <figure>
-                            <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
-                                class="img-fluid">
-                        </figure>
-                        <div class="af-commission">5% Commission</div>
-                    </div>
-                    <div class="af-content p-2">
-                        <div class="sub-title">3pcs Set (by Abaya)</div>
-                        <div class="af-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                                <span>(123K)</span>
-                        </div>
-                        <div class="af-price">239 KD</div>
-                        <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
-                        <div class="text-center mt-2">
-                             <button type="button" class="btn btn-success w-100 lh-sm" data-bs-toggle="modal" data-bs-target="#getlink">Get Link</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="sub-category-pnl mb-3 pb-1">
-                    <div class="sub-grid position-relative">
-                        <figure>
-                            <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image"
-                                class="img-fluid">
-                        </figure>
-                        <div class="af-commission">5% Commission</div>
-                    </div>
-                    <div class="af-content p-2">
-                        <div class="sub-title">3pcs Set (by Abaya)</div>
-                        <div class="af-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                                <span>(123K)</span>
-                        </div>
-                        <div class="af-price">239 KD</div>
-                        <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
-                        <div class="text-center mt-2">
-                             <button type="button" class="btn btn-success w-100 lh-sm" data-bs-toggle="modal" data-bs-target="#getlink">Get Link</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="sub-category-pnl mb-3 pb-1">
-                    <div class="sub-grid position-relative">
-                        <figure>
-                            <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
-                                class="img-fluid">
-                        </figure>
-                        <div class="af-commission">5% Commission</div>
-                    </div>
-                    <div class="af-content p-2">
-                        <div class="sub-title">3pcs Set (by Abaya)</div>
-                        <div class="af-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                                <span>(123K)</span>
-                        </div>
-                        <div class="af-price">239 KD</div>
-                        <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
-                        <div class="text-center mt-2">
-                             <button type="button" class="btn btn-success w-100 lh-sm" data-bs-toggle="modal" data-bs-target="#getlink">Get Link</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
 
 
 
 
 
-        </div>
-    </div> -->
-
-    
-
-   
 
 </section>
 
@@ -202,5 +195,3 @@
 
 
 @include('affiliatedUser.layout.footer');
-
-
