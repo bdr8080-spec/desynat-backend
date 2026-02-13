@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Seller\SellerBannerController;
 use App\Http\Controllers\Api\Seller\OrderManagement;
 
 use App\Http\Controllers\Api\Seller\SellerDealManagement;
+use App\Http\Controllers\Api\Seller\SellerLiveRequestController;
 
 use App\Http\Controllers\CommonController;
 
@@ -120,6 +121,12 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::post('/Add-products-in-deal-inside', [SellerDealManagement::class,'AddProductSinDeals']);
 
     Route::post('/remove-products-in-deal', [SellerDealManagement::class,'removeProductsInDeal']);
+
+    //M8
+    Route::get('/get_timeslots', [SellerLiveRequestController::class,'get_timeslots']);
+    Route::get('/get_live_requests', [SellerLiveRequestController::class,'get_live_requests']);
+    Route::post('/cancel_live_request', [SellerLiveRequestController::class,'cancel_live_request']);
+    Route::post('/send_live_request', [SellerLiveRequestController::class,'send_live_request']);
 
 });
 

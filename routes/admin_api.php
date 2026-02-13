@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\Admin\StoryController;
 use App\Http\Controllers\Api\Admin\LiveRequestController;
 use App\Http\Controllers\Api\Admin\FullBannerController;
 use App\Http\Controllers\Api\Admin\AffiliatedUserController;
+use App\Http\Controllers\Api\Admin\ProductManagementController;
 
 
 // Admin APi M1
@@ -222,6 +223,11 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/accept_affiliate_user',[AffiliatedUserController::class,'accept_affiliate_user']);
      Route::post('/reject_affiliate_user',[AffiliatedUserController::class,'reject_affiliate_user']);
      Route::post('/block_unblock_affiliate_user',[AffiliatedUserController::class,'block_unblock_affiliate_user']);
+
+     //M8 api starts
+     Route::get('/get_products',[ProductManagementController::class,'get_products']);
+     Route::get('/get_product_detail',[ProductManagementController::class,'get_product_detail']);
+     Route::post('/block_unblock_product',[ProductManagementController::class,'block_unblock_product']);
      
 
 
