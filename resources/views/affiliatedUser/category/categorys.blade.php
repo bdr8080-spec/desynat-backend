@@ -5,7 +5,15 @@
         <div class="title24">Category </div>
     </div>
 
-    <div class="tabs-panel py-4">
+    <div class="search-field d-flex align-items-center py-4">
+        <div class="from-group position-relative w-100">
+            <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon2">
+            <input type="search" class="form-control py-3" placeholder="Search">
+        </div>
+        <button type="button" class="btn btn-success searchlin">Search</button>
+    </div>
+
+    <div class="tabs-panel py-3">
         <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
