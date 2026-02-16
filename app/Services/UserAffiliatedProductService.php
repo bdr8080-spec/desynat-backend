@@ -155,26 +155,27 @@ class UserAffiliatedProductService
         }
     }
 
-    public function getMyProducts($request)
+   public function getMyProducts($request)
     {
         try {
+
             $limit = !empty($request->limit) ? (int) $request->limit : 10;
 
             $query = Product::with([
-                'brand',
-                'category',
-                'subcategory',
-                'product_specifications',
-                'product_variants.color',
-                'product_variants.size',
-                'seller_details.country_details',
-                'store.country_info',
-                'review'
-            ])
-            ->withAvg('review as product_avg_rating', 'product_rating')
-            ->withAvg('review as store_avg_rating', 'store_rating')
-            ->where('seller_id', $request->user_id)
-            ->where('added_by', '2');
+                    'brand',
+                    'category',
+                    'subcategory',
+                    'product_specifications',
+                    'product_variants.color',
+                    'product_variants.size',
+                    'seller_details.country_details',
+                    'store.country_info.affiliate_commission_info',
+                    'review'
+                ])
+                ->withAvg('review as product_avg_rating', 'product_rating')
+                ->withAvg('review as store_avg_rating', 'store_rating')
+                ->where('seller_id', $request->user_id)
+                ->where('added_by', '2');
 
             if (!empty($request->search)) {
                 $query->where('product_name_en', 'like', '%' . $request->search . '%');
@@ -208,16 +209,27 @@ class UserAffiliatedProductService
             }
 
             $data->getCollection()->transform(function ($product) {
+
                 $averageRating = [
-                    'product' => round($product->product_avg_rating ?? 0, 0),
-                    'store'   => round($product->store_avg_rating ?? 0, 0),
+                    'product' => round($product->product_avg_rating ?? 0),
+                    'store'   => round($product->store_avg_rating ?? 0),
                 ];
+
+                $commission = $product->store?->country_info?->affiliate_commission_info?->commission;
+
+                $affiliateCommission = round((float) ($commission ?? 0));
 
                 unset($product->product_avg_rating);
                 unset($product->store_avg_rating);
 
                 $productArray = $product->toArray();
+
+                if (isset($productArray['store']['country_info']['affiliate_commission_info'])) {
+                    unset($productArray['store']['country_info']['affiliate_commission_info']);
+                }
+
                 $productArray['average_rating'] = $averageRating;
+                $productArray['affiliate_commission'] = $affiliateCommission;
 
                 return $productArray;
             });
@@ -229,6 +241,7 @@ class UserAffiliatedProductService
             ];
 
         } catch (\Exception $e) {
+
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch products: ' . $e->getMessage(),
@@ -236,6 +249,7 @@ class UserAffiliatedProductService
             ];
         }
     }
+
 
 
 
