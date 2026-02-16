@@ -187,6 +187,57 @@ class ShippingTaxController extends Controller
         }
     }
 
+    public function get_default_shipping_fee(Request $request)
+    {
+
+        $validate = Validator::make($request->all(), [
+            'country_id' => 'required|exists:countries,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->ShippingTaxService->getDefaultShippingFeeByCountryId($request->country_id);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function update_default_shipping_fee(Request $request)
+    {
+
+        $validate = Validator::make($request->all(), [
+            'id' => 'required|exists:default_shipping_fees,id',
+            'shipping_fee' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->ShippingTaxService->updateDefaultShippingFee($request);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 

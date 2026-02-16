@@ -704,8 +704,8 @@ public function product_view_cart_details($request)
             ->where('range_to','>=',$distance)
             ->where('status','1')->first();
 
-            $defaultShipping = DefaultShippingFee::first();
-            $defaultFee = $defaultShipping->shipping_fee ?? 2;
+            $defaultShipping = DefaultShippingFee::where('country_id',$userCountry_id)->first();
+            $defaultFee = $defaultShipping->shipping_fee ?? 0;
             //dd($defaultFee);
 
             if($shipping_charges){

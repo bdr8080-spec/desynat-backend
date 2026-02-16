@@ -228,6 +228,8 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_products',[ProductManagementController::class,'get_products']);
      Route::get('/get_product_detail',[ProductManagementController::class,'get_product_detail']);
      Route::post('/block_unblock_product',[ProductManagementController::class,'block_unblock_product']);
+     Route::get('/get_default_shipping_fee',[ShippingTaxController::class,'get_default_shipping_fee']);
+     Route::post('/update_default_shipping_fee',[ShippingTaxController::class,'update_default_shipping_fee']);
      
 
 

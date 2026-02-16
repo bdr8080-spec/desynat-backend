@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Tax;
 use App\Models\country;
 use App\Models\ShippingCharge;
+use App\Models\DefaultShippingFee;
 use Illuminate\Http\Request;
 
 
@@ -272,6 +273,70 @@ class ShippingTaxService
                 'status' => 'error',
                 'message' => 'Failed to update tax: ' . $e->getMessage(),
                 'data' => []
+            ];
+        }
+    }
+
+    public function getDefaultShippingFeeByCountryId($id)
+    {
+        try {
+            $data = DefaultShippingFee::with('country_info')
+                ->where('country_id', $id)
+                ->first();
+
+            if (!$data) { 
+                return [
+                    'status'  => 'success',
+                    'message' => 'No shipping charge found',
+                    'data'    => []
+                ];
+            }
+
+            return [
+                'status'  => 'success',
+                'message' => 'Shipping Fee fetched successfully',
+                'data'    => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed to fetch shipping charge: ' . $e->getMessage(),
+                'data'    => []
+            ];
+        }
+    }
+
+
+    public function updateDefaultShippingFee(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $fee = DefaultShippingFee::find($id);
+
+            if (!$fee) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Default Shipping Fee not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $fee->update([
+                'shipping_fee' => $request->shipping_fee,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Shipping Charge updated successfully',
+                'data' => $fee
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update shipping charge',
+                'data' => (object)[]
             ];
         }
     }
