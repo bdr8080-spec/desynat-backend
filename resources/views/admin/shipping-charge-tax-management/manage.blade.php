@@ -36,7 +36,7 @@
                             <div class="form-group">
                                 <label class="form-label">Default Delivery Charge</label>
                                 <div style="position: relative;">
-                                    <input type="text" class="form-control" placeholder="Enter charge"data-bs-toggle="modal" data-bs-target="#sentModal1" />
+                                    <input type="text" id="default_shipping_fee_display" class="form-control" placeholder="Enter charge"data-bs-toggle="modal" data-bs-target="#sentModal1" value="{{$defaultShippingCharge->shipping_fee}}" readOnly/>
                                     <span style=" position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6c757d; pointer-events: none; font-weight: 500; " >
                                      <i class="bi bi-pencil-square" ></i>
                                     </span>
@@ -122,7 +122,7 @@
 </div>
 
 <!-- Add Shipping Fee Modal -->
-<div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
@@ -135,7 +135,6 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-6">
                             <div class="form-group">
-                                <!-- <label class="form-label"></label> -->
                                 <div style="position: relative;">
                                     <input type="text" class="form-control" placeholder="60 KD" />
                                   
@@ -158,7 +157,45 @@
 
         </div>
     </div>
+</div> -->
+<div class="modal fade" id="sentModal1" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Edit</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+     
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" id="id" name="id" value="{{ $defaultShippingCharge->id }}">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div style="position: relative;">
+                                <input type="text"
+                                       id="default_shipping_fee_input"
+                                       class="form-control"
+                                       placeholder="Enter delivery charge" />
+                            </div>
+                            <small id="defaultShippingFeeError"
+                                   style="color:red; display:none;"></small>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <button type="button"
+                                id="updateDefaultShippingBtn"
+                                class="btn btn-dark customBtn mt-3">
+                            Update
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -835,6 +872,81 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<!-- update default shipping fee -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const modalElement = document.getElementById("sentModal1");
+    const displayInput = document.getElementById("default_shipping_fee_display");
+    const modalInput = document.getElementById("default_shipping_fee_input");
+    const updateBtn = document.getElementById("updateDefaultShippingBtn");
+    const errorField = document.getElementById("defaultShippingFeeError");
+    const idField = document.getElementById("id"); 
+
+    // Allow only numbers and 2 decimals
+    modalInput.addEventListener("input", function () {
+        this.value = this.value
+            .replace(/[^0-9.]/g, '')          // allow numbers & dot
+            .replace(/(\..*?)\..*/, '$1')     // single dot only
+            .replace(/^0+/, '')               // ❗ remove starting 0 completely
+            .replace(/(\.\d{2}).*/, '$1');    // limit 2 decimals
+
+        errorField.style.display = "none";
+    });
+
+    modalElement.addEventListener("show.bs.modal", function () {
+        modalInput.value = displayInput.value;
+        errorField.style.display = "none";
+    });
+
+    updateBtn.addEventListener("click", function () {
+
+        if (modalInput.value.trim() === "") {
+            errorField.innerText = "Please enter delivery charge";
+            errorField.style.display = "block";
+            return;
+        }
+
+        fetch("{{ route('admin.update_default_shipping_fee') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                id: idField.value,              
+                shipping_fee: modalInput.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.status === "success") {
+
+                toastr.success(data.message);
+
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
+
+                setTimeout(() => location.reload(), 1500);
+
+            } else {
+                toastr.error(data.message || "Failed to update delivery charge");
+            }
+
+        })
+        .catch(() => {
+            toastr.error("Something went wrong");
+        });
+
+    });
+
+});
+</script>
+
+
 
 
 

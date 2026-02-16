@@ -26,8 +26,9 @@ class ShippingController extends Controller
     public function manageShippingCharges(Request $request, $id){
         $country = country::find($id);
         $shippingCharges = $this->ShippingTaxService->getShippingChargesByCountryId($id)['data'];
+        $defaultShippingCharge = $this->ShippingTaxService->getDefaultShippingFeeByCountryId($id)['data'];
         //dd($shippingCharges);
-        return view('admin.shipping-charge-tax-management.manage',compact('country','shippingCharges'));
+        return view('admin.shipping-charge-tax-management.manage',compact('country','shippingCharges','defaultShippingCharge'));
     }
 
     public function update_tax(Request $request)
@@ -114,6 +115,23 @@ class ShippingController extends Controller
     public function update_shipping_fee(Request $request)
     {
         $result = $this->ShippingTaxService->updateShippingFee($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function update_default_shipping_fee(Request $request)
+    {
+        $result = $this->ShippingTaxService->updateDefaultShippingFee($request);
 
         if ($result['status'] === 'error') {
             return response()->json([
