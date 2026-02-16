@@ -20,7 +20,19 @@
                 </div>
 
                 <div class="col-lg-6 col-md-4 col-12">
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end gap-2">
+                         <div class="">
+                            <div class="form-group">
+                                <label class="form-label">Default Shipping Fees</label>
+                                <div style="position: relative;">
+                                    <input type="text" class="form-control" placeholder="Enter range to"data-bs-toggle="modal" data-bs-target="#sentModal1" />
+                                    <span style=" position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6c757d; pointer-events: none; font-weight: 500; " >
+                                     <i class="bi bi-pencil-square" ></i>
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
                         <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
                             <span>Add Delivery Charges</span>
                         </a>
@@ -99,6 +111,43 @@
 </div>
 
 <!-- Add Shipping Fee Modal -->
+<div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h2 class="h2">Edit</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <!-- <label class="form-label"></label> -->
+                                <div style="position: relative;">
+                                    <input type="text" class="form-control" placeholder="60 KD" />
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                      
+
+                      
+                        <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center">
+                            <a type="button" class="btn btn-dark customBtn mt-3">
+                                Update
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="sentModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -177,7 +226,7 @@
 
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="form-group">
-                                <h5 class="form-label ">Range-</h5>
+                                <h5 class="form-label">Range-</h5>
 
                                 <div class="d-flex align-items-center gap-4 ">
 
@@ -397,12 +446,12 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center " style="justify-content: space-between;">
-                                    <span id="editRangeFromError" class="text-danger" style="display:none"></span>
+                                <span id="editRangeFromError" class="text-danger" style="display:none"></span>
 
 
-                                    <span id="editRangeToError" class="text-danger" style="display:none"></span>
+                                <span id="editRangeToError" class="text-danger" style="display:none"></span>
 
-                                </div>
+                            </div>
 
                         </div>
 
