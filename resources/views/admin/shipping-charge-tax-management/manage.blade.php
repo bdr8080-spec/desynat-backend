@@ -1,6 +1,17 @@
 @extends('admin.layout.app')
 @section('content')
 
+<style>
+    a.btn.btn-dark.customBtn {
+    border: 1px solid rgba(168, 130, 79, 1);
+    /* background: var(--bg-color); */
+    background: linear-gradient(to bottom left, #F9DBAB, #7D532F);
+    color: #fff;
+    /* line-height: 18px; */
+    font-size: 20px;
+    height: 53px !important;
+}
+</style>
 
 <div id="content-wrapper" class="d-flex flex-column position-relative">
     <div id="content" class="">
@@ -23,9 +34,9 @@
                     <div class="d-flex justify-content-end gap-2">
                          <div class="">
                             <div class="form-group">
-                                <label class="form-label">Default Shipping Fees</label>
+                                <label class="form-label">Default Delivery Charge</label>
                                 <div style="position: relative;">
-                                    <input type="text" class="form-control" placeholder="Enter range to"data-bs-toggle="modal" data-bs-target="#sentModal1" />
+                                    <input type="text" class="form-control" placeholder="Enter charge"data-bs-toggle="modal" data-bs-target="#sentModal1" />
                                     <span style=" position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6c757d; pointer-events: none; font-weight: 500; " >
                                      <i class="bi bi-pencil-square" ></i>
                                     </span>
@@ -33,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-dark customBtn" data-bs-toggle="modal" data-bs-target="#sentModal2">
+                        <a class="btn btn-dark customBtn mt-3" data-bs-toggle="modal" data-bs-target="#sentModal2">
                             <span>Add Delivery Charges</span>
                         </a>
                     </div>
