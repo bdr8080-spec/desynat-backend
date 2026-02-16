@@ -889,7 +889,7 @@ document.addEventListener("DOMContentLoaded", function () {
         this.value = this.value
             .replace(/[^0-9.]/g, '')          // allow numbers & dot
             .replace(/(\..*?)\..*/, '$1')     // single dot only
-            .replace(/^0+/, '')               // ❗ remove starting 0 completely
+            //.replace(/^0+/, '')               // ❗ remove starting 0 completely
             .replace(/(\.\d{2}).*/, '$1');    // limit 2 decimals
 
         errorField.style.display = "none";
