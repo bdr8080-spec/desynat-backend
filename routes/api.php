@@ -17,6 +17,8 @@ use App\Http\Controllers\Api\User\UserChatController;
 use App\Http\Controllers\Api\User\UserAffilatedControlller;
 use App\Http\Controllers\Api\User\UserWalletController;
 
+use App\Http\Controllers\Api\User\UserAffiliatedProductController;
+
 
 
 
@@ -202,6 +204,16 @@ Route::post('/affilated-add-Bank-details', [UserAffilatedControlller::class,'aff
 Route::post('/affilated-dashboard', [UserAffilatedControlller::class,'affilatedDashboard']);
 
 Route::post('/upload-Reverify-document', [UserAffilatedControlller::class,'uploadReverifydocument']);
+
+Route::get('/get_affiliate_profile', [UserAffilatedControlller::class,'get_affiliate_profile']);
+Route::post('/update_affiliate_profile', [UserAffilatedControlller::class,'update_affiliate_profile']);
+Route::post('/update_affiliate_address', [UserAffilatedControlller::class,'update_affiliate_address']);
+Route::post('/update_affiliate_bank_details', [UserAffilatedControlller::class,'update_affiliate_bank_details']);
+Route::post('/update_affiliate_document', [UserAffilatedControlller::class,'update_affiliate_document']);
+Route::post('/update_affiliate_password', [UserAffilatedControlller::class,'update_affiliate_password']);
+Route::get('/get_all_products', [UserAffiliatedProductController::class,'get_all_products']);
+Route::get('/get_my_products', [UserAffiliatedProductController::class,'get_my_products']);
+Route::get('/get_product_detail', [UserAffiliatedProductController::class,'get_product_detail']);
 
 
 });

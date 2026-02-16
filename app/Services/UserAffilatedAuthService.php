@@ -379,6 +379,287 @@ try{
 
     }
 
+function updateReverifydocument($request){
+
+  try{
+  
+  $user_id=$request->user_id;
+      // $otp="123456";
+
+  $checkUserAffilatedStatus=  AffilatedUser::where('id',$user_id)->first();
+  
+     $insert_Data=[
+    'document1'=>$request->document1??null,
+    'document2'=>$request->document2??null,
+    "admin_verify"=>"1"
+    ];
+
+
+    $checkUserAffilatedStatus->update($insert_Data);
+
+    if($checkUserAffilatedStatus){
+        return ['status'=>'success','message'=>"document Upload Successfully",'data'=>$checkUserAffilatedStatus];            
+    }
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update Affliated status: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+
+
+}
+
+function updateBankDetails($request_data)
+{
+    try {
+        $bank = Bankdetails::where('user_id', $request_data->affilated_user)
+            ->where('type', '3')
+            ->first();
+
+        if ($bank) {
+            $bank->update([
+                'bank_name'           => $request_data->bank_name,
+                'account_holder_name' => $request_data->account_holder_name,
+                'account_no'          => $request_data->account_no,
+                'iban'                => $request_data->iban,
+                'swift'               => $request_data->swift,
+            ]);
+        } else {
+            $bank = Bankdetails::create([
+                'user_id'             => $request_data->affilated_user,
+                'type'                => '3', 
+                'bank_name'           => $request_data->bank_name,
+                'account_holder_name' => $request_data->account_holder_name,
+                'account_no'          => $request_data->account_no,
+                'iban'                => $request_data->iban,
+                'swift'               => $request_data->swift,
+            ]);
+        }
+
+        AffilatedUser::where('id', $request_data->affilated_user)
+            ->update([
+                'bank_update_status' => '1',
+                'admin_verify'       => '1'
+            ]);
+
+        return [
+            'status'  => 'success',
+            'message' => 'Bank details saved successfully',
+            'data'    => $bank
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status'  => 'error',
+            'message' => 'Failed to save bank details: ' . $e->getMessage(),
+            'data'    => $e->getMessage()
+        ];
+    }
+}
+
+
+
+
+function updateAddress($request)
+{
+    try {
+
+        $request_data = [
+            "country"   => $request->country,
+            "locations" => $request->locations,
+            "address1"  => $request->address1,
+            "address2"  => $request->address2,
+            "pincode"   => $request->pincode,
+            "town"      => $request->town,
+            "state"     => $request->state,
+            "city"      => $request->city,
+            "let"       => $request->let ?? null,
+            "long"      => $request->long ?? null
+        ];
+
+        $address = AffilatedUserAddress::where('affiliate_id', $request->affilated_user)
+                    ->first();
+
+        if (!$address) {
+            return [
+                'status' => 'error',
+                'message' => 'Address not found.',
+                'data' => null
+            ];
+        }
+
+        $address->update($request_data);
+
+        AffilatedUser::where('id', $request->affilated_user)
+            ->update(['address_update_status' => '1']);
+
+        return [
+            'status' => 'success',
+            'message' => 'Address updated successfully',
+            'data' => $address
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update affiliate address: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+}
+
+function updateProfile($request)
+{
+    try {
+
+        $user_id = $request->affilated_user;
+       // dd($user_id);
+
+        $affiliate = AffilatedUser::where('id', $user_id)->first();
+
+        if (!$affiliate) {
+            return [
+                'status' => 'error',
+                'message' => 'Affiliate user not found',
+                'data' => (object)[]
+            ];
+        }
+
+        $checkEmail = AffilatedUser::where('email', $request->email)
+            ->where('id', '!=', $user_id)
+            ->where('otp_verify', '1')
+            ->first();
+
+        if ($checkEmail) {
+            return [
+                'status' => 'error',
+                'message' => 'This email is already registered by another user',
+                'data' => (object)[]
+            ];
+        }
+
+        $checkMobile = AffilatedUser::where('country_code', $request->country_code)
+            ->where('mobile', $request->mobile)
+            ->where('id', '!=', $user_id)
+            ->where('otp_verify', '1')
+            ->first();
+
+        if ($checkMobile) {
+            return [
+                'status' => 'error',
+                'message' => 'This mobile number is already registered by another user',
+                'data' => (object)[]
+            ];
+        }
+
+        $updateData = [
+            'profile_image' => $request->profile_image,
+            'full_name'     => $request->full_name,
+            'country_code'  => $request->country_code,
+            'mobile'        => $request->mobile,
+            'email'         => $request->email,
+            'document1'         => $request->document1,
+            'document2'         => $request->document2,
+        ];
+
+        $affiliate->update($updateData);
+
+        return [
+            'status' => 'success',
+            'message' => 'Profile updated successfully',
+            'data' => $affiliate
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update affiliate profile: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+}
+
+function getProfile($request)
+{
+    try {
+
+        $user_id = $request->user_id;
+
+        $affiliate = AffilatedUser::with([
+                'address_details',
+                'bank_details',
+                'country_details'
+            ])
+            ->where('id', $user_id)
+            ->first();
+
+        if (!$affiliate) {
+            return [
+                'status' => 'error',
+                'message' => 'Affiliate profile not found',
+                'data' => (object)[]
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'message' => 'Affiliate profile fetched successfully',
+            'data' => $affiliate
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to fetch affiliate profile: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+}
+
+function updatePassword($request)
+{
+    $user = AffilatedUser::where('id', $request->user_id)->first();
+
+    if (!$user) {
+        return [
+            'status'  => 'error',
+            'message' => 'Affilated User does not exist',
+            'data'    => (object) []
+        ];
+    }
+
+    if (Hash::check($request->password, $user->password)) {
+        return [
+            'status'  => 'error',
+            'message' => 'Old password cannot be used as new password',
+            'data'    => (object) []
+        ];
+    }
+
+    $user->update([
+        'password'     => Hash::make($request->password),
+        'password_old' => $request->password,
+    ]);
+
+    return [
+        'status'  => 'success',
+        'message' => 'Password updated successfully',
+        'data'    => $user
+    ];
+}
+
+
+
+
+
+
 
 
 

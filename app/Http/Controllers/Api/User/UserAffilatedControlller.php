@@ -424,6 +424,252 @@ public function affilatedAddBankDetails(Request $request){
     
 }
 
+public function update_affiliate_document(Request $request){
+
+        $user = $request->user()->id;
+
+        $validate = Validator::make($request->all(), [
+               "document1"=>"required",
+                "document2"=>"required",
+            ]);
+            
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $request_data=(object) [
+        'user_id'=>$user,
+        'document1'=>$request->document1??null,
+        'document2'=>$request->document2??null,
+        ];
+
+    $data=$this->UserAffilatedAuthService->updateReverifydocument($request_data);
+        
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],$data['data'],400);
+        }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+}
+
+public function update_affiliate_bank_details(Request $request){
+    
+        $validate = Validator::make($request->all(), [
+                'bank_name' => 'required',
+                'account_holder_name' => 'required',
+                'account_no' => 'required',
+                "confirm_account_no" =>"required|same:account_no",
+                "iban" =>"required",
+                "swift"=>"required",
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $affilated_user = $request->user()->id;
+
+     $request_data=(object) [
+    'affilated_user'=>$affilated_user,
+    "bank_name"=>$request->bank_name,
+    'account_holder_name'=>$request->account_holder_name,
+    'account_no'=>$request->account_no,
+    'iban'=>$request->iban,
+    'swift'=>$request->swift,
+    ];
+
+  $data=$this->UserAffilatedAuthService->updateBankDetails($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+}
+
+public function update_affiliate_address(Request $request)
+{
+    $validate = Validator::make($request->all(), [
+        'country'   => 'required',
+        'locations' => 'required',
+        'address1'  => 'required',
+        'address2'  => 'required',
+        'let'       => 'required',
+        'long'      => 'required',
+    ]);
+
+    if ($validate->fails()) {
+        return ApiResponse::generateResponse(
+            'error',
+            $validate->errors()->first(),
+            $validate->errors()->first(),
+            422
+        );
+    }
+
+    $affilated_user = $request->user()->id;
+
+    $request_data = (object) [
+        'affilated_user' => $affilated_user,
+        'country'        => $request->country,
+        'locations'      => $request->locations,
+        'address1'       => $request->address1,
+        'address2'       => $request->address2,
+        'pincode'        => $request->pincode ?? null,
+        'town'           => $request->town ?? null,
+        'state'          => $request->state ?? null,
+        'city'           => $request->city ?? null,
+        'let'            => $request->let ?? null,
+        'long'           => $request->long ?? null,
+    ];
+
+    $data = $this->UserAffilatedAuthService->updateAddress($request_data);
+
+    if (isset($data['status']) && $data['status'] === 'error') {
+        return ApiResponse::generateResponse(
+            'error',
+            $data['message'],
+            $data['data'],
+            422
+        );
+    }
+
+    return ApiResponse::generateResponse(
+        'success',
+        $data['message'],
+        $data['data'],
+        200
+    );
+}
+
+public function update_affiliate_profile(Request $request)
+{
+    $validate = Validator::make($request->all(), [
+        'profile_image'   => 'required',
+        'full_name' => 'required',
+        'country_code'  => 'required',
+        'mobile'  => 'required',
+        'email'       => 'required',
+        'document1'       => 'required',
+        'document2'       => 'required',
+
+    ]);
+
+    if ($validate->fails()) {
+        return ApiResponse::generateResponse(
+            'error',
+            $validate->errors()->first(),
+            $validate->errors()->first(),
+            422
+        );
+    }
+
+    $affilated_user = $request->user()->id;
+
+    $request_data = (object) [
+        'affilated_user' => $affilated_user,
+        'profile_image'        => $request->profile_image,
+        'full_name'      => $request->full_name,
+        'country_code'       => $request->country_code,
+        'mobile'       => $request->mobile,
+        'email'        => $request->email,
+        'document1'        => $request->document1,
+        'document2'        => $request->document2,
+    ];
+
+    $data = $this->UserAffilatedAuthService->updateProfile($request_data);
+
+    if (isset($data['status']) && $data['status'] === 'error') {
+        return ApiResponse::generateResponse(
+            'error',
+            $data['message'],
+            $data['data'],
+            422
+        );
+    }
+
+    return ApiResponse::generateResponse(
+        'success',
+        $data['message'],
+        $data['data'],
+        200
+    );
+}
+
+public function get_affiliate_profile(Request $request)
+{
+
+    $affilated_user = $request->user()->id;
+
+    $request_data = (object) [
+        'user_id' => $affilated_user,
+    ];
+
+    $data = $this->UserAffilatedAuthService->getProfile($request_data);
+
+    if (isset($data['status']) && $data['status'] === 'error') {
+        return ApiResponse::generateResponse(
+            'error',
+            $data['message'],
+            $data['data'],
+            422
+        );
+    }
+
+    return ApiResponse::generateResponse(
+        'success',
+        $data['message'],
+        $data['data'],
+        200
+    );
+}
+
+public function update_affiliate_password(Request $reqest)
+{
+    $validate = Validator::make($reqest->all(), [
+        'password'         => 'required',
+        'confirm_password' => 'required|same:password',
+    ]);
+
+    if ($validate->fails()) {
+        return ApiResponse::generateResponse(
+            'error',
+            $validate->errors()->first(),
+            (object) $validate->errors(),
+            422
+        );
+    }
+
+    $affilated_user = $reqest->user()->id;
+
+    $request_data = (object) [
+        'user_id' => $affilated_user,
+        'password' => $reqest->password
+    ];
+
+    $data = $this->UserAffilatedAuthService->updatePassword($request_data);
+
+    if (isset($data['status']) && $data['status'] === 'error') {
+        return ApiResponse::generateResponse(
+            'error',
+            $data['message'],
+            (object) [],
+            400
+        );
+    }
+
+    return ApiResponse::generateResponse(
+        'success',
+        $data['message'],
+        $data['data'],
+        200
+    );
+}
+
+
+
 
 
      
