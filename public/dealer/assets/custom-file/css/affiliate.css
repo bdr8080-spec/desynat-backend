@@ -93,3 +93,37 @@
     gap: 11px;
     margin: 15px 0px;
 }
+
+@media(max-width:641px){
+    .sub-grid figure {
+        height: 200px;
+    }
+    .sub-category-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .sub-title {
+        font-size: clamp(16px, 2.5vw, 20px);
+    }
+
+
+
+}
+
+@media(min-width:768px) and (max-width:1140px){
+    .sub-grid figure {
+        height: 250px;
+    }
+    .sub-category-wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    .sub-title {
+        font-size: clamp(16px, 2.5vw, 20px);
+    }
+
+
+
+}

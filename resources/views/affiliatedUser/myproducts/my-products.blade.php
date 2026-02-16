@@ -68,7 +68,7 @@
                         <div class="col-lg-9">
                             <div class="allproduct-wapper pt-5">
                                 <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <div class="sub-category-pnl mb-3 pb-1">
                                             <div class="sub-grid position-relative">
                                                 <figure>
@@ -95,7 +95,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <div class="sub-category-pnl mb-3 pb-1">
                                             <div class="sub-grid position-relative">
                                                 <figure>
@@ -122,7 +122,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <div class="sub-category-pnl mb-3 pb-1">
                                             <div class="sub-grid position-relative">
                                                 <figure>
@@ -191,4 +191,4 @@
 
 
 
-@include('affiliatedUser.layout.footer');
+@include('affiliatedUser.layout.footer')

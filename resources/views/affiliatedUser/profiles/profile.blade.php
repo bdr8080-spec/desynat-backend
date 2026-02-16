@@ -204,7 +204,7 @@
 
 
 
-@include('affiliatedUser.layout.footer');
+@include('affiliatedUser.layout.footer')
 
 <script>
 $('#profileUpload').on('change', function () {
