@@ -24,7 +24,7 @@ class UserAffiliatedProductService
                 'product_variants.size',
                 'seller_details.country_details',
                 'store.country_info',
-                'review'
+                'review' 
             ])
             ->withAvg('review as product_avg_rating', 'product_rating')
             ->withAvg('review as store_avg_rating', 'store_rating')
