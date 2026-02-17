@@ -105,20 +105,21 @@ class UserAffiliatedProductService
         try {
 
             $data = Product::with([
-                'brand',
-                'category',
-                'subcategory',
-                'product_specifications',
-                'product_variants.color',
-                'product_variants.size',
-                'seller_details.country_details',
-                'store.country_info',
-                'review'
-            ])
-            ->withAvg('review as product_avg_rating', 'product_rating')
-            ->withAvg('review as store_avg_rating', 'store_rating')
-            ->where('id', $request->id)
-            ->first();
+                    'brand',
+                    'category',
+                    'subcategory',
+                    'product_specifications',
+                    'product_variants.color',
+                    'product_variants.size',
+                    'seller_details.country_details',
+                    'store.country_info.affiliate_commission_info', 
+                    'review'
+                ])
+                ->withAvg('review as product_avg_rating', 'product_rating')
+                ->withAvg('review as store_avg_rating', 'store_rating')
+                ->withCount('review')
+                ->where('id', $request->id)
+                ->first();
 
             if (!$data) {
                 return [
@@ -129,16 +130,25 @@ class UserAffiliatedProductService
             }
 
             $averageRating = [
-                'product' => round($data->product_avg_rating ?? 0, 0),
-                'store'   => round($data->store_avg_rating ?? 0, 0),
+                'product' => round($data->product_avg_rating ?? 0),
+                'store'   => round($data->store_avg_rating ?? 0),
             ];
+
+            $commission = $data->store?->country_info?->affiliate_commission_info?->commission;
+
+            $affiliateCommission = round((float) ($commission ?? 0));
 
             unset($data->product_avg_rating);
             unset($data->store_avg_rating);
 
             $dataArray = $data->toArray();
 
+            if (isset($dataArray['store']['country_info']['affiliate_commission_info'])) {
+                unset($dataArray['store']['country_info']['affiliate_commission_info']);
+            }
+
             $dataArray['average_rating'] = $averageRating;
+            $dataArray['affiliate_commission'] = $affiliateCommission;
 
             return [
                 'status' => 'success',
@@ -154,6 +164,7 @@ class UserAffiliatedProductService
             ];
         }
     }
+
 
    public function getMyProducts($request)
     {
@@ -174,6 +185,7 @@ class UserAffiliatedProductService
                 ])
                 ->withAvg('review as product_avg_rating', 'product_rating')
                 ->withAvg('review as store_avg_rating', 'store_rating')
+                ->withCount('review')
                 ->where('seller_id', $request->user_id)
                 ->where('added_by', '2');
 

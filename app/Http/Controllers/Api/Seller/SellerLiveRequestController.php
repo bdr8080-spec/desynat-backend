@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Country;
+use App\Models\country;
 use App\Helpers\ApiResponse;
 
 use Validator;
@@ -34,7 +34,7 @@ class SellerLiveRequestController extends Controller
         try {
             $seller_details=$request->user();
             //dd($seller_details);
-            $country = Country::where('dial_code',$seller_details->country_code)->first();
+            $country = country::where('dial_code',$seller_details->country_code)->first();
             //dd($country);
 
             $request_data=(object )[
