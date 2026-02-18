@@ -206,6 +206,10 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
+Route::match(['get', 'post'], '/product-management', function () {
+    return view('admin.product-mgt.index');
+
+})->name('admin.product-management');
 
 
 Route::fallback(function (Request $request) {

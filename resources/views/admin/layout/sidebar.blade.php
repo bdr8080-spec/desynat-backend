@@ -126,6 +126,13 @@
             Banner Management
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/product-management">
+            <span><img src="{{ asset('admin/image/browser.svg') }}" alt="Product Management" /></span>
+            Product Management
+        </a>
+    </li>
      
     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
