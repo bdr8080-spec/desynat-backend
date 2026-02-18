@@ -90,7 +90,7 @@
                                                 <div class="af-price">239 KD</div>
                                                 <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
                                                 <div class="text-center mt-2">
-                                                    <button type="button" class="btn btn-success w-100 lh-sm">Track Performance</button>
+                                                    <a href="/all-performance" class="btn btn-success w-100 lh-sm text-white">Track Performance</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,7 +117,7 @@
                                                 <div class="af-price">239 KD</div>
                                                 <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
                                                 <div class="text-center mt-2">
-                                                    <button type="button" class="btn btn-success w-100 lh-sm">Track Performance</button>
+                                                    <a href="/all-performance" class="btn btn-success w-100 lh-sm text-white">Track Performance</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,7 +144,7 @@
                                                 <div class="af-price">239 KD</div>
                                                 <div class="af-price-line"><span class="text-decoration-line-through">239 KD </span>20% Off</div>
                                                 <div class="text-center mt-2">
-                                                    <button type="button" class="btn btn-success w-100 lh-sm">Track Performance</button>
+                                                    <a href="/all-performance" class="btn btn-success w-100 lh-sm text-white">Track Performance</a>
                                                 </div>
                                             </div>
                                         </div>
