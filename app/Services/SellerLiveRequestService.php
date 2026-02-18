@@ -47,6 +47,63 @@ class SellerLiveRequestService
     }
 
 
+    // public function getLiveRequests($request_data)
+    // {
+    //     try {
+    //         $limit = isset($request_data->limit) ? (int)$request_data->limit : 10;
+
+    //         $query = LiveRequest::with([
+    //             'timeslot_details',
+    //             'timeslot_details.country_info',
+    //             //'seller_details',
+    //             //'seller_details.country_details'
+    //         ]);
+    //         $query->where('seller_id', $request_data->seller_id);
+
+    //         if (!empty($request->from) && empty($request->to)) {
+    //             $query->whereDate('created_at', '>=', $request->from);
+    //         }
+
+    //         if (empty($request->from) && !empty($request->to)) {
+    //             $query->whereDate('created_at', '<=', $request->to);
+    //         }
+
+    //         if (!empty($request->from) && !empty($request->to)) {
+    //             $query->whereBetween('created_at', [
+    //                 $request->from,
+    //                 $request->to
+    //             ]);
+    //         }
+
+    //         $query->orderBy('id', 'desc');
+
+    //         $req_details = $query->paginate($limit);
+
+    //         if ($req_details->isEmpty()) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => 'No Request found',
+    //                 'data' =>  (object)[]
+    //             ];
+    //         }
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Requests fetched successfully',
+    //             'data' => $req_details
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch request: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+    
+
     public function getLiveRequests($request_data)
     {
         try {
@@ -55,10 +112,69 @@ class SellerLiveRequestService
             $query = LiveRequest::with([
                 'timeslot_details',
                 'timeslot_details.country_info',
-                //'seller_details',
-                //'seller_details.country_details'
             ]);
+
             $query->where('seller_id', $request_data->seller_id);
+
+            if (!empty($request_data->search)) {
+                $query->whereHas('timeslot_details', function ($q) use ($request_data) {
+                    $q->whereDate('date', $request_data->search);
+                });
+            }
+
+            if (!empty($request_data->from) && empty($request_data->to)) {
+                $query->whereHas('timeslot_details', function ($q) use ($request_data) {
+                    $q->whereDate('date', '>=', $request_data->from);
+                });
+            }
+
+            if (empty($request_data->from) && !empty($request_data->to)) {
+                $query->whereHas('timeslot_details', function ($q) use ($request_data) {
+                    $q->whereDate('date', '<=', $request_data->to);
+                });
+            }
+
+            if (!empty($request_data->from) && !empty($request_data->to)) {
+                $query->whereHas('timeslot_details', function ($q) use ($request_data) {
+                    $q->whereBetween('date', [
+                        $request_data->from,
+                        $request_data->to
+                    ]);
+                });
+            }
+
+            if (isset($request_data->filter)) {
+
+                //  Pending
+                if ($request_data->filter == 1) {
+                    $query->where('admin_verify', '0');
+                }
+
+                //  Completed (date + to < now)
+                if ($request_data->filter == 2) {
+
+                    $now = Carbon::now();
+
+                    $query->whereHas('timeslot_details', function ($q) use ($now) {
+                        $q->whereRaw("
+                            STR_TO_DATE(
+                                CONCAT(date, ' ', `to`),
+                                '%Y-%m-%d %h:%i %p'
+                            ) < ?
+                        ", [$now]);
+                    });
+                }
+
+                //  Cancelled
+                if ($request_data->filter == 3) {
+                    $query->where('admin_verify', '3');
+                }
+
+                //  Rejected
+                if ($request_data->filter == 4) {
+                    $query->where('admin_verify', '2');
+                }
+            }
 
             $query->orderBy('id', 'desc');
 
@@ -68,7 +184,7 @@ class SellerLiveRequestService
                 return [
                     'status' => 'success',
                     'message' => 'No Request found',
-                    'data' =>  (object)[]
+                    'data' => (object)[]
                 ];
             }
 
@@ -86,6 +202,7 @@ class SellerLiveRequestService
             ];
         }
     }
+
 
     public function cancelLiveRequest(Request $request)
     {

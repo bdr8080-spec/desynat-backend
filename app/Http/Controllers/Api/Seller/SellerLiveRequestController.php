@@ -61,7 +61,12 @@ class SellerLiveRequestController extends Controller
             $seller_details=$request->user();
             $request_data=(object )[
                 'seller_id'=>$seller_details->id,
-                "limit"=>$request->limit??10
+                "limit"=>$request->limit??10,
+                "search"=>$request->search??null,
+                "filter"=>$request->filter??null,
+                "from"=>$request->from??null,
+                "to"=>$request->to??null,
+
             ];
 
             $data = $this->SellerLiveRequestService->getLiveRequests($request_data);
