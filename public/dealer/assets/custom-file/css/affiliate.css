@@ -1,3 +1,16 @@
+.order-bg-box{
+    background: #FFF7EA;
+}
+.click-bg{
+    background: #3771C81A;
+}
+.total-revenue-bg{
+    background: linear-gradient(86.95deg, #1C1C1C 2.25%, #C2C4C2 110.97%);
+}
+.my-earning-bg{
+    background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+}
+
 .sub-grid figure {
     height: 330px;
     overflow: hidden;
@@ -92,6 +105,9 @@
     align-items: center;
     gap: 11px;
     margin: 15px 0px;
+}
+.shadow20 {
+    box-shadow: 0px 1px 8px 0px #0000001a;
 }
 
 @media(max-width:641px){
