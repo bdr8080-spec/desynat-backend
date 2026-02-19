@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\product;
+use App\Models\AffiliateProduct;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 
@@ -172,41 +173,53 @@ class UserAffiliatedProductService
 
             $limit = !empty($request->limit) ? (int) $request->limit : 10;
 
-            $query = Product::with([
-                    'brand',
-                    'category',
-                    'subcategory',
-                    'product_specifications',
-                    'product_variants.color',
-                    'product_variants.size',
-                    'seller_details.country_details',
-                    'store.country_info.affiliate_commission_info',
-                    'review'
+            $query = AffiliateProduct::with([
+                    'affiliate_details',
+                    'product' => function ($q) {
+                        $q->with([
+                            'brand',
+                            'category',
+                            'subcategory',
+                            'product_specifications',
+                            'product_variants.color',
+                            'product_variants.size',
+                            'seller_details.country_details',
+                            'store.country_info.affiliate_commission_info',
+                            'review'
+                        ])
+                        ->withAvg('review as product_avg_rating', 'product_rating')
+                        ->withAvg('review as store_avg_rating', 'store_rating')
+                        ->withCount('review');
+                    }
                 ])
-                ->withAvg('review as product_avg_rating', 'product_rating')
-                ->withAvg('review as store_avg_rating', 'store_rating')
-                ->withCount('review')
-                ->where('seller_id', $request->user_id)
-                ->where('added_by', '2');
+                ->where('affiliate_id', $request->user_id);
 
-            if (!empty($request->search)) {
-                $query->where('product_name_en', 'like', '%' . $request->search . '%');
-            }
+                if (!empty($request->search)) {
+                    $query->whereHas('product', function ($q) use ($request) {
+                        $q->where('product_name_en', 'like', '%' . $request->search . '%');
+                    });
+                }
 
-            if (!empty($request->from) && empty($request->to)) {
-                $query->whereDate('created_at', '>=', $request->from);
-            }
+                if (!empty($request->from) && empty($request->to)) {
+                    $query->whereHas('product', function ($q) use ($request) {
+                        $q->whereDate('created_at', '>=', $request->from);
+                    });
+                }
 
-            if (empty($request->from) && !empty($request->to)) {
-                $query->whereDate('created_at', '<=', $request->to);
-            }
+                if (empty($request->from) && !empty($request->to)) {
+                    $query->whereHas('product', function ($q) use ($request) {
+                        $q->whereDate('created_at', '<=', $request->to);
+                    });
+                }
 
-            if (!empty($request->from) && !empty($request->to)) {
-                $query->whereBetween('created_at', [
-                    $request->from,
-                    $request->to
-                ]);
-            }
+                if (!empty($request->from) && !empty($request->to)) {
+                    $query->whereHas('product', function ($q) use ($request) {
+                        $q->whereBetween('created_at', [
+                            $request->from,
+                            $request->to
+                        ]);
+                    });
+                }
 
             $query->orderBy('id', 'desc');
 
@@ -261,6 +274,54 @@ class UserAffiliatedProductService
             ];
         }
     }
+
+    public function addToMyProducts($request)
+    {
+        try {
+
+            $product = Product::find($request->product_id);
+
+            if (!$product) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Product not found',
+                    'data' => []
+                ];
+            }
+
+            $alreadyAdded = AffiliateProduct::where('affiliate_id', $request->user_id)
+                ->where('product_id', $request->product_id)
+                ->exists();
+
+            if ($alreadyAdded) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Product already added to this affiliate',
+                    'data' => []
+                ];
+            }
+
+            $affiliateProduct = AffiliateProduct::create([
+                'affiliate_id' => $request->user_id,
+                'product_id'   => $request->product_id,
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Product added to affiliate successfully',
+                'data' => $affiliateProduct
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add product: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 

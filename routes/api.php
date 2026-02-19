@@ -214,6 +214,7 @@ Route::post('/update_affiliate_password', [UserAffilatedControlller::class,'upda
 Route::get('/get_all_products', [UserAffiliatedProductController::class,'get_all_products']);
 Route::get('/get_my_products', [UserAffiliatedProductController::class,'get_my_products']);
 Route::get('/get_product_detail', [UserAffiliatedProductController::class,'get_product_detail']);
+Route::post('/add_to_my_products', [UserAffiliatedProductController::class,'add_to_my_products']);
 
 
 });
