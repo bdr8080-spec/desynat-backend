@@ -209,6 +209,7 @@ Route::get('/get_affiliate_profile', [UserAffilatedControlller::class,'get_affil
 Route::post('/update_affiliate_profile', [UserAffilatedControlller::class,'update_affiliate_profile']);
 Route::post('/update_affiliate_address', [UserAffilatedControlller::class,'update_affiliate_address']);
 Route::post('/update_affiliate_bank_details', [UserAffilatedControlller::class,'update_affiliate_bank_details']);
+Route::post('/add_affiliate_bank_details', [UserAffilatedControlller::class,'add_affiliate_bank_details']);
 Route::post('/update_affiliate_document', [UserAffilatedControlller::class,'update_affiliate_document']);
 Route::post('/update_affiliate_password', [UserAffilatedControlller::class,'update_affiliate_password']);
 Route::get('/get_all_products', [UserAffiliatedProductController::class,'get_all_products']);

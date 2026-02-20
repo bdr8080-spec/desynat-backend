@@ -456,6 +456,44 @@ public function update_affiliate_document(Request $request){
 public function update_affiliate_bank_details(Request $request){
     
         $validate = Validator::make($request->all(), [
+                'bank_details_id' => 'required|exists:bankdetails,id',
+                'bank_name' => 'required',
+                'account_holder_name' => 'required',
+                'account_no' => 'required',
+                "confirm_account_no" =>"required|same:account_no",
+                "iban" =>"required",
+                "swift"=>"required",
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $affilated_user = $request->user()->id;
+
+     $request_data=(object) [
+        'bank_details_id'=>$request->bank_details_id,
+    'affilated_user'=>$affilated_user,
+    "bank_name"=>$request->bank_name,
+    'account_holder_name'=>$request->account_holder_name,
+    'account_no'=>$request->account_no,
+    'iban'=>$request->iban,
+    'swift'=>$request->swift,
+    ];
+
+  $data=$this->UserAffilatedAuthService->updateBankDetails($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+}
+
+public function add_affiliate_bank_details(Request $request){
+    
+        $validate = Validator::make($request->all(), [
                 'bank_name' => 'required',
                 'account_holder_name' => 'required',
                 'account_no' => 'required',
@@ -479,7 +517,7 @@ public function update_affiliate_bank_details(Request $request){
     'swift'=>$request->swift,
     ];
 
-  $data=$this->UserAffilatedAuthService->updateBankDetails($request_data);
+  $data=$this->UserAffilatedAuthService->addBankDetails($request_data);
     
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);

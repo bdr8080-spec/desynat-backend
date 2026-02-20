@@ -415,8 +415,7 @@ function updateReverifydocument($request){
 function updateBankDetails($request_data)
 {
     try {
-        $bank = Bankdetails::where('user_id', $request_data->affilated_user)
-            ->where('type', '3')
+        $bank = Bankdetails::where('id', $request_data->bank_details_id)
             ->first();
 
         if ($bank) {
@@ -427,17 +426,7 @@ function updateBankDetails($request_data)
                 'iban'                => $request_data->iban,
                 'swift'               => $request_data->swift,
             ]);
-        } else {
-            $bank = Bankdetails::create([
-                'user_id'             => $request_data->affilated_user,
-                'type'                => '3', 
-                'bank_name'           => $request_data->bank_name,
-                'account_holder_name' => $request_data->account_holder_name,
-                'account_no'          => $request_data->account_no,
-                'iban'                => $request_data->iban,
-                'swift'               => $request_data->swift,
-            ]);
-        }
+        } 
 
         AffilatedUser::where('id', $request_data->affilated_user)
             ->update([
@@ -447,7 +436,7 @@ function updateBankDetails($request_data)
 
         return [
             'status'  => 'success',
-            'message' => 'Bank details saved successfully',
+            'message' => 'Bank details updated successfully',
             'data'    => $bank
         ];
 
@@ -455,11 +444,52 @@ function updateBankDetails($request_data)
 
         return [
             'status'  => 'error',
-            'message' => 'Failed to save bank details: ' . $e->getMessage(),
+            'message' => 'Failed to update bank details: ' . $e->getMessage(),
             'data'    => $e->getMessage()
         ];
     }
 }
+
+function addBankDetails($request_data)
+{
+    try {
+
+       $data = [
+                'user_id'             => $request_data->affilated_user,
+                'type'                => '3', 
+                'bank_name'           => $request_data->bank_name,
+                'account_holder_name' => $request_data->account_holder_name,
+                'account_no'          => $request_data->account_no,
+                'iban'                => $request_data->iban,
+                'swift'               => $request_data->swift,
+            ];
+        $bank = Bankdetails::create($data);
+
+       if($bank){  
+        AffilatedUser::where('id', $request_data->affilated_user)
+            ->update([
+                'bank_update_status' => '1',
+                'admin_verify'       => '1'
+            ]);
+        }
+
+        return [
+            'status'  => 'success',
+            'message' => 'Bank details added successfully',
+            'data'    => $bank
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status'  => 'error',
+            'message' => 'Failed to add bank details: ' . $e->getMessage(),
+            'data'    => $e->getMessage()
+        ];
+    }
+}
+
+
 
 
 

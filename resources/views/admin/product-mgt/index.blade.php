@@ -66,50 +66,83 @@
 
     <div class="userManagecontent">
         <div class="mt-4">
+            <form method="GET" action="{{ route('admin.productManagement') }}" id="filterForm">
             <div class="row align-items-end">
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Country-</label>
-                        <select name="Country" class="form-select form-select-lg">
-                            <option value="">Select</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                        <label for="status" class="form-label">Country</label>
+                        <select name="country" id="country"
+                            class="form-select form-select-lg "
+                            onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Select country</option>
+                            @foreach($countries as $country)
+                            <option value="{{ $country['id'] }}"
+                                {{ request('country') == $country['id'] ? 'selected' : '' }}>
+                                {{ $country['name'] }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
                         <label for="status" class="form-label">Category</label>
-                        <select name="Category" class="form-select form-select-lg">
-                            <option value="">Select</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                        <select name="category" id="category"
+                            class="form-select form-select-lg "
+                            onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Select Category</option>
+                            @foreach($categories as $category)
+                            <option value="{{ $category['id'] }}"
+                                {{ request('category') == $category['id'] ? 'selected' : '' }}>
+                                {{ $category['name'] }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
 
-                <!-- Country Filter -->
                 <div class="col-lg-3 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Sub-Category-</label>
-                        <select name="Sub-Category" class="form-select form-select-lg">
-                            <option value="">Select</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                        <label for="status" class="form-label">Sub-Category</label>
+                        <select name="subcategory" id="subcategory"
+                            class="form-select form-select-lg "
+                            onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Select Sub-Category</option>
+                            @foreach($subcategories as $subcategory)
+                            <option value="{{ $subcategory['id'] }}"
+                                {{ request('subcategory') == $subcategory['id'] ? 'selected' : '' }}>
+                                {{ $subcategory['name_english'] }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
-                        <label for="status" class="form-label">Brand-</label>
-                        <select name="Brand" class="form-select form-select-lg">
-                            <option value="">Select</option>
-                            <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                        <label for="status" class="form-label">Brand</label>
+                        <select name="brand" id="brand"
+                            class="form-select form-select-lg "
+                            onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Select Brand</option>
+                            @foreach($brands as $brand)
+                            <option value="{{ $brand['id'] }}"
+                                {{ request('brand') == $brand['id'] ? 'selected' : '' }}>
+                                {{ $brand['name_english'] }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
+                <div class="col-lg-2 col-md-4 col-12 ">
+                    <div class="d-flex gap-3 justify-content-end" >
+                        <a href="{{route('admin.productManagement')}}" class="btn btn-dark customBtn"
+                            style="margin-top: 60px">
+                            <span>Reset</span>
+                        </a>
+                    </div>
+                </div>
             </div>
+            </form>
 
             <div class="table-responsive w-100 mt-4">
                 <table id="myTable" class="table w-100">
@@ -133,38 +166,53 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($products as $index => $product)
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Lorem</td>
-                            <td>UAE</td>
+                            <th scope="row">{{ $index + 1 }}</th>
+                            <td>{{$product['seller_details']['first_name']}} {{$product['seller_details']['last_name']}}</td>
+                            <td>{{$product['store']['country_info']['name']}}</td>
                             <td>
-                                <img src="image/dummy-image.jpg" alt="Profile Image" width="40px" height="40px"
+                                <img src="{{$product['product_variants'][0]['variant_image'][0]}}" alt="Profile Image" width="40px" height="40px"
                                     class="square" />
                             </td>
-                            <td>lorem</td>
-                            <td>lorem</td>
-                            <td>lorem</td>
-                            <td>lorem</td>
+                            <td>{{$product['category']['name']}}</td>
+                            <td>{{$product['subcategory']['name_english']}}</td>
+                            <td>{{$product['brand']['name_english']}}</td>
+                            <td>{{$product['product_name_en']}}</td>
                             <td>
-                                <a class="table-button" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#sentModal1">
+                                <a class="table-button view-description-btn"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#sentModal1"
+                                data-description="{{ $product['description_en'] }}">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
                             <td>
-                                <a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#Modal2">
+                                <a class="table-button view-spec-btn"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#Modal2"
+                                data-specifications='@json($product["product_specifications"])'>
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
-                            <td>100KD</td>
+                            <td>{{$product['product_variants'][0]['actual_price']}} KD</td>
                             <td>
-                                <a class="table-button" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#sizeChartModal">
+                                <a class="table-button view-size-chart-btn"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#sizeChartModal"
+                                data-image="{{ $product['upload_size_chart'] }}">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
                             <td>
-                                <a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#Modal3">
+                                <a class="table-button view-variant-btn"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#Modal3"
+                                data-variants='@json($product["product_variants"])'>
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
@@ -179,6 +227,7 @@
                                 <i class="bi bi-star-fill"></i>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -187,7 +236,7 @@
 </div>
 
 
-
+<!-- description modal -->
 <div class="modal fade" id="sentModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -203,8 +252,7 @@
                         <div class="col-lg-12 col-md-12 col-12">
 
                             <div class="mb-3">
-                                <p class="fw-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, eveniet amet assumenda sint illo rerum impedit quibusdam labore soluta. Illum minima nisi tempora voluptatem tempore perspiciatis dolorum deleniti iste iure.</p>
-                                <!-- <textarea id="description" class="form-control" rows="3" readOnly></textarea> -->
+                                <p class="fw-normal" id="modalDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, eveniet amet assumenda sint illo rerum impedit quibusdam labore soluta. Illum minima nisi tempora voluptatem tempore perspiciatis dolorum deleniti iste iure.</p>
                             </div>
                         </div>
 
@@ -216,6 +264,8 @@
         </div>
     </div>
 </div>
+
+<!-- specifications modal -->
 <div class="modal fade" id="Modal2" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -225,27 +275,15 @@
             </div>
 
             <table class="details-table">
-                <tr>
-                    <th>LOrem</th>
-                    <td>Lorem</td>
-                </tr>
-                <tr>
-                    <th>LOrem</th>
-                    <td>Lorem</td>
-                </tr>
-                <tr>
-                    <th>LOrem</th>
-                    <td>Lorem</td>
-                </tr>
-                <tr>
-                    <th>LOrem</th>
-                    <td>Lorem</td>
-                </tr>
+                <tbody id="specificationTableBody">
+                    <!-- Dynamic rows will come here -->
+                </tbody>
             </table>
 
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="Modal3" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -256,63 +294,15 @@
             </div>
 
             <div class="modal-body">
-
-                <!-- Variant 1 -->
-                <div class="variant-box">
-                    <h6 class="variant-heading">Variant 1</h6>
-
-                    <div class="variant-inner">
-                        <div class="variant-left">
-                            <div class="v-row"><span>Color</span><span>White</span></div>
-                            <div class="v-row"><span>Size</span><span>S</span></div>
-                            <div class="v-row"><span>Bust</span><span>32</span></div>
-                            <div class="v-row"><span>Waist</span><span>32</span></div>
-                            <div class="v-row"><span>HIP</span><span>34</span></div>
-                            <div class="v-row"><span>Shoulder</span><span>32</span></div>
-                            <div class="v-row"><span>Sleeve length</span><span>32</span></div>
-                            <div class="v-row"><span>Length</span><span>32</span></div>
-                            <div class="v-row"><span>Total Stock</span><span>32</span></div>
-                            <div class="v-row"><span>SKU</span><span>32</span></div>
-                            <div class="v-row"><span>Price</span><span>KD</span></div>
-                            <div class="v-row"><span>Discount Price</span><span>2 KD Or 10 %</span></div>
-                        </div>
-
-                        <div class="variant-right">
-                            <i class="bi bi-image"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Variant 2 -->
-                <div class="variant-box mt-4">
-                    <h6 class="variant-heading">Variant 2</h6>
-
-                    <div class="variant-inner">
-                        <div class="variant-left">
-                            <div class="v-row"><span>Color</span><span>White</span></div>
-                            <div class="v-row"><span>Size</span><span>S</span></div>
-                            <div class="v-row"><span>Bust</span><span>32</span></div>
-                            <div class="v-row"><span>Waist</span><span>32</span></div>
-                            <div class="v-row"><span>HIP</span><span>34</span></div>
-                            <div class="v-row"><span>Shoulder</span><span>32</span></div>
-                            <div class="v-row"><span>Sleeve length</span><span>32</span></div>
-                            <div class="v-row"><span>Length</span><span>32</span></div>
-                            <div class="v-row"><span>Total Stock</span><span>32</span></div>
-                            <div class="v-row"><span>SKU</span><span>32</span></div>
-                            <div class="v-row"><span>Price</span><span>KD</span></div>
-                            <div class="v-row"><span>Discount Price</span><span>2 KD Or 10 %</span></div>
-                        </div>
-
-                        <div class="variant-right">
-                            <i class="bi bi-image"></i>
-                        </div>
-                    </div>
-                </div>
-
+              <div id="variantContainer">
+                <!-- variants will show here -->
+              </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- size chart modal -->
 <div class="modal fade" id="sizeChartModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
@@ -323,12 +313,15 @@
             </div>
 
             <div class="modal-body text-center">
-                <img src="image/product-size-chart.png" alt="Size Chart" class="size-chart-img" />
+                <a href="#" target="_blank" id="sizeChartLink">
+                    <img src="" alt="Size Chart" class="size-chart-img img-fluid" id="sizeChartImage" />
+                </a>
             </div>
 
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="moredetails" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -394,7 +387,159 @@
     </div>
 </div>
 
+<!-- show description -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.view-description-btn');
 
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                const description = this.getAttribute('data-description');
+                document.getElementById('modalDescription').textContent = description;
+            });
+        });
+    });
+</script>
+
+<!-- show specifications -->
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const buttons = document.querySelectorAll('.view-spec-btn');
+    const tableBody = document.getElementById('specificationTableBody');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+
+            const specs = JSON.parse(this.getAttribute('data-specifications'));
+
+            tableBody.innerHTML = '';
+
+            if (specs.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="2">No specifications found</td></tr>';
+                return;
+            }
+
+            specs.forEach(spec => {
+                const row = `
+                    <tr>
+                        <th>${spec.name_en}</th>
+                        <td>${spec.feature_en}</td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('beforeend', row);
+            });
+
+        });
+    });
+
+});
+</script>
+
+<!-- size chart -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const buttons = document.querySelectorAll('.view-size-chart-btn');
+    const modalImage = document.getElementById('sizeChartImage');
+    const imageLink = document.getElementById('sizeChartLink');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+
+            const imageUrl = this.getAttribute('data-image');
+
+            if (imageUrl && imageUrl !== 'null') {
+                modalImage.src = imageUrl;
+                imageLink.href = imageUrl; 
+                modalImage.style.display = 'block';
+            } else {
+                modalImage.src = '';
+                imageLink.href = '#';
+                modalImage.style.display = 'none';
+            }
+
+        });
+    });
+
+});
+</script>
+
+<!-- product variants -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const buttons = document.querySelectorAll('.view-variant-btn');
+    const container = document.getElementById('variantContainer');
+
+    function valueOrNA(value) {
+        return (value === null || value === undefined || value === '') ? 'N/A' : value;
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+
+            const variants = JSON.parse(this.getAttribute('data-variants'));
+            container.innerHTML = '';
+
+            if (!variants || variants.length === 0) {
+                container.innerHTML = '<p class="text-muted">No variants found</p>';
+                return;
+            }
+
+            variants.forEach((variant, index) => {
+
+                let discountText = 'N/A';
+                if (variant.discount_value) {
+                    discountText = variant.discount_value +
+                        (variant.discount_type == 1 ? ' %' : ' KD');
+                }
+
+                const images = variant.variant_image || [];
+                let imageHtml = '<i class="bi bi-image fs-1 text-muted"></i>';
+
+                if (images.length > 0) {
+                    imageHtml = `<img src="${images[0]}" class="img-fluid" style="max-height:150px;">`;
+                }
+
+                const html = `
+                <div class="variant-box ${index !== 0 ? 'mt-4' : ''}">
+                    <h6 class="variant-heading">Variant ${index + 1}</h6>
+
+                    <div class="variant-inner">
+                        <div class="variant-left">
+
+                            <div class="v-row"><span>Color</span><span>${valueOrNA(variant.color?.name)}</span></div>
+                            <div class="v-row"><span>Size</span><span>${valueOrNA(variant.size?.name)}</span></div>
+                            <div class="v-row"><span>Bust</span><span>${valueOrNA(variant.bust)}</span></div>
+                            <div class="v-row"><span>Waist</span><span>${valueOrNA(variant.waist)}</span></div>
+                            <div class="v-row"><span>Hip</span><span>${valueOrNA(variant.hip)}</span></div>
+                            <div class="v-row"><span>Shoulder</span><span>${valueOrNA(variant.shoulder)}</span></div>
+                            <div class="v-row"><span>Sleeve Length</span><span>${valueOrNA(variant.sleeve_length)}</span></div>
+                            <div class="v-row"><span>Length</span><span>${valueOrNA(variant.length)}</span></div>
+                            <div class="v-row"><span>Total Stock</span><span>${valueOrNA(variant.total_stock)}</span></div>
+                            <div class="v-row"><span>SKU</span><span>${valueOrNA(variant.sku)}</span></div>
+                            <div class="v-row"><span>Price</span><span>${valueOrNA(variant.actual_price)} KD</span></div>
+                            <div class="v-row"><span>Discount</span><span>${discountText}</span></div>
+                            
+
+                        </div>
+
+                        <div class="variant-right text-center">
+                            ${imageHtml}
+                        </div>
+                    </div>
+                </div>
+                `;
+
+                container.insertAdjacentHTML('beforeend', html);
+            });
+
+        });
+    });
+
+});
+</script>
 
 
 @endsection
