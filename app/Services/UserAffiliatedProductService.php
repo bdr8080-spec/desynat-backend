@@ -5,6 +5,7 @@ use App\Models\product;
 use App\Models\AffiliateProduct;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
+use Illuminate\Support\Str;
 
 
 class UserAffiliatedProductService
@@ -290,7 +291,7 @@ class UserAffiliatedProductService
             }
 
             $alreadyAdded = AffiliateProduct::where('affiliate_id', $request->user_id)
-                ->where('product_id', $request->product_id)
+                ->where('product_id', $product->id)
                 ->exists();
 
             if ($alreadyAdded) {
@@ -303,8 +304,11 @@ class UserAffiliatedProductService
 
             $affiliateProduct = AffiliateProduct::create([
                 'affiliate_id' => $request->user_id,
-                'product_id'   => $request->product_id,
+                'product_id'   => $product->id,
             ]);
+
+            // $affiliateProduct->product_link = url("/user/product/detail-page/{$product->id}?ref={$request->user_id}");
+            // $affiliateProduct->save();
 
             return [
                 'status' => 'success',

@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\StoryController;
 use App\Http\Controllers\Admin\DealManagementController;
 use App\Http\Controllers\Admin\FullScreenBannerController;
 use App\Http\Controllers\Admin\AffiliateUserController;
+use App\Http\Controllers\Admin\ProductController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -199,6 +200,9 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/blockUnblockAffiliateUser/{id}', [AffiliateUserController::class, 'blockUnblockAffiliateUser'])->name('admin.blockUnblockAffiliateUser');
         Route::post('/acceptAffiliateUser/{id}', [AffiliateUserController::class, 'acceptAffiliateUser'])->name('admin.acceptAffiliateUser');
         Route::post('/rejectAffiliateUser/{id}', [AffiliateUserController::class, 'rejectAffiliateUser'])->name('admin.rejectAffiliateUser');
+
+        //affiliate user management
+        Route::get('/product-management', [ProductController::class, 'productManagement'])->name('admin.productManagement');
         
 
     });
@@ -206,10 +210,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-Route::match(['get', 'post'], '/product-management', function () {
-    return view('admin.product-mgt.index');
-
-})->name('admin.product-management');
 
 
 Route::fallback(function (Request $request) {

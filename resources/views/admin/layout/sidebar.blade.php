@@ -127,8 +127,8 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/product-management">
+    <li class="nav-item {{ Request::routeIs('admin.productManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.productManagement') }}">
             <span><img src="{{ asset('admin/image/browser.svg') }}" alt="Product Management" /></span>
             Product Management
         </a>
