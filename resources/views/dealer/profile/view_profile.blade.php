@@ -102,7 +102,7 @@
 
 
         <div class="brand-banner">
-            <img src="{{ $seller_details->store_info->store_image }}" alt="Profile">
+            <img src="{{ $seller_details->store_info?->store_image ?? asset('images/default-store.png') }}" alt="Profile">
         </div>
 
         <div class="profile_wapper">
