@@ -145,7 +145,7 @@
 
                 <div class="mt-4">
                     <h6 class="fw-bold">{{ $seller_details->store_info->store_name??'N/A' }}</h6>
-                    <small class="text-muted">{{ $seller_details->store_info->country_code }}
+                    <small class="text-muted">{{ $seller_details->store_info->country_code??'N/A' }}
                         {{ $seller_details->store_info->store_phone ??'N/A'}}</small><br>
                     <small class="text-muted">{{ $seller_details->store_info->store_mail_id??'N/A' }}</small>
 
