@@ -144,16 +144,16 @@
                 </div>
 
                 <div class="mt-4">
-                    <h6 class="fw-bold">{{ $seller_details->store_info->store_name }}</h6>
-                    <small class="text-muted">{{ $seller_details->store_info->country_code }}
-                        {{ $seller_details->store_info->store_phone }}</small><br>
-                    <small class="text-muted">{{ $seller_details->store_info->store_mail_id }}</small>
+                    <h6 class="fw-bold">{{ $seller_details->store_info->store_name??'N/A' }}</h6>
+                    <small class="text-muted">{{ $seller_details->store_info->country_code??'N/A' }}
+                        {{ $seller_details->store_info->store_phone ??'N/A'}}</small><br>
+                    <small class="text-muted">{{ $seller_details->store_info->store_mail_id??'N/A' }}</small>
 
                     <p class="mt-2 mb-0">
-                        {{ $seller_details->store_info->store_address }}
+                        {{ $seller_details->store_info->store_address??'N/A' }}
                     </p>
                     <p class="mt-2 mb-0">
-                        {{ $seller_details->store_info->bio }}
+                        {{ $seller_details->store_info->bio??'N/A' }}
                     </p>
                 </div>
 
