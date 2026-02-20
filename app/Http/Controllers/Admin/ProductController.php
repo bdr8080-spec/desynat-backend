@@ -28,7 +28,7 @@ class ProductController extends Controller
         $categories = $this->CategoryService->getCategory($request)['data'];
         $subcategories = $this->CategoryService->getSubCategoriesByCategoryId($request->category)['data'];
         $products = $this->ProductManagementService->getProducts($request)['data'];
-       // dd($products);
+        //dd($products);
         return view('admin.product-mgt.index',compact('countries','brands','categories','subcategories','products'));
     }
 

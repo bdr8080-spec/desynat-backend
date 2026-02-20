@@ -177,7 +177,7 @@
                             </td>
                             <td>{{$product['category']['name']}}</td>
                             <td>{{$product['subcategory']['name_english']}}</td>
-                            <td>{{$product['brand']['name_english']}}</td>
+                            <td>{{$product['brand']['name_english']??'N/A'}}</td>
                             <td>{{$product['product_name_en']}}</td>
                             <td>
                                 <a class="table-button view-description-btn"
@@ -217,13 +217,16 @@
                                 </a>
                             </td>
                             <td>
-                                <a class="table-button" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#moredetails">
+                                <a class="table-button view-more-details-btn"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#moredetails"
+                                data-product='@json($product)'>
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
                             </td>
                             <td class="star-rating">
-                                0
+                                {{ $product['average_rating']['product'] }}
                                 <i class="bi bi-star-fill"></i>
                             </td>
                         </tr>
@@ -322,6 +325,7 @@
     </div>
 </div>
 
+<!-- more details modal -->
 <div class="modal fade" id="moredetails" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -331,55 +335,7 @@
             </div>
 
             <table class=" details-table">
-                <tr>
-                    <th>Min. Cart Value</th>
-                    <td>2</td>
-                </tr>
-
-                <tr>
-                    <th>Max. Cart Value</th>
-                    <td>8</td>
-                </tr>
-
-                <tr>
-                    <th>Product Refundable</th>
-                    <td>Yes</td>
-                </tr>
-
-                <tr>
-                    <th>Review & Rating Allowed</th>
-                    <td>Yes</td>
-                </tr>
-
-                <tr>
-                    <th>Affiliate Products</th>
-                    <td>Yes</td>
-                </tr>
-
-                <tr>
-                    <th>Customized Products</th>
-                    <td>Yes</td>
-                </tr>
-
-                <tr>
-                    <th>Ready to Ship</th>
-                    <td>Yes</td>
-                </tr>
-
-                <tr>
-                    <th>Cash on Delivery Allowed</th>
-                    <td>Yes</td>
-                </tr>
-
-                <tr>
-                    <th>Return Days</th>
-                    <td>10</td>
-                </tr>
-
-                <tr>
-                    <th>Exchange Days</th>
-                    <td>10</td>
-                </tr>
+             <tbody id="moreDetailsBody"></tbody>
             </table>
 
 
@@ -533,6 +489,55 @@ document.addEventListener('DOMContentLoaded', function () {
                 `;
 
                 container.insertAdjacentHTML('beforeend', html);
+            });
+
+        });
+    });
+
+});
+</script>
+
+<!-- more details -->
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const buttons = document.querySelectorAll('.view-more-details-btn');
+    const tableBody = document.getElementById('moreDetailsBody');
+
+    function yesNo(value) {
+        return value == 1 ? 'Yes' : 'No';
+    }
+
+    function valueOrNA(value) {
+        return (value === null || value === '') ? 'N/A' : value;
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+
+            const product = JSON.parse(this.getAttribute('data-product'));
+            tableBody.innerHTML = '';
+
+            const rows = [
+                ['Min. Cart Value', valueOrNA(product.min_card_quantity)],
+                ['Max. Cart Value', valueOrNA(product.max_card_quantity)],
+                ['Product Refundable', yesNo(product.product_return)],
+                ['Review & Rating Allowed', yesNo(product.review_rating)],
+                ['Affiliate Products', yesNo(product.affiliated_product)],
+                ['Customized Products', yesNo(product.customized_product)],
+                ['Ready to Ship', yesNo(product.ready_to_ship)],
+                ['Cash on Delivery Allowed', yesNo(product.cash_on_delivery)],
+                ['Return Days', valueOrNA(product.return_days)],
+                ['Exchange Days', valueOrNA(product.exchangable_days)]
+            ];
+
+            rows.forEach(row => {
+                tableBody.insertAdjacentHTML('beforeend', `
+                    <tr>
+                        <th>${row[0]}</th>
+                        <td>${row[1]}</td>
+                    </tr>
+                `);
             });
 
         });

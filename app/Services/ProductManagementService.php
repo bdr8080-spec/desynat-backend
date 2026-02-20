@@ -9,10 +9,11 @@ use App\Http\Controllers\CommonController;
 class ProductManagementService
 {
    
+
     // public function getProducts($request)
     // {
     //     try {
-    //         $limit = (int) $request->input('limit', 10);
+    //         $limit = (int) $request->input('limit', 100000);
 
     //         $query = Product::with([
     //             'brand',
@@ -24,7 +25,9 @@ class ProductManagementService
     //             'seller_details.country_details',
     //             'store.country_info',
     //             'review'
-    //         ]);
+    //         ])
+    //         ->withAvg('review as product_avg_rating', 'product_rating')
+    //         ->withAvg('review as store_avg_rating', 'store_rating');
 
     //         if ($request->filled('search')) {
     //             $search = $request->input('search');
@@ -64,6 +67,21 @@ class ProductManagementService
     //             ];
     //         }
 
+    //         $data->getCollection()->transform(function ($product) {
+    //             $averageRating = [
+    //                 'product' => round($product->product_avg_rating ?? 0, 0),
+    //                 'store'   => round($product->store_avg_rating ?? 0, 0),
+    //             ];
+
+    //             unset($product->product_avg_rating);
+    //             unset($product->store_avg_rating);
+
+    //             $productArray = $product->toArray();
+    //             $productArray['average_rating'] = $averageRating;
+
+    //             return $productArray;
+    //         });
+
     //         return [
     //             'status' => 'success',
     //             'message' => 'Products fetched successfully',
@@ -82,7 +100,7 @@ class ProductManagementService
     public function getProducts($request)
     {
         try {
-            $limit = (int) $request->input('limit', 10);
+            $limit = $request->input('limit');
 
             $query = Product::with([
                 'brand',
@@ -98,58 +116,78 @@ class ProductManagementService
             ->withAvg('review as product_avg_rating', 'product_rating')
             ->withAvg('review as store_avg_rating', 'store_rating');
 
+            // Search filter
             if ($request->filled('search')) {
-                $search = $request->input('search');
-                $query->where('product_name_en', 'like', '%' . $search . '%');
+                $query->where('product_name_en', 'like', '%' . $request->search . '%');
             }
 
-            if ($request->filled('country')) {
-                $countries = $request->input('country'); // array
-                $query->whereHas('store.country_info', function ($q) use ($countries) {
-                    $q->whereIn('id', $countries);
+            // ✅ Convert single values to arrays to keep service consistent
+            $requestCountries     = $request->country ? (array)$request->country : [];
+            $requestSubcategories = $request->subcategory ? (array)$request->subcategory : [];
+            $requestBrands        = $request->brand ? (array)$request->brand : [];
+
+            // Country filter
+            if (!empty($requestCountries)) {
+                $query->whereHas('store.country_info', function ($q) use ($requestCountries) {
+                    $q->whereIn('id', $requestCountries);
                 });
             }
 
-            if ($request->filled('category')) {
-                $query->where('category_id', $request->input('category'));
+            // Category filter (single select)
+            if (!empty($request->category)) {
+                $query->where('category_id', $request->category);
             }
 
-            if ($request->filled('subcategory')) {
-                $subcategories = $request->input('subcategory'); // array
-                $query->whereIn('subcategory_id', $subcategories);
+            // Subcategory filter
+            if (!empty($requestSubcategories)) {
+                $query->whereIn('subcategory_id', $requestSubcategories);
             }
 
-            if ($request->filled('brand')) {
-                $brands = $request->input('brand'); // array
-                $query->whereIn('brand_id', $brands);
+            // Brand filter
+            if (!empty($requestBrands)) {
+                $query->whereIn('brand_id', $requestBrands);
             }
 
             $query->orderBy('id', 'desc');
 
-            $data = $query->paginate($limit);
+            // ✅ Conditional pagination
+            if ($request->filled('limit')) {
+                $data = $query->paginate((int)$limit);
+                $collection = $data->getCollection();
+            } else {
+                $data = $query->get();
+                $collection = $data;
+            }
 
-            if ($data->isEmpty()) {
+            if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No Product found',
-                    'data' => (object) []
+                    'data' => []
                 ];
             }
 
-            $data->getCollection()->transform(function ($product) {
+            // Transform collection: add average_rating
+            $collection->transform(function ($product) {
                 $averageRating = [
                     'product' => round($product->product_avg_rating ?? 0, 0),
                     'store'   => round($product->store_avg_rating ?? 0, 0),
                 ];
 
-                unset($product->product_avg_rating);
-                unset($product->store_avg_rating);
+                unset($product->product_avg_rating, $product->store_avg_rating);
 
                 $productArray = $product->toArray();
                 $productArray['average_rating'] = $averageRating;
 
                 return $productArray;
             });
+
+            // Set collection back to paginator if paginated
+            if ($request->filled('limit')) {
+                $data->setCollection($collection);
+            } else {
+                $data = $collection;
+            }
 
             return [
                 'status' => 'success',
@@ -165,6 +203,7 @@ class ProductManagementService
             ];
         }
     }
+
 
 
     public function getProductDetail($request)
