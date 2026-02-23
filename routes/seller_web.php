@@ -168,6 +168,8 @@ Route::group(['prefix' => 'seller'], function () {
     Route::get('live-request', [SellerLiveRequestController::class, 'liveRequests'])->name('seller.liveRequests');
     Route::post('deleteLiveRequest/{id}', [SellerLiveRequestController::class, 'deleteLiveRequest'])->name('seller.deleteLiveRequest');
     Route::post('cancelLiveRequest', [SellerLiveRequestController::class, 'cancelLiveRequest'])->name('seller.cancelLiveRequest');
+    Route::post('getTimeslots', [SellerLiveRequestController::class, 'getTimeslots'])->name('seller.getTimeslots');
+    Route::post('sendLiveRequest', [SellerLiveRequestController::class, 'sendLiveRequest'])->name('seller.sendLiveRequest');
 
 
     });
