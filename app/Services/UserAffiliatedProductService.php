@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\product;
 use App\Models\AffiliateProduct;
+use App\Models\ProductLink;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Str;
@@ -307,8 +308,6 @@ class UserAffiliatedProductService
                 'product_id'   => $product->id,
             ]);
 
-            // $affiliateProduct->product_link = url("/user/product/detail-page/{$product->id}?ref={$request->user_id}");
-            // $affiliateProduct->save();
 
             return [
                 'status' => 'success',
@@ -321,6 +320,57 @@ class UserAffiliatedProductService
             return [
                 'status' => 'error',
                 'message' => 'Failed to add product: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function generateProductLink($request)
+    {
+        try {
+
+            $product = Product::find($request->product_id);
+
+            if (!$product) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Product not found',
+                    'data' => []
+                ];
+            }
+
+            $alreadyAdded = ProductLink::where('affiliate_id', $request->user_id)
+                ->where('product_id', $product->id)
+                ->first();
+
+           // dd($alreadyAdded);
+
+            if ($alreadyAdded) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Product Link already added to this affiliate',
+                    'data' => $alreadyAdded
+                ];
+            }
+
+            $data = ProductLink::create([
+                'affiliate_id' => $request->user_id,
+                'product_id'   => $product->id,
+                'link'   => url("/user/product/detail-page/{$product->id}?ref={$request->user_id}")
+            ]);
+
+
+            return [
+                'status' => 'success',
+                'message' => 'Link added to affiliate successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add product link: ' . $e->getMessage(),
                 'data' => []
             ];
         }

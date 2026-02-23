@@ -170,7 +170,7 @@
                         <tr>
                             <th scope="row">{{ $index + 1 }}</th>
                             <td>{{$product['seller_details']['first_name']}} {{$product['seller_details']['last_name']}}</td>
-                            <td>{{$product['store']['country_info']['name']}}</td>
+                            <td>{{$product['store']['country_info']['name']??'N/A'}}</td>
                             <td>
                                 <img src="{{$product['product_variants'][0]['variant_image'][0]}}" alt="Profile Image" width="40px" height="40px"
                                     class="square" />

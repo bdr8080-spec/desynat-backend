@@ -706,6 +706,34 @@ public function update_affiliate_password(Request $reqest)
     );
 }
 
+public function delete_affiliate_bank_account(Request $request){
+    
+        $validate = Validator::make($request->all(), [
+                'bank_details_id' => 'required|exists:bankdetails,id',
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $affilated_user = $request->user()->id;
+    // dd($affilated_user);
+
+     $request_data=(object) [
+        'bank_details_id'=>$request->bank_details_id,
+    'affilated_user'=>$affilated_user,
+    ];
+
+  $data=$this->UserAffilatedAuthService->deleteBankAccount($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+}
+
 
 
 

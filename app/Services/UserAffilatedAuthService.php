@@ -685,6 +685,27 @@ function updatePassword($request)
     ];
 }
 
+function deleteBankAccount($request)
+{
+    $data = Bankdetails::where('id', $request->bank_details_id)->where('user_id',$request->affilated_user)->where('type','3')->first();
+
+    if (!$data) {
+        return [
+            'status'  => 'error',
+            'message' => 'Bank Account does not exist',
+            'data'    => (object) []
+        ];
+    }
+
+    $data->delete();
+
+    return [
+        'status'  => 'success',
+        'message' => 'Bank Account Deleted successfully',
+        'data'    => (object) []
+    ];
+}
+
 
 
 

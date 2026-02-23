@@ -210,12 +210,14 @@ Route::post('/update_affiliate_profile', [UserAffilatedControlller::class,'updat
 Route::post('/update_affiliate_address', [UserAffilatedControlller::class,'update_affiliate_address']);
 Route::post('/update_affiliate_bank_details', [UserAffilatedControlller::class,'update_affiliate_bank_details']);
 Route::post('/add_affiliate_bank_details', [UserAffilatedControlller::class,'add_affiliate_bank_details']);
+Route::post('/delete_affiliate_bank_account', [UserAffilatedControlller::class,'delete_affiliate_bank_account']);
 Route::post('/update_affiliate_document', [UserAffilatedControlller::class,'update_affiliate_document']);
 Route::post('/update_affiliate_password', [UserAffilatedControlller::class,'update_affiliate_password']);
 Route::get('/get_all_products', [UserAffiliatedProductController::class,'get_all_products']);
 Route::get('/get_my_products', [UserAffiliatedProductController::class,'get_my_products']);
 Route::get('/get_product_detail', [UserAffiliatedProductController::class,'get_product_detail']);
 Route::post('/add_to_my_products', [UserAffiliatedProductController::class,'add_to_my_products']);
+Route::post('/generate_product_link', [UserAffiliatedProductController::class,'generate_product_link']);
 
 
 });

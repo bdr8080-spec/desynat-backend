@@ -129,6 +129,37 @@ class UserAffiliatedProductController extends Controller
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+
+    public function generate_product_link(Request $request)
+    {
+       $validate = Validator::make($request->all(), [
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        $affilated_user = $request->user()->id;
+
+        $request_data = (object) [
+            'user_id' => $affilated_user,
+            'product_id' => $request->product_id,
+        ];
+
+        try {
+            $data = $this->UserAffiliatedProductService->generateProductLink($request_data);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], $data['data'], 400);
+            }
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+    
     
 
 
