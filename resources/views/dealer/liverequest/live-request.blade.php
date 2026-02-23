@@ -12,7 +12,7 @@
             <div class="search-field">
                 <div class="from-group position-relative">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-                    <input type="search" class="dt-input tableSearch form-control" id="customTableSearch"
+                    <input type="search" class="dt-input tableSearch form-control @if(count($data) > 0)) tableSearch @endif" id="customTableSearch" data-table="table1"
                         placeholder="Search" aria-controls="table1">
                 </div>
             </div>
@@ -75,20 +75,65 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($data as $index => $req)
                     <tr>
-                        <td>1</td>
-                        <td>#5558566</td>
-                        <td>03/02/2026 at 07:30pm</td>
-                        <td>03/02/2026 at 07:30pm</td>
-                        <td>Pending </td>
+                        <td>{{ $index + 1 }}</td>
+                        <td>#{{ $req['order_id'] }}</td>
+                        <td>{{ $req['created_at'] }}</td>
+                        <td>{{ $req['timeslot_details']['date'] }} at {{ $req['timeslot_details']['from'] }}</td>
                         <td>
-                            <a href="javascript:void(0)" class="eyebtn" data-bs-toggle="modal"
-                            data-bs-target="#Addreason"><i class="bi bi-eye"></i></a>
+                            @php
+                                $now = \Carbon\Carbon::now();
 
-                            <a href="javascript:void(0)" class="eyebtn" data-bs-toggle="modal"
-                            data-bs-target="#reasonDialog"><i class="bi bi-trash3"></i></a>
+                                $timeslotDate = $req['timeslot_details']['date'] ?? null;
+                                $timeslotTo = $req['timeslot_details']['to'] ?? null;
+
+                                $timeslotDateTime = null;
+
+                                if ($timeslotDate && $timeslotTo) {
+                                    // Combine date and time into a single Carbon object
+                                    $timeslotDateTime = \Carbon\Carbon::parse($timeslotDate . ' ' . $timeslotTo);
+                                }
+                            @endphp
+
+                            @if($req['admin_verify'] == '0')
+                                <span style="color: #f97316;">Pending</span>
+                            @elseif($req['admin_verify'] == '2')
+                                <span style="color: #ef4444;">Rejected</span>
+                            @elseif($req['admin_verify'] == '3')
+                                <span style="color: #ef4444;">Cancelled</span>
+                            @elseif($timeslotDateTime && $timeslotDateTime->lessThanOrEqualTo($now))
+                                <span style="color: #22c55e;">Completed</span>
+                            @else
+                                <span>Accepted</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($req['admin_verify'] == '2' || $req['admin_verify'] == '3')
+                                <a href="javascript:void(0)" class="eyebtn view-reason-btn"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#Addreason"
+                                data-status="{{ $req['admin_verify'] == '2' ? 'Rejected' : 'Cancelled' }}"
+                                data-date="{{ \Carbon\Carbon::parse($req['updated_at'])->format('d/m/Y') }}"
+                                data-reason="{{ $req['admin_verify'] == '2' ? ($req['reject_reason'] ?? '-') : ($req['cancel_reason'] ?? '-') }}">
+                                <i class="bi bi-eye"></i>
+                                </a>
+                            @endif
+                            @if($req['admin_verify'] == '0')
+                                <!-- <a href="javascript:void(0)" class="eyebtn deleteReq" data-id="{{ $req['id'] }}">
+                                    <i class="bi bi-trash3"></i>
+                                </a> -->
+                                <a href="javascript:void(0)" 
+                                    class="eyebtn open-cancel-modal" 
+                                    data-id="{{ $req['id'] }}" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#reasonDialog">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
+                            @endif
                         </td>
                     </tr>
+                    @endforeach
 
                 </tbody>
             </table>
@@ -134,13 +179,13 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h3>Reason  </h3>
+                <h3>Reason</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="text-red text-end">Cancelled on - 21/02/2026</div>
+                <div class="text-red text-end" id="reason-status-date"></div>
                 <div class="reason-lists py-3">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab aliquid dolores at sequi deserunt corrupti soluta doloremque quia aut! Atque quis architecto nisi laborum ut error illo quidem praesentium laboriosam?</p>
+                    <p id="reason-text"></p>
                 </div>
             </div>
         </div>
@@ -148,11 +193,11 @@
 </div>
 
 <!-- Select Reason Dialog -->
-<div class="modal fade" id="reasonDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="reasonDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header management border-0">
-                <h3>Select Reason </h3>
+                <h3>Reason </h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -172,13 +217,35 @@
                         </label>
                     </div>
                     <div class="form-group mt-4">
-                        <textarea class="form-control" rows="4" placeholder="Write Here"></textarea>
+                        <textarea class="form-control" rows="4" placeholder="Write Here" name="cancel_reason"></textarea>
                     </div>
                     <div class="py-3">
                         <button type="submit" class="btn add-fillbtn w-100">Submit</button>
                     </div>
                 </div>    
 
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="modal fade" id="reasonDialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h3>Cancel Reason </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="reason-lists">
+                    <input type="hidden" id="requestId" value="">
+                    <div class="form-group mt-4">
+                        <textarea class="form-control" rows="4" placeholder="Write Here" name="cancel_reason" id="cancel_reason"></textarea>
+                        <small id="cancelReasonError" class="text-danger" style="display:none;"></small>
+                    </div>
+                    <div class="py-3">
+                        <button type="button" class="btn add-fillbtn w-100" id="submitCancelReason">Submit</button>
+                    </div>
+                </div>    
             </div>
         </div>
     </div>
@@ -264,4 +331,144 @@
             `${$(this).find('span').text()}, ${months[m]} ${y}`
         );
     });
+</script>
+
+<!-- view details -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('Addreason');
+        const statusDate = document.getElementById('reason-status-date');
+        const reasonText = document.getElementById('reason-text');
+
+        modal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const status = button.getAttribute('data-status');
+            const date = button.getAttribute('data-date');
+            const reason = button.getAttribute('data-reason');
+
+            statusDate.textContent = `${status} on - ${date}`;
+            reasonText.textContent = reason;
+        });
+    });
+</script>
+
+ <!-- delete live request -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.deleteReq').forEach(button => {
+        button.addEventListener('click', function() {
+            let reqId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/seller/deleteLiveRequest/${reqId}`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                toastr.success(data.message);
+                                this.closest('tr').remove();
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Something went wrong.');
+                        });
+                }
+            });
+        });
+    });
+});
+</script>
+
+<!-- search -->
+<script>
+$(document).ready(function() {
+    let table = $('#table1').DataTable({
+        paging: false,
+        ordering: true,
+        info: false,
+        searching: true,
+        destroy: true 
+    });
+
+    $('#customTableSearch').on('keyup', function() {
+        table.search(this.value).draw();
+    });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+
+    // Set request ID when modal opens
+    $('.open-cancel-modal').on('click', function() {
+        let id = $(this).data('id');
+        $('#requestId').val(id);
+        $('#cancel_reason').val('');
+        $('#cancelReasonError').hide().text('');
+    });
+
+    // Hide error when typing
+    $('#cancel_reason').on('input', function() {
+        if ($(this).val().trim() !== '') {
+            $('#cancelReasonError').hide().text('');
+        }
+    });
+
+    // Submit handler
+    $('#submitCancelReason').on('click', function() {
+        let cancelReason = $('#cancel_reason').val().trim();
+        let id = $('#requestId').val();
+
+        if (!cancelReason) {
+            $('#cancelReasonError').text('Please enter reason').show();
+            return;
+        }
+
+        $.ajax({
+            url: '/seller/cancelLiveRequest',  
+            method: 'POST',
+            data: {
+                id: id,
+                cancel_reason: cancelReason,
+                _token: '{{ csrf_token() }}'  
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+                    $('#reasonDialog').modal('hide');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(response.message || 'Something went wrong');
+                }
+            },
+            error: function(xhr) {
+                let errMsg = 'Something went wrong';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errMsg = xhr.responseJSON.message;
+                }
+                toastr.error(errMsg);
+            }
+        });
+    });
+
+});
 </script>

@@ -137,7 +137,7 @@
                                             </td>
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td>
                                                 @if($val->order_type=='1')
                                                 Normal
@@ -277,7 +277,7 @@
                                             </td>
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td>
                                                 @if($val->order_type=='1')
                                                 Normal
@@ -415,7 +415,7 @@
                                             </td>
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td>
                                                 @if($val->order_type=='1')
                                                 Normal
@@ -587,7 +587,7 @@
                                             </td>
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
@@ -715,7 +715,7 @@
                                             </td>
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>
@@ -844,7 +844,7 @@
                                             </td>
                                             <td> {{$val->id}}</td>
                                             <td>{{$val->created_at}} </td>
-                                            <td>{{$val->product_details->product_name_en}}</td>
+                                            <td>{{$val->product_details->product_name_en??'N/A'}}</td>
                                             <td> {{$val->quantity}}</td>
                                             <td>{{$val->order->user_details->full_name}}</td>
                                             <td>{{$val->order->delivery_details->address}}</td>

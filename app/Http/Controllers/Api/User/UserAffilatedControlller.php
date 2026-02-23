@@ -667,6 +667,7 @@ public function get_affiliate_profile(Request $request)
 public function update_affiliate_password(Request $reqest)
 {
     $validate = Validator::make($reqest->all(), [
+        'old_password' => 'required',
         'password'         => 'required',
         'confirm_password' => 'required|same:password',
     ]);

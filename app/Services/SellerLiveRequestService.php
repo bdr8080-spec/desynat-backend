@@ -263,6 +263,36 @@ class SellerLiveRequestService
         }
     }
 
+    public function deleteLiveRequest($requestId)
+    {
+        $data = LiveRequest::find($requestId);
+
+        if (!$data) {
+            return [
+                'status' => 'error',
+                'message' => 'Live Request not found',
+                'data' => []
+            ];
+        }
+
+        try {
+            $data->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Live Request deleted successfully',
+                'data' => []
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete live request: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 

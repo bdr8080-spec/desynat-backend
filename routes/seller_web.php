@@ -12,6 +12,7 @@ use App\Http\Controllers\Seller\SellerChatController;
 
 
 use App\Http\Controllers\Seller\WebDealManagement;
+use App\Http\Controllers\Seller\SellerLiveRequestController;
 
 
 use App\Http\Controllers\ChatController;
@@ -163,6 +164,11 @@ Route::group(['prefix' => 'seller'], function () {
    Route::match(['post'],'remove-product-deal-management', [WebDealManagement::class, 'RemovesingleDealManagement'])->name('seller.Remove-product-single-deal');
     Route::get('expire-single-deal-management/{id}', [WebDealManagement::class, 'expireViewsingleDealManagement'])->name('seller.expire-single-deal-management');
 
+    //M8
+    Route::get('live-request', [SellerLiveRequestController::class, 'liveRequests'])->name('seller.liveRequests');
+    Route::post('deleteLiveRequest/{id}', [SellerLiveRequestController::class, 'deleteLiveRequest'])->name('seller.deleteLiveRequest');
+    Route::post('cancelLiveRequest', [SellerLiveRequestController::class, 'cancelLiveRequest'])->name('seller.cancelLiveRequest');
+
 
     });
 
@@ -185,10 +191,10 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
-Route::match(['get', 'post'], '/live-request', function () {
-    return view('dealer.liverequest.live-request');
+// Route::match(['get', 'post'], '/live-request', function () {
+//     return view('dealer.liverequest.live-request');
 
-})->name('dealer.live-request');
+// })->name('dealer.live-request');
 
 
 

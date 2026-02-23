@@ -51,6 +51,13 @@
                     <span>Deal Management</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/live-request')}}"
+                    href="{{ route('seller.liveRequests') }}">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/order.svg" alt="icon" class="asideicon">
+                    <span>Live Coverage Requests</span>
+                </a>
+            </li>
 
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
