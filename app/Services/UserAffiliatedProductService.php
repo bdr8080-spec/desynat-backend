@@ -172,8 +172,83 @@ class UserAffiliatedProductService
         }
     }
 
+    public function getMyProductDetail($request)
+    {
+        try {
 
-   public function getMyProducts($request)
+            $data = AffiliateProduct::with([
+                    'affiliate_details',
+                    'affiliate_product_link',
+                    'product' => function ($q) {
+                        $q->with([
+                            'brand',
+                            'category',
+                            'subcategory',
+                            'product_specifications',
+                            'product_variants.color',
+                            'product_variants.size',
+                            'seller_details.country_details',
+                            'store.country_info.affiliate_commission_info', // ✅ Nested under product
+                            'review'
+                        ])
+                        ->withAvg('review as product_avg_rating', 'product_rating')
+                        ->withAvg('review as store_avg_rating', 'store_rating')
+                        ->withCount('review');
+                    }
+                ])
+                ->where('product_id', $request->id)
+                ->where('affiliate_id', $request->user_id)
+                ->first();
+
+            if (!$data) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No Product found',
+                    'data' => (object) []
+                ];
+            }
+
+            $product = $data->product;
+
+            // Get product and store ratings
+            $averageRating = [
+                'product' => round($product->product_avg_rating ?? 0),
+                'store'   => round($product->store_avg_rating ?? 0),
+            ];
+
+            // Affiliate commission from store
+            $commission = $product->store?->country_info?->affiliate_commission_info?->commission;
+            $affiliateCommission = round((float) ($commission ?? 0));
+
+            unset($product->product_avg_rating, $product->store_avg_rating);
+
+            $dataArray = $data->toArray();
+
+            // Remove nested commission info from store
+            if (isset($dataArray['product']['store']['country_info']['affiliate_commission_info'])) {
+                unset($dataArray['product']['store']['country_info']['affiliate_commission_info']);
+            }
+
+            $dataArray['average_rating'] = $averageRating;
+            $dataArray['affiliate_commission'] = $affiliateCommission;
+
+            return [
+                'status' => 'success',
+                'message' => 'Product details fetched successfully',
+                'data' => $dataArray
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch product detail: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function getMyProducts($request)
     {
         try {
 
@@ -181,6 +256,7 @@ class UserAffiliatedProductService
 
             $query = AffiliateProduct::with([
                     'affiliate_details',
+                    'affiliate_product_link',
                     'product' => function ($q) {
                         $q->with([
                             'brand',
@@ -200,32 +276,32 @@ class UserAffiliatedProductService
                 ])
                 ->where('affiliate_id', $request->user_id);
 
-                if (!empty($request->search)) {
-                    $query->whereHas('product', function ($q) use ($request) {
-                        $q->where('product_name_en', 'like', '%' . $request->search . '%');
-                    });
-                }
+            if (!empty($request->search)) {
+                $query->whereHas('product', function ($q) use ($request) {
+                    $q->where('product_name_en', 'like', '%' . $request->search . '%');
+                });
+            }
 
-                if (!empty($request->from) && empty($request->to)) {
-                    $query->whereHas('product', function ($q) use ($request) {
-                        $q->whereDate('created_at', '>=', $request->from);
-                    });
-                }
+            if (!empty($request->from) && empty($request->to)) {
+                $query->whereHas('product', function ($q) use ($request) {
+                    $q->whereDate('created_at', '>=', $request->from);
+                });
+            }
 
-                if (empty($request->from) && !empty($request->to)) {
-                    $query->whereHas('product', function ($q) use ($request) {
-                        $q->whereDate('created_at', '<=', $request->to);
-                    });
-                }
+            if (empty($request->from) && !empty($request->to)) {
+                $query->whereHas('product', function ($q) use ($request) {
+                    $q->whereDate('created_at', '<=', $request->to);
+                });
+            }
 
-                if (!empty($request->from) && !empty($request->to)) {
-                    $query->whereHas('product', function ($q) use ($request) {
-                        $q->whereBetween('created_at', [
-                            $request->from,
-                            $request->to
-                        ]);
-                    });
-                }
+            if (!empty($request->from) && !empty($request->to)) {
+                $query->whereHas('product', function ($q) use ($request) {
+                    $q->whereBetween('created_at', [
+                        $request->from,
+                        $request->to
+                    ]);
+                });
+            }
 
             $query->orderBy('id', 'desc');
 
@@ -239,7 +315,10 @@ class UserAffiliatedProductService
                 ];
             }
 
-            $data->getCollection()->transform(function ($product) {
+            // Transform each AffiliateProduct
+            $data->getCollection()->transform(function ($affiliateProduct) {
+
+                $product = $affiliateProduct->product;
 
                 $averageRating = [
                     'product' => round($product->product_avg_rating ?? 0),
@@ -247,16 +326,15 @@ class UserAffiliatedProductService
                 ];
 
                 $commission = $product->store?->country_info?->affiliate_commission_info?->commission;
-
                 $affiliateCommission = round((float) ($commission ?? 0));
 
-                unset($product->product_avg_rating);
-                unset($product->store_avg_rating);
+                unset($product->product_avg_rating, $product->store_avg_rating);
 
-                $productArray = $product->toArray();
+                $productArray = $affiliateProduct->toArray();
 
-                if (isset($productArray['store']['country_info']['affiliate_commission_info'])) {
-                    unset($productArray['store']['country_info']['affiliate_commission_info']);
+                // Remove nested commission info from store
+                if (isset($productArray['product']['store']['country_info']['affiliate_commission_info'])) {
+                    unset($productArray['product']['store']['country_info']['affiliate_commission_info']);
                 }
 
                 $productArray['average_rating'] = $averageRating;

@@ -27,4 +27,5 @@ class AffilatedUser extends Authenticatable
      public function country_details(){
       return $this->belongsTo(all_countrie::class,'country_code','dial_code');
      }
+
 }

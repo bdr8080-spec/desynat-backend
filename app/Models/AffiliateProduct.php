@@ -17,4 +17,9 @@ class AffiliateProduct extends Model
         return $this->hasOne(product::class,'id','product_id');
     }
 
+    public function affiliate_product_link()
+    {
+        return $this->hasOne(ProductLink::class, 'product_id', 'product_id');
+    }
+
 }

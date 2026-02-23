@@ -223,6 +223,7 @@ Route::get('/getRecentSearchData', [UserAffiliatedProductController::class,'getR
 Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,'getRecommendedSearchData']);
  Route::get('/getLatestSearchData', [UserAffiliatedProductController::class,'getRecentSearchData']);
  Route::get('/product_filter_keys', [UserAffiliatedProductController::class,'product_filter_keys']);
+ Route::get('/get_my_product_detail', [UserAffiliatedProductController::class,'get_my_product_detail']);
 
 
 });
