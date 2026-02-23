@@ -306,7 +306,7 @@
                                                 <th scope="row">{{ $index + 1 }}</th>
                                                 <td>#{{ $data['order_id'] }}</td>
                                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['first_name'] }}</td>
-                                                <td>{{ $data['seller_details']['country_details']['name'] }}</td>
+                                                <td>{{ $data['seller_details']['country_details']['name']??'N/A' }}</td>
                                                 <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}</td>
                                             </tr>
@@ -381,7 +381,7 @@
                                                 <th scope="row">{{ $index + 1 }}</th>
                                                 <td>#{{ $data['order_id'] }}</td>
                                                 <td>{{ $data['seller_details']['first_name'] }} {{ $data['seller_details']['first_name'] }}</td>
-                                                <td>{{ $data['seller_details']['country_details']['name'] }}</td>
+                                                <td>{{ $data['seller_details']['country_details']['name']??'N/A' }}</td>
                                                 <td>{{ $data['created_at']->format('jS F Y | h:i A') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($data['timeslot_details']['date'])->format('jS F Y') }} | {{ $data['timeslot_details']['from'] }}</td>
                                                 <td>{{ $data['reject_reason'] }}</td>
