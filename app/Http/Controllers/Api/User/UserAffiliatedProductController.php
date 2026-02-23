@@ -159,6 +159,86 @@ class UserAffiliatedProductController extends Controller
             return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
         }
     }
+
+    public function product_search(Request $request){
+
+
+    $user_id=$request->user()->id;
+
+     $request_data=(object)[
+        'user_id'=>$user_id,
+        'search' =>$request->search,
+        'sort_filter'=> $request->sort_filter,
+        'brand_id'     => is_array($request->brand_id) ? $request->brand_id : [],     
+        'category_id'  => is_array($request->category_id) ? $request->category_id : [],   
+        'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
+        'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
+        'price_min'    => $request->price_min ?? null,
+        'price_max'    => $request->price_max ?? null,
+        'attributes'    => $request->attributes_data ?? null,
+       ];
+
+     $data=$this->UserAffiliatedProductService->ProductSearch($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+    public function getRecentSearchData(Request $request){
+
+    $user_id=$request->user()->id;
+
+     $request_data=(object)[
+        'user_id'=>$user_id,
+        ];
+
+     $data=$this->UserAffiliatedProductService->HomeRecentSearchList($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+
+
+public function getRecommendedSearchData(Request $request){
+
+    $user_id=$request->user()->id;
+
+     $request_data=(object)[
+        'user_id'=>$user_id,
+        ];
+
+     $data=$this->UserAffiliatedProductService->Recommanded_HomeRecentSearchList($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
+
+    public function product_filter_keys(Request $request){
+
+     $data=$this->UserAffiliatedProductService->get_store_filter();
+
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }
     
     
 

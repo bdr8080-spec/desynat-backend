@@ -218,6 +218,11 @@ Route::get('/get_my_products', [UserAffiliatedProductController::class,'get_my_p
 Route::get('/get_product_detail', [UserAffiliatedProductController::class,'get_product_detail']);
 Route::post('/add_to_my_products', [UserAffiliatedProductController::class,'add_to_my_products']);
 Route::post('/generate_product_link', [UserAffiliatedProductController::class,'generate_product_link']);
+Route::post('/product_search', [UserAffiliatedProductController::class,'product_search']);
+Route::get('/getRecentSearchData', [UserAffiliatedProductController::class,'getRecentSearchData']);
+Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,'getRecommendedSearchData']);
+ Route::get('/getLatestSearchData', [UserAffiliatedProductController::class,'getRecentSearchData']);
+ Route::get('/product_filter_keys', [UserAffiliatedProductController::class,'product_filter_keys']);
 
 
 });
