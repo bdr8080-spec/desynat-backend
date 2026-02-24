@@ -429,7 +429,7 @@ class UserAffiliatedProductService
 
             if ($alreadyAdded) {
                 return [
-                    'status' => 'error',
+                    'status' => 'success',
                     'message' => 'Product Link already added to this affiliate',
                     'data' => $alreadyAdded
                 ];
