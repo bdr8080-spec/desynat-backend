@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'prevent-back-history' => DisableBackBtn::class, // Add this line
             'seller_login' =>SellerAuthenticated::class,
             'LowerUrl' => ForceLowercaseUrl::class,
-            'Affiliate_user' => AffiliateLoginCheck::class,    
+            'Affiliate_user' => AffiliateLoginCheck::class, // Login Route check   
             'optional.auth' => OptionalAuth::class,          
         ]);
     })

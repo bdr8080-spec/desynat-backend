@@ -16,7 +16,7 @@ class AffiliateLoginCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('affilated_user')->check()) {
+        if (Auth::guard('affilated_user')->check()) {  //if The user is login go to dashboard page
             return redirect()->route('affiliate.affiliateDashboard');
         }
 
