@@ -543,6 +543,10 @@ if (!empty($data->category_id) && is_array($data->category_id)) {
     $products->whereIn('category_id', array_map('intval', $data->category_id));
 }
 
+if (!empty($data->subcategory_id) && is_array($data->subcategory_id)) {
+    $products->whereIn('subcategory_id', array_map('intval', $data->subcategory_id));
+}
+
 // if (!empty($data->search)) {
 
 

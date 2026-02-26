@@ -200,6 +200,8 @@ class UserAffiliatedProductController extends Controller
         'sort_filter'=> $request->sort_filter,
         'brand_id'     => is_array($request->brand_id) ? $request->brand_id : [],     
         'category_id'  => is_array($request->category_id) ? $request->category_id : [],   
+        'subcategory_id'  => is_array($request->subcategory_id) ? $request->subcategory_id : [],   
+        
         'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
         'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
         'price_min'    => $request->price_min ?? null,
