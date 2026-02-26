@@ -124,9 +124,11 @@ class SellerLiveRequestService
             $query->where('seller_id', $request_data->seller_id);
 
             if (!empty($request_data->search)) {
-                $query->whereHas('timeslot_details', function ($q) use ($request_data) {
-                    $q->whereDate('date', $request_data->search);
-                });
+                
+                $query->where('order_id','like','%'.$request_data->search.'%');
+                // $query->whereHas('timeslot_details', function ($q) use ($request_data) {
+                //     $q->whereDate('date', $request_data->search);
+                // });
             }
 
             if (!empty($request_data->from) && empty($request_data->to)) {
