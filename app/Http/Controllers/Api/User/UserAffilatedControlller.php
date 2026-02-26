@@ -685,7 +685,9 @@ public function update_affiliate_password(Request $reqest)
 
     $request_data = (object) [
         'user_id' => $affilated_user,
-        'password' => $reqest->password
+        'password' => $reqest->password,
+        "old_password"=>$reqest->old_password
+
     ];
 
     $data = $this->UserAffilatedAuthService->updatePassword($request_data);
