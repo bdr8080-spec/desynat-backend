@@ -68,7 +68,7 @@
         <div class="mt-4">
             <form method="GET" action="{{ route('admin.productManagement') }}" id="filterForm">
             <div class="row align-items-end">
-                <div class="col-lg-3 col-md-12 col-12">
+                <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
                         <label for="status" class="form-label">Country</label>
                         <select name="country" id="country"
@@ -84,7 +84,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-12 col-12">
+                <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
                         <label for="status" class="form-label">Category</label>
                         <select name="category" id="category"
@@ -101,7 +101,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-12 col-12">
+                <div class="col-lg-2 col-md-12 col-12">
                     <div class="form-group mt-4 w-100">
                         <label for="status" class="form-label">Sub-Category</label>
                         <select name="subcategory" id="subcategory"
@@ -117,7 +117,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-12">
+                <div class="col-lg-2 col-md-4 col-12">
                     <div class="form-group mt-4 w-100">
                         <label for="status" class="form-label">Brand</label>
                         <select name="brand" id="brand"
@@ -133,7 +133,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-4 col-12 ">
+                <div class="col-lg-1 col-md-4 col-12 ">
                     <div class="d-flex gap-3 justify-content-end" >
                         <a href="{{route('admin.productManagement')}}" class="btn btn-dark customBtn"
                             style="margin-top: 60px">
@@ -307,7 +307,7 @@
 
 <!-- size chart modal -->
 <div class="modal fade" id="sizeChartModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
 
             <div class="modal-header">
@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         </div>
 
-                        <div class="variant-right text-center">
+                        <div class="variant-right  text-center">
                             ${imageHtml}
                         </div>
                     </div>
