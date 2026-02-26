@@ -56,11 +56,11 @@
         </div>
 
         <div class="col-lg-3 col-md-4 col-12">
-            <div class="d-flex justify-content-end">
+            <!-- <div class="d-flex justify-content-end">
                 <a class="btn btn-dark customBtn" href="">
                     <span>Export in Excel</span>
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             variants.forEach((variant, index) => {
 
-                let discountText = 'N/A';
+                let discountText = '';
                 if (variant.discount_value) {
                     discountText = variant.discount_value +
                         (variant.discount_type == 1 ? ' %' : ' KD');
@@ -458,6 +458,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     imageHtml = `<img src="${images[0]}" class="img-fluid" style="max-height:150px;">`;
                 }
 
+                // Helper to create row only if value exists
+                function createRow(label, value, suffix = '') {
+                    if (value === null || value === undefined || value === '') {
+                        return '';
+                    }
+                    return `<div class="v-row"><span>${label}</span><span>${value}${suffix}</span></div>`;
+                }
+
                 const html = `
                 <div class="variant-box ${index !== 0 ? 'mt-4' : ''}">
                     <h6 class="variant-heading">Variant ${index + 1}</h6>
@@ -465,19 +473,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="variant-inner">
                         <div class="variant-left">
 
-                            <div class="v-row"><span>Color</span><span>${valueOrNA(variant.color?.name)}</span></div>
-                            <div class="v-row"><span>Size</span><span>${valueOrNA(variant.size?.name)}</span></div>
-                            <div class="v-row"><span>Bust</span><span>${valueOrNA(variant.bust)}</span></div>
-                            <div class="v-row"><span>Waist</span><span>${valueOrNA(variant.waist)}</span></div>
-                            <div class="v-row"><span>Hip</span><span>${valueOrNA(variant.hip)}</span></div>
-                            <div class="v-row"><span>Shoulder</span><span>${valueOrNA(variant.shoulder)}</span></div>
-                            <div class="v-row"><span>Sleeve Length</span><span>${valueOrNA(variant.sleeve_length)}</span></div>
-                            <div class="v-row"><span>Length</span><span>${valueOrNA(variant.length)}</span></div>
-                            <div class="v-row"><span>Total Stock</span><span>${valueOrNA(variant.total_stock)}</span></div>
-                            <div class="v-row"><span>SKU</span><span>${valueOrNA(variant.sku)}</span></div>
-                            <div class="v-row"><span>Price</span><span>${valueOrNA(variant.actual_price)} KD</span></div>
-                            <div class="v-row"><span>Discount</span><span>${discountText}</span></div>
-                            
+                            ${createRow('Color', variant.color?.name)}
+                            ${createRow('Size', variant.size?.name)}
+                            ${createRow('Bust', variant.bust)}
+                            ${createRow('Waist', variant.waist)}
+                            ${createRow('Hip', variant.hip)}
+                            ${createRow('Shoulder', variant.shoulder)}
+                            ${createRow('Sleeve Length', variant.sleeve_length)}
+                            ${createRow('Length', variant.length)}
+                            ${createRow('Total Stock', variant.total_stock)}
+                            ${createRow('SKU', variant.sku)}
+                            ${createRow('Price', variant.actual_price, ' KD')}
+                            ${createRow('Discount', discountText)}
 
                         </div>
 
