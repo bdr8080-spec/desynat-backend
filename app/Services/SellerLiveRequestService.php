@@ -164,14 +164,15 @@ class SellerLiveRequestService
 
                     $now = Carbon::now();
 
-                    $query->whereHas('timeslot_details', function ($q) use ($now) {
-                        $q->whereRaw("
-                            STR_TO_DATE(
-                                CONCAT(date, ' ', `to`),
-                                '%Y-%m-%d %h:%i %p'
-                            ) < ?
-                        ", [$now]);
-                    });
+                    $query->whereNotIn('admin_verify', ['0', '2', '3']) 
+                        ->whereHas('timeslot_details', function ($q) use ($now) {
+                                $q->whereRaw("
+                                    STR_TO_DATE(
+                                        CONCAT(date, ' ', `to`),
+                                        '%Y-%m-%d %h:%i %p'
+                                    ) < ?
+                                ", [$now]);
+                        });
                 }
 
                 //  Cancelled
