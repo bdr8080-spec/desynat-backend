@@ -465,13 +465,13 @@ function addBankDetails($request_data)
             ];
         $bank = Bankdetails::create($data);
 
-       if($bank){  
-        AffilatedUser::where('id', $request_data->affilated_user)
-            ->update([
-                'bank_update_status' => '1',
-                'admin_verify'       => '1'
-            ]);
-        }
+    //    if($bank){  
+        // AffilatedUser::where('id', $request_data->affilated_user)
+        //     ->update([
+        //         'bank_update_status' => '1',
+        //         'admin_verify'       => '1'
+        //     ]);
+        // }
 
         return [
             'status'  => 'success',
