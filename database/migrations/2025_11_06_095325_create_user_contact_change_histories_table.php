@@ -13,12 +13,17 @@ return new class extends Migration
     {
         Schema::create('user_contact_change_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id') ->constrained() ->onDelete('cascade'); 
+            // $table->foreignId('user_id') ->constrained() ->onDelete('cascade'); 
+            $table->integer('user_id');
+            $table->enum('change_table', ['1', '2']) ->default('1') ->comment('1 = user , 2 = Affilaited user');
+
             $table->string('email')->nullable();
             $table->string('country_code', 10)->nullable(); 
             $table->string('mobile', 20)->nullable(); 
             $table->enum('otp_verify', ['0', '1']) ->default('0') ->comment('0 = not verified, 1 = verified'); 
             $table->enum('status', ['0', '1']) ->default('0') ->comment('0 = inactive, 1 = active');
+
+            
             $table->timestamps();
         });
     }

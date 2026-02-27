@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\UserAffilatedController;
+use App\Http\Controllers\User\UserAffiliatedProfileController;
 
 
  Route::group(['prefix' => 'user','middleware'=>['Affiliate_user']  ], function () { 
@@ -15,13 +16,14 @@ Route::match(['get', 'post'], '/affiliate-forgot-password', [UserAffilatedContro
 Route::match(['get', 'post'], '/affiliate-create-password', [UserAffilatedController::class, 'userCreatePassword'])->name('affiliate.userCreatePassword');  
 Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::class, 'affiliate_signup'])->name('affiliate.affiliate_signup');
 
- Route::post('/resend-otp', [UserAffilatedController::class, 'resendOtp'])->name('affiliate_signupResendOtp');
+Route::post('/resend-otp', [UserAffilatedController::class, 'resendOtp'])->name('affiliate_signupResendOtp');
 
 
 });
 
-// M7 Code 
+ Route::group(['middleware'=>['Affiliate_user']  ], function () { 
 
+// M7 Code 
  Route::get('/logout',[UserAffilatedController::class,'userLogout'])->name('affiliateLogout');
 
  Route::match(['get','post'],'/affiliate-add-address', [UserAffilatedController::class,'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
@@ -30,11 +32,22 @@ Route::match(['get', 'post'], '/affiliate-signup', [UserAffilatedController::cla
  
  Route::match(['get','post'],'/review_submit_page', [UserAffilatedController::class,'affiliatereview_submit_page'])->name('affiliate.affiliatereview_submit_page');
    
-
 //  Affiliate_user
 
  Route::get('/affiliate-dashboard', [UserAffilatedController::class,'affiliateDashboard'])->name('affiliate.affiliateDashboard');
  Route::match(['get', 'post'], '/affiliate-reverify-Document', [UserAffilatedController::class, 'affiliatereverifyDocument'])->name('affiliate.affiliatereverifyDocument');
+
+
+Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileController::class, 'affiliateProfile'])->name('affiliate.affiliateProfile');
+
+
+
+
+
+
+
+});
+
 
 //  Affiliate_user profile
 

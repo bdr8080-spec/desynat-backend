@@ -2641,15 +2641,14 @@ a.text {
   }
   
   .variant-right {
-    width: 120px;
-    height: 120px;
-    background: #e0e0e0;
-    border: 1px solid #aaa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 36px;
-    color: #444;
+  height: 140px;
+  overflow: hidden;
+  width: 140px;
+  }
+  .variant-right  img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
   .size-chart-img {
     max-width: 100%;

@@ -226,6 +226,12 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
  Route::get('/get_my_product_detail', [UserAffiliatedProductController::class,'get_my_product_detail']);
 
 
+
+  Route::post('/change-mobile-number', [UserAffiliatedProductController::class, 'changeMobileNumber']);
+  Route::post('/verify-otp', [UserAffiliatedProductController::class, 'verifyOtp']);
+
+
+
 });
 
 

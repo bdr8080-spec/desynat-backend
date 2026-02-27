@@ -665,6 +665,14 @@ function updatePassword($request)
         ];
     }
 
+      if (!Hash::check($request->old_password, $user->password)) {
+        return [
+            'status'  => 'error',
+            'message' => 'Old Password is not correct ',
+            'data'    => (object) []
+        ];
+    }
+
     if (Hash::check($request->password, $user->password)) {
         return [
             'status'  => 'error',

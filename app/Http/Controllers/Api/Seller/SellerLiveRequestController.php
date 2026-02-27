@@ -40,9 +40,11 @@ class SellerLiveRequestController extends Controller
             //$country = country::where('dial_code',$seller_details->country_code)->first();
             //dd($country);
 
+
             $request_data=(object )[
                 'country_id'=>$seller_store_country,
-                "date"=>$request->date
+                "date"=>$request->date,
+                'seller_id'=>$seller_details->id,
             ];
 
             $data = $this->SellerLiveRequestService->getTimeslots($request_data);
