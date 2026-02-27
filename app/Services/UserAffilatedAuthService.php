@@ -717,6 +717,36 @@ function deleteBankAccount($request)
 
 
 
+function default_affiliate_bank_details($request){
+
+try{
+
+  $request_data=[
+    "type"=>"3",
+    'user_id'=>$request->affilated_user,
+  ];
+
+    $check=  Bankdetails::where($request_data)->update(['default_account'=>'0']); // remove old default
+
+    if($check){
+
+    $check=  Bankdetails::where('id',$request->id)->update(['default_account'=>'0']); // add new default
+
+     return ['status'=>'success','message'=>"Bank details default succesfully",'data'=>$check];            
+    }
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update Affliated status: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+
+
+    }
+
+
 
 
 

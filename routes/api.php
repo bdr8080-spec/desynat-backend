@@ -206,6 +206,7 @@ Route::post('/affilated-dashboard', [UserAffilatedControlller::class,'affilatedD
 Route::post('/upload-Reverify-document', [UserAffilatedControlller::class,'uploadReverifydocument']);
 
 Route::get('/get_affiliate_profile', [UserAffilatedControlller::class,'get_affiliate_profile']);
+
 Route::post('/update_affiliate_profile', [UserAffilatedControlller::class,'update_affiliate_profile']);
 Route::post('/update_affiliate_address', [UserAffilatedControlller::class,'update_affiliate_address']);
 Route::post('/update_affiliate_bank_details', [UserAffilatedControlller::class,'update_affiliate_bank_details']);
@@ -229,6 +230,10 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
 
   Route::post('/change-mobile-number', [UserAffiliatedProductController::class, 'changeMobileNumber']);
   Route::post('/verify-otp', [UserAffiliatedProductController::class, 'verifyOtp']);
+
+
+  Route::post('/default_affiliate_bank_details', [UserAffilatedControlller::class,'default_affiliate_bank_details']);
+
 
 
 

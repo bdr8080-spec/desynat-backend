@@ -739,6 +739,34 @@ public function delete_affiliate_bank_account(Request $request){
 
 
 
+public function default_affiliate_bank_details(Request $request){
+    
+        $validate = Validator::make($request->all(), [
+            'id' => 'required|exists:bankdetails,id',
+            ]);
+
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $affilated_user = $request->user()->id;
+
+     $request_data=(object) [
+    'affilated_user'=>$affilated_user,
+    'id'=>$request->id,
+    ];
+
+  $data=$this->UserAffilatedAuthService->default_affiliate_bank_details($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    }
+
+
 
 
      
