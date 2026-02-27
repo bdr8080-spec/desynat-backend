@@ -315,9 +315,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body text-center">
-                <a href="#" target="_blank" id="sizeChartLink">
-                    <img src="" alt="Size Chart" class="size-chart-img img-fluid" id="sizeChartImage" />
+            <div class="modal-body text-center chart-img">
+                <a href="#" target="_blank" id="sizeChartLink" class="size-chart-img">
+                    <img src="" alt="Size Chart" class="size-chart-img" id="sizeChartImage" />
                 </a>
             </div>
 
@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (imageUrl && imageUrl !== 'null') {
                 modalImage.src = imageUrl;
                 imageLink.href = imageUrl; 
-                modalImage.style.display = 'block';
+                modalImage.style.display = 'inline-block';
             } else {
                 modalImage.src = '';
                 imageLink.href = '#';

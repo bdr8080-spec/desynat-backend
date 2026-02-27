@@ -129,7 +129,7 @@
 
     <li class="nav-item {{ Request::routeIs('admin.productManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.productManagement') }}">
-            <span><img src="{{ asset('admin/image/brand-icon.svg') }}" alt="Product Management" /></span>
+            <span><img src="{{ asset('admin/image/list.svg') }}" alt="Product Management" /></span>
             Product Management
         </a>
     </li>
