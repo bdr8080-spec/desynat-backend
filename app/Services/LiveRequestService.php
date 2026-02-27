@@ -314,7 +314,8 @@ class LiveRequestService
                 'timeslot_details',
                 'timeslot_details.country_info',
                 'seller_details',
-                'seller_details.country_details'
+                'seller_details.country_details',
+                'seller_details.store_info.country_info'
             ]);
             $query->where('admin_verify', $req->type);
 
@@ -337,7 +338,7 @@ class LiveRequestService
             if ($req->filled('country')) {
                 $country = $req->input('country');
 
-                $query->whereHas('seller_details.country_details', function ($q) use ($country) {
+                $query->whereHas('seller_details.store_info.country_info', function ($q) use ($country) {
                     $q->where('name', 'like', '%' . $country . '%');
                 });
             }
@@ -345,6 +346,7 @@ class LiveRequestService
             $query->orderBy('id', 'desc');
 
             $req_details = $query->paginate($limit);
+            //dd($req_details);
 
             if ($req_details->isEmpty()) {
                 return [
