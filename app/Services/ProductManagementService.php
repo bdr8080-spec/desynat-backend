@@ -163,7 +163,7 @@ class ProductManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Product found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
