@@ -56,7 +56,7 @@ class WebSellerDashboard extends Controller
 
             $request_data=(object )[
                 'seller_id'=>$seller_details->id,
-                'country_id' =>$seller_details->store_info->country
+                'country_id' =>@$seller_details->store_info->country
             ];
     
           $plans= $this->SellerAuthService->seller_allPlan($request_data);
