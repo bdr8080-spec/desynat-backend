@@ -72,7 +72,7 @@
                     </ul> -->
                 </li>
 
-                
+
 
                 <!-- End Messages Nav -->
 
@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a class="drop-profile" href="/profile">
+                                <a class="drop-profile" href="{{route('affiliate.affiliateProfile')}}">
                                     <span>View Profile</span>
                                 </a>
                             </div>
@@ -116,7 +116,7 @@
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <img id="selectedFlag" src="{{asset('user/assets/images/flags/kuwait.svg')}}"
-                                class="img-fluid" />
+                                    class="img-fluid" />
                             </button>
                             <ul class="dropdown-menu kwdrop-panel">
                                 <li class="d-flex align-self-center justify-content-between topDropdonw">
@@ -267,7 +267,7 @@
                                         </label>
                                     </div>
                                 </li>
-                              
+
 
                                 <li class="country-mt p-3 mt-4">
                                     <button type="button" class="btn affiliate-btn w-100">Save</button>

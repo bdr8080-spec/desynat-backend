@@ -43,8 +43,6 @@ Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileContro
 
 
 
-
-
 // });
 
 
