@@ -21,7 +21,7 @@ Route::post('/resend-otp', [UserAffilatedController::class, 'resendOtp'])->name(
 
 });
 
- Route::group(['middleware'=>['Affiliate_user']  ], function () { 
+//  Route::group(['middleware'=>['Affiliate_user']  ], function () { 
 
 // M7 Code 
  Route::get('/logout',[UserAffilatedController::class,'userLogout'])->name('affiliateLogout');
@@ -45,8 +45,7 @@ Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileContro
 
 
 
-
-});
+// });
 
 
 //  Affiliate_user profile
