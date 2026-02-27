@@ -118,7 +118,14 @@ class ProductManagementService
 
             // Search filter
             if ($request->filled('search')) {
-                $query->where('product_name_en', 'like', '%' . $request->search . '%');
+                $search = $request->search;
+
+                $query->where(function ($q) use ($search) {
+                    $q->where('product_name_en', 'like', '%' . $search . '%')
+                    ->orWhereHas('brand', function ($brandQuery) use ($search) {
+                        $brandQuery->where('name_english', 'like', '%' . $search . '%');
+                    });
+                });
             }
 
             // ✅ Convert single values to arrays to keep service consistent
@@ -163,7 +170,7 @@ class ProductManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Product found',
-                    'data' => []
+                    'data' => (object) []
                 ];
             }
 
