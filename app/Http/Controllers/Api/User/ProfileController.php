@@ -335,15 +335,15 @@ class ProfileController extends Controller
     // fetch sub category
     public function getSubCategories(Request $request)
     {
-        $rules = [
-            'category_id' => 'required|integer|exists:categories,id'
-        ];
+        // $rules = [
+        //     'category_id' => 'required|integer|exists:categories,id'
+        // ];
 
-        $validator = Validator::make($request->all(), $rules);
+        // $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
-               return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
-        }
+        // if ($validator->fails()) {
+        //        return ApiResponse::generateResponse('error', $validator->errors()->first(), $validator->errors(), 422);
+        // }
 
 
          $data = $this->UserProfileService->getSubCategories($request);

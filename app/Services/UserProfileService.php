@@ -87,12 +87,16 @@ class UserProfileService
         // return ApiResponse::generateResponse('error', 'Invalid OTP. Please try again.', (object)[], 400);
     }
 
-
-
     // getSubCategory
     public function getSubCategories($request){
-        $subCategory = SubCategory::where('category_id', $request->category_id)->where('status','1')->get();
 
+        if(isset($request->category_id)){
+            $subCategory = SubCategory::where('category_id', $request->category_id)->where('status','1')->get();
+
+        }else{
+            $subCategory = SubCategory::where('status','1')->get();
+        }
+        
         if ($subCategory->isEmpty()) {
              return ['status'=>'success','message'=>"No sub categories found",'data'=>[]];
             // return ApiResponse::generateResponse('success', 'No sub categories found', (object)[], 200);
