@@ -1661,6 +1661,8 @@ public function Update_affilate_commission_Inventory($request){
         if($seller_details){
         $seller_details->update(['affilate_commission'=> $request->affilate_commission]);
 
+        product::where('affiliated_product','1')->where('seller_id',$request->seller_id)->update(['affiliated_commission'=>$request->affilate_commission]); // update Affilated commision on product table
+
         }
 
         if($seller_details){
