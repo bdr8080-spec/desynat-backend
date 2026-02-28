@@ -614,6 +614,7 @@ if (
         $q->when($data->discount, function ($query) use ($data) {
         $query->whereRaw('CAST(discount_value AS DECIMAL(10,2)) <= ?', [$data->discount]);
         });
+        
 
         // if (!empty($data->discount)) {
         //     $q->where('discount_value', '<=', $data->discount);
