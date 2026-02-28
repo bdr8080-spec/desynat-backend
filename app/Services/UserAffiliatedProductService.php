@@ -595,25 +595,38 @@ if (
             $q->whereIn('color_id', array_map('intval', $data->color_id));
         }
 
-        // if (!empty($data->price_min)) {
-        //     $q->where('final_price', '>=', $data->price_min);
-        // }
+        if (!empty($data->price_min)) {
+               $q->whereRaw('CAST(final_price AS DECIMAL(10,2)) >= ?', [$data->price_min]);
+        
+        }
 
+        if (!empty($data->price_max)) {
+               $q->whereRaw('CAST(final_price AS DECIMAL(10,2)) <= ?', [$data->price_max]);
+        }
+
+         if (!empty($data->discount)) {
+        $q->where('discount_type','1') 
+        ->whereRaw('CAST(discount_value AS DECIMAL(10,2)) = ?', [$data->discount]);
+      
+        }
+        
         // if (!empty($data->price_max)) {
         //     $q->where('final_price', '<=', $data->price_max);
         // }
 
-        $q->when($data->price_min, function ($query) use ($data) {
-        $query->whereRaw('CAST(final_price AS DECIMAL(10,2)) >= ?', [$data->price_min]);
-        });
+        // $q->when($data->price_min, function ($query) use ($data) {
+        // $q->whereRaw('CAST(final_price AS DECIMAL(10,2)) >= ?', [$data->price_min]);
+        // });
 
-        $q->when($data->price_max, function ($query) use ($data) {
-        $query->whereRaw('CAST(final_price AS DECIMAL(10,2)) <= ?', [$data->price_max]);
-        });
+        // $q->when($data->price_max, function ($query) use ($data) {
+        // $q->whereRaw('CAST(final_price AS DECIMAL(10,2)) <= ?', [$data->price_max]);
+        // });
 
-        $q->when($data->discount, function ($query) use ($data) {
-        $query->whereRaw('CAST(discount_value AS DECIMAL(10,2)) <= ?', [$data->discount]);
-        });
+        // $q->when($data->discount, function ($query) use ($data) {
+
+        // $q->where('discount_type','1') 
+        // ->whereRaw('CAST(discount_value AS DECIMAL(10,2)) >= ?', [$data->discount]);
+        // });
         
 
         // if (!empty($data->discount)) {
