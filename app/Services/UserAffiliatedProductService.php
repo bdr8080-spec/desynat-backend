@@ -498,9 +498,14 @@ $attributes = is_array($data->attributes ?? null)
     : [];
 
 
+    // get affilated add products list id
+
+$Affilate_listed_products = AffiliateProduct::where('affiliate_id',$data->user_id)->pluck('product_id');
+
 $products = product::
 where('affiliated_product','1')->
-with([
+whereNotIn('id',$Affilate_listed_products)
+->with([
     'brand',
     'category',
     'subcategory',
@@ -590,17 +595,29 @@ if (
             $q->whereIn('color_id', array_map('intval', $data->color_id));
         }
 
-        if (!empty($data->price_min)) {
-            $q->where('final_price', '>=', $data->price_min);
-        }
+        // if (!empty($data->price_min)) {
+        //     $q->where('final_price', '>=', $data->price_min);
+        // }
 
-        if (!empty($data->price_max)) {
-            $q->where('final_price', '<=', $data->price_max);
-        }
+        // if (!empty($data->price_max)) {
+        //     $q->where('final_price', '<=', $data->price_max);
+        // }
 
-        if (!empty($data->discount)) {
-            $q->where('discount_value', '<=', $data->discount);
-        }
+        $q->when($data->price_min, function ($query) use ($data) {
+        $query->whereRaw('CAST(final_price AS DECIMAL(10,2)) >= ?', [$data->price_min]);
+        });
+
+        $q->when($data->price_max, function ($query) use ($data) {
+        $query->whereRaw('CAST(final_price AS DECIMAL(10,2)) <= ?', [$data->price_max]);
+        });
+
+        $q->when($data->discount, function ($query) use ($data) {
+        $query->whereRaw('CAST(discount_value AS DECIMAL(10,2)) <= ?', [$data->discount]);
+        });
+
+        // if (!empty($data->discount)) {
+        //     $q->where('discount_value', '<=', $data->discount);
+        // }
     });
 }
 
