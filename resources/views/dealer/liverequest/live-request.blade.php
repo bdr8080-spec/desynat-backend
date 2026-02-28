@@ -12,8 +12,9 @@
             <div class="search-field">
                 <div class="from-group position-relative">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
-                    <input type="search" class="dt-input tableSearch form-control @if(count($data) > 0)) tableSearch @endif" id="customTableSearch" data-table="table1"
-                        placeholder="Search" aria-controls="table1">
+                    <input type="search"
+                        class="dt-input tableSearch form-control @if(count($data) > 0)) tableSearch @endif"
+                        id="customTableSearch" data-table="table1" placeholder="Search" aria-controls="table1">
                 </div>
             </div>
 
@@ -83,53 +84,49 @@
                         <td>{{ $req['timeslot_details']['date'] }} at {{ $req['timeslot_details']['from'] }}</td>
                         <td>
                             @php
-                                $now = \Carbon\Carbon::now();
+                            $now = \Carbon\Carbon::now();
 
-                                $timeslotDate = $req['timeslot_details']['date'] ?? null;
-                                $timeslotTo = $req['timeslot_details']['to'] ?? null;
+                            $timeslotDate = $req['timeslot_details']['date'] ?? null;
+                            $timeslotTo = $req['timeslot_details']['to'] ?? null;
 
-                                $timeslotDateTime = null;
+                            $timeslotDateTime = null;
 
-                                if ($timeslotDate && $timeslotTo) {
-                                    // Combine date and time into a single Carbon object
-                                    $timeslotDateTime = \Carbon\Carbon::parse($timeslotDate . ' ' . $timeslotTo);
-                                }
+                            if ($timeslotDate && $timeslotTo) {
+                            // Combine date and time into a single Carbon object
+                            $timeslotDateTime = \Carbon\Carbon::parse($timeslotDate . ' ' . $timeslotTo);
+                            }
                             @endphp
 
                             @if($req['admin_verify'] == '0')
-                                <span style="color: #f97316;">Pending</span>
+                            <span style="color: #f97316;">Pending</span>
                             @elseif($req['admin_verify'] == '2')
-                                <span style="color: #ef4444;">Rejected</span>
+                            <span style="color: #ef4444;">Rejected</span>
                             @elseif($req['admin_verify'] == '3')
-                                <span style="color: #ef4444;">Cancelled</span>
+                            <span style="color: #ef4444;">Cancelled</span>
                             @elseif($timeslotDateTime && $timeslotDateTime->lessThanOrEqualTo($now))
-                                <span style="color: #22c55e;">Completed</span>
+                            <span style="color: #22c55e;">Completed</span>
                             @else
-                                <span>Accepted</span>
+                            <span>Accepted</span>
                             @endif
                         </td>
                         <td>
                             @if($req['admin_verify'] == '2' || $req['admin_verify'] == '3')
-                                <a href="javascript:void(0)" class="eyebtn view-reason-btn"
-                                data-bs-toggle="modal" 
+                            <a href="javascript:void(0)" class="eyebtn view-reason-btn" data-bs-toggle="modal"
                                 data-bs-target="#Addreason"
                                 data-status="{{ $req['admin_verify'] == '2' ? 'Rejected' : 'Cancelled' }}"
                                 data-date="{{ \Carbon\Carbon::parse($req['updated_at'])->format('d/m/Y') }}"
                                 data-reason="{{ $req['admin_verify'] == '2' ? ($req['reject_reason'] ?? '-') : ($req['cancel_reason'] ?? '-') }}">
                                 <i class="bi bi-eye"></i>
-                                </a>
+                            </a>
                             @endif
                             @if($req['admin_verify'] == '0')
-                                <!-- <a href="javascript:void(0)" class="eyebtn deleteReq" data-id="{{ $req['id'] }}">
+                            <!-- <a href="javascript:void(0)" class="eyebtn deleteReq" data-id="{{ $req['id'] }}">
                                     <i class="bi bi-trash3"></i>
                                 </a> -->
-                                <a href="javascript:void(0)" 
-                                    class="eyebtn open-cancel-modal" 
-                                    data-id="{{ $req['id'] }}" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#reasonDialog">
-                                    <i class="bi bi-trash3"></i>
-                                </a>
+                            <a href="javascript:void(0)" class="eyebtn open-cancel-modal" data-id="{{ $req['id'] }}"
+                                data-bs-toggle="modal" data-bs-target="#reasonDialog">
+                                <i class="bi bi-trash3"></i>
+                            </a>
                             @endif
                         </td>
                     </tr>
@@ -155,15 +152,15 @@
             <div class="modal-body">
                 <div class="from-group py-3">
                     <label for="">Total Coverages - 03</label>
-                    <input type="date" class="form-control">
-                </div>   
+                    <input type="date" class="form-control" id="live_requestDate">
+                </div>
                 <div class="from-group mb-4">
                     <label for="time">Select Time</label>
                     <div class="time-slot mt-2">
                         <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
                         <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
                     </div>
-                </div>    
+                </div>
 
                 <div class="py-3">
                     <button type="submit" class="btn add-fillbtn w-100">Send Request </button>
@@ -239,13 +236,14 @@
                 <div class="reason-lists">
                     <input type="hidden" id="requestId" value="">
                     <div class="form-group mt-4">
-                        <textarea class="form-control" rows="4" placeholder="Write Here" name="cancel_reason" id="cancel_reason"></textarea>
+                        <textarea class="form-control" rows="4" placeholder="Write Here" name="cancel_reason"
+                            id="cancel_reason"></textarea>
                         <small id="cancelReasonError" class="text-danger" style="display:none;"></small>
                     </div>
                     <div class="py-3">
                         <button type="button" class="btn add-fillbtn w-100" id="submitCancelReason">Submit</button>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
     </div>
@@ -259,15 +257,15 @@
 @include('dealer.layout.footer');
 
 <script>
-    const months = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
+const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+];
 
-    let m = new Date().getMonth();
-    let y = new Date().getFullYear();
+let m = new Date().getMonth();
+let y = new Date().getFullYear();
 
-    function render() {
+function render() {
     $('#daysContainer').html('');
     $('#monthSelect').val(m);
     $('#yearSelect').val(y);
@@ -277,13 +275,15 @@
     for (let d = 1; d <= new Date(y, m + 1, 0).getDate(); d++) {
 
         const dateObj = new Date(y, m, d);
-        const day = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+        const day = dateObj.toLocaleDateString('en-US', {
+            weekday: 'short'
+        });
 
         const active =
             d === today.getDate() &&
             m === today.getMonth() &&
-            y === today.getFullYear()
-            ? 'active' : '';
+            y === today.getFullYear() ?
+            'active' : '';
 
         $('#daysContainer').append(
             `<div class="day ${active}">
@@ -291,68 +291,82 @@
                 <b>${d}</b>
              </div>`
         );
-        
+
     }
 }
 
-    // init
-    months.forEach((x, i) => $('#monthSelect').append(`<option value="${i}">${x}</option>`));
-    for (let i = y - 0; i <= y + 0; i++) $('#yearSelect').append(`<option>${i}</option>`);
+// init
+months.forEach((x, i) => $('#monthSelect').append(`<option value="${i}">${x}</option>`));
+for (let i = y - 0; i <= y + 0; i++) $('#yearSelect').append(`<option>${i}</option>`);
+render();
+
+// events
+$('#monthSelect,#yearSelect').change(() => {
+    m = +$('#monthSelect').val();
+    y = +$('#yearSelect').val();
     render();
+});
 
-    // events
-    $('#monthSelect,#yearSelect').change(() => {
-        m = +$('#monthSelect').val();
-        y = +$('#yearSelect').val();
-        render();
-    });
+$('#prevMonth').click(() => {
+    m--;
+    if (m < 0) {
+        m = 11;
+        y--
+    }
+    render();
+});
+$('#nextMonth').click(() => {
+    m++;
+    if (m > 11) {
+        m = 0;
+        y++
+    }
+    render();
+});
 
-    $('#prevMonth').click(() => {
-        m--;
-        if (m < 0) {
-            m = 11;
-            y--
-        }
-        render();
-    });
-    $('#nextMonth').click(() => {
-        m++;
-        if (m > 11) {
-            m = 0;
-            y++
-        }
-        render();
-    });
 
-    $(document).on('click', '.day', function() {
-        $('.day').removeClass('active');
-        $(this).addClass('active');
-        $('#selectedDate').text(
-            `${$(this).find('span').text()}, ${months[m]} ${y}`
-        );
-    });
+$(document).on('click', '.day', function(e) {
+
+    $('.day').removeClass('active');
+    $(this).addClass('active');
+
+    // Get day number from <b>
+    let day = $(this).find('b').text().padStart(2, '0');
+
+    // Fix month (m is 0-based index)
+    let monthNumber = String(m + 1).padStart(2, '0');
+
+    let year = y;
+
+    // Display formatted text
+    $('#selectedDate').text(`${day}, ${months[m]} ${year}`);
+
+    // Set value in YYYY-MM-DD format (required for input type="date")
+    $('#live_requestDate').val(`${year}-${monthNumber}-${day}`);
+
+});
 </script>
 
 <!-- view details -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('Addreason');
-        const statusDate = document.getElementById('reason-status-date');
-        const reasonText = document.getElementById('reason-text');
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('Addreason');
+    const statusDate = document.getElementById('reason-status-date');
+    const reasonText = document.getElementById('reason-text');
 
-        modal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget;
-            const status = button.getAttribute('data-status');
-            const date = button.getAttribute('data-date');
-            const reason = button.getAttribute('data-reason');
+    modal.addEventListener('show.bs.modal', function(event) {
+        const button = event.relatedTarget;
+        const status = button.getAttribute('data-status');
+        const date = button.getAttribute('data-date');
+        const reason = button.getAttribute('data-reason');
 
-            statusDate.textContent = `${status} on - ${date}`;
-            reasonText.textContent = reason;
-        });
+        statusDate.textContent = `${status} on - ${date}`;
+        reasonText.textContent = reason;
     });
+});
 </script>
 
- <!-- delete live request -->
+<!-- delete live request -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.deleteReq').forEach(button => {
@@ -404,7 +418,7 @@ $(document).ready(function() {
         ordering: true,
         info: false,
         searching: true,
-        destroy: true 
+        destroy: true
     });
 
     $('#customTableSearch').on('keyup', function() {
@@ -442,12 +456,12 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: '/seller/cancelLiveRequest',  
+            url: '/seller/cancelLiveRequest',
             method: 'POST',
             data: {
                 id: id,
                 cancel_reason: cancelReason,
-                _token: '{{ csrf_token() }}'  
+                _token: '{{ csrf_token() }}'
             },
             success: function(response) {
                 if (response.status === 'success') {
