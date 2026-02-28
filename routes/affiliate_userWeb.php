@@ -40,6 +40,7 @@ Route::post('/resend-otp', [UserAffilatedController::class, 'resendOtp'])->name(
 
 Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileController::class, 'affiliateProfile'])->name('affiliate.affiliateProfile');
 
+Route::match(['get', 'post'], '/affiliate/change-password', [UserAffiliatedProfileController::class, 'affiliateChangePassword'])->name('affiliate.change-password');
 
 
 
@@ -48,15 +49,15 @@ Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileContro
 
 //  Affiliate_user profile
 
-Route::match(['get', 'post'], '/profile', function () {
-    return view('affiliatedUser.profiles.profile');
+// Route::match(['get', 'post'], '/profile', function () {
+//     return view('affiliatedUser.profiles.profile');
 
-})->name('affiliatedUser.profile');
+// })->name('affiliatedUser.profile');
 
-Route::match(['get', 'post'], '/change-password', function () {
-    return view('affiliatedUser.profiles.change-pwd');
+// Route::match(['get', 'post'], '/change-password', function () {
+//     return view('affiliatedUser.profiles.change-pwd');
 
-})->name('affiliatedUser.change-password');
+// })->name('affiliatedUser.change-password');
 
 Route::match(['get', 'post'], '/category', function () {
     return view('affiliatedUser.category.categorys');
