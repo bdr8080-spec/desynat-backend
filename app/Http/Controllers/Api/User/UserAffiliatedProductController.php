@@ -208,6 +208,7 @@ class UserAffiliatedProductController extends Controller
         'price_min'    => $request->price_min ?? null,
         'price_max'    => $request->price_max ?? null,
         'attributes'    => $request->attributes_data ?? null,
+        'discount'    => $request->discount ?? null,
        ];
 
      $data=$this->UserAffiliatedProductService->ProductSearch($request_data);
