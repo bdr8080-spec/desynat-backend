@@ -64,6 +64,7 @@ class UserAffiliatedProductService
             //     $query->whereIn('brand_id', $brands);
             // }
 
+            
             $query->orderBy('id', 'desc');
 
             $data = $query->paginate($limit);
@@ -497,7 +498,9 @@ $attributes = is_array($data->attributes ?? null)
     : [];
 
 
-$products = product::with([
+$products = product::
+where('affiliated_product','1')->
+with([
     'brand',
     'category',
     'subcategory',
@@ -668,6 +671,8 @@ if (!empty($data->sort_filter)) {
 /**
  * Pagination + Wishlist flag
  */
+
+
 $products = $products->paginate()
     ->through(function ($product) use ($wishlistIds) {
         $product->wishlist = in_array($product->id, $wishlistIds) ? 1 : 0;
