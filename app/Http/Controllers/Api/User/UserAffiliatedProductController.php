@@ -113,6 +113,8 @@ class UserAffiliatedProductController extends Controller
             'to' => $request->to ?? null,
             'limit' => $request->limit ?? null,
             'search' => $request->search ?? null,
+            'category_id' => $request->category_id ?? null,
+            'subcategory_id' => $request->subcategory_id ?? null,
         ];
 
         try {

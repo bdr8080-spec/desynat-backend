@@ -282,6 +282,18 @@ class UserAffiliatedProductService
                 });
             }
 
+              if (!empty($request->category_id)) {
+                $query->whereHas('product', function ($q) use ($request) {
+                    $q->where('category_id', 'like', '%' . $request->category_id . '%');
+                });
+            }
+
+              if (!empty($request->subcategory_id)) {
+                $query->whereHas('product', function ($q) use ($request) {
+                    $q->where('subcategory_id', 'like', '%' . $request->subcategory_id . '%');
+                });
+            }
+
             if (!empty($request->from) && empty($request->to)) {
                 $query->whereHas('product', function ($q) use ($request) {
                     $q->whereDate('created_at', '>=', $request->from);
