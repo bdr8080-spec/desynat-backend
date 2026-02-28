@@ -730,7 +730,7 @@ try{
 
     if($check){
 
-    $check=  Bankdetails::where('id',$request->id)->update(['default_account'=>'0']); // add new default
+    $check=  Bankdetails::where('id',$request->id)->update(['default_account'=>'1']); // add new default
 
      return ['status'=>'success','message'=>"Bank details default succesfully",'data'=>$check];            
     }

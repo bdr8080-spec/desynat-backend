@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('bankdetails', function (Blueprint $table) {
             $table->string('account_no')->nullable()->after('id');
+            $table->enum('default_account',['0','1'])->default('0')->comment('0 not selected 1 selected');
         });
     }
 
