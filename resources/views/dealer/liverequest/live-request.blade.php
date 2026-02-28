@@ -39,6 +39,10 @@
                     <div class="from-group">
                         <select class="form-select form-control width-50" aria-label="Default select example">
                             <option value="">Filter by status</option>
+                            <option value="1">Pending</option>
+                            <option value="2">Completed</option>
+                            <option value="3">Cancelled</option>
+                            <option value="4">Rejected</option>
 
                         </select>
                     </div>
