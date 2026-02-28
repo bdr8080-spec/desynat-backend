@@ -98,7 +98,7 @@ class SellerLiveRequestController extends Controller
                 'country_id'=>$seller_store_country,
                 "date"=>$request->date
             ];
-        $result = $this->SellerLiveRequestService->getTimeslots($request);
+        $result = $this->SellerLiveRequestService->getTimeslots($request_data);
 
         if ($result['status'] === 'error') {
             return response()->json([
