@@ -13,7 +13,7 @@ use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,
 
 use Hash;
 
-use App\Models\{AffilatedUser,AffilatedUserAddress,Bankdetails};
+use App\Models\{AffilatedUser,AffilatedUserAddress,Bankdetails,AffiliateProduct};
 
 use DB;
 
@@ -735,6 +735,31 @@ try{
      return ['status'=>'success','message'=>"Bank details default succesfully",'data'=>$check];            
     }
     
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update Affliated status: ' . $e->getMessage(),
+            'data' => $e->getMessage()
+        ];
+    }
+
+
+    }
+
+
+function affiliate_remove_product($request){
+
+try{
+
+  $request_data=[
+    'id'=> $request->id
+  ];
+
+    $check=  AffiliateProduct::where($request_data)->delete(); // remove old default
+
+   return ['status'=>'success','message'=>"affilate product remove succesfully",'data'=>$check];            
+
+   
     } catch (\Exception $e) {
         return [
             'status' => 'error',

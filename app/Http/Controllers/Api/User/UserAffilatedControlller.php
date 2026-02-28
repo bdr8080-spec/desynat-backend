@@ -769,6 +769,36 @@ public function default_affiliate_bank_details(Request $request){
 
 
 
+
+public function affiliate_remove_affilate_product(Request $request){
+    
+        $validate = Validator::make($request->all(), [
+            'id' => 'required|exists:affiliate_products,id',
+            ]);
+
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+     $affilated_user = $request->user()->id;
+
+     $request_data=(object) [
+    'affilated_user'=>$affilated_user,
+    'id'=>$request->id,
+    ];
+
+  $data=$this->UserAffilatedAuthService->affiliate_remove_product($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    }
+
+
+
      
 
 }

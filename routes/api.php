@@ -233,6 +233,7 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
 
 
   Route::post('/default_affiliate_bank_details', [UserAffilatedControlller::class,'default_affiliate_bank_details']);
+  Route::post('/affiliate_remove_affilate_product', [UserAffilatedControlller::class,'affiliate_remove_affilate_product']);
 
 
 
