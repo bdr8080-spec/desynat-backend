@@ -236,6 +236,7 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   Route::post('/affiliate_remove_affilate_product', [UserAffilatedControlller::class,'affiliate_remove_affilate_product']);
 
 
+  
 
 
 });
