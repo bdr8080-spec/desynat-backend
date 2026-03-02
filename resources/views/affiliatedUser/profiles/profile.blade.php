@@ -67,7 +67,7 @@
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter Mobile Number"
                                     value="{{$affilatedUser->mobile }}" readonly>
-                                <a class="drop-profile mob-change" href="#">
+                                <a class="drop-profile mob-change" href="/change-mobile-number">
                                     <span>Change</span>
                                 </a>
                             </div>

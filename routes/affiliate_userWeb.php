@@ -78,3 +78,8 @@ Route::match(['get', 'post'], '/all-performance', function () {
     return view('affiliatedUser.myproducts.performance');
 
 })->name('affiliatedUser.all-performance');
+
+Route::match(['get', 'post'], '/change-mobile-number', function () {
+    return view('affiliatedUser.profiles.change-mobile');
+
+})->name('affiliatedUser.change-mobile-number');
