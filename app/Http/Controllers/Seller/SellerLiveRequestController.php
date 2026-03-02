@@ -38,8 +38,10 @@ class SellerLiveRequestController extends Controller
         
         $request_data=(object) [
         'seller_id'=>$seller_id,
+        'from' => $request->from??null, 
+                'to' => $request->to??null, 
+                'filter' => $request->filter??null 
         ];
-    
       $all_records= $this->SellerLiveRequestService->getLiveRequests($request_data);
 
       

@@ -47,14 +47,14 @@
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/deal-management')||  Request::is('seller/View-single-deal-management/*') ||  Request::is('seller/add-single-deal-management/*')? 'sidebar-active' : '' }}"
                     href="{{ route('seller.deal_management') }}">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/order.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/deal.svg" alt="icon" class="asideicon">
                     <span>Deal Management</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/live-request')}}"
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/live-request')? 'sidebar-active' : ''}} "
                     href="{{ route('seller.liveRequests') }}">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/order.svg" alt="icon" class="asideicon">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/live-send.svg" alt="icon" class="asideicon">
                     <span>Live Coverage Requests</span>
                 </a>
             </li>
