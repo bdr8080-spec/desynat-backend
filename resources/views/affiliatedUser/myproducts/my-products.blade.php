@@ -27,7 +27,7 @@
     <div class="tabs-panel py-3">
 
         <div class="tabs-panel py-3">
-            <ul class="nav nav-pills mb-3 nav-justified">
+            <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab">
 
                 <li class="nav-item">
                     <button class="nav-link active w-100 category-tab" data-category="all">

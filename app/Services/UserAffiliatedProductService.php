@@ -19,6 +19,8 @@ class UserAffiliatedProductService
 
     public function getAllProducts($request)
     {
+
+
         try {
             $limit = (int) $request->input('limit', 10);
 
