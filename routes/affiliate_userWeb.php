@@ -58,10 +58,12 @@ Route::match(['get', 'post'], '/affiliate/category', [UserAffiliatedProfileContr
 
 Route::get('/affiliate/allsubcategory', [UserAffiliatedProfileController::class, 'Affilateallsubcategory'])
     ->name('affiliate.allsubcategory');
-    
 
 Route::get('/affiliate/all-products', [UserAffiliatedProfileController::class, 'AffilateAllProducts'])
     ->name('affiliate.allProducts');
+
+Route::get('/affiliate/generate-product-link', [UserAffiliatedProfileController::class, 'generateProductLink'])
+    ->name('affiliate.generateProductLink');
 
 // });
 

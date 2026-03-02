@@ -249,13 +249,28 @@ public function AffilateAllProducts(Request $request){
 
     $products=$data['data'];
     
-    
     if($request->ismethod('get')){
         return view('affiliatedUser.category.allproducts',compact('products'));
     }
 
     }
 
-    
+
+
+
+public function generateProductLink(Request $request){
+
+    $affilatedUser=Auth::guard('affilated_user')->user();     
+
+           $request_data = (object) [
+            'user_id' => $affilatedUser->id,
+            'product_id' => $request->product_id,
+        ];
+
+    $data = $this->UserAffiliatedProductService->generateProductLink($request_data);
+    $products=$data['data'];
+        return $products->link;  // return Link 
+
+    }
 
 }

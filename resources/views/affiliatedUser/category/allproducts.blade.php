@@ -55,8 +55,9 @@
 
                         </div>
                         <div class="text-center mt-2">
-                            <button type="button" class="btn btn-success w-100 lh-sm" data-bs-toggle="modal"
-                                data-bs-target="#getlink">Get Link</button>
+                            <button type="button" class="btn btn-success w-100 lh-sm get-link-btn"
+                                data-bs-toggle="modal" data-bs-target="#getlink" data-product="{{$product['id']}}">Get
+                                Link</button>
                         </div>
                     </div>
                 </div>
@@ -81,9 +82,10 @@
             <div class="modal-body">
                 <div class="search-field-2 d-flex align-items-center py-4 gap-3">
                     <div class="from-group position-relative w-75">
-                        <input type="search" class="form-control py-3" placeholder="Enter URL">
+                        <input type="search" class="form-control py-3" id="generate_url_link" placeholder="Enter URL"
+                            readonly>
                     </div>
-                    <button type="button" class="btn btn-success">Copy link</button>
+                    <button type="button" class="btn btn-success" id="copyLinkBtn">Copy link</button>
                 </div>
                 <div class="text-center mt-2">
                     <button type="button" class="btn btn-success w-100 lh-2"> Submit </button>
@@ -94,6 +96,48 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
+
+<script>
+$(document).on('click', '.get-link-btn', function() {
+
+    let productId = $(this).data('product');
+
+    $.ajax({
+        url: "{{ route('affiliate.generateProductLink') }}",
+        type: "GET",
+        data: {
+            product_id: productId
+        },
+        beforeSend: function() {
+            // $('#getlink .modal-body').html('<p>Loading...</p>');
+        },
+        success: function(response) {
+
+            $('#generate_url_link').val(response);
+        },
+        error: function() {
+            alert('Something went wrong');
+        }
+    });
+
+});
+</script>
+
+<script>
+$(document).on('click', '#copyLinkBtn', function() {
+
+    let copyText = $('#generate_url_link').val();
+
+    navigator.clipboard.writeText(copyText).then(function() {
+        toastr.success("Link copied successfully!");
+    }).catch(function() {
+        toastr.failed("Failed to copy link");
+    });
+
+});
+</script>
 
 
 
