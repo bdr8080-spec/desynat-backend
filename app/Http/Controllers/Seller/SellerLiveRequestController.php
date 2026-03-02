@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\sellerStoreInformation;
 
 
 
@@ -95,9 +96,11 @@ class SellerLiveRequestController extends Controller
             //dd($country);
 
             $request_data=(object )[
+                'seller_id' => $seller_details->id, 
                 'country_id'=>$seller_store_country,
                 "date"=>$request->date
             ];
+            //dd($request_data);
         $result = $this->SellerLiveRequestService->getTimeslots($request_data);
 
         if ($result['status'] === 'error') {
@@ -109,9 +112,40 @@ class SellerLiveRequestController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => $result['message']
+            'message' => $result['message'],
+            'data' => $result['data'] 
         ], 200);
     }
+//     public function getTimeslots(Request $request)
+// {
+//     $seller_details = Auth::guard('seller')->user();
+
+//     if (!$seller_details) {
+//         return response()->json([
+//             'status' => 'error',
+//             'message' => 'Seller not authenticated'
+//         ], 401);
+//     }
+
+//     $seller_store_details = sellerStoreInformation::where('seller_id', $seller_details->id)->first();
+
+//     if (!$seller_store_details) {
+//         return response()->json([
+//             'status' => 'error',
+//             'message' => 'Store information not found'
+//         ], 400);
+//     }
+
+//     $request_data = (object)[
+//         'seller_id' => $seller_details->id,
+//         'country_id' => $seller_store_details->country,
+//         'date' => $request->date
+//     ];
+
+//     $result = $this->SellerLiveRequestService->getTimeslots($request_data);
+
+//     return response()->json($result);
+// }
 
     public function sendLiveRequest(Request $request)
     {

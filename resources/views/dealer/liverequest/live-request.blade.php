@@ -155,15 +155,17 @@
             </div>
             <div class="modal-body">
                 <div class="from-group py-3">
-                    <label for="">Total Coverages - 03</label>
+                    <label>Total Coverages - <span id="totalSlots">0</span></label>
                     <input type="date" class="form-control" id="live_requestDate">
                 </div>
                 <div class="from-group mb-4">
                     <label for="time">Select Time</label>
                     <div class="time-slot mt-2">
-                        <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
-                        <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
+                        <!-- <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button>
+                        <button class="btn btn-time-outline">10:00 AM To 11:30 AM</button> -->
                     </div>
+                    <small id="slotError" class="text-danger"></small>
+                    <input type="hidden" id="selectedTimeslotId">
                 </div>
 
                 <div class="py-3">
@@ -260,7 +262,10 @@
 @include('dealer.layout.custom_code');
 @include('dealer.layout.footer');
 
-<script>
+
+
+<!-- <script>
+
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -270,6 +275,7 @@ let m = new Date().getMonth();
 let y = new Date().getFullYear();
 
 function render() {
+
     $('#daysContainer').html('');
     $('#monthSelect').val(m);
     $('#yearSelect').val(y);
@@ -286,8 +292,9 @@ function render() {
         const active =
             d === today.getDate() &&
             m === today.getMonth() &&
-            y === today.getFullYear() ?
-            'active' : '';
+            y === today.getFullYear()
+                ? 'active'
+                : '';
 
         $('#daysContainer').append(
             `<div class="day ${active}">
@@ -295,60 +302,364 @@ function render() {
                 <b>${d}</b>
              </div>`
         );
-
     }
 }
 
-// init
-months.forEach((x, i) => $('#monthSelect').append(`<option value="${i}">${x}</option>`));
-for (let i = y - 0; i <= y + 0; i++) $('#yearSelect').append(`<option>${i}</option>`);
+// Initialize month + year dropdown
+months.forEach((x, i) => {
+    $('#monthSelect').append(`<option value="${i}">${x}</option>`);
+});
+
+for (let i = y; i <= y; i++) {
+    $('#yearSelect').append(`<option value="${i}">${i}</option>`);
+}
+
 render();
 
-// events
-$('#monthSelect,#yearSelect').change(() => {
+
+// ================= MONTH / YEAR CHANGE =================
+
+$('#monthSelect, #yearSelect').change(function () {
     m = +$('#monthSelect').val();
     y = +$('#yearSelect').val();
     render();
 });
 
-$('#prevMonth').click(() => {
-    m--;
-    if (m < 0) {
-        m = 11;
-        y--
+
+// ================= LOAD TIMESLOTS FUNCTION =================
+
+function loadTimeslots(date) {
+
+    if (!date) {
+        document.querySelector('.time-slot').innerHTML =
+            '<p class="text-danger">Please select date</p>';
+        return;
     }
-    render();
-});
-$('#nextMonth').click(() => {
-    m++;
-    if (m > 11) {
-        m = 0;
-        y++
-    }
-    render();
-});
+
+    document.querySelector('.time-slot').innerHTML = '<p>Loading...</p>';
+
+    fetch("{{ route('seller.getTimeslots') }}", {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            date: date
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        let html = '';
+
+        if (data.data && data.data.length > 0) {
+
+            data.data.forEach(function (slot) {
+                html += `
+                    <button type="button"
+                        class="btn btn-time-outline m-1 timeslot-btn"
+                        data-id="${slot.id}">
+                        ${slot.from} To ${slot.to}
+                    </button>
+                `;
+            });
+
+        } else {
+            html = `<p class="text-danger">No Timeslot Available</p>`;
+        }
+
+        document.querySelector('.time-slot').innerHTML = html;
+
+    })
+    .catch(error => {
+        document.querySelector('.time-slot').innerHTML =
+            '<p class="text-danger">Something went wrong</p>';
+        console.error(error);
+    });
+}
 
 
-$(document).on('click', '.day', function(e) {
+
+// ================= DATE CLICK FROM CALENDAR =================
+
+$(document).on('click', '.day', function () {
 
     $('.day').removeClass('active');
     $(this).addClass('active');
 
-    // Get day number from <b>
     let day = $(this).find('b').text().padStart(2, '0');
-
-    // Fix month (m is 0-based index)
     let monthNumber = String(m + 1).padStart(2, '0');
-
     let year = y;
 
-    // Display formatted text
-    $('#selectedDate').text(`${day}, ${months[m]} ${year}`);
+    let formattedDate = `${year}-${monthNumber}-${day}`;
 
-    // Set value in YYYY-MM-DD format (required for input type="date")
-    $('#live_requestDate').val(`${year}-${monthNumber}-${day}`);
+    $('#selectedDate').text(`${day}, ${months[m]} ${year}`);
+    $('#live_requestDate').val(formattedDate);
+
+    // If modal already open → reload timeslots
+    if ($('#sendlives').hasClass('show')) {
+        loadTimeslots(formattedDate);
+    }
+});
+
+
+// ================= WHEN MODAL OPENS =================
+
+$('#sendlives').on('shown.bs.modal', function () {
+
+    let selectedDate = $('#live_requestDate').val();
+
+    loadTimeslots(selectedDate);
+});
+
+
+// ================= IF DATE CHANGED INSIDE MODAL =================
+
+$('#live_requestDate').on('change', function () {
+
+    let newDate = $(this).val();
+
+    loadTimeslots(newDate);
+});
+
+
+// ================= TIMESLOT BUTTON SELECT =================
+
+$(document).on('click', '.timeslot-btn', function () {
+
+    $('.timeslot-btn').removeClass('active');
+    $(this).addClass('active');
+});
+
+</script> -->
+
+<script>
+
+const months = [
+    'January', 'February', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+// Fix missing March
+months.splice(2, 0, 'March');
+
+let m = new Date().getMonth();
+let y = new Date().getFullYear();
+let selectedSlotId = null;
+
+/* ================= RENDER CALENDAR ================= */
+
+function render() {
+
+    $('#daysContainer').html('');
+    $('#monthSelect').val(m);
+    $('#yearSelect').val(y);
+
+    const today = new Date();
+
+    for (let d = 1; d <= new Date(y, m + 1, 0).getDate(); d++) {
+
+        const dateObj = new Date(y, m, d);
+        const day = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+
+        const active =
+            d === today.getDate() &&
+            m === today.getMonth() &&
+            y === today.getFullYear()
+                ? 'active'
+                : '';
+
+        $('#daysContainer').append(`
+            <div class="day ${active}">
+                <span>${day}</span>
+                <b>${d}</b>
+            </div>
+        `);
+    }
+}
+
+/* ================= INIT MONTH & YEAR ================= */
+
+months.forEach((month, index) => {
+    $('#monthSelect').append(`<option value="${index}">${month}</option>`);
+});
+
+for (let i = y; i <= y; i++) {
+    $('#yearSelect').append(`<option value="${i}">${i}</option>`);
+}
+
+render();
+
+/* ================= MONTH / YEAR CHANGE ================= */
+
+$('#monthSelect, #yearSelect').change(function () {
+    m = +$('#monthSelect').val();
+    y = +$('#yearSelect').val();
+    render();
+});
+
+/* ================= LOAD TIMESLOTS ================= */
+
+function loadTimeslots(date) {
+
+    if (!date) {
+        $('.time-slot').html('<p class="text-danger">Please select date</p>');
+        $('#totalSlots').text(0);
+        return;
+    }
+
+    $('.time-slot').html('<p>Loading...</p>');
+    $('#totalSlots').text(0);
+    $('#slotError').text('');
+    selectedSlotId = null;
+    $('#selectedTimeslotId').val('');
+
+    fetch("{{ route('seller.getTimeslots') }}", {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({ date: date })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network error");
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        let html = '';
+
+        if (data.data && data.data.length > 0) {
+
+            $('#totalSlots').text(data.data.length);
+
+            data.data.forEach(function (slot) {
+                html += `
+                    <button type="button"
+                        class="btn btn-time-outline m-1 timeslot-btn"
+                        data-id="${slot.id}">
+                        ${slot.from} To ${slot.to}
+                    </button>
+                `;
+            });
+
+        } else {
+            html = `<p class="text-danger">No Timeslot Available</p>`;
+            $('#totalSlots').text(0);
+        }
+
+        $('.time-slot').html(html);
+
+    })
+    .catch(() => {
+        $('.time-slot').html('<p class="text-danger">Something went wrong</p>');
+        $('#totalSlots').text(0);
+    });
+}
+
+/* ================= DATE CLICK FROM CALENDAR ================= */
+
+$(document).on('click', '.day', function () {
+
+    $('.day').removeClass('active');
+    $(this).addClass('active');
+
+    let day = $(this).find('b').text().padStart(2, '0');
+    let monthNumber = String(m + 1).padStart(2, '0');
+    let year = y;
+
+    let formattedDate = `${year}-${monthNumber}-${day}`;
+
+    $('#selectedDate').text(`${day}, ${months[m]} ${year}`);
+    $('#live_requestDate').val(formattedDate);
+
+    if ($('#sendlives').hasClass('show')) {
+        loadTimeslots(formattedDate);
+    }
+});
+
+/* ================= MODAL OPEN ================= */
+
+$('#sendlives').on('shown.bs.modal', function () {
+    loadTimeslots($('#live_requestDate').val());
+});
+
+/* ================= DATE CHANGE INSIDE MODAL ================= */
+
+$('#live_requestDate').on('change', function () {
+    loadTimeslots($(this).val());
+});
+
+/* ================= SELECT TIMESLOT ================= */
+
+$(document).on('click', '.timeslot-btn', function () {
+
+    $('.timeslot-btn').removeClass('active');
+    $(this).addClass('active');
+
+    selectedSlotId = $(this).data('id');
+    $('#selectedTimeslotId').val(selectedSlotId);
+    $('#slotError').text('');
+});
+
+/* ================= SUBMIT LIVE REQUEST ================= */
+
+$('.add-fillbtn').on('click', function (e) {
+
+    e.preventDefault();
+
+    let timeslotId = $('#selectedTimeslotId').val();
+
+    if (!timeslotId) {
+        $('#slotError').text('Please select a timeslot');
+        return;
+    }
+
+    fetch("{{ route('seller.sendLiveRequest') }}", {
+        method: "POST",
+        headers: {
+            "X-CSRF-TOKEN": "{{ csrf_token() }}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            timeslot_id: timeslotId,
+            seller_id: {{ auth()->guard('seller')->id() }}
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        if (data.status === 'success') {
+
+            toastr.success(data.message);
+
+            $('#sendlives').modal('hide');
+
+            loadTimeslots($('#live_requestDate').val());
+
+        } else {
+            toastr.error(data.message);
+        }
+
+    })
+    .catch(() => {
+        toastr.error('Something went wrong');
+    });
 
 });
+
 </script>
 
 <!-- view details -->
