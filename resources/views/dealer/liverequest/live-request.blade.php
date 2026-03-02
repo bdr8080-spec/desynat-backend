@@ -294,191 +294,12 @@
 
 
 
-<!-- <script>
+<script>
 
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
-
-let m = new Date().getMonth();
-let y = new Date().getFullYear();
-
-function render() {
-
-    $('#daysContainer').html('');
-    $('#monthSelect').val(m);
-    $('#yearSelect').val(y);
-
-    const today = new Date();
-
-    for (let d = 1; d <= new Date(y, m + 1, 0).getDate(); d++) {
-
-        const dateObj = new Date(y, m, d);
-        const day = dateObj.toLocaleDateString('en-US', {
-            weekday: 'short'
-        });
-
-        const active =
-            d === today.getDate() &&
-            m === today.getMonth() &&
-            y === today.getFullYear()
-                ? 'active'
-                : '';
-
-        $('#daysContainer').append(
-            `<div class="day ${active}">
-                <span>${day}</span>
-                <b>${d}</b>
-             </div>`
-        );
-    }
-}
-
-// Initialize month + year dropdown
-months.forEach((x, i) => {
-    $('#monthSelect').append(`<option value="${i}">${x}</option>`);
-});
-
-for (let i = y; i <= y; i++) {
-    $('#yearSelect').append(`<option value="${i}">${i}</option>`);
-}
-
-render();
-
-
-// ================= MONTH / YEAR CHANGE =================
-
-$('#monthSelect, #yearSelect').change(function () {
-    m = +$('#monthSelect').val();
-    y = +$('#yearSelect').val();
-    render();
-});
-
-
-// ================= LOAD TIMESLOTS FUNCTION =================
-
-function loadTimeslots(date) {
-
-    if (!date) {
-        document.querySelector('.time-slot').innerHTML =
-            '<p class="text-danger">Please select date</p>';
-        return;
-    }
-
-    document.querySelector('.time-slot').innerHTML = '<p>Loading...</p>';
-
-    fetch("{{ route('seller.getTimeslots') }}", {
-        method: "POST",
-        headers: {
-            "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({
-            date: date
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        return response.json();
-    })
-    .then(data => {
-
-        let html = '';
-
-        if (data.data && data.data.length > 0) {
-
-            data.data.forEach(function (slot) {
-                html += `
-                    <button type="button"
-                        class="btn btn-time-outline m-1 timeslot-btn"
-                        data-id="${slot.id}">
-                        ${slot.from} To ${slot.to}
-                    </button>
-                `;
-            });
-
-        } else {
-            html = `<p class="text-danger">No Timeslot Available</p>`;
-        }
-
-        document.querySelector('.time-slot').innerHTML = html;
-
-    })
-    .catch(error => {
-        document.querySelector('.time-slot').innerHTML =
-            '<p class="text-danger">Something went wrong</p>';
-        console.error(error);
-    });
-}
-
-
-
-// ================= DATE CLICK FROM CALENDAR =================
-
-$(document).on('click', '.day', function () {
-
-    $('.day').removeClass('active');
-    $(this).addClass('active');
-
-    let day = $(this).find('b').text().padStart(2, '0');
-    let monthNumber = String(m + 1).padStart(2, '0');
-    let year = y;
-
-    let formattedDate = `${year}-${monthNumber}-${day}`;
-
-    $('#selectedDate').text(`${day}, ${months[m]} ${year}`);
-    $('#live_requestDate').val(formattedDate);
-
-    // If modal already open → reload timeslots
-    if ($('#sendlives').hasClass('show')) {
-        loadTimeslots(formattedDate);
-    }
-});
-
-
-// ================= WHEN MODAL OPENS =================
-
-$('#sendlives').on('shown.bs.modal', function () {
-
-    let selectedDate = $('#live_requestDate').val();
-
-    loadTimeslots(selectedDate);
-});
-
-
-// ================= IF DATE CHANGED INSIDE MODAL =================
-
-$('#live_requestDate').on('change', function () {
-
-    let newDate = $(this).val();
-
-    loadTimeslots(newDate);
-});
-
-
-// ================= TIMESLOT BUTTON SELECT =================
-
-$(document).on('click', '.timeslot-btn', function () {
-
-    $('.timeslot-btn').removeClass('active');
-    $(this).addClass('active');
-});
-
-</script> -->
-
-<script>
-
-const months = [
-    'January', 'February', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-];
-
-// Fix missing March
-months.splice(2, 0, 'March');
 
 let m = new Date().getMonth();
 let y = new Date().getFullYear();
@@ -521,7 +342,7 @@ months.forEach((month, index) => {
     $('#monthSelect').append(`<option value="${index}">${month}</option>`);
 });
 
-for (let i = y; i <= y; i++) {
+for (let i = y; i <= y + 14; i++) {
     $('#yearSelect').append(`<option value="${i}">${i}</option>`);
 }
 
@@ -614,9 +435,11 @@ $(document).on('click', '.day', function () {
     $('#selectedDate').text(`${day}, ${months[m]} ${year}`);
     $('#live_requestDate').val(formattedDate);
 
-    if ($('#sendlives').hasClass('show')) {
-        loadTimeslots(formattedDate);
-    }
+    // Open modal programmatically on date click
+    var myModal = new bootstrap.Modal(document.getElementById('sendlives'));
+    myModal.show();
+
+    loadTimeslots(formattedDate);
 });
 
 /* ================= MODAL OPEN ================= */
