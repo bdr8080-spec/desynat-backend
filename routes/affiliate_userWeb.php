@@ -50,9 +50,11 @@ Route::match(['get', 'post'], '/affiliate/my-product', [UserAffiliatedProfileCon
 
 Route::get('/affiliate/my-product-subcategory', [UserAffiliatedProfileController::class, 'myProductFiltersubcategory'])
     ->name('affiliate.myProductFiltersubcategory');
-
 Route::get('/affiliate/my-product-filter', [UserAffiliatedProfileController::class, 'myProductFilter'])
     ->name('affiliate.Myproductfilter');
+
+Route::get('/affiliate/affiliate-product-performance/{id}', [UserAffiliatedProfileController::class, 'affiliateProductPerformance'])->name('affiliate.ProductPerformance');
+
 
 // });
 
@@ -84,10 +86,10 @@ Route::match(['get', 'post'], '/my-product', function () {
 
 })->name('affiliatedUser.my-product');
 
-Route::match(['get', 'post'], '/all-performance', function () {
-    return view('affiliatedUser.myproducts.performance');
+// Route::match(['get', 'post'], '/all-performance', function () {
+//     return view('affiliatedUser.myproducts.performance');
 
-})->name('affiliatedUser.all-performance');
+// })->name('affiliatedUser.all-performance');
 
 Route::match(['get', 'post'], '/change-mobile-number', function () {
     return view('affiliatedUser.profiles.change-mobile');

@@ -245,6 +245,13 @@ public function affiliateMyProduct(Request $request){
 
     
 
+public function affiliateProductPerformance(Request $request){
+
+    if($request->ismethod('get')){
+         return view('affiliatedUser.myproducts.performance');
+    }
+    }
+
 
     
 

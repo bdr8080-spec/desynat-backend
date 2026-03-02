@@ -46,7 +46,8 @@
                         @endif
                     </div>
                     <div class="text-center mt-2">
-                        <a href="/all-performance" class="btn btn-success w-100 lh-sm text-white">Track
+                        <a href="{{route('affiliate.ProductPerformance', $product['id'])}}"
+                            class="btn btn-success w-100 lh-sm text-white">Track
                             Performance</a>
                     </div>
                 </div>
