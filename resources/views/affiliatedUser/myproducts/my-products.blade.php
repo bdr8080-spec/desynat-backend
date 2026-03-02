@@ -1,13 +1,13 @@
 @include('affiliatedUser.layout.header')
 
 
-<style>
+<!-- <style>
 .all-product-lists.active {
     border: 2px solid #000;
     background-color: #f8f8f8;
     cursor: pointer;
 }
-</style>
+</style> -->
 
 
 <section class="section dashboard">

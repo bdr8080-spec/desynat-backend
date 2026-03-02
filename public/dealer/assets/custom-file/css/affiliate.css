@@ -89,17 +89,25 @@
     font-size: 14px;
 }
 .af-box {
-    height: 75px;
-    width: 75px;
+    height: 55px;
+    width: 55px;
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 50px;
+    margin: 2px 5px;
 }
 .af-box img{
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
+.all-product-lists.active {
+    border: 1px solid #be9a70a8;
+    background-color: #fff7ea;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
 .all-product-lists {
     display: flex;
     align-items: center;
