@@ -319,9 +319,7 @@
 @include('dealer.layout.footer');
 
 
-<script>
-  new DataTable('#table1');
-</script>
+
 
 <script>
 
