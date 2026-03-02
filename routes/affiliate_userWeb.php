@@ -55,6 +55,9 @@ Route::get('/affiliate/my-product-filter', [UserAffiliatedProfileController::cla
 
 Route::get('/affiliate/affiliate-product-performance/{id}', [UserAffiliatedProfileController::class, 'affiliateProductPerformance'])->name('affiliate.ProductPerformance');
 
+Route::post('/affiliate/updateBankAccountDetails/{id}', [UserAffiliatedProfileController::class, 'updateBankAccountDetails'])->name('affiliate.updateBankAccountDetails');
+Route::post('/affiliate/addAnotherBankDetails', [UserAffiliatedProfileController::class, 'addAnotherBankDetails'])->name('affiliate.addAnotherBankDetails');
+
 
 // });
 

@@ -224,9 +224,22 @@
                     <div class="bankpnl d-flex justify-content-between align-items-center line2">
                         <div class="account-no">{{$val->account_no}}</div>
                         <div class="banktool">
-                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#editbankDetails">
+                            <!-- <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#editbankDetails">
                                 <img src="{{ asset('/dealer') }}/assets/img/b-edit.svg" alt="edit icon"
                                     class="img-fluid">
+                            </a> -->
+                            <a href="javascript:void(0)"
+                            class="editBankBtn"
+                            data-id="{{$val->id}}"
+                            data-affiliate="{{$affilatedUser->id}}"
+                            data-bank_name="{{$val->bank_name}}"
+                            data-holder="{{$val->account_holder_name}}"
+                            data-account="{{$val->account_no}}"
+                            data-iban="{{$val->iban}}"
+                            data-swift="{{$val->swift}}"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editbankDetails">
+                                <img src="{{ asset('/dealer') }}/assets/img/b-edit.svg" class="img-fluid">
                             </a>
                             <a href="#">
                                 <img src="{{ asset('/dealer') }}/assets/img/b-delete.svg" alt="delete icon"
@@ -251,111 +264,135 @@
 
 
 <!-- Add bank details -->
-<div class="modal fade" id="bankDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="bankDetails" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered w-75">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Add Account </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5">Add Account</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-        <div class="modal-body">
-            <div class="account-form">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Bank name</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Bank name ">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Account Holder name</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Account Holder name">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Account Number</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Account Number">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Confirm Account Number</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Re-Enter Account Number">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>IBAN</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter IBAN">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>SWIFT/BIC</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Swift">
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <button type="button" class="btn btn-success w-100 lh-2"> Submit Request</button>
-            </div>
+
+      <div class="modal-body">
+
+        <div class="account-form">
+
+          <div class="sub-form">
+            <label>Bank Name</label>
+            <input type="text" id="bank_name" class="form-control">
+            <small class="text-danger" id="error_bank_name"></small>
+          </div>
+
+          <div class="sub-form">
+            <label>Account Holder Name</label>
+            <input type="text" id="account_holder_name" class="form-control">
+            <small class="text-danger" id="error_account_holder_name"></small>
+          </div>
+
+          <div class="sub-form">
+            <label>Account Number</label>
+            <input type="text" id="account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <small class="text-danger" id="error_account_no"></small>
+          </div>
+
+          <div class="sub-form">
+            <label>Confirm Account Number</label>
+            <input type="text" id="confirm_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <small class="text-danger" id="error_confirm_account_no"></small>
+          </div>
+
+          <div class="sub-form">
+            <label>IBAN</label>
+            <input type="text" id="iban" class="form-control">
+            <small class="text-danger" id="error_iban"></small>
+          </div>
+
+          <div class="sub-form">
+            <label>SWIFT / BIC</label>
+            <input type="text" id="swift" class="form-control">
+            <small class="text-danger" id="error_swift"></small>
+          </div>
+
         </div>
+
+        <div class="text-center mt-4">
+          <button type="button" id="submit_bank_btn" class="btn btn-success w-100">
+            Submit Request
+          </button>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Edit bank details -->
-<div class="modal fade" id="editbankDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editbankDetails" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered w-75">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Edit Account </h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5">Edit Account</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-        <div class="modal-body">
-            <div class="account-form">
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Bank name</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Bank name ">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Account Holder name</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Account Holder name">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Account Number</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Account Number">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>Confirm Account Number</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Re-Enter Account Number">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>IBAN</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter IBAN">
-                </div>
-                <div class="sub-form">
-                    <div class="label-flex">
-                        <label>SWIFT/BIC</label>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Enter Swift">
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <button type="button" class="btn btn-success w-100 lh-2"> Submit Request</button>
-            </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="edit_bank_id">
+
+        <div class="account-form">
+
+          <!-- Bank Name -->
+          <div class="sub-form">
+            <label>Bank Name</label>
+            <input type="text" id="edit_bank_name" class="form-control">
+            <small class="text-danger error-text" id="error_edit_bank_name"></small>
+          </div>
+
+          <!-- Account Holder Name -->
+          <div class="sub-form">
+            <label>Account Holder Name</label>
+            <input type="text" id="edit_account_holder_name" class="form-control">
+            <small class="text-danger error-text" id="error_edit_account_holder_name"></small>
+          </div>
+
+          <!-- Account Number -->
+          <div class="sub-form">
+            <label>Account Number</label>
+            <input type="text" id="edit_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <small class="text-danger error-text" id="error_edit_account_no"></small>
+          </div>
+
+          <!-- Confirm Account Number -->
+          <div class="sub-form">
+            <label>Confirm Account Number</label>
+            <input type="text" id="edit_confirm_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <small class="text-danger error-text" id="error_edit_confirm_account_no"></small>
+          </div>
+
+          <!-- IBAN -->
+          <div class="sub-form">
+            <label>IBAN</label>
+            <input type="text" id="edit_iban" class="form-control">
+            <small class="text-danger error-text" id="error_edit_iban"></small>
+          </div>
+
+          <!-- SWIFT -->
+          <div class="sub-form">
+            <label>SWIFT / BIC</label>
+            <input type="text" id="edit_swift" class="form-control">
+            <small class="text-danger error-text" id="error_edit_swift"></small>
+          </div>
+
         </div>
+
+        <div class="text-center mt-4">
+          <button type="button" id="edit_submit_bank_btn" class="btn btn-success w-100">
+            Submit Request
+          </button>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
@@ -415,5 +452,266 @@ $('.removebtn').on('click', function() {
     $('#imageUpload2').val('');
     $('#uploadLabel2').show();
     $(this).hide();
+});
+</script>
+
+<!-- edit bank details -->
+<script>
+let affiliateUserId = '';
+
+$(document).on('click', '.editBankBtn', function () {
+
+
+    let bankId = $(this).data('id');
+
+    affiliateUserId = $(this).data('affiliate');
+    //console.log(affiliateUserId);
+
+    $('#edit_bank_id').val(bankId);
+    $('#edit_bank_name').val($(this).data('bank_name'));
+    $('#edit_account_holder_name').val($(this).data('holder'));
+    $('#edit_account_no').val($(this).data('account'));
+    $('#edit_confirm_account_no').val($(this).data('account'));
+    $('#edit_iban').val($(this).data('iban'));
+    $('#edit_swift').val($(this).data('swift'));
+
+});
+
+function clearErrors() {
+    $('.error-text').text('');
+}
+
+function showError(field, message) {
+    $('#error_' + field).text(message);
+}
+
+/* Remove error while typing */
+$(document).on('input', '#editbankDetails input', function () {
+    let fieldId = $(this).attr('id');
+    $('#error_' + fieldId).text('');
+});
+
+$('#edit_submit_bank_btn').on('click', function () {
+
+    clearErrors();
+
+    let bankName = $('#edit_bank_name').val().trim();
+    let holder = $('#edit_account_holder_name').val().trim();
+    let accountNo = $('#edit_account_no').val().trim();
+    let confirmAccountNo = $('#edit_confirm_account_no').val().trim();
+    let iban = $('#edit_iban').val().trim();
+    let swift = $('#edit_swift').val().trim();
+
+    let isValid = true;
+
+    if (bankName === '') {
+        showError('edit_bank_name', 'Please enter bank name');
+        isValid = false;
+    }
+
+    if (holder === '') {
+        showError('edit_account_holder_name', 'Please enter account holder name');
+        isValid = false;
+    }
+
+    if (accountNo === '') {
+        showError('edit_account_no', 'Please enter account number');
+        isValid = false;
+    }
+
+    if (confirmAccountNo === '') {
+        showError('edit_confirm_account_no', 'Please confirm account number');
+        isValid = false;
+    }
+
+    if (accountNo !== '' && confirmAccountNo !== '' && accountNo !== confirmAccountNo) {
+        showError('edit_confirm_account_no', 'Account numbers do not match');
+        isValid = false;
+    }
+
+    if (iban === '') {
+        showError('edit_iban', 'Please enter IBAN');
+        isValid = false;
+    }
+
+    if (swift === '') {
+        showError('edit_swift', 'Please enter SWIFT');
+        isValid = false;
+    }
+
+    if (!isValid) return;
+
+    /* ================= AJAX CALL ================= */
+
+    $.ajax({
+        url: "{{ url('/affiliate/updateBankAccountDetails') }}/" + $('#edit_bank_id').val(),
+        type: "POST",
+        data: {
+            _token: "{{ csrf_token() }}",
+            bank_name: bankName,
+            account_holder_name: holder,
+            account_no: accountNo,
+            confirm_account_no: confirmAccountNo,
+            iban: iban,
+            swift: swift,
+            affilated_user: affiliateUserId
+        },
+        beforeSend: function () {
+            $('#edit_submit_bank_btn').prop('disabled', true).text('Processing...');
+        },
+        success: function (response) {
+
+            if (response.status === 'success') {
+
+                toastr.success(response.message);
+
+                setTimeout(function () {
+                    location.reload();
+                }, 2000);
+
+            } else {
+                toastr.error(response.message);
+            }
+        },
+        complete: function () {
+            $('#edit_submit_bank_btn').prop('disabled', false).text('Submit Request');
+        }
+    });
+
+});
+</script>
+
+<!-- add bank account -->
+<script>
+$(document).ready(function() {
+
+    function clearErrors() {
+        $('[id^="error_"]').text('');
+    }
+
+    function showError(fieldId, message) {
+        $('#error_' + fieldId).text(message);
+    }
+
+    $(document).on('input', '#bankDetails input', function () {
+        let fieldId = $(this).attr('id');
+        $('#error_' + fieldId).text('');
+    });
+
+    $('#submit_bank_btn').on('click', function() {
+
+        clearErrors();
+
+        let bankName = $('#bank_name').val().trim();
+        let accountHolder = $('#account_holder_name').val().trim();
+        let accountNo = $('#account_no').val().trim();
+        let confirmAccountNo = $('#confirm_account_no').val().trim();
+        let iban = $('#iban').val().trim();
+        let swift = $('#swift').val().trim();
+
+        let isValid = true;
+
+        if(bankName === '') {
+            showError('bank_name', 'Please enter bank name');
+            isValid = false;
+        }
+
+        if(accountHolder === '') {
+            showError('account_holder_name', 'Please enter account holder name');
+            isValid = false;
+        }
+
+        if(accountNo === '') {
+            showError('account_no', 'Please enter account number');
+            isValid = false;
+        }
+
+        if(confirmAccountNo === '') {
+            showError('confirm_account_no', 'Please confirm account number');
+            isValid = false;
+        }
+
+        if(accountNo !== '' && confirmAccountNo !== '' && accountNo !== confirmAccountNo) {
+            showError('confirm_account_no', 'Account numbers do not match');
+            isValid = false;
+        }
+
+        if(iban === '') {
+            showError('iban', 'Please enter IBAN');
+            isValid = false;
+        }
+
+        if(swift === '') {
+            showError('swift', 'Please enter SWIFT/BIC');
+            isValid = false;
+        }
+
+        if(!isValid) return;
+
+        $.ajax({
+            url: "{{ route('affiliate.addAnotherBankDetails') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                bank_name: bankName,
+                account_holder_name: accountHolder,
+                account_no: accountNo,
+                confirm_account_no: confirmAccountNo,
+                iban: iban,
+                swift: swift,
+            },
+            beforeSend: function() {
+                $('#submit_bank_btn').prop('disabled', true).text('Processing...');
+            },
+            success: function(response) {
+                if(response.status === 'success') {
+                    toastr.success(response.message);
+                    $('#bankDetails').modal('hide');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr) {
+                if(xhr.responseJSON && xhr.responseJSON.errors) {
+                    $.each(xhr.responseJSON.errors, function(key, value) {
+                        toastr.error(value[0]);
+                    });
+                } else {
+                    toastr.error("Something went wrong");
+                }
+            },
+            complete: function() {
+                $('#submit_bank_btn').prop('disabled', false).text('Submit Request');
+            }
+        });
+
+    });
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    // 1️⃣ Restore last active tab
+    let activeTab = localStorage.getItem("active_product_tab");
+    if (activeTab) {
+        let tabEl = document.querySelector(`[data-bs-target="${activeTab}"]`);
+        if (tabEl) {
+            new bootstrap.Tab(tabEl).show();
+        }
+    }
+
+    // 2️⃣ Save clicked tab
+    document.querySelectorAll('[data-bs-toggle="pill"]').forEach(tabBtn => {
+        tabBtn.addEventListener("shown.bs.tab", function(e) {
+            localStorage.setItem("active_product_tab", e.target.getAttribute(
+                "data-bs-target"));
+        });
+    });
+
 });
 </script>
