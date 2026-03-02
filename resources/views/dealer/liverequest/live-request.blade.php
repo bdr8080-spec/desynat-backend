@@ -227,8 +227,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="text-red text-end" id="reason-status-date"></div>
-                <div class="reason-lists py-3">
+                <div class="text-red text-end mb-1" id="reason-status-date"></div>
+                <div class="reason-lists py-3" style="border: 1px solid #ddd; border-radius: 10px; padding: 10px;">
                     <p id="reason-text"></p>
                 </div>
             </div>
@@ -319,8 +319,12 @@
 @include('dealer.layout.footer');
 
 
+<script>
+  new DataTable('#table1');
+</script>
 
 <script>
+
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
