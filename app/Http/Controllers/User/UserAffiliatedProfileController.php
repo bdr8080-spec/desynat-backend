@@ -329,7 +329,7 @@ public function AffilateAllProducts(Request $request){
 
 
 public function generateProductLink(Request $request){
-
+    
     $affilatedUser=Auth::guard('affilated_user')->user();     
 
            $request_data = (object) [
@@ -342,6 +342,31 @@ public function generateProductLink(Request $request){
         return $products->link;  // return Link 
 
     }
+
+
+
+public function add_to_my_products(Request $request){
+
+    $affilatedUser=Auth::guard('affilated_user')->user();     
+
+    $request_data = (object) [
+    'user_id' => $affilatedUser->id,
+    'product_id' => $request->product_id,
+];
+
+    $data = $this->UserAffiliatedProductService->addToMyProducts($request_data);    
+
+    return response()->json([
+                'status' => $data['status'],
+                'message' => $data['message'],
+                'data' => $data['data']
+            ]);
+
+    }
+
+    
+
+
     
     public function deleteBankAccount(Request $request, $id)
     {
@@ -355,11 +380,8 @@ public function generateProductLink(Request $request){
 
             $data = $this->UserAffilatedAuthService->deleteBankAccount($request_data);
 
-            return response()->json([
-                'status' => $data['status'],
-                'message' => $data['message'],
-                'data' => $data['data']
-            ]);
+          
+            
 
         } catch (\Exception $e) {
 

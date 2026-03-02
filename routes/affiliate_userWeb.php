@@ -68,6 +68,9 @@ Route::get('/affiliate/all-products', [UserAffiliatedProfileController::class, '
 
 Route::get('/affiliate/generate-product-link', [UserAffiliatedProfileController::class, 'generateProductLink'])
     ->name('affiliate.generateProductLink');
+    
+Route::post('/affiliate/add_to_my_products', [UserAffiliatedProfileController::class, 'add_to_my_products'])
+->name('affiliate.add_to_my_products');
 
 // });
 

@@ -79,20 +79,26 @@
                 <h1 class="modal-title fs-5">Affiliate link</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <div class="search-field-2 d-flex align-items-center py-4 gap-3">
-                    <div class="from-group position-relative w-75">
-                        <input type="search" class="form-control py-3" id="generate_url_link" placeholder="Enter URL"
-                            readonly>
+
+            <form id="AddproductToLink" action="{{route('affiliate.add_to_my_products')}}" method="post">
+                <meta name="csrf-token" content="{{ csrf_token() }}">
+
+                <div class="modal-body">
+                    <div class="search-field-2 d-flex align-items-center py-4 gap-3">
+                        <div class="from-group position-relative w-75">
+                            <input type="search" class="form-control py-3" id="generate_url_link"
+                                placeholder="Enter URL" readonly>
+
+                            <input type="hidden" class="form-control py-3" name="product_id" id="product_id">
+                        </div>
+                        <button type="button" class="btn btn-success" id="copyLinkBtn">Copy link</button>
                     </div>
-                    <button type="button" class="btn btn-success" id="copyLinkBtn">Copy link</button>
+                    <div class="text-center mt-2">
+                        <button type="submit" class="btn btn-success w-100 lh-2">Add product</button>
+                    </div>
                 </div>
-                <div class="text-center mt-2">
-                    <button type="button" class="btn btn-success w-100 lh-2"> Submit </button>
-                </div>
+            </form>
 
-
-            </div>
         </div>
     </div>
 </div>
@@ -116,6 +122,8 @@ $(document).on('click', '.get-link-btn', function() {
         success: function(response) {
 
             $('#generate_url_link').val(response);
+            $('#product_id').val(productId);
+
         },
         error: function() {
             alert('Something went wrong');
@@ -123,9 +131,7 @@ $(document).on('click', '.get-link-btn', function() {
     });
 
 });
-</script>
 
-<script>
 $(document).on('click', '#copyLinkBtn', function() {
 
     let copyText = $('#generate_url_link').val();
@@ -134,6 +140,59 @@ $(document).on('click', '#copyLinkBtn', function() {
         toastr.success("Link copied successfully!");
     }).catch(function() {
         toastr.failed("Failed to copy link");
+    });
+
+});
+
+
+
+$(document).on('submit', '#AddproductToLink', function(e) {
+
+    e.preventDefault(); // stop normal form submit
+
+    let form = $(this);
+    let formData = form.serialize();
+
+    $.ajax({
+        url: form.attr('action'),
+        type: "POST",
+        data: formData,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function() {
+            // form.find('button[type="submit"]').prop('disabled', true).text('Adding...');
+        },
+        success: function(response) {
+
+            console.log(response.status);
+
+            if (response.status == "success") {
+                toastr.success(response.message);
+
+            }
+
+            if (response.status == "error") {
+                toastr.error(response.message);
+            }
+
+            // window.setTimeout(function() {
+            //     location.reload();
+            // }, 2000);
+
+            // Optional success message
+            // alert('Product added successfully!');
+
+            // 🔥 Refresh page
+            // location.reload();
+
+        },
+        error: function(xhr) {
+
+            alert('Something went wrong');
+
+            form.find('button[type="submit"]').prop('disabled', false).text('Add product');
+        }
     });
 
 });
