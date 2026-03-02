@@ -43,6 +43,18 @@ Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileContro
 Route::match(['get', 'post'], '/affiliate/change-password', [UserAffiliatedProfileController::class, 'affiliateChangePassword'])->name('affiliate.change-password');
 
 
+Route::match(['get', 'post'], '/affiliate/category', [UserAffiliatedProfileController::class, 'affiliateMyCategory'])->name('affiliate.affiliateCategory');
+
+Route::match(['get', 'post'], '/affiliate/my-product', [UserAffiliatedProfileController::class, 'affiliateMyProduct'])->name('affiliate.affiliateMyProduct');
+
+
+Route::get('/affiliate/my-product-subcategory', [UserAffiliatedProfileController::class, 'myProductFiltersubcategory'])
+    ->name('affiliate.myProductFiltersubcategory');
+Route::get('/affiliate/my-product-filter', [UserAffiliatedProfileController::class, 'myProductFilter'])
+    ->name('affiliate.Myproductfilter');
+
+Route::get('/affiliate/affiliate-product-performance/{id}', [UserAffiliatedProfileController::class, 'affiliateProductPerformance'])->name('affiliate.ProductPerformance');
+
 
 // });
 
@@ -59,25 +71,25 @@ Route::match(['get', 'post'], '/affiliate/change-password', [UserAffiliatedProfi
 
 // })->name('affiliatedUser.change-password');
 
-Route::match(['get', 'post'], '/category', function () {
-    return view('affiliatedUser.category.categorys');
+// Route::match(['get', 'post'], '/category', function () {
+//     return view('affiliatedUser.category.categorys');
 
-})->name('affiliatedUser.category');
+// })->name('affiliatedUser.category');
 
-Route::match(['get', 'post'], '/all-product', function () {
-    return view('affiliatedUser.category.allproducts');
+// Route::match(['get', 'post'], '/all-product', function () {
+//     return view('affiliatedUser.category.allproducts');
 
-})->name('affiliatedUser.all-product');
+// })->name('affiliatedUser.all-product');
 
 Route::match(['get', 'post'], '/my-product', function () {
     return view('affiliatedUser.myproducts.my-products');
 
 })->name('affiliatedUser.my-product');
 
-Route::match(['get', 'post'], '/all-performance', function () {
-    return view('affiliatedUser.myproducts.performance');
+// Route::match(['get', 'post'], '/all-performance', function () {
+//     return view('affiliatedUser.myproducts.performance');
 
-})->name('affiliatedUser.all-performance');
+// })->name('affiliatedUser.all-performance');
 
 Route::match(['get', 'post'], '/change-mobile-number', function () {
     return view('affiliatedUser.profiles.change-mobile');
