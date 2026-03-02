@@ -82,8 +82,7 @@
 
         <div class="choose-date">
             <div class="date-card">
-                <!-- <div class="date-header" data-bs-toggle="modal" data-bs-target="#sendlives"> -->
-                    <div class="date-header">
+                <div class="date-header" data-bs-toggle="modal" data-bs-target="#sendlives">
                     <span>Select Date</span>
                     <h3 id="selectedDate"></h3>
                 </div>
