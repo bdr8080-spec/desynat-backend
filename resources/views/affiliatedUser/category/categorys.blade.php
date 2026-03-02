@@ -14,188 +14,27 @@
     </div>
 
     <div class="tabs-panel py-3">
-        <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active w-100" id="pills-allproduct-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-allproduct" type="button" role="tab" aria-controls="pills-allproduct"
-                    aria-selected="true">Men </button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link w-100" id="pills-address-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-address" type="button" role="tab" aria-controls="pills-active"
-                    aria-selected="false"> Woman</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link w-100" id="pills-inactive-tab" data-bs-toggle="pill"
-                    data-bs-target="#pills-bank" type="button" role="tab" aria-controls="pills-bank"
-                    aria-selected="false"> Kids</button>
-            </li>
 
-        </ul>
+        <div class="tabs-panel py-3">
+            <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab">
+                @foreach($category as $key=>$val)
+
+                <li class="nav-item">
+                    <button class="nav-link w-100 category-tab @if($key=='0') active @endif"
+                        data-category="{{$val->id}}">
+                        {{$val->name}}
+                    </button>
+                </li>
+
+                @endforeach
+
+            </ul>
+        </div>
+
     </div>
 
-    <div class="tab-body-wapper">
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-allproduct" role="tabpanel"
-                aria-labelledby="pills-allproduct-tab" tabindex="0">
-                <div class="personl-wapper">
-                    <div class="title24">Sub Category </div>
-                    <div class="sub-category-wrapper py-4">
-                        <div class="sub-category-pnl">
-                            <a href="/all-product">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="tab-pane fade" id="pills-address" role="tabpanel" aria-labelledby="pills-address-tab"
-                tabindex="0">
-                <div class="personl-wapper">
-                    <div class="title24">Sub Category </div>
-                    <div class="sub-category-wrapper py-4">
-                        <div class="sub-category-pnl">
-                            <a href="/all-product">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-1.jpg" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                       
-                    </div>
-
-                </div>
-
-
-            </div>
-
-            <div class="tab-pane fade" id="pills-bank" role="tabpanel" aria-labelledby="pills-bank-tab" tabindex="0">
-                <div class="personl-wapper">
-                    <div class="title24">Sub Category </div>
-                    <div class="sub-category-wrapper py-4">
-                        <div class="sub-category-pnl">
-                            <a href="/all-product">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt.jpg" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                       
-                        <div class="sub-category-pnl">
-                            <a href="#">
-                                <div class="sub-grid">
-                                    <figure>
-                                        <img src="{{ asset('dealer') }}/assets/img/t-shirt-3.png" alt="image"
-                                            class="img-fluid">
-                                    </figure>
-                                </div>
-                                <div class="sub-title">Casual Wear</div>
-                            </a>
-                        </div>
-                       
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
+    <div id="show-subcategory">
+        <!-- show subcategory code here  -->
     </div>
 
 </section>
@@ -203,5 +42,52 @@
 
 
 
-@include('affiliatedUser.layout.footer')
+<script src="{{ asset('/dealer') }}/assets/custom-file/js/jquery.min.js"></script>
 
+
+<script>
+$(document).ready(function() {
+
+    let selectedCategory = $('.category-tab.active').data('category') || 'all';
+    let selectedSubcategory = $('.subcategory-item.active').data('subcategory') || 'all';
+
+    // 🔹 Load Subcategories (ONLY when category changes)
+    function loadSubcategories() {
+        $.ajax({
+            url: "{{ route('affiliate.allsubcategory') }}",
+            type: "GET",
+            data: {
+                category: selectedCategory
+            },
+            beforeSend: function() {
+                $('#show-subcategory').html('<p>Loading...</p>');
+            },
+            success: function(response) {
+                $('#show-subcategory').html(response);
+            }
+        });
+    }
+
+
+    // ✅ Category Click → Load BOTH
+    $(document).on('click', '.category-tab', function() {
+
+        $('.category-tab').removeClass('active');
+        $(this).addClass('active');
+
+        selectedCategory = $(this).data('category');
+        selectedSubcategory = 'all';
+
+        loadSubcategories(); // 🔥 only here
+    });
+
+
+    // 🔥 On page load
+    loadSubcategories();
+
+});
+</script>
+
+
+
+@include('affiliatedUser.layout.footer')

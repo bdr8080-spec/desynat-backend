@@ -43,11 +43,8 @@ Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileContro
 Route::match(['get', 'post'], '/affiliate/change-password', [UserAffiliatedProfileController::class, 'affiliateChangePassword'])->name('affiliate.change-password');
 
 
-Route::match(['get', 'post'], '/affiliate/category', [UserAffiliatedProfileController::class, 'affiliateMyCategory'])->name('affiliate.affiliateCategory');
-
+// My Affilate prosduct Show Code 
 Route::match(['get', 'post'], '/affiliate/my-product', [UserAffiliatedProfileController::class, 'affiliateMyProduct'])->name('affiliate.affiliateMyProduct');
-
-
 Route::get('/affiliate/my-product-subcategory', [UserAffiliatedProfileController::class, 'myProductFiltersubcategory'])
     ->name('affiliate.myProductFiltersubcategory');
 Route::get('/affiliate/my-product-filter', [UserAffiliatedProfileController::class, 'myProductFilter'])
@@ -56,7 +53,57 @@ Route::get('/affiliate/my-product-filter', [UserAffiliatedProfileController::cla
 Route::get('/affiliate/affiliate-product-performance/{id}', [UserAffiliatedProfileController::class, 'affiliateProductPerformance'])->name('affiliate.ProductPerformance');
 
 
+// catgeory Code 
+Route::match(['get', 'post'], '/affiliate/category', [UserAffiliatedProfileController::class, 'affiliateMyCategory'])->name('affiliate.affiliateCategory');
+
+Route::get('/affiliate/allsubcategory', [UserAffiliatedProfileController::class, 'Affilateallsubcategory'])
+    ->name('affiliate.allsubcategory');
+    
+
+Route::get('/affiliate/all-products', [UserAffiliatedProfileController::class, 'AffilateAllProducts'])
+    ->name('affiliate.allProducts');
+
 // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //  Affiliate_user profile
@@ -76,10 +123,10 @@ Route::get('/affiliate/affiliate-product-performance/{id}', [UserAffiliatedProfi
 
 // })->name('affiliatedUser.category');
 
-// Route::match(['get', 'post'], '/all-product', function () {
-//     return view('affiliatedUser.category.allproducts');
+Route::match(['get', 'post'], '/all-product', function () {
+    return view('affiliatedUser.category.allproducts');
 
-// })->name('affiliatedUser.all-product');
+})->name('affiliatedUser.all-product');
 
 Route::match(['get', 'post'], '/my-product', function () {
     return view('affiliatedUser.myproducts.my-products');

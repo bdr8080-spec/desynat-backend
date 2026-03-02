@@ -103,64 +103,6 @@ $affilatedUser=Auth::guard('affilated_user')->user();
     }
 
 
-
-public function affiliateMyCategory(Request $request){
-
-    $category=Category::all();
-    
-
-    if($request->ismethod('get')){
-     return view('affiliatedUser.category.categorys',compact('category'));
-    }
-
-
-$affilatedUser=Auth::guard('affilated_user')->user();     
-
-
-   $validate = Validator::make($request->all(), [
-        'old_password' => 'required',
-        'password'         => 'required',
-        'confirm_password' => 'required|same:password',
-    ]);
-
-    if ($validate->fails()) {
-        return ApiResponse::generateResponse(
-            'error',
-            $validate->errors()->first(),
-            (object) $validate->errors(),
-            422
-        );
-    }
-
-    $affilated_user = $affilatedUser->id;
-    
-    $request_data = (object) [
-        'user_id' => $affilated_user,
-        'password' => $request->password,
-        "old_password"=>$request->old_password
-    ];
-
-    $data = $this->UserAffilatedAuthService->updatePassword($request_data);
-
-    if (isset($data['status']) && $data['status'] === 'error') {
-        return ApiResponse::generateResponse(
-            'error',
-            $data['message'],
-            (object) [],
-            400
-        );
-    }
-
-    return ApiResponse::generateResponse(
-        'success',
-        $data['message'],
-        $data['data'],
-        200
-    );
-    
-    }
-
-
 public function affiliateMyProduct(Request $request){
 
     $category=Category::all();
@@ -253,8 +195,67 @@ public function affiliateProductPerformance(Request $request){
     }
 
 
+
+//catgory Code 
+
+public function affiliateMyCategory(Request $request){
+
+    $category=Category::all();
+    
+    if($request->ismethod('get')){
+     return view('affiliatedUser.category.categorys',compact('category'));
+    }
+        
+    }
+
+    public function Affilateallsubcategory(Request $request)
+{
+    $affilatedUser=Auth::guard('affilated_user')->user();     
+    
+    $category_id = $request->category;
+    $subcategory = $request->subcategory;
+
     
 
+    if($category_id=='all'){
+     $all_subcategory=SubCategory::all();
 
+     $category_id='';
+
+    }else{
+       $all_subcategory=SubCategory::where('category_id',$category_id)->get();
+     }
+        
+    if($subcategory=='all'){
+        $subcategory='';
+    }
+
+
+    return view('affiliatedUser.category.partials.showSubcatory',compact('all_subcategory'))->render();
+    
+}
+
+// affilate all product accoprding to category and subcategory
+
+public function AffilateAllProducts(Request $request){
+
+        // $request_data = (object)[
+        // 'category_id' => $request->category_id,
+        // 'subcategory_id' => $request->subcategory_id,
+        // "limit"=>10,
+        // ];
+        
+    $data = $this->UserAffiliatedProductService->getAllProducts($request);
+
+    $products=$data['data'];
+    
+    
+    if($request->ismethod('get')){
+        return view('affiliatedUser.category.allproducts',compact('products'));
+    }
+
+    }
+
+    
 
 }
