@@ -55,12 +55,12 @@
                     <div class="from-group d-flex gap-2 flex-wrap align-items-center">
                         <div class="date-form-pnl">
                             <input type="date" class="form-control" name="from" id="fromDate"
-                                value="{{ request('from') }}">
+                                value="{{ request('from') }}" onchange="updateToDate();>
                             <p class="text-danger" id="error-start_date"></p>
                         </div>
                         <div class="date-form-pnl">
                             <input type="date" class="form-control" name="to" id="toDate"
-                                value="{{ request('to') }}">
+                                value="{{ request('to') }}" onchange="updateToDate();>
                             <p class="text-danger" id="error-end_date"></p>
                         </div>
                     </div>
@@ -114,8 +114,12 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>#{{ $req['order_id'] }}</td>
-                        <td>{{ $req['created_at'] }}</td>
-                        <td>{{ $req['timeslot_details']['date'] }} at {{ $req['timeslot_details']['from'] }}</td>
+                        <td>
+                            {{ \Carbon\Carbon::parse($req['created_at'])
+                                ->setTimezone(config('app.timezone'))
+                                ->format('Y/m/d \a\t h:i A') }}
+                        </td>
+                        <td>{{ str_replace('-', '/', $req['timeslot_details']['date']) }} at {{ $req['timeslot_details']['from'] }}</td>
                         <td>
                             @php
                             $now = \Carbon\Carbon::now();
@@ -140,7 +144,7 @@
                             @elseif($timeslotDateTime && $timeslotDateTime->lessThanOrEqualTo($now))
                             <span style="color: #22c55e;">Completed</span>
                             @else
-                            <span>Accepted</span>
+                            <span style="color: #22c55e;">Confirmed</span>
                             @endif
                         </td>
                         <td>
@@ -186,7 +190,9 @@
             <div class="modal-body">
                 <div class="from-group py-3">
                     <label>Total Coverages - <span id="totalSlots">0</span></label>
-                    <input type="date" class="form-control" id="live_requestDate">
+                    <!-- <input type="date" class="form-control" id="live_requestDate"> -->
+                     <div class="form-control" id="modalSelectedDate" readonly></div>
+                    <input type="hidden" id="live_requestDate">
                 </div>
                 <div class="from-group mb-4">
                     <label for="time">Select Time</label>
@@ -285,6 +291,21 @@
     </div>
 </div>
 
+<!--Success Modal -->
+    <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="p-4 text-center">
+                        <img alt="image" src="{{ asset('/dealer') }}/assets/img/success.svg">
+                        <h5 class="mt-3">Request Sent Successfully!</h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 
 
 
@@ -295,18 +316,16 @@
 
 
 <script>
-
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-let m = new Date().getMonth();
-let y = new Date().getFullYear();
-let selectedSlotId = null;
+let m = new Date().getMonth(); // current month
+let y = new Date().getFullYear(); // current year
+let selectedSlotId = null; // selected timeslot id
 
 /* ================= RENDER CALENDAR ================= */
-
 function render() {
 
     $('#daysContainer').html('');
@@ -333,11 +352,24 @@ function render() {
                 <b>${d}</b>
             </div>
         `);
+
+        // Set selected date text if it's today
+        if (active) {
+            let dayStr = String(d).padStart(2, '0');
+            let monthStr = String(m + 1).padStart(2, '0');
+            let formattedDate = `${y}-${monthStr}-${dayStr}`;
+
+            $('#selectedDate').text(`${dayStr}, ${months[m]} ${y}`); // main page
+            $('#live_requestDate').val(formattedDate); // hidden input
+            $('#modalSelectedDate').text(formattedDate); // modal display
+        }
     }
+
+    // Disable submit button initially
+    $('.add-fillbtn').prop('disabled', true);
 }
 
 /* ================= INIT MONTH & YEAR ================= */
-
 months.forEach((month, index) => {
     $('#monthSelect').append(`<option value="${index}">${month}</option>`);
 });
@@ -346,10 +378,10 @@ for (let i = y; i <= y + 14; i++) {
     $('#yearSelect').append(`<option value="${i}">${i}</option>`);
 }
 
+// Initial render
 render();
 
 /* ================= MONTH / YEAR CHANGE ================= */
-
 $('#monthSelect, #yearSelect').change(function () {
     m = +$('#monthSelect').val();
     y = +$('#yearSelect').val();
@@ -357,20 +389,21 @@ $('#monthSelect, #yearSelect').change(function () {
 });
 
 /* ================= LOAD TIMESLOTS ================= */
-
 function loadTimeslots(date) {
 
     if (!date) {
         $('.time-slot').html('<p class="text-danger">Please select date</p>');
         $('#totalSlots').text(0);
+        $('.add-fillbtn').prop('disabled', true); // disable button
         return;
     }
 
-    $('.time-slot').html('<p>Loading...</p>');
+    // $('.time-slot').html('<p>Loading...</p>');
     $('#totalSlots').text(0);
     $('#slotError').text('');
     selectedSlotId = null;
     $('#selectedTimeslotId').val('');
+    $('.add-fillbtn').prop('disabled', true); // disable until a slot is selected
 
     fetch("{{ route('seller.getTimeslots') }}", {
         method: "POST",
@@ -382,9 +415,7 @@ function loadTimeslots(date) {
         body: JSON.stringify({ date: date })
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error("Network error");
-        }
+        if (!response.ok) throw new Error("Network error");
         return response.json();
     })
     .then(data => {
@@ -412,15 +443,20 @@ function loadTimeslots(date) {
 
         $('.time-slot').html(html);
 
+        // Disable submit if no slots
+        if (!data.data || data.data.length === 0) {
+            $('.add-fillbtn').prop('disabled', true);
+        }
+
     })
     .catch(() => {
         $('.time-slot').html('<p class="text-danger">Something went wrong</p>');
         $('#totalSlots').text(0);
+        $('.add-fillbtn').prop('disabled', true);
     });
 }
 
 /* ================= DATE CLICK FROM CALENDAR ================= */
-
 $(document).on('click', '.day', function () {
 
     $('.day').removeClass('active');
@@ -432,10 +468,11 @@ $(document).on('click', '.day', function () {
 
     let formattedDate = `${year}-${monthNumber}-${day}`;
 
-    $('#selectedDate').text(`${day}, ${months[m]} ${year}`);
-    $('#live_requestDate').val(formattedDate);
+    $('#selectedDate').text(`${day}, ${months[m]} ${year}`); // main page
+    $('#live_requestDate').val(formattedDate); // hidden input
+    $('#modalSelectedDate').text(formattedDate); // modal display
 
-    // Open modal programmatically on date click
+    // Open modal programmatically
     var myModal = new bootstrap.Modal(document.getElementById('sendlives'));
     myModal.show();
 
@@ -443,19 +480,11 @@ $(document).on('click', '.day', function () {
 });
 
 /* ================= MODAL OPEN ================= */
-
 $('#sendlives').on('shown.bs.modal', function () {
     loadTimeslots($('#live_requestDate').val());
 });
 
-/* ================= DATE CHANGE INSIDE MODAL ================= */
-
-$('#live_requestDate').on('change', function () {
-    loadTimeslots($(this).val());
-});
-
 /* ================= SELECT TIMESLOT ================= */
-
 $(document).on('click', '.timeslot-btn', function () {
 
     $('.timeslot-btn').removeClass('active');
@@ -464,10 +493,12 @@ $(document).on('click', '.timeslot-btn', function () {
     selectedSlotId = $(this).data('id');
     $('#selectedTimeslotId').val(selectedSlotId);
     $('#slotError').text('');
+
+    // Enable submit button
+    $('.add-fillbtn').prop('disabled', false);
 });
 
 /* ================= SUBMIT LIVE REQUEST ================= */
-
 $('.add-fillbtn').on('click', function (e) {
 
     e.preventDefault();
@@ -496,11 +527,16 @@ $('.add-fillbtn').on('click', function (e) {
 
         if (data.status === 'success') {
 
-            toastr.success(data.message);
-
             $('#sendlives').modal('hide');
 
-            loadTimeslots($('#live_requestDate').val());
+            // Show success modal
+            $('#modalSuccess').modal('show');
+
+            // Hide success modal after 3s and reload timeslots
+            setTimeout(() => {
+                $('#modalSuccess').modal('hide');
+                location.reload(); // reloads the entire page
+            }, 3000);
 
         } else {
             toastr.error(data.message);
@@ -513,6 +549,18 @@ $('.add-fillbtn').on('click', function (e) {
 
 });
 
+/* ================= SET INITIAL MODAL DATE ON PAGE LOAD ================= */
+$(document).ready(function() {
+    let today = new Date();
+    let day = String(today.getDate()).padStart(2, '0');
+    let month = String(today.getMonth() + 1).padStart(2, '0');
+    let year = today.getFullYear();
+    let formattedDate = `${year}-${month}-${day}`;
+
+    $('#live_requestDate').val(formattedDate);
+    $('#modalSelectedDate').text(formattedDate);
+    $('.add-fillbtn').prop('disabled', true);
+});
 </script>
 
 <!-- view details -->
@@ -659,4 +707,20 @@ $(document).ready(function() {
     $('#fromDate, #toDate').change(function() {
     $('#liveRequestFilterForm').submit();
 });
+</script>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('fromDate').value;
+        const toDateInput = document.getElementById('toDate');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
+
 </script>
