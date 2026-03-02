@@ -109,6 +109,27 @@
 .shadow20 {
     box-shadow: 0px 1px 8px 0px #0000001a;
 }
+/* Profile css */
+
+.addanother {
+    line-height: 38px;
+    border: 1px solid #b9946b;
+    color: #6E4527;
+    border-radius: 8px;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+}
+.line2{
+    line-height: 38px;
+    border-radius: 8px;
+    padding: 10px;
+}
+.addanother h5 {
+    font-size: 17px;
+}
+
+
 
 @media(max-width:641px){
     .sub-grid figure {

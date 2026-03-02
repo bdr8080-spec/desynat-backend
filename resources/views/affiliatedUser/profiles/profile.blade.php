@@ -220,11 +220,11 @@
             <div class="tab-pane fade" id="pills-bank" role="tabpanel" aria-labelledby="pills-bank-tab" tabindex="0">
 
                 @foreach($affilatedUser->bank_details as $key=>$val)
-                <div class="p-2 rounded-4 desc-box bg-white">
-                    <div class="bankpnl d-flex justify-content-between p-2 align-items-center">
+                <div class="rounded-4 desc-box bg-white mb-3">
+                    <div class="bankpnl d-flex justify-content-between align-items-center line2">
                         <div class="account-no">{{$val->account_no}}</div>
                         <div class="banktool">
-                            <a href="#">
+                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#editbankDetails">
                                 <img src="{{ asset('/dealer') }}/assets/img/b-edit.svg" alt="edit icon"
                                     class="img-fluid">
                             </a>
@@ -238,6 +238,10 @@
 
                 @endforeach
 
+                <div class="addanother d-flex gap-2" data-bs-toggle="modal" data-bs-target="#bankDetails">
+                    <i class="bi bi-plus-lg"></i> <h5 class="mb-0">Add another account</h5>
+                </div>
+
 
             </div>
         </div>
@@ -246,7 +250,115 @@
 </section>
 
 
+<!-- Add bank details -->
+<div class="modal fade" id="bankDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered w-75">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Add Account </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+            <div class="account-form">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Bank name</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Bank name ">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Account Holder name</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Account Holder name">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Account Number</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Account Number">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Confirm Account Number</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Re-Enter Account Number">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>IBAN</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter IBAN">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>SWIFT/BIC</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Swift">
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-success w-100 lh-2"> Submit Request</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 
+<!-- Edit bank details -->
+<div class="modal fade" id="editbankDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered w-75">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Edit Account </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <div class="modal-body">
+            <div class="account-form">
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Bank name</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Bank name ">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Account Holder name</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Account Holder name">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Account Number</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Account Number">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>Confirm Account Number</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Re-Enter Account Number">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>IBAN</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter IBAN">
+                </div>
+                <div class="sub-form">
+                    <div class="label-flex">
+                        <label>SWIFT/BIC</label>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Enter Swift">
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-success w-100 lh-2"> Submit Request</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 
 @include('affiliatedUser.layout.footer')
 
