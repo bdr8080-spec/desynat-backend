@@ -52,6 +52,10 @@ Route::get('/affiliate/my-product-filter', [UserAffiliatedProfileController::cla
 
 Route::get('/affiliate/affiliate-product-performance/{id}', [UserAffiliatedProfileController::class, 'affiliateProductPerformance'])->name('affiliate.ProductPerformance');
 
+Route::post('/affiliate/updateBankAccountDetails/{id}', [UserAffiliatedProfileController::class, 'updateBankAccountDetails'])->name('affiliate.updateBankAccountDetails');
+Route::post('/affiliate/addAnotherBankDetails', [UserAffiliatedProfileController::class, 'addAnotherBankDetails'])->name('affiliate.addAnotherBankDetails');
+Route::post('/affiliate/deleteBankAccount/{id}', [UserAffiliatedProfileController::class, 'deleteBankAccount'])->name('affiliate.deleteBankAccount');
+
 
 // catgeory Code 
 Route::match(['get', 'post'], '/affiliate/category', [UserAffiliatedProfileController::class, 'affiliateMyCategory'])->name('affiliate.affiliateCategory');

@@ -37,6 +37,7 @@ class UserAffiliatedProfileController extends Controller
     $data = $this->UserAffilatedAuthService->getProfile($request_data);
 
     $affilatedUser=$data['data'];
+    //dd($affilatedUser);
 
     $country =   country::all();
 
@@ -194,6 +195,75 @@ public function affiliateProductPerformance(Request $request){
     }
     }
 
+public function updateBankAccountDetails(Request $request, $id)
+{
+    try {
+
+        $request->validate([
+            'bank_name' => 'required',
+            'account_holder_name' => 'required',
+            'account_no' => 'required',
+            'confirm_account_no' => 'required|same:account_no',
+        ]);
+
+        $request->merge([
+            'bank_details_id' => $id
+        ]);
+
+        $response = $this->UserAffilatedAuthService->updateBankDetails($request);
+
+        return response()->json($response);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ]);
+    }
+}
+
+public function addAnotherBankDetails(Request $request)
+{
+    try {
+
+        $request->validate([
+            'bank_name' => 'required',
+            'account_holder_name' => 'required',
+            'account_no' => 'required',
+            'iban' => 'required',
+            'swift' => 'required',
+        ]);
+
+        $affilatedUser=Auth::guard('affilated_user')->user(); 
+
+        $request_data = (object) [
+            'affilated_user' => $affilatedUser->id,
+            'bank_name' => $request->bank_name,
+            'account_holder_name' => $request->account_holder_name,
+            'account_no' => $request->account_no,
+            'iban' => $request->iban,
+            'swift' => $request->swift,
+        ];
+
+        $data = $this->UserAffilatedAuthService->addBankDetails($request_data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Bank details added successfully',
+            'data' => $data
+        ]);
+
+    } catch (\Exception $e) {
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Something went wrong',
+            'data' => $e->getMessage()
+        ]);
+    }
+}
+
 
 
 //catgory Code 
@@ -272,5 +342,35 @@ public function generateProductLink(Request $request){
         return $products->link;  // return Link 
 
     }
+    
+    public function deleteBankAccount(Request $request, $id)
+    {
+        try {
+            $affilatedUser = Auth::guard('affilated_user')->user();
+
+            $request_data = (object)[
+                'bank_details_id' => $id,
+                'affilated_user'  => $affilatedUser->id
+            ];
+
+            $data = $this->UserAffilatedAuthService->deleteBankAccount($request_data);
+
+            return response()->json([
+                'status' => $data['status'],
+                'message' => $data['message'],
+                'data' => $data['data']
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+                'data' => (object)[]
+            ]);
+        }
+    }
+
+    
 
 }
