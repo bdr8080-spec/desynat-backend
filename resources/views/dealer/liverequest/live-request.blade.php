@@ -4,7 +4,8 @@
 <section class="section dashboard">
     <div class="page-wapper dashboard-pnl d-flex justify-content-between align-center">
         <div class="title24">Live Coverage Requests</div>
-        <a href="#" class="btn btn-success exportbtn">Export</a>
+        <a href="{{ route('seller.liveRequests') }}" class="btn btn-success exportbtn">Reset</a>
+        <!-- <a href="#" class="btn btn-success exportbtn">Export</a> -->
 
     </div>
     <div class="datatable-wapper mt-4">
@@ -13,12 +14,12 @@
                 <div class="from-group position-relative">
                     <img src="{{ asset('dealer') }}/assets/img/search-icon.svg" alt="search" class="search-icon">
                     <input type="search"
-                        class="dt-input tableSearch form-control @if(count($data) > 0)) tableSearch @endif"
+                        class="dt-input tableSearch form-control  tableSearch"
                         id="customTableSearch" data-table="table1" placeholder="Search" aria-controls="table1">
                 </div>
             </div>
 
-            <form method="GET" action="">
+            <!-- <form method="GET" action="">
 
                 <div class="search-filter">
                     <div class="from-group">
@@ -46,6 +47,35 @@
 
                         </select>
                     </div>
+                </div>
+            </form> -->
+            <form method="GET" action="{{ route('seller.liveRequests') }}" id="liveRequestFilterForm">
+                <div class="search-filter d-flex flex-wrap align-items-center gap-3">
+
+                    <div class="from-group d-flex gap-2 flex-wrap align-items-center">
+                        <div class="date-form-pnl">
+                            <input type="date" class="form-control" name="from" id="fromDate"
+                                value="{{ request('from') }}">
+                            <p class="text-danger" id="error-start_date"></p>
+                        </div>
+                        <div class="date-form-pnl">
+                            <input type="date" class="form-control" name="to" id="toDate"
+                                value="{{ request('to') }}">
+                            <p class="text-danger" id="error-end_date"></p>
+                        </div>
+                    </div>
+
+                    <div class="from-group">
+                        <select name="filter" id="filterStatus" class="form-select form-control width-50" 
+                            onchange="document.getElementById('liveRequestFilterForm').submit();">
+                            <option value="">Filter by status</option>
+                            <option value="1" {{ request('filter') == '1' ? 'selected' : '' }}>Pending</option>
+                            <option value="2" {{ request('filter') == '2' ? 'selected' : '' }}>Completed</option>
+                            <option value="3" {{ request('filter') == '3' ? 'selected' : '' }}>Cancelled</option>
+                            <option value="4" {{ request('filter') == '4' ? 'selected' : '' }}>Rejected</option>
+                        </select>
+                    </div>
+
                 </div>
             </form>
         </div>
@@ -799,5 +829,11 @@ $(document).ready(function() {
         });
     });
 
+});
+</script>
+
+<script>
+    $('#fromDate, #toDate').change(function() {
+    $('#liveRequestFilterForm').submit();
 });
 </script>
