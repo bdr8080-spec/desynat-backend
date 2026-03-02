@@ -53,14 +53,18 @@
                 <div class="search-filter d-flex flex-wrap align-items-center gap-3">
 
                     <div class="from-group d-flex gap-2 flex-wrap align-items-center">
-                        <div class="date-form-pnl">
-                            <input type="date" class="form-control" name="from" id="fromDate"
-                                value="{{ request('from') }}" onchange="updateToDate();>
+                        <div class="datefilter">
+                            <div class="date-form-pnl">
+                                <input type="date" class="form-control" name="from" id="fromDate"
+                                    value="{{ request('from') }}" onchange="updateToDate();">
+                            </div>
                             <p class="text-danger" id="error-start_date"></p>
                         </div>
-                        <div class="date-form-pnl">
-                            <input type="date" class="form-control" name="to" id="toDate"
-                                value="{{ request('to') }}" onchange="updateToDate();>
+                        <div class="datefilter">
+                            <div class="date-form-pnl">
+                                <input type="date" class="form-control" name="to" id="toDate"
+                                    value="{{ request('to') }}" onchange="updateToDate();">
+                                </div>
                             <p class="text-danger" id="error-end_date"></p>
                         </div>
                     </div>
