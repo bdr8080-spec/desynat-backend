@@ -326,6 +326,34 @@ public function AffilateAllProducts(Request $request){
 
     }
 
+    public function deleteBankAccount(Request $request, $id)
+    {
+        try {
+            $affilatedUser = Auth::guard('affilated_user')->user();
+
+            $request_data = (object)[
+                'bank_details_id' => $id,
+                'affilated_user'  => $affilatedUser->id
+            ];
+
+            $data = $this->UserAffilatedAuthService->deleteBankAccount($request_data);
+
+            return response()->json([
+                'status' => $data['status'],
+                'message' => $data['message'],
+                'data' => $data['data']
+            ]);
+
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong: ' . $e->getMessage(),
+                'data' => (object)[]
+            ]);
+        }
+    }
+
     
 
 }

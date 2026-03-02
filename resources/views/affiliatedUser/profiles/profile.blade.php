@@ -243,7 +243,7 @@
                             </a>
                             <a href="#">
                                 <img src="{{ asset('/dealer') }}/assets/img/b-delete.svg" alt="delete icon"
-                                    class="img-fluid">
+                                    class="img-fluid deleteAccount" data-id="{{$val->id}}">
                             </a>
                         </div>
                     </div>
@@ -713,5 +713,50 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.deleteAccount').forEach(button => {
+        button.addEventListener('click', function () {
+            let id = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/affiliate/deleteBankAccount/${id}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.status == "success"){
+                            toastr.success(data.message);
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    })
+                    .catch(() => {
+                        toastr.error('Something went wrong.');
+                    });
+                }
+            });
+        });
+    });
 });
 </script>

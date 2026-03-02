@@ -54,6 +54,7 @@ Route::get('/affiliate/affiliate-product-performance/{id}', [UserAffiliatedProfi
 
 Route::post('/affiliate/updateBankAccountDetails/{id}', [UserAffiliatedProfileController::class, 'updateBankAccountDetails'])->name('affiliate.updateBankAccountDetails');
 Route::post('/affiliate/addAnotherBankDetails', [UserAffiliatedProfileController::class, 'addAnotherBankDetails'])->name('affiliate.addAnotherBankDetails');
+Route::post('/affiliate/deleteBankAccount/{id}', [UserAffiliatedProfileController::class, 'deleteBankAccount'])->name('affiliate.deleteBankAccount');
 
 
 // catgeory Code 
