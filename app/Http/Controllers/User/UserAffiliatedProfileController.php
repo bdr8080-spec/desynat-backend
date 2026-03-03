@@ -284,21 +284,38 @@ public function affiliateMyCategory(Request $request){
     
     $category_id = $request->category;
     $subcategory = $request->subcategory;
+    $search = $request->search;
 
     
+$query = SubCategory::query();
 
-    if($category_id=='all'){
-     $all_subcategory=SubCategory::all();
+if ($category_id != 'all') {
+    $query->where('category_id', $category_id);
+}
 
-     $category_id='';
+if (isset($subcategory) && $subcategory != 'all') {
+    $query->where('subcategory_id', $subcategory);
+}
 
-    }else{
-       $all_subcategory=SubCategory::where('category_id',$category_id)->get();
-     }
+if (!empty($search)) {
+    $query->where('name_english', 'like', '%' . $search . '%');
+}
+
+$all_subcategory = $query->get();
+
+
+    // if($category_id=='all'){
+    //  $all_subcategory=SubCategory::all();
+
+    //  $category_id='';
+
+    // }else{
+    //    $all_subcategory=SubCategory::where('category_id',$category_id)->get();
+    //  }
         
-    if($subcategory=='all'){
-        $subcategory='';
-    }
+    // if($subcategory=='all'){
+    //     $subcategory='';
+    // }
 
 
     return view('affiliatedUser.category.partials.showSubcatory',compact('all_subcategory'))->render();

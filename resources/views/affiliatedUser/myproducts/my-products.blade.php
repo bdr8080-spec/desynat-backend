@@ -98,6 +98,8 @@ $(document).ready(function() {
     let selectedCategory = $('.category-tab.active').data('category') || 'all';
     let selectedSubcategory = $('.subcategory-item.active').data('subcategory') || 'all';
 
+   
+
     // 🔹 Load Subcategories (ONLY when category changes)
     function loadSubcategories() {
         $.ajax({
@@ -117,12 +119,16 @@ $(document).ready(function() {
 
     // 🔹 Load Products
     function loadProducts() {
+         let searchValue = $('input[type="search"]').val(); // 🔍 get search text
+
+         
         $.ajax({
             url: "{{ route('affiliate.Myproductfilter') }}",
             type: "GET",
             data: {
                 category: selectedCategory,
-                subcategory: selectedSubcategory
+                subcategory: selectedSubcategory,
+                search:searchValue,
             },
             beforeSend: function() {
                 $('#product-container').html('<p>Loading...</p>');
@@ -157,6 +163,11 @@ $(document).ready(function() {
         selectedSubcategory = $(this).data('subcategory');
 
         loadProducts(); // 🔥 only this route
+    });
+
+
+     $('.searchlin').on('click', function() {
+        loadProducts();
     });
 
     // 🔥 On page load

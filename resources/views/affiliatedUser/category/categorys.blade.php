@@ -53,11 +53,16 @@ $(document).ready(function() {
 
     // 🔹 Load Subcategories (ONLY when category changes)
     function loadSubcategories() {
+
+        let searchValue = $('input[type="search"]').val(); // 🔍 get search text
+
+
         $.ajax({
             url: "{{ route('affiliate.allsubcategory') }}",
             type: "GET",
             data: {
-                category: selectedCategory
+                category: selectedCategory,
+                 search: searchValue 
             },
             beforeSend: function() {
                 $('#show-subcategory').html('<p>Loading...</p>');
@@ -79,6 +84,11 @@ $(document).ready(function() {
         selectedSubcategory = 'all';
 
         loadSubcategories(); // 🔥 only here
+    });
+
+
+     $('.searchlin').on('click', function() {
+        loadSubcategories();
     });
 
 
