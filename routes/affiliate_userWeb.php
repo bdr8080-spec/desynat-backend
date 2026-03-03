@@ -48,12 +48,14 @@ Route::match(['get', 'post'], '/affiliate-save-profile', [UserAffiliatedProfileC
 Route::match(['get', 'post'], '/affiliate-profile-address', [UserAffiliatedProfileController::class, 'affiliateProfilesaveAddress'])->name('affiliate.affiliateProfilesaveAddress');
 
 
-Route::match(['get', 'post'], '/affiliate-verify-otp', [UserAffiliatedProfileController::class, 'affiliateaffiliateVerifyOtp'])->name('affiliate.affiliateaffiliateVerifyOtp');
+// Route::match(['get', 'post'], '/affiliate-verify-otp', [UserAffiliatedProfileController::class, 'affiliateaffiliateVerifyOtp'])->name('affiliate.affiliateaffiliateVerifyOtp');
+// Route::match(['get', 'post'], '/change-number-or-email', [UserAffiliatedProfileController::class, 'affiliatechangeNumberAndemail'])->name('affiliate.affiliatechangeNumberAndemail');
 
-Route::match(['get', 'post'], '/change-number-or-email', [UserAffiliatedProfileController::class, 'affiliatechangeNumberAndemail'])->name('affiliate.affiliatechangeNumberAndemail');
-
-
-
+Route::match(['get', 'post'], '/old-number-send-otp', [UserAffiliatedProfileController::class, 'oldNumberSendOtp'])->name('affiliate.userOldNumberSendOtp');
+Route::match(['get', 'post'], '/verify-contact-otp', [UserAffiliatedProfileController::class, 'oldNumberVerify'])->name('affiliate.userOldNumberVerify');
+Route::match(['get','post'], '/update-new-number', [UserAffiliatedProfileController::class, 'updateNewNumber'])->name('affiliate.userUpdateNewNumber');
+Route::match(['get','post'],'/update-email-address',[UserAffiliatedProfileController::class, 'updateEmailAddress'])->name('affiliate.userUpdateNewEmail');
+Route::get('/update-resend-otp', [UserAffiliatedProfileController::class, 'updateResendOtp'])->name('affiliate.updateResendOtp');
 
 
 

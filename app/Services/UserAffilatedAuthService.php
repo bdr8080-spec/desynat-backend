@@ -7,7 +7,7 @@ use App\Models\color;
 use App\Models\ProductVariant;
 use Carbon\Carbon;
 
-use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason};
+use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason,UserContactChangeHistory};
 use App\Models\{Promocode,userAddress,country,all_countrie,allproductchats};
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 
@@ -16,7 +16,7 @@ use Hash;
 use App\Models\{AffilatedUser,AffilatedUserAddress,Bankdetails,AffiliateProduct};
 
 use DB;
-
+use Auth;
 class UserAffilatedAuthService
 {
 
@@ -775,6 +775,53 @@ try{
     }
 
 
+
+     public function verifyOtp($request){
+        $userDetails = UserContactChangeHistory::find($request->id);
+
+    
+        if (!$userDetails) {
+              return ['status'=>'error','message'=>"No User Found",'data'=>(object)[]];
+            // return ApiResponse::generateResponse('error', 'No User Found', (object)[], 404);
+        }
+
+
+        // if ($userDetails->otp === $request->otp) {
+        //     $userDetails->otp = null;
+        //     $userDetails->otp_verify = '1';
+        //     $userDetails->status = '1';
+        //     $userDetails->save();
+        //     $user = request()->user();
+        //     $user->country_code = $userDetails->country_code;
+        //     $user->mobile = $userDetails->mobile;
+        //             // User::where('')
+        //     return ['status'=>'success','message'=>"OTP verified successfully",'data'=>$userDetails];
+        //     // return ApiResponse::generateResponse('success', 'OTP verified successfully', $userDetails, 201);
+        // }
+
+
+        if ($userDetails && $userDetails->otp === $request->otp) {
+            $userDetails->otp = null;
+            $userDetails->otp_verify = '1';
+            $userDetails->status = '1';
+            $userDetails->save();
+
+            // $user = request()->user();
+             $user = Auth::guard('affilated_user')->user();
+
+            $user->country_code = $userDetails->country_code ?? $user->country_code;
+            $user->mobile = $userDetails->mobile ?? $user->mobile;
+            $user->email = $userDetails->email ?? $user->email;
+            $user->save();
+
+            return ['status' => 'success', 'message' => 'OTP verified successfully', 'data' => $userDetails];
+        }
+
+
+
+         return ['status'=>'error','message'=>"Invalid OTP. Please try again.",'data'=>(object)[]];
+        // return ApiResponse::generateResponse('error', 'Invalid OTP. Please try again.', (object)[], 400);
+    }
 
 
 

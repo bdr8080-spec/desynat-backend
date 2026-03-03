@@ -10,11 +10,12 @@ use Validator;
 
 use App\Helpers\ApiResponse;
 
-use App\Models\{country,Category,SubCategory,Product};
+use App\Models\{country,Category,SubCategory,Product,UserContactChangeHistory,all_countrie};
 
 use App\Services\UserAffilatedAuthService;
 use App\Services\UserAffiliatedProductService;
 
+use Illuminate\Validation\Rule;
 
 class UserAffiliatedProfileController extends Controller
 {
@@ -575,44 +576,324 @@ public function add_to_my_products(Request $request){
 
 
 
-    // verify email and Number otp 
-    public function affiliateaffiliateVerifyOtp(Request $request){
+    // // verify email and Number otp 
+    // public function affiliateaffiliateVerifyOtp(Request $request){
 
-    $affilatedUser=Auth::guard('affilated_user')->user();           
+    // $affilatedUser=Auth::guard('affilated_user')->user();           
 
-    $request_data = (object) [
-        'user_id' => $affilatedUser->id,
-    ];
+    // $request_data = (object) [
+    //     'user_id' => $affilatedUser->id,
+    // ];
 
-    $data = $this->UserAffilatedAuthService->getProfile($request_data);
+    // $data = $this->UserAffilatedAuthService->getProfile($request_data);
 
-    $affilatedUser=$data['data'];
-    $country =   country::all();
+    // $affilatedUser=$data['data'];
+    // $country =   country::all();
 
-     return view('affiliatedUser.profiles.verify-Otp',compact('affilatedUser','country'));
+    //  return view('affiliatedUser.profiles.verify-Otp',compact('affilatedUser','country'));
 
-    }
+    // }
 
     
 
-    // add new number and email  
-    public function affiliatechangeNumberAndemail(Request $request){
+    // // add new number and email  
+    // public function affiliatechangeNumberAndemail(Request $request){
 
-    $affilatedUser=Auth::guard('affilated_user')->user();           
+    // $affilatedUser=Auth::guard('affilated_user')->user();           
 
-    $request_data = (object) [
-        'user_id' => $affilatedUser->id,
-    ];
+    // $request_data = (object) [
+    //     'user_id' => $affilatedUser->id,
+    // ];
 
-    $data = $this->UserAffilatedAuthService->getProfile($request_data);
+    // $data = $this->UserAffilatedAuthService->getProfile($request_data);
 
-    $affilatedUser=$data['data'];
-    $country =   country::all();
+    // $affilatedUser=$data['data'];
+    // $country =   country::all();
 
-    return view('affiliatedUser.profiles.change-mobile',compact('affilatedUser','country'));
+    // return view('affiliatedUser.profiles.change-mobile',compact('affilatedUser','country'));
 
 
+    // }
+
+
+
+    
+    // change affilate product phone no and email code Start
+
+
+    public function oldNumberSendOtp(Request $request)
+{
+
+
+    $for = $request->input('for');
+    $type = $request->input('type');
+
+     if ($for === 'mobile') {
+            $rules = [
+                'country_code' => 'required|string|max:10',
+                'mobile'       => ['required', 'regex:/^[0-9]{7,15}$/', 'string', 'max:20'],
+                'type'         => 'required|in:0,1',
+            ];
+
+            $messages = [
+                'country_code.required' => 'Please enter your country code',
+                'mobile.required'       => 'Please enter your mobile number',
+                'mobile.regex'          => 'Mobile number must contain 7 to 15 digits',
+                'type.required'         => 'Please specify whether it is old or new number',
+                'type.in'               => 'Type must be 0 (old number) or 1 (new number)',
+            ];
+
+        
+            if ($request->type == '0') {
+                $rules['mobile'][] = Rule::exists('affilated_users', 'mobile')
+                    ->where('country_code', $request->country_code);
+            } else {
+                $rules['mobile'][] = Rule::unique('affilated_users', 'mobile')
+                    ->where('country_code', $request->country_code);
+            }
+
+        } elseif ($for === 'email') {
+
+            $rules = [
+                'email' => ['required', 'email'],
+                'type'  => 'required|in:0,1',
+            ];
+
+            $messages = [
+                'email.required' => 'Please enter your email address',
+                'email.email'    => 'Please enter a valid email address',
+                'type.required'  => 'Please specify whether it is old or new email',
+                'type.in'        => 'Type must be 0 (old email) or 1 (new email)',
+            ];
+
+
+            if ($request->type == '0') {
+                $rules['email'][] = Rule::exists('affilated_users', 'email');
+
+            } else {
+                $rules['email'][] = Rule::unique('affilated_users', 'email');
+            }
+
+        } else {
+            return redirect()->back()->with('error', 'Invalid "for" value. Use either "mobile" or "email"');
+        }
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            $firstError = $validator->errors()->first();
+            return redirect()->back()->with('error', $firstError)->withInput();
+        }  
+
+
+
+    // $user = $request->user();
+     $user = Auth::guard('affilated_user')->user();
+
+    $otp = config('services.otp');
+
+    UserContactChangeHistory::where('user_id', $user->id)->where('change_table','2')->update(['status' => '1']);
+
+    if ($for === 'mobile') {
+
+        if ($type == '0') {
+            if (
+                $user->country_code === $request->country_code &&
+                $user->mobile === $request->mobile
+            ) {
+                $data = UserContactChangeHistory::create([
+                    'user_id'      => $user->id,
+                    'change_table'=>'2',
+                    'country_code' => $request->country_code,
+                    'mobile'       => $request->mobile,
+                    'otp'          => $otp,
+                    'type'         => '0',
+                    'status'       => '0',
+                ]);
+
+                return redirect()->route('affiliate.userOldNumberVerify', [
+                    'country_code' => $user->country_code,
+                    'mobile'       => $user->mobile,
+                    'id'           => encrypt($data->id),
+                    'type'         => '0',
+                    'for'          => 'mobile',
+                ])->with('success', 'OTP sent successfully to your old mobile number.');
+            }
+
+            return redirect()->back()->with('error', "Old mobile number doesn't match our records.");
+        }
+
+        if ($type == '1') {
+            $data = UserContactChangeHistory::create([
+                 'change_table'=>'2',
+                'user_id'      => $user->id,
+                'country_code' => $request->country_code,
+                'mobile'       => $request->mobile,
+                'otp'          => $otp,
+                'type'         => '1',
+                'status'       => '0',
+            ]);
+
+            return redirect()->route('affiliate.userOldNumberVerify', [
+                'country_code' => $data->country_code,
+                'mobile'       => $data->mobile,
+                'id'           => encrypt($data->id),
+                'type'         => '1',
+                'for'          => 'mobile',
+            ])->with('success', 'OTP sent successfully to your new mobile number.');
+        }
     }
+
+    if ($for === 'email') {
+        if ($type == '0') {
+            if ($user->email !== $request->email) {
+                return redirect()->back()->with('error', "Old email doesn't match our records.");
+            }
+
+            $data = UserContactChangeHistory::create([
+                 'change_table'=>'2',
+                'user_id' => $user->id,
+                'email'   => $request->email,
+                'otp'     => $otp,
+                'type'    => '1',
+                'status'  => '0',
+            ]);
+
+            return redirect()->route('affiliate.userOldNumberVerify', [
+                'email' => $data->email,
+                'id'    => encrypt($data->id),
+                'type'  => '0',
+                'for'   => 'email',
+            ])->with('success', 'OTP sent successfully to your old email.');
+        }
+
+        if ($type == '1') {
+            $data = UserContactChangeHistory::create([
+                 'change_table'=>'2',
+                'user_id' => $user->id,
+                'email'   => $request->email,
+                'otp'     => $otp,
+                'type'    => '1',
+                'status'  => '0',
+            ]);
+
+            return redirect()->route('affiliate.userOldNumberVerify', [
+                'email' => $data->email,
+                'id'    => encrypt($data->id),
+                'type'  => '1',
+                'for'   => 'email',
+            ])->with('success', 'OTP sent successfully to your new email.');
+        }
+    }
+
+    return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+}
+
+
+    public function oldNumberVerify(Request $request){
+          if($request->isMethod('get')){
+                    return view('affiliatedUser.profiles.setting.profileChangeNumberOtp');
+        }else{
+         
+        $validator = Validator::make($request->all(), [
+                'id'  => 'required',
+                'otp' => 'required|array',
+                'otp.*' => 'required|digits:1',
+            ], [
+                'id.required' => 'Verification ID is missing.',
+                'otp.required' => 'Please enter OTP.',
+                'otp.*.required' => 'Please enter all digits of your OTP',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'error'  => $validator->errors()->first(),
+                ]);
+            }
+
+  
+        try {
+            $id = decrypt($request->id);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return redirect()->back()->with('error', 'Invalid or expired verification link.');
+        }
+
+        $request->merge(['id' => $id]);
+         $request->merge([
+                'otp' => implode('', $request->otp)
+            ]);
+
+        $data = $this->UserAffilatedAuthService->verifyOtp($request);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return response()->json([
+            'status'=>true,
+            'message'=>$data['message'],
+        ]);
+
+        }
+    }
+
+    public function updateNewNumber(Request $request){
+               if($request->isMethod('get')){
+                  $country =   all_countrie::all();
+                    return view('affiliatedUser.profiles.setting.profileChangeNumber', compact('country'));
+        }
+    }
+
+    public function updateEmailAddress(){
+                    return view('affiliatedUser.profiles.setting.profileChangeEmailOtp');  
+    }
+
+ public function updateResendOtp(Request $request)
+{
+    try {
+        // Ensure the ID is present
+        if (!$request->has('id')) {
+            return response()->json([
+                'status' => false,
+                'message' => 'ID is required.',
+            ], 400);
+        }
+
+        $id = decrypt($request->id);
+
+        
+        $data = UserContactChangeHistory::find($id);
+        if (!$data) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Record not found.',
+            ], 404);
+        }
+
+        $otp = config('services.otp');
+        $data->otp = $otp;
+        $data->save();
+
+
+        return response()->json([
+            'status' => true,
+            'message' => 'OTP resent successfully.',
+            'otp' => $otp,
+        ]);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Something went wrong: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+// change mobile number and email Code End here 
+
+
+
+
     
 
 }

@@ -101,7 +101,12 @@
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter Mobile Number"
                                     value="{{$affilatedUser->mobile }}" readonly>
-                                <a class="drop-profile mob-change" href="/change-mobile-number">
+                                <a class="drop-profile mob-change" href="{{ route('affiliate.userOldNumberSendOtp', [
+                        'mobile' => $affilatedUser->mobile,
+                        'country_code' => $affilatedUser->country_code,
+                        'for' => 'mobile',
+                        'type' => '0'
+                    ]) }}">
                                     <span>Change</span>
                                 </a>
                             </div>
@@ -113,7 +118,11 @@
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter Email Address"
                                     value="{{$affilatedUser->email}}" readonly>
-                                <a class="drop-profile mob-change" href="#">
+                                <a class="drop-profile mob-change"  href="{{ route('affiliate.userOldNumberSendOtp', [
+                        'email' => $affilatedUser->email,
+                        'for' => 'email',
+                        'type' => '0'
+                    ]) }}">
                                     <span>Change</span>
                                 </a>
                             </div>
