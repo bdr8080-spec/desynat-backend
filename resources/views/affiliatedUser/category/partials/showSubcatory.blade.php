@@ -10,7 +10,11 @@
                       @foreach($all_subcategory as $key=>$sub)
                       <div class="sub-category-pnl">
                           <a
-                              href="{{route('affiliate.allProducts')}}?category_id={{$sub->category_id}}&subcategory_id={{$sub->id}}">
+                              href="
+                              {{ route('affiliate.allProducts', [
+    'category_id'    => [$sub->category_id],
+    'subcategory_id' => [$sub->id]
+]) }}">
                               <div class="sub-grid">
                                   <figure>
                                       <img src="{{$sub->image}}" alt="image" class="img-fluid">

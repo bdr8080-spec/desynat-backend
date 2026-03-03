@@ -170,15 +170,17 @@ $(document).on('submit', '#AddproductToLink', function(e) {
             if (response.status == "success") {
                 toastr.success(response.message);
 
+            window.setTimeout(function() {
+                location.reload();
+            }, 2000);
+
             }
 
             if (response.status == "error") {
                 toastr.error(response.message);
             }
 
-            // window.setTimeout(function() {
-            //     location.reload();
-            // }, 2000);
+          
 
             // Optional success message
             // alert('Product added successfully!');

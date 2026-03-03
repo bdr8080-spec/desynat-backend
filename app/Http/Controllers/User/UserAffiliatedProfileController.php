@@ -309,13 +309,36 @@ public function affiliateMyCategory(Request $request){
 
 public function AffilateAllProducts(Request $request){
 
+  $affilatedUser=Auth::guard('affilated_user')->user()->id;     
+    
+
         // $request_data = (object)[
         // 'category_id' => $request->category_id,
         // 'subcategory_id' => $request->subcategory_id,
         // "limit"=>10,
         // ];
         
-    $data = $this->UserAffiliatedProductService->getAllProducts($request);
+    // $data = $this->UserAffiliatedProductService->getAllProducts($request);
+    
+     $request_data=(object)[
+        'user_id'=>$affilatedUser,
+        'search' =>$request->search,
+        'sort_filter'=> $request->sort_filter,
+        'brand_id'     => is_array($request->brand_id) ? $request->brand_id : [],     
+        'category_id'  => is_array($request->category_id) ? $request->category_id : [],   
+        'subcategory_id'  => is_array($request->subcategory_id) ? $request->subcategory_id : [],   
+        
+        'size_id'      => is_array($request->size_id) ? $request->size_id : [],       
+        'color_id'     => is_array($request->color_id) ? $request->color_id : [],      
+        'price_min'    => $request->price_min ?? null,
+        'price_max'    => $request->price_max ?? null,
+        'attributes'    => $request->attributes_data ?? null,
+        'discount'    => $request->discount ?? null,
+       ];
+
+
+  $data = $this->UserAffiliatedProductService->ProductSearch($request_data);
+
 
     $products=$data['data'];
     
