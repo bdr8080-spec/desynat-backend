@@ -30,19 +30,28 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-allproduct" role="tabpanel"
                 aria-labelledby="pills-allproduct-tab" tabindex="0">
+               
+               <form id="SaveProfileForm" action="{{route('affiliate.affiliatesaveprofile')}}" method="post" enctype="multipart/form-data">
+               
+                @csrf
+
                 <div class="personl-wapper">
                     <div class="store-panel py-3 d-flex justify-content-between align-items-center">
                         <div class="d-flex gap-3 align-items-center">
                             <div class="showcircle">
                                 <img id="profileShow"
                                     style="display:none;width:100%;height:100%;object-fit:cover;border-radius:6px;">
-                                <img id="demoProfile" src="{{ asset('/dealer') }}/assets/img/profile-img.jpg"
+                                <img id="demoProfile" src="{{$affilatedUser->profile_image }}"
                                     class="img-fluid">
                             </div>
                             <label class="change-title position-relative">
                                 <h6>Change Image </h6>
                                 <input type="file" accept="image/*" id="profileUpload"
+                                    style="opacity:0;position: absolute;" name="profile_image">
+                              
+                                <input type="hidden" accept="image/*" name="old_profile_image" value="{{$affilatedUser->profile_image }}"
                                     style="opacity:0;position: absolute;">
+                              
                             </label>
                         </div>
                         <a class="drop-profile" href="{{route('affiliate.change-password')}}">
@@ -57,7 +66,9 @@
                                     <label>First Name</label>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter First Name"
-                                    value="{{$affilatedUser->full_name }}">
+                                    value="{{$affilatedUser->full_name }}" name="full_name">
+                                <p class="text-danger" id="error-full_name"></p>
+                                       
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
@@ -92,16 +103,17 @@
                                             style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
                                         <div class="py-2" style="color:#875C3A">Document 1</div>
                                         <input type="file" accept="image/*" id="imageUpload" style="opacity:0;"
-                                            name="upload_proof">
+                                            name="document1"  >
                                     </label>
                                     <div class="removebtn1 topremove" style="">X</div>
                                     <img id="imagePreview"
                                         style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
                                         src="{{$affilatedUser->document1 }}">
+                                         <p class="text-danger" id="error-document1"></p>
                                 </div>
 
-                                <input type="hidden" name="old_document1" value="{{$affilatedUser->document1 }}">
-                                <input type="hidden" name="old_document2" value="{{$affilatedUser->document2 }}">
+                                <input type="hidden" name="old_document1" id="old_document1" value="{{$affilatedUser->document1 }}">
+                                <input type="hidden" name="old_document2" id="old_document2" value="{{$affilatedUser->document2 }}">
 
                                 <div class="upload-image" style="height:170px;width: 270px;">
                                     <label id="uploadLabel2" style="cursor:pointer;text-align:center;display:none;">
@@ -109,13 +121,14 @@
                                             style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
                                         <div class="py-2" style="color:#875C3A">Document 1</div>
                                         <input type="file" accept="image/*" id="imageUpload2" style="opacity:0;"
-                                            name="upload_proof">
+                                         name="document2">
                                     </label>
 
                                     <div class="removebtn topremove" style="">X</div>
                                     <img id="imagePreview2"
                                         style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
                                         src="{{$affilatedUser->document2 }}">
+                                        <p class="text-danger" id="error-document2"></p>                                  
                                 </div>
                             </div>
 
@@ -127,6 +140,7 @@
                     </div>
 
                 </div>
+            </form>
 
             </div>
 
@@ -432,6 +446,10 @@ $('.removebtn1').on('click', function() {
     $('#imageUpload').val('');
     $('#uploadLabel').show();
     $(this).hide();
+    $('#old_document1').val('');
+
+
+
 });
 
 $('#imageUpload2').on('change', function() {
@@ -452,6 +470,10 @@ $('.removebtn').on('click', function() {
     $('#imageUpload2').val('');
     $('#uploadLabel2').show();
     $(this).hide();
+
+    $('#old_document2').val('');
+
+
 });
 </script>
 
@@ -759,4 +781,112 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+// save profile Code Start
+
+$(document).on('submit', 'form#SaveProfileForm', function(event) {
+    event.preventDefault();
+    $('p.error_container').html("");
+    $(".text-danger").html("");
+
+    var form = $(this);
+    var data = new FormData($(this)[0]);
+    var url = form.attr("action");
+    var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> loading...';
+
+    $('.submit').attr('disabled', true);
+    // $('.form-control').attr('readonly', true).addClass('disabled-link');
+    $('.error-control').addClass('disabled-link');
+
+    if ($('.submit').html() !== loadingText) {
+        $('.submit').html(loadingText);
+    }
+
+    $.ajax({
+        type: form.attr('method'),
+        url: url,
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function() {
+            //     // Show loader
+            $('#loader').show();
+        },
+        success: function(response) {
+            console.log(response);
+
+            window.setTimeout(function() {
+                $('.customBtn, .form-control').attr('disabled', false).removeClass(
+                    'disabled-link');
+                $('.submit').html('Upload');
+            }, 2000);
+
+            if (response.status === 'success') {
+                toastr.success(response.message);
+
+                $('.submit').attr('disabled', true);
+
+                setTimeout(() => {
+                     location.href =
+                        "{{ route('affiliate.affiliateProfile') }}";                  
+                }, 1000);
+
+            }
+        },
+        error: function(xhr) {
+            $('.text-danger').empty(); // Clear previous errors
+
+            let errors = xhr.responseJSON.errors ?? xhr.responseJSON.data;
+
+            $.each(errors, function(field, messages) {
+
+                // 1️⃣ Handle array fields with index → product_spe_en.0
+                if (field.includes(".")) {
+
+                    let parts = field.split(".");
+                    let fieldName = parts[0];
+                    let index = parts[1];
+                    let index1 = parts[2];
+
+
+                    // Example → #error-product_spe_en_0
+
+                    let errorId = "#error-" + fieldName + "_" + index;
+
+                    // If second index exists, append it
+                    if (typeof index1 !== "undefined" && index1 !== "") {
+                        errorId += "_" + index1;
+                    }
+                    $(errorId).html(messages[0]);
+
+
+                } else {
+
+                    // 2️⃣ File special case
+                    if (field === "file") {
+                        $("#file-error").html(messages[0]);
+                    }
+
+                    // 3️⃣ Handle whole array errors (custom rule)
+                    $("#error-" + field).html(messages[0]);
+                }
+            });
+        },
+        complete: function() {
+            // Hide loader (after success or error)
+            $('#loader').hide();
+        }
+
+
+    });
+
+    return false;
+});
+
+
+// save profile code End here
+
+
 </script>

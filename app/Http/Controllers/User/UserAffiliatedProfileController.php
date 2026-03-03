@@ -42,9 +42,88 @@ class UserAffiliatedProfileController extends Controller
     $country =   country::all();
 
     return view('affiliatedUser.profiles.profile',compact('affilatedUser','country'));
+    }
+
+
+    public function affiliateSaveProfile(Request $request){
+
+    $affilatedUser=Auth::guard('affilated_user')->user();
+
+
+    $validate = Validator::make($request->all(), [
+    'profile_image'      => 'required_without:old_profile_image',
+    'old_profile_image'  => 'nullable',
+    'full_name'          => 'required',
+    'document1'          => 'required_without:old_document1',
+    'old_document1'      => 'nullable',
+
+    'document2'          => 'required_without:old_document2',
+    'old_document2'      => 'nullable',
+]);
+
+    if ($validate->fails()) {
+      return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+      if ($request->hasFile('profile_image')) {
+            $dir = "profile";
+            $profile_image = image_upload($request->profile_image, $dir);
+            } else {
+             $profile_image =$request->old_profile_image;
+        }
+
+      if ($request->hasFile('document1')) {
+            $dir = "profile";
+            $document1 = image_upload($request->document1, $dir);
+            } else {
+             $document1 =$request->old_document1;
+        }
+
+        
+        
+      if ($request->hasFile('document2')) {
+            $dir = "profile";
+            $document2 = image_upload($request->document2, $dir);
+            } else {
+             $document2 =$request->old_document2;
+        }
+
+    $request_data = (object) [
+        'affilated_user' => $affilatedUser->id,
+        'profile_image'        => $profile_image,
+        'full_name'      => $request->full_name,
+        'country_code'       => $affilatedUser->country_code,
+        'mobile'       => $affilatedUser->mobile,
+        'email'        => $affilatedUser->email,
+        'document1'        => $document1,
+        'document2'        => $document2,
+    ];
+
+    $data = $this->UserAffilatedAuthService->updateProfile($request_data);    
     
+    if (isset($data['status']) && $data['status'] === 'error') {
+        return ApiResponse::generateResponse(
+            'error',
+            $data['message'],
+            $data['data'],
+            422
+        );
+    }
+
+    return ApiResponse::generateResponse(
+        'success',
+        $data['message'],
+        $data['data'],
+        200
+    );
+
     
     }
+
+
+
+
+
 
 
 

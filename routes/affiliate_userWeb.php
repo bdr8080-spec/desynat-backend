@@ -38,9 +38,14 @@ Route::post('/resend-otp', [UserAffilatedController::class, 'resendOtp'])->name(
  Route::match(['get', 'post'], '/affiliate-reverify-Document', [UserAffilatedController::class, 'affiliatereverifyDocument'])->name('affiliate.affiliatereverifyDocument');
 
 
-Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileController::class, 'affiliateProfile'])->name('affiliate.affiliateProfile');
+//  Affilate profile code 
 
+Route::match(['get', 'post'], '/affiliate-profile', [UserAffiliatedProfileController::class, 'affiliateProfile'])->name('affiliate.affiliateProfile');
 Route::match(['get', 'post'], '/affiliate/change-password', [UserAffiliatedProfileController::class, 'affiliateChangePassword'])->name('affiliate.change-password');
+
+Route::match(['get', 'post'], '/affiliate-save-profile', [UserAffiliatedProfileController::class, 'affiliateSaveProfile'])->name('affiliate.affiliatesaveprofile');
+
+
 
 
 // My Affilate prosduct Show Code 
