@@ -60,7 +60,6 @@ Route::get('/update-resend-otp', [UserAffiliatedProfileController::class, 'updat
 
 
 
-
 // My Affilate prosduct Show Code 
 Route::match(['get', 'post'], '/affiliate/my-product', [UserAffiliatedProfileController::class, 'affiliateMyProduct'])->name('affiliate.affiliateMyProduct');
 Route::get('/affiliate/my-product-subcategory', [UserAffiliatedProfileController::class, 'myProductFiltersubcategory'])
