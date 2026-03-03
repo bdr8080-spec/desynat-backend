@@ -48,6 +48,16 @@ Route::match(['get', 'post'], '/affiliate-save-profile', [UserAffiliatedProfileC
 Route::match(['get', 'post'], '/affiliate-profile-address', [UserAffiliatedProfileController::class, 'affiliateProfilesaveAddress'])->name('affiliate.affiliateProfilesaveAddress');
 
 
+Route::match(['get', 'post'], '/affiliate-verify-otp', [UserAffiliatedProfileController::class, 'affiliateaffiliateVerifyOtp'])->name('affiliate.affiliateaffiliateVerifyOtp');
+
+Route::match(['get', 'post'], '/change-number-or-email', [UserAffiliatedProfileController::class, 'affiliatechangeNumberAndemail'])->name('affiliate.affiliatechangeNumberAndemail');
+
+
+
+
+
+
+
 
 // My Affilate prosduct Show Code 
 Route::match(['get', 'post'], '/affiliate/my-product', [UserAffiliatedProfileController::class, 'affiliateMyProduct'])->name('affiliate.affiliateMyProduct');

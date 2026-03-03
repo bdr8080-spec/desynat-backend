@@ -41,7 +41,7 @@ class UserAffiliatedProfileController extends Controller
 
     return view('affiliatedUser.profiles.profile',compact('affilatedUser','country'));
     }
-
+    
 
     public function affiliateSaveProfile(Request $request){
 
@@ -573,6 +573,46 @@ public function add_to_my_products(Request $request){
         }
     }
 
+
+
+    // verify email and Number otp 
+    public function affiliateaffiliateVerifyOtp(Request $request){
+
+    $affilatedUser=Auth::guard('affilated_user')->user();           
+
+    $request_data = (object) [
+        'user_id' => $affilatedUser->id,
+    ];
+
+    $data = $this->UserAffilatedAuthService->getProfile($request_data);
+
+    $affilatedUser=$data['data'];
+    $country =   country::all();
+
+     return view('affiliatedUser.profiles.verify-Otp',compact('affilatedUser','country'));
+
+    }
+
+    
+
+    // add new number and email  
+    public function affiliatechangeNumberAndemail(Request $request){
+
+    $affilatedUser=Auth::guard('affilated_user')->user();           
+
+    $request_data = (object) [
+        'user_id' => $affilatedUser->id,
+    ];
+
+    $data = $this->UserAffilatedAuthService->getProfile($request_data);
+
+    $affilatedUser=$data['data'];
+    $country =   country::all();
+
+    return view('affiliatedUser.profiles.change-mobile',compact('affilatedUser','country'));
+
+
+    }
     
 
 }
