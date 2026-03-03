@@ -7,6 +7,37 @@
         </a>
     </div>
     
+    <div class="performance-pnl my-4 mb-5">
+        <div class="d-flex gap-4">
+            <div class="performance-img">
+                <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon" class="img-fluid">
+            </div>
+            <div class="performance-content">
+                <div class="sub-title"> Solid Mens Cotton Full Sleeve</div>
+                <div class="af-rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                    <span>(123K)</span>
+                </div>
+                <div class="per-size d-flex gap-2 py-1">
+                    <div class="per-1">Size: <span> M </span></div>
+                    <div class="per-1">Color: <span> <i class="bi bi-circle-fill"></i> </span></div>
+                    <div class="per-1">Qnt: <span> 20</span></div>
+                </div>
+                <div class="af-price-line"><span class="af-price text-black">739 KD</span> <span class="text-decoration-line-through"> 239 KD </span> 20% Off </div>
+                <div class="commission-text">5% Commission </div>
+
+            </div>
+        </div>
+        <div class="link-copy">
+            <div class="link-title"> Link: <span>http://www.desynat.com/</span> <i class="bi bi-copy"></i> </div>
+        </div>
+    </div>
+
+
     <div class="group-radio-btn d-flex gap-4 justify-content-between flex-wrap">
         <div class="title24">Quick Summary</div>
         <div class="show-date d-flex gap-2  flex-wrap">

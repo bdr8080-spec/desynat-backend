@@ -168,6 +168,26 @@
 .resend{
     cursor: pointer;
 }
+.performance-pnl{
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.performance-img{
+    height: 150px;
+    width: 150px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.performance-img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
 
 
 @media(max-width:641px){
