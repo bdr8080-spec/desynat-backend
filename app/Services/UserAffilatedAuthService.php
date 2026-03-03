@@ -135,6 +135,9 @@ function affilatedAddAddress($request){
 
 try{
 
+$match=[
+     'affiliate_id'=>$request->affilated_user,
+];
 
   $request_data=[
     'affiliate_id'=>$request->affilated_user,
@@ -150,7 +153,7 @@ try{
     'long'=>$request->long??null
     ];
 
-    $check=  AffilatedUserAddress::UpdateOrCreate($request_data);
+    $check=  AffilatedUserAddress::UpdateOrCreate($match,$request_data);
 
     if($check){
     $affilated_user= AffilatedUser::where('id',$request->affilated_user)->update(['address_update_status'=>'1']);

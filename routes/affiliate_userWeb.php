@@ -45,6 +45,7 @@ Route::match(['get', 'post'], '/affiliate/change-password', [UserAffiliatedProfi
 
 Route::match(['get', 'post'], '/affiliate-save-profile', [UserAffiliatedProfileController::class, 'affiliateSaveProfile'])->name('affiliate.affiliatesaveprofile');
 
+Route::match(['get', 'post'], '/affiliate-profile-address', [UserAffiliatedProfileController::class, 'affiliateProfilesaveAddress'])->name('affiliate.affiliateProfilesaveAddress');
 
 
 

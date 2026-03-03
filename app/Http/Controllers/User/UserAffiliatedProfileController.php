@@ -37,8 +37,6 @@ class UserAffiliatedProfileController extends Controller
     $data = $this->UserAffilatedAuthService->getProfile($request_data);
 
     $affilatedUser=$data['data'];
-    //dd($affilatedUser);
-
     $country =   country::all();
 
     return view('affiliatedUser.profiles.profile',compact('affilatedUser','country'));
@@ -120,10 +118,73 @@ class UserAffiliatedProfileController extends Controller
     
     }
 
+    public function affiliateProfilesaveAddress(Request $request){
+
+     $validate = Validator::make($request->all(), [
+                'country' => 'required',
+                'locations' => 'required',
+                'address1' => 'required',
+                "address2" =>"required",
+                // "pincode" =>"required",
+                // "town"=>"required",
+                // "state"=>"required",
+                // "city"=>"required",
+                "let"=>"required",
+                "long" =>"required"
+                ],
+             [
+        'country.required'   => 'Please select a country.',
+        'locations.required' => 'Please select a location.',
+        'address1.required'  => 'Address line 1 is required.',
+        'address2.required'  => 'Address line 2 is required.',
+        'pincode.required'   => 'Pincode is required.',
+        'town.required'      => 'Town is required.',
+        'state.required'     => 'State is required.',
+        'city.required'      => 'City is required.',
+        'let.required'       => 'Latitude is required.',
+        'long.required'      => 'Longitude is required.',
+    ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors(),422);
+    }
+
+    $affilated_user=Auth::guard('affilated_user')->user()->id;
+     
+     $request_data=(object) [
+    'affilated_user'=>$affilated_user,
+    "country"=>$request->country,
+    'locations'=>$request->locations,
+    'address1'=>$request->address1,
+    'address2'=>$request->address2,
+    'pincode'=>$request->pincode??null,
+    'town'=>$request->town??null,
+    'state'=>$request->state??null,
+    'city'=>$request->city??null,
+    'let'=>$request->let??null,
+    'long'=>$request->long??null
+    ];
+
+  $data=$this->UserAffilatedAuthService->affilatedAddAddress($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    $id = $data['data']->affiliate_id;
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $data['message'],
+            'id' => $id,
+        ]);
+
+    // return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
 
 
 
+    }
 
 
 
