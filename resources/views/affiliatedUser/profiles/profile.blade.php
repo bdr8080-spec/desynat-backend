@@ -237,7 +237,7 @@
                         <p class="text-danger" id="error-address1"></p> 
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-6 col-md-6" style="display:none;">
                         <div class="sub-form">
                             <div class="label-flex">
                                 <label>Address 2</label>

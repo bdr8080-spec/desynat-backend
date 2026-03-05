@@ -129,7 +129,7 @@ class UserAffiliatedProfileController extends Controller
                 'country' => 'required',
                 'locations' => 'required',
                 'address1' => 'required',
-                "address2" =>"required",
+                "address2" =>"nullable",
                 // "pincode" =>"required",
                 // "town"=>"required",
                 // "state"=>"required",
