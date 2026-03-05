@@ -11,7 +11,7 @@
                 <div class="otp-page">
                     <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a></span> OTP</h3>
                     @if (request()->email)
-                          <h5 class="otp_sent">To change email address. a verification code has been sent <span>{{request()->email}}</span></h5>
+                          <h5 class="otp_sent">To change email address. a verification code has been sent <span class="gold-color">{{request()->email}}</span></h5>
                     @else
                           <h5 class="otp_sent">To change mobile no. a verification code has been sent <span class="gold-color">{{request()->country_code}} {{request()->mobile}}</span></h5>
                     @endif
