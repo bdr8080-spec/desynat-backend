@@ -15,12 +15,13 @@
             <div class="performance-content">
                 <div class="sub-title"> {{ $performace->product->product_name_en}}</div>
                 <div class="af-rating">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-half"></i>
-                    <span>(123K)</span>
+
+                       @for($i=0;$i<$performace->product->product_avg_rating; $i++)
+                        <i class="bi bi-star-fill"></i>
+                       @endfor
+                        
+                        <span>({{$performace->product->review_count}}) </span>
+                  
                 </div>
                 <div class="per-size d-flex gap-2 py-1">
                     <div class="per-1">Size: <span>  {{ $performace->product->product_variants['0']->size->name }}  </span></div>
@@ -30,6 +31,7 @@
                 <div class="af-price-line"><span class="af-price text-black">{{ $performace->product->product_variants['0']->final_price }} KD</span> <span class="text-decoration-line-through"> {{ $performace->product->product_variants['0']->actual_price }} KD </span>
 
                     {{$performace->product->product_variants['0']->discount_value}}
+
                     
                     @if($performace->product->product_variants['0']->discount_type=='1')
                     %
@@ -37,7 +39,7 @@
                      OFF
                     @endif
                     </div>
-                <div class="commission-text"> {{ $performace->product->affiliated_commission }} % Commission </div>
+                <div class="commission-text"> {{ $performace->product->affiliated_commission??'0'}}% Commission </div>
 
             </div>
         </div>
