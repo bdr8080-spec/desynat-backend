@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="link-copy">
-            <div class="link-title"> Link: <span>http://www.desynat.com/</span> <i class="bi bi-copy"></i> </div>
+            <div class="link-title"> Link: <span>  {{ $performace->affiliate_product_link->link  }}  </span> <i class="bi bi-copy"></i> </div>
         </div>
     </div>
 
