@@ -206,6 +206,7 @@
                             <div class="label-flex">
                                 <label>location </label>
                             </div>
+                            <div class="position-relative">
                             <input type="text" class="form-control" placeholder="Enter location"
                                 value="{{$affilatedUser->address_details->locations }}"  name="locations" id="store_address">
 
@@ -213,6 +214,7 @@
                                             data-bs-target="#gpspanel" aria-controls="offcanvasExample">
                                             <i class="bi bi-crosshair"></i>
                                             </button>
+                                </div>               
 
 
                         </div>
