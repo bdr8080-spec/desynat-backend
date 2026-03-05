@@ -453,9 +453,9 @@ class UserAffiliatedProductService
             $data = ProductLink::create([
                 'affiliate_id' => $request->user_id,
                 'product_id'   => $product->id,
-                // 'link'   => url("/user/product/detail-page/{$product->id}?ref={$request->user_id}")
-                'link'   => "https://desynat.com/user/product/detail-page/{$product->id}?ref={$request->user_id}"
-                            
+                'link'   => url("/user/product/detail-page/{$product->id}?ref={$request->user_id}")
+                // 'link'   => "https://desynat.com/user/product/detail-page/{$product->id}?ref={$request->user_id}"
+
                 ]);
 
 
