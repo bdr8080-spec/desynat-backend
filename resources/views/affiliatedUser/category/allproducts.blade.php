@@ -41,12 +41,13 @@
                     <div class="af-content p-2">
                         <div class="sub-title"> {{ substr($product['product_name_en'],0,20)}}</div>
                         <div class="af-rating">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i>
-                            <span>(123K)</span>
+                        
+                              @for($i=0;$i<$product['product_avg_rating']; $i++)
+                        <i class="bi bi-star-fill"></i>
+                       @endfor
+                       
+                            <span>({{$product['review_count']}}) </span>
+
                         </div>
                         <div class="af-price"> {{$product['product_variants'][0]['final_price']}} KD</div>
                         <div class="af-price-line"><span class="text-decoration-line-through">

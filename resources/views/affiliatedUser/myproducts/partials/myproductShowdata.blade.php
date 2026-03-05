@@ -30,12 +30,13 @@
                         {{$product['product']['product_name_en']}}
                     </div>
                     <div class="af-rating">
+                        
+
+                        @for($i=0;$i<$product['average_rating']['product']; $i++)
                         <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-half"></i>
-                        <span>(123K)</span>
+                       @endfor
+                        
+                        <span>({{count($product['product']['review'] )}}) </span>
                     </div>
                     <div class="af-price">
                         {{$product['product']['product_variants'][0]['final_price']}}

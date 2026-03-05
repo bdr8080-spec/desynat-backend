@@ -374,107 +374,8 @@ class UserAffiliatedProductService
         }
     }
 
-    public function addToMyProducts($request)
-    {
-        try {
 
-            $product = Product::find($request->product_id);
-
-            if (!$product) {
-                return [
-                    'status' => 'error',
-                    'message' => 'Product not found',
-                    'data' => []
-                ];
-            }
-
-            $alreadyAdded = AffiliateProduct::where('affiliate_id', $request->user_id)
-                ->where('product_id', $product->id)
-                ->exists();
-
-            if ($alreadyAdded) {
-                return [
-                    'status' => 'error',
-                    'message' => 'Product already added to this affiliate',
-                    'data' => []
-                ];
-            }
-
-            $affiliateProduct = AffiliateProduct::create([
-                'affiliate_id' => $request->user_id,
-                'product_id'   => $product->id,
-            ]);
-
-
-            return [
-                'status' => 'success',
-                'message' => 'Product added to affiliate successfully',
-                'data' => $affiliateProduct
-            ];
-
-        } catch (\Exception $e) {
-
-            return [
-                'status' => 'error',
-                'message' => 'Failed to add product: ' . $e->getMessage(),
-                'data' => []
-            ];
-        }
-    }
-
-    public function generateProductLink($request)
-    {
-        try {
-
-            $product = Product::find($request->product_id);
-
-            if (!$product) {
-                return [
-                    'status' => 'error',
-                    'message' => 'Product not found',
-                    'data' => []
-                ];
-            }
-
-            $alreadyAdded = ProductLink::where('affiliate_id', $request->user_id)
-                ->where('product_id', $product->id)
-                ->first();
-
-           // dd($alreadyAdded);
-
-            if ($alreadyAdded) {
-                return [
-                    'status' => 'success',
-                    'message' => 'Product Link already added to this affiliate',
-                    'data' => $alreadyAdded
-                ];
-            }
-
-            $data = ProductLink::create([
-                'affiliate_id' => $request->user_id,
-                'product_id'   => $product->id,
-                'link'   => url("/user/product/detail-page/{$product->id}?ref={$request->user_id}")
-                // 'link'   => "https://desynat.com/user/product/detail-page/{$product->id}?ref={$request->user_id}"
-
-                ]);
-
-
-            return [
-                'status' => 'success',
-                'message' => 'Link added to affiliate successfully',
-                'data' => $data
-            ];
-
-        } catch (\Exception $e) {
-
-            return [
-                'status' => 'error',
-                'message' => 'Failed to add product link: ' . $e->getMessage(),
-                'data' => []
-            ];
-        }
-    }
-
+    
     public function ProductSearch($data)
     {
         try {
@@ -534,7 +435,10 @@ whereNotIn('id',$Affilate_listed_products)
     },
     'product_variants.color',
     'product_variants.size'
-]);
+])
+ ->withAvg('review as product_avg_rating', 'product_rating')
+                        ->withAvg('review as store_avg_rating', 'store_rating')
+                        ->withCount('review');
 
 
 /**
@@ -730,6 +634,108 @@ return [
                 'status'  => 'error',
                 'message' => 'Failed: ' . $e->getMessage(),
                 'data'    => (object)[]
+            ];
+        }
+    }
+
+
+    public function addToMyProducts($request)
+    {
+        try {
+
+            $product = Product::find($request->product_id);
+
+            if (!$product) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Product not found',
+                    'data' => []
+                ];
+            }
+
+            $alreadyAdded = AffiliateProduct::where('affiliate_id', $request->user_id)
+                ->where('product_id', $product->id)
+                ->exists();
+
+            if ($alreadyAdded) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Product already added to this affiliate',
+                    'data' => []
+                ];
+            }
+
+            $affiliateProduct = AffiliateProduct::create([
+                'affiliate_id' => $request->user_id,
+                'product_id'   => $product->id,
+            ]);
+
+
+            return [
+                'status' => 'success',
+                'message' => 'Product added to affiliate successfully',
+                'data' => $affiliateProduct
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add product: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function generateProductLink($request)
+    {
+        try {
+
+            $product = Product::find($request->product_id);
+
+            if (!$product) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Product not found',
+                    'data' => []
+                ];
+            }
+
+            $alreadyAdded = ProductLink::where('affiliate_id', $request->user_id)
+                ->where('product_id', $product->id)
+                ->first();
+
+           // dd($alreadyAdded);
+
+            if ($alreadyAdded) {
+                return [
+                    'status' => 'success',
+                    'message' => 'Product Link already added to this affiliate',
+                    'data' => $alreadyAdded
+                ];
+            }
+
+            $data = ProductLink::create([
+                'affiliate_id' => $request->user_id,
+                'product_id'   => $product->id,
+                'link'   => url("/user/product/detail-page/{$product->id}?ref={$request->user_id}")
+                // 'link'   => "https://desynat.com/user/product/detail-page/{$product->id}?ref={$request->user_id}"
+
+                ]);
+
+
+            return [
+                'status' => 'success',
+                'message' => 'Link added to affiliate successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to add product link: ' . $e->getMessage(),
+                'data' => []
             ];
         }
     }
