@@ -2,18 +2,18 @@
 
 <section class="section dashboard page-100">
     
-    <div class="login_contenar login_content-box ">
+    <div class="login_contenar">
         <div class="login_content-box">
             <div class="login_content_content align-self-center">
                 <form id="verifyOtp">
                     @csrf
                     <input type="hidden" value="{{request()->id}}" name="id">
                 <div class="otp-page">
-                    <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="fa-solid fa-chevron-left"></i></a></span> OTP</h3>
+                    <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a></span> OTP</h3>
                     @if (request()->email)
                           <h5 class="otp_sent">To change email address. a verification code has been sent <span>{{request()->email}}</span></h5>
                     @else
-                          <h5 class="otp_sent">To change mobile no. a verification code has been sent <span>{{request()->country_code}} {{request()->mobile}}</span></h5>
+                          <h5 class="otp_sent">To change mobile no. a verification code has been sent <span class="gold-color">{{request()->country_code}} {{request()->mobile}}</span></h5>
                     @endif
                      <div class="otp-container mt-3">
                         <input type="text" maxlength="1" class="otp-input" id="otp1" name="otp[]" />
@@ -25,13 +25,13 @@
                     </div>
                         <div class="resend-otp-container"
                             style="display: flex;justify-content: center;margin-top:20px !important;xmargin:0 auto; align-items: center; gap: 10px;">
-                           <button type="button" class="customBtnresend" data-id="{{ request()->id }}" id="resendOtp">
+                           <button type="button" class="customBtnresend resend" data-id="{{ request()->id }}" id="resendOtp">
                                 Resend OTP
                             </button>
 
                             <span id="otpTimer" style="color: red;"></span>
                         </div>
-                    <button type="submit" class="customBtn customBtn5 mt-5" id="verifyBtn">Verify OTP</button>
+                    <button type="submit" class="btn btn-success w-100 mt-5" id="verifyBtn">Verify OTP</button>
                 </div>
                 </form>
             </div>

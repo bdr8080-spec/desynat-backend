@@ -149,7 +149,7 @@
 }
 
 .login_content-box {
-    max-width: 600px;
+    max-width: 550px;
     width: 100%;
     margin: auto;
     padding: 30px;
@@ -161,13 +161,20 @@
     height: 70vh;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .gold-color{
     color: #6e4527;
 }
-.resend{
+
+.resend {
     cursor: pointer;
+    border: 1px solid #ddd;
+    background: transparent;
+    border-radius: 5px;
+    padding: 3px 13px;
 }
+
 .performance-pnl{
     border: 1px solid #ddd;
     padding: 15px;
