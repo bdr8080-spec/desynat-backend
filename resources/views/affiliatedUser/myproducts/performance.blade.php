@@ -10,10 +10,10 @@
     <div class="performance-pnl my-4 mb-5">
         <div class="d-flex gap-4">
             <div class="performance-img">
-                <img src="{{ asset('dealer') }}/assets/img/all-icons/dashboard.svg" alt="icon" class="img-fluid">
+                <img src="{{ $performace->product->product_variants['0']->variant_image['0'] }}" alt="icon" class="img-fluid">
             </div>
             <div class="performance-content">
-                <div class="sub-title"> Solid Mens Cotton Full Sleeve</div>
+                <div class="sub-title"> {{ $performace->product->product_name_en}}</div>
                 <div class="af-rating">
                     <i class="bi bi-star-fill"></i>
                     <i class="bi bi-star-fill"></i>
@@ -23,12 +23,21 @@
                     <span>(123K)</span>
                 </div>
                 <div class="per-size d-flex gap-2 py-1">
-                    <div class="per-1">Size: <span> M </span></div>
-                    <div class="per-1">Color: <span> <i class="bi bi-circle-fill"></i> </span></div>
-                    <div class="per-1">Qnt: <span> 20</span></div>
+                    <div class="per-1">Size: <span>  {{ $performace->product->product_variants['0']->size->name }}  </span></div>
+                    <div class="per-1">Color: <span>   {{ $performace->product->product_variants['0']->color->name }} </span></div>
+                    <div class="per-1">Qnt: <span> 0</span></div>
                 </div>
-                <div class="af-price-line"><span class="af-price text-black">739 KD</span> <span class="text-decoration-line-through"> 239 KD </span> 20% Off </div>
-                <div class="commission-text">5% Commission </div>
+                <div class="af-price-line"><span class="af-price text-black">{{ $performace->product->product_variants['0']->final_price }} KD</span> <span class="text-decoration-line-through"> {{ $performace->product->product_variants['0']->actual_price }} KD </span>
+
+                    {{$performace->product->product_variants['0']->discount_value}}
+                    
+                    @if($performace->product->product_variants['0']->discount_type=='1')
+                    %
+                    @else
+                     OFF
+                    @endif
+                    </div>
+                <div class="commission-text"> {{ $performace->product->affiliated_commission }} % Commission </div>
 
             </div>
         </div>

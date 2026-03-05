@@ -873,8 +873,53 @@ return [
     }
 
 
+    
+    public function getPerformancewithidProducts($request)
+    {
+        try {
 
+            $query = AffiliateProduct::with([
+                    'affiliate_details',
+                    'affiliate_product_link',
+                    'product' => function ($q) {
+                        $q->with([
+                            'brand',
+                            'category',
+                            'subcategory',
+                            'product_specifications',
+                            'product_variants.color',
+                            'product_variants.size',
+                            'seller_details.country_details',
+                            'store.country_info.affiliate_commission_info',
+                            'review'
+                        ])
+                        ->withAvg('review as product_avg_rating', 'product_rating')
+                        ->withAvg('review as store_avg_rating', 'store_rating')
+                        ->withCount('review');
+                    }
+                ])
+                // ->where('affiliate_id', $request->user_id)
+                ->where('id', $request->id)
+                ->first();
 
+            
+            // Transform each AffiliateProduct
+          
+            return [
+                'status' => 'success',
+                'message' => 'Products Performace details Fecth successfully',
+                'data' => $query
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch products: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
 
 
 

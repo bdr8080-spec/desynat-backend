@@ -331,9 +331,30 @@ public function affiliateMyProduct(Request $request){
 
 public function affiliateProductPerformance(Request $request){
 
+  $affilatedUser=Auth::guard('affilated_user')->user();     
+   
+
     if($request->ismethod('get')){
-         return view('affiliatedUser.myproducts.performance');
-    }
+
+       $request_data = (object) [
+            'user_id' => $affilatedUser->id,
+            'id' => $request->id ?? null
+            ];
+
+            
+
+    $data = $this->UserAffiliatedProductService->getPerformancewithidProducts($request_data);
+    $performace=$data['data'];
+  
+
+    return view('affiliatedUser.myproducts.performance',compact('performace'));
+
+
+         }
+
+
+
+
     }
 
 public function updateBankAccountDetails(Request $request, $id)
