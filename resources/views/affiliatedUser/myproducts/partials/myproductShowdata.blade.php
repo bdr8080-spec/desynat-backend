@@ -3,7 +3,6 @@
 
         <!-- Product SHow Code Start Here -->
 
-
         @forelse($products as $key=>$product)
 
         <div class="col-lg-4 col-md-6">

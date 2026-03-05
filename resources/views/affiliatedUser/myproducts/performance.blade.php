@@ -25,7 +25,7 @@
                 <div class="per-size d-flex gap-2 py-1">
                     <div class="per-1">Size: <span>  {{ $performace->product->product_variants['0']->size->name }}  </span></div>
                     <div class="per-1">Color: <span>   {{ $performace->product->product_variants['0']->color->name }} </span></div>
-                    <div class="per-1">Qnt: <span> 0</span></div>
+                    <!-- <div class="per-1">Qnt: <span> 0</span></div> -->
                 </div>
                 <div class="af-price-line"><span class="af-price text-black">{{ $performace->product->product_variants['0']->final_price }} KD</span> <span class="text-decoration-line-through"> {{ $performace->product->product_variants['0']->actual_price }} KD </span>
 

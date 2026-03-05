@@ -340,6 +340,7 @@ public function affiliateMyProduct(Request $request){
 
     $data = $this->UserAffiliatedProductService->getMyProducts($request_data);
     $products=$data['data'];
+    // dd($products);
     
     return view('affiliatedUser.myproducts.partials.myproductShowdata',compact('products','category_id','all_subcategory'))->render();
     
