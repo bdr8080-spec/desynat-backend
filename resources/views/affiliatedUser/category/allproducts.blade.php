@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="d-flex justify-content-between mt-4 mb-5">
-        <a href="/category" class="title24 alink">
+        <a href="{{route('affiliate.affiliateCategory')}}" class="title24 alink">
             <i class="bi bi-chevron-left"></i> All Products
         </a>
     </div>
@@ -17,7 +17,7 @@
     <div class="allproduct-wapper pt-5">
         <div class="row">
 
-            @foreach($products as $key=>$product)
+            @forelse($products as $key=>$product)
             <div class="col-lg-3 col-md-6">
                 <div class="sub-category-pnl mb-3 pb-1">
                     <div class="sub-grid position-relative">
@@ -27,9 +27,16 @@
                         </figure>
                         <div class="af-commission">
 
-                            {{$product['affiliated_commission']}}%
-
-                            Commission</div>
+                            
+                        @isset($product['affiliated_commission'])
+                        {{$product['affiliated_commission']}}%
+                        Commission
+                    @else
+                        0%
+                        Commission
+                   
+                    @endisset 
+                   </div>
                     </div>
                     <div class="af-content p-2">
                         <div class="sub-title"> {{ substr($product['product_name_en'],0,20)}}</div>
@@ -63,7 +70,12 @@
                 </div>
             </div>
 
-            @endforeach
+            @empty
+             <div class="col-lg-3 col-md-6">
+                <p>No product found</p>
+             </div>
+
+            @endforelse
 
         </div>
     </div>

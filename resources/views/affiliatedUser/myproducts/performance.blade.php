@@ -41,9 +41,15 @@
 
             </div>
         </div>
+       
         <div class="link-copy">
-            <div class="link-title"> Link: <span>  {{ $performace->affiliate_product_link->link  }}  </span> <i class="bi bi-copy"></i> </div>
-        </div>
+    <div class="link-title">
+        Link: 
+        <span id="affiliateLink">{{ $performace->affiliate_product_link->link }}</span>
+        <i class="bi bi-copy" onclick="copyLink()" style="cursor:pointer;"></i>
+    </div>
+</div>
+
     </div>
 
 
@@ -143,6 +149,15 @@
 
 </section>
 
+
+<script>
+function copyLink() {
+    let text = document.getElementById("affiliateLink").innerText;
+    navigator.clipboard.writeText(text).then(function() {
+        toastr.success("Link copied!");
+    });
+}
+</script>
 
 
 

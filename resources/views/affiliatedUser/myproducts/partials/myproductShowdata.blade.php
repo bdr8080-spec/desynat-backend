@@ -4,7 +4,7 @@
         <!-- Product SHow Code Start Here -->
 
 
-        @foreach($products as $key=>$product)
+        @forelse($products as $key=>$product)
 
         <div class="col-lg-4 col-md-6">
             <div class="sub-category-pnl mb-3 pb-1">
@@ -15,8 +15,15 @@
                     </figure>
                     <div class="af-commission">
 
+                        @isset($product['product']['affiliated_commission'])
                         {{$product['product']['affiliated_commission']}}%
-                        Commission</div>
+                        Commission
+                    @else
+                        0%
+                        Commission
+                   
+                    @endisset
+                    </div>
                 </div>
                 <div class="af-content p-2">
                     <div class="sub-title">
@@ -54,7 +61,15 @@
             </div>
         </div>
 
-        @endforeach
+
+        @empty
+        <div class="col-lg-4 col-md-6">
+
+          <p>No product found</p>
+
+        </div>
+
+        @endforelse
 
         <!-- Product SHow Code End  Here -->
 
