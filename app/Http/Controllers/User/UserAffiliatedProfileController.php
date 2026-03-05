@@ -345,7 +345,7 @@ public function affiliateProductPerformance(Request $request){
 
     $data = $this->UserAffiliatedProductService->getPerformancewithidProducts($request_data);
     $performace=$data['data'];
-  
+
 
     return view('affiliatedUser.myproducts.performance',compact('performace'));
 
