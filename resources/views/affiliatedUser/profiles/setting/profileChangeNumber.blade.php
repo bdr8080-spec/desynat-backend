@@ -27,9 +27,9 @@
                                         <button class="btn btn-light border dropdown-toggle d-flex align-items-center" type="button"
                                                 id="countryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span id="selected-flag">
-                                                <img src="{{ $country[0]->flag }}" alt="flag" width="25" height="16">
+                                                <img src="{{ $country[88]->flag }}" alt="flag" width="25" height="16">
                                             </span>
-                                            <span id="selected-code" class="ms-2">{{ $country[0]->dial_code }}</span>
+                                            <span id="selected-code" class="ms-2">{{ $country[88]->dial_code }}</span>
                                         </button>
 
                                         <ul class="dropdown-menu" aria-labelledby="countryDropdown" style="max-height: 250px; overflow-y: auto;">

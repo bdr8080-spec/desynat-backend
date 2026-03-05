@@ -55,9 +55,13 @@ class UserAffiliatedProfileController extends Controller
     'full_name'          => 'required',
     'document1'          => 'required_without:old_document1',
     'old_document1'      => 'nullable',
-
     'document2'          => 'required_without:old_document2',
     'old_document2'      => 'nullable',
+], [
+    'full_name.required' => 'Please enter full name',
+    'document1.required_without' => 'Please upload document 1',
+    'document2.required_without' => 'Please upload document 2',
+    'profile_image.required_without' => 'Please upload a profile image',
 ]);
 
     if ($validate->fails()) {
@@ -201,19 +205,33 @@ $affilatedUser=Auth::guard('affilated_user')->user();
 
 
    $validate = Validator::make($request->all(), [
-        'old_password' => 'required',
-        'password'         => 'required',
-        'confirm_password' => 'required|same:password',
-    ]);
+    'old_password' => 'required',
+    'password' => [
+        'required',
+        'min:6',
+        'regex:/[A-Z]/',       // at least one capital letter
+        'regex:/[@$!%*#?&]/'   // at least one special character
+    ],
+    'confirm_password' => 'required|same:password',
+],[
+    'old_password.required' => 'Please Enter Old Password',
 
-    if ($validate->fails()) {
-        return ApiResponse::generateResponse(
-            'error',
-            $validate->errors()->first(),
-            (object) $validate->errors(),
-            422
-        );
-    }
+    'password.required' => 'Please Enter New Password',
+    'password.min' => 'Password must be at least 6 characters long',
+    'password.regex' => 'Password must contain at least one uppercase letter and one special character',
+
+    'confirm_password.required' => 'Please Enter Confirm Password',
+    'confirm_password.same' => 'Confirm password must match new password',
+]);
+
+if ($validate->fails()) {
+    return ApiResponse::generateResponse(
+        'error',
+        $validate->errors()->first(),
+        (object) $validate->errors(),
+        422
+    );
+}
 
     $affilated_user = $affilatedUser->id;
     
@@ -815,14 +833,27 @@ public function add_to_my_products(Request $request){
           if($request->isMethod('get')){
                     return view('affiliatedUser.profiles.setting.profileChangeNumberOtp');
         }else{
+
+        $otpArray = $request->otp ?? [];
+
+        // Check if all OTP inputs are empty
+        if(empty(array_filter($otpArray))){
+            return response()->json([
+                'status' => false,
+                'error'  => 'Please enter OTP.',
+            ]);
+        }
          
         $validator = Validator::make($request->all(), [
                 'id'  => 'required',
-                'otp' => 'required|array',
+                'otp' => 'required|array|size:6',
                 'otp.*' => 'required|digits:1',
             ], [
                 'id.required' => 'Verification ID is missing.',
+                // 'otp.required' => 'Please enter OTP.',
+                // 'otp.*.required' => 'Please enter all digits of your OTP',
                 'otp.required' => 'Please enter OTP.',
+                'otp.size' => 'Please enter all digits of your OTP',
                 'otp.*.required' => 'Please enter all digits of your OTP',
             ]);
 

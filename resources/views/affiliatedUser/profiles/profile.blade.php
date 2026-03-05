@@ -86,9 +86,9 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="sub-form">
                                 <div class="label-flex">
-                                    <label>First Name</label>
+                                    <label>Full Name</label>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter First Name"
+                                <input type="text" class="form-control" placeholder="Enter Full Name"
                                     value="{{$affilatedUser->full_name }}" name="full_name">
                                 <p class="text-danger" id="error-full_name"></p>
                                        
@@ -100,7 +100,7 @@
                                     <label>Mobile No.</label>
                                 </div>
                                 <input type="text" class="form-control" placeholder="Enter Mobile Number"
-                                    value="{{$affilatedUser->mobile }}" readonly>
+                                    value="{{$affilatedUser->country_code }}{{$affilatedUser->mobile }}" readonly>
                                 <a class="drop-profile mob-change" href="{{ route('affiliate.userOldNumberSendOtp', [
                         'mobile' => $affilatedUser->mobile,
                         'country_code' => $affilatedUser->country_code,
