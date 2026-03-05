@@ -582,7 +582,7 @@ public function add_to_my_products(Request $request){
 
             $data = $this->UserAffilatedAuthService->deleteBankAccount($request_data);
 
-          
+          return response()->json($data); 
             
 
         } catch (\Exception $e) {
