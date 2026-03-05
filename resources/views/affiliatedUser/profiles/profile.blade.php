@@ -878,8 +878,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             toastr.error(data.message);
                         }
                     })
-                    .catch(() => {
-                        toastr.error('Something went wrong.');
+                    .catch(error => {
+                        //console.error("Full Error:", error);
+                        toastr.error(error.message || "Something went wrong.");
                     });
                 }
             });
