@@ -28,7 +28,7 @@
                     <div class="sub-title">
                         {{$product['product']['product_name_en']}}
                     </div>
-                    <div class="af-rating">
+                    <!-- <div class="af-rating">
                         
 
                         @for($i=0;$i<$product['average_rating']['product']; $i++)
@@ -36,6 +36,26 @@
                        @endfor
                         
                         <span>({{count($product['product']['review'] )}}) </span>
+                    </div> -->
+                    <div class="af-rating">
+                        @php
+                            $rating = $product['average_rating']['product'] ?? 0;
+                            $maxStars = 5;
+                            $filledStars = ($rating > 0) ? (int)$rating : 0;
+                            $emptyStars = $maxStars - $filledStars;
+                        @endphp
+
+                        {{-- Filled stars --}}
+                        @for ($i = 0; $i < $filledStars; $i++)
+                            <i class="bi bi-star-fill"></i>
+                        @endfor
+
+                        {{-- Empty stars --}}
+                        @for ($i = 0; $i < $emptyStars; $i++)
+                            <i class="bi bi-star"></i>
+                        @endfor
+
+                        <span>({{ count($product['product']['review'] ?? []) }})</span>
                     </div>
                     <div class="af-price">
                         {{$product['product']['product_variants'][0]['final_price']}}

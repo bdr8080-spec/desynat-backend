@@ -209,7 +209,8 @@ $affilatedUser=Auth::guard('affilated_user')->user();
     'password' => [
         'required',
         // 'min:6',
-        'regex:/[A-Z]/',       // at least one capital letter
+        'regex:/[A-Z]/', 
+        'regex:/[0-9]/',      // at least one capital letter
         'regex:/[@$!%*#?&]/'   // at least one special character
     ],
     'confirm_password' => 'required|same:password',
@@ -218,7 +219,7 @@ $affilatedUser=Auth::guard('affilated_user')->user();
 
     'password.required' => 'Please Enter New Password',
     // 'password.min' => 'Password must be at least 6 characters long',
-    'password.regex' => 'Password must be at least 6 characters long,contain at least one uppercase letter and one special character',
+    'password.regex' => 'Password must be at least 6 characters long,contain at least one uppercase letter,one special character and one number',
 
     'confirm_password.required' => 'Please Enter Confirm Password',
     'confirm_password.same' => 'Confirm password must match new password',

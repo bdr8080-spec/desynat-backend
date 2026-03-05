@@ -14,7 +14,7 @@
             </div>
             <div class="performance-content">
                 <div class="sub-title"> {{ $performace->product->product_name_en}}</div>
-                <div class="af-rating">
+                <!-- <div class="af-rating">
 
                        @for($i=0;$i<$performace->product->product_avg_rating; $i++)
                         <i class="bi bi-star-fill"></i>
@@ -22,6 +22,26 @@
                         
                         <span>({{$performace->product->review_count}}) </span>
                   
+                </div> -->
+                <div class="af-rating">
+                    @php
+                        $rating = $performace->product->product_avg_rating ?? 0;
+                        $maxStars = 5;
+                        $filledStars = ($rating > 0) ? (int)$rating : 0;
+                        $emptyStars = $maxStars - $filledStars;
+                    @endphp
+
+                    {{-- Filled stars --}}
+                    @for ($i = 0; $i < $filledStars; $i++)
+                        <i class="bi bi-star-fill"></i>
+                    @endfor
+
+                    {{-- Empty stars --}}
+                    @for ($i = 0; $i < $emptyStars; $i++)
+                        <i class="bi bi-star"></i>
+                    @endfor
+
+                    <span>({{ $performace->product->review_count ?? 0 }})</span>
                 </div>
                 <div class="per-size d-flex gap-2 py-1">
                     <div class="per-1">Size: <span>  {{ $performace->product->product_variants['0']->size->name }}  </span></div>
