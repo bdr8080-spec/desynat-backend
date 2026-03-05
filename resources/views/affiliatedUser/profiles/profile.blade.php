@@ -200,6 +200,7 @@
                             </select>
                         </div>
                     </div>
+                
 
                     <div class="col-lg-6 col-md-6">
                         <div class="sub-form position-relative">
@@ -1371,4 +1372,3 @@ $(document).on('submit', 'form#Affiliate_AddAddress', function(event) {
 // Form save Address Code End here 
 
 
-</script>
