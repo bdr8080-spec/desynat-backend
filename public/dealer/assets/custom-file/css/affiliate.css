@@ -1,6 +1,12 @@
 .order-bg-box{
     background: #FFF7EA;
 }
+.change-length {
+    padding: 11px;
+}
+.readpnl {
+    background: #C0BBBB3D;
+}
 .click-bg{
     background: #3771C81A;
 }
@@ -9,6 +15,10 @@
 }
 .my-earning-bg{
     background: linear-gradient(180.99deg, #DFBF8F -53.71%, #6E4527 154.28%);
+}
+.change-title h6{
+    color: #9E7853;
+    cursor: pointer;
 }
 
 .sub-grid figure {
