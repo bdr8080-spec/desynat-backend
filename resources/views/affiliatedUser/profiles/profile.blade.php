@@ -129,6 +129,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="product-pnls mt-4">
+                            <div>
                                 <div class="upload-image me-3" style="height:170px;width: 270px;">
                                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:none">
                                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
@@ -141,27 +142,29 @@
                                     <img id="imagePreview"
                                         style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
                                         src="{{$affilatedUser->document1 }}">
-                                         <p class="text-danger" id="error-document1"></p>
+                                    </div>
+                                    <p class="text-danger" id="error-document1"></p>
                                 </div>
-
                                 <input type="hidden" name="old_document1" id="old_document1" value="{{$affilatedUser->document1 }}">
                                 <input type="hidden" name="old_document2" id="old_document2" value="{{$affilatedUser->document2 }}">
 
-                                <div class="upload-image" style="height:170px;width: 270px;">
-                                    <label id="uploadLabel2" style="cursor:pointer;text-align:center;display:none;">
-                                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
-                                            style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
-                                        <div class="py-2" style="color:#875C3A">Document 1</div>
-                                        <input type="file" accept="image/*" id="imageUpload2" style="opacity:0;"
-                                         name="document2">
-                                    </label>
+                                <div>
+                                    <div class="upload-image" style="height:170px;width: 270px;">
+                                        <label id="uploadLabel2" style="cursor:pointer;text-align:center;display:none;">
+                                            <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                                                style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
+                                            <div class="py-2" style="color:#875C3A">Document 1</div>
+                                            <input type="file" accept="image/*" id="imageUpload2" style="opacity:0;"
+                                            name="document2">
+                                        </label>
 
-                                    <div class="removebtn topremove" style="">X</div>
-                                    <img id="imagePreview2"
-                                        style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
-                                        src="{{$affilatedUser->document2 }}">
-                                        <p class="text-danger" id="error-document2"></p>                                  
-                                </div>
+                                        <div class="removebtn topremove" style="">X</div>
+                                        <img id="imagePreview2"
+                                            style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
+                                            src="{{$affilatedUser->document2 }}">
+                                        </div>
+                                        <p class="text-danger" id="error-document2"></p>   
+                                    </div>                               
                             </div>
 
                         </div>

@@ -16,9 +16,9 @@
                             <i class="fa-solid fa-chevron-left"></i></a>Change Email Address
                     </h3>
 
-                    <h5 class="otp_sent">
+                    <h6 class="otp_sent">
                         Great! Now enter the email address you want to continue with
-                    </h5>
+                    </h6>
 
                     <div class="form-group mt-3">
                         <div class="d-flex gap-2">
