@@ -2,7 +2,7 @@
 
 <section class="section dashboard">
     <div class="d-flex justify-content-between mt-4 mb-5">
-        <a href="/my-product" class="title24 alink">
+        <a href="{{route('affiliate.affiliateMyProduct')}}" class="title24 alink">
             <i class="bi bi-chevron-left"></i> Item Performance
         </a>
     </div>
