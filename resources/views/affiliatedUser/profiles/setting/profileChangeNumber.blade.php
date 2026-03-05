@@ -4,7 +4,7 @@
 <section class="section dashboard page-100">
 
     <div class="login_contenar">
-
+    <div class="login_content-box">
         <div class="login_content">
             <div class="login_content_content align-self-center">
             <form action="{{ route('affiliate.userOldNumberSendOtp') }}" method="POST">
@@ -12,10 +12,10 @@
                     <div class="otp-page">
                         <h3 class="h3-heading">
                             <a href="{{ url()->previous() }}" class="text-dark me-2">
-                                <i class="fa-solid fa-chevron-left"></i></a>Change Mobile Number
+                            <i class="bi bi-chevron-left"></i> </a> Change Mobile Number
                         </h3>
 
-                        <h5 class="otp_sent">
+                        <h5 class="otp_sent mt-3">
                             Great! Now enter the mobile number you want to continue with
                         </h5>
 
@@ -64,13 +64,14 @@
                         <input type="hidden" name="for" value="mobile">
                         <input type="hidden" name="type" value="1"> 
 
-                        <button type="submit" class="customBtn customBtn5 mt-5 w-100">Continue</button>
+                        <button type="submit" class="btn btn-success customBtn customBtn5 mt-5 w-100">Continue</button>
                     </div>
                 </form>
             </div>
 
         </div>
      </div>
+</div>
 
 <script>
            document.addEventListener('DOMContentLoaded', function () {
