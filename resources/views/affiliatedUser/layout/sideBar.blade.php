@@ -9,21 +9,29 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/my-product') ? 'sidebar-active' : '' }} "
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/my-product')|| Request::is('affiliate/affiliate-product-performance*') ? 'sidebar-active' : '' }} "
                     href="{{route('affiliate.affiliateMyProduct')}}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/my-product.svg" alt="icon" class="asideicon">
                     <span>My Product</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/category') ? 'sidebar-active' : '' }}"
                     href="{{route('affiliate.affiliateCategory')}}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/categary-ic.svg" alt="icon" class="asideicon">
                     <span>Category</span>
                 </a>
-            </li>
+            </li> -->
 
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20 
+                {{ Request::is('affiliate/category') || Request::is('affiliate/all-products*') ? 'sidebar-active' : '' }}"
+                    href="{{route('affiliate.affiliateCategory')}}">
+                    <img src="{{ asset('dealer') }}/assets/img/all-icons/categary-ic.svg" alt="icon" class="asideicon">
+                    <span>Category</span>
+                </a>
+            </li>
 
 
             <!-- <li class="nav-item">
