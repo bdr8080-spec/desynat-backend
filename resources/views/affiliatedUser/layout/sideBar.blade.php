@@ -26,7 +26,7 @@
             </li>
 
             <!-- <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="{{route('affiliate.affiliateCategory')}}">
+                <a class="nav-link border-radious-9 margin-20" href="/payment">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/payment.svg" alt="icon" class="asideicon">
                     <span>Payments</span>
                 </a>
