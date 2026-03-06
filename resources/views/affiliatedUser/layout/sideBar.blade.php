@@ -16,14 +16,6 @@
                 </a>
             </li>
 
-            <!-- <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20 {{ Request::is('affiliate/category') ? 'sidebar-active' : '' }}"
-                    href="{{route('affiliate.affiliateCategory')}}">
-                    <img src="{{ asset('dealer') }}/assets/img/all-icons/categary-ic.svg" alt="icon" class="asideicon">
-                    <span>Category</span>
-                </a>
-            </li> -->
-
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20 
                 {{ Request::is('affiliate/category') || Request::is('affiliate/all-products*') ? 'sidebar-active' : '' }}"
@@ -33,6 +25,39 @@
                 </a>
             </li>
 
+            <!-- <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="{{route('affiliate.affiliateCategory')}}">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/payment.svg" alt="icon" class="asideicon">
+                    <span>Payments</span>
+                </a>
+            </li>  -->
+
+            <!-- <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/withdrawal.svg" alt="icon" class="asideicon">
+                    <span>My Withdrawals</span>
+                </a>
+            </li> 
+
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/terms.svg" alt="icon" class="asideicon">
+                    <span>Terms & Condition</span>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/about.svg" alt="icon" class="asideicon">
+                    <span>About Us</span>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="">
+                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/faq.svg" alt="icon" class="asideicon">
+                    <span>FAQs</span>
+                </a>
+            </li>  -->
+          
 
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
