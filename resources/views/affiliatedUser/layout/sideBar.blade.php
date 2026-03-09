@@ -30,14 +30,16 @@
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/payment.svg" alt="icon" class="asideicon">
                     <span>Payments</span>
                 </a>
-            </li>  -->
+            </li> 
 
-            <!-- <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="">
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20" href="/my-withdrawals">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/withdrawal.svg" alt="icon" class="asideicon">
                     <span>My Withdrawals</span>
                 </a>
-            </li> 
+            </li>  -->
+
+            <!--
 
             <li class="nav-item">
                 <a class="nav-link border-radious-9 margin-20" href="">
