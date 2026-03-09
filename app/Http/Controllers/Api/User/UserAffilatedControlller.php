@@ -11,14 +11,16 @@ use Validator;
 use Illuminate\Validation\Rule;
 
 use App\Services\UserAffilatedAuthService;
+use App\Services\UserOrderService;
 
 
 class UserAffilatedControlller extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
+        $this->UserOrderService = $UserOrderService;
     }
 
 
@@ -796,6 +798,178 @@ public function affiliate_remove_affilate_product(Request $request){
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     
     }
+
+
+     public function affiliate_all_order(Request $request){
+
+            try{    
+        //     $validate = Validator::make($request->all(), [
+        //         'order_type'=>'required|in:1,2',
+        //         ]);
+            
+        //    if($validate->fails()){
+        //     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        //    }
+    
+             $user_id= $request->user()->id;
+
+    
+               $request_data=(object)[
+                'user_id'=>$user_id,
+                'search'=>$request->search,
+                'filter'=>$request->filter,
+                "order_type"=>$request->order_type
+                ];
+        
+                $data=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data);
+        
+                if(isset($data['status']) && $data['status']=='error' ){
+                    return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+                }
+        
+                return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+        
+        
+            } catch (\Exception $e) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                    'data' => []
+                ];
+            }
+            
+            }
+
+public function affiliate_single_order_details(Request $request){
+
+        try{
+
+            $validate = Validator::make($request->all(), [
+                'order_id'=>'required',
+                // "orderdetails_id"=>'required|exists:orderdetails,id'
+
+                ]);
+            
+           if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+           }
+    
+         $user_id= $request->user()->id;
+
+           $request_data=(object)[
+            'user_id'=>$user_id,
+            'order_id'=>$request->order_id,
+            'orderdetails_id'=>$request->orderdetails_id
+            ];
+    
+            if(isset($request->orderdetails_id)){
+
+            $data=$this->UserOrderService->singleOrderDetailsNew($request_data);
+            }else{
+
+                $data=$this->UserOrderService->singleOrderDetails($request_data);
+            }
+
+    
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+    
+            return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+        
+        }
+
+public function affiliate_submit_withdraw_request(Request $request){
+
+        try{
+
+            $validate = Validator::make($request->all(), [
+                'amount'=>'required',
+                 "bankdetails_id"=>'required|exists:bankdetails,id'
+
+                ]);
+            
+           if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+           }
+    
+         $user_id= $request->user()->id;
+
+           $request_data=(object)[
+            'user_id'=>$user_id,
+            'amount'=>$request->amount,
+            'bankdetails_id'=>$request->bankdetails_id
+            ];
+    
+
+            $data=$this->UserOrderService->submitWithdrawRequest($request_data);
+
+    
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+    
+            return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+        
+        }
+
+public function affiliate_all_withdraw_request(Request $request)
+{
+    try {
+        $validate = Validator::make($request->all(), [
+            'req_type' => 'required|in:0,1', // 0-pending,1-accepted/credited
+        ]);
+        
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse(
+                'error',
+                $validate->errors()->first(),
+                $validate->errors()->first(),
+                422
+            );
+        }
+
+        $user_id = $request->user()->id;
+
+        $request_data = (object)[
+            'user_id' => $user_id,
+            'req_type' => $request->req_type,
+        ];
+
+        $data = $this->UserOrderService->getAllWithdrawRequest($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], $data['data'], 422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to fetch withdraw requests: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+}
 
 
 

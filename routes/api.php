@@ -235,6 +235,12 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   Route::post('/default_affiliate_bank_details', [UserAffilatedControlller::class,'default_affiliate_bank_details']);
   Route::post('/affiliate_remove_affilate_product', [UserAffilatedControlller::class,'affiliate_remove_affilate_product']);
 
+  //M9
+  Route::get('/affiliate_all_order', [UserAffilatedControlller::class,'affiliate_all_order']);
+  Route::get('/affiliate_single_order_details', [UserAffilatedControlller::class,'affiliate_single_order_details']);
+  Route::post('/affiliate_submit_withdraw_request', [UserAffilatedControlller::class,'affiliate_submit_withdraw_request']);
+  Route::get('/affiliate_all_withdraw_request', [UserAffilatedControlller::class,'affiliate_all_withdraw_request']);
+
 
   
 
