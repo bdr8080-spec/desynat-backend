@@ -228,7 +228,7 @@ label {
 }
 
 .date-form-pnl .form-control {
-  padding: 8px;
+  padding: 9px;
   border: 1px solid #C0BBBB;
   max-width: 140px;
 }
@@ -415,7 +415,7 @@ label {
 }
 
 .form-control {
-  padding: 8px;
+  padding: 10px;
   font-size: 15px;
   border: 1px solid #C0BBBB;
 }
