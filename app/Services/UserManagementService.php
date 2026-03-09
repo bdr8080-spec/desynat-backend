@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\DB;
 use App\Models\DefaultShippingFee;
+use App\Models\AffilatedUserAddress;
+use App\Models\AffiliateCommission;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart,allproductchats,orderdetail};
 
@@ -523,85 +526,272 @@ class UserManagementService
     }
 
 
+// public function product_add_to_cart($request)
+//     {
+//         try {
+
+
+//             $match=[
+//                 'user_id'=>$request->user_id,
+//                 'product_id'=>$request->product_id,
+//                 'variants_id'=>$request->variants_id,
+//                 'order_type'=>'1',
+//                ];
+
+//             $data=[
+//                 'user_id'=>$request->user_id,
+//                 'product_id'=>$request->product_id,
+//                 'quantity'=>$request->quantity,
+//                 'variants_id'=>$request->variants_id,
+//                ];
+
+//             $variation_stock_check= ProductVariant::where('id',$request->variants_id)->first();
+
+//             if(intVal($variation_stock_check->total_stock) < $request->quantity){
+//                 return [
+//                     'status'  => 'error',
+//                     'message' => 'product Stock limit Is Low',
+//                     'data'    => (object)[]
+//                 ];
+//             }
+
+//             $product_amount=$variation_stock_check->final_price;
+
+
+//             $add_to_cart = Addtocart::where($match)->first();
+
+//             if($add_to_cart){
+
+//                 $update_quantity=$add_to_cart->quantity + $request->quantity;
+
+//                 $update_amount=$product_amount*$update_quantity;
+
+//                 // check quantity Again on Update product Time
+
+//                 if(intVal($variation_stock_check->total_stock) < $update_quantity){
+//                     return [
+//                         'status'  => 'error',
+//                         'message' => 'product Stock limit Is Low',
+//                         'data'    => (object)[]
+//                     ];
+//                 }
+                
+//                 $add_to_cart->update(['quantity'=>$update_quantity,'amount'=>$update_amount]);
+
+//                 $msg="Product Add to Cart Update Successfully";
+            
+//             }else{
+
+//               $data['amount']=$product_amount*$request->quantity;
+
+
+//               $add_to_cart= Addtocart::create($data);
+//                 $msg="Product Add in Cart Successfully";
+//             }
+
+          
+//             return [
+//                 'status'  => 'success',
+//                 'message' => $msg,
+//                 'data'    => $add_to_cart
+//             ];
+    
+//         } catch (\Exception $e) {
+    
+//             return [
+//                 'status'  => 'error',
+//                 'message' => 'Failed: ' . $e->getMessage(),
+//                 'data'    => (object)[]
+//             ];
+//         }
+//     }
+
 public function product_add_to_cart($request)
-    {
-        try {
+{
+    try {
 
+        $affiliate_id = null;
+        $reference_link = null;
+        $admin_commission_percent = null;
+        $affiliate_commission_percent = null;
 
-            $match=[
-                'user_id'=>$request->user_id,
-                'product_id'=>$request->product_id,
-                'variants_id'=>$request->variants_id,
-                'order_type'=>'1',
-               ];
+        if(!empty($request->reference_link)){
 
-            $data=[
-                'user_id'=>$request->user_id,
-                'product_id'=>$request->product_id,
-                'quantity'=>$request->quantity,
-                'variants_id'=>$request->variants_id,
-               ];
+            $reference_link = $request->reference_link;
 
-            $variation_stock_check= ProductVariant::where('id',$request->variants_id)->first();
+            $query = parse_url($reference_link, PHP_URL_QUERY);
+            parse_str($query, $params);
 
-            if(intVal($variation_stock_check->total_stock) < $request->quantity){
+            if(isset($params['ref'])){
+                $affiliate_id = $params['ref'];
+            }
+        }
+
+        $match = [
+            'user_id' => $request->user_id,
+            'product_id' => $request->product_id,
+            'variants_id' => $request->variants_id,
+            'order_type' => '1',
+        ];
+
+        $data = [
+            'user_id' => $request->user_id,
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'variants_id' => $request->variants_id,
+        ];
+
+        if($reference_link){
+            $data['reference_link'] = $reference_link;
+        }
+
+        if($affiliate_id){
+            $data['affiliate_id'] = $affiliate_id;
+        }
+
+        $variation_stock_check = ProductVariant::where('id', $request->variants_id)->first();
+
+        if(!$variation_stock_check){
+            return [
+                'status' => 'error',
+                'message' => 'Variant not found',
+                'data' => (object)[]
+            ];
+        }
+
+        if(intval($variation_stock_check->total_stock) < $request->quantity){
+            return [
+                'status' => 'error',
+                'message' => 'Product Stock limit is low',
+                'data' => (object)[]
+            ];
+        }
+
+        $product_amount = $variation_stock_check->final_price;
+        $total_amount = $product_amount * $request->quantity;
+
+        $product = Product::select('affiliated_commission')
+                    ->where('id', $request->product_id)
+                    ->first();
+
+        if($product){
+            $affiliate_commission_percent = $product->affiliated_commission;
+        }
+
+        if($affiliate_id){
+
+            if(!is_null($affiliate_commission_percent)){
+                $data['affiliate_commission'] = number_format(($affiliate_commission_percent / 100) * $total_amount, 2, '.', '');
+            } else {
+                $data['affiliate_commission'] = null;
+            }
+
+            $affiliate_address = AffilatedUserAddress::where('affiliate_id', $affiliate_id)->first();
+
+            if($affiliate_address){
+
+                $affiliate_country_id = $affiliate_address->country;
+
+                $admin_commission = AffiliateCommission::where('country_id', $affiliate_country_id)
+                                    ->orderBy('id', 'asc')
+                                    ->first();
+
+                if($admin_commission){
+
+                    $admin_commission_percent = $admin_commission->commission ?? null;
+
+                    if($admin_commission_percent){
+                        $data['admin_commission'] = number_format(($admin_commission_percent / 100) * $total_amount, 2, '.', '');
+                    } else {
+                        $data['admin_commission'] = null;
+                    }
+                }
+            }
+        }
+
+        $add_to_cart = Addtocart::where($match)->first();
+
+        if($add_to_cart){
+
+            $update_quantity = $add_to_cart->quantity + $request->quantity;
+
+            if(intval($variation_stock_check->total_stock) < $update_quantity){
                 return [
-                    'status'  => 'error',
-                    'message' => 'product Stock limit Is Low',
-                    'data'    => (object)[]
+                    'status' => 'error',
+                    'message' => 'Product Stock limit is low',
+                    'data' => (object)[]
                 ];
             }
 
-            $product_amount=$variation_stock_check->final_price;
+            $update_amount = $product_amount * $update_quantity;
 
+            $updateData = [
+                'quantity' => $update_quantity,
+                'amount' => $update_amount
+            ];
 
-            $add_to_cart = Addtocart::where($match)->first();
-
-            if($add_to_cart){
-
-                $update_quantity=$add_to_cart->quantity + $request->quantity;
-
-                $update_amount=$product_amount*$update_quantity;
-
-                // check quantity Again on Update product Time
-
-                if(intVal($variation_stock_check->total_stock) < $update_quantity){
-                    return [
-                        'status'  => 'error',
-                        'message' => 'product Stock limit Is Low',
-                        'data'    => (object)[]
-                    ];
-                }
-                
-                $add_to_cart->update(['quantity'=>$update_quantity,'amount'=>$update_amount]);
-
-                $msg="Product Add to Cart Update Successfully";
-            
-            }else{
-
-              $data['amount']=$product_amount*$request->quantity;
-
-
-              $add_to_cart= Addtocart::create($data);
-                $msg="Product Add in Cart Successfully";
+            if($reference_link){
+                $updateData['reference_link'] = $reference_link;
             }
 
-          
-            return [
-                'status'  => 'success',
-                'message' => $msg,
-                'data'    => $add_to_cart
-            ];
-    
-        } catch (\Exception $e) {
-    
-            return [
-                'status'  => 'error',
-                'message' => 'Failed: ' . $e->getMessage(),
-                'data'    => (object)[]
-            ];
+            if($affiliate_id){
+
+                $updateData['affiliate_id'] = $affiliate_id;
+
+                if(!is_null($affiliate_commission_percent)){
+                    $updateData['affiliate_commission'] = number_format(($affiliate_commission_percent / 100) * $update_amount, 2, '.', '');
+                } else {
+                    $updateData['affiliate_commission'] = null;
+                }
+
+                if($admin_commission_percent){
+                    $updateData['admin_commission'] = number_format(($admin_commission_percent / 100) * $update_amount, 2, '.', '');
+                } else {
+                    $updateData['admin_commission'] = null;
+                }
+            }
+
+            $add_to_cart->update($updateData);
+
+            $msg = "Product Add to Cart Updated Successfully";
+
+        } else {
+
+            $data['amount'] = $total_amount;
+
+            $add_to_cart = Addtocart::create($data);
+
+            $msg = "Product Add in Cart Successfully";
         }
+
+        if($reference_link){
+
+            Session::put('affiliate_product', [
+                'product_id' => $add_to_cart->product_id,
+                'variant_id' => $add_to_cart->variants_id,
+                'reference_number' => $add_to_cart->reference_link,
+                'affiliate_id' => $add_to_cart->affiliate_id ?? null,
+                'admin_commission' => $add_to_cart->admin_commission ?? null,
+                'affiliate_commission' => $add_to_cart->affiliate_commission ?? null
+            ]);
+            //dd(Session::get('affiliate_product'));
+        }
+
+        return [
+            'status' => 'success',
+            'message' => $msg,
+            'data' => $add_to_cart
+        ];
+
+    } catch (\Exception $e){
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed: ' . $e->getMessage(),
+            'data' => (object)[]
+        ];
     }
+}
 
     
 
@@ -1324,6 +1514,7 @@ public function addtoCart_Increment_decrement($request)
         }
         
     }
+
 
 
 

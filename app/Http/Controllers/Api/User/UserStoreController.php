@@ -194,6 +194,7 @@ class UserStoreController extends Controller
             'product_id' => 'required|integer| exists:products,id',
             'quantity'=>'required|integer',
             'variants_id' => 'required|exists:product_variants,id|integer',
+            'reference_link' => 'nullable',
          ]);
         
        if($validate->fails()){
@@ -207,6 +208,7 @@ class UserStoreController extends Controller
         'product_id'=>intval($request->product_id),
         'quantity'=>intval($request->quantity),
         'variants_id'=>intval($request->variants_id),
+        'reference_link'=>$request->reference_link,
        ];
 
         $data=$this->UserManagementService->product_add_to_cart($request_data);
