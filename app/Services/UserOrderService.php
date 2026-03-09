@@ -1790,7 +1790,7 @@ public function submitWithdrawRequest($request_data)
                             ->where('delivery_status', '3')
                             ->sum('affiliate_commission');
 
-            if($total_earning>$request_data->amount){
+            if($total_earning<$request_data->amount){
                 return [
                     'status' => 'success',
                     'message' => 'you can not withdraw more than total earning',
