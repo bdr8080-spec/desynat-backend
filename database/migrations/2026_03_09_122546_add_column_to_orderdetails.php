@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::table('orderdetails', function (Blueprint $table) {
             $table->string('reference_link')->after('unique_id');
-            $table->string('affiliate_id')->after('reference_link');
+            $table->string('affiliate_id')->after('reference_link')->comment('Affilate user Id');
             $table->string('affiliate_commission')->after('affiliate_id');
             $table->string('affiliate_admin_commission')->after('affiliate_commission');
-                        
             });
     }
 
