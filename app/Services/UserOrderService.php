@@ -1829,6 +1829,10 @@ public function submitWithdrawRequest($request_data)
                 $query->where('admin_verify', '1'); 
             }
 
+            if (!empty($request_data->search)) {
+                $query->where('request_id', 'like', '%' . $request_data->search . '%');
+            }
+
             $withdraw_requests = $query->orderBy('id', 'desc')->get();
 
             $total_withdrawals = WithdrawRequest::where('user_id', $request_data->user_id)

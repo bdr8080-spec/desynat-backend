@@ -952,6 +952,7 @@ public function affiliate_all_withdraw_request(Request $request)
         $request_data = (object)[
             'user_id' => $user_id,
             'req_type' => $request->req_type,
+            'search' => $request->search??null,
         ];
 
         $data = $this->UserOrderService->getAllWithdrawRequest($request_data);
