@@ -11,6 +11,7 @@ use App\Models\{UserGiftCards,GiftCard,UserWallet,Reason,UserWalletHistory};
 use App\Models\{Promocode,userAddress,country,all_countrie,allproductchats};
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 use DB;
+use App\Models\WithdrawRequest;
 
 class UserOrderService
 {
@@ -1689,6 +1690,168 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
         ];
     }
 }
+
+ public function AffiliateAllOrderDetailsNew($request){
+
+try{
+
+     $orders = OrderDetail::with([
+        'order.delivery_details',
+        'product_details.brand',
+        'product_details.category',
+        'product_details.subcategory',
+        'product_details.seller_details',
+        'variation_details.color',
+        'variation_details.size',
+        "exchange_order_details"
+       // "chatRoomrecords"
+    ])
+    ->whereHas('order', function ($q) use ($request) {
+
+        if(isset($request->order_type)){
+          $q->where('order_type', $request->order_type);
+        }
+        
+        // User filter
+        $q->where('affiliate_id', $request->user_id);
+
+        // Payment logic
+        $q->where(function ($query) {
+            $query->where('payment_method', '3') // COD
+                  ->orWhere(function ($sub) {
+                      $sub->whereIn('payment_method', ['1', '2'])
+                          ->where('payment_status', '!=', '0'); // Paid
+                  });
+        });
+
+        // Search filter
+        if (!empty($request->search)) {
+            $q->where('order_id', 'like', '%' . $request->search . '%');
+        }
+    });
+
+/*
+|--------------------------------------------------------------------------
+| OrderDetail status filters
+|--------------------------------------------------------------------------
+*/
+if (!empty($request->filter)) {
+    $orders->where(function ($query) use ($request) {
+
+        switch ($request->filter) {
+
+            case '2': // Ongoing
+                $query->whereIn('delivery_status', ['1', '2'])
+                ->whereIn('payment_status',['0','1']);
+                break;
+
+            case '3': // Delivered
+                $query->where('delivery_status', '3')
+                ->where('return_type','0');
+
+                break;
+
+            case '4': // Cancelled
+                $query->whereIn('payment_status', ['3','2']); // adjust if needed
+                break;
+
+            case '5': // Returned / Failed
+                $query->where('delivery_status', '3')
+                      ->where('return_type', '1');
+                break;
+        }
+    });
+}
+
+$orders = $orders->orderBy('id', 'desc')->get();
+
+
+    return ['status'=>'success','message'=>"All Order details fetch Successfully",'data'=>$orders];
+
+    
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+
+    }
+
+public function submitWithdrawRequest($request_data)
+    {
+        try {
+            DB::beginTransaction();
+            $reqId = rand(100000, 999999);
+
+            $withdraw = WithdrawRequest::create([
+                'request_id' => $reqId,
+                'type' => '1',
+                'user_id' => $request_data->user_id,
+                'amount' => $request_data->amount,
+                'admin_verify' => '0',
+                'bankdetails_id' => $request_data->bankdetails_id,
+            ]);
+
+            DB::commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Withdraw request submitted successfully',
+                'data' => $withdraw
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return [
+                'status' => 'error',
+                'message' => 'Failed to submit withdraw request: ' . $e->getMessage(),
+                'data' => null
+            ];
+        }
+    }
+
+    public function getAllWithdrawRequest(object $request_data): array
+    {
+        try {
+
+            $query = WithdrawRequest::with('bank_details')
+                        ->where('user_id', $request_data->user_id)
+                        ->where('type', '1'); 
+
+            if ($request_data->req_type == '0') {
+                $query->where('admin_verify', '0'); 
+            } elseif ($request_data->req_type == '1') {
+                $query->where('admin_verify', '1'); 
+            }
+
+            $withdraw_requests = $query->orderBy('id', 'desc')->get();
+
+            $total_withdrawals = WithdrawRequest::where('user_id', $request_data->user_id)
+                                    ->where('type', '1')
+                                    ->where('admin_verify', '1')
+                                    ->sum('amount');
+
+            return [
+                'status' => 'success',
+                'message' => 'Withdraw requests fetched successfully',
+                'data' => [
+                    'withdraw_requests' => $withdraw_requests,
+                    'total_withdrawals' => number_format((float)$total_withdrawals, 2, '.', '') 
+                ]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch withdraw requests: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
 
 
 
