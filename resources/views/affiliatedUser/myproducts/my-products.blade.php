@@ -12,9 +12,10 @@
 
 <section class="section dashboard">
     <div class="d-flex justify-content-between mt-4 mb-5">
-        <a href="/category" class="title24 alink">
+        <!-- <a href="/category" class="title24 alink">
             <i class="bi bi-chevron-left"></i> My Product
-        </a>
+        </a> -->
+        <div class="title24">My Product </div>
     </div>
     <div class="search-field d-flex align-items-center mb-4">
         <div class="from-group position-relative w-100">
