@@ -195,7 +195,21 @@ class UserStoreController extends Controller
 
     public function productDetails(Request $request,string $id){
 
-        
+        $affiliate_id = $request->query('ref'); // get affiliate id from URL
+        $product_id = $id;
+
+        if ($affiliate_id) {
+            $request_data1=(object)[
+            'user_id' => $request->user()->id ?? null,
+                'product_id' => $product_id,
+                'affiliate_id' => $affiliate_id,
+                'reference_link' => $request->fullUrl()
+            ];
+
+            $result = $this->UserManagementService->recordAffiliateClick($request_data1);
+
+        }
+
         $request_data=(object)[
             'product_id'=>$id,
             'user_id'=> $request->user()->id ?? null

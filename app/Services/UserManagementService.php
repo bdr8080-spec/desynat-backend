@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\DefaultShippingFee;
 use App\Models\AffilatedUserAddress;
 use App\Models\AffiliateCommission;
+use App\Models\ProductLink;
+use App\Models\AffiliateProduct;
+use App\Models\AffiliateProductClickRecord;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist,Addtocart,allproductchats,orderdetail};
@@ -439,6 +442,7 @@ class UserManagementService
             ];
         }
     }
+    
 
 
     
@@ -1514,6 +1518,40 @@ public function addtoCart_Increment_decrement($request)
         }
         
     }
+
+    public function recordAffiliateClick($request_data1)
+{
+    try {
+        $affiliateProduct = AffiliateProduct::where('affiliate_id', $request_data1->affiliate_id)
+            ->where('product_id', $request_data1->product_id)
+            ->first();
+
+        $affiliate_product_id = $affiliateProduct ? $affiliateProduct->id : null;
+
+        $clickRecord = AffiliateProductClickRecord::create([
+            'product_id' => $request_data1->product_id,
+            'affiliate_id' => $request_data1->affiliate_id,
+            'affiliate_product_id' => $affiliate_product_id,
+            'user_id' => $request_data1->user_id,
+            'reference_link' => $request_data1->reference_link,
+        ]);
+
+        return [
+            'status' => 'success',
+            'message' => 'Affiliate click recorded successfully',
+            'data' => $clickRecord
+        ];
+
+    } catch (\Exception $e) {
+        //\Log::error('Affiliate click record failed: ' . $e->getMessage());
+
+        return [
+            'status' => 'error',
+            'message' => 'Failed to record affiliate click: ' . $e->getMessage(),
+            'data' => (object)[]
+        ];
+    }
+}
 
 
 
