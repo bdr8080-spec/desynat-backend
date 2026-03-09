@@ -12,4 +12,8 @@ class WithdrawRequest extends Model
     {
         return $this->belongsTo(Bankdetails::class, 'bankdetails_id');
     }
+    public function affiliate__details()
+    {
+        return $this->belongsTo(AffilatedUser::class, 'user_id');
+    }
 }

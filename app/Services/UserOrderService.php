@@ -1786,6 +1786,17 @@ public function submitWithdrawRequest($request_data)
     {
         try {
             DB::beginTransaction();
+            $total_earning = OrderDetail::where('affiliate_id', $request->user_id)
+                            ->where('delivery_status', '3')
+                            ->sum('affiliate_commission');
+
+            if($total_earning>$request_data->amount){
+                return [
+                    'status' => 'success',
+                    'message' => 'you can not withdraw more than total earning',
+                    'data' => (object)[]
+                ];
+            }                
             $reqId = rand(100000, 999999);
 
             $withdraw = WithdrawRequest::create([
