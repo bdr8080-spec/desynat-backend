@@ -15,9 +15,9 @@
                             <i class="bi bi-chevron-left"></i> </a> Change Mobile Number
                         </h3>
 
-                        <h5 class="otp_sent mt-3">
+                        <h6 class="otp_sent mt-3">
                             Great! Now enter the mobile number you want to continue with
-                        </h5>
+                        </h6>
 
                         <div class="form-group mt-3">
                             <div class="d-flex gap-2">

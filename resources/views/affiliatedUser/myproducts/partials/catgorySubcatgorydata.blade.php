@@ -1,6 +1,6 @@
     <div class="all-product-lists subcategory-item active" id="selectSubcatgoty_all" data-subcategory="all">
-        <div class="af-box">
-            <img src="image.jpg" class="img-fluid">
+        <div class="af-box" style="background: #a8825a;">
+            <img src="{{ asset('dealer') }}/assets/img/all-ic.svg" class="img-fluid">
         </div>
         <div class="af-title">All</div>
     </div>

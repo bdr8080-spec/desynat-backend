@@ -91,8 +91,12 @@ Route::post('/affiliate/add_to_my_products', [UserAffiliatedProfileController::c
 
 // });
 
+// payment section
 
+Route::match(['get', 'post'], '/payment', function () {
+    return view('affiliatedUser.payment.index');
 
+})->name('affiliatedUser.payment');
 
 
 

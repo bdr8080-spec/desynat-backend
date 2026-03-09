@@ -77,8 +77,8 @@
                               
                             </label>
                         </div>
-                        <a class="drop-profile" href="{{route('affiliate.change-password')}}">
-                            <span>Change Password</span>
+                        <a class="drop-profile change-length" href="{{route('affiliate.change-password')}}">
+                            <span> <i class="bi bi-lock"></i> Change Password </span>
                         </a>
 
                     </div>
@@ -99,7 +99,7 @@
                                 <div class="label-flex">
                                     <label>Mobile No.</label>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter Mobile Number"
+                                <input type="text" class="form-control readpnl" placeholder="Enter Mobile Number"
                                     value="{{$affilatedUser->country_code }}{{$affilatedUser->mobile }}" readonly>
                                 <a class="drop-profile mob-change" href="{{ route('affiliate.userOldNumberSendOtp', [
                         'mobile' => $affilatedUser->mobile,
@@ -116,7 +116,7 @@
                                 <div class="label-flex">
                                     <label>Email Address</label>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter Email Address"
+                                <input type="text" class="form-control readpnl" placeholder="Enter Email Address"
                                     value="{{$affilatedUser->email}}" readonly>
                                 <a class="drop-profile mob-change"  href="{{ route('affiliate.userOldNumberSendOtp', [
                         'email' => $affilatedUser->email,
@@ -129,6 +129,7 @@
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="product-pnls mt-4">
+                            <div>
                                 <div class="upload-image me-3" style="height:170px;width: 270px;">
                                     <label id="uploadLabel" style="cursor:pointer;text-align:center;display:none">
                                         <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
@@ -141,27 +142,29 @@
                                     <img id="imagePreview"
                                         style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
                                         src="{{$affilatedUser->document1 }}">
-                                         <p class="text-danger" id="error-document1"></p>
+                                    </div>
+                                    <p class="text-danger" id="error-document1"></p>
                                 </div>
-
                                 <input type="hidden" name="old_document1" id="old_document1" value="{{$affilatedUser->document1 }}">
                                 <input type="hidden" name="old_document2" id="old_document2" value="{{$affilatedUser->document2 }}">
 
-                                <div class="upload-image" style="height:170px;width: 270px;">
-                                    <label id="uploadLabel2" style="cursor:pointer;text-align:center;display:none;">
-                                        <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
-                                            style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
-                                        <div class="py-2" style="color:#875C3A">Document 1</div>
-                                        <input type="file" accept="image/*" id="imageUpload2" style="opacity:0;"
-                                         name="document2">
-                                    </label>
+                                <div>
+                                    <div class="upload-image" style="height:170px;width: 270px;">
+                                        <label id="uploadLabel2" style="cursor:pointer;text-align:center;display:none;">
+                                            <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                                                style="width:70px;object-fit:cover; border-radius:6px;padding-top:2rem;">
+                                            <div class="py-2" style="color:#875C3A">Document 1</div>
+                                            <input type="file" accept="image/*" id="imageUpload2" style="opacity:0;"
+                                            name="document2">
+                                        </label>
 
-                                    <div class="removebtn topremove" style="">X</div>
-                                    <img id="imagePreview2"
-                                        style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
-                                        src="{{$affilatedUser->document2 }}">
-                                        <p class="text-danger" id="error-document2"></p>                                  
-                                </div>
+                                        <div class="removebtn topremove" style="">X</div>
+                                        <img id="imagePreview2"
+                                            style="width:100%;height:100%;object-fit:cover;border-radius:6px;"
+                                            src="{{$affilatedUser->document2 }}">
+                                        </div>
+                                        <p class="text-danger" id="error-document2"></p>   
+                                    </div>                               
                             </div>
 
                         </div>
@@ -341,8 +344,17 @@
 
                 @foreach($affilatedUser->bank_details as $key=>$val)
                 <div class="rounded-4 desc-box bg-white mb-3">
+                       
                     <div class="bankpnl d-flex justify-content-between align-items-center line2">
-                        <div class="account-no">{{$val->account_no}}</div>
+                        <div class="check_radio d-flex gap-2">
+                            <label class="radio-group">
+                                <input type="radio" name="today" checked>
+                                <span class="custom-radio"></span>
+                                <span class="radio-label"></span>
+                            </label>
+                            <div class="account-no">{{$val->account_no}}</div>
+                        </div>
+
                         <div class="banktool">
                             <!-- <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#editbankDetails">
                                 <img src="{{ asset('/dealer') }}/assets/img/b-edit.svg" alt="edit icon"
@@ -397,37 +409,37 @@
 
         <div class="account-form">
 
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Bank Name</label>
             <input type="text" id="bank_name" class="form-control">
             <small class="text-danger" id="error_bank_name"></small>
           </div>
 
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Account Holder Name</label>
             <input type="text" id="account_holder_name" class="form-control">
             <small class="text-danger" id="error_account_holder_name"></small>
           </div>
 
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Account Number</label>
             <input type="text" id="account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger" id="error_account_no"></small>
           </div>
 
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Confirm Account Number</label>
             <input type="text" id="confirm_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger" id="error_confirm_account_no"></small>
           </div>
 
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>IBAN</label>
             <input type="text" id="iban" class="form-control">
             <small class="text-danger" id="error_iban"></small>
           </div>
 
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>SWIFT / BIC</label>
             <input type="text" id="swift" class="form-control">
             <small class="text-danger" id="error_swift"></small>
@@ -437,7 +449,7 @@
 
         <div class="text-center mt-4">
           <button type="button" id="submit_bank_btn" class="btn btn-success w-100">
-            Submit Request
+            Submit 
           </button>
         </div>
 
@@ -463,42 +475,42 @@
         <div class="account-form">
 
           <!-- Bank Name -->
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Bank Name</label>
             <input type="text" id="edit_bank_name" class="form-control">
             <small class="text-danger error-text" id="error_edit_bank_name"></small>
           </div>
 
           <!-- Account Holder Name -->
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Account Holder Name</label>
             <input type="text" id="edit_account_holder_name" class="form-control">
             <small class="text-danger error-text" id="error_edit_account_holder_name"></small>
           </div>
 
           <!-- Account Number -->
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Account Number</label>
             <input type="text" id="edit_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger error-text" id="error_edit_account_no"></small>
           </div>
 
           <!-- Confirm Account Number -->
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>Confirm Account Number</label>
             <input type="text" id="edit_confirm_account_no" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
             <small class="text-danger error-text" id="error_edit_confirm_account_no"></small>
           </div>
 
           <!-- IBAN -->
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>IBAN</label>
             <input type="text" id="edit_iban" class="form-control">
             <small class="text-danger error-text" id="error_edit_iban"></small>
           </div>
 
           <!-- SWIFT -->
-          <div class="sub-form">
+          <div class="sub-form mb-2">
             <label>SWIFT / BIC</label>
             <input type="text" id="edit_swift" class="form-control">
             <small class="text-danger error-text" id="error_edit_swift"></small>
@@ -508,7 +520,7 @@
 
         <div class="text-center mt-4">
           <button type="button" id="edit_submit_bank_btn" class="btn btn-success w-100">
-            Submit Request
+            Update
           </button>
         </div>
 

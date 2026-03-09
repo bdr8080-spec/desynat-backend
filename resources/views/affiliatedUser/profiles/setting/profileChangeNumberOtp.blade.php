@@ -9,11 +9,11 @@
                     @csrf
                     <input type="hidden" value="{{request()->id}}" name="id">
                 <div class="otp-page">
-                    <h3 class="h3-heading"><span><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left"></i></a></span> OTP</h3>
+                    <h3 class="h3-heading mb-3"><span><a href="{{ url()->previous() }}"><i class="bi bi-chevron-left gold-color"></i></a></span> OTP</h3>
                     @if (request()->email)
-                          <h5 class="otp_sent">To change email address. a verification code has been sent <span class="gold-color">{{request()->email}}</span></h5>
+                          <h6 class="otp_sent">To change email address. a verification code has been sent <span class="gold-color">{{request()->email}}</span></h6>
                     @else
-                          <h5 class="otp_sent">To change mobile no. a verification code has been sent <span class="gold-color">{{request()->country_code}} {{request()->mobile}}</span></h5>
+                          <h6 class="otp_sent">To change mobile no. a verification code has been sent <span class="gold-color">{{request()->country_code}} {{request()->mobile}}</span></h6>
                     @endif
                      <div class="otp-container mt-3">
                         <input type="text" maxlength="1" class="otp-input" id="otp1" name="otp[]" />
