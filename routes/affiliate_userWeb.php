@@ -98,6 +98,10 @@ Route::match(['get', 'post'], '/payment', function () {
 
 })->name('affiliatedUser.payment');
 
+Route::match(['get', 'post'], '/my-withdrawals', function () {
+    return view('affiliatedUser.payment.mywithdrawals');
+
+})->name('affiliatedUser.my-withdrawals');
 
 
 
