@@ -1815,7 +1815,7 @@ public function submitWithdrawRequest($request_data)
         }
     }
 
-    public function getAllWithdrawRequest(object $request_data): array
+    public function getAllWithdrawRequest($request_data)
     {
         try {
 
