@@ -28,7 +28,8 @@
     transition: all 0.5s ease;
 }
 .sub-grid figure:hover{
-    transform: translateX(20px);
+    transform: scale(1.3);
+    filter: brightness(0.5);
 }
 .sub-grid figure img {
     width: 100%;
@@ -235,6 +236,18 @@
 .withdraw-bg{
     background-color: #fff;
     color: #6E4527;
+}
+.btn-close {
+    font-size: 40px;
+    opacity: 1;
+}
+.kd-icon {
+    position: absolute;
+    padding: 11px 6px;
+    color: #666;
+}
+.sub-grid {
+    overflow: hidden;
 }
 
 

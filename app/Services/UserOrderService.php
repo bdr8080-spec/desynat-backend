@@ -287,6 +287,14 @@ foreach($checkDataInCart as $key=>$val){
         "promocode_id"=>$promoCodeId,
         "promocode_value"=>$PrmocodeCardAmountDivide,
         "unique_id"=>$val->unique_id,
+
+        
+        // affilate product detaiuls,
+        "reference_link"=>$val->reference_link,
+        "affiliate_id"=>$val->affiliate_id,
+        "affiliate_commission"=>$val->affiliate_commission,
+        "affiliate_admin_commission"=> $val->admin_commission,
+        
     ];
     orderdetail::create($cart_data);
 }
