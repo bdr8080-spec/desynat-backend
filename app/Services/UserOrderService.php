@@ -1786,7 +1786,7 @@ public function submitWithdrawRequest($request_data)
     {
         try {
             DB::beginTransaction();
-            $total_earning = OrderDetail::where('affiliate_id', $request->user_id)
+            $total_earning = OrderDetail::where('affiliate_id', $request_data->user_id)
                             ->where('delivery_status', '3')
                             ->sum('affiliate_commission');
 
