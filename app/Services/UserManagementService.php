@@ -12,6 +12,7 @@ use App\Models\DefaultShippingFee;
 use App\Models\AffilatedUserAddress;
 use App\Models\AffiliateCommission;
 use App\Models\ProductLink;
+use App\Models\AffiliateProduct;
 use App\Models\AffiliateProductClickRecord;
 use Illuminate\Support\Facades\Session;
 
@@ -1521,7 +1522,7 @@ public function addtoCart_Increment_decrement($request)
     public function recordAffiliateClick($request_data1)
 {
     try {
-        $affiliateProduct = ProductLink::where('affiliate_id', $request_data1->affiliate_id)
+        $affiliateProduct = AffiliateProduct::where('affiliate_id', $request_data1->affiliate_id)
             ->where('product_id', $request_data1->product_id)
             ->first();
 
