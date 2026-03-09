@@ -78,12 +78,11 @@ class WithdrawRequestController extends Controller
     // }
 
 
-    public function reject_seller(Request $request)
+    public function reject_withdraw_request(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'seller_id' => 'required|exists:sellers,id',
+            'req_id' => 'required|exists:withdraw_requests,id',
             'reject_reason' => 'required|string|max:1000',
-            'reject_type' => 'required|string',
         ]);
 
         if ($validate->fails()) {
@@ -91,7 +90,7 @@ class WithdrawRequestController extends Controller
         }
 
         try {
-            $data = $this->SellerManagementService->rejectSeller($request->seller_id,$request->reject_reason,$request->reject_type);
+            $data = $this->WithdrawRequestManagementService->rejectWithdrawRequest($request->req_id,$request->reject_reason);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], [], 400);

@@ -122,39 +122,33 @@ class WithdrawRequestManagementService
     //     }
     // }
 
-    public function rejectWithdrawRequest($sellerId, $rejectReason, $rejectType)
+    public function rejectWithdrawRequest($reqId, $rejectReason)
     {
         try {
-            $seller = seller::find($sellerId);
+            $data = WithdrawRequest::find($reqId);
 
-            if (!$seller) {
+            if (!$data) {
                 return [
                     'status' => 'error',
-                    'message' => 'Seller not found',
+                    'message' => 'Withdraw Request not found',
                     'data' => (object) []
                 ];
             }
 
-            if ($rejectType === 'complete') {
-                $seller->admin_verify = '3';
-            } elseif ($rejectType === 'document') {
-                $seller->admin_verify = '4';
-                $seller->bank_information = '0';
-            }
-
-            $seller->reject_reason = $rejectReason;
-            $seller->save();
+                $data->admin_verify = '2';
+               $data->reject_reason = $rejectReason;
+               $data->save();
 
             return [
                 'status' => 'success',
-                'message' => 'Seller Rejected Successfully',
-                'data' => $seller
+                'message' => 'Withdraw Request Rejected Successfully',
+                'data' => $data
             ];
 
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
-                'message' => 'Failed to reject seller: ' . $e->getMessage(),
+                'message' => 'Failed to reject request: ' . $e->getMessage(),
                 'data' => []
             ];
         }

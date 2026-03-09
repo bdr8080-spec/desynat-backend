@@ -234,6 +234,7 @@ Route::group(['prefix' => 'admin'], function () {
 
      //M9 api starts
      Route::get('/get_withdraw_requests',[WithdrawRequestController::class,'get_withdraw_requests']);
+     Route::post('/reject_withdraw_request',[WithdrawRequestController::class,'reject_withdraw_request']);
      
 
 

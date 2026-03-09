@@ -1792,7 +1792,7 @@ public function submitWithdrawRequest($request_data)
 
             if($total_earning<$request_data->amount){
                 return [
-                    'status' => 'success',
+                    'status' => 'error',
                     'message' => 'you can not withdraw more than total earning',
                     'data' => (object)[]
                 ];
