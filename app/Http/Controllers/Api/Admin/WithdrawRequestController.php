@@ -39,6 +39,7 @@ class WithdrawRequestController extends Controller
                 'from_date' => $request->from_date??null,
                 'to_date' => $request->to_date??null,
                 'search' => $request->search??null,
+                'status' => $request->status??null,
             ];
             $data = $this->WithdrawRequestManagementService->getWithdrawRequests($request_data);
 
