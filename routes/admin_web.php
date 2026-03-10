@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\DealManagementController;
 use App\Http\Controllers\Admin\FullScreenBannerController;
 use App\Http\Controllers\Admin\AffiliateUserController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\AffiliateWithdrawController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -203,6 +204,9 @@ Route::group(['prefix'=>'admin'], function(){
 
         //affiliate user management
         Route::get('/product-management', [ProductController::class, 'productManagement'])->name('admin.productManagement');
+
+        //affiliate user withdraw request management
+        Route::get('/affiliate-withdraw-request-management', [AffiliateWithdrawController::class, 'affiliateWithdrawRequestManagement'])->name('admin.affiliateWithdrawRequestManagement');
         
 
     });

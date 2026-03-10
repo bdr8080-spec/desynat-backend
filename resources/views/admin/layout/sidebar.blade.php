@@ -133,6 +133,13 @@
             Product Management
         </a>
     </li>
+
+    <li class="nav-item {{ Request::routeIs('admin.affiliateWithdrawRequestManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.affiliateWithdrawRequestManagement') }}">
+            <span><img src="{{ asset('admin/image/list.svg') }}" alt="Affiliate Withdraw Request Management" /></span>
+            Affiliate User Withdraw Request Management
+        </a>
+    </li>
      
     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
