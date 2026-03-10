@@ -6,6 +6,8 @@ use App\Models\WithdrawRequest;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 
 class WithdrawRequestManagementService
@@ -91,37 +93,6 @@ class WithdrawRequestManagementService
     }
 
 
-    // public function acceptSeller($sellerId)
-    // {
-    //     try {
-    //         $seller = seller::find($sellerId);
-
-    //         if (!$seller) {
-    //             return [
-    //                 'status' => 'error',
-    //                 'message' => 'Seller not found',
-    //                 'data' => (object) []
-    //             ];
-    //         }
-
-    //         $seller->admin_verify = '2'; 
-    //         $seller->save();
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Seller Approve Successfully',
-    //             'data' => $seller
-    //         ];
-
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to accept seller: ' . $e->getMessage(),
-    //             'data' => []
-    //         ];
-    //     }
-    // }
-
     public function rejectWithdrawRequest($reqId, $rejectReason)
     {
         try {
@@ -132,6 +103,23 @@ class WithdrawRequestManagementService
                     'status' => 'error',
                     'message' => 'Withdraw Request not found',
                     'data' => (object) []
+                ];
+            }
+
+            if ($data->admin_verify != '0') {
+
+                if ($data->admin_verify == '1') {
+                    $msg = 'Withdraw request already approved';
+                } elseif ($data->admin_verify == '2') {
+                    $msg = 'Withdraw request already rejected';
+                } else {
+                    $msg = 'Withdraw request already processed';
+                }
+
+                return [
+                    'status' => 'error',
+                    'message' => $msg,
+                    'data' => (object)[]
                 ];
             }
 
@@ -149,10 +137,154 @@ class WithdrawRequestManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to reject request: ' . $e->getMessage(),
-                'data' => []
+                'data' => (object)[]
             ];
         }
     }
+
+    public function approveWithdrawRequest($reqId)
+    {
+        try {
+            $data = WithdrawRequest::find($reqId);
+
+            if (!$data) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Withdraw Request not found',
+                    'data' => (object) []
+                ];
+            }
+
+            if ($data->admin_verify != '0') {
+
+                if ($data->admin_verify == '1') {
+                    $msg = 'Withdraw request already approved';
+                } elseif ($data->admin_verify == '2') {
+                    $msg = 'Withdraw request already rejected';
+                } else {
+                    $msg = 'Withdraw request already processed';
+                }
+
+                return [
+                    'status' => 'error',
+                    'message' => $msg,
+                    'data' => (object)[]
+                ];
+            }
+
+                $data->admin_verify = '1';
+               $data->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Withdraw Request Approved Successfully',
+                'data' => $data
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to approve request: ' . $e->getMessage(),
+                'data' => (object)[]
+            ];
+        }
+    }
+
+
+
+    // public function transferWithdrawRequest($request_data)
+    // {
+    //     try {
+
+    //         $withdraw = WithdrawRequest::with('bank_details','affiliate__details.country_details')
+    //                     ->where('id', $request_data->withdraw_request_id)
+    //                     ->where('admin_verify', '0')
+    //                     ->first();
+
+    //         if (!$withdraw) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'Withdraw request not found or already processed',
+    //                 'data' => (object)[]
+    //             ];
+    //         }
+
+    //         $bank = $withdraw->bank_details;
+
+    //         if (!$bank || empty($bank->iban)) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'Bank IBAN not available',
+    //                 'data' => (object)[]
+    //             ];
+    //         }
+
+    //         $amount = $withdraw->amount;
+
+    //         $payload = [
+    //             "NotificationOption" => "LNK",
+    //             "CustomerName" => $bank->account_holder_name,
+    //             "DisplayCurrencyIso" => $withdraw->affiliate__details->country_details->currency_code ?? "KWD",
+    //             "MobileCountryCode" => $withdraw->affiliate__details->country_code ?? "+965",
+    //             "CustomerMobile" => $withdraw->affiliate__details->mobile ?? "0000000000",
+    //             "CustomerEmail" => $withdraw->affiliate__details->email,
+    //             "InvoiceValue" => $amount,
+    //             "CallBackUrl" => url('/api/myfatoorah/success'),
+    //             "ErrorUrl" => url('/api/myfatoorah/error'),
+    //             "CustomerReference" => $withdraw->request_id,
+    //             "Language" => "en"
+    //         ];
+
+    //         $base_url = config('myfatoorah.test_mode')
+    //             ? 'https://apitest.myfatoorah.com'
+    //             : 'https://api.myfatoorah.com';
+
+    //         $response = Http::withHeaders([
+    //             'Authorization' => 'Bearer ' . config('myfatoorah.api_key'),
+    //             'Content-Type' => 'application/json'
+    //         ])->post($base_url . '/v2/SendPayment', $payload);
+
+    //         $result = $response->json();
+
+    //         Log::info('MyFatoorah Withdraw Transfer', [
+    //             'withdraw_id' => $withdraw->id,
+    //             'payload' => $payload,
+    //             'response' => $result
+    //         ]);
+
+    //         if (!$response->successful() || !isset($result['IsSuccess']) || $result['IsSuccess'] == false) {
+
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => $result['Message'] ?? 'Transfer failed',
+    //                 'data' => $result
+    //             ];
+    //         }
+
+    //         $withdraw->admin_verify = 1;
+    //         $withdraw->save();
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Commission transferred successfully',
+    //             'data' => $result
+    //         ];
+
+    //     } catch (\Exception $e) {
+
+    //         Log::error('Withdraw Transfer Error', [
+    //             'error' => $e->getMessage()
+    //         ]);
+
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Transfer failed: ' . $e->getMessage(),
+    //             'data' => (object)[]
+    //         ];
+    //     }
+    // }
+
+
 
 
     
