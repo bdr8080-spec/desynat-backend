@@ -56,13 +56,13 @@
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
-                            <select name="country_name" id="country_name"
+                            <select name="country" id="country"
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm').submit();">
                                 <option value="">Select country</option>
                                 @foreach($countries as $country)
                                 <option value="{{ $country['name'] }}"
-                                    {{ request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                    {{ request('country') == $country['name'] ? 'selected' : '' }}>
                                     {{ $country['name'] }}
                                 </option>
                                 @endforeach

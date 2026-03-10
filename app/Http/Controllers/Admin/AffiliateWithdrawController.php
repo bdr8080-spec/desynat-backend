@@ -23,7 +23,7 @@ class AffiliateWithdrawController extends Controller
          $request_data = (object)[
                 'req_type' => '0',
                 'limit' => $request->limit??null,
-                'country_name' => $request->country_name??null,
+                'country' => $request->country??null,
                 'from_date' => $request->from_date??null,
                 'to_date' => $request->to_date??null,
                 'search' => $request->search??null,
