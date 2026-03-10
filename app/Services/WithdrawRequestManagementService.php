@@ -22,9 +22,9 @@ class WithdrawRequestManagementService
                         ->where('type', '1')
                         ->where('admin_verify', $request_data->req_type); 
 
-            if (!empty($request_data->country_id)) {
+            if (!empty($request_data->country_name)) {
                 $query->whereHas('affiliate__details.country_details', function ($q) use ($request_data) {
-                    $q->where('id', $request_data->country_id);
+                    $q->where('name', $request_data->country_name);
                 });
             }
 

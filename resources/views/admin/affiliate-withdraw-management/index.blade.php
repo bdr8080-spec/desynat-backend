@@ -31,39 +31,48 @@
     <div class="userManagecontent">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab" tabindex="0">
+                <form method="GET" action="{{ route('admin.affiliateWithdrawRequestManagement') }}" id="filterForm">
                 <div class="row">
                     <!-- From Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="from" class="form-label">From:</label>
-                            <input type="date" id="from" name="from_date2" class="form-control" />
+                            <input type="date" id="from" name="from_date" class="form-control"
+                                value="{{ request()->from_date }}"
+                                onchange="document.getElementById('filterForm').submit();" />
                         </div>
                     </div>
-
                     <!-- To Date Filter -->
                     <div class="col-lg-3 col-md-4 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">To:</label>
-                            <input type="date" id="to" name="to_date2" class="form-control" />
+                            <input type="date" id="to" name="to_date" class="form-control"
+                                value="{{ request()->to_date }}"
+                                onchange="document.getElementById('filterForm').submit();" />
                         </div>
                     </div>
 
                     <!-- Country Filter -->
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
-                            <label for="to" class="form-label">All Countries</label>
-
-                            <select name="country_id2" id="country_id" class="form-select form-select-lg">
+                            <label for="to" class="form-label">Select Country</label>
+                            <select name="country_name" id="country_name"
+                                class="form-select form-select-lg "
+                                onchange="document.getElementById('filterForm').submit();">
                                 <option value="">Select country</option>
-
-                                <option value="">egjo</option>
+                                @foreach($countries as $country)
+                                <option value="{{ $country['name'] }}"
+                                    {{ request('country_name') == $country['name'] ? 'selected' : '' }}>
+                                    {{ $country['name'] }}
+                                </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-12 col-12">
                         <div class="d-flex gap-3 justify-content-start" style="text-align: start">
-                            <a href="" class="btn btn-dark customBtn" style="margin-top: 60px">
+                            <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn" style="margin-top: 60px">
                                 <span>Reset</span>
                             </a>
                             <a class="btn btn-dark customBtn" style="margin-top: 60px">
@@ -72,14 +81,15 @@
                         </div>
                     </div>
                 </div>
+                </form>
 
                 <div class="table-responsive">
-                    <table class="table w-100">
+                    <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Driver Name</th>
+                                <th scope="col">Affiliate Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
@@ -89,15 +99,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($newRequest as $index => $req)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>#2345</td>
-                                <td>Lorem</td>
-                                <td>UAE</td>
-                                <td>2nd July 2025 | 11 Am</td>
-                                <td>KD 2000</td>
-                                <td>KD 2000</td>
-                                <td>XXXXXX626262</td>
+                                <th scope="row">{{ $index + 1 }}</th>
+                                <td>#{{ $req['request_id'] }}</td>
+                                <td>{{ $req['affiliate__details']['full_name'] }}</td>
+                                <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
+                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g A') }}</td>
+                                <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
+                                <td>{{ $req['amount'] }} KD</td>
+                                <td>{{ $req['bank_details']['account_no'] }}</td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a class="table-button acceptUser" type="button">
@@ -109,6 +120,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -310,6 +322,25 @@
     </div>
 </div>
 
-
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    //get active tab from local storage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+    //save active tab to local storage
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
 
 @endsection
