@@ -142,10 +142,10 @@ class WithdrawRequestManagementService
         }
     }
 
-    public function approveWithdrawRequest($reqId)
+    public function approveWithdrawRequest($request)
     {
         try {
-            $data = WithdrawRequest::find($reqId);
+            $data = WithdrawRequest::find($request->req_id);
 
             if (!$data) {
                 return [
@@ -173,7 +173,9 @@ class WithdrawRequestManagementService
             }
 
                 $data->admin_verify = '1';
-               $data->save();
+                $data->transaction_id = $request->transaction_id;
+                $data->payment_status = $request->payment_status;
+                $data->save();
 
             return [
                 'status' => 'success',

@@ -107,6 +107,8 @@ class WithdrawRequestController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'req_id' => 'required|exists:withdraw_requests,id',
+            'transaction_id' => 'required',
+            'payment_status' => 'required|in:1,2',//1-paid,2-fail
         ]);
 
         if ($validate->fails()) {
@@ -114,7 +116,7 @@ class WithdrawRequestController extends Controller
         }
 
         try {
-            $data = $this->WithdrawRequestManagementService->approveWithdrawRequest($request->req_id);
+            $data = $this->WithdrawRequestManagementService->approveWithdrawRequest($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
