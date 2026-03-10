@@ -3,7 +3,7 @@ namespace App\Services;
 
 
 use App\Models\WithdrawRequest;
-use App\Models\OrderDetail;
+use App\Models\orderdetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Http;
@@ -57,7 +57,7 @@ class WithdrawRequestManagementService
             $req_details->getCollection()->transform(function ($item) {
 
             $item->total_earning = number_format(
-                    OrderDetail::where('affiliate_id', $item->user_id)
+                    orderdetail::where('affiliate_id', $item->user_id)
                         ->where('delivery_status', '3')
                         ->sum('affiliate_commission'),
                     2,
