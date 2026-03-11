@@ -1699,9 +1699,104 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
     }
 }
 
- public function AffiliateAllOrderDetailsNew($request) {
+//  public function AffiliateAllOrderDetailsNew($request) {
+//     try {
+//         // Base query for orders
+//         $ordersQuery = OrderDetail::with([
+//             'user_details',
+//             'order.delivery_details',
+//             'product_details.brand',
+//             'product_details.category',
+//             'product_details.subcategory',
+//             'product_details.seller_details',
+//             'variation_details.color',
+//             'variation_details.size',
+//             'exchange_order_details'
+//         ])->whereHas('order', function ($q) use ($request) {
+
+//             if (isset($request->order_type)) {
+//                 $q->where('order_type', $request->order_type);
+//             }
+
+//             $q->where('affiliate_id', $request->user_id);
+
+//             $q->where(function ($query) {
+//                 $query->where('payment_method', '3') // COD
+//                       ->orWhere(function ($sub) {
+//                           $sub->whereIn('payment_method', ['1', '2'])
+//                               ->where('payment_status', '!=', '0'); // Paid
+//                       });
+//             });
+
+//             if (!empty($request->search)) {
+//                 $q->where('order_id', 'like', '%' . $request->search . '%');
+//             }
+//         });
+
+//         if (!empty($request->start_date) && !empty($request->end_date)) {
+//             $ordersQuery->whereBetween('created_at', [
+//                 $request->start_date . ' 00:00:00',
+//                 $request->end_date . ' 23:59:59'
+//             ]);
+//         } elseif (!empty($request->start_date)) {
+//             $ordersQuery->whereDate('created_at', '>=', $request->start_date);
+//         } elseif (!empty($request->end_date)) {
+//             $ordersQuery->whereDate('created_at', '<=', $request->end_date);
+//         }
+
+//         // Filter by order status
+//         if (!empty($request->filter)) {
+//             $ordersQuery->where(function ($query) use ($request) {
+//                 switch ($request->filter) {
+//                     case '2': // Ongoing
+//                         $query->whereIn('delivery_status', ['1', '2'])
+//                               ->whereIn('payment_status', ['0','1']);
+//                         break;
+//                     case '3': // Delivered
+//                         $query->where('delivery_status', '3')
+//                               ->where('return_type','0');
+//                         break;
+//                     case '4': // Cancelled
+//                         $query->whereIn('payment_status', ['3','2']);
+//                         break;
+//                     case '5': // Returned / Failed
+//                         $query->where('delivery_status', '3')
+//                               ->where('return_type', '1');
+//                         break;
+//                 }
+//             });
+//         }
+
+//         // Fetch orders
+//         $orders = $ordersQuery->orderBy('id', 'desc')->get();
+
+//         // Calculate total affiliate earnings for delivered orders
+//         $total_earning = OrderDetail::where('affiliate_id', $request->user_id)
+//             ->where('delivery_status', '3')
+//             ->sum('affiliate_commission');
+
+//         return [
+//             'status' => 'success',
+//             'message' => "All Order details fetch Successfully",
+//             'data' => [
+//                 'orders' => $orders,
+//                 'total_earning' => $total_earning
+//             ]
+//         ];
+
+//     } catch (\Exception $e) {
+//         return [
+//             'status' => 'error',
+//             'message' => 'Failed to fetch order details: ' . $e->getMessage(),
+//             'data' => []
+//         ];
+//     }
+// }
+
+public function AffiliateAllOrderDetailsNew($request)
+{
     try {
-        // Base query for orders
+
         $ordersQuery = OrderDetail::with([
             'user_details',
             'order.delivery_details',
@@ -1712,7 +1807,8 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
             'variation_details.color',
             'variation_details.size',
             'exchange_order_details'
-        ])->whereHas('order', function ($q) use ($request) {
+        ])
+        ->whereHas('order', function ($q) use ($request) {
 
             if (isset($request->order_type)) {
                 $q->where('order_type', $request->order_type);
@@ -1720,12 +1816,12 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
 
             $q->where('affiliate_id', $request->user_id);
 
-            $q->where(function ($query) {
-                $query->where('payment_method', '3') // COD
-                      ->orWhere(function ($sub) {
-                          $sub->whereIn('payment_method', ['1', '2'])
-                              ->where('payment_status', '!=', '0'); // Paid
-                      });
+            $q->where(function ($q2) {
+                $q2->where('payment_method', '3') // COD
+                   ->orWhere(function ($q3) {
+                        $q3->whereIn('payment_method', ['1', '2'])
+                           ->where('payment_status', '!=', '0');
+                   });
             });
 
             if (!empty($request->search)) {
@@ -1738,39 +1834,46 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
                 $request->start_date . ' 00:00:00',
                 $request->end_date . ' 23:59:59'
             ]);
-        } elseif (!empty($request->start_date)) {
+        } 
+        elseif (!empty($request->start_date)) {
             $ordersQuery->whereDate('created_at', '>=', $request->start_date);
-        } elseif (!empty($request->end_date)) {
+        } 
+        elseif (!empty($request->end_date)) {
             $ordersQuery->whereDate('created_at', '<=', $request->end_date);
         }
 
         // Filter by order status
         if (!empty($request->filter)) {
-            $ordersQuery->where(function ($query) use ($request) {
+
+            $ordersQuery->where(function ($q) use ($request) {
+
                 switch ($request->filter) {
+
                     case '2': // Ongoing
-                        $query->whereIn('delivery_status', ['1', '2'])
-                              ->whereIn('payment_status', ['0','1']);
+                        $q->whereIn('delivery_status', ['1', '2'])
+                          ->whereIn('payment_status', ['0','1']);
                         break;
+
                     case '3': // Delivered
-                        $query->where('delivery_status', '3')
-                              ->where('return_type','0');
+                        $q->where('delivery_status', '3')
+                          ->where('return_type','0');
                         break;
+
                     case '4': // Cancelled
-                        $query->whereIn('payment_status', ['3','2']);
+                        $q->whereIn('payment_status', ['3','2']);
                         break;
-                    case '5': // Returned / Failed
-                        $query->where('delivery_status', '3')
-                              ->where('return_type', '1');
+
+                    case '5': // Returned
+                        $q->where('delivery_status', '3')
+                          ->where('return_type', '1');
                         break;
                 }
             });
         }
 
-        // Fetch orders
         $orders = $ordersQuery->orderBy('id', 'desc')->get();
 
-        // Calculate total affiliate earnings for delivered orders
+        // Affiliate earnings
         $total_earning = OrderDetail::where('affiliate_id', $request->user_id)
             ->where('delivery_status', '3')
             ->sum('affiliate_commission');
@@ -1785,6 +1888,7 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
         ];
 
     } catch (\Exception $e) {
+
         return [
             'status' => 'error',
             'message' => 'Failed to fetch order details: ' . $e->getMessage(),
