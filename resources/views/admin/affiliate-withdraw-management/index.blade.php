@@ -429,10 +429,10 @@
     align-items:center;
     justify-content:center;
 ">
-    <div style="text-align:center;color:#fff;">
+    <!-- <div style="text-align:center;color:#fff;">
         <div class="spinner"></div>
         <p style="margin-top:10px;font-size:18px;">Redirecting to payment gateway...</p>
-    </div>
+    </div> -->
 </div>
 
 <script>
@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
+<!-- <script>
 document.addEventListener('DOMContentLoaded', function () {
 
     const loader = document.getElementById('paymentLoader');
@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let withdrawId = this.getAttribute('data-id');
 
             // Show loader
-            loader.style.display = "flex";
+            //loader.style.display = "flex";
 
             fetch('/admin/transferWithdrawRequest', {
                 method: "POST",
@@ -598,11 +598,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     console.log("Redirecting to:", data.payment_url);
 
-                    window.location.href = data.payment_url;
+                   // window.location.href = data.payment_url;
 
                 }else{
 
-                    loader.style.display = "none"; // hide loader
+                   // loader.style.display = "none"; // hide loader
                     console.error(data.message);
 
                 }
@@ -613,6 +613,70 @@ document.addEventListener('DOMContentLoaded', function () {
                 loader.style.display = "none"; // hide loader
                 console.error(error);
 
+            });
+
+        });
+
+    });
+
+});
+</script> -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const loader = document.getElementById('paymentLoader');
+
+    document.querySelectorAll('.acceptUser').forEach(button => {
+
+        button.addEventListener('click', function () {
+
+            let withdrawId = this.getAttribute('data-id');
+
+            // SHOW LOADER
+            // loader.style.display = "flex";
+
+            fetch('/admin/transferWithdrawRequest', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    withdraw_request_id: withdrawId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+
+                // HIDE LOADER
+                // loader.style.display = "none";
+
+                if(data.status === 'success'){
+                    toastr.success(data.message || "Withdraw processed successfully");
+                } else {
+                    toastr.error(data.message || "Payment failed");
+                }
+
+                // Reload page after toast message
+                setTimeout(() => {
+                    location.reload();
+                }, 1200);
+
+            })
+            .catch(error => {
+
+                // HIDE LOADER
+                // loader.style.display = "none";
+
+                toastr.error("Something went wrong. Please try again.");
+
+               // console.error(error);
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1200);
             });
 
         });
