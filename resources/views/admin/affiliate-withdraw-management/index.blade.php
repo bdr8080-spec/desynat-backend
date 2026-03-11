@@ -27,7 +27,7 @@
                 <button class="nav-link customBtn2 m-0" id="pills-order-tab" data-bs-toggle="pill"
                     data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order"
                     aria-selected="false">
-                    Ne
+                    New
                 </button>
             </li>
             <li class="nav-item m-1" role="presentation">

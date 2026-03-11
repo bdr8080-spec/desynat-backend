@@ -1952,7 +1952,7 @@ public function submitWithdrawRequest($request_data)
             if ($request_data->req_type == '0') {
                 $query->where('admin_verify', '0'); 
             } elseif ($request_data->req_type == '1') {
-                $query->where('admin_verify', '1'); 
+                $query->whereIn('admin_verify', ['1', '2']);
             }
 
             if (!empty($request_data->search)) {
