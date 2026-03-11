@@ -89,8 +89,8 @@
                     </div>
 
                     <div class="col-lg-3 col-md-12 col-12">
-                        <div class="d-flex gap-3 justify-content-start" style="text-align: start">
-                            <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn" style="margin-top: 60px">
+                        <div class="d-flex gap-3 justify-content-start mt-5" style="text-align: start">
+                            <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn mt-2">
                                 <span>Reset</span>
                             </a>
                             <!-- <a class="btn btn-dark customBtn" style="margin-top: 60px">
@@ -101,7 +101,7 @@
                 </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-4">
                     <table id="myTable" class="table w-100">
                         <thead>
                             <tr>
@@ -171,7 +171,7 @@
                     </div>
 
                     <!-- Country Filter -->
-                    <div class="col-lg-3 col-md-12 col-12">
+                    <div class="col-lg-2 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Country</label>
                             <select name="country1" id="country1"
@@ -188,7 +188,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-12 col-12">
+                    <div class="col-lg-2 col-md-12 col-12">
                         <div class="form-group mt-4 w-100">
                             <label for="to" class="form-label">Select Status</label>
                             <select name="status" id="status"
@@ -201,9 +201,9 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-12 col-12">
-                        <div class="d-flex gap-3 justify-content-start" style="text-align: start">
-                            <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn" style="margin-top: 60px">
+                    <div class="col-lg-2 col-md-12 col-12">
+                        <div class="d-flex gap-3 justify-content-start mt-5" style="text-align: start">
+                            <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn mt-2">
                                 <span>Reset</span>
                             </a>
                             <!-- <a class="btn btn-dark customBtn" style="margin-top: 60px">
@@ -214,7 +214,7 @@
                 </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-4">
                     <table id="myTable1" class="table w-100">
                         <thead>
                             <tr>
@@ -302,8 +302,8 @@
                     </div>
 
                     <div class="col-lg-3 col-md-12 col-12">
-                        <div class="d-flex gap-3 justify-content-start" style="text-align: start">
-                            <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn" style="margin-top: 60px">
+                        <div class="d-flex gap-3 justify-content-start mt-5" style="text-align: start">
+                            <a href="{{route('admin.affiliateWithdrawRequestManagement')}}" class="btn btn-dark customBtn mt-2">
                                 <span>Reset</span>
                             </a>
                             <!-- <a class="btn btn-dark customBtn" style="margin-top: 60px">
@@ -314,7 +314,7 @@
                 </div>
                 </form>
 
-                <div class="table-responsive">
+                <div class="table-responsive mt-4">
                     <table id="myTable2" class="table w-100">
                         <thead>
                             <tr>
