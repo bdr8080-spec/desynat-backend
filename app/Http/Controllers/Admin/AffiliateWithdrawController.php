@@ -56,7 +56,7 @@ class AffiliateWithdrawController extends Controller
 
     public function rejectWithdrawRequest(Request $request, $reqId)
     {
-        $rejectReason = $requset->reject_reason;
+        $rejectReason = $request->reject_reason;
 
 
         $result = $this->WithdrawRequestManagementService->rejectWithdrawRequest($reqId, $rejectReason);
