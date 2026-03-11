@@ -1733,15 +1733,15 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
             }
         });
 
-        if (!empty($request->from_date) && !empty($request->to_date)) {
+        if (!empty($request->start_date) && !empty($request->end_date)) {
             $query->whereBetween('created_at', [
-                $request->from_date . ' 00:00:00',
-                $request->to_date . ' 23:59:59'
+                $request->start_date . ' 00:00:00',
+                $request->end_date . ' 23:59:59'
             ]);
-        } elseif (!empty($request->from_date)) {
-            $query->whereDate('created_at', '>=', $request->from_date);
-        } elseif (!empty($request->to_date)) {
-            $query->whereDate('created_at', '<=', $request->to_date);
+        } elseif (!empty($request->start_date)) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        } elseif (!empty($request->end_date)) {
+            $query->whereDate('created_at', '<=', $request->end_date);
         }
 
         // Filter by order status
