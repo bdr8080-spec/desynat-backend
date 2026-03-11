@@ -196,7 +196,7 @@
                                 onchange="document.getElementById('filterForm1').submit();">
                                 <option value="">Select Status</option>
                                 <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Complete</option>
-                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Failed</option>
+                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Pending</option>
                             </select>
                         </div>
                     </div>
@@ -246,7 +246,7 @@
                                     @if($req['payment_status'] == '1')
                                         <span class="text-success">Complete</span>
                                     @elseif($req['payment_status'] == '2')
-                                        <span class="text-danger">Failed</span>
+                                        <span class="text-danger">Pending</span>
                                     @else
                                         <span class="text-warning">Pending</span>
                                     @endif
