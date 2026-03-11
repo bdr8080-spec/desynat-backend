@@ -126,7 +126,7 @@
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
-                                <td>{{ $req['bank_details']['account_no'] }}</td>
+                                <td>{{ $req['bank_details']['account_no']??'N/A' }}</td>
                                 <td>
                                     <div class="d-flex gap-3 justify-content-center">
                                         <a class="table-button acceptUser" data-id="{{ $req['id'] }}" type="button">
@@ -240,13 +240,11 @@
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
-                                <td>{{ $req['bank_details']['account_no'] }}</td>
+                                <td>{{ $req['bank_details']['account_no']??'N/A' }}</td>
                                 <td>{{ $req['transaction_id'] ?? 'N/A' }}</td>
                                 <td>
-                                    @if($req['payment_status'] == '1')
+                                    @if($req['admin_verify'] == '1')
                                         <span class="text-success">Complete</span>
-                                    @elseif($req['payment_status'] == '2')
-                                        <span class="text-danger">Pending</span>
                                     @else
                                         <span class="text-warning">Pending</span>
                                     @endif
@@ -339,7 +337,7 @@
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
-                                <td>{{ $req['bank_details']['account_no'] }}</td>
+                                <td>{{ $req['bank_details']['account_no']??'N/A' }}</td>
                                 <td>
                                     {{ $req['reject_reason'] }}
                                 </td>

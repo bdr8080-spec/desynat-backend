@@ -30,9 +30,9 @@ class WithdrawRequestManagementService
 
             if (!empty($request_data->status)) {
                 if ($request_data->status == 1) {
-                    $query->where('payment_status', '1');
+                    $query->where('admin_verify', '1');
                 } elseif ($request_data->status == 2) {
-                    $query->where('payment_status', '2');
+                    $query->where('admin_verify', '2');
                 }
             }
 
