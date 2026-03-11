@@ -56,14 +56,8 @@ class AffiliateWithdrawController extends Controller
 
     public function rejectWithdrawRequest(Request $request, $reqId)
     {
-        $rejectReason = $request->input('reject_reason');
+        $rejectReason = $request->reject_reason;
 
-        if (empty($rejectReason)) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Reject reason is required.'
-            ], 400);
-        }
 
         $result = $this->WithdrawRequestManagementService->rejectWithdrawRequest($reqId, $rejectReason);
 
@@ -80,6 +74,97 @@ class AffiliateWithdrawController extends Controller
         ], 200);
     }
 
+    public function approveWithdrawRequest(Request $request)
+    {
+
+        $validate = Validator::make($request->all(), [
+            'req_id' => 'required|exists:withdraw_requests,id',
+            ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validate->errors()->first()
+            ], 422);
+        }
+
+        $result = $this->WithdrawRequestManagementService->approveWithdrawRequest($request);
+
+        if ($result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+
+    // public function transferWithdrawRequest(Request $request)
+    // {
+    //     $request_data = (object)[
+    //         'withdraw_request_id' => $request->withdraw_request_id
+    //     ];
+
+    //     $result = $this->WithdrawRequestManagementService
+    //         ->transferWithdrawRequest($request_data);
+
+    //     if ($result['status'] === 'error') {
+
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => $result['message'] ?? 'Something went wrong'
+    //         ]);
+    //     }
+
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'payment_url' => $result['payment_url']
+    //     ]);
+    // }
+
+
+
+    // public function paymentSuccess(Request $request)
+    // {
+    //     //Log::info('MyFatoorah Success Callback', $request->all());
+
+    //     $paymentId = $request->paymentId;
+
+    //     if (!$paymentId) {
+    //         return redirect()->route('admin.affiliateWithdrawRequestManagement')
+    //             ->with('error','Payment ID not found');
+    //     }
+
+    //     $result = $this->WithdrawRequestManagementService
+    //         ->verifyWithdrawPayment($paymentId,'PaymentId');
+
+    //     if ($result['status'] === 'success') {
+    //         return redirect()->route('admin.affiliateWithdrawRequestManagement')
+    //             ->with('success',$result['message']);
+    //     }
+
+    //     return redirect()->route('admin.affiliateWithdrawRequestManagement')
+    //         ->with('error',$result['message']);
+    // }
+
+    // public function paymentError(Request $request)
+    // {
+    //     $paymentId = $request->paymentId ?? null;
+
+    //     if($paymentId){
+
+    //         $this->WithdrawRequestManagementService
+    //             ->verifyWithdrawPayment($paymentId,'PaymentId');
+    //     }
+
+    //     return redirect()->route('admin.affiliateWithdrawRequestManagement')
+    //         ->with('error','Payment failed or cancelled.');
+    // }
 
     public function transferWithdrawRequest(Request $request)
     {
@@ -87,60 +172,20 @@ class AffiliateWithdrawController extends Controller
             'withdraw_request_id' => $request->withdraw_request_id
         ];
 
-        $result = $this->WithdrawRequestManagementService
-            ->transferWithdrawRequest($request_data);
+        $result = $this->WithdrawRequestManagementService->transferWithdrawRequest($request_data);
 
         if ($result['status'] === 'error') {
-
             return response()->json([
                 'status' => 'error',
-                'message' => $result['message'] ?? 'Something went wrong'
+                'message' => $result['message']
             ]);
         }
 
         return response()->json([
             'status' => 'success',
-            'payment_url' => $result['payment_url']
+            'message' => $result['message'],
+            'transaction_id' => $result['transaction_id']
         ]);
-    }
-
-
-
-    public function paymentSuccess(Request $request)
-    {
-        //Log::info('MyFatoorah Success Callback', $request->all());
-
-        $paymentId = $request->paymentId;
-
-        if (!$paymentId) {
-            return redirect()->route('admin.affiliateWithdrawRequestManagement')
-                ->with('error','Payment ID not found');
-        }
-
-        $result = $this->WithdrawRequestManagementService
-            ->verifyWithdrawPayment($paymentId,'PaymentId');
-
-        if ($result['status'] === 'success') {
-            return redirect()->route('admin.affiliateWithdrawRequestManagement')
-                ->with('success',$result['message']);
-        }
-
-        return redirect()->route('admin.affiliateWithdrawRequestManagement')
-            ->with('error',$result['message']);
-    }
-
-    public function paymentError(Request $request)
-    {
-        $paymentId = $request->paymentId ?? null;
-
-        if($paymentId){
-
-            $this->WithdrawRequestManagementService
-                ->verifyWithdrawPayment($paymentId,'PaymentId');
-        }
-
-        return redirect()->route('admin.affiliateWithdrawRequestManagement')
-            ->with('error','Payment failed or cancelled.');
     }
 
 

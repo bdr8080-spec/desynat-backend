@@ -818,7 +818,9 @@ public function affiliate_remove_affilate_product(Request $request){
                 'user_id'=>$user_id,
                 'search'=>$request->search,
                 'filter'=>$request->filter,
-                "order_type"=>$request->order_type
+                "order_type"=>$request->order_type,
+                "start_date"=>$request->start_date??null,
+                "end_date"=>$request->end_date??null
                 ];
         
                 $data=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data);

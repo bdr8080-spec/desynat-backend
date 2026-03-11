@@ -123,7 +123,7 @@
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
                                 <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g A') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
                                 <td>{{ $req['bank_details']['account_no'] }}</td>
@@ -195,7 +195,7 @@
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm1').submit();">
                                 <option value="">Select Status</option>
-                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Paid</option>
+                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Complete</option>
                                 <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Failed</option>
                             </select>
                         </div>
@@ -220,7 +220,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Driver Name</th>
+                                <th scope="col">Affiliate Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
@@ -237,18 +237,18 @@
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
                                 <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g A') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
                                 <td>{{ $req['bank_details']['account_no'] }}</td>
                                 <td>{{ $req['transaction_id'] ?? 'N/A' }}</td>
                                 <td>
-                                    @if($req['payment_status']=='1')
-                                    Paid
-                                    @elseif($req['payment_status']=='2')
-                                    Failed
+                                    @if($req['payment_status'] == '1')
+                                        <span class="text-success">Complete</span>
+                                    @elseif($req['payment_status'] == '2')
+                                        <span class="text-danger">Failed</span>
                                     @else
-                                    Pending
+                                        <span class="text-warning">Pending</span>
                                     @endif
                                 </td>
                             </tr>
@@ -320,7 +320,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Driver Name</th>
+                                <th scope="col">Affiliate Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
@@ -336,7 +336,7 @@
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
                                 <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g A') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
                                 <td>{{ $req['bank_details']['account_no'] }}</td>
@@ -387,7 +387,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5>Add Reason</h5>
+                <h5>Reason For Rejection </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -397,7 +397,7 @@
                     <textarea class="form-control" id="rejectReason" name="reject_reason" rows="3"></textarea>
 
                     <small id="reasonError" class="text-danger" style="display:none;">
-                        Please enter reject reason
+                        Please enter reason for rejection
                     </small>
                 </div>
 
@@ -429,10 +429,10 @@
     align-items:center;
     justify-content:center;
 ">
-    <div style="text-align:center;color:#fff;">
+    <!-- <div style="text-align:center;color:#fff;">
         <div class="spinner"></div>
         <p style="margin-top:10px;font-size:18px;">Redirecting to payment gateway...</p>
-    </div>
+    </div> -->
 </div>
 
 <script>
@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script>
+<!-- <script>
 document.addEventListener('DOMContentLoaded', function () {
 
     const loader = document.getElementById('paymentLoader');
@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let withdrawId = this.getAttribute('data-id');
 
             // Show loader
-            loader.style.display = "flex";
+            //loader.style.display = "flex";
 
             fetch('/admin/transferWithdrawRequest', {
                 method: "POST",
@@ -598,11 +598,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     console.log("Redirecting to:", data.payment_url);
 
-                    window.location.href = data.payment_url;
+                   // window.location.href = data.payment_url;
 
                 }else{
 
-                    loader.style.display = "none"; // hide loader
+                   // loader.style.display = "none"; // hide loader
                     console.error(data.message);
 
                 }
@@ -613,6 +613,69 @@ document.addEventListener('DOMContentLoaded', function () {
                 loader.style.display = "none"; // hide loader
                 console.error(error);
 
+            });
+
+        });
+
+    });
+
+});
+</script> -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const loader = document.getElementById('paymentLoader');
+
+    document.querySelectorAll('.acceptUser').forEach(button => {
+
+        button.addEventListener('click', function () {
+
+            let withdrawId = this.getAttribute('data-id');
+
+            // SHOW LOADER
+            // loader.style.display = "flex";
+
+            // Send req_id in POST body
+            fetch(`/admin/approveWithdrawRequest`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    req_id: withdrawId
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+
+                // HIDE LOADER
+                // loader.style.display = "none";
+
+                if(data.status === 'success'){
+                    toastr.success(data.message || "Withdraw processed successfully");
+                } else {
+                    toastr.error(data.message || "Payment failed");
+                }
+
+                // Reload page after toast message
+                setTimeout(() => {
+                    location.reload();
+                }, 1200);
+
+            })
+            .catch(error => {
+
+                // HIDE LOADER
+                // loader.style.display = "none";
+
+                toastr.error("Something went wrong. Please try again.");
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1200);
             });
 
         });

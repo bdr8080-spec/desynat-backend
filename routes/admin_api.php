@@ -236,6 +236,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_withdraw_requests',[WithdrawRequestController::class,'get_withdraw_requests']);
      Route::post('/reject_withdraw_request',[WithdrawRequestController::class,'reject_withdraw_request']);
      Route::post('/approve_withdraw_request',[WithdrawRequestController::class,'approve_withdraw_request']);
+     Route::post('/transfer_withdraw_request',[WithdrawRequestController::class,'transfer_withdraw_request']);
      
 
 

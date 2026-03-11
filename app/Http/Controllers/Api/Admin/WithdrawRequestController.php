@@ -108,8 +108,8 @@ class WithdrawRequestController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'req_id' => 'required|exists:withdraw_requests,id',
-            'transaction_id' => 'required',
-            'payment_status' => 'required|in:1,2',//1-paid,2-fail
+            // 'transaction_id' => 'required',
+            // 'payment_status' => 'required|in:1,2',//1-paid,2-fail
         ]);
 
         if ($validate->fails()) {
@@ -118,6 +118,30 @@ class WithdrawRequestController extends Controller
 
         try {
             $data = $this->WithdrawRequestManagementService->approveWithdrawRequest($request);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    public function transfer_withdraw_request(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'withdraw_request_id' => 'required|exists:withdraw_requests,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 422);
+        }
+
+        try {
+            $data = $this->WithdrawRequestManagementService->transferWithdrawRequest($request);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
