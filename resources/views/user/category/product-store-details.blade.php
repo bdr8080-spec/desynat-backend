@@ -790,6 +790,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function sendToCart(qty) {
+
         let product_id = document.getElementById("productId").value;
         let variant_id = document.getElementById("variantId").value;
 
@@ -798,35 +799,57 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        // ✅ Get reference link if ref exists
+        let referenceLink = null;
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.has('ref')) {
+            referenceLink = window.location.href;
+            //console.log(referenceLink);
+        }
+
+        // ✅ If already in cart → go to cart
+        if (cartData[variant_id]) {
+            window.location.href = "{{ route('user.view_cart') }}";
+            return;
+        }
+
         fetch("{{ route('user.addToCart') }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                },
-                body: JSON.stringify({
-                    product_id: product_id,
-                    variant_id: variant_id,
-                    quantity: qty
-                })
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({
+                product_id: product_id,
+                variant_id: variant_id,
+                quantity: qty,
+                reference_link: referenceLink
             })
-            .then(r => r.json())
-            .then(data => {
-                if (data.status === "error") {
-                    toastr.error(data.message);
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-                } else {
-                    toastr.success(data.message);
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
-                }
-            })
-            .catch(() => {
-                toastr.error("Something went wrong.");
-            });
+        })
+        .then(r => r.json())
+        .then(data => {
+
+            if (data.status === "error") {
+                toastr.error(data.message);
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+
+            } else {
+
+                toastr.success(data.message);
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+
+        })
+        .catch(() => {
+            toastr.error("Something went wrong.");
+        });
     }
 
     function updateCartUIForVariant(variantId) {
@@ -1135,6 +1158,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const variantId = selectedSize.dataset.variantId;
         const productId = selectedSize.dataset.productId;
 
+        let referenceLink = null;
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if (urlParams.has('ref')) {
+            referenceLink = window.location.href;
+            console.log(referenceLink);
+        }
+
         // ✅ If already in cart → go to cart
         if (cartData[variantId]) {
             window.location.href = "{{ route('user.view_cart') }}";
@@ -1151,7 +1182,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 body: JSON.stringify({
                     product_id: productId,
                     variant_id: variantId,
-                    quantity: 1
+                    quantity: 1,
+                    reference_link: referenceLink
                 })
             })
             .then(r => r.json())

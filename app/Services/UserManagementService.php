@@ -1204,6 +1204,7 @@ public function addtoCart_Increment_decrement($request)
         }
     }
 
+
     // public function product_add_to_cart_without_quantity_increment($request)
     // {
     //     try {
@@ -1232,13 +1233,15 @@ public function addtoCart_Increment_decrement($request)
     //             ];
     //         }
 
-    //         // Check stock
-    //         if (intval($variant->total_stock) < $request->quantity) {
-    //             return [
-    //                 'status'  => 'error',
-    //                 'message' => 'Product stock is too low.',
-    //                 'data'    => (object)[]
-    //             ];
+    //         // Check stock only if quantity is greater than 0
+    //         if ($request->quantity > 0) {
+    //             if (intval($variant->total_stock) < $request->quantity) {
+    //                 return [
+    //                     'status'  => 'error',
+    //                     'message' => 'Product stock is too low.',
+    //                     'data'    => (object)[]
+    //                 ];
+    //             }
     //         }
 
     //         $product_amount = $variant->final_price;
@@ -1246,15 +1249,33 @@ public function addtoCart_Increment_decrement($request)
     //         // Find existing cart entry
     //         $cartItem = Addtocart::where($match)->first();
 
+    //         if ($request->quantity == 0) {
+    //             // If quantity is 0, remove the item from the cart
+    //             if ($cartItem) {
+    //                 $cartItem->delete();
+    //                 return [
+    //                     'status'  => 'error',
+    //                     'message' => 'Item removed from cart successfully.',
+    //                     'data'    => (object)[]
+    //                 ];
+    //             } else {
+    //                 return [
+    //                     'status'  => 'error',
+    //                     'message' => 'Item not found in cart.',
+    //                     'data'    => (object)[]
+    //                 ];
+    //             }
+    //         }
+
     //         if ($cartItem) {
-    //             // FIXED: SET EXACT QUANTITY (do NOT add)
+    //             // Update the existing cart item if the quantity is non-zero
     //             $cartItem->quantity = $request->quantity;
     //             $cartItem->amount = $product_amount * $request->quantity;
     //             $cartItem->save();
 
     //             $msg = "Cart updated successfully";
     //         } else {
-    //             // Create new cart entry
+    //             // Create new cart entry if it doesn't exist
     //             $data['amount'] = $product_amount * $request->quantity;
     //             $cartItem = Addtocart::create($data);
     //             $msg = "Added to cart successfully";
@@ -1273,99 +1294,198 @@ public function addtoCart_Increment_decrement($request)
     //             'data'    => (object)[]
     //         ];
     //     }
+        
     // }
 
     public function product_add_to_cart_without_quantity_increment($request)
-    {
-        try {
-            // Match existing cart item for the user, product, and variant
-            $match = [
-                'user_id'     => $request->user_id,
-                'product_id'  => $request->product_id,
-                'variants_id' => $request->variants_id,
-            ];
+{
+    try {
 
-            // Prepare data to insert if not exists
-            $data = [
-                'user_id'     => $request->user_id,
-                'product_id'  => $request->product_id,
-                'quantity'    => $request->quantity,
-                'variants_id' => $request->variants_id,
-            ];
+        $affiliate_id = null;
+        $reference_link = null;
+        $admin_commission_percent = null;
+        $affiliate_commission_percent = null;
 
-            // Get variant stock and price
-            $variant = ProductVariant::find($request->variants_id);
-            if (!$variant) {
+        // Check reference link
+        if(!empty($request->reference_link)){
+            //dd(123);
+
+            $reference_link = $request->reference_link;
+
+            $query = parse_url($reference_link, PHP_URL_QUERY);
+            parse_str($query, $params);
+
+            if(isset($params['ref'])){
+                $affiliate_id = $params['ref'];
+            }
+        }
+
+        $match = [
+            'user_id'     => $request->user_id,
+            'product_id'  => $request->product_id,
+            'variants_id' => $request->variants_id,
+        ];
+
+        $data = [
+            'user_id'     => $request->user_id,
+            'product_id'  => $request->product_id,
+            'quantity'    => $request->quantity,
+            'variants_id' => $request->variants_id,
+        ];
+
+        if($reference_link){
+            $data['reference_link'] = $reference_link;
+        }
+
+        if($affiliate_id){
+            $data['affiliate_id'] = $affiliate_id;
+        }
+
+        $variant = ProductVariant::find($request->variants_id);
+
+        if (!$variant) {
+            return [
+                'status'  => 'error',
+                'message' => 'Product variant not found.',
+                'data'    => (object)[]
+            ];
+        }
+
+        if ($request->quantity > 0) {
+            if (intval($variant->total_stock) < $request->quantity) {
                 return [
                     'status'  => 'error',
-                    'message' => 'Product variant not found.',
+                    'message' => 'Product stock is too low.',
+                    'data'    => (object)[]
+                ];
+            }
+        }
+
+        $product_amount = $variant->final_price;
+        $total_amount = $product_amount * $request->quantity;
+
+        // Get affiliate commission percent
+        $product = Product::select('affiliated_commission')
+                    ->where('id', $request->product_id)
+                    ->first();
+
+        if($product){
+            $affiliate_commission_percent = $product->affiliated_commission;
+        }
+
+        if($affiliate_id){
+
+            if(!is_null($affiliate_commission_percent)){
+                $data['affiliate_commission'] = number_format(($affiliate_commission_percent / 100) * $total_amount, 2, '.', '');
+            }
+
+            $affiliate_address = AffilatedUserAddress::where('affiliate_id', $affiliate_id)->first();
+
+            if($affiliate_address){
+
+                $affiliate_country_id = $affiliate_address->country;
+
+                $admin_commission = AffiliateCommission::where('country_id', $affiliate_country_id)
+                                    ->orderBy('id','asc')
+                                    ->first();
+
+                if($admin_commission){
+
+                    $admin_commission_percent = $admin_commission->commission ?? null;
+
+                    if($admin_commission_percent){
+                        $data['admin_commission'] = number_format(($admin_commission_percent / 100) * $total_amount, 2, '.', '');
+                    }
+                }
+            }
+        }
+
+        $cartItem = Addtocart::where($match)->first();
+
+        if ($request->quantity == 0) {
+
+            if ($cartItem) {
+                $cartItem->delete();
+
+                return [
+                    'status'  => 'error',
+                    'message' => 'Item removed from cart successfully.',
                     'data'    => (object)[]
                 ];
             }
 
-            // Check stock only if quantity is greater than 0
-            if ($request->quantity > 0) {
-                if (intval($variant->total_stock) < $request->quantity) {
-                    return [
-                        'status'  => 'error',
-                        'message' => 'Product stock is too low.',
-                        'data'    => (object)[]
-                    ];
-                }
-            }
-
-            $product_amount = $variant->final_price;
-
-            // Find existing cart entry
-            $cartItem = Addtocart::where($match)->first();
-
-            if ($request->quantity == 0) {
-                // If quantity is 0, remove the item from the cart
-                if ($cartItem) {
-                    $cartItem->delete();
-                    return [
-                        'status'  => 'error',
-                        'message' => 'Item removed from cart successfully.',
-                        'data'    => (object)[]
-                    ];
-                } else {
-                    return [
-                        'status'  => 'error',
-                        'message' => 'Item not found in cart.',
-                        'data'    => (object)[]
-                    ];
-                }
-            }
-
-            if ($cartItem) {
-                // Update the existing cart item if the quantity is non-zero
-                $cartItem->quantity = $request->quantity;
-                $cartItem->amount = $product_amount * $request->quantity;
-                $cartItem->save();
-
-                $msg = "Cart updated successfully";
-            } else {
-                // Create new cart entry if it doesn't exist
-                $data['amount'] = $product_amount * $request->quantity;
-                $cartItem = Addtocart::create($data);
-                $msg = "Added to cart successfully";
-            }
-
-            return [
-                'status'  => 'success',
-                'message' => $msg,
-                'data'    => $cartItem
-            ];
-
-        } catch (\Exception $e) {
             return [
                 'status'  => 'error',
-                'message' => 'Failed: ' . $e->getMessage(),
+                'message' => 'Item not found in cart.',
                 'data'    => (object)[]
             ];
         }
-        
+
+        if ($cartItem) {
+
+            $updateData = [
+                'quantity' => $request->quantity,
+                'amount' => $product_amount * $request->quantity
+            ];
+
+            if($reference_link){
+                $updateData['reference_link'] = $reference_link;
+            }
+
+            if($affiliate_id){
+
+                $updateData['affiliate_id'] = $affiliate_id;
+
+                if(!is_null($affiliate_commission_percent)){
+                    $updateData['affiliate_commission'] = number_format(($affiliate_commission_percent / 100) * $updateData['amount'], 2, '.', '');
+                }
+
+                if($admin_commission_percent){
+                    $updateData['admin_commission'] = number_format(($admin_commission_percent / 100) * $updateData['amount'], 2, '.', '');
+                }
+            }
+
+            $cartItem->update($updateData);
+
+            $msg = "Cart updated successfully";
+
+        } else {
+
+            $data['amount'] = $total_amount;
+
+            $cartItem = Addtocart::create($data);
+
+            $msg = "Added to cart successfully";
+        }
+
+        // Save affiliate session
+        if($reference_link){
+
+            Session::put('affiliate_product', [
+                'product_id' => $cartItem->product_id,
+                'variant_id' => $cartItem->variants_id,
+                'reference_number' => $cartItem->reference_link,
+                'affiliate_id' => $cartItem->affiliate_id ?? null,
+                'admin_commission' => $cartItem->admin_commission ?? null,
+                'affiliate_commission' => $cartItem->affiliate_commission ?? null
+            ]);
+        }
+
+        return [
+            'status'  => 'success',
+            'message' => $msg,
+            'data'    => $cartItem
+        ];
+
+    } catch (\Exception $e) {
+
+        return [
+            'status'  => 'error',
+            'message' => 'Failed: ' . $e->getMessage(),
+            'data'    => (object)[]
+        ];
     }
+}
 
 
 

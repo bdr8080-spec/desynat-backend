@@ -328,12 +328,14 @@ foreach ($data->product_variants as $item) {
      }
 
       public function addToCart(Request $request){
+       // dd($request->all());
 
         $request_data = (object)[
             'user_id'     => $request->user()->id,
             'product_id'  => $request->product_id,
             'variants_id' => $request->variant_id, 
-            'quantity'    => $request->quantity
+            'quantity'    => $request->quantity,
+            'reference_link'    => $request->reference_link??null,
         ];
         $data = $this->UserManagementService->product_add_to_cart_without_quantity_increment($request_data);
 
