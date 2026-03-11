@@ -107,7 +107,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Affiliate Name</th>
+                                <th scope="col">User Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
@@ -220,7 +220,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Affiliate Name</th>
+                                <th scope="col">User Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
@@ -320,7 +320,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Affiliate Name</th>
+                                <th scope="col">User Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
