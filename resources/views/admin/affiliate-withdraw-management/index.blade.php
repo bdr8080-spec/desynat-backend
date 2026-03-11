@@ -636,7 +636,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // SHOW LOADER
             // loader.style.display = "flex";
 
-            fetch('/admin/approve_withdraw_request', {
+            // Send req_id in POST body
+            fetch(`/admin/approveWithdrawRequest`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -644,7 +645,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     "Accept": "application/json"
                 },
                 body: JSON.stringify({
-                    withdraw_request_id: withdrawId
+                    req_id: withdrawId
                 })
             })
             .then(res => res.json())
@@ -671,8 +672,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 // loader.style.display = "none";
 
                 toastr.error("Something went wrong. Please try again.");
-
-               // console.error(error);
 
                 setTimeout(() => {
                     location.reload();

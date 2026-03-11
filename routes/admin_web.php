@@ -208,6 +208,7 @@ Route::group(['prefix'=>'admin'], function(){
         //affiliate user withdraw request management
         Route::get('/affiliate-withdraw-request-management', [AffiliateWithdrawController::class, 'affiliateWithdrawRequestManagement'])->name('admin.affiliateWithdrawRequestManagement');
         Route::post('/rejectWithdrawRequest/{id}', [AffiliateWithdrawController::class, 'rejectWithdrawRequest'])->name('admin.rejectWithdrawRequest');
+        Route::post('/approveWithdrawRequest', [AffiliateWithdrawController::class, 'approveWithdrawRequest'])->name('admin.approveWithdrawRequest');
         Route::post('/transferWithdrawRequest', [AffiliateWithdrawController::class, 'transferWithdrawRequest'])->name('admin.transferWithdrawRequest');
         Route::get('/myfatoorah/success', [AffiliateWithdrawController::class, 'paymentSuccess'])->name('admin.payment.success');
         Route::get('/myfatoorah/error', [AffiliateWithdrawController::class, 'paymentError'])->name('admin.payment.error');
