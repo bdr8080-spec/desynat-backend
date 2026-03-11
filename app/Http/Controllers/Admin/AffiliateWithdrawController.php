@@ -30,7 +30,7 @@ class AffiliateWithdrawController extends Controller
                 'search' => $request->search??null,
             ];
          $newRequest = $this->WithdrawRequestManagementService->getWithdrawRequests($request_data)['data'];
-         dd($newRequest);
+         //dd($newRequest);
          $request_data1 = (object)[
                 'req_type' => '1',
                 'limit' => $request->limit??null,
