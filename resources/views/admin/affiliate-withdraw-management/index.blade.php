@@ -123,7 +123,7 @@
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
                                 <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g A') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
                                 <td>{{ $req['bank_details']['account_no'] }}</td>
@@ -195,7 +195,7 @@
                                 class="form-select form-select-lg "
                                 onchange="document.getElementById('filterForm1').submit();">
                                 <option value="">Select Status</option>
-                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Paid</option>
+                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Complete</option>
                                 <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Failed</option>
                             </select>
                         </div>
@@ -220,7 +220,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Driver Name</th>
+                                <th scope="col">Affiliate Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
@@ -237,18 +237,18 @@
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
                                 <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g A') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
                                 <td>{{ $req['bank_details']['account_no'] }}</td>
                                 <td>{{ $req['transaction_id'] ?? 'N/A' }}</td>
                                 <td>
-                                    @if($req['payment_status']=='1')
-                                    Paid
-                                    @elseif($req['payment_status']=='2')
-                                    Failed
+                                    @if($req['payment_status'] == '1')
+                                        <span class="text-success">Complete</span>
+                                    @elseif($req['payment_status'] == '2')
+                                        <span class="text-danger">Failed</span>
                                     @else
-                                    Pending
+                                        <span class="text-warning">Pending</span>
                                     @endif
                                 </td>
                             </tr>
@@ -320,7 +320,7 @@
                             <tr>
                                 <th scope="col">Sr.No</th>
                                 <th scope="col">Request ID</th>
-                                <th scope="col">Driver Name</th>
+                                <th scope="col">Affiliate Name</th>
                                 <th scope="col">Country</th>
                                 <th scope="col">Request On</th>
                                 <th scope="col">Available Amount</th>
@@ -336,7 +336,7 @@
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
                                 <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g A') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
                                 <td>{{ $req['bank_details']['account_no'] }}</td>
@@ -387,7 +387,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h5>Add Reason</h5>
+                <h5>Reason For Rejection </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -397,7 +397,7 @@
                     <textarea class="form-control" id="rejectReason" name="reject_reason" rows="3"></textarea>
 
                     <small id="reasonError" class="text-danger" style="display:none;">
-                        Please enter reject reason
+                        Please enter reason for rejection
                     </small>
                 </div>
 
