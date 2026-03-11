@@ -56,16 +56,36 @@ class AffiliateWithdrawController extends Controller
 
     public function rejectWithdrawRequest(Request $request, $reqId)
     {
-        $rejectReason = $request->input('reject_reason');
 
-        if (empty($rejectReason)) {
+
+        $result = $this->WithdrawRequestManagementService->rejectWithdrawRequest($reqId, $rejectReason);
+
+        if ($result['status'] === 'error') {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Reject reason is required.'
+                'message' => $result['message']
             ], 400);
         }
 
-        $result = $this->WithdrawRequestManagementService->rejectWithdrawRequest($reqId, $rejectReason);
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
+    public function approveWithdrawRequest(Request $request)
+    {
+            $validate = Validator::make($request->all(), [
+            'req_id' => 'required|exists:withdraw_requests,id',
+            // 'transaction_id' => 'required',
+            // 'payment_status' => 'required|in:1,2',//1-paid,2-fail
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $result = $this->WithdrawRequestManagementService->rejectWithdrawRequest($request);
 
         if ($result['status'] === 'error') {
             return response()->json([

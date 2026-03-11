@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // SHOW LOADER
             // loader.style.display = "flex";
 
-            fetch('/admin/transferWithdrawRequest', {
+            fetch('/admin/approve_withdraw_request', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

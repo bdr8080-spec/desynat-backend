@@ -181,8 +181,8 @@ class WithdrawRequestManagementService
             }
 
                 $data->admin_verify = '1';
-                $data->transaction_id = $request->transaction_id;
-                $data->payment_status = $request->payment_status;
+                // $data->transaction_id = $request->transaction_id;
+                // $data->payment_status = $request->payment_status;
                 $data->save();
 
             return [
