@@ -108,8 +108,8 @@ class WithdrawRequestController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'req_id' => 'required|exists:withdraw_requests,id',
-            'transaction_id' => 'required',
-            'payment_status' => 'required|in:1,2',//1-paid,2-fail
+            // 'transaction_id' => 'required',
+            // 'payment_status' => 'required|in:1,2',//1-paid,2-fail
         ]);
 
         if ($validate->fails()) {
