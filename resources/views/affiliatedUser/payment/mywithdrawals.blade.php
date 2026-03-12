@@ -85,8 +85,12 @@
                     @endforeach
 
                 </div>
-
+                <div class="d-flex justify-content-center">
+                    {{ $pendingReq['withdraw_requests']->links('pagination::bootstrap-4') }}
+                </div>
+ 
             </div>
+            
 
             <div class="tab-pane fade" id="pills-completed" role="tabpanel" aria-labelledby="pills-completed-tab" tabindex="0">
                 <div class="my-penal">
@@ -132,11 +136,15 @@
                                 </p>
                             </div>
                             @endif
-                        </div>
-                        
+                        </div>                    
                     </div>
                     @endforeach
+ 
                 </div>
+                <div class="d-flex justify-content-center">
+                    {{ $approveRejectedReq['withdraw_requests']->links('pagination::bootstrap-4') }}
+                </div>
+                
 
             </div>
             

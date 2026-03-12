@@ -820,7 +820,8 @@ public function affiliate_remove_affilate_product(Request $request){
                 'filter'=>$request->filter,
                 "order_type"=>$request->order_type,
                 "start_date"=>$request->start_date,
-                "end_date"=>$request->end_date
+                "end_date"=>$request->end_date,
+                "limit"=>$request->limit
                 ];
         
                 $data=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data);
@@ -955,6 +956,7 @@ public function affiliate_all_withdraw_request(Request $request)
             'user_id' => $user_id,
             'req_type' => $request->req_type,
             'search' => $request->search??null,
+            "limit"=>$request->limit??null
         ];
 
         $data = $this->UserOrderService->getAllWithdrawRequest($request_data);

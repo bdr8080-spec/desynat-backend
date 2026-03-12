@@ -1796,6 +1796,7 @@ $checkGiftCard->update(['giftCardUse'=>'1']);
 public function AffiliateAllOrderDetailsNew($request)
 {
     try {
+         $limit = (int) ($request->limit ?? 10);
 
         $ordersQuery = orderdetail::with([
             'user_details',
@@ -1901,7 +1902,7 @@ public function AffiliateAllOrderDetailsNew($request)
             });
         }
 
-        $orders = $ordersQuery->orderBy('id', 'desc')->get();
+        $orders = $ordersQuery->orderBy('id', 'desc')->paginate($limit);
 
         // Affiliate earnings
         $total_earning = orderdetail::where('affiliate_id', $request->user_id)
@@ -1993,6 +1994,7 @@ public function submitWithdrawRequest($request_data)
     public function getAllWithdrawRequest($request_data)
     {
         try {
+            $limit = (int) ($request_data->limit ?? 10);
 
             $query = WithdrawRequest::with('bank_details')
                         ->where('user_id', $request_data->user_id)
@@ -2008,7 +2010,7 @@ public function submitWithdrawRequest($request_data)
                 $query->where('request_id', 'like', '%' . $request_data->search . '%');
             }
 
-            $withdraw_requests = $query->orderBy('id', 'desc')->get();
+            $withdraw_requests = $query->orderBy('id', 'desc')->paginate($limit);
 
             $total_withdrawals = WithdrawRequest::where('user_id', $request_data->user_id)
                                     ->where('type', '1')

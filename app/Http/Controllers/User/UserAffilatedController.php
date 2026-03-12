@@ -994,7 +994,8 @@ if ($validator->fails()) {
                 'filter'=>$request->filter??null,
                 "order_type"=>$request->order_type??null,
                 "start_date"=>$request->start_date??null,
-                "end_date"=>$request->end_date??null
+                "end_date"=>$request->end_date??null,
+                "limit"=>$request->limit??null
                 ];
         
                 $allOrders=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data)['data'];
@@ -1023,6 +1024,7 @@ if ($validator->fails()) {
             'user_id' => $user,
             'req_type' => '0',
             'search' => $request->search??null,
+            "limit"=>$request->limit??10
         ];
 
         $pendingReq = $this->UserOrderService->getAllWithdrawRequest($request_data)['data'];
@@ -1032,13 +1034,17 @@ if ($validator->fails()) {
             'user_id' => $user,
             'req_type' => '1',
             'search' => $request->search??null,
+            "limit"=>$request->limit??10
         ];
+        //dump($request_data1);
 
         $approveRejectedReq = $this->UserOrderService->getAllWithdrawRequest($request_data1)['data'];
+        //dd($approveRejectedReq);
 
         return view('affiliatedUser.payment.mywithdrawals',compact('pendingReq','approveRejectedReq'));
 
     }
+
 
 
      
