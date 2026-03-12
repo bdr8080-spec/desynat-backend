@@ -9,18 +9,24 @@
     <div class="border-12 mb-4 mt-3 choose-date">
         <div class="d-flex justify-content-between date-header">
             <div class="total-balance">
-                <div class="balance-title">Total Revenue</div>
+                <div class="balance-title">Total Withdrawals</div>
                 <div class="walletic d-flex gap-2 align-items-center mt-3">
                     <div class="wallet-ic-2">
                         <img src="http://www.desynat.com/user/assets/images/wallet-ic.svg" class="img-fluid">
                     </div>
-                    <h5>2532.55 KD</h5>
+                    <h5>
+                        {{ 
+                            intval($pendingReq['total_withdrawals']) == $pendingReq['total_withdrawals'] 
+                                ? intval($pendingReq['total_withdrawals']) 
+                                : number_format($pendingReq['total_withdrawals'], 2) 
+                        }} KD
+                    </h5>
                 </div>
             </div>
-            <div class="total-balance-2 d-flex gap-3 align-items-center">
+            <!-- <div class="total-balance-2 d-flex gap-3 align-items-center">
                 <a href="#" class="btn btn-export">Export</a>
                 <a href="#" class="btn btn-export withdraw-bg"  data-bs-toggle="modal" data-bs-target="#Withdrawpop"> Withdraw</a>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -39,33 +45,44 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-upcoming" role="tabpanel" aria-labelledby="pills-upcoming-tab" tabindex="0">
                 <div class="my-penal">
+                    @foreach($pendingReq['withdraw_requests'] as $withdraw)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <div class="my-request">
                                 <p class="text-muted mb-1">Request id </p>
-                                <h6>#966969</h6>
+                                <h6>#{{$withdraw['request_id']}}</h6>
                             </div>
                             <div class="my-request">
                                 <p class="text-muted mb-1">Requested On </p>
-                                <h6>250 KD </h6>
+                                <h6>{{ \Carbon\Carbon::parse($withdraw['created_at'])->format('d/m/Y \a\t h:i A') }}</h6>
                             </div>
                         </div>
 
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1"> Account No. </p>
-                                <p>AE#9898898 </p>
+                                <p>{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1">Total Amount</p>
-                                <p>250 KD</p>
+                                <p>{{$withdraw['amount']}} KD</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1">Status</p>
-                                <p><span class="pending-text">Pending</span></p>
+                                <p><span class="pending-text">
+                                    @if($withdraw['admin_verify']=='0')
+                                    Pending
+                                    @elseif($withdraw['admin_verify']=='1')
+                                    Accepted
+                                    @else
+                                    Rejected
+                                    @endif
+                                </span></p>
                             </div>
                         </div>
+                        
                     </div>
+                    @endforeach
 
                 </div>
 
@@ -73,33 +90,44 @@
 
             <div class="tab-pane fade" id="pills-completed" role="tabpanel" aria-labelledby="pills-completed-tab" tabindex="0">
                 <div class="my-penal">
+                    @foreach($approveRejectedReq['withdraw_requests'] as $withdraw)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between">
-                            <div class="">
-                                <p class="text-muted mb-1">My Earnings </p>
-                                <h6>250 KD </h6>
+                            <div class="my-request">
+                                <p class="text-muted mb-1">Request id </p>
+                                <h6>#{{$withdraw['request_id']}}</h6>
                             </div>
-                            <div class="">
-                                <p class="text-muted mb-1">My Earnings </p>
-                                <h6>250 KD </h6>
+                            <div class="my-request">
+                                <p class="text-muted mb-1">Requested On </p>
+                                <h6>{{ \Carbon\Carbon::parse($withdraw['created_at'])->format('d/m/Y \a\t h:i A') }}</h6>
                             </div>
                         </div>
 
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Purchased by </p>
-                                <p>Atish </p>
+                                <p class="text-muted mb-1"> Account No. </p>
+                                <p>{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Product name</p>
-                                <p>Nike T-shirt</p>
+                                <p class="text-muted mb-1">Total Amount</p>
+                                <p>{{$withdraw['amount']}} KD</p>
                             </div>
                             <div class="d-flex justify-content-between">
-                                <p class="text-muted mb-1">Category</p>
-                                <p>Nike</p>
+                                <p class="text-muted mb-1">Status</p>
+                                <p>
+                                    @if($withdraw->admin_verify == '1')
+                                        <span style="color:#28a745;">Completed</span>
+                                    @elseif($withdraw->admin_verify == '2')
+                                        <span style="color:#E70000;">Rejected</span>
+                                    @else
+                                        <span class="pending-text">Pending</span>
+                                    @endif
+                                </p>
                             </div>
                         </div>
+                        
                     </div>
+                    @endforeach
                 </div>
 
             </div>
@@ -162,6 +190,27 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    //get active tab from local storage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+    //save active tab to local storage
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
 
 
 
