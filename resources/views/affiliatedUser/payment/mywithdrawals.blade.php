@@ -61,11 +61,11 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1"> Account No. </p>
-                                <p>{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
+                                <p class="fst-500">{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1">Total Amount</p>
-                                <p>{{$withdraw['amount']}} KD</p>
+                                <p class="fst-500">{{$withdraw['amount']}} KD</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1">Status</p>
@@ -112,11 +112,11 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1"> Account No. </p>
-                                <p>{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
+                                <p class="fst-500">{{$withdraw['bank_details']['account_no']??'N/A'}} </p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1">Total Amount</p>
-                                <p>{{$withdraw['amount']}} KD</p>
+                                <p class="fst-500">{{$withdraw['amount']}} KD</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-1">Status</p>

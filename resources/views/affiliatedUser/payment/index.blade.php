@@ -124,7 +124,7 @@
             <div class="card-header d-flex justify-content-between">
                 <div class="">
                     <p class="text-muted mb-1">My Earnings </p>
-                    <h6>{{ 
+                    <h6 class="fst-500">{{ 
                             intval($order['affiliate_commission']) == $order['affiliate_commission'] 
                                 ? intval($order['affiliate_commission']) 
                                 : number_format($order['affiliate_commission'], 2) 
@@ -133,34 +133,34 @@
                 </div>
                 <div class="">
                     <p class="text-muted mb-1">Transaction Id </p>
-                    <h6>#{{ $order['id'] }} </h6>
+                    <h6 class="fst-500">#{{ $order['id'] }} </h6>
                 </div>
             </div>
 
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Purchased by </p>
-                    <p>{{ $order['user_details']['full_name'] }} </p>
+                    <p class="fst-500">{{ $order['user_details']['full_name'] }} </p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Product name</p>
-                    <p>{{ $order['product_details']['product_name_en'] }}</p>
+                    <p class="fst-500">{{ $order['product_details']['product_name_en'] }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Category</p>
-                    <p>{{ $order['product_details']['category']['name'] }}</p>
+                    <p class="fst-500">{{ $order['product_details']['category']['name'] }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Quantity</p>
-                    <p>{{ $order['quantity'] }}</p>
+                    <p class="fst-500">{{ $order['quantity'] }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Total Amount</p>
-                    <p>{{ $order['amount'] }} KD</p>
+                    <p class="fst-500">{{ $order['amount'] }} KD</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Purchased on</p>
-                    <p>{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y \a\t h:i A') }}</p>
+                    <p class="fst-500">{{ \Carbon\Carbon::parse($order->created_at)->format('d/m/Y \a\t h:i A') }}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <p class="text-muted mb-1">Order status</p>
