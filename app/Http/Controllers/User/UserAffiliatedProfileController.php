@@ -14,6 +14,7 @@ use App\Models\{country,Category,SubCategory,Product,UserContactChangeHistory,al
 
 use App\Services\UserAffilatedAuthService;
 use App\Services\UserAffiliatedProductService;
+use App\Models\AffiliateProduct;
 
 use Illuminate\Validation\Rule;
 
@@ -349,7 +350,8 @@ public function affiliateMyProduct(Request $request){
 
     
 
-public function affiliateProductPerformance(Request $request){
+public function affiliateProductPerformance(Request $request,$id){
+   // dd($id);
 
   $affilatedUser=Auth::guard('affilated_user')->user();     
    
@@ -363,8 +365,25 @@ public function affiliateProductPerformance(Request $request){
 
     $data = $this->UserAffiliatedProductService->getPerformancewithidProducts($request_data);
     $performace=$data['data'];
+    //dd($performace);
 
-    return view('affiliatedUser.myproducts.performance',compact('performace'));
+    $product = AffiliateProduct::where('id',$id)->first();
+    $product_id = $product->product_id;
+    //dd($product_id);
+
+    $request_data1 = (object) [
+            'user_id' => $affilatedUser->id,
+            'id' => $product_id,
+            "start_date"=>$request->start_date??null,
+                "end_date"=>$request->end_date??null
+            ];
+            //dd($request_data1);
+
+    $data1 = $this->UserAffiliatedProductService->getMyProductDetail($request_data1);
+    $summary=$data1['data'];
+    //dd($summary);
+
+    return view('affiliatedUser.myproducts.performance',compact('performace','summary'));
 
 
          }
