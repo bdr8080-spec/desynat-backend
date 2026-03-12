@@ -292,8 +292,8 @@ foreach($checkDataInCart as $key=>$val){
         // affilate product detaiuls,
         "reference_link"=>$val->reference_link,
         "affiliate_id"=>$val->affiliate_id,
-        "affiliate_commission"=>$val->affiliate_commission,
-        "affiliate_admin_commission"=> $val->admin_commission,
+        "affiliate_commission"=>$val->affiliate_commission*$val->quantity,
+        "affiliate_admin_commission"=> $val->admin_commission*$val->quantity,
         
     ];
     orderdetail::create($cart_data);
