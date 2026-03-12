@@ -87,77 +87,87 @@
         </div>
     </div>
 
+    @php
+        // Ensure $summaryArray is always an array
+        $summaryArray = is_object($summary) ? (array) $summary : $summary;
+
+        // Set defaults if keys don't exist
+        $Total_revenue = $summaryArray['Total_revenue'] ?? 0;
+        $my_earning = $summaryArray['my_earning'] ?? 0;
+        $Total_order = $summaryArray['Total_order'] ?? 0;
+        $affiliate_clicks = $summaryArray['affiliate_product_click_records_count'] ?? 0;
+        $conversionrate = $summaryArray['conversionrate'] ?? 0;
+    @endphp
+
     <div class="row">
         <div class="col-lg-6 col-xxl-6">
             <div class="py-4 pb-0">
                 <div class="dash-box border20 shadow20 p20 pnl-flex total-revenue-bg">
                     <div class="dash-content ">
                         <h5 class="text-white">Total Revenue</h5>
-                        <div class="title30 text-white">120</div>
+                        <div class="title30 text-white">{{ $Total_revenue }} KD</div>
                     </div>
                     <div class="dash-circle-2">
-                        <img src="{{ asset('dealer') }}/assets/img/m3-icon/ren-icon.svg" alt="icon" class="img-fluid">
+                        <img src="{{ asset('dealer/assets/img/m3-icon/ren-icon.svg') }}" alt="icon" class="img-fluid">
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-6 col-xxl-6">
-            <div class=" border20 shadow20 p20 mt-4 my-earning-bg">
+            <div class="border20 shadow20 p20 mt-4 my-earning-bg">
                 <div class="total-revenu-box pnl-flex">
                     <div class="dash-content ">
                         <h5 class="text-white">My Earnings</h5>
-                        <h1 class="font-34 py-3 text-white">12,542 KD</h1>
+                        <h1 class="font-34 py-3 text-white">{{ $my_earning }} KD</h1>
                     </div>
                     <div class="total-revenu-image">
-                        <img src="{{ asset('dealer') }}/assets/img/m3-icon/white-ic.svg" alt="icon" class="img-fluid">
+                        <img src="{{ asset('dealer/assets/img/m3-icon/white-ic.svg') }}" alt="icon" class="img-fluid">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="py-2">
         <div class="row mt-3">
             <div class="col-lg-4 col-md-4">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-4 click-bg">
                     <div class="dash-content">
-                        <h5>Total Clicks </h5>
-                        <div class="title30">120</div>
+                        <h5>Total Clicks</h5>
+                        <div class="title30">{{ $affiliate_clicks }}</div>
                     </div>
                     <div class="dash-circle-2">
-                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/or-click.svg" alt="icon" class="img-fluid">
+                        <img src="{{ asset('dealer/assets/img/m3-icon/or-click.svg') }}" alt="icon" class="img-fluid">
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4 col-md-4">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-3 order-bg-box">
                     <div class="dash-content">
                         <h5>Total Orders</h5>
-                        <div class="title30">50</div>
+                        <div class="title30">{{ $Total_order }}</div>
                     </div>
                     <div class="dash-circle-2">
-                    <img src="{{ asset('dealer') }}/assets/img/m3-icon/total-order.svg" alt="icon" class="img-fluid">
-
+                        <img src="{{ asset('dealer/assets/img/m3-icon/total-order.svg') }}" alt="icon" class="img-fluid">
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4 col-md-4">
                 <div class="total-revenu border20 shadow20 p20 mb-3">
                     <div class="total-revenu-box pnl-flex">
                         <div class="dash-content">
-                            <h5>Conversion rate</h5>
-                            <div class="title30">2.3%</div>
+                            <h5>Conversion Rate</h5>
+                            <div class="title30">{{ $conversionrate }}%</div>
                         </div>
                         <div class="total-revenu-image">
-                            <img src="{{ asset('dealer') }}/assets/img/profit.svg" alt="icon" class="img-fluid">
+                            <img src="{{ asset('dealer/assets/img/profit.svg') }}" alt="icon" class="img-fluid">
                         </div>
                     </div>
                 </div>
-
             </div>
-           
-            
         </div>
     </div>
 

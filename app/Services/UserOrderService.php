@@ -1797,7 +1797,7 @@ public function AffiliateAllOrderDetailsNew($request)
 {
     try {
 
-        $ordersQuery = OrderDetail::with([
+        $ordersQuery = orderdetail::with([
             'user_details',
             'order.delivery_details',
             'product_details.brand',
@@ -1904,7 +1904,7 @@ public function AffiliateAllOrderDetailsNew($request)
         $orders = $ordersQuery->orderBy('id', 'desc')->get();
 
         // Affiliate earnings
-        $total_earning = OrderDetail::where('affiliate_id', $request->user_id)
+        $total_earning = orderdetail::where('affiliate_id', $request->user_id)
             ->where('delivery_status', '3')
             ->sum('affiliate_commission');
             
@@ -1939,9 +1939,10 @@ public function submitWithdrawRequest($request_data)
     {
         try {
             DB::beginTransaction();
-            $total_earning = OrderDetail::where('affiliate_id', $request_data->user_id)
+            $total_earning = orderdetail::where('affiliate_id', $request_data->user_id)
                             ->where('delivery_status', '3')
                             ->sum('affiliate_commission');
+            //dd($total_earning);
 
                                     
             $withdraw_request_amount = WithdrawRequest::where('user_id', $request_data->user_id)

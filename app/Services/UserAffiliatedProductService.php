@@ -251,6 +251,7 @@ class UserAffiliatedProductService
 ->first();
 
 
+
             if (!$data) {
                 return [
                     'status' => 'success',
