@@ -1836,7 +1836,9 @@ public function AffiliateAllOrderDetailsNew($request)
 
                 // Order ID
                 $q->where('order_id', 'like', "%{$search}%")
-
+                ->orwhere('id', 'like', "%{$search}%")
+                
+                
                 // User Name
                 ->orWhereHas('user_details', function ($q2) use ($search) {
                     $q2->where('full_name', 'like', "%{$search}%");
