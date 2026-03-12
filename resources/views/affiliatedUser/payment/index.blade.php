@@ -124,7 +124,12 @@
             <div class="card-header d-flex justify-content-between">
                 <div class="">
                     <p class="text-muted mb-1">My Earnings </p>
-                    <h6>{{ $order['affiliate_commission'] }} KD </h6>
+                    <h6>{{ 
+                            intval($order['affiliate_commission']) == $order['affiliate_commission'] 
+                                ? intval($order['affiliate_commission']) 
+                                : number_format($order['affiliate_commission'], 2) 
+                        }} KD
+                    </h6>
                 </div>
                 <div class="">
                     <p class="text-muted mb-1">Transaction Id </p>
