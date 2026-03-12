@@ -45,7 +45,7 @@
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-upcoming" role="tabpanel" aria-labelledby="pills-upcoming-tab" tabindex="0">
                 <div class="my-penal">
-                    @foreach($pendingReq['withdraw_requests'] as $withdraw)
+                    @forelse($pendingReq['withdraw_requests'] as $withdraw)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <div class="my-request">
@@ -82,7 +82,9 @@
                         </div>
                         
                     </div>
-                    @endforeach
+                    @empty
+                        <p class="text-center text-muted">No data found.</p>
+                    @endforelse
 
                 </div>
                 <div class="d-flex justify-content-center">
@@ -94,7 +96,7 @@
 
             <div class="tab-pane fade" id="pills-completed" role="tabpanel" aria-labelledby="pills-completed-tab" tabindex="0">
                 <div class="my-penal">
-                    @foreach($approveRejectedReq['withdraw_requests'] as $withdraw)
+                    @forelse($approveRejectedReq['withdraw_requests'] as $withdraw)
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <div class="my-request">
@@ -138,7 +140,9 @@
                             @endif
                         </div>                    
                     </div>
-                    @endforeach
+                    @empty
+                        <p class="text-center text-muted">No data found.</p>
+                    @endforelse
  
                 </div>
                 <div class="d-flex justify-content-center">
