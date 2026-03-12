@@ -90,7 +90,7 @@
                             // 3 → Delivered
                             $orderdetail->delivery_status == '3' &&
                             $orderdetail->return_type == '0'
-                            => 'Delivered',
+                            => 'Complete',
 
                             // 4 → Cancelled
                             $orderdetail->payment_status == '2'
@@ -110,7 +110,7 @@
 
                             [$statusColor, $bgColor] = match ($statusText) {
 
-                            'Delivered' => ['#28a745', '#28a7451A'],
+                            'Complete' => ['#28a745', '#28a7451A'],
 
                             'Cancelled' => ['#E70000', '#E700001A'],
 
@@ -127,8 +127,8 @@
                     <h6>{{ $order['affiliate_commission'] }} KD </h6>
                 </div>
                 <div class="">
-                    <p class="text-muted mb-1">My Earnings </p>
-                    <h6>{{ $order['affiliate_commission'] }} KD </h6>
+                    <p class="text-muted mb-1">Transaction Id </p>
+                    <h6>#{{ $order['id'] }} </h6>
                 </div>
             </div>
 
@@ -215,7 +215,7 @@
                    @endforeach
    
                    <div class="addanother d-flex gap-2" data-bs-toggle="modal" data-bs-target="#bankDetails">
-                       <i class="bi bi-plus-lg"></i> <h5 class="mb-0">Add New</h5>
+                       <i class="bi bi-plus-lg"></i> <h5 class="mb-0">Add another account</h5>
                    </div>
    
                 </div>
