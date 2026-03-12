@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Str;
 
+use Carbon\Carbon;
 
 class UserAffiliatedProductService
 {
@@ -179,31 +180,76 @@ class UserAffiliatedProductService
     {
         try {
 
+            // $data = AffiliateProduct::with([
+            //         'affiliate_details',
+            //         'affiliate_product_link',
+            //         'affiliate_product_click_records',
+            //         'product' => function ($q) {
+            //             $q->with([
+            //                 'brand',
+            //                 'category',
+            //                 'subcategory',
+            //                 'product_specifications',
+            //                 'product_variants.color',
+            //                 'product_variants.size',
+            //                 'seller_details.country_details',
+            //                 'store.country_info.affiliate_commission_info', // ✅ Nested under product
+            //                 'review'
+            //             ])
+            //             ->withAvg('review as product_avg_rating', 'product_rating')
+            //             ->withAvg('review as store_avg_rating', 'store_rating')
+            //             ->withCount('review');
+            //         }
+            //     ])
+            //     ->withcount('affiliate_product_click_records')
+
+
+            //     ->where('product_id', $request->id)
+            //     ->where('affiliate_id', $request->user_id)
+            //     ->first();
+
             $data = AffiliateProduct::with([
-                    'affiliate_details',
-                    'affiliate_product_link',
-                    'affiliate_product_click_records',
-                    'product' => function ($q) {
-                        $q->with([
-                            'brand',
-                            'category',
-                            'subcategory',
-                            'product_specifications',
-                            'product_variants.color',
-                            'product_variants.size',
-                            'seller_details.country_details',
-                            'store.country_info.affiliate_commission_info', // ✅ Nested under product
-                            'review'
-                        ])
-                        ->withAvg('review as product_avg_rating', 'product_rating')
-                        ->withAvg('review as store_avg_rating', 'store_rating')
-                        ->withCount('review');
-                    }
-                ])
-                ->withcount('affiliate_product_click_records')
-                ->where('product_id', $request->id)
-                ->where('affiliate_id', $request->user_id)
-                ->first();
+    'affiliate_details',
+    'affiliate_product_link',
+    'affiliate_product_click_records' => function ($q) use ($request) {
+        $q->when($request->start_date && $request->end_date, function ($query) use ($request) {
+            $query->whereBetween('created_at', [
+                $request->start_date,
+                $request->end_date
+            ]);
+        });
+    },
+    'product' => function ($q) {
+        $q->with([
+            'brand',
+            'category',
+            'subcategory',
+            'product_specifications',
+            'product_variants.color',
+            'product_variants.size',
+            'seller_details.country_details',
+            'store.country_info.affiliate_commission_info',
+            'review'
+        ])
+        ->withAvg('review as product_avg_rating', 'product_rating')
+        ->withAvg('review as store_avg_rating', 'store_rating')
+        ->withCount('review');
+    }
+])
+->withCount([
+    'affiliate_product_click_records' => function ($q) use ($request) {
+        $q->when($request->start_date && $request->end_date, function ($query) use ($request) {
+            $query->whereBetween('created_at', [
+                $request->start_date,
+                $request->end_date
+            ]);
+        });
+    }
+])
+->where('product_id', $request->id)
+->where('affiliate_id', $request->user_id)
+->first();
+
 
             if (!$data) {
                 return [
@@ -221,13 +267,20 @@ class UserAffiliatedProductService
         $refer_affilatelink=$data->affiliate_product_link->link;
 
         $orderStats = orderdetail::where('reference_link', $refer_affilatelink)
+           ->when($request->start_date && $request->end_date, function ($q) use ($request) {
+        $q->whereBetween('created_at', [
+            Carbon::parse($request->start_date)->startOfDay(),
+            Carbon::parse($request->end_date)->endOfDay()
+        ]);
+    })
     ->selectRaw('COUNT(*) as total_order, SUM(amount) as total_revenue, SUM(affiliate_commission) as my_earning')
+
     ->first();
     
 
-        $data->Total_order   = $orderStats->total_order;
-        $data->Total_revenue = $orderStats->total_revenue;
-        $data->my_earning    = $orderStats->my_earning;
+        $data->Total_order   = $orderStats->total_order??0;
+        $data->Total_revenue = $orderStats->total_revenue??0;
+        $data->my_earning    = $orderStats->my_earning??0;
         $data->conversionrate   = 0;
 
             // Amount and commision records End here 
