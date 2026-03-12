@@ -982,19 +982,23 @@ if ($validator->fails()) {
     }
 
     public function payment(Request $request){
-        $user_id= $request->user()->id;
+        $affilatedUser=Auth::guard('affilated_user')->user();
+            
+        $user = $affilatedUser->id;
+        //dd($user);
 
     
                $request_data=(object)[
-                'user_id'=>$user_id,
-                'search'=>$request->search,
-                'filter'=>$request->filter,
-                "order_type"=>$request->order_type,
-                "start_date"=>$request->start_date,
-                "end_date"=>$request->end_date
+                'user_id'=>$user,
+                'search'=>$request->search??null,
+                'filter'=>$request->filter??null,
+                "order_type"=>$request->order_type??null,
+                "start_date"=>$request->start_date??null,
+                "end_date"=>$request->end_date??null
                 ];
         
-                $allOrders=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data);
+                $allOrders=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data)['data'];
+               // dd($allOrders);
 
         return view('affiliatedUser.payment.index',compact('allOrders'));
 

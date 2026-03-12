@@ -1824,9 +1824,37 @@ public function AffiliateAllOrderDetailsNew($request)
                    });
             });
 
-            if (!empty($request->search)) {
-                $q->where('order_id', 'like', '%' . $request->search . '%');
-            }
+            // if (!empty($request->search)) {
+            //     $q->where('order_id', 'like', '%' . $request->search . '%');
+            // }
+        })
+        ->when(!empty($request->search), function ($query) use ($request) {
+
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+
+                // Order ID
+                $q->where('order_id', 'like', "%{$search}%")
+
+                // User Name
+                ->orWhereHas('user_details', function ($q2) use ($search) {
+                    $q2->where('full_name', 'like', "%{$search}%");
+                })
+
+                // Product Name
+                ->orWhereHas('product_details', function ($q3) use ($search) {
+                    $q3->where('product_name_en', 'like', "%{$search}%")
+                    ->orWhere('product_name_ar', 'like', "%{$search}%");
+                })
+
+                // Category Name
+                ->orWhereHas('product_details.category', function ($q4) use ($search) {
+                    $q4->where('name', 'like', "%{$search}%");
+                });
+
+            });
+
         });
 
         if (!empty($request->start_date) && !empty($request->end_date)) {
