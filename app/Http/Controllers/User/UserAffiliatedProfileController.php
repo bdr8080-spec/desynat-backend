@@ -375,7 +375,7 @@ public function affiliateProductPerformance(Request $request,$id){
             'user_id' => $affilatedUser->id,
             'id' => $product_id,
             "start_date"=>$request->start_date??null,
-                "end_date"=>$request->end_date??null
+            "end_date"=>$request->end_date??null
             ];
             //dd($request_data1);
 
@@ -383,7 +383,7 @@ public function affiliateProductPerformance(Request $request,$id){
     $summary=$data1['data'];
     //dd($summary);
 
-    return view('affiliatedUser.myproducts.performance',compact('performace','summary'));
+    return view('affiliatedUser.myproducts.performance',compact('performace','summary','id'));
 
 
          }

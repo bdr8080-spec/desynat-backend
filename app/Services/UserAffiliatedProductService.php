@@ -285,7 +285,12 @@ class UserAffiliatedProductService
 
         $data->Total_revenue = $orderStats->total_revenue??0;
         $data->my_earning    = $orderStats->my_earning??0;
-        $data->conversionrate   = $Total_order/$click_count*100;
+        // $data->conversionrate   = $Total_order/$click_count*100;
+        if ($click_count > 0) {
+            $data->conversionrate = round(($Total_order / $click_count) * 100, 2);
+        } else {
+            $data->conversionrate = 0.00;
+        }
 
             // Amount and commision records End here 
 

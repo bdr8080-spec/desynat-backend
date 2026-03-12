@@ -78,14 +78,26 @@
     <div class="group-radio-btn d-flex gap-4 justify-content-between flex-wrap">
         <div class="title24">Quick Summary</div>
         <div class="show-date d-flex gap-2  flex-wrap">
-            <div class="date-form-pnl">
+            <!-- <div class="date-form-pnl">
                 <input type="date" class="form-control">
             </div>
             <div class="date-form-pnl">
                 <input type="date" class="form-control">
-            </div>
+            </div> -->
+            <form method="GET" action="{{ route('affiliate.ProductPerformance', $id) }}" id="filterForm" class="show-date d-flex gap-2 flex-wrap">
+                <div class="date-form-pnl">
+                    <input type="date" name="start_date" id="start_date" class="form-control" 
+                        value="{{ request()->start_date }}" 
+                        onchange="document.getElementById('filterForm').submit();" />
+                </div>
+                <div class="date-form-pnl">
+                    <input type="date" name="end_date" id="end_date" class="form-control" 
+                        value="{{ request()->end_date }}" 
+                        onchange="document.getElementById('filterForm').submit();" />
+                </div>
+            </form>
         </div>
-    </div>
+</div>
 
     @php
         // Ensure $summaryArray is always an array
@@ -191,6 +203,28 @@ function copyLink() {
 }
 </script>
 
+<script>
+    document.querySelectorAll('.show-date input[type="date"]').forEach(function(input){
+        input.addEventListener('change', function(){
+            input.closest('form').submit();
+        });
+    });
+</script>
+
+<script>
+    function updateToDate() {
+        const fromDate = document.getElementById('start_date').value;
+        const toDateInput = document.getElementById('end_date');
+        if (fromDate) {
+            toDateInput.setAttribute('min', fromDate);
+        } else {
+            toDateInput.removeAttribute('min');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateToDate();
+    });
+</script>
 
 
 
