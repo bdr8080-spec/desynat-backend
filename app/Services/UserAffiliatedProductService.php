@@ -266,6 +266,7 @@ class UserAffiliatedProductService
             // Amount and commision records 
 
         $refer_affilatelink=$data->affiliate_product_link->link;
+        $click_count=$data->affiliate_product_click_records_count;
 
         $orderStats = orderdetail::where('reference_link', $refer_affilatelink)
            ->when($request->start_date && $request->end_date, function ($q) use ($request) {
@@ -279,10 +280,12 @@ class UserAffiliatedProductService
     ->first();
     
 
-        $data->Total_order   = $orderStats->total_order??0;
+        $Total_order   = $orderStats->total_order??0;
+        $data->Total_order = $Total_order;
+
         $data->Total_revenue = $orderStats->total_revenue??0;
         $data->my_earning    = $orderStats->my_earning??0;
-        $data->conversionrate   = 0;
+        $data->conversionrate   = $Total_order/$click_count*100;
 
             // Amount and commision records End here 
 

@@ -1947,7 +1947,7 @@ public function submitWithdrawRequest($request_data)
                                     
             $withdraw_request_amount = WithdrawRequest::where('user_id', $request_data->user_id)
             ->where('type','1')
-            ->where('admin_verify','1')
+            ->whereIn('admin_verify',['1','0'])
                 ->sum('amount');
 
              $total_earning=$total_earning-$withdraw_request_amount;
