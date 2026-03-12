@@ -292,8 +292,8 @@ foreach($checkDataInCart as $key=>$val){
         // affilate product detaiuls,
         "reference_link"=>$val->reference_link,
         "affiliate_id"=>$val->affiliate_id,
-        "affiliate_commission"=>$val->affiliate_commission,
-        "affiliate_admin_commission"=> $val->admin_commission,
+        "affiliate_commission"=>$val->affiliate_commission*$val->quantity,
+        "affiliate_admin_commission"=> $val->admin_commission*$val->quantity,
         
     ];
     orderdetail::create($cart_data);
@@ -1907,6 +1907,14 @@ public function AffiliateAllOrderDetailsNew($request)
         $total_earning = orderdetail::where('affiliate_id', $request->user_id)
             ->where('delivery_status', '3')
             ->sum('affiliate_commission');
+            
+        $withdraw_request_amount = WithdrawRequest::where('user_id', $request->user_id)
+        ->where('type','1')
+        ->whereIn('admin_verify',['0','1'])
+            ->sum('amount');
+
+         $total_earning=$total_earning-$withdraw_request_amount;
+
 
         return [
             'status' => 'success',
@@ -1935,6 +1943,16 @@ public function submitWithdrawRequest($request_data)
                             ->where('delivery_status', '3')
                             ->sum('affiliate_commission');
             //dd($total_earning);
+
+                                    
+            $withdraw_request_amount = WithdrawRequest::where('user_id', $request_data->user_id)
+            ->where('type','1')
+            ->whereIn('admin_verify',['1','0'])
+                ->sum('amount');
+
+             $total_earning=$total_earning-$withdraw_request_amount;
+
+
 
             if($total_earning<$request_data->amount){
                 return [
