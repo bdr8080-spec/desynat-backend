@@ -735,24 +735,24 @@ public function product_add_to_cart($request)
             ];
 
             if($reference_link){
-                $updateData['reference_link'] = $reference_link;
+                // $updateData['reference_link'] = $reference_link;
             }
 
             if($affiliate_id){
 
                 $updateData['affiliate_id'] = $affiliate_id;
 
-                if(!is_null($affiliate_commission_percent)){
-                    $updateData['affiliate_commission'] = number_format(($affiliate_commission_percent / 100) * $update_amount, 2, '.', '');
-                } else {
-                    $updateData['affiliate_commission'] = null;
-                }
+                // if(!is_null($affiliate_commission_percent)){
+                //     $updateData['affiliate_commission'] = number_format(($affiliate_commission_percent / 100) * $update_amount, 2, '.', '');
+                // } else {
+                //     $updateData['affiliate_commission'] = null;
+                // }
 
-                if($admin_commission_percent){
-                    $updateData['admin_commission'] = number_format(($admin_commission_percent / 100) * $update_amount, 2, '.', '');
-                } else {
-                    $updateData['admin_commission'] = null;
-                }
+                // if($admin_commission_percent){
+                //     $updateData['admin_commission'] = number_format(($admin_commission_percent / 100) * $update_amount, 2, '.', '');
+                // } else {
+                //     $updateData['admin_commission'] = null;
+                // }
             }
 
             $add_to_cart->update($updateData);
