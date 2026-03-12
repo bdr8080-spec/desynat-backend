@@ -227,8 +227,7 @@ class UserAffiliatedProductService
         $data->Total_order   = $orderStats->total_order;
         $data->Total_revenue = $orderStats->total_revenue;
         $data->my_earning    = $orderStats->my_earning;
-   
-
+        $data->conversionrate   = 0;
 
             // Amount and commision records End here 
 
