@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Str;
 
+use Carbon\Carbon;
 
 class UserAffiliatedProductService
 {
@@ -221,7 +222,14 @@ class UserAffiliatedProductService
         $refer_affilatelink=$data->affiliate_product_link->link;
 
         $orderStats = orderdetail::where('reference_link', $refer_affilatelink)
+           ->when($request->start_date && $request->end_date, function ($q) use ($request) {
+        $q->whereBetween('created_at', [
+            Carbon::parse($request->start_date)->startOfDay(),
+            Carbon::parse($request->end_date)->endOfDay()
+        ]);
+    })
     ->selectRaw('COUNT(*) as total_order, SUM(amount) as total_revenue, SUM(affiliate_commission) as my_earning')
+
     ->first();
     
 

@@ -91,6 +91,8 @@ class UserAffiliatedProductController extends Controller
             $request_data = (object) [
                 'user_id' => $user_id,
                 'id' => $request->id,
+                "start_date"=>$request->start_date,
+                "end_date"=>$request->end_date
             ];
             $data = $this->UserAffiliatedProductService->getMyProductDetail($request_data);
 
