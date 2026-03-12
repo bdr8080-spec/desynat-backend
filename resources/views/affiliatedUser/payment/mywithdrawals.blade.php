@@ -116,7 +116,7 @@
                                 <p class="text-muted mb-1">Status</p>
                                 <p>
                                     @if($withdraw->admin_verify == '1')
-                                        <span style="color:#28a745;">Completed</span>
+                                        <span style="color:#28a745;">Credit</span>
                                     @elseif($withdraw->admin_verify == '2')
                                         <span style="color:#E70000;">Rejected</span>
                                     @else
@@ -124,6 +124,14 @@
                                     @endif
                                 </p>
                             </div>
+                            @if($withdraw->admin_verify == '2')
+                            <div class="d-flex justify-content-between">
+                                <p class="text-muted mb-1">Reason</p>
+                                <p>
+                                    {{$withdraw->reject_reason }}
+                                </p>
+                            </div>
+                            @endif
                         </div>
                         
                     </div>
