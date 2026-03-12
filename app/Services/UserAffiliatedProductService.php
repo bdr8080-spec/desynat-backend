@@ -233,9 +233,9 @@ class UserAffiliatedProductService
     ->first();
     
 
-        $data->Total_order   = $orderStats->total_order;
-        $data->Total_revenue = $orderStats->total_revenue;
-        $data->my_earning    = $orderStats->my_earning;
+        $data->Total_order   = $orderStats->total_order??0;
+        $data->Total_revenue = $orderStats->total_revenue??0;
+        $data->my_earning    = $orderStats->my_earning??0;
         $data->conversionrate   = 0;
 
             // Amount and commision records End here 
