@@ -16,13 +16,15 @@ use Illuminate\Support\Facades\Hash;
 use App\Helpers\ApiResponse;
 
 use App\Services\UserAffilatedAuthService;
+use App\Services\UserOrderService;
 
 class UserAffilatedController extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
+        $this->UserOrderService = $UserOrderService;
     }
 
 
@@ -978,6 +980,89 @@ if ($validator->fails()) {
 
 
     }
+
+    public function payment(Request $request){
+        $user_id= $request->user()->id;
+
+    
+               $request_data=(object)[
+                'user_id'=>$user_id,
+                'search'=>$request->search,
+                'filter'=>$request->filter,
+                "order_type"=>$request->order_type,
+                "start_date"=>$request->start_date,
+                "end_date"=>$request->end_date
+                ];
+        
+                $allOrders=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data);
+
+        return view('affiliatedUser.payment.index',compact('allOrders'));
+
+    }
+
+    public function myWithdrawls(Request $request){
+        $user_id = $request->user()->id;
+
+        $request_data = (object)[
+            'user_id' => $user_id,
+            'req_type' => $request->req_type,
+            'search' => $request->search??null,
+        ];
+
+        $allReq = $this->UserOrderService->getAllWithdrawRequest($request_data);
+
+        return view('affiliatedUser.payment.mywithdrawals',compact('allReq'));
+
+    }
+
+
+     
+
+
+public function affiliate_submit_withdraw_request(Request $request){
+
+        try{
+
+            $validate = Validator::make($request->all(), [
+                'amount'=>'required',
+                 "bankdetails_id"=>'required|exists:bankdetails,id'
+
+                ]);
+            
+           if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+           }
+    
+         $user_id= $request->user()->id;
+
+           $request_data=(object)[
+            'user_id'=>$user_id,
+            'amount'=>$request->amount,
+            'bankdetails_id'=>$request->bankdetails_id
+            ];
+    
+
+            $data=$this->UserOrderService->submitWithdrawRequest($request_data);
+
+    
+            if(isset($data['status']) && $data['status']=='error' ){
+                return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+            }
+    
+            return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update seller status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+        
+        }
+
+
 
 
 

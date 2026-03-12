@@ -25,19 +25,23 @@
                 </a>
             </li>
 
-            <!-- <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="/payment">
+            <li class="nav-item">
+                <a class="nav-link border-radious-9 margin-20
+                {{ Request::is('affiliate/payment') ? 'sidebar-active' : '' }}"
+                  href="{{route('affiliate.payment')}}">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/payment.svg" alt="icon" class="asideicon">
                     <span>Payments</span>
                 </a>
             </li> 
 
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="/my-withdrawals">
+                <a class="nav-link border-radious-9 margin-20
+                {{ Request::is('affiliate/my-withdrawals') ? 'sidebar-active' : '' }}"
+                  href="{{route('affiliate.myWithdrawls')}}">
                     <img src="{{ asset('dealer') }}/assets/img/m3-icon/withdrawal.svg" alt="icon" class="asideicon">
                     <span>My Withdrawals</span>
                 </a>
-            </li>  -->
+            </li> 
 
             <!--
 

@@ -89,19 +89,15 @@ Route::get('/affiliate/generate-product-link', [UserAffiliatedProfileController:
 Route::post('/affiliate/add_to_my_products', [UserAffiliatedProfileController::class, 'add_to_my_products'])
 ->name('affiliate.add_to_my_products');
 
+//m9
+Route::get('/affiliate/payment', [UserAffilatedController::class, 'payment'])->name('affiliate.payment');
+Route::get('/affiliate/my-withdrawals', [UserAffilatedController::class, 'myWithdrawls'])->name('affiliate.myWithdrawls');
+Route::post('/affiliate/affiliate_submit_withdraw_request', [UserAffilatedController::class, 'affiliate_submit_withdraw_request'])->name('affiliate.affiliate_submit_withdraw_request');
+
 // });
 
-// payment section
 
-Route::match(['get', 'post'], '/payment', function () {
-    return view('affiliatedUser.payment.index');
 
-})->name('affiliatedUser.payment');
-
-Route::match(['get', 'post'], '/my-withdrawals', function () {
-    return view('affiliatedUser.payment.mywithdrawals');
-
-})->name('affiliatedUser.my-withdrawals');
 
 
 

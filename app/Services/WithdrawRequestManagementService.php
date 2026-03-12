@@ -18,12 +18,12 @@ class WithdrawRequestManagementService
         try {
             $limit = (int)($request_data->limit); 
 
-            $query = WithdrawRequest::with('bank_details','affiliate__details.country_details')
+            $query = WithdrawRequest::with('bank_details','affiliate__details.address_details.country_details')
                         ->where('type', '1')
                         ->where('admin_verify', $request_data->req_type); 
 
             if (!empty($request_data->country)) {
-                $query->whereHas('affiliate__details.country_details', function ($q) use ($request_data) {
+                $query->whereHas('affiliate__details.address_details.country_details', function ($q) use ($request_data) {
                     $q->where('name', $request_data->country);
                 });
             }
