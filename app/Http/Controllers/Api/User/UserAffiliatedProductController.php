@@ -87,6 +87,7 @@ class UserAffiliatedProductController extends Controller
         try {
 
             $user_id = $request->user()->id;
+
             $request_data = (object) [
                 'user_id' => $user_id,
                 'id' => $request->id,

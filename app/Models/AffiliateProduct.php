@@ -22,4 +22,11 @@ class AffiliateProduct extends Model
         return $this->hasOne(ProductLink::class, 'product_id', 'product_id');
     }
 
+    public function affiliate_product_click_records()
+    {
+        return $this->hasmany(AffiliateProductClickRecord::class, 'affiliate_product_id', 'id');
+    }
+
+
+
 }

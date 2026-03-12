@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Models\product;
-use App\Models\{AffiliateProduct,UserContactChangeHistory};
+use App\Models\{AffiliateProduct,UserContactChangeHistory,orderdetail};
 use App\Models\ProductLink;
 use App\Models\AffiliateRecentSearch;
 use App\Models\wishlist;
@@ -182,6 +182,7 @@ class UserAffiliatedProductService
             $data = AffiliateProduct::with([
                     'affiliate_details',
                     'affiliate_product_link',
+                    'affiliate_product_click_records',
                     'product' => function ($q) {
                         $q->with([
                             'brand',
@@ -199,6 +200,7 @@ class UserAffiliatedProductService
                         ->withCount('review');
                     }
                 ])
+                ->withcount('affiliate_product_click_records')
                 ->where('product_id', $request->id)
                 ->where('affiliate_id', $request->user_id)
                 ->first();
@@ -212,6 +214,24 @@ class UserAffiliatedProductService
             }
 
             $product = $data->product;
+
+
+            // Amount and commision records 
+
+        $refer_affilatelink=$data->affiliate_product_link->link;
+
+        $orderStats = orderdetail::where('reference_link', $refer_affilatelink)
+    ->selectRaw('COUNT(*) as total_order, SUM(amount) as total_revenue, SUM(affiliate_commission) as my_earning')
+    ->first();
+
+        $data->Total_order   = $orderStats->total_order;
+        $data->Total_revenue = $orderStats->total_revenue;
+        $data->my_earning    = $orderStats->my_earning;
+   
+
+
+            // Amount and commision records End here 
+
 
             // Get product and store ratings
             $averageRating = [
