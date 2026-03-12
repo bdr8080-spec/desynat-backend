@@ -1910,7 +1910,7 @@ public function AffiliateAllOrderDetailsNew($request)
             
         $withdraw_request_amount = WithdrawRequest::where('user_id', $request->user_id)
         ->where('type','1')
-        ->where('admin_verify','1')
+        ->whereIn('admin_verify',['0','1'])
             ->sum('amount');
 
          $total_earning=$total_earning-$withdraw_request_amount;
