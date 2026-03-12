@@ -1005,17 +1005,28 @@ if ($validator->fails()) {
     }
 
     public function myWithdrawls(Request $request){
-        $user_id = $request->user()->id;
+        $affilatedUser=Auth::guard('affilated_user')->user();
+            
+        $user = $affilatedUser->id;
 
         $request_data = (object)[
-            'user_id' => $user_id,
-            'req_type' => $request->req_type,
+            'user_id' => $user,
+            'req_type' => '0',
             'search' => $request->search??null,
         ];
 
-        $allReq = $this->UserOrderService->getAllWithdrawRequest($request_data);
+        $pendingReq = $this->UserOrderService->getAllWithdrawRequest($request_data)['data'];
+        //dd($pendingReq);
 
-        return view('affiliatedUser.payment.mywithdrawals',compact('allReq'));
+        $request_data1 = (object)[
+            'user_id' => $user,
+            'req_type' => '1',
+            'search' => $request->search??null,
+        ];
+
+        $approveRejectedReq = $this->UserOrderService->getAllWithdrawRequest($request_data1)['data'];
+
+        return view('affiliatedUser.payment.mywithdrawals',compact('pendingReq','approveRejectedReq'));
 
     }
 

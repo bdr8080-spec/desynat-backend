@@ -39,7 +39,13 @@
                     <div class="wallet-ic-2">
                         <img src="http://www.desynat.com/user/assets/images/wallet-ic.svg" class="img-fluid">
                     </div>
-                    <h5>{{ $allOrders['total_earning'] }} KD</h5>
+                    <h5>
+                      {{ 
+                            intval($allOrders['total_earning']) == $allOrders['total_earning'] 
+                                ? intval($allOrders['total_earning']) 
+                                : number_format($allOrders['total_earning'], 2) 
+                        }} KD
+                    </h5>
                 </div>
             </div>
             <div class="total-balance-2 d-flex gap-3 align-items-center">
