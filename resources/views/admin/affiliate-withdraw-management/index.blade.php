@@ -122,7 +122,7 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
-                                <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
+                                <td>{{ $req['affiliate__details']['address_details']['country_details']['name'] }}</td>
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
@@ -236,7 +236,7 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
-                                <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
+                                <td>{{ $req['affiliate__details']['address_details']['country_details']['name'] }}</td>
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
@@ -333,7 +333,7 @@
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>#{{ $req['request_id'] }}</td>
                                 <td>{{ $req['affiliate__details']['full_name'] }}</td>
-                                <td>{{ $req['affiliate__details']['country_details']['name'] }}</td>
+                                <td>{{ $req['affiliate__details']['address_details']['country_details']['name'] }}</td>
                                 <td>{{ \Carbon\Carbon::parse($req['created_at'])->format('jS F Y | g:i A') }}</td>
                                 <td>{{ rtrim(rtrim(number_format($req['total_earning'], 2, '.', ''), '0'), '.') }} KD</td>
                                 <td>{{ $req['amount'] }} KD</td>
