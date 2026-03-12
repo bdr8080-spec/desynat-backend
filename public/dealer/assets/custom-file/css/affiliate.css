@@ -2,7 +2,9 @@
     color: #FF5F1B;
 }
 
-
+.fst-500{
+    font-weight: 600;
+}
 .order-bg-box{
     background: #FFF7EA;
 }
