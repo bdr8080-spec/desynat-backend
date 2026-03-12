@@ -223,6 +223,7 @@ class UserAffiliatedProductService
         $orderStats = orderdetail::where('reference_link', $refer_affilatelink)
     ->selectRaw('COUNT(*) as total_order, SUM(amount) as total_revenue, SUM(affiliate_commission) as my_earning')
     ->first();
+    
 
         $data->Total_order   = $orderStats->total_order;
         $data->Total_revenue = $orderStats->total_revenue;
