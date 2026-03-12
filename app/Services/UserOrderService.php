@@ -1907,6 +1907,14 @@ public function AffiliateAllOrderDetailsNew($request)
         $total_earning = OrderDetail::where('affiliate_id', $request->user_id)
             ->where('delivery_status', '3')
             ->sum('affiliate_commission');
+            
+        $withdraw_request_amount = WithdrawRequest::where('user_id', $request->user_id)
+        ->where('type','1')
+        ->where('admin_verify','1')
+            ->sum('amount');
+
+         $total_earning=$total_earning-$withdraw_request_amount;
+
 
         return [
             'status' => 'success',
@@ -1934,6 +1942,16 @@ public function submitWithdrawRequest($request_data)
             $total_earning = OrderDetail::where('affiliate_id', $request_data->user_id)
                             ->where('delivery_status', '3')
                             ->sum('affiliate_commission');
+
+                                    
+            $withdraw_request_amount = WithdrawRequest::where('user_id', $request_data->user_id)
+            ->where('type','1')
+            ->where('admin_verify','1')
+                ->sum('amount');
+
+             $total_earning=$total_earning-$withdraw_request_amount;
+
+
 
             if($total_earning<$request_data->amount){
                 return [
