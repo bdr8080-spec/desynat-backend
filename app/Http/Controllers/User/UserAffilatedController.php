@@ -999,8 +999,18 @@ if ($validator->fails()) {
         
                 $allOrders=$this->UserOrderService->AffiliateAllOrderDetailsNew($request_data)['data'];
                // dd($allOrders);
+                     
 
-        return view('affiliatedUser.payment.index',compact('allOrders'));
+        $request_data1 = (object) [
+            'user_id' => $user,
+        ];
+
+        $data = $this->UserAffilatedAuthService->getProfile($request_data1);
+
+        $affilatedUser=$data['data'];
+        //dd($affilatedUser);
+
+        return view('affiliatedUser.payment.index',compact('allOrders','affilatedUser'));
 
     }
 
@@ -1048,10 +1058,12 @@ public function affiliate_submit_withdraw_request(Request $request){
             return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
            }
     
-         $user_id= $request->user()->id;
+         $affilatedUser=Auth::guard('affilated_user')->user();
+            
+        $user = $affilatedUser->id;
 
            $request_data=(object)[
-            'user_id'=>$user_id,
+            'user_id'=>$user,
             'amount'=>$request->amount,
             'bankdetails_id'=>$request->bankdetails_id
             ];
