@@ -193,6 +193,11 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
+Route::match(['get', 'post'], '/subscription-plans', function () {
+    return view('dealer.plans.index');
+
+})->name('dealer.subscription-plans');
+
 // Route::match(['get', 'post'], '/live-request', function () {
 //     return view('dealer.liverequest.live-request');
 
