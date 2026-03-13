@@ -1,5 +1,47 @@
 </main>
 
+<!-- Notification Management -->
+
+<div class="offcanvas  offcanvas-end" data-bs-scroll="true" tabindex="-1" id="notificationDialog">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">Notification</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="notification-pnl d-flex gap-3 mb-3">
+        <div>
+            <div class="bell-icon-1">
+                <i class="bi bi-bell-fill"></i>
+            </div>
+        </div>
+        <div class="noti-content">
+            <div class="noti-header d-flex justify-content-between">
+                <div class="noti-title">Booking Confirmation</div>
+                <div class="post-date">Today 11:55 am</div>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste voluptatem dolores culpa atque nostrum quasi nihil sit itaque sapiente magni fuga,</p>
+        </div>
+    </div>
+    <div class="notification-pnl d-flex gap-3 mb-3">
+        <div>
+            <div class="bell-icon-1">
+                <i class="bi bi-bell-fill"></i>
+            </div>
+        </div>
+        <div class="noti-content">
+            <div class="noti-header d-flex justify-content-between">
+                <div class="noti-title">Booking Confirmation</div>
+                <div class="post-date">Today 11:55 am</div>
+            </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste voluptatem dolores culpa atque nostrum quasi nihil sit itaque sapiente magni fuga,</p>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+
+
 <!-- app story -->
 <div class="storywapper" style="display:none;">
   <div class="container">

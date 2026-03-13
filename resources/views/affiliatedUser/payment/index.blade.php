@@ -37,7 +37,7 @@
                 <div class="balance-title">Total Revenue</div>
                 <div class="walletic d-flex gap-2 align-items-center mt-3">
                     <div class="wallet-ic-2">
-                        <img src="http://www.desynat.com/user/assets/images/wallet-ic.svg" class="img-fluid">
+                        <img src="{{ asset('/dealer') }}/assets/img/wallet-ic.svg" class="img-fluid">
                     </div>
                     <h5>
                       {{ 
