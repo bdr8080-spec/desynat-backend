@@ -1024,7 +1024,8 @@ if ($validator->fails()) {
             'user_id' => $user,
             'req_type' => '0',
             'search' => $request->search??null,
-            "limit"=>$request->limit??10
+            "limit"=>$request->limit??10,
+            'page_name' => 'pending_page'
         ];
 
         $pendingReq = $this->UserOrderService->getAllWithdrawRequest($request_data)['data'];
@@ -1034,7 +1035,8 @@ if ($validator->fails()) {
             'user_id' => $user,
             'req_type' => '1',
             'search' => $request->search??null,
-            "limit"=>$request->limit??10
+            "limit"=>$request->limit??10,
+            'page_name' => 'approved_page'
         ];
         //dump($request_data1);
 

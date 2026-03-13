@@ -1991,10 +1991,55 @@ public function submitWithdrawRequest($request_data)
         }
     }
 
+    // public function getAllWithdrawRequest($request_data)
+    // {
+    //     try {
+    //         $limit = (int) ($request_data->limit ?? 10);
+
+    //         $query = WithdrawRequest::with('bank_details')
+    //                     ->where('user_id', $request_data->user_id)
+    //                     ->where('type', '1'); 
+
+    //         if ($request_data->req_type == '0') {
+    //             $query->where('admin_verify', '0'); 
+    //         } elseif ($request_data->req_type == '1') {
+    //             $query->whereIn('admin_verify', ['1', '2']);
+    //         }
+
+    //         if (!empty($request_data->search)) {
+    //             $query->where('request_id', 'like', '%' . $request_data->search . '%');
+    //         }
+
+    //         $withdraw_requests = $query->orderBy('id', 'desc')->paginate($limit);
+
+    //         $total_withdrawals = WithdrawRequest::where('user_id', $request_data->user_id)
+    //                                 ->where('type', '1')
+    //                                 ->where('admin_verify', '1')
+    //                                 ->sum('amount');
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Withdraw requests fetched successfully',
+    //             'data' => [
+    //                 'withdraw_requests' => $withdraw_requests,
+    //                 'total_withdrawals' => number_format((float)$total_withdrawals, 2, '.', '') 
+    //             ]
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch withdraw requests: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
     public function getAllWithdrawRequest($request_data)
     {
         try {
             $limit = (int) ($request_data->limit ?? 10);
+            $pageName = $request_data->page_name ?? 'page';
 
             $query = WithdrawRequest::with('bank_details')
                         ->where('user_id', $request_data->user_id)
@@ -2010,7 +2055,8 @@ public function submitWithdrawRequest($request_data)
                 $query->where('request_id', 'like', '%' . $request_data->search . '%');
             }
 
-            $withdraw_requests = $query->orderBy('id', 'desc')->paginate($limit);
+            $withdraw_requests = $query->orderBy('id', 'desc')
+                                    ->paginate($limit, ['*'], $pageName);
 
             $total_withdrawals = WithdrawRequest::where('user_id', $request_data->user_id)
                                     ->where('type', '1')
