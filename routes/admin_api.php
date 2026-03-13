@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\Admin\FullBannerController;
 use App\Http\Controllers\Api\Admin\AffiliatedUserController;
 use App\Http\Controllers\Api\Admin\ProductManagementController;
 use App\Http\Controllers\Api\Admin\WithdrawRequestController;
+use App\Http\Controllers\Api\Admin\CMSController;
 
 
 // Admin APi M1
@@ -237,6 +238,23 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/reject_withdraw_request',[WithdrawRequestController::class,'reject_withdraw_request']);
      Route::post('/approve_withdraw_request',[WithdrawRequestController::class,'approve_withdraw_request']);
      Route::post('/transfer_withdraw_request',[WithdrawRequestController::class,'transfer_withdraw_request']);
+
+     //M10 api starts
+     Route::post('/create_update_terms_condition',[CMSController::class,'create_update_terms_condition']);
+     Route::get('/get_terms_condition',[CMSController::class,'get_terms_condition']);
+     Route::post('/create_update_return_policy',[CMSController::class,'create_update_return_policy']);
+     Route::get('/get_return_policy',[CMSController::class,'get_return_policy']);
+     Route::post('/create_update_about_us',[CMSController::class,'create_update_about_us']);
+     Route::get('/get_about_us',[CMSController::class,'get_about_us']);
+     Route::post('/create_update_cancellation_policy',[CMSController::class,'create_update_cancellation_policy']);
+     Route::get('/get_cancellation_policy',[CMSController::class,'get_cancellation_policy']);
+     Route::post('/create_update_exchange_policy',[CMSController::class,'create_update_exchange_policy']);
+     Route::get('/get_exchange_policy',[CMSController::class,'get_exchange_policy']);
+     Route::post('/create_update_contact_us',[CMSController::class,'create_update_contact_us']);
+     Route::get('/get_contact_us',[CMSController::class,'get_contact_us']);
+     Route::post('/add_faq',[CMSController::class,'add_faq']);
+     Route::post('/update_faq',[CMSController::class,'update_faq']);
+     Route::get('/get_faq',[CMSController::class,'get_faq']);
      
 
 
