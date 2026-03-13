@@ -917,6 +917,36 @@ table.dataTable td.dt-type-date {
     width: 100%;
     object-fit: cover;
 }
+.bell-icon-1 {
+    height: 45px;
+    width: 45px;
+    background: #eee;
+    border-radius: 50px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#notificationDialog {
+    width: 31%;
+}
+.notification-pnl {
+    border: 1px solid #ddd;
+    padding: 14px;
+    border-radius: 10px;
+}
+.noti-content p {
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.noti-title {
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+.post-date {
+    font-size: 14px;
+    font-weight: 400;
+}
 
 
 

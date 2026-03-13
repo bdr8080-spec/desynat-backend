@@ -72,7 +72,7 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialog" >
                         <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
                         <!-- <span class="badge bg-primary badge-number">4</span> -->
                     </a>
