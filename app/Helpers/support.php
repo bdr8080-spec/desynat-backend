@@ -1,12 +1,13 @@
 <?php
 
-
 use App\Models\{UserGiftCards,UserWallet,Order,Addtocart,orderdetail,OrderDeliveryAddress,allproductchats};
 use App\Models\Zone;
 use App\Models\DeliveryBoy;
 use App\Models\SellerSubcriptionPlanBuy;
 use App\Models\Plan;
 use Carbon\Carbon;
+use App\Models\Notification;
+
 
 // Function to calculate the distance using the Haversine formula
 function calculateDistance($lat1, $lon1, $lat2, $lon2) {
@@ -508,6 +509,60 @@ if (!function_exists('SellerChatproductRequestStatus')) {
         return $data;
     }
 }
+
+    function sendPushNotification($userTokens, $title, $description, $notification_type, $sender_id, $receiver_id, $receiver_type)
+    {
+       // dd($userTokens);
+        $accessToken = generateFirebaseAccessToken()['access_token'];
+        //dd($accessToken);
+
+        foreach ($userTokens as $device_token) {
+
+            if (!$device_token) continue;
+
+            $notification = [
+                'message' => [
+                    'token' => $device_token,
+                    'notification' => [
+                        'title' => (string)$title,
+                        'body' => (string)$description,
+                    ],
+                    'data' => [
+                        'receiver_id' => (string)$receiver_id,
+                        'sender_id' => (string)$sender_id,
+                        'type' => (string)$notification_type,
+                        'receiver_type' => (string)$receiver_type
+                    ]
+                ]
+            ];
+
+            $curl = curl_init();
+            curl_setopt_array($curl, [
+                CURLOPT_URL => 'https://fcm.googleapis.com/v1/projects/desynat/messages:send',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($notification),
+                CURLOPT_HTTPHEADER => [
+                    'Authorization: Bearer ' . $accessToken,
+                    'Content-Type: application/json',
+                ],
+            ]);
+
+            curl_exec($curl);
+            curl_close($curl);
+        }
+    }
+
+    function generateFirebaseAccessToken()
+    {
+        $serviceAccountPath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
+
+        $client = new \Google_Client();
+        $client->setAuthConfig($serviceAccountPath);
+        $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
+
+        return $client->fetchAccessTokenWithAssertion();
+    }
 
 
 

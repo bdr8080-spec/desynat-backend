@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\DeliveryBoy\AuthController;
 use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyDashboardController;
 use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyProfileController;
 use App\Http\Controllers\Api\DeliveryBoy\DeliveryBoyOrderController;
+use App\Http\Controllers\Api\DeliveryBoy\NotificationController;
 
 
 // M1 Milestone 
@@ -42,6 +43,10 @@ Route::group(['prefix' => 'deliveryboy'], function () {
 
 
     Route::post('/return-order-to-store-in-exchange', [DeliveryBoyOrderController::class,'ReturnOrderToStoreOnExchnage']);
+
+    //M10
+    Route::get('/get_notifications_list',[NotificationController::class,'get_notifications_list']);
+    Route::post('/mark_notification_as_read',[NotificationController::class,'mark_notification_as_read']);
 
     });
 

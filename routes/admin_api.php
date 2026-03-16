@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\Admin\AffiliatedUserController;
 use App\Http\Controllers\Api\Admin\ProductManagementController;
 use App\Http\Controllers\Api\Admin\WithdrawRequestController;
 use App\Http\Controllers\Api\Admin\CMSController;
+use App\Http\Controllers\Api\Admin\NotificationController;
 
 
 // Admin APi M1
@@ -255,6 +256,11 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/add_faq',[CMSController::class,'add_faq']);
      Route::post('/update_faq',[CMSController::class,'update_faq']);
      Route::get('/get_faq',[CMSController::class,'get_faq']);
+
+     Route::post('/send_notification',[NotificationController::class,'send_notification']);
+     Route::get('/get_send_notifications_list',[NotificationController::class,'get_send_notifications_list']);
+     Route::get('/get_my_notifications_list',[NotificationController::class,'get_my_notifications_list']);
+     Route::post('/mark_notification_as_read',[NotificationController::class,'mark_notification_as_read']);
      
 
 
