@@ -220,6 +220,10 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
+Route::match(['get', 'post'], '/cms-page', function () {
+    return view('admin.cms.index');
+
+})->name('admin.cms-page');
 
 
 Route::fallback(function (Request $request) {
