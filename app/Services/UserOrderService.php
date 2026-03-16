@@ -1940,6 +1940,13 @@ public function submitWithdrawRequest($request_data)
     {
         try {
             DB::beginTransaction();
+            if ($request_data->amount > 1000) {
+                return [
+                    'status' => 'error',
+                    'message' => 'You cannot withdraw more than 1000 KD at a time',
+                    'data' => (object)[]
+                ];
+            }
             $total_earning = orderdetail::where('affiliate_id', $request_data->user_id)
                             ->where('delivery_status', '3')
                             ->sum('affiliate_commission');
