@@ -147,6 +147,13 @@
             CMS Management
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/notification">
+            <span><img src="{{ asset('admin/image/credit-card-down.svg') }}" alt="icon" /></span>
+            Notification Management
+        </a>
+    </li>
      
     <!-- <li class="nav-item">
         <a class="nav-link" href="{{ route('adminLogout') }}">
