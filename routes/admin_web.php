@@ -220,6 +220,20 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
+Route::match(['get', 'post'], '/cms-page', function () {
+    return view('admin.cms.index');
+
+})->name('admin.cms-page');
+
+Route::match(['get', 'post'], '/notification', function () {
+    return view('admin.cms.notification');
+
+})->name('admin.notification');
+
+Route::match(['get', 'post'], '/send-notification', function () {
+    return view('admin.cms.notification-send');
+
+})->name('admin.send-notification');
 
 
 Route::fallback(function (Request $request) {
