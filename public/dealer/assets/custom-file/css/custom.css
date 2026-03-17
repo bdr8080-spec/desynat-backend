@@ -22,6 +22,13 @@
     color: #916b47;
     background: linear-gradient(180.99deg, #dfbf8fa8 -53.71%, #cba97c61 154.28%);
 }
+.monthly-color{
+    color: #916b47;
+}
+.planmont{
+    background: #dddddd6b;
+    border-radius: 10px 10px 0px 0px !important;
+}
 
 .add-fillbtn {
     background: var(--all-btn-bg);
