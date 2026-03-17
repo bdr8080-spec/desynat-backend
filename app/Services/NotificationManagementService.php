@@ -144,16 +144,62 @@ class NotificationManagementService
     }
     
 
+    // public function GetSendNotificationList($request_data)
+    // {
+    //     try {
+    //         $limit = (int)($request_data->limit); 
+    //         $sender_id = $request_data->sender_id;
+    //         $sender_type = $request_data->sender_type;
+    //         $search       = $request_data->search;
+
+    //         $notifications = Notification::where('sender_id', $sender_id)
+    //             ->where('sender_type', $sender_type)
+    //             ->orderBy('id', 'desc')
+    //             ->paginate($limit);
+
+    //         if ($notifications->isEmpty()) {
+    //             return [
+    //                 'status' => 'error',
+    //                 'message' => 'No notifications found',
+    //                 'data' => (object)[]
+    //             ];
+    //         }
+
+    //         // Append receiver_details to each notification
+    //         $notifications->map(function($notification) {
+    //             $notification->receiver_details = $notification->receiver_details;
+    //             $notification->sender_details = $notification->sender_details;
+    //             return $notification;
+    //         });
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Notifications fetched successfully',
+    //             'data' => $notifications
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch notifications: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
+
     public function GetSendNotificationList($request_data)
     {
         try {
-            $sender_id = $request_data->sender_id;
-            $sender_type = $request_data->sender_type;
+            $limit        = (int)($request_data->limit); 
+            $sender_id    = $request_data->sender_id;
+            $sender_type  = $request_data->sender_type;
+            $search       = strtolower(trim($request_data->search));
 
             $notifications = Notification::where('sender_id', $sender_id)
                 ->where('sender_type', $sender_type)
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate($limit);
 
             if ($notifications->isEmpty()) {
                 return [
@@ -163,12 +209,58 @@ class NotificationManagementService
                 ];
             }
 
-            // Append receiver_details to each notification
-            $notifications->map(function($notification) {
-                $notification->receiver_details = $notification->receiver_details;
-                $notification->sender_details = $notification->sender_details;
+            $filtered = $notifications->getCollection()->transform(function ($notification) use ($search) {
+
+                $receiver = $notification->receiver_details;
+                $sender   = $notification->sender_details;
+
+                $notification->receiver_details = $receiver;
+                $notification->sender_details   = $sender;
+
+                if (!empty($search)) {
+
+                    $fullName  = '';
+                    $firstName = '';
+                    $lastName  = '';
+
+                    if ($receiver) {
+
+                        //  HANDLE ARRAY
+                        if (is_array($receiver)) {
+                            $fullName  = strtolower($receiver['full_name'] ?? $receiver['full_name_english'] ?? '');
+                            $firstName = strtolower($receiver['first_name'] ?? '');
+                            $lastName  = strtolower($receiver['last_name'] ?? '');
+
+                        //  HANDLE OBJECT
+                        } else {
+                            $fullName  = strtolower($receiver->full_name ?? $receiver->full_name_english ?? '');
+                            $firstName = strtolower($receiver->first_name ?? '');
+                            $lastName  = strtolower($receiver->last_name ?? '');
+                        }
+                    }
+
+                    // Combine names
+                    $combinedName = trim($firstName . ' ' . $lastName);
+
+                    $title = strtolower($notification->title_english ?? '');
+
+                    //  MATCH CONDITIONS
+                    if (
+                        strpos($fullName, $search) === false &&
+                        strpos($firstName, $search) === false &&
+                        strpos($lastName, $search) === false &&
+                        strpos($combinedName, $search) === false &&
+                        strpos($title, $search) === false
+                    ) {
+                        return null;
+                    }
+                }
+
                 return $notification;
-            });
+
+            })->filter()->values();
+
+            $notifications->setCollection($filtered);
 
             return [
                 'status' => 'success',
