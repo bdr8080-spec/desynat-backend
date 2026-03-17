@@ -134,12 +134,68 @@
 
                     </div>
                 </div>
-
-
-
             </div>
 
+            <!-------------  my plan ------------>
+
             <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
+                
+                <div class="rounded-4 desc-box shadow-sm bg-white mb-4">
+                    <div class="card-header d-flex justify-content-between p-2 planmont">
+                        <div class="monthly-color fw-semibold">Active</div>
+                        <div class="monthly-color fw-semibold">Monthly</div>
+                    </div>
+                    <div class="p-3">
+                        <div class="row mb-2">
+                            <div class="col-6">Purchased On</div>
+                            <div class="col-6">
+                                <div class="text-end">21/03/2026 at 10:00 AM  </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Amount </div>
+                            <div class="col-6">
+                                <div class="text-end">200 KD</div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Plan </div>
+                            <div class="col-6">
+                                <div class="text-end">Pro Plan </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rounded-4 desc-box shadow-sm bg-white mb-4">
+                    <div class="card-header d-flex justify-content-between p-2 planmont">
+                        <div class="monthly-black fw-semibold">Expired</div>
+                        <div class="monthly-color fw-semibold">Monthly</div>
+                    </div>
+                    <div class="p-3">
+                        <div class="row mb-2">
+                            <div class="col-6">Purchased On</div>
+                            <div class="col-6">
+                                <div class="text-end">21/03/2026 at 10:00 AM  </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Amount </div>
+                            <div class="col-6">
+                                <div class="text-end">200 KD</div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">Plan </div>
+                            <div class="col-6">
+                                <div class="text-end">Pro Plan </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
 
             </div>
 
