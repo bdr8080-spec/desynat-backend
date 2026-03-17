@@ -91,6 +91,8 @@ class NotificationController extends Controller
             $request_data = (object)[
                 'sender_id'    => $senderId,
                 'sender_type'      => '1',
+                'search'      => $request->search??null,
+                'limit'      => $request->limit??10,
             ];
 
             $data = $this->NotificationManagementService->GetSendNotificationList($request_data);
