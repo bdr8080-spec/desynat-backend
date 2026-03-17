@@ -144,13 +144,14 @@ class NotificationManagementService
     }
     
 
+
     // public function GetSendNotificationList($request_data)
     // {
     //     try {
-    //         $limit = (int)($request_data->limit); 
-    //         $sender_id = $request_data->sender_id;
-    //         $sender_type = $request_data->sender_type;
-    //         $search       = $request_data->search;
+    //         $limit        = (int)($request_data->limit); 
+    //         $sender_id    = $request_data->sender_id;
+    //         $sender_type  = $request_data->sender_type;
+    //         $search       = strtolower(trim($request_data->search));
 
     //         $notifications = Notification::where('sender_id', $sender_id)
     //             ->where('sender_type', $sender_type)
@@ -159,18 +160,64 @@ class NotificationManagementService
 
     //         if ($notifications->isEmpty()) {
     //             return [
-    //                 'status' => 'error',
+    //                 'status' => 'success',
     //                 'message' => 'No notifications found',
     //                 'data' => (object)[]
     //             ];
     //         }
 
-    //         // Append receiver_details to each notification
-    //         $notifications->map(function($notification) {
-    //             $notification->receiver_details = $notification->receiver_details;
-    //             $notification->sender_details = $notification->sender_details;
+    //         $filtered = $notifications->getCollection()->transform(function ($notification) use ($search) {
+
+    //             $receiver = $notification->receiver_details;
+    //             $sender   = $notification->sender_details;
+
+    //             $notification->receiver_details = $receiver;
+    //             $notification->sender_details   = $sender;
+
+    //             if (!empty($search)) {
+
+    //                 $fullName  = '';
+    //                 $firstName = '';
+    //                 $lastName  = '';
+
+    //                 if ($receiver) {
+
+    //                     //  HANDLE ARRAY
+    //                     if (is_array($receiver)) {
+    //                         $fullName  = strtolower($receiver['full_name'] ?? $receiver['full_name_english'] ?? '');
+    //                         $firstName = strtolower($receiver['first_name'] ?? '');
+    //                         $lastName  = strtolower($receiver['last_name'] ?? '');
+
+    //                     //  HANDLE OBJECT
+    //                     } else {
+    //                         $fullName  = strtolower($receiver->full_name ?? $receiver->full_name_english ?? '');
+    //                         $firstName = strtolower($receiver->first_name ?? '');
+    //                         $lastName  = strtolower($receiver->last_name ?? '');
+    //                     }
+    //                 }
+
+    //                 // Combine names
+    //                 $combinedName = trim($firstName . ' ' . $lastName);
+
+    //                 $title = strtolower($notification->title_english ?? '');
+
+    //                 //  MATCH CONDITIONS
+    //                 if (
+    //                     strpos($fullName, $search) === false &&
+    //                     strpos($firstName, $search) === false &&
+    //                     strpos($lastName, $search) === false &&
+    //                     strpos($combinedName, $search) === false &&
+    //                     strpos($title, $search) === false
+    //                 ) {
+    //                     return null;
+    //                 }
+    //             }
+
     //             return $notification;
-    //         });
+
+    //         })->filter()->values();
+
+    //         $notifications->setCollection($filtered);
 
     //         return [
     //             'status' => 'success',
@@ -191,84 +238,140 @@ class NotificationManagementService
     public function GetSendNotificationList($request_data)
     {
         try {
-            $limit        = (int)($request_data->limit); 
-            $sender_id    = $request_data->sender_id;
-            $sender_type  = $request_data->sender_type;
-            $search       = strtolower(trim($request_data->search));
 
-            $notifications = Notification::where('sender_id', $sender_id)
-                ->where('sender_type', $sender_type)
-                ->orderBy('id', 'desc')
-                ->paginate($limit);
+            $limit       = (int)($request_data->limit ?? 10); 
+            $sender_id   = $request_data->sender_id;
+            $sender_type = $request_data->sender_type;
+            $search      = strtolower(trim($request_data->search ?? ''));
+
+            $query = Notification::where('sender_id', $sender_id)
+                ->where('sender_type', $sender_type);
+
+            if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
+
+                $query->whereBetween('created_at', [
+                    $request_data->from_date . ' 00:00:00',
+                    $request_data->to_date . ' 23:59:59'
+                ]);
+
+            } elseif (!empty($request_data->from_date)) {
+
+                $query->whereDate('created_at', '>=', $request_data->from_date);
+
+            } elseif (!empty($request_data->to_date)) {
+
+                $query->whereDate('created_at', '<=', $request_data->to_date);
+            }
+
+            $notifications = $query->orderBy('id', 'desc')->get();
 
             if ($notifications->isEmpty()) {
                 return [
-                    'status' => 'error',
+                    'status' => 'success',
                     'message' => 'No notifications found',
                     'data' => (object)[]
                 ];
             }
 
-            $filtered = $notifications->getCollection()->transform(function ($notification) use ($search) {
+            //  Group notifications
+            $grouped = $notifications->groupBy(function ($item) {
+                return md5(
+                    $item->title_english .
+                    $item->description_english .
+                    $item->sender_id .
+                    $item->sender_type
+                );
+            });
 
-                $receiver = $notification->receiver_details;
-                $sender   = $notification->sender_details;
+            $finalData = [];
 
-                $notification->receiver_details = $receiver;
-                $notification->sender_details   = $sender;
+            foreach ($grouped as $group) {
 
+                $first = $group->first();
+
+                //  Collect receivers
+                $receivers = collect($group)->map(function ($notification) {
+
+                    if (!$notification->receiver_details) {
+                        return null;
+                    }
+
+                    $receiver = $notification->receiver_details;
+
+                    $receiver->receiver_type = $notification->receiver_type;
+                    $receiver->receiver_id   = $notification->receiver_id;
+
+                    return $receiver;
+
+                })
+                ->filter()
+                ->values()
+                ->all();
+
+                //  Search filter
                 if (!empty($search)) {
 
-                    $fullName  = '';
-                    $firstName = '';
-                    $lastName  = '';
+                    $matchFound = false;
 
-                    if ($receiver) {
+                    foreach ($receivers as $receiver) {
 
-                        //  HANDLE ARRAY
-                        if (is_array($receiver)) {
-                            $fullName  = strtolower($receiver['full_name'] ?? $receiver['full_name_english'] ?? '');
-                            $firstName = strtolower($receiver['first_name'] ?? '');
-                            $lastName  = strtolower($receiver['last_name'] ?? '');
+                        $name = strtolower(
+                            $receiver->full_name ??
+                            $receiver->full_name_english ??
+                            trim(($receiver->first_name ?? '') . ' ' . ($receiver->last_name ?? ''))
+                        );
 
-                        //  HANDLE OBJECT
-                        } else {
-                            $fullName  = strtolower($receiver->full_name ?? $receiver->full_name_english ?? '');
-                            $firstName = strtolower($receiver->first_name ?? '');
-                            $lastName  = strtolower($receiver->last_name ?? '');
+                        if (strpos($name, $search) !== false) {
+                            $matchFound = true;
+                            break;
                         }
                     }
 
-                    // Combine names
-                    $combinedName = trim($firstName . ' ' . $lastName);
+                    $title = strtolower($first->title_english ?? '');
 
-                    $title = strtolower($notification->title_english ?? '');
-
-                    //  MATCH CONDITIONS
-                    if (
-                        strpos($fullName, $search) === false &&
-                        strpos($firstName, $search) === false &&
-                        strpos($lastName, $search) === false &&
-                        strpos($combinedName, $search) === false &&
-                        strpos($title, $search) === false
-                    ) {
-                        return null;
+                    if (!$matchFound && strpos($title, $search) === false) {
+                        continue;
                     }
                 }
 
-                return $notification;
+                $finalData[] = [
+                    'id'                  => $first->id,
+                    'sender_id'           => $first->sender_id,
+                    'sender_type'         => $first->sender_type,
+                    'title_english'       => $first->title_english,
+                    'title_arabic'        => $first->title_arabic,
+                    'description_english' => $first->description_english,
+                    'description_arabic'  => $first->description_arabic,
+                    'created_at'          => $first->created_at,
+                    'total_receivers'     => count($receivers),
 
-            })->filter()->values();
+                    'sender_details'      => $first->sender_details,
+                    'receiver_details'    => $receivers,
+                ];
+            }
 
-            $notifications->setCollection($filtered);
+            // Pagination
+            $page    = (int)request()->get('page', 1);
+            $perPage = $limit;
+
+            $pagedData = collect($finalData)
+                ->forPage($page, $perPage)
+                ->values();
 
             return [
                 'status' => 'success',
                 'message' => 'Notifications fetched successfully',
-                'data' => $notifications
+                'data' => [
+                    'current_page' => $page,
+                    'data'         => $pagedData,
+                    'total'        => count($finalData),
+                    'per_page'     => $perPage,
+                    'last_page'    => ceil(count($finalData) / $perPage),
+                ]
             ];
 
         } catch (\Exception $e) {
+
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch notifications: ' . $e->getMessage(),
@@ -276,6 +379,11 @@ class NotificationManagementService
             ];
         }
     }
+
+
+
+
+
 
     public function GetMyNotificationList($request_data)
     {
@@ -290,7 +398,7 @@ class NotificationManagementService
 
             if ($notifications->isEmpty()) {
                 return [
-                    'status' => 'error',
+                    'status' => 'success',
                     'message' => 'No notifications found',
                     'data' => (object)[]
                 ];
@@ -329,7 +437,7 @@ class NotificationManagementService
 
             if ($updated === 0) {
                 return [
-                    'status' => 'error',
+                    'status' => 'success',
                     'message' => 'No notifications found',
                     'data' => (object)[]
                 ];

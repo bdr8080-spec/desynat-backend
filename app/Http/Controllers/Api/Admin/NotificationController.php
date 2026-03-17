@@ -92,6 +92,8 @@ class NotificationController extends Controller
                 'sender_id'    => $senderId,
                 'sender_type'      => '1',
                 'search'      => $request->search??null,
+                'from_date'      => $request->from_date??null,
+                'to_date'      => $request->to_date??null,
                 'limit'      => $request->limit??10,
             ];
 
