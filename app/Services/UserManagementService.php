@@ -20,6 +20,8 @@ use App\Models\{ product,ProductSpecification,ProductVariant,sortFilter,wishlist
 
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 
 

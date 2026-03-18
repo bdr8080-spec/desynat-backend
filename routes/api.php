@@ -202,11 +202,14 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
 
     Route::Post('/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
 
-
-
-
-
 });
+
+
+  Route::Post('/scanner-Seller-details', [UserDashboardController::class,'ScannerSellerdetails']);
+
+
+   
+
 
 Route::post('user/complete-add-money-in-wallet', [UserWalletController::class,'completeAddMoneyInWallet']);
 

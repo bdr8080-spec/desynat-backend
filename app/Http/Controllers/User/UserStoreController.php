@@ -17,6 +17,9 @@ use App\Models\{Category,size,wishlist,product};
 use Auth;
 use App\Models\Addtocart;
 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
+
 class UserStoreController extends Controller
 {
 
@@ -164,9 +167,14 @@ class UserStoreController extends Controller
         $category = Category::orderBy('id', 'desc')->get();
         $size = Size::orderBy('name', 'desc')->get();
         $color = Color::orderBy('name', 'asc')->get();
-
-        return view('user.category.index', compact('store_details', 'category', 'brand', 'size', 'color'));
+        
+        // Qr Create Scanner Code 
+         $qrSellerCode = url()->full();
+          
+        return view('user.category.index', compact('store_details', 'category', 'brand', 'size', 'color','qrSellerCode'));
+        
     }
+
 
     
 

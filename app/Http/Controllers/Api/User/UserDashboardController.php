@@ -10,6 +10,9 @@ use Validator;
 
 use App\Services\UserDashboardService;
 
+use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
+
+
 class UserDashboardController extends Controller
 {
 
@@ -221,6 +224,34 @@ public function UserHomescreenDeals(Request $request){
     
     }
 
+
+public function ScannerSellerdetails(Request $request){
+
+      $validate = Validator::make($request->all(), [
+                'seller_id' => 'required',
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+  $seller_details=seller::where('id',$request->seller_id)->first();
+
+        // Qr Code Details 
+
+        $Seller_details = json_encode([
+        'id' => $seller_details->id,
+        'profile_pic' => $seller_details->profile_pic,
+        'email' => $seller_details->email,
+    ]);
+
+    $Qr_scanner= QrCode::size(300)->generate($Seller_details);
+
+    return $Qr_scanner;
+
+    // Qr Code End here 
+
+    }
 
 
     
