@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner,sellerBanner};
+use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner,sellerBanner,Deal};
 
 
 
@@ -526,6 +526,33 @@ return [
         }
     }
 
+
+
+
+public function HomeScreenDealManagement($request)
+    {
+        try {
+
+
+$all_deal= Deal::with('sellerDealrecord.product_details')->where('category_id',$request->category)
+->whereDate('from','<=',date('Y-m-d'))
+->whereDate('to','>=',date('Y-m-d'))
+->where('status','1')->get();
+
+return [
+    'status'  => 'success',
+    'message' => 'All Deal records Get Successfully',
+    'data'    => $all_deal
+];
+
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => 'Failed: ' . $e->getMessage(),
+                'data'    => (object)[]
+            ];
+        }
+    }
 
 
 

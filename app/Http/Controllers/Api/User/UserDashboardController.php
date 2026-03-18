@@ -194,6 +194,35 @@ public function HomescreenBanner(Request $request){
 
 
 
+
+public function UserHomescreenDeals(Request $request){
+
+      $validate = Validator::make($request->all(), [
+                'category' => 'required|in:1,2,3',
+                ]);
+            
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    //  $user_id=$request->user()->id;
+
+     $request_data=(object) [
+    'category'=>$request->category??null,   
+    ];
+
+  $data=$this->UserDashboardService->HomeScreenDealManagement($request_data);
+    
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    
+    }
+
+
+
     
 
 
