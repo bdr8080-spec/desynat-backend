@@ -59,7 +59,10 @@
                         <span>Copy Link</span>
                         <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" alt="Copy" class="copy-icon">
 
-                        {!! QrCode::size(110)->generate($qrSellerCode) !!}
+                        <!-- {!! QrCode::size(110)->generate($qrSellerCode) !!} -->
+
+                        <img src="{{$store_details['store']->seller_information->profile_qr}}" class="" width="100px">
+
 
                     </div>
 
