@@ -217,6 +217,44 @@ class SellerDashboardController extends Controller
 
     }
 
+    public function renew_subcription_plan_buy(Request $request){
+
+        
+        $validate = Validator::make($request->all(), [
+            'plan_id' => 'required|exists:plans,id',
+        ]);
+
+
+        if($validate->fails()){
+            return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+           }
+
+
+        $seller_details=$request->user();
+
+        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details')->where('id',$seller_details->id)->first();
+
+        $tranasaction_id='Tran'.rand(1111111111111,9999999999999);
+
+        $request_data=(object )[
+            'transaction_id'=>$tranasaction_id,
+            'seller_id'=>$seller_details->id,
+            'plan_id' =>$request->plan_id,
+            "payment_method"=>$request->payment_method??'online',
+            'payment_status'=>'0',
+        ];
+
+      $data= $this->SellerAuthService->create_Subcription_Order($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    
+    }
+
     
 
     

@@ -401,7 +401,7 @@ class NotificationManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No notifications found',
-                    'data' => []
+                    'data' => (object)[]
                 ];
             }
 
