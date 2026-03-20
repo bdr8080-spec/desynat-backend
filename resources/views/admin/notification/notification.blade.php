@@ -34,7 +34,7 @@
                     tabindex="0">
                     <div class="row align-items-end d-flex justify-content-end">
                         <div class="col-md-2 col-lg-3 col-12">
-                            <a href="/send-notification" class="btn btn-dark customBtn w-100 ms-auto mb-3">
+                            <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn w-100 ms-auto mb-3">
                                 <span>Send Notification</span></a>
                         </div>
                     </div>

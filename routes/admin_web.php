@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\AffiliateUserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AffiliateWithdrawController;
 use App\Http\Controllers\Admin\CmsController;
+use App\Http\Controllers\Admin\NotificationController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -216,6 +217,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //cms management
         Route::get('/cms-management', [CmsController::class, 'cmsManagement'])->name('admin.cmsManagement');
+        Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
+        Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->name('admin.sendNotification');
             
         
 

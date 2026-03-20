@@ -148,8 +148,8 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/notification">
+    <li class="nav-item {{ Request::routeIs('admin.notificationManagement') || Request::routeIs('admin.sendNotification') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.notificationManagement') }}">
             <span><img src="{{ asset('admin/image/credit-card-down.svg') }}" alt="icon" /></span>
             Notification Management
         </a>
