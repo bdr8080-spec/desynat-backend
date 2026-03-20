@@ -576,9 +576,9 @@ class SellerAuthService
 
   public function seller_myPlan($request){
 
-              
+              $limit = (int)($request->limit ?? 10);
 
-              $data= SellerSubcriptionPlanBuy::with('plan_info')->where('seller_id',$request->seller_id)->get();
+              $data= SellerSubcriptionPlanBuy::with('plan_info')->where('seller_id',$request->seller_id)->paginate($limit);
 
 
               if($data->isNotEmpty()){

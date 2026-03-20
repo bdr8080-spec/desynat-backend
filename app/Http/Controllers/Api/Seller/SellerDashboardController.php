@@ -263,6 +263,7 @@ class SellerDashboardController extends Controller
 
         $request_data=(object )[
             'seller_id'=>$seller_details->id,
+            'limit' =>$request->limit??10,
         ];
 
       $data= $this->SellerAuthService->seller_myPlan($request_data);
