@@ -262,6 +262,8 @@ class UserManagementService
     
             // Step 1: Find store
             $store_information = sellerStoreInformation::find($data->store_id);
+            // seller profile generate Qr Code 
+            Generate_SellerQrCode($store_information->seller_id);
     
             // If store not found
             if (!$store_information) {
