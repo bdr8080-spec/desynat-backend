@@ -46,6 +46,6 @@ function Generate_SellerQrCode($seller_id){
     // Get correct S3 URL
     $image_url = Storage::disk('s3')->url($fileName);
 
-    seller::where('id',$seller_id)->update(['profile_qr'=>$image_url]);
+    seller::where('id',$seller_id)->update(['profile_qr'=>$image_url,'qrSellerUrl'=>$qrSellerCode]);
 
 }
