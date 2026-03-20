@@ -471,6 +471,35 @@ class CMSController extends Controller
         }
     }
 
+    public function delete_faq(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'faq_id' => 'required|exists:faqs,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validate->errors()->first(), 400);
+        }
+
+        try {
+
+            $request_data = (object)[
+                'faq_id' => $request->faq_id,
+            ];
+
+            $data = $this->CMSManagementService->DeleteFaq($request_data);
+
+            if ($data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 
