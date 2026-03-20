@@ -390,17 +390,18 @@ class NotificationManagementService
         try {
             $receiver_id = $request_data->receiver_id;
             $receiver_type = $request_data->receiver_type;
+            $limit         = isset($request_data->limit) ? (int) $request_data->limit : 10; // ensure integer
 
             $notifications = Notification::where('receiver_id', $receiver_id)
                 ->where('receiver_type', $receiver_type)
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate($limit);
 
             if ($notifications->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No notifications found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
