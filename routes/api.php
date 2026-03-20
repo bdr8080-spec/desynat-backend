@@ -18,6 +18,9 @@ use App\Http\Controllers\Api\User\UserAffilatedControlller;
 use App\Http\Controllers\Api\User\UserWalletController;
 
 use App\Http\Controllers\Api\User\UserAffiliatedProductController;
+use App\Http\Controllers\Api\User\ApiNotificationController;
+
+
 
 
 
@@ -191,7 +194,22 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   Route::post('/redeem-gift-card-in-wallet', [UserWalletController::class,'Redeemgiftcardinwallet']);
   
 
+  // M10 APi 
+
+    Route::get('/user-notification', [ApiNotificationController::class,'userNotification']);
+    Route::post('/read-user-notification', [ApiNotificationController::class,'ReaduserNotification']);
+
+
+    Route::Post('/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
+
 });
+
+
+  Route::Post('/scanner-Seller-details', [UserDashboardController::class,'ScannerSellerdetails']);
+
+
+   
+
 
 Route::post('user/complete-add-money-in-wallet', [UserWalletController::class,'completeAddMoneyInWallet']);
 
