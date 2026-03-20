@@ -3,7 +3,7 @@
 
 
 
-<div class="inner-content management">
+<div class="inner-content management mb-5">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
             <h2 class="h2">CMS Management </h2>
@@ -100,45 +100,47 @@
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
 
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
+                            <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#editModal">
                                 <i class="bi bi-pencil-square"></i>
-                            </a>
-
-
+                            </a> -->
                         </div>
-                        <h6>English</h6>
+                       
                         <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
+
                     </div>
 
                     <!-- Privacy Policy -->
@@ -147,44 +149,41 @@
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Retrun Policy</h6>
 
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalPrivacy">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-
-
                         </div>
-                        <h6>English</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+
+                         <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                       <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
 
@@ -193,42 +192,41 @@
                         aria-labelledby="pills-about-tab-user">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">About Us</h6>
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalAbout">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
+                           
                         </div>
-                        <h6>English</h6>
                         <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
                     <!-- cancel-policy -->
@@ -236,45 +234,40 @@
                         aria-labelledby="pills-cancel-tab-user">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
-
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalAbout">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-
-
                         </div>
-                        <h6>English</h6>
                         <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
 
@@ -289,39 +282,40 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>
 
+                        </div>
+                      <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
 
-                        </div>
-                        <h6>English</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
 
@@ -331,13 +325,11 @@
                             <h5 class="flex-grow-1 text-start">FAQs</h5>
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#faqquestionModal">Add New Question</a>
-
-
                         </div>
                         <div class="management mt-4">
                             <h6>List of Questions(English)</h6>
 
-                            <div class="accordion" id="accordionExample">
+                            <!-- <div class="accordion" id="accordionExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -351,142 +343,61 @@
                                         <div class="accordion-body">
                                             <strong>This is the first item’s accordion body.</strong> It is shown by
                                             default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Accordion Item #2
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the second item’s accordion body.</strong> It is hidden by
-                                            default, until
-                                            the collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            Accordion Item #3
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the third item’s accordion body.</strong> It is hidden by
-                                            default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <h6>List of Questions(Arabic)</h6>
+                            </div> -->
 
-                            <div class="accordion" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            Accordion Item #1
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the first item’s accordion body.</strong> It is shown by
-                                            default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
+                            <div class="faq-list-panle">
+                                <div class="faq-english mb-3">
+                                   <div class="form-grid">
+                                        <div class="form-label">Question 1 (English)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora impedit a molestias labore, tempore quidem consectetur? Necessitatibus, voluptatem, soluta ipsa ex assumenda, nulla dolorem consectetur reprehenderit ipsum quod dolores est.
+                                        </div>
+
+                                        <div class="form-label">Answer (English)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                                        </div>
+
+                                        <div class="form-label">Question 1 (Arabic)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                                        </div>
+                                        <div class="form-label">Answer (Arabic)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Accordion Item #2
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the second item’s accordion body.</strong> It is hidden by
-                                            default, until
-                                            the collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
+
+                                 <div class="faq-english">
+                                   <div class="form-grid">
+                                        <div class="form-label">Question 1 (English)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                                        </div>
+
+                                        <div class="form-label">Answer (English)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                                        </div>
+
+                                        <div class="form-label">Question 1 (Arabic)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                                        </div>
+                                        <div class="form-label">Answer (Arabic)</div>
+                                        <div class="form-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            Accordion Item #3
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the third item’s accordion body.</strong> It is hidden by
-                                            default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
+
+                        
                         </div>
                     </div>
 
@@ -588,45 +499,40 @@
                         aria-labelledby="pills-home-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
-
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalDealer">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-
-
                         </div>
-                        <h6>English</h6>
                         <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
 
@@ -635,44 +541,40 @@
                         aria-labelledby="pills-privacy-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Privacy Policy</h6>
-
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalPrivacyDealer">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-
                         </div>
-                        <h6>English</h6>
                         <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
 
@@ -682,48 +584,40 @@
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">About Us</h6>
 
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalAboutDealer">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
 
-                            <!-- <a class="table-button eyebox mb-2" type="button"
-                                style="opacity: 0.5; text-decoration: none" data-bs-toggle="modal"
-                                data-bs-target="#noAccessMsg">
-                                <i class="bi bi-pencil-square"></i>
-                            </a> -->
-                        </div>
-                        <h6>English</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
                     <!-- cancel-policy -->
@@ -731,46 +625,42 @@
                         aria-labelledby="pills-cancel-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
-
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalAbout">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-
-
                         </div>
-                        <h6>English</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                         <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
+                     
                     </div>
 
                     <!-- exchange-policy -->
@@ -779,44 +669,40 @@
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Exchange Policy</h6>
 
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModalAbout">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-
-
                         </div>
-                        <h6>English</h6>
                         <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
+                            <div class="col-lg-6">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h6>English</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                 </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                    </div>
+                               </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                 <div class="d-flex justify-content-between mb-2">
+                                    <h6>Arabic</h6>
+                                    <a class="table-button eyebox mb-2">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                               <div class="editor-wapper mt-2">
+                                    <div class="editor">
+                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                    </div>
+                               </div>
                             </div>
                         </div>
-                        <h6>Arabic</h6>
-                        <div class="row mt-3">
-                            <div class="col-lg-12">
-                                <div class="form-control" style="
-                            height: auto;
-                            min-height: 200px;
-                            overflow: auto;
-                          ">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                                    elit. Saepe rerum distinctio repellat nisi veritatis
-                                    aperiam molestiae suscipit, doloribus dolorem eveniet
-                                    quisquam inventore quae vitae eligendi eos hic ipsa
-                                    incidunt aspernatur.
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="btn customBtn2 active text-white">
+                               Submit
+                            </button>
                         </div>
                     </div>
 
@@ -827,7 +713,6 @@
                             <h5 class="flex-grow-1 text-start">FAQs</h5>
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#faqquestionModal">Add New Question</a>
-
 
                         </div>
                         <div class="management mt-4">
@@ -846,19 +731,11 @@
                                         data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <strong>This is the first item’s accordion body.</strong> It is shown by
-                                            default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
+                                           
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion-item">
+                                <!-- <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#collapseTwo"
@@ -881,108 +758,10 @@
                                             <code>.accordion-body</code>, though the transition does limit overflow.
                                         </div>
                                     </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            Accordion Item #3
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the third item’s accordion body.</strong> It is hidden by
-                                            default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> -->
+                                
                             </div>
-                            <h6>List of Questions(Arabic)</h6>
-
-                            <div class="accordion" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            Accordion Item #1
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the first item’s accordion body.</strong> It is shown by
-                                            default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Accordion Item #2
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the second item’s accordion body.</strong> It is hidden by
-                                            default, until
-                                            the collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            Accordion Item #3
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the third item’s accordion body.</strong> It is hidden by
-                                            default, until the
-                                            collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                          
                         </div>
                     </div>
 

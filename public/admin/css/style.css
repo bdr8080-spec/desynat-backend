@@ -38,6 +38,34 @@ body {
 figure {
     margin: 0 0 1rem;
 }
+.ck-editor__editable_inline {
+    min-height: 200px;
+}
+.ck.ck-content p {
+    font-weight: 400;
+    font-size: 15px;
+}
+.faq-english .form-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 10px 20px;
+    max-width: 900px;
+}
+
+.faq-english .form-label {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.faq-english .form-text {
+    color: #333;
+    font-size: 15px;
+}
+.faq-english {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+}
 
 img {
     vertical-align: middle;
