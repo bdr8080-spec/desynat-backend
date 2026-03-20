@@ -459,6 +459,44 @@ class NotificationManagementService
             ];
         }
     }
+
+    public function markAllNotificationsAsRead($request_data)
+    {
+        try {
+
+            $receiver_type = $request_data->receiver_type;
+
+            $query = Notification::where('receiver_type', $receiver_type)
+                ->where('is_read', '0');
+
+            if (!$query->exists()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No notifications found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $query->update(['is_read' => '1']);
+
+            $updatedNotifications = Notification::where('receiver_type', $receiver_type)
+                ->where('is_read', '1')
+                ->get();
+
+            return [
+                'status' => 'success',
+                'message' => 'Notifications marked as read successfully',
+                'data' => $updatedNotifications
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
     
 
 
