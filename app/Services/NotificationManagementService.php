@@ -343,7 +343,7 @@ class NotificationManagementService
                     'description_english' => $first->description_english,
                     'description_arabic'  => $first->description_arabic,
                     'created_at'          => $first->created_at,
-                    'total_receivers'     => count($receivers),
+                    'total_receivers'     => max(count($receivers) - 1, 0),
 
                     'sender_details'      => $first->sender_details,
                     'receiver_details'    => $receivers,
@@ -380,6 +380,134 @@ class NotificationManagementService
         }
     }
 
+    public function GetSendNotificationListWeb($request_data)
+    {
+        try {
+
+            $sender_id   = $request_data->sender_id;
+            $sender_type = $request_data->sender_type;
+            $search      = strtolower(trim($request_data->search ?? ''));
+
+            $query = Notification::where('sender_id', $sender_id)
+                ->where('sender_type', $sender_type);
+
+            // Date filters
+            if (!empty($request_data->from_date) && !empty($request_data->to_date)) {
+
+                $query->whereBetween('created_at', [
+                    $request_data->from_date . ' 00:00:00',
+                    $request_data->to_date . ' 23:59:59'
+                ]);
+
+            } elseif (!empty($request_data->from_date)) {
+
+                $query->whereDate('created_at', '>=', $request_data->from_date);
+
+            } elseif (!empty($request_data->to_date)) {
+
+                $query->whereDate('created_at', '<=', $request_data->to_date);
+            }
+
+            $notifications = $query->orderBy('id', 'desc')->get();
+
+            if ($notifications->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No notifications found',
+                    'data' => []
+                ];
+            }
+
+            // Group notifications
+            $grouped = $notifications->groupBy(function ($item) {
+                return md5(
+                    $item->title_english .
+                    $item->description_english .
+                    $item->sender_id .
+                    $item->sender_type
+                );
+            });
+
+            $finalData = [];
+
+            foreach ($grouped as $group) {
+
+                $first = $group->first();
+
+                // Collect receivers
+                $receivers = collect($group)->map(function ($notification) {
+
+                    if (!$notification->receiver_details) {
+                        return null;
+                    }
+
+                    $receiver = $notification->receiver_details;
+
+                    $receiver->receiver_type = $notification->receiver_type;
+                    $receiver->receiver_id   = $notification->receiver_id;
+
+                    return $receiver;
+
+                })->filter()->values()->all();
+
+                // Search filter
+                if (!empty($search)) {
+
+                    $matchFound = false;
+
+                    foreach ($receivers as $receiver) {
+
+                        $name = strtolower(
+                            $receiver->full_name ??
+                            $receiver->full_name_english ??
+                            trim(($receiver->first_name ?? '') . ' ' . ($receiver->last_name ?? ''))
+                        );
+
+                        if (strpos($name, $search) !== false) {
+                            $matchFound = true;
+                            break;
+                        }
+                    }
+
+                    $title = strtolower($first->title_english ?? '');
+
+                    if (!$matchFound && strpos($title, $search) === false) {
+                        continue;
+                    }
+                }
+
+                $finalData[] = [
+                    'id'                  => $first->id,
+                    'sender_id'           => $first->sender_id,
+                    'sender_type'         => $first->sender_type,
+                    'title_english'       => $first->title_english,
+                    'title_arabic'        => $first->title_arabic,
+                    'description_english' => $first->description_english,
+                    'description_arabic'  => $first->description_arabic,
+                    'created_at'          => $first->created_at,
+                    'total_receivers'     => max(count($receivers) - 1, 0),
+
+                    'sender_details'      => $first->sender_details,
+                    'receiver_details'    => $receivers,
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Notifications fetched successfully',
+                'data' => $finalData
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch notifications: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 
@@ -390,11 +518,12 @@ class NotificationManagementService
         try {
             $receiver_id = $request_data->receiver_id;
             $receiver_type = $request_data->receiver_type;
+            $limit         = isset($request_data->limit) ? (int) $request_data->limit : 10; // ensure integer
 
             $notifications = Notification::where('receiver_id', $receiver_id)
                 ->where('receiver_type', $receiver_type)
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate($limit);
 
             if ($notifications->isEmpty()) {
                 return [
@@ -459,7 +588,86 @@ class NotificationManagementService
             ];
         }
     }
-    
+
+    public function markAllNotificationsAsRead($request_data)
+    {
+        try {
+
+            $receiver_type = $request_data->receiver_type;
+
+            $query = Notification::where('receiver_type', $receiver_type)
+                ->where('is_read', '0');
+
+            if (!$query->exists()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No notifications found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $query->update(['is_read' => '1']);
+
+            $updatedNotifications = Notification::where('receiver_type', $receiver_type)
+                ->where('is_read', '1')
+                ->get();
+
+            return [
+                'status' => 'success',
+                'message' => 'Notifications marked as read successfully',
+                'data' => $updatedNotifications
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function driverMarkAllNotificationsAsRead($request_data)
+    {
+        try {
+
+            $receiver_id   = $request_data->receiver_id;
+            $receiver_type = $request_data->receiver_type;
+
+            $query = Notification::where('receiver_id', $receiver_id)
+                ->where('receiver_type', $receiver_type)
+                ->where('is_read', '0');
+
+            if (!$query->exists()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No notifications found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $query->update(['is_read' => '1']);
+
+            $updatedNotifications = Notification::where('receiver_id', $receiver_id)
+                ->where('receiver_type', $receiver_type)
+                ->where('is_read', '1')
+                ->get();
+
+            return [
+                'status' => 'success',
+                'message' => 'Notifications marked as read successfully',
+                'data' => $updatedNotifications
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+        
 
 
 

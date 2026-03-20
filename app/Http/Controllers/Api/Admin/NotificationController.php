@@ -120,6 +120,7 @@ class NotificationController extends Controller
             $request_data = (object)[
                 'receiver_id'    => $receiverId,
                 'receiver_type'      => '1',
+                'limit'      => $request->limit??10,
             ];
 
             $data = $this->NotificationManagementService->GetMyNotificationList($request_data);
@@ -154,6 +155,36 @@ class NotificationController extends Controller
             ];
 
             $data = $this->NotificationManagementService->markNotificationsAsRead($request_data);
+
+            if ($data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: '.$e->getMessage(), [], 500);
+        }
+    }
+
+    public function mark_all_notification_as_read(Request $request)
+    {
+        //dd(123);
+        $validator = Validator::make($request->all(), [
+            'receiver_type' => 'required|in:1,2,3,4,5',
+        ]);
+
+        if ($validator->fails()) {
+            return ApiResponse::generateResponse('error', 'Validation error', $validator->errors()->first(), 400);
+        }
+
+        try {
+
+            $request_data = (object)[
+                'receiver_type' => $request->receiver_type,
+            ];
+
+            $data = $this->NotificationManagementService->markAllNotificationsAsRead($request_data);
 
             if ($data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);

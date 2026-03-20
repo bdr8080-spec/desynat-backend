@@ -32,6 +32,16 @@ class AdminAuthService
         if($get_user_details){
 
             if(Hash::check($request->password,$get_user_details->password,)){
+                 $updateData = [];
+                    if (isset($request->device_type)) {
+                        $updateData['device_type'] = $request->device_type;
+                    }
+                    if (isset($request->fcm_token)) {
+                        $updateData['fcm_token'] = $request->fcm_token;
+                    }
+                    if (!empty($updateData)) {
+                        $get_user_details->update($updateData);
+                    }
                 $get_user_details->accessToken = $get_user_details->createToken('admin')->plainTextToken;            
                 return ['status'=>'success','message'=>"Admin Login Successfully",'data'=>$get_user_details];                            
             }else{

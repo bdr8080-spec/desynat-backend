@@ -30,6 +30,7 @@ class NotificationController extends Controller
             $request_data = (object)[
                 'receiver_id'    => $receiverId,
                 'receiver_type'      => '5',
+                'limit'      => $request->limit??10,
             ];
 
             $data = $this->NotificationManagementService->GetMyNotificationList($request_data);
@@ -64,6 +65,30 @@ class NotificationController extends Controller
             ];
 
             $data = $this->NotificationManagementService->markNotificationsAsRead($request_data);
+
+            if ($data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: '.$e->getMessage(), [], 500);
+        }
+    }
+
+    public function driver_mark_all_notification_as_read(Request $request)
+    {
+
+        try {
+            $receiverId = auth()->id();
+
+            $request_data = (object)[
+                'receiver_id' => $receiverId,
+                'receiver_type' => '5',
+            ];
+
+            $data = $this->NotificationManagementService->driverMarkAllNotificationsAsRead($request_data);
 
             if ($data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);

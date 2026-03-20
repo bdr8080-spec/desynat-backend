@@ -27,6 +27,8 @@ use App\Http\Controllers\Admin\FullScreenBannerController;
 use App\Http\Controllers\Admin\AffiliateUserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AffiliateWithdrawController;
+use App\Http\Controllers\Admin\CmsController;
+use App\Http\Controllers\Admin\NotificationController;
 
 
 Route::group(['prefix'=>'admin'], function(){
@@ -212,6 +214,13 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/transferWithdrawRequest', [AffiliateWithdrawController::class, 'transferWithdrawRequest'])->name('admin.transferWithdrawRequest');
         Route::get('/myfatoorah/success', [AffiliateWithdrawController::class, 'paymentSuccess'])->name('admin.payment.success');
         Route::get('/myfatoorah/error', [AffiliateWithdrawController::class, 'paymentError'])->name('admin.payment.error');
+
+        //cms management
+        Route::get('/cms-management', [CmsController::class, 'cmsManagement'])->name('admin.cmsManagement');
+
+        //notification management
+        Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
+        Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->name('admin.sendNotification');
             
         
 
@@ -220,20 +229,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-Route::match(['get', 'post'], '/cms-page', function () {
-    return view('admin.cms.index');
-
-})->name('admin.cms-page');
-
-Route::match(['get', 'post'], '/notification', function () {
-    return view('admin.cms.notification');
-
-})->name('admin.notification');
-
-Route::match(['get', 'post'], '/send-notification', function () {
-    return view('admin.cms.notification-send');
-
-})->name('admin.send-notification');
 
 
 Route::fallback(function (Request $request) {

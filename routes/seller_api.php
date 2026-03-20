@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Seller\OrderManagement;
 
 use App\Http\Controllers\Api\Seller\SellerDealManagement;
 use App\Http\Controllers\Api\Seller\SellerLiveRequestController;
+use App\Http\Controllers\Api\Seller\NotificationController;
 
 use App\Http\Controllers\CommonController;
 
@@ -127,6 +128,13 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::get('/get_live_requests', [SellerLiveRequestController::class,'get_live_requests']);
     Route::post('/cancel_live_request', [SellerLiveRequestController::class,'cancel_live_request']);
     Route::post('/send_live_request', [SellerLiveRequestController::class,'send_live_request']);
+
+    //M10
+    Route::get('/get_my_notifications_list', [NotificationController::class,'get_my_notifications_list']);
+    Route::post('/mark_notification_as_read', [NotificationController::class,'mark_notification_as_read']);
+    Route::post('/mark_all_notification_as_read', [NotificationController::class,'mark_all_notification_as_read']);
+    Route::post('/renew_subcription_plan_buy', [SellerDashboardController::class,'renew_subcription_plan_buy']);
+    Route::get('/my_plans', [SellerDashboardController::class,'my_plans']);
 
 });
 

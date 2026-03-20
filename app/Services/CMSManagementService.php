@@ -595,6 +595,37 @@ class CMSManagementService
         }
     }
 
+    public function DeleteFaq($request_data)
+    {
+        try {
+
+            $faq = Faq::find($request_data->faq_id);
+
+            if (!$faq) {
+                return [
+                    'status' => 'error',
+                    'message' => 'FAQ not found',
+                    'data' => (object)[]
+                ];
+            }
+            $faq->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'FAQ deleted successfully',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete FAQ: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
     
 
