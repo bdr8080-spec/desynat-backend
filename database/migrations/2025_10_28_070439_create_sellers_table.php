@@ -34,10 +34,9 @@ return new class extends Migration
             $table->tinyInteger('is_block')->default(0)->comment('0 no, 1 yes');
             $table->string('lang')->default('en')->comment(' en ar');
          
-
-            
-
-           
+             $table->string('profile_qr')->comment('Seller profile QR Code');
+             $table->string('qrSellerUrl')->comment(' Seller profile QR Code Link ');
+             
             $table->timestamps();
         });
     }
