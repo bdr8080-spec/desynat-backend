@@ -255,6 +255,27 @@ class SellerDashboardController extends Controller
     
     }
 
+    public function my_plans(Request $request){
+
+        $seller_details=$request->user();
+
+        $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details')->where('id',$seller_details->id)->first();
+
+        $request_data=(object )[
+            'seller_id'=>$seller_details->id,
+        ];
+
+      $data= $this->SellerAuthService->seller_myPlan($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],[],400);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    
+    }
+
     
 
     

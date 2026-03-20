@@ -573,6 +573,21 @@ class SellerAuthService
           ];
       }
   }
+
+  public function seller_myPlan($request){
+
+              
+
+              $data= SellerSubcriptionPlanBuy::with('plan_info')->where('seller_id',$request->seller_id)->get();
+
+
+              if($data->isNotEmpty()){
+                return ['status'=>'success','message'=>"My Plans fetch Successfully",'data'=>$data];            
+                }else{
+                  return ['status'=>'error','message'=>"No Plan Found",'data'=>(object)[]];                
+                }
+
+              }
               
 
             
