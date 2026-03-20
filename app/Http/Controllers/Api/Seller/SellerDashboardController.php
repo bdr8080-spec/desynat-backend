@@ -244,7 +244,7 @@ class SellerDashboardController extends Controller
             'payment_status'=>'0',
         ];
 
-      $data= $this->SellerAuthService->create_Subcription_Order($request_data);
+      $data= $this->SellerAuthService->renew_Subscription_Order($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],(object)[],400);

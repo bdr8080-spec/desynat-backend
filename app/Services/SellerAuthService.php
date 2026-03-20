@@ -494,6 +494,85 @@ class SellerAuthService
                     }
               
                   }
+
+  public function renew_Subscription_Order($request)
+  {
+      try {
+          $plan_data = Plan::where('id', $request->plan_id)->first();
+          if (!$plan_data) {
+              return [
+                  'status' => 'error',
+                  'message' => 'Plan not found',
+                  'data' => (object)[]
+              ];
+          }
+
+          $currentDateTime = Carbon::now();
+
+          // Calculate new end date based on duration type
+          if ($plan_data->duration_type == '1') { // month
+              $newEndDate = $currentDateTime->copy()->addMonths($plan_data->duration);
+          } else { // year
+              $newEndDate = $currentDateTime->copy()->addYears($plan_data->duration);
+          }
+
+          // Check existing active plan
+          $activePlan = SellerSubcriptionPlanBuy::where('seller_id', $request->seller_id)
+              ->where('status', '1')
+              ->where('payment_status', '1')
+              ->orderBy('id', 'desc')
+              ->first();
+
+          if ($activePlan && $activePlan->plan_end_date >= $currentDateTime) {
+              return [
+                  'status' => 'error',
+                  'message' => 'Your active plan is not expired yet',
+                  'data' => (object)[]
+              ];
+          }
+
+          // Mark previous plan as expired if exists
+          if ($activePlan) {
+              $activePlan->update(['is_expired' => '1']);
+          }
+
+          // Prepare new subscription record
+          $array_data = [
+              'transaction_id' => $request->transaction_id,
+              'seller_id'      => $request->seller_id,
+              'plan_id'        => $request->plan_id,
+              'status'         => '0', 
+              'payment_status' => $request->payment_status,
+              'plan_start_date'=> $currentDateTime,
+              'plan_end_date'  => $newEndDate,
+              'payment_method' => $request->payment_method,
+              'amount'         => $plan_data->price,
+          ];
+
+          $newSubscription = SellerSubcriptionPlanBuy::create($array_data);
+
+          if ($newSubscription) {
+              return [
+                  'status' => 'success',
+                  'message' => 'Renew Subscription Order Create Successfully',
+                  'data' => $newSubscription
+              ];
+          } else {
+              return [
+                  'status' => 'error',
+                  'message' => 'Failed to create subscription',
+                  'data' => (object)[]
+              ];
+          }
+
+      } catch (\Exception $e) {
+          return [
+              'status' => 'error',
+              'message' => 'Something went wrong: ' . $e->getMessage(),
+              'data' => (object)[]
+          ];
+      }
+  }
               
 
             

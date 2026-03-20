@@ -133,6 +133,7 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::get('/get_my_notifications_list', [NotificationController::class,'get_my_notifications_list']);
     Route::post('/mark_notification_as_read', [NotificationController::class,'mark_notification_as_read']);
     Route::post('/mark_all_notification_as_read', [NotificationController::class,'mark_all_notification_as_read']);
+    Route::post('/renew_subcription_plan_buy', [SellerDashboardController::class,'renew_subcription_plan_buy']);
 
 });
 
