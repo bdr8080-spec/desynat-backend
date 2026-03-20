@@ -7,7 +7,7 @@
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
             <div class="arrow">
-                <a href="/notification" type="button">
+                <a href="{{ route('admin.notificationManagement') }}" type="button">
                     <i class="fas fa-angle-left"></i>
                 </a>
             </div>

@@ -217,6 +217,8 @@ Route::group(['prefix'=>'admin'], function(){
 
         //cms management
         Route::get('/cms-management', [CmsController::class, 'cmsManagement'])->name('admin.cmsManagement');
+
+        //notification management
         Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
         Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->name('admin.sendNotification');
             
@@ -227,16 +229,6 @@ Route::group(['prefix'=>'admin'], function(){
 });
 
 
-
-Route::match(['get', 'post'], '/notification', function () {
-    return view('admin.cms.notification');
-
-})->name('admin.notification');
-
-Route::match(['get', 'post'], '/send-notification', function () {
-    return view('admin.cms.notification-send');
-
-})->name('admin.send-notification');
 
 
 Route::fallback(function (Request $request) {

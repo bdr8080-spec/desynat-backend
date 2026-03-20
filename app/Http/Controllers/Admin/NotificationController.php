@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 use App\Services\NotificationManagementService;
+use Illuminate\Support\Facades\Auth;
 
 
 use Validator;
@@ -20,10 +21,32 @@ class NotificationController extends Controller
     }
 
     public function notificationManagement(Request $request){
-        return view('admin.notification.notification');
+
+           $admin = Auth::guard('admin')->user();
+           $receiverId = $admin->id;
+           //dd($receiverId);
+        $request_data = (object)[
+                'receiver_id'    => $receiverId,
+                'receiver_type'      => '1',
+                'limit'      => $request->limit??10,
+            ];
+
+            $myNotifications = $this->NotificationManagementService->GetMyNotificationList($request_data)['data'];
+            //dd($myNotifications);
+        $request_data1 = (object)[
+                'sender_id'    => $receiverId,
+                'sender_type'      => '1',
+                'from_date'      => $request->from_date??null,
+                'to_date'      => $request->to_date??null,
+            ];
+
+            $sentNotifications = $this->NotificationManagementService->GetSendNotificationListWeb($request_data1)['data'];
+           // dd($sentNotifications);
+        return view('admin.notification.notification',compact('myNotifications','sentNotifications'));
     }
 
     public function sendNotification(Request $request){
+       // dd(123);
         return view('admin.notification.notification-send');
     }
 
@@ -89,60 +112,6 @@ class NotificationController extends Controller
         }
     }
 
-    public function get_send_notifications_list(Request $request)
-    {
-
-        try {
-            $senderId = auth()->id();
-            //dd($senderId);
-
-            $request_data = (object)[
-                'sender_id'    => $senderId,
-                'sender_type'      => '1',
-                'search'      => $request->search??null,
-                'from_date'      => $request->from_date??null,
-                'to_date'      => $request->to_date??null,
-                'limit'      => $request->limit??10,
-            ];
-
-            $data = $this->NotificationManagementService->GetSendNotificationList($request_data);
-
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
-            }
-
-            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
-
-        } catch (\Exception $e) {
-            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
-        }
-    }
-
-    public function get_my_notifications_list(Request $request)
-    {
-
-        try {
-            $receiverId = auth()->id();
-            //dd($senderId);
-
-            $request_data = (object)[
-                'receiver_id'    => $receiverId,
-                'receiver_type'      => '1',
-                'limit'      => $request->limit??10,
-            ];
-
-            $data = $this->NotificationManagementService->GetMyNotificationList($request_data);
-
-            if (isset($data['status']) && $data['status'] === 'error') {
-                return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
-            }
-
-            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
-
-        } catch (\Exception $e) {
-            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
-        }
-    }
 
     public function mark_notification_as_read(Request $request)
     {
