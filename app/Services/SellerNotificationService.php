@@ -35,7 +35,7 @@ class SellerNotificationService
                 return [
                     'status' => 'success',
                     'message' => 'No notifications found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
