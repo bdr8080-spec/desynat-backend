@@ -141,8 +141,8 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/cms-page">
+    <li class="nav-item {{ Request::routeIs('admin.cmsManagement') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('admin.cmsManagement') }}">
             <span><img src="{{ asset('admin/image/credit-card-down.svg') }}" alt="icon" /></span>
             CMS Management
         </a>
