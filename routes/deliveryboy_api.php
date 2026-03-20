@@ -47,6 +47,7 @@ Route::group(['prefix' => 'deliveryboy'], function () {
     //M10
     Route::get('/get_notifications_list',[NotificationController::class,'get_notifications_list']);
     Route::post('/mark_notification_as_read',[NotificationController::class,'mark_notification_as_read']);
+    Route::post('/driver_mark_all_notification_as_read',[NotificationController::class,'driver_mark_all_notification_as_read']);
 
     });
 
