@@ -21,7 +21,12 @@ class CMSController extends Controller
     }
 
     public function cmsManagement(Request $request){
-        return view('admin.cms.index');
+        $request_data = (object)[
+                'type' => '1',
+            ];
+            $userterms = $this->CMSManagementService->GetTermConditions($request_data)['data'];
+            //dd($userterms);
+        return view('admin.cms.index',compact('userterms'));
     }
 
 
@@ -39,7 +44,7 @@ class CMSController extends Controller
 
         try {
             $request_data = (object)[
-                'type' => $request->type,
+                'type' => '1',
                 'content_english' => $request->content_english,
                 'content_arabic' => $request->content_arabic,
             ];

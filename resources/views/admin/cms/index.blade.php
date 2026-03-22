@@ -95,10 +95,12 @@
 
                 <div class="tab-content" id="userCmsTabContent">
                     <!-- Terms & Conditions -->
+                    <form id="termsForm">
                     <div class="tab-pane fade show active" id="pills-home-user" role="tabpanel"
                         aria-labelledby="pills-home-tab-user">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
+                            <input type="hidden" name="type" value="1">
 
                             <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#editModal">
@@ -110,13 +112,15 @@
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-between mb-2">
                                     <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                        <textarea id="content_english" name="content_english" class="ckeditorfile" rowspan="5"> 
+                                            {!! $userterms->content_english ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -124,13 +128,15 @@
                             <div class="col-lg-6">
                                  <div class="d-flex justify-content-between mb-2">
                                     <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                        <textarea id="content_arabic" name="content_arabic" class="ckeditorfile">
+                                         {!! $userterms->content_arabic ?? '' !!}   
+                                    </textarea>
                                     </div>
                                </div>
                             </div>
@@ -142,6 +148,7 @@
                         </div>
 
                     </div>
+                    </form>
 
                     <!-- Privacy Policy -->
                     <div class="tab-pane fade" id="pills-privacy-user" role="tabpanel"
@@ -1123,14 +1130,14 @@
                 </div>
             </div>
         </div>
-   
+
 
 
 @endsection
 
-
-
-<script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.ckeditorfile').forEach(function(element) {
         ClassicEditor
@@ -1140,5 +1147,56 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 });
+</script> -->
+
+<script>
+$(document).ready(function () {
+    CKEDITOR.replace('content_english');
+    CKEDITOR.replace('content_arabic');
+});
 </script>
+<!-- user tems & condition -->
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+let editors = {};
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.ckeditorfile').forEach(function(element) {
+        ClassicEditor
+            .create(element)
+            .then(editor => {
+                editors[element.name] = editor; 
+            .catch(error => console.error(error));
+    });
+
+    $('#termsForm').on('submit', function(e) {
+        e.preventDefault();
+
+        let content_english = editors['content_english'] ? editors['content_english'].getData() : '';
+        let content_arabic = editors['content_arabic'] ? editors['content_arabic'].getData() : '';
+
+        $.ajax({
+            url: "{{ route('admin.create_update_terms_condition') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 1,
+                content_english: content_english,
+                content_arabic: content_arabic
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                let res = xhr.responseJSON;
+                toastr.error(res?.message || 'Something went wrong');
+            }
+        });
+    });
+});
+</script>
+
+
+
+
 

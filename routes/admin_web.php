@@ -217,6 +217,7 @@ Route::group(['prefix'=>'admin'], function(){
 
         //cms management
         Route::get('/cms-management', [CmsController::class, 'cmsManagement'])->name('admin.cmsManagement');
+        Route::post('/create_update_terms_condition', [CmsController::class, 'create_update_terms_condition'])->name('admin.create_update_terms_condition');
 
         //notification management
         Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
