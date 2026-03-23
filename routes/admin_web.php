@@ -230,6 +230,7 @@ Route::group(['prefix'=>'admin'], function(){
         //notification management
         Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
         Route::get('/send-notification', [NotificationController::class, 'sendNotification'])->name('admin.sendNotification');
+        Route::post('/send_notification', [NotificationController::class, 'send_notification'])->name('admin.send_notification');
             
         
 
