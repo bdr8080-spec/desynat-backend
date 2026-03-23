@@ -1,0 +1,14 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "6QKUQGN93F.com.app.DesynatUser",
+                "paths": [
+                    "/user/product/detail-page/*",
+                    "/user/store-details/*"
+                ]
+            }
+        ]
+    }
+}
