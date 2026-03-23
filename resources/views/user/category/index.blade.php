@@ -66,7 +66,7 @@
 
                     </div>
 
-                    <p id="copiedMsg">Link Copied!</p>
+                    <p id="copiedMsg">{{$store_details['store']->seller_information->qrSellerUrl}}</p>
                 </div>
             </div>
         </div>
@@ -816,7 +816,19 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+<!-- copy Seller profile Link -->
+<script>
+document.getElementById("copyLinkBtn").addEventListener("click", function() {
+    const text = document.getElementById("copiedMsg").innerText;
 
+    navigator.clipboard.writeText(text).then(function() {
+        // alert("Link copied!");
+        toastr.success('Link copied');
+    }).catch(function(err) {
+        console.error("Failed to copy: ", err);
+    });
+});
+</script>
 
 
 @endsection
