@@ -5,7 +5,7 @@
             {
                 "appID": "6QKUQGN93F.com.app.DesynatUser",
                 "paths": [
-                    "/user/"
+                    "/user/*"
                 ]
             }
         ]
