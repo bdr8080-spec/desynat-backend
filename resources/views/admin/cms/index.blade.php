@@ -17,7 +17,7 @@
                 <li class="nav-item m-1" role="presentation">
                     <button class="nav-link customBtn2 active m-0" id="user-tab" data-bs-toggle="pill"
                         data-bs-target="#userContent" type="button" role="tab" aria-controls="userContent"
-                        aria-selected="true">
+                        aria-selected="false">
                         User
                     </button>
                 </li>
@@ -25,7 +25,7 @@
                     <button class="nav-link customBtn2 m-0" id="dealer-tab" data-bs-toggle="pill"
                         data-bs-target="#dealerCmsTabContent" type="button" role="tab"
                         aria-controls="dealerCmsTabContent" aria-selected="false">
-                        Dealer
+                        Seller
                     </button>
                 </li>
             </ul>
@@ -41,7 +41,7 @@
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 active m-0" id="pills-home-tab-user"
                                 data-bs-toggle="pill" data-bs-target="#pills-home-user" type="button" role="tab"
-                                aria-controls="pills-home-user" aria-selected="true">
+                                aria-controls="pills-home-user" aria-selected="false">
                                 Terms & Conditions
                             </button>
                         </li>
@@ -95,19 +95,169 @@
 
                 <div class="tab-content" id="userCmsTabContent">
                     <!-- Terms & Conditions -->
-                    <form id="termsForm">
-                    <div class="tab-pane fade show active" id="pills-home-user" role="tabpanel"
-                        aria-labelledby="pills-home-tab-user">
-                        <div class="d-flex border-bottom align-items-center mb-3">
-                            <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
+                    <form id="userTermsForm">
+                        <div class="tab-pane fade show active" id="pills-home-user" role="tabpanel"
+                            aria-labelledby="pills-home-tab-user">
+                            <div class="d-flex border-bottom align-items-center mb-3">
+                                <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
+                                <input type="hidden" name="type" value="1">
+
+                                <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#editModal">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a> -->
+                            </div>
+                        
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>English</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea id="content_english" name="content_english" class="ckeditorfile" rowspan="5"> 
+                                                {!! $userterms->content_english ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>Arabic</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea id="content_arabic" name="content_arabic" class="ckeditorfile">
+                                            {!! $userterms->content_arabic ?? '' !!}   
+                                        </textarea>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-5">
+                                <button type="submit" class="btn customBtn2 active text-white">
+                                Submit
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <!-- Privacy Policy -->
+                    <form id="userReturnForm">
+                        <div class="tab-pane fade" id="pills-privacy-user" role="tabpanel"
+                            aria-labelledby="pills-privacy-tab-user">
+                            <div class="d-flex border-bottom align-items-center mb-3">
+                                <h6 class="flex-grow-1 text-start">Retrun Policy</h6>
+
+                            </div>
                             <input type="hidden" name="type" value="1">
 
-                            <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#editModal">
-                                <i class="bi bi-pencil-square"></i>
-                            </a> -->
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>English</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_english_return" id="content_english_return" class="ckeditorfile" rowspan="5"> 
+                                                {!! $userreturn->content_english ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>Arabic</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_arabic_return" id="content_arabic_return" class="ckeditorfile"> 
+                                                {!! $userreturn->content_arabic ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                                <button type="submit" class="btn customBtn2 active text-white">
+                                Submit
+                                </button>
+                            </div>
                         </div>
-                       
+                    </form>
+
+                    <!-- About Us -->
+                    <form id="userAboutForm">
+                        <div class="tab-pane fade" id="pills-about-user" role="tabpanel"
+                            aria-labelledby="pills-about-tab-user">
+                            <div class="d-flex border-bottom align-items-center mb-3">
+                                <h6 class="flex-grow-1 text-start">About Us</h6>
+                            
+                            </div>
+                            <input type="hidden" name="type" value="1">
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>English</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_english_about" id="content_english_about" class="ckeditorfile" rowspan="5"> 
+                                                {!! $userabout->content_english ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>Arabic</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_arabic_about" id="content_arabic_about" class="ckeditorfile"> 
+                                                {!! $userabout->content_arabic ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-5">
+                                <button type="submit" class="btn customBtn2 active text-white">
+                                Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- cancel-policy -->
+                    <form id="userCancellationForm">
+                    <div class="tab-pane fade" id="pills-cancel-user" role="tabpanel"
+                        aria-labelledby="pills-cancel-tab-user">
+                        <div class="d-flex border-bottom align-items-center mb-3">
+                            <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
+                        </div>
+                        <input type="hidden" name="type" value="1">
                         <div class="row mt-3">
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-between mb-2">
@@ -118,8 +268,8 @@
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea id="content_english" name="content_english" class="ckeditorfile" rowspan="5"> 
-                                            {!! $userterms->content_english ?? '' !!}
+                                        <textarea name="content_english_cancellation" id="content_english_cancellation" class="ckeditorfile" rowspan="5"> 
+                                            {!! $usercancellation->content_english ?? '' !!}
                                         </textarea>
                                     </div>
                                </div>
@@ -134,9 +284,9 @@
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea id="content_arabic" name="content_arabic" class="ckeditorfile">
-                                         {!! $userterms->content_arabic ?? '' !!}   
-                                    </textarea>
+                                        <textarea name="content_arabic_cancellation" id="content_arabic_cancellation" class="ckeditorfile"> 
+                                            {!! $usercancellation->content_arabic ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -146,161 +296,36 @@
                                Submit
                             </button>
                         </div>
-
                     </div>
                     </form>
 
-                    <!-- Privacy Policy -->
-                    <div class="tab-pane fade" id="pills-privacy-user" role="tabpanel"
-                        aria-labelledby="pills-privacy-tab-user">
-                        <div class="d-flex border-bottom align-items-center mb-3">
-                            <h6 class="flex-grow-1 text-start">Retrun Policy</h6>
-
-                        </div>
-
-                         <div class="row mt-3">
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                 <div class="d-flex justify-content-between mb-2">
-                                    <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
-                        </div>
-                       <div class="d-flex justify-content-center mt-5">
-                            <button type="submit" class="btn customBtn2 active text-white">
-                               Submit
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- About Us -->
-                    <div class="tab-pane fade" id="pills-about-user" role="tabpanel"
-                        aria-labelledby="pills-about-tab-user">
-                        <div class="d-flex border-bottom align-items-center mb-3">
-                            <h6 class="flex-grow-1 text-start">About Us</h6>
-                           
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                 <div class="d-flex justify-content-between mb-2">
-                                    <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-5">
-                            <button type="submit" class="btn customBtn2 active text-white">
-                               Submit
-                            </button>
-                        </div>
-                    </div>
-                    <!-- cancel-policy -->
-                    <div class="tab-pane fade" id="pills-cancel-user" role="tabpanel"
-                        aria-labelledby="pills-cancel-tab-user">
-                        <div class="d-flex border-bottom align-items-center mb-3">
-                            <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                 <div class="d-flex justify-content-between mb-2">
-                                    <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-5">
-                            <button type="submit" class="btn customBtn2 active text-white">
-                               Submit
-                            </button>
-                        </div>
-                    </div>
-
                     <!-- exchange-policy -->
+                    <form id="userExchangeForm">
                     <div class="tab-pane fade" id="pills-exchange-user" role="tabpanel"
                         aria-labelledby="pills-exchange-tab-user">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Exchange Policy</h6>
 
-                            <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
+                            <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#editModalAbout">
                                 <i class="bi bi-pencil-square"></i>
-                            </a>
+                            </a> -->
 
                         </div>
+                        <input type="hidden" name="type" value="1">
                       <div class="row mt-3">
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-between mb-2">
                                     <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                        <textarea name="content_english_exchange" id="content_english_exchange" class="ckeditorfile" rowspan="5"> 
+                                            {!! $userexchange->content_english ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -308,13 +333,15 @@
                             <div class="col-lg-6">
                                  <div class="d-flex justify-content-between mb-2">
                                     <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                        <textarea name="content_arabic_exchange" id="content_arabic_exchange" class="ckeditorfile"> 
+                                            {!! $userexchange->content_arabic ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -325,6 +352,7 @@
                             </button>
                         </div>
                     </div>
+                    </form>
 
                     <!-- FAQs -->
                     <div class="tab-pane fade" id="pills-faq-user" role="tabpanel" aria-labelledby="pills-faq-tab-user">
@@ -356,52 +384,41 @@
                             </div> -->
 
                             <div class="faq-list-panle">
-                                <div class="faq-english mb-3">
-                                   <div class="form-grid">
-                                        <div class="form-label">Question 1 (English)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora impedit a molestias labore, tempore quidem consectetur? Necessitatibus, voluptatem, soluta ipsa ex assumenda, nulla dolorem consectetur reprehenderit ipsum quod dolores est.
-                                        </div>
+                                @forelse($userfaq as $index => $faq)
+                                    <div class="faq-english mb-3">
+                                        <div class="form-grid">
 
-                                        <div class="form-label">Answer (English)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                                        </div>
+                                            <div class="form-label">
+                                                Question {{ $index + 1 }} (English)
+                                            </div>
+                                            <div class="form-text">
+                                                {!! $faq->question_english ?? '' !!}
+                                            </div>
 
-                                        <div class="form-label">Question 1 (Arabic)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                                        </div>
-                                        <div class="form-label">Answer (Arabic)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                                            <div class="form-label">Answer (English)</div>
+                                            <div class="form-text">
+                                                {!! $faq->answer_english ?? '' !!}
+                                            </div>
+
+                                            <div class="form-label">
+                                                Question {{ $index + 1 }} (Arabic)
+                                            </div>
+                                            <div class="form-text">
+                                                {!! $faq->question_arabic ?? '' !!}
+                                            </div>
+
+                                            <div class="form-label">Answer (Arabic)</div>
+                                            <div class="form-text">
+                                                {!! $faq->answer_arabic ?? '' !!}
+                                            </div>
+
                                         </div>
                                     </div>
-                                </div>
-
-                                 <div class="faq-english">
-                                   <div class="form-grid">
-                                        <div class="form-label">Question 1 (English)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                                        </div>
-
-                                        <div class="form-label">Answer (English)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                                        </div>
-
-                                        <div class="form-label">Question 1 (Arabic)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                                        </div>
-                                        <div class="form-label">Answer (Arabic)</div>
-                                        <div class="form-text">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
-                                        </div>
+                                @empty
+                                    <div class="text-center text-muted">
+                                        No FAQs found.
                                     </div>
-                                </div>
-
+                                @endforelse
                             </div>
 
                         
@@ -409,29 +426,26 @@
                     </div>
 
                     <!-- Contact Us -->
-                    <div class="tab-pane fade" id="pills-contact-user" role="tabpanel"
+                    <!-- <div class="tab-pane fade" id="pills-contact-user" role="tabpanel"
                         aria-labelledby="pills-contact-tab-user">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h5 class="flex-grow-1 text-start">Contact Us</h5>
                         </div>
 
-                        <input type="hidden" value="" name="id" />
+                        <input type="hidden" value="1" name="type" />
                         <div class="contactUs mx-auto" style="max-width: 400px">
                             <div class="form-group mb-2">
-                                <label class="form-label" for="email">Email id-</label>
-                                <input type="text" id="email" class="form-control space" name="email_id" />
-                                <span class="text-danger" id="error-email_id"></span>
+                                <label class="form-label" for="email">Email id</label>
+                                <input type="text" id="email" class="form-control space" name="email" />
                             </div>
                             <div class="form-group mb-2">
                                 <label class="form-label space" for="phone">Contact Number
                                 </label>
-                                <input type="tel" id="contact_us" class="form-control space" name="mobile" />
-                                <input type="hidden" id="country_code" name="country_code" />
-                                <span class="text-danger" id="error-mobile"></span>
+                                <input type="tel" id="mobile" class="form-control space" name="mobile" />
                             </div>
                             <div class="form-group mb-2">
-                                <label class="form-label space" for="twitter">Twitter Link</label>
-                                <input type="text" id="twitter" class="form-control" name="twitter" />
+                                <label class="form-label space" for="twitter">Whatsapp Number</label>
+                                <input type="text" id="whatsapp" class="form-control" name="whatsapp" />
                             </div>
 
 
@@ -439,6 +453,64 @@
                                 data-bs-toggle="modal" data-bs-target="#noAccessMsg">
                                 <a type="button" class="btn btn-dark customBtn"><span>Submit</span></a>
                             </div>
+                        </div>
+                    </div> -->
+                    <div class="tab-pane fade" id="pills-contact-user" role="tabpanel"
+                        aria-labelledby="pills-contact-tab-user">
+
+                        <div class="d-flex border-bottom align-items-center mb-3">
+                            <h5 class="flex-grow-1 text-start">Contact Us</h5>
+                        </div>
+
+                        <input type="hidden" value="1" name="type" />
+
+                        <div class="contactUs mx-auto" style="max-width: 400px">
+
+                            <div class="form-group mb-2">
+                                <label class="form-label" for="email">Email id</label>
+                                <input 
+                                    type="text" 
+                                    id="email" 
+                                    class="form-control space" 
+                                    name="email"
+                                    placeholder="Enter Email"
+                                    value="{{ $userContactUs->content_english['email'] ?? '' }}"
+                                />
+                                <h6 class="text-danger error-email"></h6>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label class="form-label space" for="phone">Contact Number</label>
+                                <input 
+                                    type="tel" 
+                                    id="mobile" 
+                                    class="form-control space" 
+                                    name="mobile"
+                                    placeholder="Enter Mobile Number"
+                                    value="{{ $userContactUs->content_english['mobile'] ?? '' }}"
+                                />
+                                <h6 class="text-danger error-mobile"></h6>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label class="form-label space" for="twitter">Whatsapp Number</label>
+                                <input 
+                                    type="text" 
+                                    id="whatsapp" 
+                                    class="form-control" 
+                                    name="whatsapp"
+                                    placeholder="Enter Whatsapp Number"
+                                    value="{{ $userContactUs->content_english['whatsapp'] ?? '' }}"
+                                />
+                                <h6 class="text-danger error-whatsapp"></h6>
+                            </div>
+
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="button" id="contactSubmitBtn" class="btn btn-dark customBtn">
+                                    <span>Submit</span>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -450,7 +522,7 @@
                         <li class="nav-item m-1" role="presentation">
                             <button class="nav-link customBtn2 active m-0" id="pills-home-tab-dealer"
                                 data-bs-toggle="pill" data-bs-target="#pills-home-dealer" type="button" role="tab"
-                                aria-controls="pills-home-dealer" aria-selected="true">
+                                aria-controls="pills-home-dealer" aria-selected="false">
                                 Terms & Conditions
                             </button>
                         </li>
@@ -502,148 +574,182 @@
                 <!-- DEALER CMS Tab Content -->
                 <div class="tab-content" id="dealerCmsTabContent">
                     <!-- Terms & Conditions -->
-                    <div class="tab-pane fade show active" id="pills-home-dealer" role="tabpanel"
-                        aria-labelledby="pills-home-tab-dealer">
-                        <div class="d-flex border-bottom align-items-center mb-3">
-                            <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                    <form id="sellerTermsForm">
+                        <div class="tab-pane fade show active" id="pills-home-dealer" role="tabpanel"
+                            aria-labelledby="pills-home-tab-dealer">
+                            <div class="d-flex border-bottom align-items-center mb-3">
+                                <h6 class="flex-grow-1 text-start">Terms & Conditions</h6>
+                                <input type="hidden" name="type" value="2">
+
+                                <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#editModal">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a> -->
+                            </div>
+                        
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>English</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
                                     </div>
-                               </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea id="content_english_seller" name="content_english_seller" class="ckeditorfile" rowspan="5"> 
+                                                {!! $sellerterms->content_english ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>Arabic</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea id="content_arabic_seller" name="content_arabic_seller" class="ckeditorfile">
+                                            {!! $sellerterms->content_arabic ?? '' !!}   
+                                        </textarea>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-5">
+                                <button type="submit" class="btn customBtn2 active text-white">
+                                Submit
+                                </button>
                             </div>
 
-                            <div class="col-lg-6">
-                                 <div class="d-flex justify-content-between mb-2">
-                                    <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-5">
-                            <button type="submit" class="btn customBtn2 active text-white">
-                               Submit
-                            </button>
-                        </div>
-                    </div>
+                    </form>
 
                     <!-- Privacy Policy -->
-                    <div class="tab-pane fade" id="pills-privacy-dealer" role="tabpanel"
-                        aria-labelledby="pills-privacy-tab-dealer">
-                        <div class="d-flex border-bottom align-items-center mb-3">
-                            <h6 class="flex-grow-1 text-start">Privacy Policy</h6>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
-                                    </div>
-                               </div>
-                            </div>
+                    <form id="sellerReturnForm">
+                        <div class="tab-pane fade" id="pills-privacy-dealer" role="tabpanel"
+                            aria-labelledby="pills-privacy-tab-dealer">
+                            <div class="d-flex border-bottom align-items-center mb-3">
+                                <h6 class="flex-grow-1 text-start">Retrun Policy</h6>
 
-                            <div class="col-lg-6">
-                                 <div class="d-flex justify-content-between mb-2">
-                                    <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                            </div>
+                            <input type="hidden" name="type" value="2">
+
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>English</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
                                     </div>
-                               </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_english_return_seller" id="content_english_return_seller" class="ckeditorfile" rowspan="5"> 
+                                                {!! $sellerreturn->content_english ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>Arabic</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_arabic_return_seller" id="content_arabic_return_seller" class="ckeditorfile"> 
+                                                {!! $sellerreturn->content_arabic ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                        <div class="d-flex justify-content-center mt-5">
+                                <button type="submit" class="btn customBtn2 active text-white">
+                                Submit
+                                </button>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-5">
-                            <button type="submit" class="btn customBtn2 active text-white">
-                               Submit
-                            </button>
-                        </div>
-                    </div>
+                    </form>
 
                     <!-- About Us -->
-                    <div class="tab-pane fade" id="pills-about-dealer" role="tabpanel"
-                        aria-labelledby="pills-about-tab-dealer">
-                        <div class="d-flex border-bottom align-items-center mb-3">
-                            <h6 class="flex-grow-1 text-start">About Us</h6>
-
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
-                                    </div>
-                               </div>
+                    <form id="sellerAboutForm">
+                        <div class="tab-pane fade" id="pills-about-dealer" role="tabpanel"
+                            aria-labelledby="pills-about-tab-dealer">
+                            <div class="d-flex border-bottom align-items-center mb-3">
+                                <h6 class="flex-grow-1 text-start">About Us</h6>
+                            
                             </div>
-
-                            <div class="col-lg-6">
-                                 <div class="d-flex justify-content-between mb-2">
-                                    <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </div>
-                               <div class="editor-wapper mt-2">
-                                    <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                            <input type="hidden" name="type" value="2">
+                            <div class="row mt-3">
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>English</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
                                     </div>
-                               </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_english_about_seller" id="content_english_about_seller" class="ckeditorfile" rowspan="5"> 
+                                                {!! $sellerabout->content_english ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h6>Arabic</h6>
+                                        <!-- <a class="table-button eyebox mb-2">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> -->
+                                    </div>
+                                <div class="editor-wapper mt-2">
+                                        <div class="editor">
+                                            <textarea name="content_arabic_about_seller" id="content_arabic_about_seller" class="ckeditorfile"> 
+                                                {!! $sellerabout->content_arabic ?? '' !!}
+                                            </textarea>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-5">
+                                <button type="submit" class="btn customBtn2 active text-white">
+                                Submit
+                                </button>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-5">
-                            <button type="submit" class="btn customBtn2 active text-white">
-                               Submit
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                     <!-- cancel-policy -->
+                    <form id="sellerCancellationForm">
                     <div class="tab-pane fade" id="pills-cancel-dealer" role="tabpanel"
                         aria-labelledby="pills-cancel-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Cancellation Policy</h6>
                         </div>
-                         <div class="row mt-3">
+                        <input type="hidden" name="type" value="2">
+                        <div class="row mt-3">
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-between mb-2">
                                     <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                        <textarea name="content_english_cancellation_seller" id="content_english_cancellation_seller" class="ckeditorfile" rowspan="5"> 
+                                            {!! $sellercancellation->content_english ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -651,13 +757,15 @@
                             <div class="col-lg-6">
                                  <div class="d-flex justify-content-between mb-2">
                                     <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                        <textarea name="content_arabic_cancellation_seller" id="content_arabic_cancellation_seller" class="ckeditorfile"> 
+                                            {!! $sellercancellation->content_arabic ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -667,27 +775,36 @@
                                Submit
                             </button>
                         </div>
-                     
                     </div>
+                    </form>
 
                     <!-- exchange-policy -->
+                    <form id="sellerExchangeForm">
                     <div class="tab-pane fade" id="pills-exchange-dealer" role="tabpanel"
                         aria-labelledby="pills-exchange-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h6 class="flex-grow-1 text-start">Exchange Policy</h6>
 
+                            <!-- <a class="table-button eyebox mb-2" type="button" data-bs-toggle="modal"
+                                data-bs-target="#editModalAbout">
+                                <i class="bi bi-pencil-square"></i>
+                            </a> -->
+
                         </div>
-                        <div class="row mt-3">
+                        <input type="hidden" name="type" value="2">
+                      <div class="row mt-3">
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-between mb-2">
                                     <h6>English</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile" rowspan="5"> </textarea>
+                                        <textarea name="content_english_exchange_seller" id="content_english_exchange_seller" class="ckeditorfile" rowspan="5"> 
+                                            {!! $sellerexchange->content_english ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -695,13 +812,15 @@
                             <div class="col-lg-6">
                                  <div class="d-flex justify-content-between mb-2">
                                     <h6>Arabic</h6>
-                                    <a class="table-button eyebox mb-2">
+                                    <!-- <a class="table-button eyebox mb-2">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a> -->
                                 </div>
                                <div class="editor-wapper mt-2">
                                     <div class="editor">
-                                        <textarea name="content" class="ckeditorfile"> </textarea>
+                                        <textarea name="content_arabic_exchange_seller" id="content_arabic_exchange_seller" class="ckeditorfile"> 
+                                            {!! $sellerexchange->content_arabic ?? '' !!}
+                                        </textarea>
                                     </div>
                                </div>
                             </div>
@@ -712,93 +831,117 @@
                             </button>
                         </div>
                     </div>
+                    </form>
 
                     <!-- FAQs -->
-                    <div class="tab-pane fade" id="pills-faq-dealer" role="tabpanel"
-                        aria-labelledby="pills-faq-tab-dealer">
+                    <div class="tab-pane fade" id="pills-faq-dealer" role="tabpanel" aria-labelledby="pills-faq-tab-dealer">
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h5 class="flex-grow-1 text-start">FAQs</h5>
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
-                                data-bs-target="#faqquestionModal">Add New Question</a>
-
+                                data-bs-target="#faqquestionModalSeller">Add New Question</a>
                         </div>
                         <div class="management mt-4">
                             <h6>List of Questions(English)</h6>
 
-                            <div class="accordion" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            Accordion Item #1
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the first item’s accordion body.</strong> It is shown by
-                                           
+                            <div class="faq-list-panle">
+                                @forelse($sellerfaq as $index => $faq)
+                                    <div class="faq-english mb-3">
+                                        <div class="form-grid">
+
+                                            <div class="form-label">
+                                                Question {{ $index + 1 }} (English)
+                                            </div>
+                                            <div class="form-text">
+                                                {!! $faq->question_english ?? '' !!}
+                                            </div>
+
+                                            <div class="form-label">Answer (English)</div>
+                                            <div class="form-text">
+                                                {!! $faq->answer_english ?? '' !!}
+                                            </div>
+
+                                            <div class="form-label">
+                                                Question {{ $index + 1 }} (Arabic)
+                                            </div>
+                                            <div class="form-text">
+                                                {!! $faq->question_arabic ?? '' !!}
+                                            </div>
+
+                                            <div class="form-label">Answer (Arabic)</div>
+                                            <div class="form-text">
+                                                {!! $faq->answer_arabic ?? '' !!}
+                                            </div>
+
                                         </div>
                                     </div>
-                                </div>
-                                <!-- <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Accordion Item #2
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <strong>This is the second item’s accordion body.</strong> It is hidden by
-                                            default, until
-                                            the collapse plugin adds the appropriate classes that we use to style each
-                                            element. These
-                                            classes control the overall appearance, as well as the showing and hiding
-                                            via CSS
-                                            transitions. You can modify any of this with custom CSS or overriding our
-                                            default variables.
-                                            It’s also worth noting that just about any HTML can go within the
-                                            <code>.accordion-body</code>, though the transition does limit overflow.
-                                        </div>
+                                @empty
+                                    <div class="text-center text-muted">
+                                        No FAQs found.
                                     </div>
-                                </div> -->
-                                
+                                @endforelse
                             </div>
-                          
+
+                        
                         </div>
                     </div>
 
                     <!-- Contact Us -->
                     <div class="tab-pane fade" id="pills-contact-dealer" role="tabpanel"
                         aria-labelledby="pills-contact-tab-dealer">
+
                         <div class="d-flex border-bottom align-items-center mb-3">
                             <h5 class="flex-grow-1 text-start">Contact Us</h5>
                         </div>
 
-                        <input type="hidden" name="id" />
+                        <input type="hidden" value="2" name="type" />
+
                         <div class="contactUs mx-auto" style="max-width: 400px">
+
                             <div class="form-group mb-2">
-                                <label class="form-label" for="emailDealer">Email id-</label>
-                                <input type="text" id="emailDealer" class="form-control space" name="email_id_dealer" />
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="form-label space" for="contactDealer">Contact Number</label>
-                                <input type="tel" class="form-control space" name="mobile_dealer" />
-                                <input type="hidden" name="country_code_dealer" />
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="form-label space" for="twitterDealer">Twitter Link</label>
-                                <input type="text" class="form-control" name="twitter_dealer" />
+                                <label class="form-label" for="email">Email id</label>
+                                <input 
+                                    type="text" 
+                                    id="email_seller" 
+                                    class="form-control space" 
+                                    name="email_seller"
+                                    placeholder="Enter Email"
+                                    value="{{ $sellerContactUs->content_english['email'] ?? '' }}"
+                                />
+                                <h6 class="text-danger error-email_seller"></h6>
                             </div>
 
-
-                            <div class="d-flex justify-content-center">
-                                <a type="button" class="btn btn-dark customBtn">Submit</a>
+                            <div class="form-group mb-2">
+                                <label class="form-label space" for="phone">Contact Number</label>
+                                <input 
+                                    type="tel" 
+                                    id="mobile_seller" 
+                                    class="form-control space" 
+                                    name="mobile_seller"
+                                    placeholder="Enter Mobile Number"
+                                    value="{{ $sellerContactUs->content_english['mobile'] ?? '' }}"
+                                />
+                                <h6 class="text-danger error-mobile_seller"></h6>
                             </div>
+
+                            <div class="form-group mb-2">
+                                <label class="form-label space" for="twitter">Whatsapp Number</label>
+                                <input 
+                                    type="text" 
+                                    id="whatsapp_seller" 
+                                    class="form-control" 
+                                    name="whatsapp_seller"
+                                    placeholder="Enter Whatsapp Number"
+                                    value="{{ $sellerContactUs->content_english['whatsapp'] ?? '' }}"
+                                />
+                                <h6 class="text-danger error-whatsapp_seller"></h6>
+                            </div>
+
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="button" id="contactSubmitBtnSeller" class="btn btn-dark customBtn">
+                                    <span>Submit</span>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -808,252 +951,106 @@
     </div>
 
 </div>     
-        <!-- edit termsConditions -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+
+        <!-- add faq Question user -->
+        <div class="modal fade" id="faqquestionModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h6 class=" " id="exampleModalLabel">
-                            Edit Terms & Conditions
-                        </h6>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 
-                        </button>
+                    <div class="modal-header border-0">
+                        <h3 class="modal-title">Add FAQ USER</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
-                    <input type="hidden" name="slug" />
                     <div class="modal-body">
-                        <div class="editor">
-                        <textarea name="content" class="ckeditorfile"> </textarea>
-                        </div>
-                        <h6 class="text-danger" id="error-content"></h6>
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-dark customBtn">
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <div class="form-group">
 
-        <!-- edit termsConditions dealer -->
-        <div class="modal fade" id="editModalDealer" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h6 class=" " id="exampleModalLabel">
-                            Edit Terms & Conditions
-                        </h6>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <label>Question English</label>
+                            <input id="question_english" class="form-control mb-2" type="text"
+                                placeholder="Enter Question in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
+                            <h6 class="text-danger error-question_english"></h6>
 
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="editor">
-                            <textarea name="content" class="ckeditorfile"> </textarea>
-                        </div>
-                        <h6 class="text-danger" id="error-content"></h6>
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-dark customBtn">
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <label>Answer English</label>
+                            <textarea id="answer_english" class="form-control mb-2"
+                                placeholder="Enter Answer in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
+                            <h6 class="text-danger error-answer_english"></h6>
 
-        <!-- edit Privacy Policy -->
-        <div class="modal fade" id="editModalPrivacy" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h3 class="modal-title fs-5" id="exampleModalLabel">
-                            Edit Privacy Policy
-                        </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <label>Question Arabic</label>
+                            <input id="question_arabic" class="form-control mb-2" type="text"
+                                placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
+                            <h6 class="text-danger error-question_arabic"></h6>
 
-                        </button>
-                    </div>
-                    <input type="hidden" name="slug" />
-                    <div class="modal-body">
-                        <div class="editor">
-                            <textarea name="content" class="ckeditorfile"> </textarea>
-                        </div>
-                        <h6 class="text-danger" id="error-content"></h6>
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-dark customBtn">
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <label>Answer Arabic</label>
+                            <textarea id="answer_arabic" class="form-control mb-2"
+                                placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
+                            <h6 class="text-danger error-answer_arabic"></h6>
 
-        <!-- edit Privacy Policy dealer-->
-        <div class="modal fade" id="editModalPrivacyDealer" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h3 class="modal-title fs-5" id="exampleModalLabel">
-                            Edit Privacy Policy
-                        </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <input type="hidden" id="type_seller" value="1">
 
-                        </button>
-                    </div>
-                    <input type="hidden" name="slug" />
-                    <div class="modal-body">
-                        <div class="editor">
-                             <textarea name="content" class="ckeditorfile"> </textarea>
-                        </div>
-                        <h6 class="text-danger" id="error-content"></h6>
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-dark customBtn">
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- edit AboutUs -->
-        <div class="modal fade" id="editModalAbout" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h3 class="modal-title fs-5" id="exampleModalLabel">
-                            Edit About Us
-                        </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                        </button>
-                    </div>
-                    <input type="hidden" name="slug" />
-                    <div class="modal-body">
-                        <div class="editor">
-                            <textarea name="content" class="ckeditorfile"> </textarea>
-                        </div>
-                        <h6 class="text-danger" id="error-content"></h6>
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-dark customBtn">
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- edit AboutUs dealer-->
-        <div class="modal fade" id="editModalAboutDealer" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h3 class="modal-title fs-5" id="exampleModalLabel">
-                            Edit About Us
-                        </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                        </button>
-                    </div>
-                    <input type="hidden" name="slug" />
-                    <div class="modal-body">
-                        <div class="editor">
-                            <textarea name="content" class="ckeditorfile"> </textarea>
-                        </div>
-                        <h6 class="text-danger" id="error-content"></h6>
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-dark customBtn">
-                                <span>Submit</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- faq Question add -->
-        <div class="modal fade" id="faqquestionModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h3 class="modal-title fs-5" id="exampleModalLabel">
-                            Add FAQ USER
-                        </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="editor">
-                            <div class="form-group">
-                                <label> Question</label>
-                                <input placeholder=" Enter Question" name="question" class="form-control mb-3"
-                                    type="text" />
-                                <h6 class="text-danger error-question"></h6>
-                                <label> Answer</label>
-
-                                <textarea name="answer" class="mb-3"  placeholder="Enter Answer" rows="3"
-                                    cols="80"></textarea>
-                                <h6 class="text-danger error-answer"></h6>
-                            </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-dark customBtn">
+                            <div class="text-center mt-3">
+                                <button type="button" id="addFaqBtn" class="btn btn-dark">
                                     <span>Add</span>
                                 </button>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
 
-        <!-- faq Question add dealer-->
-        <div class="modal fade" id="faqquestionModalDealer" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <!-- add faq Question seller -->
+        <div class="modal fade" id="faqquestionModalSeller" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header management border-0">
-                        <h3 class="modal-title fs-5" id="exampleModalLabel">
-                            Add FAQ DEALER
-                        </h3>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 
-                        </button>
+                    <div class="modal-header border-0">
+                        <h3 class="modal-title">Add FAQ SELLER</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="editor">
-                            <div class="form-group">
-                                <label> Question</label>
-                                <input placeholder=" Enter Question" name="question_dealer" class="form-control mb-3"
-                                    type="text" />
-                                <h6 class="text-danger error-question"></h6>
-                                <label> Answer</label>
 
-                                <textarea name="answer_dealer" class="mb-3" id="editor13" placeholder="Enter Answer"
-                                    rows="3" cols="80"></textarea>
-                                <h6 class="text-danger error-answer"></h6>
-                            </div>
-                            <div class="d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-dark customBtn">
+                    <div class="modal-body">
+                        <div class="form-group">
+
+                            <label>Question English</label>
+                            <input id="question_english_seller" class="form-control mb-2" type="text"
+                                placeholder="Enter Question in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')">
+                            <h6 class="text-danger error-question_english_seller"></h6>
+
+                            <label>Answer English</label>
+                            <textarea id="answer_english_seller" class="form-control mb-2"
+                                placeholder="Enter Answer in English" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')"></textarea>
+                            <h6 class="text-danger error-answer_english_seller"></h6>
+
+                            <label>Question Arabic</label>
+                            <input id="question_arabic_seller" class="form-control mb-2" type="text"
+                                placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
+                            <h6 class="text-danger error-question_arabic_seller"></h6>
+
+                            <label>Answer Arabic</label>
+                            <textarea id="answer_arabic_seller" class="form-control mb-2"
+                                placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
+                            <h6 class="text-danger error-answer_arabic_seller"></h6>
+
+                            <input type="hidden" id="type_seller" value="2">
+
+                            <div class="text-center mt-3">
+                                <button type="button" id="addFaqBtnSeller" class="btn btn-dark">
                                     <span>Add</span>
                                 </button>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
+
 
         <!-- faq Question edit-->
         <div class="modal fade" id="editfaqquestionModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -1133,30 +1130,38 @@
 
 
 
-@endsection
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 <!-- <script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.ckeditorfile').forEach(function(element) {
-        ClassicEditor
-            .create(element)
-            .catch(error => {
-                console.error(error);
-            });
-    });
-});
-</script> -->
-
-<script>
 $(document).ready(function () {
     CKEDITOR.replace('content_english');
     CKEDITOR.replace('content_arabic');
 });
+</script> -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    //get active tab from local storage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+    //save active tab to local storage
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
 </script>
+
 <!-- user tems & condition -->
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 <script>
 let editors = {};
 
@@ -1165,11 +1170,12 @@ document.addEventListener("DOMContentLoaded", function () {
         ClassicEditor
             .create(element)
             .then(editor => {
-                editors[element.name] = editor; 
+                editors[element.name] = editor;
+            })
             .catch(error => console.error(error));
     });
 
-    $('#termsForm').on('submit', function(e) {
+    $('#userTermsForm').on('submit', function(e) {
         e.preventDefault();
 
         let content_english = editors['content_english'] ? editors['content_english'].getData() : '';
@@ -1186,6 +1192,9 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             success: function(response) {
                 toastr.success(response.message);
+                // setTimeout(function () {
+                //     location.reload();
+                // }, 1500); 
             },
             error: function(xhr) {
                 let res = xhr.responseJSON;
@@ -1193,8 +1202,590 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    $('#userReturnForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_return_policy') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 1,
+                content_english: editors['content_english_return']?.getData() || '',
+                content_arabic: editors['content_arabic_return']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
+
+    $('#userAboutForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_about_us') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 1,
+                content_english: editors['content_english_about']?.getData() || '',
+                content_arabic: editors['content_arabic_about']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
+
+    $('#userCancellationForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_cancellation_policy') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 1,
+                content_english: editors['content_english_cancellation']?.getData() || '',
+                content_arabic: editors['content_arabic_cancellation']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
+
+    $('#userExchangeForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_exchange_policy') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 1,
+                content_english: editors['content_english_exchange']?.getData() || '',
+                content_arabic: editors['content_arabic_exchange']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
+    //seller
+    $('#sellerTermsForm').on('submit', function(e) {
+        e.preventDefault();
+
+        let content_english = editors['content_english_seller'] ? editors['content_english_seller'].getData() : '';
+        let content_arabic = editors['content_arabic_seller'] ? editors['content_arabic_seller'].getData() : '';
+
+        $.ajax({
+            url: "{{ route('admin.create_update_terms_condition') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 2,
+                content_english: content_english,
+                content_arabic: content_arabic
+            },
+            success: function(response) {
+                toastr.success(response.message);
+                // setTimeout(function () {
+                //     location.reload();
+                // }, 1500); 
+            },
+            error: function(xhr) {
+                let res = xhr.responseJSON;
+                toastr.error(res?.message || 'Something went wrong');
+            }
+        });
+    });
+
+    $('#sellerReturnForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_return_policy') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 2,
+                content_english: editors['content_english_return_seller']?.getData() || '',
+                content_arabic: editors['content_arabic_return_seller']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
+
+    $('#sellerAboutForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_about_us') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 2,
+                content_english: editors['content_english_about_seller']?.getData() || '',
+                content_arabic: editors['content_arabic_about_seller']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
+
+    $('#sellerCancellationForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_cancellation_policy') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 2,
+                content_english: editors['content_english_cancellation_seller']?.getData() || '',
+                content_arabic: editors['content_arabic_cancellation_seller']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
+
+    $('#sellerExchangeForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "{{ route('admin.create_update_exchange_policy') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 2,
+                content_english: editors['content_english_exchange_seller']?.getData() || '',
+                content_arabic: editors['content_arabic_exchange_seller']?.getData() || ''
+            },
+            success: function(response) {
+                toastr.success(response.message);
+            },
+            error: function(xhr) {
+                toastr.error(xhr.responseJSON?.message || 'Something went wrong');
+            }
+        });
+    });
 });
 </script>
+
+<!-- add faq -->
+<script>
+$(document).ready(function () {
+
+    // Remove error while typing
+    $('#question_english, #answer_english, #question_arabic, #answer_arabic')
+    .on('input', function () {
+        let id = $(this).attr('id');
+        $('.error-' + id).text('');
+    });
+
+    // Button click (NO FORM SUBMIT)
+    $('#addFaqBtn').on('click', function () {
+
+        // clear old errors
+        $('.text-danger').text('');
+
+        let question_english = $('#question_english').val().trim();
+        let answer_english   = $('#answer_english').val().trim();
+        let question_arabic  = $('#question_arabic').val().trim();
+        let answer_arabic    = $('#answer_arabic').val().trim();
+        let type             = $('#type').val();
+
+        let hasError = false;
+
+        // ✅ Frontend validation (instant, no reload)
+        if (!question_english) {
+            $('.error-question_english').text('Please enter question in English');
+            hasError = true;
+        }
+
+        if (!answer_english) {
+            $('.error-answer_english').text('Please enter answer in English');
+            hasError = true;
+        }
+
+        if (!question_arabic) {
+            $('.error-question_arabic').text('Please enter question in Arabic');
+            hasError = true;
+        }
+
+        if (!answer_arabic) {
+            $('.error-answer_arabic').text('Please enter answer in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        // disable button
+        $('#addFaqBtn').prop('disabled', true).find('span').text('Saving...');
+
+        $.ajax({
+            url: "{{ route('admin.add_faq') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: type,
+                question_english: question_english,
+                answer_english: answer_english,
+                question_arabic: question_arabic,
+                answer_arabic: answer_arabic
+            },
+
+            success: function(response) {
+                toastr.success(response.message);
+
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            },
+
+            error: function(xhr) {
+                $('#addFaqBtn').prop('disabled', false).find('span').text('Add');
+
+                let res = xhr.responseJSON;
+
+                toastr.error(res?.message || 'Something went wrong');
+
+                // backend validation (optional)
+                if (res?.errors) {
+                    $.each(res.errors, function(key, value) {
+                        $('.error-' + key).text(value[0]);
+                    });
+                }
+            }
+        });
+
+    });
+
+});
+</script>
+
+<!-- user contact us -->
+<script>
+$(document).ready(function () {
+
+    // Remove error on typing
+    $('#email, #mobile, #whatsapp').on('input', function () {
+        let name = $(this).attr('name');
+        $('.error-' + name).text('');
+    });
+
+    $('#contactSubmitBtn').on('click', function () {
+
+        $('.text-danger').text('');
+
+        let email = $('#email').val().trim();
+        let mobile = $('#mobile').val().trim();
+        let whatsapp = $('#whatsapp').val().trim();
+
+        let hasError = false;
+
+        // ✅ Email validation
+        if (!email) {
+            $('.error-email').text('Please enter email');
+            hasError = true;
+        } else {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                $('.error-email').text('Please enter a valid email');
+                hasError = true;
+            }
+        }
+
+        // ✅ Mobile validation (7–15 digits)
+        if (!mobile) {
+            $('.error-mobile').text('Please enter contact number');
+            hasError = true;
+        } else {
+            const mobilePattern = /^\+?[0-9]{7,15}$/;
+            if (!mobilePattern.test(mobile)) {
+                $('.error-mobile').text('Mobile number must be between 7 to 15 digits');
+                hasError = true;
+            }
+        }
+
+        if (!whatsapp) {
+            $('.error-whatsapp').text('Please enter whatsapp number');
+            hasError = true;
+        } else {
+            const whatsappPattern = /^\+?[0-9]{7,15}$/;
+            if (!whatsappPattern.test(whatsapp)) {
+                $('.error-whatsapp').text('WhatsApp number must be between 7 to 15 digits');
+                hasError = true;
+            }
+        }
+
+        if (hasError) return;
+
+        $('#contactSubmitBtn').prop('disabled', true).find('span').text('Saving...');
+
+        $.ajax({
+            url: "{{ route('admin.create_update_contact_us') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 1,
+                email: email,
+                mobile: mobile,
+                whatsapp: whatsapp
+            },
+
+            success: function(response) {
+                toastr.success(response.message);
+
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            },
+
+            error: function(xhr) {
+                $('#contactSubmitBtn').prop('disabled', false).find('span').text('Submit');
+
+                let res = xhr.responseJSON;
+
+                toastr.error(res?.message || 'Something went wrong');
+
+                if (res?.errors) {
+                    $.each(res.errors, function(key, value) {
+                        $('.error-' + key).text(value[0]);
+                    });
+                }
+            }
+        });
+
+    });
+
+});
+</script>
+
+<!-- add faq seller -->
+<script>
+$(document).ready(function () {
+
+    // Remove error while typing
+    $('#question_english_seller, #answer_english_seller, #question_arabic_seller, #answer_arabic_seller')
+    .on('input', function () {
+        let id = $(this).attr('id');
+        $('.error-' + id).text('');
+    });
+
+    // Button click (NO FORM SUBMIT)
+    $('#addFaqBtnSeller').on('click', function () {
+
+        // clear old errors
+        $('.text-danger').text('');
+
+        let question_english = $('#question_english_seller').val().trim();
+        let answer_english   = $('#answer_english_seller').val().trim();
+        let question_arabic  = $('#question_arabic_seller').val().trim();
+        let answer_arabic    = $('#answer_arabic_seller').val().trim();
+        let type             = $('#type_seller').val();
+
+        let hasError = false;
+
+        // ✅ Frontend validation (instant, no reload)
+        if (!question_english) {
+            $('.error-question_english_seller').text('Please enter question in English');
+            hasError = true;
+        }
+
+        if (!answer_english) {
+            $('.error-answer_english_seller').text('Please enter answer in English');
+            hasError = true;
+        }
+
+        if (!question_arabic) {
+            $('.error-question_arabic_seller').text('Please enter question in Arabic');
+            hasError = true;
+        }
+
+        if (!answer_arabic) {
+            $('.error-answer_arabic_seller').text('Please enter answer in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
+        // disable button
+        $('#addFaqBtnSeller').prop('disabled', true).find('span').text('Saving...');
+
+        $.ajax({
+            url: "{{ route('admin.add_faq') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 2,
+                question_english: question_english,
+                answer_english: answer_english,
+                question_arabic: question_arabic,
+                answer_arabic: answer_arabic
+            },
+
+            success: function(response) {
+                toastr.success(response.message);
+
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            },
+
+            error: function(xhr) {
+                $('#addFaqBtnSeller').prop('disabled', false).find('span').text('Add');
+
+                let res = xhr.responseJSON;
+
+                toastr.error(res?.message || 'Something went wrong');
+
+                // backend validation (optional)
+                if (res?.errors) {
+                    $.each(res.errors, function(key, value) {
+                        $('.error-' + key).text(value[0]);
+                    });
+                }
+            }
+        });
+
+    });
+
+});
+</script>
+
+<!-- seller contact us -->
+<script>
+$(document).ready(function () {
+
+    // Remove error on typing
+    $('#email_seller, #mobile_seller, #whatsapp_seller').on('input', function () {
+        let name = $(this).attr('name');
+        $('.error-' + name).text('');
+    });
+
+    $('#contactSubmitBtnSeller').on('click', function () {
+
+        $('.text-danger').text('');
+
+        let email = $('#email_seller').val().trim();
+        let mobile = $('#mobile_seller').val().trim();
+        let whatsapp = $('#whatsapp_seller').val().trim();
+
+        let hasError = false;
+
+        // ✅ Email validation
+        if (!email) {
+            $('.error-email_seller').text('Please enter email');
+            hasError = true;
+        } else {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                $('.error-email_seller').text('Please enter a valid email');
+                hasError = true;
+            }
+        }
+
+        // ✅ Mobile validation (7–15 digits)
+        if (!mobile) {
+            $('.error-mobile_seller').text('Please enter contact number');
+            hasError = true;
+        } else {
+            const mobilePattern = /^\+?[0-9]{7,15}$/;
+            if (!mobilePattern.test(mobile)) {
+                $('.error-mobile_seller').text('Mobile number must be between 7 to 15 digits');
+                hasError = true;
+            }
+        }
+
+        if (!whatsapp) {
+            $('.error-whatsapp_seller').text('Please enter whatsapp number');
+            hasError = true;
+        } else {
+            const whatsappPattern = /^\+?[0-9]{7,15}$/;
+            if (!whatsappPattern.test(whatsapp)) {
+                $('.error-whatsapp_seller').text('WhatsApp number must be between 7 to 15 digits');
+                hasError = true;
+            }
+        }
+
+        if (hasError) return;
+
+        $('#contactSubmitBtn').prop('disabled', true).find('span').text('Saving...');
+
+        $.ajax({
+            url: "{{ route('admin.create_update_contact_us') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                type: 2,
+                email: email,
+                mobile: mobile,
+                whatsapp: whatsapp
+            },
+
+            success: function(response) {
+                toastr.success(response.message);
+
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
+            },
+
+            error: function(xhr) {
+                $('#contactSubmitBtnSeller').prop('disabled', false).find('span').text('Submit');
+
+                let res = xhr.responseJSON;
+
+                toastr.error(res?.message || 'Something went wrong');
+
+                if (res?.errors) {
+                    $.each(res.errors, function(key, value) {
+                        $('.error-' + key).text(value[0]);
+                    });
+                }
+            }
+        });
+
+    });
+
+});
+</script>
+
+
+
+
+
+@endsection
 
 
 

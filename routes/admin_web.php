@@ -218,6 +218,12 @@ Route::group(['prefix'=>'admin'], function(){
         //cms management
         Route::get('/cms-management', [CmsController::class, 'cmsManagement'])->name('admin.cmsManagement');
         Route::post('/create_update_terms_condition', [CmsController::class, 'create_update_terms_condition'])->name('admin.create_update_terms_condition');
+        Route::post('/create_update_return_policy', [CmsController::class, 'create_update_return_policy'])->name('admin.create_update_return_policy');
+        Route::post('/create_update_about_us', [CmsController::class, 'create_update_about_us'])->name('admin.create_update_about_us');
+        Route::post('/create_update_cancellation_policy', [CmsController::class, 'create_update_cancellation_policy'])->name('admin.create_update_cancellation_policy');
+        Route::post('/create_update_exchange_policy', [CmsController::class, 'create_update_exchange_policy'])->name('admin.create_update_exchange_policy');
+        Route::post('/add_faq', [CmsController::class, 'add_faq'])->name('admin.add_faq');
+        Route::post('/create_update_contact_us', [CmsController::class, 'create_update_contact_us'])->name('admin.create_update_contact_us');
 
         //notification management
         Route::get('/notification-management', [NotificationController::class, 'notificationManagement'])->name('admin.notificationManagement');
