@@ -382,7 +382,7 @@
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#faqquestionModal">Add New Question</a>
                         </div>
-                        <div class="management mt-4">
+                        <div class="management mt-4 pb-5">
                             <h6>List of Questions(English)</h6>
 
                             <!-- <div class="accordion" id="accordionExample">
@@ -873,7 +873,7 @@
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#faqquestionModalSeller">Add New Question</a>
                         </div>
-                        <div class="management mt-4">
+                        <div class="management mt-4 pb-5">
                             <h6>List of Questions(English)</h6>
 
                             <div class="faq-list-panle">
@@ -1315,7 +1315,7 @@
                             <a class="btn btn-dark customBtn mb-2" type="button" data-bs-toggle="modal"
                                 data-bs-target="#faqquestionModal">Add New Question</a>
                         </div>
-                        <div class="management mt-4">
+                        <div class="management mt-4 pb-5">
                             <h6>List of Questions(English)</h6>
 
                             <!-- <div class="accordion" id="accordionExample">
