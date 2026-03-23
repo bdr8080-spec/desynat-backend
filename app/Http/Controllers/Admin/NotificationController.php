@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 use App\Services\NotificationManagementService;
+use App\Services\UserManagementService;
+use App\Services\AffiliatedUserManagementService;
+use App\Services\SellerManagementService;
+use App\Services\DeliveryBoyManagementService;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -14,9 +18,13 @@ use Validator;
 class NotificationController extends Controller
 {
 
-    public function __construct(NotificationManagementService $NotificationManagementService){
+    public function __construct(NotificationManagementService $NotificationManagementService,UserManagementService $UserManagementService,AffiliatedUserManagementService $AffiliatedUserManagementService,SellerManagementService $SellerManagementService,DeliveryBoyManagementService $DeliveryBoyManagementService){
 
         $this->NotificationManagementService=$NotificationManagementService;
+        $this->UserManagementService=$UserManagementService;
+        $this->AffiliatedUserManagementService=$AffiliatedUserManagementService;
+        $this->SellerManagementService=$SellerManagementService;
+        $this->DeliveryBoyManagementService=$DeliveryBoyManagementService;
 
     }
 
@@ -46,8 +54,12 @@ class NotificationController extends Controller
     }
 
     public function sendNotification(Request $request){
+        $users = $this->UserManagementService->getUsers($request)['data'];
+        $affiliateUsers = $this->AffiliatedUserManagementService->getApprovedAffiliatedUers($request)['data'];
+        $sellers = $this->SellerManagementService->getApprovedSellers($request)['data'];
+        $deliveryBoys = $this->DeliveryBoyManagementService->getDeliveryBoys($request)['data'];
        // dd(123);
-        return view('admin.notification.notification-send');
+        return view('admin.notification.notification-send',compact('users','affiliateUsers','sellers','deliveryBoys'));
     }
 
     public function send_notification(Request $request)
@@ -83,8 +95,8 @@ class NotificationController extends Controller
         }
 
         try {
-            $senderId = auth()->id();
-            //dd($senderId);
+            $senderId = Auth::guard('admin')->user()->id;
+            //sdd($senderId);
 
             $request_data = (object)[
                 'sender_id'    => $senderId,
@@ -98,6 +110,7 @@ class NotificationController extends Controller
                 'title_arabic'      => $request->title_arabic,
                 'sender_type'      => $request->sender_type,
             ];
+            //dd($request_data);
 
             $data = $this->NotificationManagementService->SendNotification($request_data);
 
