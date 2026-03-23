@@ -433,6 +433,7 @@
                                             {!! $faq->answer_arabic ?? '' !!}
                                         </div>
 
+                                    </div>
                                         <div class="d-flex gap-3 justify-content-center ">
                                             <a class="table-button" href="#" type="button">
                                                 <i class="bi bi-pencil-square"></i>
@@ -441,8 +442,6 @@
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
                                         </div>
-
-                                    </div>
 
                                 </div>
                                 @empty
@@ -907,6 +906,15 @@
                                         </div>
 
                                     </div>
+                                        <div class="d-flex gap-3 justify-content-end">
+                                            <a class="table-button" href="javascript:void(0)" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#editFAQ">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" class="table-button text-danger deletePromoCode mb-1 mt-1">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                        </div>
                                 </div>
                                 @empty
                                 <div class="text-center text-muted">
@@ -1358,7 +1366,8 @@
                                             {!! $faq->answer_arabic ?? '' !!}
                                         </div>
 
-                                        <div class="d-flex gap-3 justify-content-center ">
+                                    </div>
+                                    <div class="d-flex gap-3 justify-content-end">
                                             <a class="table-button" href="javascript:void(0)" type="button" data-bs-toggle="modal"
                                             data-bs-target="#editFAQ">
                                                 <i class="bi bi-pencil-square"></i>
@@ -1367,8 +1376,6 @@
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
                                         </div>
-                                        
-                                    </div>
                                 </div>
                                 @empty
                                 <div class="text-center text-muted">

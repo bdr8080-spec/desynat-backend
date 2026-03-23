@@ -49,7 +49,7 @@ figure {
     display: grid;
     grid-template-columns: 220px 1fr;
     gap: 10px 20px;
-    max-width: 900px;
+    max-width: 100%;
 }
 
 .faq-english .form-label {
