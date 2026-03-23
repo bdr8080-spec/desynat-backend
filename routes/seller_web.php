@@ -13,6 +13,7 @@ use App\Http\Controllers\Seller\SellerChatController;
 
 use App\Http\Controllers\Seller\WebDealManagement;
 use App\Http\Controllers\Seller\SellerLiveRequestController;
+use App\Http\Controllers\Seller\NotificationController;
 
 
 use App\Http\Controllers\ChatController;
@@ -171,6 +172,11 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('getTimeslots', [SellerLiveRequestController::class, 'getTimeslots'])->name('seller.getTimeslots');
     Route::post('sendLiveRequest', [SellerLiveRequestController::class, 'sendLiveRequest'])->name('seller.sendLiveRequest');
 
+    //M10
+    Route::post('mark_notification_as_read', [NotificationController::class, 'mark_notification_as_read'])->name('seller.mark_notification_as_read');
+    Route::get('subscription-plans', [WebSellerDashboard::class, 'subscriptionPlan'])->name('seller.subscriptionPlan');
+    Route::post('/renew_subcription_plan_buy', [WebSellerDashboard::class,'renew_subcription_plan_buy']);
+    Route::get('/my_plans', [WebSellerDashboard::class,'my_plans']);
 
     });
 
@@ -193,10 +199,10 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
-Route::match(['get', 'post'], '/subscription-plans', function () {
-    return view('dealer.plans.index');
+// Route::match(['get', 'post'], '/subscription-plans', function () {
+//     return view('dealer.plans.index');
 
-})->name('dealer.subscription-plans');
+// })->name('dealer.subscription-plans');
 
 // Route::match(['get', 'post'], '/live-request', function () {
 //     return view('dealer.liverequest.live-request');

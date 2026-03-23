@@ -60,7 +60,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link border-radious-9 margin-20" href="/subscription-plans">
+                <a class="nav-link border-radious-9 margin-20 {{ Request::is('seller/subscription-plans')? 'sidebar-active' : ''}} "
+                href="{{ route('seller.subscriptionPlan') }}">
                     <img src="{{ asset('dealer') }}/assets/img/all-icons/plan.svg" alt="icon" class="asideicon">
                     <span>Subscription Plans</span>
                 </a>
