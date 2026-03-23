@@ -48,119 +48,110 @@
                 <!-- BOX 1 -->
                 <div class="col-md-3">
                     <div class="multi-box form-group">
-                        <input type="text" class="search" placeholder="search user" />
-                        <div class="select-all">
-                            <span>Select all</span>
-                            <input type="checkbox" />
+                         <input type="text" id="search" class="search-box" placeholder="Search user">
+                         <div class="user-item  d-flex justify-content-between mt-3">
+                            <label>Select All</label>
+                            <input type="checkbox" id="selectAll">
                         </div>
-                        <ul>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" checked />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" checked />
-                            </li>
 
-                        </ul>
+                        <div id="userList">
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 1</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 2</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>Admin User</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
 
                 <!-- BOX 2 -->
                 <div class="col-md-3">
-                    <div class="multi-box">
-                        <input type="text" class="search" placeholder="search user" />
-                        <div class="select-all">
-                            <span>Select all</span>
-                            <input type="checkbox" />
+                    <div class="multi-box form-group">
+                         <input type="text" id="search" class="search-box" placeholder="Search user">
+                         <div class="user-item  d-flex justify-content-between mt-3">
+                            <label>Select All</label>
+                            <input type="checkbox" id="selectAll">
                         </div>
-                        <ul>
-                            <li>
-                                <i class="bi bi-person"></i> Seller Name
-                                <input type="checkbox" checked />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> Seller Name
-                                <input type="checkbox" />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> Seller Name
-                                <input type="checkbox" checked />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> Seller Name
-                                <input type="checkbox" checked />
-                            </li>
 
-                        </ul>
+                        <div id="userList">
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 1</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 2</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>Admin User</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
                 <!-- BOX 3 -->
                 <div class="col-md-3">
-                    <div class="multi-box">
-                        <input type="text" class="search" placeholder="search user" />
-                        <div class="select-all">
-                            <span>Select all</span>
-                            <input type="checkbox" />
+                    <div class="multi-box form-group">
+                         <input type="text" id="search" class="search-box" placeholder="Search user">
+                         <div class="user-item  d-flex justify-content-between mt-3">
+                            <label>Select All</label>
+                            <input type="checkbox" id="selectAll">
                         </div>
-                        <ul>
-                            <li>
-                                <i class="bi bi-person"></i> Delivery Boy
-                                <input type="checkbox" />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> Delivery Boy
-                                <input type="checkbox" checked />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> Delivery Boy
-                                <input type="checkbox" />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> Delivery Boy
-                                <input type="checkbox" />
-                            </li>
 
-                        </ul>
+                        <div id="userList">
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 1</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 2</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>Admin User</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
 
                 <!-- BOX 4 -->
                 <div class="col-md-3">
-                    <div class="multi-box">
-                        <input type="text" class="search" placeholder="Affiliate Users" />
-                        <div class="select-all">
-                            <span>Select all</span>
-                            <input type="checkbox" />
+                     <div class="multi-box form-group">
+                         <input type="text" id="search" class="search-box" placeholder="Search user">
+                         <div class="user-item  d-flex justify-content-between mt-3">
+                            <label>Select All</label>
+                            <input type="checkbox" id="selectAll">
                         </div>
-                        <ul>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" checked />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" checked />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" checked />
-                            </li>
-                            <li>
-                                <i class="bi bi-person"></i> User ID
-                                <input type="checkbox" />
-                            </li>
-                        </ul>
+
+                        <div id="userList">
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 1</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>User 2</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                            <div class="user-item d-flex justify-content-between bottom-border">
+                                <span>Admin User</span>
+                                <input type="checkbox" class="user-checkbox">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -170,6 +161,30 @@
 
 </div>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#selectAll').on('change', function () {
+            $('.user-checkbox').prop('checked', $(this).prop('checked'));
+        });
+
+        $('.user-checkbox').on('change', function () {
+            let total = $('.user-checkbox').length;
+            let checked = $('.user-checkbox:checked').length;
+            $('#selectAll').prop('checked', total === checked);
+        });
+
+        // 🔍 Search Filter
+        $('#search').on('keyup', function () {
+            let value = $(this).val().toLowerCase();
+            $('#userList .user-item').filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        });
+</script>
 
 
 @endsection

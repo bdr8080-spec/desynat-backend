@@ -51,6 +51,11 @@ figure {
     gap: 10px 20px;
     max-width: 100%;
 }
+.bottom-border {
+    border-bottom: 1px solid #ddd;
+    line-height: 36px;
+    font-size: 14px;
+}
 
 .faq-english .form-label {
     font-weight: bold;
