@@ -434,7 +434,7 @@
                                         </div>
 
                                     </div>
-                                        <div class="d-flex gap-3 justify-content-center ">
+                                        <div class="d-flex gap-3 justify-content-end">
                                             <a class="table-button" href="#" type="button">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
@@ -1337,7 +1337,7 @@
                                 </div>
                             </div> -->
 
-                            <div class="faq-list-panle">
+                            <div class="faq-list-panle mb-5">
                                 @forelse($userfaq as $index => $faq)
                                 <div class="faq-english mb-3">
                                     <div class="form-grid">
