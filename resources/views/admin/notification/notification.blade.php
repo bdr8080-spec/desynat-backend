@@ -33,7 +33,7 @@
                 <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab"
                     tabindex="0">
                     <div class="row align-items-end d-flex justify-content-end">
-                        <div class="col-md-2 col-lg-3 col-12">
+                        <div class="col-md-2 col-lg-2 col-12">
                             <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn w-100 ms-auto mb-3">
                                 <span>Send Notification</span></a>
                         </div>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
                     <div class="row align-items-end d-flex justify-content-end">
-                        <div class="col-md-2 col-lg-3 col-12">
+                        <div class="col-md-2 col-lg-2 col-12">
                             <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn w-100 ms-auto mb-3" href="/send-notification">
                                 <span>Send Notification</span></a>
                         </div>
@@ -103,11 +103,11 @@
                         </div>
 
                         <div class="col-lg-3 col-md-12 col-12">
-                            <div class="d-flex gap-3 justify-content-start" style="text-align: start">
-                                <a href="{{ route('admin.notificationManagement') }}" class="btn btn-dark customBtn" style="margin-top: 60px">
+                            <div class="d-flex gap-3 justify-content-start mt-5" style="text-align: start">
+                                <a href="{{ route('admin.notificationManagement') }}" class="btn btn-dark customBtn mt-2">
                                     <span>Reset</span>
                                 </a>
-                                <a href="" class="btn btn-dark customBtn" style="margin-top: 60px">
+                                <a href="" class="btn btn-dark customBtn mt-2">
                                     <span>Export</span>
                                 </a>
                             </div>

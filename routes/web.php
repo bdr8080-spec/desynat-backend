@@ -25,7 +25,8 @@ Route::match(['get', 'post'], '/Invoice/{id}', [OrderInvoiceController::class, '
             "details" => [
                 [
                     "appID" => "6QKUQGN93F.com.app.DesynatUser",
-                    "paths" => ["/user/product/detail-page/*"]
+                    // "paths" => ["/user/product/detail-page/*"]
+                    "paths" => ["/user/*"]
                 ]
             ]
         ]
