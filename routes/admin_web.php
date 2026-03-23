@@ -223,6 +223,8 @@ Route::group(['prefix'=>'admin'], function(){
         Route::post('/create_update_cancellation_policy', [CmsController::class, 'create_update_cancellation_policy'])->name('admin.create_update_cancellation_policy');
         Route::post('/create_update_exchange_policy', [CmsController::class, 'create_update_exchange_policy'])->name('admin.create_update_exchange_policy');
         Route::post('/add_faq', [CmsController::class, 'add_faq'])->name('admin.add_faq');
+        Route::post('/update_faq', [CmsController::class, 'update_faq'])->name('admin.update_faq');
+        Route::post('/delete_faq', [CmsController::class, 'delete_faq'])->name('admin.delete_faq');
         Route::post('/create_update_contact_us', [CmsController::class, 'create_update_contact_us'])->name('admin.create_update_contact_us');
 
         //notification management

@@ -90,7 +90,42 @@ class CMSController extends Controller
                 'type' => '2',
             ];
             $sellerContactUs = $this->CMSManagementService->GetContactUs($request_data13)['data'];
-        return view('admin.cms.index',compact('userterms','userreturn','userabout','usercancellation','userexchange','userfaq','userContactUs','sellerterms','sellerreturn','sellerabout','sellercancellation','sellerexchange','sellerfaq','sellerContactUs'));
+
+        $request_data14 = (object)[
+                'type' => '3',
+            ];
+            $driverterms = $this->CMSManagementService->GetTermConditions($request_data14)['data'];
+            //dd($userterms);
+        $request_data15 = (object)[
+                'type' => '3',
+            ];
+            $driverreturn = $this->CMSManagementService->GetReturnPolicy($request_data15)['data'];
+
+        $request_data16 = (object)[
+                'type' => '3',
+            ];
+            $driverabout = $this->CMSManagementService->GetAboutUs($request_data16)['data'];
+
+        $request_data17 = (object)[
+                'type' => '3',
+            ];
+            $drivercancellation = $this->CMSManagementService->GetCancellationPolicy($request_data17)['data'];
+        
+        $request_data18 = (object)[
+                'type' => '3',
+            ];
+            $driverexchange = $this->CMSManagementService->GetExchangePolicy($request_data18)['data'];
+
+        $request_data19 = (object)[
+                'type' => '3',
+            ];
+            $driverfaq = $this->CMSManagementService->GetFaq($request_data19)['data'];
+
+        $request_data20 = (object)[
+                'type' => '3',
+            ];
+            $driverContactUs = $this->CMSManagementService->GetContactUs($request_data20)['data'];
+        return view('admin.cms.index',compact('userterms','userreturn','userabout','usercancellation','userexchange','userfaq','userContactUs','sellerterms','sellerreturn','sellerabout','sellercancellation','sellerexchange','sellerfaq','sellerContactUs','driverterms','driverreturn','driverabout','drivercancellation','driverexchange','driverfaq','driverContactUs'));
     }
 
 
