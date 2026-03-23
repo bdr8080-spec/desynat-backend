@@ -28,8 +28,9 @@ Route::match(['get', 'post'], '/Invoice/{id}', [OrderInvoiceController::class, '
                     // "paths" => ["/user/product/detail-page/*"]
                     "paths" => 
                     [
-                  "/user/product/*",
-                  "/user/store-details/*" 
+                        "*"
+                //   "/user/product/*",
+                //   "/user/store-details/*" 
                   ]
                 ]
             ]
