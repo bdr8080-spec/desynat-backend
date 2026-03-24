@@ -269,7 +269,7 @@ class SellerDashboardController extends Controller
       $data= $this->SellerAuthService->seller_myPlan($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
-        return ApiResponse::generateResponse('error', $data['message'],[],200);
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],200);
     }
 
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
