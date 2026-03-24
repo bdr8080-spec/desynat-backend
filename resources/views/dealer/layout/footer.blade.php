@@ -245,6 +245,9 @@ $(document).ready(function () {
                     toastr.success(res.message || "Marked as read");
                     element.removeClass("unread clickable")
                            .addClass("read not-clickable");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
 
                 } else {
                     toastr.error(res.message || "Something went wrong");

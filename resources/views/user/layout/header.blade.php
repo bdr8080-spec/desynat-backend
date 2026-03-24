@@ -85,10 +85,24 @@
                                         <img src="{{asset('user/assets/images/cart.svg')}}" class=img-fluid />
                                     </span>
                                 </a>
-                                <a href="">
-                                    <span>
-                                        <img src="{{asset('user/assets/images/noti.svg')}}" class=img-fluid />
-                                    </span>
+                                 @php
+                                    $notificationCount = 0;
+
+                                    if (Auth::guard('web')->check()) {
+                                        $notificationCount = \App\Models\Notification::where('receiver_id', auth()->id())
+                                            ->where('receiver_type', '2')
+                                            ->where('is_read', '0')
+                                            ->orderBy('id', 'desc')
+                                            ->count();
+                                    }
+                                @endphp
+
+                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogUser">
+                                    <img src="{{ asset('user/assets/images/noti.svg') }}" class="img-fluid" />
+
+                                    @if($notificationCount > 0)
+                                        <span class="badge text-bg-danger badge-number">{{ $notificationCount }}</span>
+                                    @endif
                                 </a>
                             </div>
 

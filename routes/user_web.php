@@ -142,6 +142,8 @@ Route::match(['get','post'],'/add-wallet-money', [WalletController::class,'addWa
 
 Route::match(['post'],'/redeem-giftCard-in-User', [WalletController::class,'redeemgiftCardinUser'])->name('user.redeemgiftCardinUser');
 
+Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_notification_as_read'])->name('user.mark_notification_as_read');
+
 
 });
 

@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\UserDashboardService;
-
+use App\Services\NotificationManagementService;
 use Illuminate\Support\Facades\Session;
+use App\Helpers\ApiResponse;
+use Validator;
 
 
 class DashBoardController extends Controller
 {
 
-    public function __construct(UserDashboardService $UserDashboardService)
+    public function __construct(UserDashboardService $UserDashboardService,NotificationManagementService $NotificationManagementService)
     {
         $this->UserDashboardService = $UserDashboardService;
+        $this->NotificationManagementService = $NotificationManagementService;
     }
 
 
@@ -144,6 +147,41 @@ class DashBoardController extends Controller
             ], 500);
         }
     }
+
+    public function mark_notification_as_read(Request $request){
+
+        try{
+
+            $validate = Validator::make($request->all(), [
+            'notification_id' => 'required|exists:notifications,id',
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+            
+        $user = $request->user();
+       
+       $request_data=(object)[
+        'user_id'=>$user->id,
+        'notification_id' => $request->notification_id
+       ];
+
+    $data=$this->NotificationManagementService->ReaduserNotification($request_data);
+
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }catch(exception $e){
+        return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+    }
+
+}
 
 
 }

@@ -26,111 +26,93 @@
                 tabindex="0">
                 <div class="plan-wapper-2">
                     <div class="row">
-                        <div class="col-lg-3 col-md-4">
-                            <div class="plan-card plan-shadow">
-                                <div class="plan-header bg-yellow-2 text-center">Pro Package</div>
-                                <div class="plan-content text-center plan-shadow">
-                                    <h4>KD 250.00</h4>
-                                    <div>for 1 Month</div>
-                                </div>
+                        @forelse($allPlans as $plan)
 
-                                <div class="plan-body p-3">
-                                    <ul class="list-inline">
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
-                                            Products:
-                                            <span>120</span>
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of Videos
-                                            (Reels): <span>60</span>
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
-                                            Highlights: <span>10</span></li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">15 stories within
-                                            24
-                                            hours</li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">5 Store Employees
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
-                                            <span>2.5%</span>
-                                        </li>
-                                    </ul>
-                                    <div class="py-3">
-                                        <a href="#" class="btn btn-success w-100">Purchase</a>
+                            @php
+                                // Assign different colors based on plan name or loop index
+                                $colors = ['bg-dark', 'bg-yellow-2', 'bg-success', 'bg-primary', 'bg-danger'];
+                                $headerClass = $colors[$loop->index % count($colors)];
+                            @endphp
+
+                            <div class="col-lg-3 col-md-4">
+                                <div class="plan-card plan-shadow">
+                                    <div class="plan-header {{ $headerClass }} text-center">
+                                        {{ $plan->plan_name_english }}
                                     </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4">
-                            <div class="plan-card plan-shadow">
-                                <div class="plan-header bg-yellow-3 text-center">Plus Package</div>
-                                <div class="plan-content text-center plan-shadow">
-                                    <h4>KD 250.00</h4>
-                                    <div>for 1 Month</div>
-                                </div>
-
-                                <div class="plan-body p-3">
-                                    <ul class="list-inline">
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
-                                            Products:
-                                            <span>120</span>
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of Videos
-                                            (Reels): <span>60</span>
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
-                                            Highlights: <span>10</span></li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">15 stories within
-                                            24
-                                            hours</li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">5 Store Employees
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
-                                            <span>2.5%</span>
-                                        </li>
-                                    </ul>
-                                    <div class="py-3">
-                                        <a href="#" class="btn btn-success w-100">Purchase</a>
+                                    <div class="plan-content text-center plan-shadow">
+                                        <h4>KD {{ number_format($plan->price, 2) }}</h4>
+                                        <div>
+                                            for {{ $plan->duration }}
+                                            {{ $plan->duration_type == 1 ? 'Month' : 'Year' }}
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="plan-body p-3">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
+                                                Number of Products:
+                                                <span>{{ $plan->no_of_products }}</span>
+                                            </li>
 
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4">
-                            <div class="plan-card plan-shadow">
-                                <div class="plan-header bg-yellow-4 text-center">Growth Package</div>
-                                <div class="plan-content text-center plan-shadow">
-                                    <h4>KD 250.00</h4>
-                                    <div>for 1 Month</div>
-                                </div>
+                                            <li>
+                                                <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
+                                                Number of Videos (Reels):
+                                                <span>{{ $plan->no_of_videos }}</span>
+                                            </li>
 
-                                <div class="plan-body p-3">
-                                    <ul class="list-inline">
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
-                                            Products:
-                                            <span>120</span>
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of Videos
-                                            (Reels): <span>60</span>
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Number of
-                                            Highlights: <span>10</span></li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">15 stories within
-                                            24
-                                            hours</li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">5 Store Employees
-                                        </li>
-                                        <li><img src="{{ asset('dealer') }}/assets/img/check-icon.svg">Commission :
-                                            <span>2.5%</span>
-                                        </li>
-                                    </ul>
-                                    <div class="py-3">
-                                        <a href="#" class="btn btn-success w-100">Purchase</a>
+                                            <li>
+                                                <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
+                                                Number of Highlights:
+                                                <span>{{ $plan->no_of_highlights }}</span>
+                                            </li>
+
+                                            <li>
+                                                <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
+                                                Stories :
+                                                <span>{{ $plan->stories == 1 ? 'Yes' : 'No' }}</span>
+                                            </li>
+
+                                            <li>
+                                                <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
+                                                
+                                                {{ $plan->no_of_employee }} Store Employees
+                                            </li>
+
+                                            <li>
+                                                <img src="{{ asset('dealer/assets/img/check-icon.svg') }}">
+                                                Commission :
+                                                <span>
+                                                    {{ $plan->commission == 1 ? $plan->commission_percentage . '%' : '0%' }}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                        <div class="py-3">
+                                            @if($activePlan && $activePlan->plan_id == $plan->id)
+
+                                                <button class="btn btn-secondary w-100" disabled>
+                                                    Currently
+                                                </button>
+
+                                            @else
+
+                                                <a href="javascript:void(0);" 
+                                                class="btn btn-success w-100 purchase-plan-btn"
+                                                data-plan-id="{{ $plan->id }}">
+                                                Purchase
+                                                </a>
+
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
+
+                        @empty
+                            <div class="col-12 text-center">
+                                <h5>No plan available</h5>
+                            </div>
+                        @endforelse
 
                     </div>
                 </div>
@@ -138,7 +120,7 @@
 
             <!-------------  my plan ------------>
 
-            <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
+            <!-- <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
                 
                 <div class="rounded-4 desc-box shadow-sm bg-white mb-4">
                     <div class="card-header d-flex justify-content-between p-2 planmont">
@@ -197,12 +179,139 @@
                 
 
 
+            </div> -->
+            <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
+                @foreach($myPlans as $plan)
+                    @php
+                        $isExpired = $plan->is_expired == 1;
+                        $isActive = $plan->status == 1 && $plan->is_expired == 0;
+                    @endphp
+
+                    <div class="rounded-4 desc-box shadow-sm bg-white mb-4">
+                        
+                        <div class="card-header d-flex justify-content-between p-2 planmont">
+                            <div class="fw-semibold {{ $isExpired ? 'monthly-black' : 'monthly-color' }}">
+                                {{ $isExpired ? 'Expired' : 'Active' }}
+                            </div>
+                            <div class="monthly-color fw-semibold">
+                                @if($plan->plan_info->duration_type=='1')
+                                Monthly
+                                @elseif($plan->plan_info->duration_type=='2')
+                                Yearly
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="p-3">
+                            <div class="row mb-2">
+                                <div class="col-6">Purchased On</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                        {{ \Carbon\Carbon::parse($plan->created_at)->format('d/m/Y \a\t h:i A') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">Amount</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                        {{ $plan->amount }} KD
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">Plan</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                        {{ $plan->plan_info->plan_name_english ?? 'N/A' }}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                @endforeach
+
             </div>
 
         </div>
     </div>
     </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    //get active tab from local storage
+    const lastTab = localStorage.getItem("activeTab");
+    if (lastTab) {
+        const triggerEl = document.querySelector(`#${lastTab}`);
+        if (triggerEl) {
+            const tab = new bootstrap.Tab(triggerEl);
+            tab.show();
+        }
+    }
+    //save active tab to local storage
+    const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+    tabButtons.forEach((button) => {
+        button.addEventListener("shown.bs.tab", function() {
+            localStorage.setItem("activeTab", this.id);
+        });
+    });
+});
+</script>
+
+<script>
+$(document).ready(function () {
+
+    $(".purchase-plan-btn").on("click", function () {
+
+        let planId = $(this).data("plan-id");
+        let element = $(this);
+
+        if (!planId) return;
+
+        $.ajax({
+            url: "{{ route('seller.renew_subcription_plan_buy') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                plan_id: planId
+            },
+            success: function (res) {
+
+                if (res.status === "success") {
+                    window.location.href = "/seller/single-plans/" + planId;
+
+                    // toastr.success(res.message || "Plan purchased successfully");
+
+                    // element.addClass("disabled").text("Purchased");
+
+                    // setTimeout(function () {
+                    //     location.reload();
+                    // }, 1500);
+
+                } else {
+                    toastr.error(res.message || "Something went wrong");
+                }
+
+            },
+            error: function (xhr) {
+
+                let message = "Something went wrong";
+
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+
+                toastr.error(message);
+            }
+        });
+
+    });
+
+});
+</script>
 
 @include('dealer.layout.footer');
 @include('dealer.product.ajax.datatablejs');

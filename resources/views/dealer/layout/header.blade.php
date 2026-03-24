@@ -70,11 +70,29 @@
                         </li>
                     </ul> -->
                 </li>
+                @php
+                    use Illuminate\Support\Facades\Auth;
+                    use App\Models\Notification;
+
+                    $notifications = [];
+
+                    if (Auth::guard('seller')->check()) {
+                        $sellerId = Auth::guard('seller')->user()->id;
+
+                        $notificationCount = Notification::where('receiver_id', $sellerId)
+                            ->where('receiver_type', '3')
+                            ->where('is_read','0')
+                            ->orderBy('created_at', 'desc')
+                            ->count();
+                    }
+                @endphp
 
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialog" >
                         <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
-                        <!-- <span class="badge bg-primary badge-number">4</span> -->
+                        @if($notificationCount>0)
+                        <span class="badge bg-primary badge-number">{{$notificationCount}}</span>
+                        @endif
                     </a>
 
                     <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
