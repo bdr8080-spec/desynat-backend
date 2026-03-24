@@ -14,7 +14,7 @@
     border-left: 4px solid #0d6efd;
     cursor: pointer;
 }
-</style>
+     </style>
      <footer>
          <div class="container-fluid">
              <div class="row justify-content-between">
@@ -131,79 +131,77 @@
          </div>
      </div>
 
-    <!-- Notification Management -->
+     <!-- Notification Management -->
 
-@php
-    use Illuminate\Support\Facades\Auth;
-    use App\Models\Notification;
+     @php
+     use Illuminate\Support\Facades\Auth;
+     use App\Models\Notification;
 
-    $notifications = [];
+     $notifications = [];
 
-    if (Auth::guard('web')->check()) {
+     if (Auth::guard('web')->check()) {
 
-        $notifications = Notification::where('receiver_id', auth()->id())
-            ->where('receiver_type', '2')
-            ->orderBy('id', 'desc')
-            ->get();
-    }
-@endphp
+     $notifications = Notification::where('receiver_id', auth()->id())
+     ->where('receiver_type', '2')
+     ->orderBy('id', 'desc')
+     ->get();
+     }
+     @endphp
 
-<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="notificationDialogUser">
-    
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Notifications</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="notificationDialogUser">
 
-    <div class="offcanvas-body">
+         <div class="offcanvas-header">
+             <h5 class="offcanvas-title">Notifications</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+         </div>
 
-        @forelse($notifications as $notification)
+         <div class="offcanvas-body">
 
-            <div class="notification-pnl d-flex gap-3 mb-3 
+             @forelse($notifications as $notification)
+
+             <div class="notification-pnl d-flex gap-3 mb-3 
                 {{ $notification->is_read == 0 ? 'unread clickable' : 'read not-clickable' }}"
-                
-                data-id="{{ $notification->id }}"
-            >
+                 data-id="{{ $notification->id }}">
 
-                <!-- ICON -->
-                <div>
-                    <div class="bell-icon-1">
-                        <i class="bi bi-bell-fill"></i>
-                    </div>
-                </div>
+                 <!-- ICON -->
+                 <div>
+                     <div class="bell-icon-1">
+                         <i class="bi bi-bell-fill"></i>
+                     </div>
+                 </div>
 
-                <!-- CONTENT -->
-                <div class="noti-content w-100">
+                 <!-- CONTENT -->
+                 <div class="noti-content w-100">
 
-                    <div class="noti-header d-flex justify-content-between">
-                        <div class="noti-title">
-                            {{ $notification->title_english ?? 'Notification' }}
-                        </div>
+                     <div class="noti-header d-flex justify-content-between">
+                         <div class="noti-title">
+                             {{ $notification->title_english ?? 'Notification' }}
+                         </div>
 
-                        <div class="post-date">
-                            {{ \Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A') }}
-                        </div>
-                    </div>
+                         <div class="post-date">
+                             {{ \Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A') }}
+                         </div>
+                     </div>
 
-                    <p>
-                        {{ $notification->description_english }}
-                    </p>
+                     <p>
+                         {{ $notification->description_english }}
+                     </p>
 
-                </div>
+                 </div>
 
-            </div>
+             </div>
 
-            @empty
-            <div class="text-center text-muted">
-                No notifications found
-            </div>
-            @endforelse
+             @empty
+             <div class="text-center text-muted">
+                 No notifications found
+             </div>
+             @endforelse
 
-    </div>
-</div>
+         </div>
+     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="{{ asset('user/assets/js/custom.js') }}"></script>
      <script src="{{ asset('user/assets/js/bootstrap.bundle.min.js') }}"></script>
      <!-- <script src="assets/js/fontawesome.min.js"></script> -->
@@ -459,13 +457,13 @@ $('.bannerpop').owlCarousel({
         }
     }
 })
-   $('.storeBanner').owlCarousel({
+$('.storeBanner').owlCarousel({
     loop: true,
     margin: 10,
     nav: false,
     dots: true,
     autoplay: true,
-   autoplayTimeout: 5000,
+    autoplayTimeout: 5000,
     smartSpeed: 2000,
     responsive: {
         0: {
@@ -480,7 +478,6 @@ $('.bannerpop').owlCarousel({
         }
     }
 })
-
      </script>
 
      <script>
@@ -1035,11 +1032,10 @@ function sendSearch() {
         window.location.href = "/user/all-product?search=" + encodeURIComponent(value);
     }
 }
+     </script>
 
-</script>
-
-<script>
-$(window).on('load', function () {
+     <script>
+$(window).on('load', function() {
 
     // 👉 Sirf home page par modal open hoga
     if (window.location.pathname === '/') {
@@ -1050,14 +1046,14 @@ $(window).on('load', function () {
         // $('body').addClass('overflow-hidden');
 
         // Manual skip (button or overlay click)
-        $('.btn-skip, #showBanner').on('click', function (e) {
+        $('.btn-skip, #showBanner').on('click', function(e) {
             if ($(e.target).is('.btn-skip') || $(e.target).is('#showBanner')) {
                 closeBanner();
             }
         });
 
         // ⏱ Auto skip after 5 seconds
-        setTimeout(function () {
+        setTimeout(function() {
             if ($modal1.is(':visible')) {
                 closeBanner();
             }
@@ -1071,13 +1067,13 @@ $(window).on('load', function () {
     }
 
 });
-</script>
+     </script>
 
-<!-- mark notification as read -->
-<script>
-$(document).ready(function () {
+     <!-- mark notification as read -->
+     <script>
+$(document).ready(function() {
 
-    $(".notification-pnl.unread").on("click", function () {
+    $(".notification-pnl.unread").on("click", function() {
 
         let notificationId = $(this).data("id");
         let element = $(this);
@@ -1091,14 +1087,14 @@ $(document).ready(function () {
                 _token: "{{ csrf_token() }}",
                 notification_id: [notificationId]
             },
-            success: function (res) {
+            success: function(res) {
 
                 if (res.status === "success") {
 
                     toastr.success(res.message || "Marked as read");
                     element.removeClass("unread clickable")
-                           .addClass("read not-clickable");
-                    setTimeout(function () {
+                        .addClass("read not-clickable");
+                    setTimeout(function() {
                         location.reload();
                     }, 1500);
 
@@ -1107,7 +1103,7 @@ $(document).ready(function () {
                 }
 
             },
-            error: function () {
+            error: function() {
                 toastr.error("Something went wrong");
             }
         });
@@ -1115,9 +1111,111 @@ $(document).ready(function () {
     });
 
 });
-</script>
+     </script>
 
 
+
+     <!-- Firebase geberate Token and Save token Code  -->
+
+
+
+
+     <script type="module">
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import {
+    getMessaging,
+    getToken,
+    onMessage
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCYQyk6P8Gpp6YA7HgLE_Gf_aXDxze_big",
+    authDomain: "desynat.firebaseapp.com",
+    databaseURL: "https://desynat-default-rtdb.firebaseio.com",
+    projectId: "desynat",
+    storageBucket: "desynat.firebasestorage.app",
+    messagingSenderId: "89320198276",
+    appId: "1:89320198276:web:1d3c84f812a338529d32d1",
+    measurementId: "G-7MVP5BHENE"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+// Ask user for notification permission
+Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+        console.log('Notification permission granted.');
+
+        getToken(messaging, {
+            vapidKey: "BBPk2muPnGI7gfY99rJLaHaUyQhB2HqWS_87X3VtjU_EzQFymAd742YmWH6SkApA-3javZ5JqIRfr9ERqS5FSiU"
+        }).then((currentToken) => {
+            if (currentToken) {
+                console.log("Device Token:", currentToken);
+
+                // save Token Code
+                $.ajax({
+                    url: "{{ url('user-save-token') }}",
+                    type: "get",
+                    dataType: 'json',
+                    data: {
+                        token: currentToken,
+                    },
+                    success: function(response) {
+                        $('#user_loder').hide();
+                        if (response.success) {
+
+                            console.log(response);
+
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#user_loder').hide();
+                        // toastr.error("Error occurred: " + xhr.responseText);
+                    }
+                });
+
+                // save Token Code end Here
+
+
+
+                // send to server
+            } else {
+                console.log('No registration token available.');
+            }
+        }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+        });
+
+    } else {
+        console.log('Notification permission not granted.');
+    }
+});
+
+
+onMessage(messaging, (payload) => {
+    console.log('Foreground message:', payload);
+    const {
+        title,
+        body
+    } = payload.notification;
+
+    new Notification(title, {
+        body: body,
+        icon: '/icon.png',
+    });
+});
+     </script>
+
+
+
+
+     <!-- firebAse code End here  -->
 
      </body>
 

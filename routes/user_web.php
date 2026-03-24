@@ -20,6 +20,15 @@ use App\Http\Controllers\GoogleTranslateController;
 use App\Http\Controllers\LanguageController;
 
 
+use App\Http\Controllers\SaveFirebaseToken;
+
+
+
+
+// Save User firebase Token 
+
+Route::get('user-save-token', [SaveFirebaseToken::class, 'saveUserToken']);
+
 
 Route::get('/', [AuthController::class,'dashboard'])->name('dashboard');
 
