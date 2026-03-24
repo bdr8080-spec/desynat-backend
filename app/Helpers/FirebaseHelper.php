@@ -2,22 +2,19 @@
 
 use Google\Auth\OAuth2;
 use Illuminate\Support\Facades\Http;
-
 if (!function_exists('sendPushNotificationNew')) {
-    function sendPushNotificationNew($deviceToken, $title, $body)
+    function sendPushNotificationNew($deviceTokens, $title, $body)
     {
-
         $projectId = 'desynat';
         $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
 
-        $clientEmail = json_decode(file_get_contents($keyFilePath), true)['client_email'];
-        $privateKey = json_decode(file_get_contents($keyFilePath), true)['private_key'];
+        $credentials = json_decode(file_get_contents($keyFilePath), true);
 
-        $oauth = new OAuth2([
+        $oauth = new \Google\Auth\OAuth2([
             'audience' => 'https://oauth2.googleapis.com/token',
-            'issuer' => $clientEmail,
+            'issuer' => $credentials['client_email'],
             'signingAlgorithm' => 'RS256',
-            'signingKey' => $privateKey,
+            'signingKey' => $credentials['private_key'],
             'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
             'scope' => ['https://www.googleapis.com/auth/firebase.messaging'],
         ]);
@@ -25,24 +22,34 @@ if (!function_exists('sendPushNotificationNew')) {
         $oauth->fetchAuthToken();
         $accessToken = $oauth->getLastReceivedToken()['access_token'];
 
-        $response = Http::withToken($accessToken)->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
-            'message' => [
-                'token' => $deviceToken,
-                'notification' => [
-                    'title' => $title,
-                    'body' => $body,
-                ],
-                'android' => [
-                    'priority' => 'high',
-                ],
-                'apns' => [
-                    'headers' => [
-                        'apns-priority' => '10',
-                    ],
-                ],
-            ],
-        ]);
+        $responses = [];
 
-        return $response->json();
+        foreach ($deviceTokens as $token) {
+
+            if (empty($token)) continue;
+
+            $response = Http::withToken($accessToken)
+                ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
+                    'message' => [
+                        'token' => $token,
+                        'notification' => [
+                            'title' => $title,
+                            'body' => $body,
+                        ],
+                        'android' => [
+                            'priority' => 'high',
+                        ],
+                        'apns' => [
+                            'headers' => [
+                                'apns-priority' => '10',
+                            ],
+                        ],
+                    ],
+                ]);
+
+            $responses[] = $response->json();
+        }
+
+        return $responses;
     }
 }
