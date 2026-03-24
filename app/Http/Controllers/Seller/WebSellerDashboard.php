@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 Use Auth;
 use Validator;
 use App\Models\seller;
-
+use App\Models\sellerStoreInformation;
 use App\Models\country;
+use App\Models\SellerSubcriptionPlanBuy;
 
 use Illuminate\Support\Facades\Cache;
 
@@ -508,8 +509,24 @@ $seller_id=Auth::guard('seller')->user()->id;
         }
     
     public function subscriptionPlan(Request $request){
-
-    return view('dealer.plans.index');
+        $seller_details=Auth::guard('seller')->user();
+        $request_data=(object )[
+            'seller_id'=>$seller_details->id,
+        ];
+     $myPlans= $this->SellerAuthService->seller_myPlan($request_data)['data'];
+     //dd($myPlans);
+     $sellerCountry = sellerStoreInformation::with('country_info')->where('seller_id',$seller_details->id)->first();
+     //dd($sellerCountry);
+     $request_data=(object )[
+            'country_id'=>$sellerCountry->country,
+        ];
+     $allPlans= $this->SellerAuthService->seller_allPlan($request_data)['data'];
+     //dd($allPlans);
+     $activePlan = SellerSubcriptionPlanBuy::where('seller_id', $seller_details->id)
+                    ->where('is_expired','0')
+                    ->where('status', '1')
+                    ->first();
+    return view('dealer.plans.index',compact('myPlans','allPlans','activePlan'));
 
     
     }
@@ -527,7 +544,7 @@ $seller_id=Auth::guard('seller')->user()->id;
            }
 
 
-        $seller_details=$request->user();
+        $seller_details=Auth::guard('seller')->user();
 
         $seller_details=seller::with('store_info','owner_document','store_document','seller_bank_details')->where('id',$seller_details->id)->first();
 

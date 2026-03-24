@@ -175,8 +175,8 @@ Route::group(['prefix' => 'seller'], function () {
     //M10
     Route::post('mark_notification_as_read', [NotificationController::class, 'mark_notification_as_read'])->name('seller.mark_notification_as_read');
     Route::get('subscription-plans', [WebSellerDashboard::class, 'subscriptionPlan'])->name('seller.subscriptionPlan');
-    Route::post('/renew_subcription_plan_buy', [WebSellerDashboard::class,'renew_subcription_plan_buy']);
-    Route::get('/my_plans', [WebSellerDashboard::class,'my_plans']);
+    Route::post('/renew_subcription_plan_buy', [WebSellerDashboard::class,'renew_subcription_plan_buy'])->name('seller.renew_subcription_plan_buy');
+    Route::get('/my_plans', [WebSellerDashboard::class,'my_plans'])->name('seller.my_plans');
 
     });
 
