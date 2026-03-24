@@ -299,6 +299,10 @@ foreach($checkDataInCart as $key=>$val){
     orderdetail::create($cart_data);
 }
 
+// Send Notificateion Code 
+
+
+
 DB::commit();
    
 return ['status'=>'success','message'=>"Order Create Successfully",'data'=>$createOrder];
@@ -393,7 +397,7 @@ try{
 
 DB::beginTransaction();
 
-$checkOrder=Order::where('order_id', $request->order_id)->first();
+$checkOrder=Order::with('user_details')->where('order_id', $request->order_id)->first();
 
 if($checkOrder->payment_status!=='0' ){
     return [
@@ -408,15 +412,13 @@ $userid=$checkOrder->user_id; // User Id
 
 $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
- // when i Received Payment in Cod
+    // when i Received Payment in Cod
     if($checkOrder->payment_method=='3'){
 
         $checkOrder->update(['payment_status'=>'0','delivery_status'=>'2']);
 
         AddtocartRemoveData($checkOrder->id);
-
         OrderGiftCardConditionCheck($checkOrder->id); // order inside Giftcard Check 
-
 
          $msg="COD Order Place Successfully";  
 
@@ -489,14 +491,18 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         $this->Order_detailsPaidStatusChange($checkOrder->id,$request->payment_status); // order details complete order
 
         }
-        
+
     }else{
 
-        $msg="Order Payment Cancelled";        
-        
-
+        $msg="Order Payment Cancelled";                
     }
 
+    // send Notification to Firebase 
+    $deviceTokens=[$checkOrder->user_details->fcm_token];
+    $title='Order Status';
+    $body=$msg;
+    sendPushNotificationNew($deviceTokens, $title, $msg);
+    // send Notification to Firebase  end here
     DB::commit();
 
 
