@@ -493,7 +493,7 @@ try {
 
 //$user_id=$request->user_id;
 
-$homeScreenBanner=sellerBanner::with('category_details','subcategory_details')->where('banner_position',$request->type)
+$homeScreenBanner=sellerBanner::with('seller_details.store_info','category_details','subcategory_details')->where('banner_position',$request->type)
 ->whereDate('start_date', '<=', now())
 ->whereDate('end_date', '>=', now())
 ->where('payment_status','1')
