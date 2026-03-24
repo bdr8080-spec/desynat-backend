@@ -534,10 +534,19 @@ public function HomeScreenDealManagement($request)
         try {
 
 
-$all_deal= Deal::with('sellerDealrecord.product_details')->where('category_id',$request->category)
-->whereDate('from','<=',date('Y-m-d'))
-->whereDate('to','>=',date('Y-m-d'))
-->where('status','1')->get();
+// $all_deal= Deal::with('sellerDealrecord.product_details')->where('category_id',$request->category)
+// ->whereDate('from','<=',date('Y-m-d'))
+// ->whereDate('to','>=',date('Y-m-d'))
+// ->where('status','1')->get();
+$all_deal = Deal::with('sellerDealrecord.product_details')
+    ->when($request->category, function ($query) use ($request) {
+        $query->where('category_id', $request->category);
+    })
+    ->whereDate('from', '<=', date('Y-m-d'))
+    ->whereDate('to', '>=', date('Y-m-d'))
+    ->where('status', '1')
+    ->get();
+    
 
 return [
     'status'  => 'success',
