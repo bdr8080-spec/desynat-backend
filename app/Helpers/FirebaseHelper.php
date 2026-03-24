@@ -53,3 +53,15 @@ if (!function_exists('sendPushNotificationNew')) {
         return $responses;
     }
 }
+
+
+// This code for change dynamic value for send  dynamic text in Firebase send Notification 
+if (!function_exists('parseNotificationText')) {
+    function parseNotificationText($text, $data = [])
+    {
+        foreach ($data as $key => $value) {
+            $text = str_replace("{{$key}}", $value, $text);
+        }
+        return $text;
+    }
+}
