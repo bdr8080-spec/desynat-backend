@@ -259,6 +259,10 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   Route::post('/affiliate_submit_withdraw_request', [UserAffilatedControlller::class,'affiliate_submit_withdraw_request']);
   Route::get('/affiliate_all_withdraw_request', [UserAffilatedControlller::class,'affiliate_all_withdraw_request']);
 
+  //M10
+  Route::get('/affiliateUserNotification', [ApiNotificationController::class,'affiliateUserNotification']);
+  Route::post('/ReadAffiliateUserNotification', [ApiNotificationController::class,'ReadAffiliateUserNotification']);
+
 
   
 

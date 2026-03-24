@@ -1,4 +1,21 @@
 </main>
+     <style>
+.notification-pnl.read {
+    opacity: 0.7;
+}
+
+.notification-pnl.not-clickable {
+    pointer-events: none;
+    cursor: default;
+}
+
+/* Optional: keep unread visually distinct */
+.notification-pnl.unread {
+    background-color: #f1f7ff;
+    border-left: 4px solid #0d6efd;
+    cursor: pointer;
+}
+</style>
 
 <!-- app story -->
 <div class="storywapper" style="display:none;">
@@ -30,6 +47,78 @@
 
             </div>
         </div>
+    </div>
+</div>
+
+    <!-- Notification Management -->
+
+@php
+    use Illuminate\Support\Facades\Auth;
+    use App\Models\Notification;
+
+    $notifications = [];
+
+    if (Auth::guard('affilated_user')->check()) {
+        $userId =Auth::guard('affilated_user')->user()->id;
+
+        $notifications = Notification::where('receiver_id', $userId)
+            ->where('receiver_type', '4')
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+@endphp
+
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="notificationDialogAffiliateUser">
+    
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Notifications</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+
+        @forelse($notifications as $notification)
+
+            <div class="notification-pnl d-flex gap-3 mb-3 
+                {{ $notification->is_read == 0 ? 'unread clickable' : 'read not-clickable' }}"
+                
+                data-id="{{ $notification->id }}"
+            >
+
+                <!-- ICON -->
+                <div>
+                    <div class="bell-icon-1">
+                        <i class="bi bi-bell-fill"></i>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="noti-content w-100">
+
+                    <div class="noti-header d-flex justify-content-between">
+                        <div class="noti-title">
+                            {{ $notification->title_english ?? 'Notification' }}
+                        </div>
+
+                        <div class="post-date">
+                            {{ \Carbon\Carbon::parse($notification->created_at)->format('M d, h:i A') }}
+                        </div>
+                    </div>
+
+                    <p>
+                        {{ $notification->description_english }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            @empty
+            <div class="text-center text-muted">
+                No notifications found
+            </div>
+            @endforelse
+
     </div>
 </div>
 
@@ -99,6 +188,50 @@ toastr.warning("{{ session('warning') }}");
 @if(session('info'))
 toastr.info("{{ session('info') }}");
 @endif
+</script>
+
+<!-- mark notification as read -->
+<script>
+$(document).ready(function () {
+
+    $(".notification-pnl.unread").on("click", function () {
+
+        let notificationId = $(this).data("id");
+        let element = $(this);
+
+        if (!notificationId) return;
+
+        $.ajax({
+            url: "{{ route('affiliate.mark_notification_as_read') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                notification_id: [notificationId]
+            },
+            success: function (res) {
+
+                if (res.status === "success") {
+
+                    toastr.success(res.message || "Marked as read");
+                    element.removeClass("unread clickable")
+                           .addClass("read not-clickable");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+
+                } else {
+                    toastr.error(res.message || "Something went wrong");
+                }
+
+            },
+            error: function () {
+                toastr.error("Something went wrong");
+            }
+        });
+
+    });
+
+});
 </script>
 
 </body>

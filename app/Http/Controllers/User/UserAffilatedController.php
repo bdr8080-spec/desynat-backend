@@ -17,14 +17,16 @@ use App\Helpers\ApiResponse;
 
 use App\Services\UserAffilatedAuthService;
 use App\Services\UserOrderService;
+use App\Services\NotificationManagementService;
 
 class UserAffilatedController extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
         $this->UserOrderService = $UserOrderService;
+        $this->NotificationManagementService = $NotificationManagementService;
     }
 
 
@@ -1096,6 +1098,42 @@ public function affiliate_submit_withdraw_request(Request $request){
         }
         
         }
+
+    public function mark_notification_as_read(Request $request){
+
+        try{
+
+            $validate = Validator::make($request->all(), [
+            'notification_id' => 'required|exists:notifications,id',
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+            
+        $affilatedUser=Auth::guard('affilated_user')->user();
+        $user = $affilatedUser->id;
+       
+       $request_data=(object)[
+        'user_id'=>$user,
+        'notification_id' => $request->notification_id
+       ];
+
+    $data=$this->NotificationManagementService->ReadAffiliateUserNotification($request_data);
+
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }catch(exception $e){
+        return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+    }
+
+}
 
 
 

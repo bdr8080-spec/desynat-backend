@@ -94,6 +94,9 @@ Route::get('/affiliate/payment', [UserAffilatedController::class, 'payment'])->n
 Route::get('/affiliate/my-withdrawals', [UserAffilatedController::class, 'myWithdrawls'])->name('affiliate.myWithdrawls');
 Route::post('/affiliate/affiliate_submit_withdraw_request', [UserAffilatedController::class, 'affiliate_submit_withdraw_request'])->name('affiliate.affiliate_submit_withdraw_request');
 
+//m10
+Route::post('/mark_notification_as_read', [UserAffilatedController::class, 'mark_notification_as_read'])->name('affiliate.mark_notification_as_read');
+
 // });
 
 

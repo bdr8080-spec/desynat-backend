@@ -727,6 +727,55 @@ class NotificationManagementService
             ];
         }
     }
+
+    public function getAffiliateUserNotifications($request_data)
+    {
+        try {
+
+           
+            $AllNotification = Notification::where('receiver_type','4')
+                ->where('receiver_id', $request_data->user_id )
+                ->get();
+           
+            return [
+                'status' => 'success',
+                'message' => 'Notifications fetch successfully',
+                'data' => $AllNotification
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function ReadAffiliateUserNotification($request_data)
+    {
+        try {
+           // dd(123);
+            $notification_ids = $request_data->notification_id;
+
+            $updated = Notification::where('id', $notification_ids)
+                      ->update(['is_read' => '1']);
+
+            return [
+                'status' => 'success',
+                'message' => 'Notifications marked as read successfully',
+                'data' => $updated
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
     
 
     

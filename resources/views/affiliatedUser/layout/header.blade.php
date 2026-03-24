@@ -60,9 +60,23 @@
             <ul class="d-flex align-items-center gap-3">
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
+                     @php
+                            $notificationCount = 0;
+
+                            if (Auth::guard('affilated_user')->check()) {
+                                $userId =Auth::guard('affilated_user')->user()->id;
+                                $notificationCount = \App\Models\Notification::where('receiver_id', $userId)
+                                    ->where('receiver_type', '4')
+                                    ->where('is_read', '0')
+                                    ->orderBy('id', 'desc')
+                                    ->count();
+                            }
+                        @endphp
+                    <a class="nav-link" href="#" data-bs-toggle="offcanvas" data-bs-target="#notificationDialogAffiliateUser">
                         <img src="{{ asset('dealer') }}/assets/img/bell.svg" alt="icon" class="bell-icon">
-                        <!-- <span class="badge bg-primary badge-number">4</span> -->
+                        @if($notificationCount > 0)
+                        <span class="badge text-bg-danger badge-number">{{ $notificationCount }}</span>
+                        @endif
                     </a>
 
                     <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
