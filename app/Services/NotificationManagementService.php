@@ -97,14 +97,20 @@ class NotificationManagementService
                // dd($token);
 
                 if($token) {
-                    sendPushNotification(
+                    // sendPushNotification(
+                    //     [$token],
+                    //     $title_english,
+                    //     $description_english,
+                    //     $notification_type,
+                    //     $sender_id,
+                    //     $receiver['id'],
+                    //     $receiver['type']
+                    // );
+                    sendPushNotificationNew(
                         [$token],
                         $title_english,
                         $description_english,
-                        $notification_type,
-                        $sender_id,
-                        $receiver['id'],
-                        $receiver['type']
+
                     );
                 }
             }
@@ -683,10 +689,12 @@ class NotificationManagementService
     {
         try {
 
+        $limit       = (int)($request_data->limit ?? 10); 
+
            
             $AllNotification = Notification::where('receiver_type','2')
                 ->where('receiver_id', $request_data->user_id )
-                ->get();
+                ->paginate($limit);
            
             return [
                 'status' => 'success',
@@ -731,11 +739,11 @@ class NotificationManagementService
     public function getAffiliateUserNotifications($request_data)
     {
         try {
-
+            $limit       = (int)($request_data->limit ?? 10); 
            
             $AllNotification = Notification::where('receiver_type','4')
                 ->where('receiver_id', $request_data->user_id )
-                ->get();
+                ->paginate($limit);
            
             return [
                 'status' => 'success',
