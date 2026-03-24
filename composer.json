@@ -39,7 +39,8 @@
         "files": [
             "app/Helpers/support.php",
             "app/Helpers/commonFunction.php",
-            "app/Helpers/ApiResponse.php"
+            "app/Helpers/ApiResponse.php",
+            "app/Helpers/FirebaseHelper.php"
         ]
     },
     "autoload-dev": {

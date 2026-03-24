@@ -564,7 +564,7 @@
 
         @foreach($homeDealBanner as $key=>$val)
         <div class="item">
-            <div class="premiumImg">
+            <div class="premiumImg ">
                 <img src="{{$val->image}}" class="img-fluid" />
             </div>
         </div>

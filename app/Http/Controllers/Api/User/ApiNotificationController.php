@@ -143,5 +143,32 @@ public function ReadAffiliateUserNotification(Request $request){
 }
 
 
+public function sendDummynotification(Request $request){
+
+        try{
+
+            $validate = Validator::make($request->all(), [
+            'fcm_token' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            
+        ]);
+        
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+
+       
+     $data = sendPushNotificationNew($request->fcm_token, $request->title, $request->content);
+
+    return ApiResponse::generateResponse('success', 'notification send ',$data, 200);
+
+    }catch(exception $e){
+        return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+    }
+
+}
+
+
 
 }
