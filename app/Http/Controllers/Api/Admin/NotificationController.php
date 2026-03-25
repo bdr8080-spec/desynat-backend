@@ -47,7 +47,7 @@ class NotificationController extends Controller
             return ApiResponse::generateResponse('error', 'Validation error', $validator->errors()->first(), 400);
         }
 
-        if (!$request->user_id && !$request->seller_id && !$request->affiliate_id) {
+        if (!$request->user_id && !$request->seller_id && !$request->affiliate_id && !$request->driver_id) {
             return ApiResponse::generateResponse('error', 'Please provide at least one receiver', [], 400);
         }
 
