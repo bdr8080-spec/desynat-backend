@@ -95,8 +95,8 @@
 
                                             @else
 
-                                                <a href="javascript:void(0);" 
-                                                class="btn btn-success w-100 purchase-plan-btn"
+                                                <a href="{{ route('seller.single_plans', $plan->id) }}" 
+                                                class="btn btn-success w-100"
                                                 data-plan-id="{{ $plan->id }}">
                                                 Purchase
                                                 </a>
@@ -208,7 +208,11 @@
                                 <div class="col-6">Duration</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        12 Month
+                                        @if($plan->plan_info->duration_type == '1')
+                                            {{ $plan->plan_info->duration  }} Month
+                                        @elseif($plan->plan_info->duration_type == '2')
+                                            {{ $plan->plan_info->duration  }} Year
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +230,7 @@
                                 <div class="col-6">Purchased On</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        {{ \Carbon\Carbon::parse($plan->created_at)->format('d/m/Y \a\t h:i A') }}
+                                        {{ \Carbon\Carbon::parse($plan->plan_start_date)->format('d/m/Y \a\t h:i A') }}
                                     </div>
                                 </div>
                             </div>
@@ -234,7 +238,7 @@
                                 <div class="col-6">Expired on</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        11/11/2025 at 10:07 AM
+                                        {{ \Carbon\Carbon::parse($plan->plan_end_date)->format('d/m/Y \a\t h:i A') }}
                                     </div>
                                 </div>
                             </div>
@@ -252,15 +256,15 @@
                                 <div class="col-6">Transaction id</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                       Tran565656565
+                                       #{{ $plan->online_transaction_id }}
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-6">Paid By Card</div>
+                                <div class="col-6">Paid By {{ $plan->payment_method }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                       500 KD
+                                       {{ $plan->amount }} KD
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +272,7 @@
                                 <div class="col-6"></div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        <a href="#" class="btn btn-success exportbtn">Renew Plan</a>
+                                        <a href="#" class="btn btn-success exportbtn renew-plan-btn" data-plan-id="{{ $plan->plan_info->id }}">Renew Plan</a>
                                     </div>
                                 </div>
                             </div>
@@ -313,7 +317,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
 $(document).ready(function () {
 
-    $(".purchase-plan-btn").on("click", function () {
+    $(".renew-plan-btn").on("click", function () {
 
         let planId = $(this).data("plan-id");
         let element = $(this);
@@ -361,6 +365,7 @@ $(document).ready(function () {
 
 });
 </script>
+
 
 @include('dealer.layout.footer');
 @include('dealer.product.ajax.datatablejs');
