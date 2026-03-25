@@ -107,6 +107,31 @@ class NotificationController extends Controller
         }
     }
 
+    public function get_seller_notifications_count(Request $request)
+    {
+
+        try {
+            $receiverId = auth()->id();
+            //dd($senderId);
+
+            $request_data = (object)[
+                'receiver_id'    => $receiverId,
+                'receiver_type'      => '3',
+            ];
+
+            $data = $this->NotificationManagementService->GetSellerNotificationCount($request_data);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+            }
+
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
 
 
 
