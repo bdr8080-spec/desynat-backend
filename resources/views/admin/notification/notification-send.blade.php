@@ -118,19 +118,19 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <label class="form-group">Notification Title (English)</label>
-                <input type="text" id="title_english" placeholder="Enter English Notification" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                <input type="text" id="title_english" placeholder="Enter Title English " oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
             </div>
             <h6 class="text-danger error-title_english"></h6>
 
             <div class="mb-3">
                 <label class="form-group">Notification Title (Arabic)</label>
-                <input type="text" id="title_arabic" placeholder="Enter Arabic Notification" dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                <input type="text" id="title_arabic" placeholder="Enter Title Arabic" dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
             </div>
             <h6 class="text-danger error-title_arabic"></h6>
 
             <div class="mb-3">
                 <label class="form-group">Notification Description (English)</label>
-                <textarea rows="4" id="description_english" placeholder="Enter Description " oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
+                <textarea rows="4" id="description_english" placeholder="Enter Description" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
             </div>
             <h6 class="text-danger error-description_english"></h6>
 

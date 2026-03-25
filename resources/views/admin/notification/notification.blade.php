@@ -54,8 +54,8 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="received-tab"
                     tabindex="0">
-                    <div class="row align-items-end d-flex justify-content-end">
-                        <div class="col-md-2 col-lg-2 col-12">
+                    <div class=" align-items-end d-flex justify-content-end">
+                        <div class="noti">
                             <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn ms-auto mb-3">
                                 <span>Send Notification</span></a>
                         </div>
@@ -96,8 +96,8 @@
                     @endif
                 </div>
                 <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
-                    <div class="row align-items-end d-flex justify-content-end">
-                        <div class="col-md-2 col-lg-2 col-12">
+                    <div class="align-items-end d-flex justify-content-end">
+                        <div class="noti">
                             <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn ms-auto mb-3" href="/send-notification">
                                 <span>Send Notification</span></a>
                         </div>
@@ -243,7 +243,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center">No notifications found</td>
+                                        <td colspan="8" class="text-center">No notifications found</td>
                                     </tr>
                                 @endforelse
                                 </tbody>
