@@ -107,6 +107,32 @@ public function ReaduserNotification(Request $request){
 }
 
 
+ public function affiliateUserNotificationCount(Request $request){
+
+        try{
+
+        $user_id= $request->user()->id;
+       
+       $request_data=(object)[
+        'user_id'=>$user_id,
+       ];
+
+    $data=$this->NotificationManagementService->getAffiliateUserNotificationsCount($request_data);
+
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],$data['data'],422);
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+    }catch(exception $e){
+        return ApiResponse::generateResponse('error', $e->getMessage(),'', 400);
+    }
+
+}
+
+
 public function ReadAffiliateUserNotification(Request $request){
 
         try{
