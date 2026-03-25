@@ -142,7 +142,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Sr.No</th>
-                                    <th scope="col">Title</th>
+                                    <th scope="col">Title English</th>
+                                    <th scope="col">Title Arabic</th>
                                     <th scope="col">Sent To</th>
                                     <th scope="col">All Type</th>
                                     <th scope="col">English Description</th>
@@ -155,6 +156,7 @@
                                 <tr>
                                     <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $notification['title_english'] }}</td>
+                                    <td>{{ $notification['title_arabic'] }}</td>
                                     <td>
                                         @php
                                             $receivers = $notification['receiver_details'] ?? [];
@@ -175,18 +177,53 @@
                                             <span class="text-primary">{{ $notification['total_receivers'] }}+</span>
                                     </td>
                                     <td>
+                                        @php
+                                            $receivers = $notification['receiver_details'] ?? [];
 
+                                            // Map class names to display labels (case-insensitive)
+                                            $classMap = [
+                                                'user' => 'User',
+                                                'affilateduser' => 'Affiliate User',
+                                                'seller' => 'Seller',
+                                                'deliveryboy' => 'Delivery Boy',
+                                            ];
+
+                                            // Initialize a set of detected types
+                                            $detected = [];
+
+                                            foreach ($receivers as $receiver) {
+                                                $class = strtolower(class_basename($receiver)); // convert to lowercase
+                                                if (isset($classMap[$class])) {
+                                                    $detected[$class] = $classMap[$class]; // store unique labels
+                                                }
+                                            }
+
+                                            // Define the fixed display order (lowercase)
+                                            $order = ['user', 'affilateduser', 'seller', 'deliveryboy'];
+
+                                            // Prepare final string in correct order
+                                            $typeString = collect($order)
+                                                ->filter(fn($c) => isset($detected[$c]))
+                                                ->map(fn($c) => $detected[$c])
+                                                ->implode(', ');
+                                        @endphp
+
+                                        {{ $typeString ?: 'N/A' }}
                                     </td>
 
                                     <td>
-                                        <!-- {{ $notification['description_english'] }} -->
-                                        <a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#englishModal" data-description="happy">
+                                        <a class="table-button" type="button" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#englishModal" 
+                                        data-description="{{ $notification['description_english'] }}">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <!-- {{ $notification['description_english'] }} -->
-                                        <a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#arabicModal" data-description="happy">
+                                        <a class="table-button" type="button" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#arabicModal" 
+                                        data-description="{{ $notification['description_arabic'] }}">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
                                     </td>
@@ -221,7 +258,9 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="mb-3">
-                               <p class="text-thin1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum impedit nihil delectus voluptatibus ab ratione sapiente quos! Consequatur quia accusantium, ab magnam maxime dolorum. Non nam repudiandae sapiente aliquam debitis!</p>
+                               <p class="text-thin1" id="englishModalDescription">
+
+                               </p>
                             </div>
                         </div>
                     </div>
@@ -243,8 +282,10 @@
                 <div class="appointment-container">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12">
-                            <div class="mb-3">
-                                <p class="text-thin1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum impedit nihil delectus voluptatibus ab ratione sapiente quos! Consequatur quia accusantium, ab magnam maxime dolorum. Non nam repudiandae sapiente aliquam debitis!</p>
+                            <div class="mb-3" id="arabicModalDescription">
+                                <p class="text-thin1">
+
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -320,6 +361,31 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener('DOMContentLoaded', function() {
         updateToDate();
     });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const englishModal = document.getElementById('englishModal');
+    
+    englishModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const description = button.getAttribute('data-description');
+        const modalBody = englishModal.querySelector('#englishModalDescription');
+        modalBody.textContent = description;
+    });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const englishModal = document.getElementById('arabicModal');
+    
+    englishModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const description = button.getAttribute('data-description');
+        const modalBody = englishModal.querySelector('#arabicModalDescription');
+        modalBody.textContent = description;
+    });
+});
 </script>
 
 

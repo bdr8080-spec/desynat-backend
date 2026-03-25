@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Optional: at least one receiver
-        let users = getCheckedValues("user-checkbox");
+        let users = getCheckedValues("users-checkbox");
         let affiliates = getCheckedValues("affiliate-checkbox");
         let sellers = getCheckedValues("seller-checkbox");
         let drivers = getCheckedValues("delivery-checkbox");
@@ -366,6 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
             driver_id: drivers,
             sender_type: 1
         };
+       // console.log("Payload going to server:", payload);
 
         fetch("{{ route('admin.send_notification') }}", {
             method: "POST",
