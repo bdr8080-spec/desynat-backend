@@ -363,14 +363,26 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateToDate() {
         const fromDate = document.getElementById('from').value;
         const toDateInput = document.getElementById('to');
+
         if (fromDate) {
             toDateInput.setAttribute('min', fromDate);
+
+            // ✅ Optional: reset TO date if it's smaller than FROM
+            if (toDateInput.value && toDateInput.value < fromDate) {
+                toDateInput.value = '';
+            }
+
         } else {
             toDateInput.removeAttribute('min');
         }
     }
-    document.addEventListener('DOMContentLoaded', function() {
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Run on load
         updateToDate();
+
+        // ✅ Run when FROM date changes
+        document.getElementById('from').addEventListener('change', updateToDate);
     });
 </script>
 
