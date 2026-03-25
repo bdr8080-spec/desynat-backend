@@ -131,6 +131,7 @@
                                                 {!! $userterms->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english"></span>
                                     </div>
                                 </div>
 
@@ -147,6 +148,7 @@
                                             {!! $userterms->content_arabic ?? '' !!}   
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic"></span>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +161,7 @@
                         </form>
                         </div>
 
-                    <!-- Privacy Policy -->
+                    <!-- return Policy -->
                     
                         <div class="tab-pane fade" id="pills-privacy-user" role="tabpanel"
                             aria-labelledby="pills-privacy-tab-user">
@@ -185,6 +187,7 @@
                                                 {!! $userreturn->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_return"></span>
                                     </div>
                                 </div>
 
@@ -202,6 +205,7 @@
                                                 {!! $userreturn->content_arabic ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_return"></span>
                                     </div>
                                 </div>
                             </div>
@@ -238,6 +242,7 @@
                                                 {!! $userabout->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_about"></span>
                                     </div>
                                 </div>
 
@@ -255,6 +260,7 @@
                                                 {!! $userabout->content_arabic ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_about"></span>
                                     </div>
                                 </div>
                             </div>
@@ -289,6 +295,7 @@
                                             {!! $usercancellation->content_english ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_cancellation"></span>
                                     </div>
                                 </div>
 
@@ -306,6 +313,7 @@
                                             {!! $usercancellation->content_arabic ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_cancellation"></span>
                                     </div>
                                 </div>
                             </div>
@@ -347,6 +355,7 @@
                                             {!! $userexchange->content_english ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_exchange"></span>
                                     </div>
                                 </div>
 
@@ -364,6 +373,7 @@
                                             {!! $userexchange->content_arabic ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_exchange"></span>
                                     </div>
                                 </div>
                             </div>
@@ -600,6 +610,7 @@
                                                 {!! $sellerterms->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_seller"></span>
                                     </div>
                                 </div>
 
@@ -617,6 +628,7 @@
                                             {!! $sellerterms->content_arabic ?? '' !!}   
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_seller"></span>
                                     </div>
                                 </div>
                             </div>
@@ -655,6 +667,7 @@
                                                 {!! $sellerreturn->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_return_seller"></span>
                                     </div>
                                 </div>
 
@@ -672,6 +685,7 @@
                                                 {!! $sellerreturn->content_arabic ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_return_seller"></span>
                                     </div>
                                 </div>
                             </div>
@@ -708,6 +722,7 @@
                                                 {!! $sellerabout->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_about_seller"></span>
                                     </div>
                                 </div>
 
@@ -725,6 +740,7 @@
                                                 {!! $sellerabout->content_arabic ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_about_seller"></span>
                                     </div>
                                 </div>
                             </div>
@@ -760,6 +776,7 @@
                                             {!! $sellercancellation->content_english ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_cancellation_seller"></span>
                                     </div>
                                 </div>
 
@@ -777,6 +794,7 @@
                                             {!! $sellercancellation->content_arabic ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_cancellation_seller"></span>
                                     </div>
                                 </div>
                             </div>
@@ -818,6 +836,7 @@
                                             {!! $sellerexchange->content_english ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_exchange_seller"></span>
                                     </div>
                                 </div>
 
@@ -835,6 +854,7 @@
                                             {!! $sellerexchange->content_arabic ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_exchange_seller"></span>
                                     </div>
                                 </div>
                             </div>
@@ -1054,6 +1074,7 @@
                                                 {!! $driverterms->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_driver"></span>
                                     </div>
                                 </div>
 
@@ -1070,6 +1091,7 @@
                                             {!! $driverterms->content_arabic ?? '' !!}   
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_driver"></span>
                                     </div>
                                 </div>
                             </div>
@@ -1108,6 +1130,7 @@
                                                 {!! $driverreturn->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_return_driver"></span>
                                     </div>
                                 </div>
 
@@ -1125,6 +1148,7 @@
                                                 {!! $driverreturn->content_arabic ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_return_driver"></span>
                                     </div>
                                 </div>
                             </div>
@@ -1161,6 +1185,7 @@
                                                 {!! $driverabout->content_english ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_about_driver"></span>
                                     </div>
                                 </div>
 
@@ -1178,6 +1203,7 @@
                                                 {!! $driverabout->content_arabic ?? '' !!}
                                             </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_about_driver"></span>
                                     </div>
                                 </div>
                             </div>
@@ -1212,6 +1238,7 @@
                                             {!! $drivercancellation->content_english ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_cancellation_driver"></span>
                                     </div>
                                 </div>
 
@@ -1229,6 +1256,7 @@
                                             {!! $drivercancellation->content_arabic ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_cancellation_driver"></span>
                                     </div>
                                 </div>
                             </div>
@@ -1270,6 +1298,7 @@
                                             {!! $driverexchange->content_english ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_english_exchange_driver"></span>
                                     </div>
                                 </div>
 
@@ -1287,6 +1316,7 @@
                                             {!! $driverexchange->content_arabic ?? '' !!}
                                         </textarea>
                                         </div>
+                                        <span class="error-text text-danger" id="error_content_arabic_exchange_driver"></span>
                                     </div>
                                 </div>
                             </div>
@@ -1761,6 +1791,14 @@ document.addEventListener("DOMContentLoaded", function() {
             .create(element)
             .then(editor => {
                 editors[element.name] = editor;
+
+                editor.model.document.on('change:data', function() {
+                    let data = editor.getData().replace(/<[^>]*>/g, '').trim();
+
+                    if (data) {
+                        $('#error_' + element.name).text('');
+                    }
+                });
             })
             .catch(error => console.error(error));
     });
@@ -1770,6 +1808,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let content_english = editors['content_english'] ? editors['content_english'].getData() : '';
         let content_arabic = editors['content_arabic'] ? editors['content_arabic'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english').text('');
+        $('#error_content_arabic').text('');
+
+        if (!content_english) {
+            $('#error_content_english').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         $.ajax({
             url: "{{ route('admin.create_update_terms_condition') }}",
@@ -1796,6 +1851,26 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#userReturnForm').on('submit', function(e) {
         e.preventDefault();
 
+        let content_english_return = editors['content_english_return'] ? editors['content_english_return'].getData() : '';
+        let content_arabic_return = editors['content_arabic_return'] ? editors['content_arabic_return'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_return').text('');
+        $('#error_content_arabic_return').text('');
+
+        if (!content_english_return) {
+            $('#error_content_english_return').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic_return) {
+            $('#error_content_arabic_return').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_return_policy') }}",
             type: "POST",
@@ -1816,6 +1891,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#userAboutForm').on('submit', function(e) {
         e.preventDefault();
+
+         let content_english = editors['content_english_about'] ? editors['content_english_about'].getData() : '';
+        let content_arabic = editors['content_arabic_about'] ? editors['content_arabic_about'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_about').text('');
+        $('#error_content_arabic_about').text('');
+
+        if (!content_english) {
+            $('#error_content_english_about').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_about').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         $.ajax({
             url: "{{ route('admin.create_update_about_us') }}",
@@ -1838,6 +1933,26 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#userCancellationForm').on('submit', function(e) {
         e.preventDefault();
 
+         let content_english = editors['content_english_cancellation'] ? editors['content_english_cancellation'].getData() : '';
+        let content_arabic = editors['content_arabic_cancellation'] ? editors['content_arabic_cancellation'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_cancellation').text('');
+        $('#error_content_arabic_cancellation').text('');
+
+        if (!content_english) {
+            $('#error_content_english_cancellation').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_cancellation').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_cancellation_policy') }}",
             type: "POST",
@@ -1858,6 +1973,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#userExchangeForm').on('submit', function(e) {
         e.preventDefault();
+
+        let content_english = editors['content_english_exchange'] ? editors['content_english_exchange'].getData() : '';
+        let content_arabic = editors['content_arabic_exchange'] ? editors['content_arabic_exchange'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_exchange').text('');
+        $('#error_content_arabic_exchange').text('');
+
+        if (!content_english) {
+            $('#error_content_english_exchange').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_exchange').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         $.ajax({
             url: "{{ route('admin.create_update_exchange_policy') }}",
@@ -1885,6 +2020,23 @@ document.addEventListener("DOMContentLoaded", function() {
         let content_arabic = editors['content_arabic_seller'] ? editors['content_arabic_seller']
             .getData() : '';
 
+        let hasError = false;
+
+        $('#error_content_english_seller').text('');
+        $('#error_content_arabic_seller').text('');
+
+        if (!content_english) {
+            $('#error_content_english_seller').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_seller').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_terms_condition') }}",
             type: "POST",
@@ -1910,6 +2062,26 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#sellerReturnForm').on('submit', function(e) {
         e.preventDefault();
 
+        let content_english = editors['content_english_return_seller'] ? editors['content_english_return_seller'].getData() : '';
+        let content_arabic = editors['content_arabic_return_seller'] ? editors['content_arabic_return_seller'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_return_seller').text('');
+        $('#error_content_arabic_return_seller').text('');
+
+        if (!content_english) {
+            $('#error_content_english_return_seller').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_return_seller').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_return_policy') }}",
             type: "POST",
@@ -1930,6 +2102,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#sellerAboutForm').on('submit', function(e) {
         e.preventDefault();
+
+        let content_english = editors['content_english_about_seller'] ? editors['content_english_about_seller'].getData() : '';
+        let content_arabic = editors['content_arabic_about_seller'] ? editors['content_arabic_about_seller'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_about_seller').text('');
+        $('#error_content_arabic_about_seller').text('');
+
+        if (!content_english) {
+            $('#error_content_english_about_seller').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_about_seller').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         $.ajax({
             url: "{{ route('admin.create_update_about_us') }}",
@@ -1952,6 +2144,26 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#sellerCancellationForm').on('submit', function(e) {
         e.preventDefault();
 
+        let content_english = editors['content_english_cancellation_seller'] ? editors['content_english_cancellation_seller'].getData() : '';
+        let content_arabic = editors['content_arabic_cancellation_seller'] ? editors['content_arabic_cancellation_seller'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_cancellation_seller').text('');
+        $('#error_content_arabic_cancellation_seller').text('');
+
+        if (!content_english) {
+            $('#error_content_english_cancellation_seller').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_cancellation_seller').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_cancellation_policy') }}",
             type: "POST",
@@ -1973,6 +2185,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#sellerExchangeForm').on('submit', function(e) {
         e.preventDefault();
+
+        let content_english = editors['content_english_exchange_seller'] ? editors['content_english_exchange_seller'].getData() : '';
+        let content_arabic = editors['content_arabic_exchange_seller'] ? editors['content_arabic_exchange_seller'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_exchange_seller').text('');
+        $('#error_content_arabic_exchange_seller').text('');
+
+        if (!content_english) {
+            $('#error_content_english_exchange_seller').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_exchange_seller').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         $.ajax({
             url: "{{ route('admin.create_update_exchange_policy') }}",
@@ -2000,6 +2232,23 @@ document.addEventListener("DOMContentLoaded", function() {
         let content_arabic = editors['content_arabic_driver'] ? editors['content_arabic_driver']
             .getData() : '';
 
+        let hasError = false;
+
+        $('#error_content_english_driver').text('');
+        $('#error_content_arabic_driver').text('');
+
+        if (!content_english) {
+            $('#error_content_english_driver').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_driver').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_terms_condition') }}",
             type: "POST",
@@ -2025,6 +2274,26 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#driverReturnForm').on('submit', function(e) {
         e.preventDefault();
 
+        let content_english = editors['content_english_return_driver'] ? editors['content_english_return_driver'].getData() : '';
+        let content_arabic = editors['content_arabic_return_driver'] ? editors['content_arabic_return_driver'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_return_driver').text('');
+        $('#error_content_arabic_return_driver').text('');
+
+        if (!content_english) {
+            $('#error_content_english_return_driver').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_return_driver').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_return_policy') }}",
             type: "POST",
@@ -2045,6 +2314,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#driverAboutForm').on('submit', function(e) {
         e.preventDefault();
+
+        let content_english = editors['content_english_about_driver'] ? editors['content_english_about_driver'].getData() : '';
+        let content_arabic = editors['content_arabic_about_driver'] ? editors['content_arabic_about_driver'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_about_driver').text('');
+        $('#error_content_arabic_about_driver').text('');
+
+        if (!content_english) {
+            $('#error_content_english_about_driver').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_about_driver').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         $.ajax({
             url: "{{ route('admin.create_update_about_us') }}",
@@ -2067,6 +2356,26 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#driverCancellationForm').on('submit', function(e) {
         e.preventDefault();
 
+        let content_english = editors['content_english_cancellation_driver'] ? editors['content_english_cancellation_driver'].getData() : '';
+        let content_arabic = editors['content_arabic_cancellation_driver'] ? editors['content_arabic_cancellation_driver'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_cancellation_driver').text('');
+        $('#error_content_arabic_cancellation_driver').text('');
+
+        if (!content_english) {
+            $('#error_content_english_cancellation_driver').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_cancellation_driver').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
+
         $.ajax({
             url: "{{ route('admin.create_update_cancellation_policy') }}",
             type: "POST",
@@ -2088,6 +2397,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#driverExchangeForm').on('submit', function(e) {
         e.preventDefault();
+
+        let content_english = editors['content_english_exchange_driver'] ? editors['content_english_exchange_driver'].getData() : '';
+        let content_arabic = editors['content_arabic_exchange_driver'] ? editors['content_arabic_exchange_driver'].getData() : '';
+
+        let hasError = false;
+
+        $('#error_content_english_exchange_driver').text('');
+        $('#error_content_arabic_exchange_driver').text('');
+
+        if (!content_english) {
+            $('#error_content_english_exchange_driver').text('Please enter content in English');
+            hasError = true;
+        }
+
+        if (!content_arabic) {
+            $('#error_content_arabic_exchange_driver').text('Please enter content in Arabic');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         $.ajax({
             url: "{{ route('admin.create_update_exchange_policy') }}",
@@ -2165,7 +2494,7 @@ $(document).ready(function() {
             type: "POST",
             data: {
                 _token: "{{ csrf_token() }}",
-                type: type,
+                type: 1,
                 question_english: question_english,
                 answer_english: answer_english,
                 question_arabic: question_arabic,
