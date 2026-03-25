@@ -1,9 +1,31 @@
 @extends('admin.layout.app')
 @section('content')
 
+<style>
+/* Hide all tab panes initially to avoid flicker */
+.tab-content > .tab-pane {
+    display: none;
+}
+
+/* Show only the active tab pane */
+.tab-content > .tab-pane.active {
+    display: block;
+}
+
+/* Hide entire tab container initially */
+#tabContentContainer {
+    visibility: hidden;
+}
+
+/* Show tab container after JS activates the saved tab */
+#tabContentContainer.active-shown {
+    visibility: visible;
+}
+</style>
 
 
-<div class="inner-content management">
+
+<div class="inner-content management" id="tabContentContainer">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
             <h2 class="h2">Notification Management </h2>
@@ -172,21 +194,52 @@
 </div>
 
 <script>
+// document.addEventListener("DOMContentLoaded", function() {
+//     //get active tab from local storage
+//     const lastTab = localStorage.getItem("activeTab");
+//     if (lastTab) {
+//         const triggerEl = document.querySelector(`#${lastTab}`);
+//         if (triggerEl) {
+//             const tab = new bootstrap.Tab(triggerEl);
+//             tab.show();
+//         }
+//     }
+//     //save active tab to local storage
+//     const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+//     tabButtons.forEach((button) => {
+//         button.addEventListener("shown.bs.tab", function() {
+//             localStorage.setItem("activeTab", this.id);
+//         });
+//     });
+// });
 document.addEventListener("DOMContentLoaded", function() {
-    //get active tab from local storage
+    const tabContentContainer = document.getElementById('tabContentContainer');
+
+    // 1️⃣ Restore last active tab on page load
     const lastTab = localStorage.getItem("activeTab");
     if (lastTab) {
         const triggerEl = document.querySelector(`#${lastTab}`);
         if (triggerEl) {
             const tab = new bootstrap.Tab(triggerEl);
-            tab.show();
+            tab.show(); // Show the saved tab immediately
         }
     }
-    //save active tab to local storage
+
+    // 2️⃣ Show tab container after activating the saved tab
+    if (tabContentContainer) {
+        tabContentContainer.classList.add('active-shown');
+    }
+
+    // 3️⃣ Reload page when user clicks a different tab
     const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
     tabButtons.forEach((button) => {
-        button.addEventListener("shown.bs.tab", function() {
-            localStorage.setItem("activeTab", this.id);
+        button.addEventListener("click", function(e) {
+            const currentTab = localStorage.getItem("activeTab");
+            if (currentTab !== this.id) {
+                e.preventDefault(); // Stop Bootstrap from switching tab immediately
+                localStorage.setItem("activeTab", this.id);
+                //location.reload(); // reload before tab content shows
+            }
         });
     });
 });
