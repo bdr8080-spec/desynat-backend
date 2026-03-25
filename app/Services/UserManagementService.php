@@ -28,6 +28,63 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class UserManagementService
 {
    
+    // public function getUsers($request)
+    // {
+    //     try {
+    //         $limit = (int) $request->input('limit');
+
+    //         $query = User::with(['country_info', 'wallet_info']);
+
+    //         if (!empty($request->country_id)) {
+    //             $query->whereHas('country_info', function ($q) use ($request) {
+    //                 $q->where('id', $request->country_id);
+    //             });
+    //         }
+
+    //         if (!empty($request->from_date) && !empty($request->to_date)) {
+    //             $query->whereBetween('created_at', [
+    //                 $request->from_date . ' 00:00:00',
+    //                 $request->to_date . ' 23:59:59'
+    //             ]);
+    //         } elseif (!empty($request->from_date)) {
+    //             $query->whereDate('created_at', '>=', $request->from_date);
+    //         } elseif (!empty($request->to_date)) {
+    //             $query->whereDate('created_at', '<=', $request->to_date);
+    //         }
+
+    //         if (!empty($request->search)) {
+    //             $search = $request->search;
+    //             $query->where(function($query) use ($search) {
+    //                 $query->where('full_name', 'like', "%{$search}%")
+    //                     ->orWhere('email', 'like', "%{$search}%")
+    //                     ->orWhere('mobile', 'like', "%{$search}%");
+    //             });
+    //         }
+
+    //         $user_details = $query->orderBy('id', 'desc')->paginate($limit);
+
+    //         if ($user_details->isEmpty()) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => 'No user found',
+    //                 'data' => (object)[]
+    //             ];
+    //         }
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Users fetched successfully',
+    //             'data' => $user_details
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch users: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
     public function getUsers($request)
     {
         try {
@@ -54,14 +111,20 @@ class UserManagementService
 
             if (!empty($request->search)) {
                 $search = $request->search;
-                $query->where(function($query) use ($search) {
-                    $query->where('full_name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%")
-                        ->orWhere('mobile', 'like', "%{$search}%");
+                $query->where(function($q) use ($search) {
+                    $q->where('full_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('mobile', 'like', "%{$search}%");
                 });
             }
 
-            $user_details = $query->orderBy('id', 'desc')->paginate($limit);
+            $query->orderBy('id', 'desc');
+
+            if ($limit > 0) {
+                $user_details = $query->paginate($limit);
+            } else {
+                $user_details = $query->get();
+            }
 
             if ($user_details->isEmpty()) {
                 return [
