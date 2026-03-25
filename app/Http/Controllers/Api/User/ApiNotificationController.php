@@ -158,8 +158,6 @@ public function sendDummynotification(Request $request){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
     }
     
-    parseNotificationText
-    
 
     $data = sendPushNotificationNew($request->fcm_token, $request->title, $request->content);
 
