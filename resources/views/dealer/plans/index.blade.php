@@ -181,7 +181,7 @@
 
             </div> -->
             <div class="tab-pane fade" id="pills-plan" role="tabpanel" aria-labelledby="pills-plan-tab" tabindex="0">
-                @foreach($myPlans as $plan)
+                @forelse($myPlans as $plan)
                     @php
                         $isExpired = $plan->is_expired == 1;
                         $isActive = $plan->status == 1 && $plan->is_expired == 0;
@@ -231,7 +231,11 @@
 
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-12 text-center">
+                        <h5>No plan found</h5>
+                    </div>
+                @endforelse
 
             </div>
 
