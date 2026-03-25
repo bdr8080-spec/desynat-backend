@@ -593,7 +593,7 @@ class AuthController extends Controller
                 ->orderBy('id', 'desc')
                 ->get();
         }
-     dd($banners);
+    // dd($banners);
 
              $request_data = (object)[
                     'type'        => '1',
