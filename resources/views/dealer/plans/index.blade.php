@@ -34,7 +34,7 @@
                                 $headerClass = $colors[$loop->index % count($colors)];
                             @endphp
 
-                            <div class="col-lg-3 col-md-4">
+                            <div class="col-lg-4 col-md-4">
                                 <div class="plan-card plan-shadow">
                                     <div class="plan-header {{ $headerClass }} text-center">
                                         {{ $plan->plan_name_english }}
@@ -205,21 +205,14 @@
 
                         <div class="p-3">
                             <div class="row mb-2">
-                                <div class="col-6">Purchased On</div>
+                                <div class="col-6">Duration</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                        {{ \Carbon\Carbon::parse($plan->created_at)->format('d/m/Y \a\t h:i A') }}
+                                        12 Month
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-6">Amount</div>
-                                <div class="col-6">
-                                    <div class="text-end">
-                                        {{ $plan->amount }} KD
-                                    </div>
-                                </div>
-                            </div>
+
                             <div class="row mb-2">
                                 <div class="col-6">Plan</div>
                                 <div class="col-6">
@@ -228,6 +221,58 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row mb-2">
+                                <div class="col-6">Purchased On</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                        {{ \Carbon\Carbon::parse($plan->created_at)->format('d/m/Y \a\t h:i A') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">Expired on</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                        11/11/2025 at 10:07 AM
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-6">Total Amount</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                        {{ $plan->amount }} KD
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-6">Transaction id</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                       Tran565656565
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">Paid By Card</div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                       500 KD
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6"></div>
+                                <div class="col-6">
+                                    <div class="text-end">
+                                        <a href="#" class="btn btn-success exportbtn">Renew Plan</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
 
                         </div>
                     </div>
