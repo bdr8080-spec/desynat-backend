@@ -83,12 +83,14 @@ class AffiliatedUserManagementService
                     'country_details'
                 ]);
 
+            // ✅ Country filter
             if (!empty($request->country1)) {
                 $query->whereHas('country_details', function ($q) use ($request) {
                     $q->where('name', $request->country1);
                 });
             }
 
+            // ✅ Date filter
             if (!empty($request->from_date1) && !empty($request->to_date1)) {
                 $query->whereBetween('created_at', [
                     $request->from_date1 . ' 00:00:00',
@@ -100,6 +102,7 @@ class AffiliatedUserManagementService
                 $query->whereDate('created_at', '<=', $request->to_date1);
             }
 
+            // ✅ Search filter
             if (!empty($request->search)) {
                 $search = $request->search;
                 $query->where(function ($q) use ($search) {
@@ -107,14 +110,50 @@ class AffiliatedUserManagementService
                 });
             }
 
-            $user_details = $query->orderBy('id', 'desc')->paginate($limit);
+            // ✅ Order
+            $query->orderBy('id', 'desc');
 
+            // ============================================
+            // ✅ PAGINATE OR GET ALL
+            // ============================================
 
+            if ($limit > 0) {
+
+                // 👉 PAGINATED
+                $user_details = $query->paginate($limit);
+
+                $user_details->getCollection()->transform(function ($user) {
+
+                    $data = $user->toArray();
+
+                    $data['address_details'] = $user->address_details ? $user->address_details->toArray() : null;
+                    $data['bank_details'] = $user->bank_details ? $user->bank_details->toArray() : null;
+                    $data['country_details'] = $user->country_details ? $user->country_details->toArray() : null;
+
+                    return $data;
+                });
+
+            } else {
+
+                // 👉 GET ALL
+                $user_details = $query->get()->map(function ($user) {
+
+                    $data = $user->toArray();
+
+                    $data['address_details'] = $user->address_details ? $user->address_details->toArray() : null;
+                    $data['bank_details'] = $user->bank_details ? $user->bank_details->toArray() : null;
+                    $data['country_details'] = $user->country_details ? $user->country_details->toArray() : null;
+
+                    return $data;
+                });
+            }
+
+            // ✅ Empty check
             if ($user_details->isEmpty()) {
                 return [
                     'status' => 'success',
-                    'message' => 'No Approved Affiliate Uesrs found',
-                    'data' => (object) []
+                    'message' => 'No Approved Affiliate Users found',
+                    'data' => (object)[]
                 ];
             }
 

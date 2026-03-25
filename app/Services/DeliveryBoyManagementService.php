@@ -29,6 +29,7 @@ class DeliveryBoyManagementService
                 'zone_info',
             ]);
 
+            //  Date filter
             if (!empty($request->from_date) && !empty($request->to_date)) {
                 $query->whereBetween('created_at', [
                     $request->from_date . ' 00:00:00',
@@ -40,6 +41,7 @@ class DeliveryBoyManagementService
                 $query->whereDate('created_at', '<=', $request->to_date);
             }
 
+            // Search filter
             if (!empty($request->search)) {
                 $search = $request->search;
                 $query->where(function ($q) use ($search) {
@@ -47,22 +49,45 @@ class DeliveryBoyManagementService
                 });
             }
 
-            $details = $query->orderBy('id', 'desc')->paginate($limit);
+            $query->orderBy('id', 'desc');
 
-            $details->getCollection()->transform(function ($deliveryboy) {
 
-                $data = $deliveryboy->toArray();
+            if ($limit > 0) {
 
-                $data['vehicle_image'] = empty($data['vehicle_image']) ? null : $data['vehicle_image'];
-                $data['identity_proof'] = empty($data['identity_proof']) ? null : $data['identity_proof'];
-                $data['driving_license'] = empty($data['driving_license']) ? null : $data['driving_license'];
-                $data['vehicle_insurance'] = empty($data['vehicle_insurance']) ? null : $data['vehicle_insurance'];
-                $data['pollution_paper'] = empty($data['pollution_paper']) ? null : $data['pollution_paper'];
-                $data['registration_certificate'] = empty($data['registration_certificate']) ? null : $data['registration_certificate'];
-                $data['zone_info'] = empty($data['zone_info']) ? null : $data['zone_info'];
+                $details = $query->paginate($limit);
 
-                return $data;
-            });
+                $details->getCollection()->transform(function ($deliveryboy) {
+
+                    $data = $deliveryboy->toArray();
+
+                    $data['vehicle_image'] = empty($data['vehicle_image']) ? null : $data['vehicle_image'];
+                    $data['identity_proof'] = empty($data['identity_proof']) ? null : $data['identity_proof'];
+                    $data['driving_license'] = empty($data['driving_license']) ? null : $data['driving_license'];
+                    $data['vehicle_insurance'] = empty($data['vehicle_insurance']) ? null : $data['vehicle_insurance'];
+                    $data['pollution_paper'] = empty($data['pollution_paper']) ? null : $data['pollution_paper'];
+                    $data['registration_certificate'] = empty($data['registration_certificate']) ? null : $data['registration_certificate'];
+                    $data['zone_info'] = empty($data['zone_info']) ? null : $data['zone_info'];
+
+                    return $data;
+                });
+
+            } else {
+
+                $details = $query->get()->map(function ($deliveryboy) {
+
+                    $data = $deliveryboy->toArray();
+
+                    $data['vehicle_image'] = empty($data['vehicle_image']) ? null : $data['vehicle_image'];
+                    $data['identity_proof'] = empty($data['identity_proof']) ? null : $data['identity_proof'];
+                    $data['driving_license'] = empty($data['driving_license']) ? null : $data['driving_license'];
+                    $data['vehicle_insurance'] = empty($data['vehicle_insurance']) ? null : $data['vehicle_insurance'];
+                    $data['pollution_paper'] = empty($data['pollution_paper']) ? null : $data['pollution_paper'];
+                    $data['registration_certificate'] = empty($data['registration_certificate']) ? null : $data['registration_certificate'];
+                    $data['zone_info'] = empty($data['zone_info']) ? null : $data['zone_info'];
+
+                    return $data;
+                });
+            }
 
             if ($details->isEmpty()) {
                 return [
@@ -82,7 +107,7 @@ class DeliveryBoyManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to fetch delivery boy: ' . $e->getMessage(),
-                'data' => (object) []
+                'data' => (object)[]
             ];
         }
     }

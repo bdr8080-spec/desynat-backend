@@ -103,12 +103,14 @@ class SellerManagementService
                     'subcription_plan'
                 ]);
 
+            // ✅ Country filter
             if (!empty($request->country_id1)) {
                 $query->whereHas('store_info', function ($q) use ($request) {
                     $q->where('country', $request->country_id1);
                 });
             }
 
+            // ✅ Date filter
             if (!empty($request->from_date1) && !empty($request->to_date1)) {
                 $query->whereBetween('created_at', [
                     $request->from_date1 . ' 00:00:00',
@@ -120,6 +122,7 @@ class SellerManagementService
                 $query->whereDate('created_at', '<=', $request->to_date1);
             }
 
+            // ✅ Search filter
             if (!empty($request->search)) {
                 $search = $request->search;
                 $query->where(function ($q) use ($search) {
@@ -128,26 +131,58 @@ class SellerManagementService
                 });
             }
 
-            $seller_details = $query->orderBy('id', 'desc')->paginate($limit);
+            // ✅ Order
+            $query->orderBy('id', 'desc');
 
-            $seller_details->getCollection()->transform(function ($seller) {
-                $data = $seller->toArray();
-                $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
-                $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
-                $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
-                $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
-                $data['subcription_plan'] = $seller->subcription_plan && !$seller->subcription_plan->isEmpty()
-                    ? $seller->subcription_plan->toArray()
-                    : null;
+            // ============================================
+            // ✅ PAGINATE OR GET ALL
+            // ============================================
 
-                return $data;
-            });
+            if ($limit > 0) {
 
+                // 👉 PAGINATED
+                $seller_details = $query->paginate($limit);
+
+                $seller_details->getCollection()->transform(function ($seller) {
+
+                    $data = $seller->toArray();
+
+                    $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                    $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                    $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                    $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                    $data['subcription_plan'] = ($seller->subcription_plan && !$seller->subcription_plan->isEmpty())
+                        ? $seller->subcription_plan->toArray()
+                        : null;
+
+                    return $data;
+                });
+
+            } else {
+
+                // 👉 GET ALL
+                $seller_details = $query->get()->map(function ($seller) {
+
+                    $data = $seller->toArray();
+
+                    $data['store_info'] = $seller->store_info ? $seller->store_info->toArray() : null;
+                    $data['owner_document'] = $seller->owner_document ? $seller->owner_document->toArray() : null;
+                    $data['store_document'] = $seller->store_document ? $seller->store_document->toArray() : null;
+                    $data['seller_bank_details'] = $seller->seller_bank_details ? $seller->seller_bank_details->toArray() : null;
+                    $data['subcription_plan'] = ($seller->subcription_plan && !$seller->subcription_plan->isEmpty())
+                        ? $seller->subcription_plan->toArray()
+                        : null;
+
+                    return $data;
+                });
+            }
+
+            // ✅ Empty check
             if ($seller_details->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No Approved Seller found',
-                    'data' => (object) []
+                    'data' => (object)[]
                 ];
             }
 
