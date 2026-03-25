@@ -466,7 +466,7 @@
                                         </div>
 
                                     </div>
-                                        <div class="d-flex gap-3 justify-content-end">
+                                        <div class="d-flex gap-3 justify-content-end align-items-center">
                                             <a class="table-button editFaqBtn"
                                                 href="#"
                                                 data-bs-toggle="modal"
@@ -931,7 +931,7 @@
                                         </div>
 
                                     </div>
-                                        <div class="d-flex gap-3 justify-content-end">
+                                        <div class="d-flex gap-3 justify-content-end align-items-center">
                                             <a class="table-button editFaqBtnSeller"
                                                 href="javascript:void(0)"
                                                 data-bs-toggle="modal"
@@ -1394,7 +1394,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="d-flex gap-3 justify-content-end">
+                                    <div class="d-flex gap-3 justify-content-end align-items-center">
                                             <a class="table-button editFaqBtnDriver"
                                                 href="javascript:void(0)"
                                                 data-bs-toggle="modal"
@@ -1865,8 +1865,19 @@ document.addEventListener("DOMContentLoaded", function() {
         ClassicEditor
             .create(element, {
                 language: {
-                    content: element.name.includes('arabic') ? 'ar' : 'en' // Arabic or English UI
-                }
+                    content: element.name.includes('arabic') ? 'ar' : 'en'
+                }, 
+                toolbar: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'bulletedList',
+                    'numberedList',
+                    '|',
+                    'undo',
+                    'redo'
+                ]
             })
             .then(editor => {
                 // Store the editor instance using the element's name as key
