@@ -721,6 +721,7 @@ class NotificationManagementService
            
             $AllNotification = Notification::where('receiver_type','2')
                 ->where('receiver_id', $request_data->user_id )
+                ->where('is_read','0')
                 ->count();
            
             return [
@@ -796,6 +797,7 @@ class NotificationManagementService
            
             $AllNotification = Notification::where('receiver_type','4')
                 ->where('receiver_id', $request_data->user_id )
+                  ->where('is_read','0')
                 ->count();
            
             return [
