@@ -119,7 +119,7 @@ class NotificationController extends Controller
                 'receiver_type'      => '3',
             ];
 
-            $data = $this->NotificationManagementService->GetSellerNotificationCount($request_data);
+            $data = $this->SellerNotificationService->GetNotificationCountSeller($request_data);
 
             if (isset($data['status']) && $data['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);

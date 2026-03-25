@@ -800,31 +800,6 @@ class NotificationManagementService
         }
     }
 
-    public function GetSellerNotificationCount($request_data)
-    {
-        try {
-            $receiver_id = $request_data->receiver_id;
-            $receiver_type = $request_data->receiver_type;
-
-            $notificationCount = Notification::where('receiver_id', $receiver_id)
-                ->where('receiver_type', $receiver_type)
-                ->where('is_read', '0')
-                ->count();
-
-            return [
-                'status' => 'success',
-                'message' => 'Notification Count fetched successfully',
-                'data' => $notificationCount
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => 'Failed to fetch notifications: ' . $e->getMessage(),
-                'data' => []
-            ];
-        }
-    }
 
     public function GetAdminNotificationCount($request_data)
     {
