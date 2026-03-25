@@ -8,11 +8,10 @@
 
 /* Apply scroll to all dropdown lists */
 .user-list {
-    max-height: 300px;
+    max-height: 450px;
     overflow-y: auto;
-    border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 10px;
+    padding: 6px;
 }
 
 /* Optional scrollbar styling */
@@ -31,9 +30,8 @@
 </style>
 <style>
 .affiliate-list {
-    max-height: 300px;      /* controls dropdown height */
+    max-height: 450px;      /* controls dropdown height */
     overflow-y: auto;       /* enables vertical slider */
-    border: 1px solid #ddd;
     border-radius: 6px;
     padding: 10px;
 }
@@ -54,9 +52,8 @@
 </style>
 <style>
 .seller-list {
-    max-height: 300px;
+    max-height: 450px;
     overflow-y: auto;
-    border: 1px solid #ddd;
     border-radius: 6px;
     padding: 10px;
 }
@@ -76,9 +73,8 @@
 </style>
 <style>
 .delivery-list {
-    max-height: 300px;
+    max-height: 450px;
     overflow-y: auto;
-    border: 1px solid #ddd;
     border-radius: 6px;
     padding: 10px;
 }
@@ -122,25 +118,25 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <label class="form-group">Notification Title (English)</label>
-                <input type="text" id="title_english" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                <input type="text" id="title_english" placeholder="Enter English Notification" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control" />
             </div>
             <h6 class="text-danger error-title_english"></h6>
 
             <div class="mb-3">
                 <label class="form-group">Notification Title (Arabic)</label>
-                <input type="text" id="title_arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
+                <input type="text" id="title_arabic" placeholder="Enter Arabic Notification" dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control" />
             </div>
             <h6 class="text-danger error-title_arabic"></h6>
 
             <div class="mb-3">
                 <label class="form-group">Notification Description (English)</label>
-                <textarea rows="4" id="description_english" oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
+                <textarea rows="4" id="description_english" placeholder="Enter Description " oninput="this.value = this.value.replace(/[^A-Za-z ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
             </div>
             <h6 class="text-danger error-description_english"></h6>
 
             <div class="mb-4">
                 <label class="form-group">Notification Description (Arabic)</label>
-                <textarea rows="4" id="description_arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
+                <textarea rows="4" id="description_arabic"  placeholder="Enter Description"  dir="rtl" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')" class="form-control"></textarea>
             </div>
             <h6 class="text-danger error-description_arabic"></h6>
 

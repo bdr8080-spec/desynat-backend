@@ -56,7 +56,7 @@
                     tabindex="0">
                     <div class="row align-items-end d-flex justify-content-end">
                         <div class="col-md-2 col-lg-2 col-12">
-                            <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn w-100 ms-auto mb-3">
+                            <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn ms-auto mb-3">
                                 <span>Send Notification</span></a>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                 <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
                     <div class="row align-items-end d-flex justify-content-end">
                         <div class="col-md-2 col-lg-2 col-12">
-                            <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn w-100 ms-auto mb-3" href="/send-notification">
+                            <a href="{{route('admin.sendNotification')}}" class="btn btn-dark customBtn ms-auto mb-3" href="/send-notification">
                                 <span>Send Notification</span></a>
                         </div>
                     </div>
@@ -137,14 +137,16 @@
                     </div>
                     </form>
 
-                    <div class="table-responsive">
+                    <div class="table-responsive mt-4">
                         <table id="myTable" class="table w-100">
                             <thead>
                                 <tr>
                                     <th scope="col">Sr.No</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Sent To</th>
-                                    <th scope="col">Content</th>
+                                    <th scope="col">All Type</th>
+                                    <th scope="col">English Description</th>
+                                    <th scope="col">Arabic Description</th>
                                     <th scope="col">Date & Time</th>
                                 </tr>
                             </thead>
@@ -172,14 +174,29 @@
 
                                             <span class="text-primary">{{ $notification['total_receivers'] }}+</span>
                                     </td>
-                                    <td>{{ $notification['description_english'] }}</td>
+                                    <td>
+
+                                    </td>
+
+                                    <td>
+                                        <!-- {{ $notification['description_english'] }} -->
+                                        <a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#englishModal" data-description="happy">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <!-- {{ $notification['description_english'] }} -->
+                                        <a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#arabicModal" data-description="happy">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                    </td>
                                     <td>
                                         {{ \Carbon\Carbon::parse($notification['created_at'])->format('d/m/y \a\t h:i A') }}
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">No notifications found</td>
+                                    <td colspan="7" class="text-center">No notifications found</td>
                                 </tr>
                             @endforelse
                             </tbody>
@@ -189,9 +206,54 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
+ <!-------- english Description-------->
+<div class="modal fade" id="englishModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h5>English Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="mb-3">
+                               <p class="text-thin1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum impedit nihil delectus voluptatibus ab ratione sapiente quos! Consequatur quia accusantium, ab magnam maxime dolorum. Non nam repudiandae sapiente aliquam debitis!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-------- Arabic Description-------->
+<div class="modal fade" id="arabicModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header management border-0">
+                <h5>Arabic Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-12">
+                            <div class="mb-3">
+                                <p class="text-thin1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum impedit nihil delectus voluptatibus ab ratione sapiente quos! Consequatur quia accusantium, ab magnam maxime dolorum. Non nam repudiandae sapiente aliquam debitis!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 // document.addEventListener("DOMContentLoaded", function() {

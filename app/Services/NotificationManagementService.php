@@ -712,6 +712,33 @@ class NotificationManagementService
     }
 
 
+     public function CountgetUserNotifications($request_data)
+    {
+        try {
+
+        $limit       = (int)($request_data->limit ?? 10); 
+
+           
+            $AllNotification = Notification::where('receiver_type','2')
+                ->where('receiver_id', $request_data->user_id )
+                ->count();
+           
+            return [
+                'status' => 'success',
+                'message' => 'Notifications fetch successfully',
+                'data' => $AllNotification
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
     public function ReaduserNotification($request_data)
     {
         try {
@@ -739,7 +766,7 @@ class NotificationManagementService
     public function getAffiliateUserNotifications($request_data)
     {
         try {
-            $limit       = (int)($request_data->limit ?? 10); 
+            $limit    = (int)($request_data->limit ?? 10); 
            
             $AllNotification = Notification::where('receiver_type','4')
                 ->where('receiver_id', $request_data->user_id )
@@ -759,6 +786,33 @@ class NotificationManagementService
             ];
         }
     }
+
+
+    
+
+       public function getAffiliateUserNotificationsCount($request_data)
+    {
+        try {
+           
+            $AllNotification = Notification::where('receiver_type','4')
+                ->where('receiver_id', $request_data->user_id )
+                ->count();
+           
+            return [
+                'status' => 'success',
+                'message' => 'Notifications Count fetch successfully',
+                'data' => $AllNotification
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
     public function ReadAffiliateUserNotification($request_data)

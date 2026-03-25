@@ -446,7 +446,7 @@ class SellerAuthService
 
                   $seller_id=$data->seller_id;
 
-                 $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$seller_id)->where('status','1')->where('payment_status','1')->first(); // check seller Plan
+                 $check_plan= SellerSubcriptionPlanBuy::where('seller_id',$seller_id)->where('status','1')->where('is_expired','0')->where('payment_status','1')->first(); // check seller Plan
 
                  if($check_plan){
                   return ['status'=>'error','message'=>"seller Already Have Active Plan",'data'=>(object)[]]; 

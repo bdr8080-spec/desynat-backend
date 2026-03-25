@@ -143,14 +143,14 @@
 
     <li class="nav-item {{ Request::routeIs('admin.cmsManagement') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.cmsManagement') }}">
-            <span><img src="{{ asset('admin/image/credit-card-down.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/users-01-1.svg') }}" alt="icon" /></span>
             CMS Management
         </a>
     </li>
 
     <li class="nav-item {{ Request::routeIs('admin.notificationManagement') || Request::routeIs('admin.sendNotification') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('admin.notificationManagement') }}">
-            <span><img src="{{ asset('admin/image/credit-card-down.svg') }}" alt="icon" /></span>
+            <span><img src="{{ asset('admin/image/bell-01.svg') }}" alt="icon" /></span>
             Notification Management
         </a>
     </li>
