@@ -1,9 +1,31 @@
 @extends('admin.layout.app')
 @section('content')
 
+<style>
+/* Hide all tab panes initially to avoid flicker */
+.tab-content > .tab-pane {
+    display: none;
+}
+
+/* Show only the active tab pane */
+.tab-content > .tab-pane.active {
+    display: block;
+}
+
+/* Hide entire tab container initially */
+#tabContentContainer {
+    visibility: hidden;
+}
+
+/* Show tab container after JS activates the saved tab */
+#tabContentContainer.active-shown {
+    visibility: visible;
+}
+</style>
 
 
-<div class="inner-content management mb-5">
+
+<div class="inner-content management mb-5" id="tabContentContainer">
     <div class="row align-items-center justify-content-between">
         <div class="col-lg-6 col-md-6 col-12">
             <h2 class="h2">CMS Management </h2>
@@ -499,6 +521,7 @@
                                 <label class="form-label space" for="phone">Contact Number</label>
                                 <input type="tel" id="mobile" class="form-control space" name="mobile"
                                     placeholder="Enter Mobile Number"
+                                    oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $userContactUs->content_english['mobile'] ?? '' }}" />
                                 <h6 class="text-danger error-mobile"></h6>
                             </div>
@@ -507,6 +530,7 @@
                                 <label class="form-label space" for="twitter">Whatsapp Number</label>
                                 <input type="text" id="whatsapp" class="form-control" name="whatsapp"
                                     placeholder="Enter Whatsapp Number"
+                                    oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $userContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp"></h6>
                             </div>
@@ -961,6 +985,7 @@
                                 <label class="form-label space" for="phone">Contact Number</label>
                                 <input type="tel" id="mobile_seller" class="form-control space" name="mobile_seller"
                                     placeholder="Enter Mobile Number"
+                                    oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $sellerContactUs->content_english['mobile'] ?? '' }}" />
                                 <h6 class="text-danger error-mobile_seller"></h6>
                             </div>
@@ -969,6 +994,7 @@
                                 <label class="form-label space" for="twitter">Whatsapp Number</label>
                                 <input type="text" id="whatsapp_seller" class="form-control" name="whatsapp_seller"
                                     placeholder="Enter Whatsapp Number"
+                                    oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $sellerContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp_seller"></h6>
                             </div>
@@ -1422,6 +1448,7 @@
                                 <label class="form-label space" for="phone">Contact Number</label>
                                 <input type="tel" id="mobile_driver" class="form-control space" name="mobile"
                                     placeholder="Enter Mobile Number"
+                                    oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $driverContactUs->content_english['mobile'] ?? '' }}" />
                                 <h6 class="text-danger error-mobile_driver"></h6>
                             </div>
@@ -1430,6 +1457,7 @@
                                 <label class="form-label space" for="twitter">Whatsapp Number</label>
                                 <input type="text" id="whatsapp_driver" class="form-control" name="whatsapp"
                                     placeholder="Enter Whatsapp Number"
+                                    oninput="this.value = this.value.replace(/[^0-9+]/g,'')"
                                     value="{{ $driverContactUs->content_english['whatsapp'] ?? '' }}" />
                                 <h6 class="text-danger error-whatsapp_driver"></h6>
                             </div>
@@ -1479,17 +1507,17 @@
                     <h6 class="text-danger error-answer_english"></h6>
 
                     <label>Question Arabic</label>
-                    <input id="question_arabic" class="form-control mb-2" type="text"
+                    <input id="question_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
                         placeholder="Enter Question in Arabic"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_arabic"></h6>
 
                     <label>Answer Arabic</label>
-                    <textarea id="answer_arabic" class="form-control mb-2" placeholder="Enter Answer in Arabic"
+                    <textarea id="answer_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="Enter Answer in Arabic"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_arabic"></h6>
 
-                    <input type="hidden" id="type_seller" value="1">
+                    <input type="hidden" id="type_user" value="1">
 
                     <div class="text-center mt-3">
                         <button type="button" id="addFaqBtn" class="btn customBtn2 active text-white">
@@ -1530,13 +1558,13 @@
                     <h6 class="text-danger error-answer_english_seller"></h6>
 
                     <label>Question Arabic</label>
-                    <input id="question_arabic_seller" class="form-control mb-2" type="text"
+                    <input id="question_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
                         placeholder="Enter Question in Arabic"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_arabic_seller"></h6>
 
                     <label>Answer Arabic</label>
-                    <textarea id="answer_arabic_seller" class="form-control mb-2" placeholder="Enter Answer in Arabic"
+                    <textarea id="answer_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="Enter Answer in Arabic"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_arabic_seller"></h6>
 
@@ -1580,13 +1608,13 @@
                     <h6 class="text-danger error-answer_english_driver"></h6>
 
                     <label>Question Arabic</label>
-                    <input id="question_arabic_driver" class="form-control mb-2" type="text"
+                    <input id="question_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
                         placeholder="Enter Question in Arabic"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-question_arabic_driver"></h6>
 
                     <label>Answer Arabic</label>
-                    <textarea id="answer_arabic_driver" class="form-control mb-2" placeholder="Enter Answer in Arabic"
+                    <textarea id="answer_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2" placeholder="Enter Answer in Arabic"
                         oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-answer_arabic_driver"></h6>
 
@@ -1632,12 +1660,12 @@
                     <h6 class="text-danger error-edit_answer_english"></h6>
 
                     <label>Question Arabic</label>
-                    <input id="edit_question_arabic" class="form-control mb-2" type="text"
+                    <input id="edit_question_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
                         placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_arabic"></h6>
 
                     <label>Answer Arabic</label>
-                    <textarea id="edit_answer_arabic" class="form-control mb-2"
+                    <textarea id="edit_answer_arabic" dir="rtl" style="text-align: right;" class="form-control mb-2"
                         placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_arabic"></h6>
 
@@ -1681,12 +1709,12 @@
                     <h6 class="text-danger error-edit_answer_english_seller"></h6>
 
                     <label>Question Arabic</label>
-                    <input id="edit_question_arabic_seller" class="form-control mb-2" type="text"
+                    <input id="edit_question_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
                         placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')">
                     <h6 class="text-danger error-edit_question_arabic_seller"></h6>
 
                     <label>Answer Arabic</label>
-                    <textarea id="edit_answer_arabic_seller" class="form-control mb-2"
+                    <textarea id="edit_answer_arabic_seller" dir="rtl" style="text-align: right;" class="form-control mb-2"
                         placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_arabic_seller"></h6>
 
@@ -1730,12 +1758,12 @@
                     <h6 class="text-danger error-edit_answer_english_driver"></h6>
 
                     <label>Question Arabic</label>
-                    <input id="edit_question_arabic_driver" class="form-control mb-2" type="text"
+                    <input id="edit_question_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2" type="text"
                         placeholder="Enter Question in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></input>
                     <h6 class="text-danger error-edit_question_arabic_driver"></h6>
 
                     <label>Answer Arabic</label>
-                    <textarea id="edit_answer_arabic_driver" class="form-control mb-2"
+                    <textarea id="edit_answer_arabic_driver" dir="rtl" style="text-align: right;" class="form-control mb-2"
                         placeholder="Enter Answer in Arabic" oninput="this.value = this.value.replace(/[^\u0600-\u06FF ]/g,'').replace(/^\s+/,'')"></textarea>
                     <h6 class="text-danger error-edit_answer_arabic_driver"></h6>
 
@@ -1761,21 +1789,52 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+// document.addEventListener("DOMContentLoaded", function() {
+//     //get active tab from local storage
+//     const lastTab = localStorage.getItem("activeTab");
+//     if (lastTab) {
+//         const triggerEl = document.querySelector(`#${lastTab}`);
+//         if (triggerEl) {
+//             const tab = new bootstrap.Tab(triggerEl);
+//             tab.show();
+//         }
+//     }
+//     //save active tab to local storage
+//     const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
+//     tabButtons.forEach((button) => {
+//         button.addEventListener("shown.bs.tab", function() {
+//             localStorage.setItem("activeTab", this.id);
+//         });
+//     });
+// });
 document.addEventListener("DOMContentLoaded", function() {
-    //get active tab from local storage
+    const tabContentContainer = document.getElementById('tabContentContainer');
+
+    // 1️⃣ Restore last active tab on page load
     const lastTab = localStorage.getItem("activeTab");
     if (lastTab) {
         const triggerEl = document.querySelector(`#${lastTab}`);
         if (triggerEl) {
             const tab = new bootstrap.Tab(triggerEl);
-            tab.show();
+            tab.show(); // Show the saved tab immediately
         }
     }
-    //save active tab to local storage
+
+    // 2️⃣ Show tab container after activating the saved tab
+    if (tabContentContainer) {
+        tabContentContainer.classList.add('active-shown');
+    }
+
+    // 3️⃣ Reload page when user clicks a different tab
     const tabButtons = document.querySelectorAll('button[data-bs-toggle="pill"]');
     tabButtons.forEach((button) => {
-        button.addEventListener("shown.bs.tab", function() {
-            localStorage.setItem("activeTab", this.id);
+        button.addEventListener("click", function(e) {
+            const currentTab = localStorage.getItem("activeTab");
+            if (currentTab !== this.id) {
+                e.preventDefault(); // Stop Bootstrap from switching tab immediately
+                localStorage.setItem("activeTab", this.id);
+                //location.reload(); // reload before tab content shows
+            }
         });
     });
 });
@@ -1786,21 +1845,63 @@ document.addEventListener("DOMContentLoaded", function() {
 let editors = {};
 
 document.addEventListener("DOMContentLoaded", function() {
+    // document.querySelectorAll('.ckeditorfile').forEach(function(element) {
+    //     ClassicEditor
+    //         .create(element)
+    //         .then(editor => {
+    //             editors[element.name] = editor;
+
+    //             editor.model.document.on('change:data', function() {
+    //                 let data = editor.getData().replace(/<[^>]*>/g, '').trim();
+
+    //                 if (data) {
+    //                     $('#error_' + element.name).text('');
+    //                 }
+    //             });
+    //         })
+    //         .catch(error => console.error(error));
+    // });
     document.querySelectorAll('.ckeditorfile').forEach(function(element) {
         ClassicEditor
-            .create(element)
+            .create(element, {
+                language: {
+                    content: element.name.includes('arabic') ? 'ar' : 'en' // Arabic or English UI
+                }
+            })
             .then(editor => {
+                // Store the editor instance using the element's name as key
                 editors[element.name] = editor;
 
+                // If the field is Arabic, apply RTL direction inside the editor
+                if (element.name.includes('arabic')) {
+                    editor.editing.view.change(writer => {
+                        writer.setAttribute(
+                            'dir',
+                            'rtl',
+                            editor.editing.view.document.getRoot()
+                        );
+                    });
+
+                    // Optional: Filter out non-Arabic characters on data change (strict input)
+                    editor.model.document.on('change:data', () => {
+                        let data = editor.getData();
+                        let plainText = data.replace(/<[^>]*>/g, '');
+                        let filteredText = plainText.replace(/[^\u0600-\u06FF\s]/g, '');
+                        if (plainText !== filteredText) {
+                            editor.setData(filteredText);
+                        }
+                    });
+                }
+
+                // Remove validation error message when user starts typing (all editors)
                 editor.model.document.on('change:data', function() {
                     let data = editor.getData().replace(/<[^>]*>/g, '').trim();
-
                     if (data) {
                         $('#error_' + element.name).text('');
                     }
                 });
             })
-            .catch(error => console.error(error));
+            .catch(error => console.error(error)); 
     });
 
     $('#userTermsForm').on('submit', function(e) {
