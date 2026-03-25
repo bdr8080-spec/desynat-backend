@@ -585,6 +585,7 @@ class AuthController extends Controller
         if (auth()->check() && auth()->user()->banner_view == '0') {
 
             $userCountryCode = auth()->user()->country_code;
+            dd($userCountryCode);
 
             $banners = FullBanner::with('country_info')->where('type','2')
                 ->whereHas('country_info', function($query) use ($userCountryCode) {

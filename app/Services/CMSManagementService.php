@@ -570,7 +570,7 @@ class CMSManagementService
     public function GetFaq($request_data)
     {
         try {
-            $faqs = Faq::where('type', $request_data->type)->get();
+            $faqs = Faq::where('type', $request_data->type)->orderBy('id', 'desc')->get();
 
             if ($faqs->isEmpty()) {
                 return [
