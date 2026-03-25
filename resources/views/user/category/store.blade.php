@@ -12,7 +12,9 @@
                 @else
                     @foreach($catBanners['data'] as $banner)
                         <div class="premiumImg">
-                            <img src="{{ $banner->upload_banner }}" class="img-fluid" />
+                            <a href="{{ url('user/store-details/' . ($banner->seller_details->store_info->id ?? '')) }}">
+                                <img src="{{ $banner->upload_banner }}" class="img-fluid" />
+                            </a>
                         </div>
                     @endforeach
             @endif
