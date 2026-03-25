@@ -158,23 +158,37 @@
                                         <td>{{ $notification['title_english'] }}</td>
                                         <td>{{ $notification['title_arabic'] }}</td>
                                         <td>
-                                            @php
+                                           @php
                                                 $receivers = $notification['receiver_details'] ?? [];
 
                                                 $getName = function ($user) {
-                                                    return $user->full_name
-                                                        ?? $user->full_name_english
-                                                        ?? trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''))
-                                                        ?? $user->name
-                                                        ?? 'N/A';
+
+                                                    // ✅ If object
+                                                    if (is_object($user)) {
+                                                        return $user->full_name
+                                                            ?? $user->full_name_english
+                                                            ?? trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''))
+                                                            ?? $user->name
+                                                            ?? 'N/A';
+                                                    }
+
+                                                    // ✅ If array (AFTER FILTER)
+                                                    if (is_array($user)) {
+                                                        return $user['full_name']
+                                                            ?? $user['full_name_english']
+                                                            ?? trim(($user['first_name'] ?? '') . ' ' . ($user['last_name'] ?? ''))
+                                                            ?? $user['name']
+                                                            ?? 'N/A';
+                                                    }
+
+                                                    return 'N/A';
                                                 };
 
                                                 $firstName = count($receivers) ? $getName($receivers[0]) : 'N/A';
                                             @endphp
 
                                             {{ $firstName }}
-
-                                                <span class="text-primary">{{ $notification['total_receivers'] }}+</span>
+                                            <span class="text-primary">{{ $notification['total_receivers'] }}+</span>
                                         </td>
                                         <td>
                                            @php

@@ -151,95 +151,6 @@ class NotificationManagementService
     
 
 
-    // public function GetSendNotificationList($request_data)
-    // {
-    //     try {
-    //         $limit        = (int)($request_data->limit); 
-    //         $sender_id    = $request_data->sender_id;
-    //         $sender_type  = $request_data->sender_type;
-    //         $search       = strtolower(trim($request_data->search));
-
-    //         $notifications = Notification::where('sender_id', $sender_id)
-    //             ->where('sender_type', $sender_type)
-    //             ->orderBy('id', 'desc')
-    //             ->paginate($limit);
-
-    //         if ($notifications->isEmpty()) {
-    //             return [
-    //                 'status' => 'success',
-    //                 'message' => 'No notifications found',
-    //                 'data' => (object)[]
-    //             ];
-    //         }
-
-    //         $filtered = $notifications->getCollection()->transform(function ($notification) use ($search) {
-
-    //             $receiver = $notification->receiver_details;
-    //             $sender   = $notification->sender_details;
-
-    //             $notification->receiver_details = $receiver;
-    //             $notification->sender_details   = $sender;
-
-    //             if (!empty($search)) {
-
-    //                 $fullName  = '';
-    //                 $firstName = '';
-    //                 $lastName  = '';
-
-    //                 if ($receiver) {
-
-    //                     //  HANDLE ARRAY
-    //                     if (is_array($receiver)) {
-    //                         $fullName  = strtolower($receiver['full_name'] ?? $receiver['full_name_english'] ?? '');
-    //                         $firstName = strtolower($receiver['first_name'] ?? '');
-    //                         $lastName  = strtolower($receiver['last_name'] ?? '');
-
-    //                     //  HANDLE OBJECT
-    //                     } else {
-    //                         $fullName  = strtolower($receiver->full_name ?? $receiver->full_name_english ?? '');
-    //                         $firstName = strtolower($receiver->first_name ?? '');
-    //                         $lastName  = strtolower($receiver->last_name ?? '');
-    //                     }
-    //                 }
-
-    //                 // Combine names
-    //                 $combinedName = trim($firstName . ' ' . $lastName);
-
-    //                 $title = strtolower($notification->title_english ?? '');
-
-    //                 //  MATCH CONDITIONS
-    //                 if (
-    //                     strpos($fullName, $search) === false &&
-    //                     strpos($firstName, $search) === false &&
-    //                     strpos($lastName, $search) === false &&
-    //                     strpos($combinedName, $search) === false &&
-    //                     strpos($title, $search) === false
-    //                 ) {
-    //                     return null;
-    //                 }
-    //             }
-
-    //             return $notification;
-
-    //         })->filter()->values();
-
-    //         $notifications->setCollection($filtered);
-
-    //         return [
-    //             'status' => 'success',
-    //             'message' => 'Notifications fetched successfully',
-    //             'data' => $notifications
-    //         ];
-
-    //     } catch (\Exception $e) {
-    //         return [
-    //             'status' => 'error',
-    //             'message' => 'Failed to fetch notifications: ' . $e->getMessage(),
-    //             'data' => []
-    //         ];
-    //     }
-    // }
-
 
     public function GetSendNotificationList($request_data)
     {
@@ -457,26 +368,26 @@ class NotificationManagementService
                 // })->filter()->values()->all();
                 $receivers = collect($group)->map(function ($notification) {
 
-    $fullName = $notification->receiver_details?->full_name
-                ?? $notification->receiver_details?->full_name_english
-                ?? trim(($notification->receiver_details?->first_name ?? '') . ' ' . ($notification->receiver_details?->last_name ?? ''))
-                ?? 'N/A';
+                $fullName = $notification->receiver_details?->full_name
+                            ?? $notification->receiver_details?->full_name_english
+                            ?? trim(($notification->receiver_details?->first_name ?? '') . ' ' . ($notification->receiver_details?->last_name ?? ''))
+                            ?? 'N/A';
 
-    $typeName = match($notification->receiver_type) {
-        2 => 'user',
-        3 => 'seller',
-        4 => 'affilateduser',
-        5 => 'deliveryboy',
-        default => 'unknown',
-    };
+                $typeName = match($notification->receiver_type) {
+                    2 => 'user',
+                    3 => 'seller',
+                    4 => 'affilateduser',
+                    5 => 'deliveryboy',
+                    default => 'unknown',
+                };
 
-    return [
-        'receiver_id' => $notification->receiver_id,
-        'full_name'   => $fullName,
-        'type_name'   => $typeName,
-    ];
+                return [
+                    'receiver_id' => $notification->receiver_id,
+                    'full_name'   => $fullName,
+                    'type_name'   => $typeName,
+                ];
 
-})->filter()->values()->all();
+            })->filter()->values()->all();
 
                 // Search filter
                 if (!empty($search)) {
@@ -858,6 +769,32 @@ class NotificationManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function GetDriverNotificationCount($request_data)
+    {
+        try {
+            $receiver_id = $request_data->receiver_id;
+            $receiver_type = $request_data->receiver_type;
+
+            $notificationCount = Notification::where('receiver_id', $receiver_id)
+                ->where('receiver_type', $receiver_type)
+                ->where('is_read', '0')
+                ->count();
+
+            return [
+                'status' => 'success',
+                'message' => 'Notification Count fetched successfully',
+                'data' => $notificationCount
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch notifications: ' . $e->getMessage(),
                 'data' => []
             ];
         }

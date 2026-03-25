@@ -167,12 +167,12 @@
                             @foreach($users as $user)
                                 <div class="user-item d-flex justify-content-between bottom-border user-row">
 
-                                    <span>{{ $user->full_name }}</span>
+                                    <span>{{ $user['full_name'] }}</span>
 
                                     <input type="checkbox"
                                         class="user-checkbox users-checkbox"
                                         name="users[]"
-                                        value="{{ $user->id }}">
+                                        value="{{ $user['id'] }}">
 
                                 </div>
                             @endforeach
@@ -202,12 +202,12 @@
                             @foreach($affiliateUsers as $user)
                                 <div class="user-item d-flex justify-content-between bottom-border user-row">
 
-                                    <span>{{ $user->full_name }}</span>
+                                    <span>{{ $user['full_name'] }}</span>
 
                                     <input type="checkbox"
                                         class="user-checkbox affiliate-checkbox"
                                         name="affiliate_users[]"
-                                        value="{{ $user->id }}">
+                                        value="{{ $user['id'] }}">
 
                                 </div>
                             @endforeach
