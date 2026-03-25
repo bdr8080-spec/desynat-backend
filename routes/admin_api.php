@@ -263,6 +263,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_my_notifications_list',[NotificationController::class,'get_my_notifications_list']);
      Route::post('/mark_notification_as_read',[NotificationController::class,'mark_notification_as_read']);
      Route::post('/mark_all_notification_as_read',[NotificationController::class,'mark_all_notification_as_read']);
+     Route::get('/get_admin_notifications_count',[NotificationController::class,'get_admin_notifications_count']);
      
 
 
