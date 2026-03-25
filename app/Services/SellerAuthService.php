@@ -339,7 +339,7 @@ class SellerAuthService
               }
               
 
-              $data= Plan::where('country_id',$request->country_id)->get();
+              $data= Plan::where('country_id',$request->country_id)->where('status','1')->get();
 
 
               if($data->isNotEmpty()){
