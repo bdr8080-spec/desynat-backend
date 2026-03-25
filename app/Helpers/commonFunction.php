@@ -30,11 +30,11 @@ use App\Models\{seller};
         return $image_url;
     }
 
-function Generate_SellerQrCode($seller_id){
+function Generate_SellerQrCode($seller_id,$store_id){
 
     // $qrSellerCode = url()->full();
 
-   $qrSellerCode= url('/')."/user/store-details/".$seller_id;
+   $qrSellerCode= url('/')."/user/store-details/".$store_id;
    
     $fileName = 'qr_' . time() . '.svg';
     // Generate SVG content

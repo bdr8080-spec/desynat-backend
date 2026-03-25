@@ -53,7 +53,6 @@ require __DIR__.'/deliveryboy_api.php';
 
 
 
-
 // User APi M1
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/verify_otp',[AuthController::class,'verify_otp']);
