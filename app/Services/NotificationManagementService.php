@@ -441,20 +441,42 @@ class NotificationManagementService
                 $first = $group->first();
 
                 // Collect receivers
+                // $receivers = collect($group)->map(function ($notification) {
+
+                //     if (!$notification->receiver_details) {
+                //         return null;
+                //     }
+
+                //     $receiver = $notification->receiver_details;
+
+                //     $receiver->receiver_type = $notification->receiver_type;
+                //     $receiver->receiver_id   = $notification->receiver_id;
+
+                //     return $receiver;
+
+                // })->filter()->values()->all();
                 $receivers = collect($group)->map(function ($notification) {
 
-                    if (!$notification->receiver_details) {
-                        return null;
-                    }
+    $fullName = $notification->receiver_details?->full_name
+                ?? $notification->receiver_details?->full_name_english
+                ?? trim(($notification->receiver_details?->first_name ?? '') . ' ' . ($notification->receiver_details?->last_name ?? ''))
+                ?? 'N/A';
 
-                    $receiver = $notification->receiver_details;
+    $typeName = match($notification->receiver_type) {
+        2 => 'user',
+        3 => 'seller',
+        4 => 'affilateduser',
+        5 => 'deliveryboy',
+        default => 'unknown',
+    };
 
-                    $receiver->receiver_type = $notification->receiver_type;
-                    $receiver->receiver_id   = $notification->receiver_id;
+    return [
+        'receiver_id' => $notification->receiver_id,
+        'full_name'   => $fullName,
+        'type_name'   => $typeName,
+    ];
 
-                    return $receiver;
-
-                })->filter()->values()->all();
+})->filter()->values()->all();
 
                 // Search filter
                 if (!empty($search)) {

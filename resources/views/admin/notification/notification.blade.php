@@ -110,7 +110,7 @@
                                 <label for="from" class="form-label">From:</label>
                                 <input type="date" id="from" name="from_date" class="form-control"
                                     value="{{ request()->from_date }}"
-                                    onchange="document.getElementById('filterForm').submit();" />
+                                     />
                             </div>
                         </div>
 
@@ -120,7 +120,7 @@
                                 <label for="to" class="form-label">To:</label>
                                 <input type="date" id="to" name="to_date" class="form-control"
                                     value="{{ request()->to_date }}"
-                                    onchange="document.getElementById('filterForm').submit();" />
+                                     />
                             </div>
                         </div>
 
@@ -136,108 +136,105 @@
                         </div>
                     </div>
                     </form>
+                    <div id="sentNotificationsWrapper">
+                        <div class="table-responsive mt-4">
+                            <table id="myTable" class="table w-100">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sr.No</th>
+                                        <th scope="col">Title English</th>
+                                        <th scope="col">Title Arabic</th>
+                                        <th scope="col">Sent To</th>
+                                        <th scope="col">All Type</th>
+                                        <th scope="col">English Description</th>
+                                        <th scope="col">Arabic Description</th>
+                                        <th scope="col">Date & Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sentNotificationsTbody">
+                                    @forelse($sentNotifications as $key => $notification)
+                                    <tr>
+                                        <th scope="row">{{ $loop->iteration }}</th>
+                                        <td>{{ $notification['title_english'] }}</td>
+                                        <td>{{ $notification['title_arabic'] }}</td>
+                                        <td>
+                                            @php
+                                                $receivers = $notification['receiver_details'] ?? [];
 
-                    <div class="table-responsive mt-4">
-                        <table id="myTable" class="table w-100">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Sr.No</th>
-                                    <th scope="col">Title English</th>
-                                    <th scope="col">Title Arabic</th>
-                                    <th scope="col">Sent To</th>
-                                    <th scope="col">All Type</th>
-                                    <th scope="col">English Description</th>
-                                    <th scope="col">Arabic Description</th>
-                                    <th scope="col">Date & Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($sentNotifications as $key => $notification)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td>{{ $notification['title_english'] }}</td>
-                                    <td>{{ $notification['title_arabic'] }}</td>
-                                    <td>
-                                        @php
-                                            $receivers = $notification['receiver_details'] ?? [];
+                                                $getName = function ($user) {
+                                                    return $user->full_name
+                                                        ?? $user->full_name_english
+                                                        ?? trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''))
+                                                        ?? $user->name
+                                                        ?? 'N/A';
+                                                };
 
-                                            $getName = function ($user) {
-                                                return $user->full_name
-                                                    ?? $user->full_name_english
-                                                    ?? trim(($user->first_name ?? '') . ' ' . ($user->last_name ?? ''))
-                                                    ?? $user->name
-                                                    ?? 'N/A';
-                                            };
+                                                $firstName = count($receivers) ? $getName($receivers[0]) : 'N/A';
+                                            @endphp
 
-                                            $firstName = count($receivers) ? $getName($receivers[0]) : 'N/A';
-                                        @endphp
+                                            {{ $firstName }}
 
-                                        {{ $firstName }}
+                                                <span class="text-primary">{{ $notification['total_receivers'] }}+</span>
+                                        </td>
+                                        <td>
+                                           @php
+                                                $receivers = $notification['receiver_details'] ?? [];
 
-                                            <span class="text-primary">{{ $notification['total_receivers'] }}+</span>
-                                    </td>
-                                    <td>
-                                        @php
-                                            $receivers = $notification['receiver_details'] ?? [];
+                                                $classMap = [
+                                                    'user' => 'User',
+                                                    'affilateduser' => 'Affiliate User',
+                                                    'seller' => 'Seller',
+                                                    'deliveryboy' => 'Delivery Boy',
+                                                ];
 
-                                            // Map class names to display labels (case-insensitive)
-                                            $classMap = [
-                                                'user' => 'User',
-                                                'affilateduser' => 'Affiliate User',
-                                                'seller' => 'Seller',
-                                                'deliveryboy' => 'Delivery Boy',
-                                            ];
+                                                $detected = [];
 
-                                            // Initialize a set of detected types
-                                            $detected = [];
-
-                                            foreach ($receivers as $receiver) {
-                                                $class = strtolower(class_basename($receiver)); // convert to lowercase
-                                                if (isset($classMap[$class])) {
-                                                    $detected[$class] = $classMap[$class]; // store unique labels
+                                                foreach ($receivers as $receiver) {
+                                                    $cls = strtolower($receiver['type_name'] ?? '');
+                                                    if (isset($classMap[$cls])) {
+                                                        $detected[$cls] = $classMap[$cls];
+                                                    }
                                                 }
-                                            }
 
-                                            // Define the fixed display order (lowercase)
-                                            $order = ['user', 'affilateduser', 'seller', 'deliveryboy'];
+                                                $order = ['user', 'affilateduser', 'seller', 'deliveryboy'];
 
-                                            // Prepare final string in correct order
-                                            $typeString = collect($order)
-                                                ->filter(fn($c) => isset($detected[$c]))
-                                                ->map(fn($c) => $detected[$c])
-                                                ->implode(', ');
-                                        @endphp
+                                                $typeString = collect($order)
+                                                    ->filter(fn($c) => isset($detected[$c]))
+                                                    ->map(fn($c) => $detected[$c])
+                                                    ->implode(', ');
+                                                @endphp
 
-                                        {{ $typeString ?: 'N/A' }}
-                                    </td>
+                                                {{ $typeString ?: 'N/A' }}
+                                        </td>
 
-                                    <td>
-                                        <a class="table-button" type="button" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#englishModal" 
-                                        data-description="{{ $notification['description_english'] }}">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="table-button" type="button" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#arabicModal" 
-                                        data-description="{{ $notification['description_arabic'] }}">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        {{ \Carbon\Carbon::parse($notification['created_at'])->format('d/m/y \a\t h:i A') }}
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center">No notifications found</td>
-                                </tr>
-                            @endforelse
-                            </tbody>
-                        </table>
+                                        <td>
+                                            <a class="table-button" type="button" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#englishModal" 
+                                            data-description="{{ $notification['description_english'] }}">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="table-button" type="button" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#arabicModal" 
+                                            data-description="{{ $notification['description_arabic'] }}">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{ \Carbon\Carbon::parse($notification['created_at'])->format('d/m/y \a\t h:i A') }}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">No notifications found</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -385,6 +382,72 @@ document.addEventListener("DOMContentLoaded", function() {
         const modalBody = englishModal.querySelector('#arabicModalDescription');
         modalBody.textContent = description;
     });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const fromInput = document.getElementById('from');
+    const toInput = document.getElementById('to');
+    const tableBody = document.getElementById('sentNotificationsTbody');
+
+    fromInput.addEventListener('change', fetchFilteredNotifications);
+    toInput.addEventListener('change', fetchFilteredNotifications);
+
+    function fetchFilteredNotifications() {
+        const fromDate = fromInput.value;
+        const toDate = toInput.value;
+
+        fetch(`{{ route('admin.notificationManagement') }}?from_date=${fromDate}&to_date=${toDate}`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(res => res.json()) // return JSON instead of HTML
+        .then(data => {
+            // data should include filtered notifications
+            let html = '';
+            if (data.sentNotifications.length) {
+                data.sentNotifications.forEach((notification, key) => {
+                    const receivers = notification.receiver_details || [];
+                    const firstName = receivers.length ? (receivers[0].full_name || receivers[0].full_name_english || 'N/A') : 'N/A';
+
+                    const classMap = {
+                        'user': 'User',
+                        'affilateduser': 'Affiliate User',
+                        'seller': 'Seller',
+                        'deliveryboy': 'Delivery Boy'
+                    };
+                    let detected = {};
+                    receivers.forEach(r => {
+                        const cls = r.type_name?.toLowerCase() || '';
+                        if (classMap[cls]) detected[cls] = classMap[cls];
+                    });
+                    const order = ['user','affilateduser','seller','deliveryboy'];
+                    const typeString = order.filter(c => detected[c]).map(c => detected[c]).join(', ') || 'N/A';
+
+                    html += `
+                        <tr>
+                            <th scope="row">${key+1}</th>
+                            <td>${notification.title_english}</td>
+                            <td>${notification.title_arabic}</td>
+                            <td>${firstName} <span class="text-primary">${notification.total_receivers}+</span></td>
+                            <td>${typeString}</td>
+                            <td><a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#englishModal" data-description="${notification.description_english}"><i class="bi bi-eye-fill"></i></a></td>
+                            <td><a class="table-button" type="button" data-bs-toggle="modal" data-bs-target="#arabicModal" data-description="${notification.description_arabic}"><i class="bi bi-eye-fill"></i></a></td>
+                            <td>${notification.created_at_formatted}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                html = `<tr><td colspan="8" class="text-center">No notifications found</td></tr>`;
+            }
+
+            tableBody.innerHTML = html;
+        })
+        .catch(err => console.error(err));
+    }
 });
 </script>
 
