@@ -204,7 +204,13 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
   // M10 APi 
 
     Route::get('/user-notification', [ApiNotificationController::class,'userNotification']);
+
     Route::post('/read-user-notification', [ApiNotificationController::class,'ReaduserNotification']);
+      
+    Route::get('/user-notification', [ApiNotificationController::class,'userNotification']);
+    Route::get('/count-user-notification', [ApiNotificationController::class,'CountUserNotification']);
+
+    
 
 
     Route::Post('/user-get-deals', [UserDashboardController::class,'UserHomescreenDeals']);
@@ -267,12 +273,10 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   Route::get('/affiliate_all_withdraw_request', [UserAffilatedControlller::class,'affiliate_all_withdraw_request']);
 
   //M10
-  Route::get('/affiliateUserNotificationCount', [ApiNotificationController::class,'affiliateUserNotificationCount']);
 
   Route::get('/affiliateUserNotification', [ApiNotificationController::class,'affiliateUserNotification']);
   Route::post('/ReadAffiliateUserNotification', [ApiNotificationController::class,'ReadAffiliateUserNotification']);
-
-
+  Route::get('/CountaffiliateUserNotification', [ApiNotificationController::class,'affiliateUserNotificationCount']);
   
 
 

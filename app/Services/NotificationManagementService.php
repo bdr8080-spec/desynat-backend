@@ -712,6 +712,33 @@ class NotificationManagementService
     }
 
 
+     public function CountgetUserNotifications($request_data)
+    {
+        try {
+
+        $limit       = (int)($request_data->limit ?? 10); 
+
+           
+            $AllNotification = Notification::where('receiver_type','2')
+                ->where('receiver_id', $request_data->user_id )
+                ->count();
+           
+            return [
+                'status' => 'success',
+                'message' => 'Notifications fetch successfully',
+                'data' => $AllNotification
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to mark notifications as read: '.$e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
     public function ReaduserNotification($request_data)
     {
         try {
