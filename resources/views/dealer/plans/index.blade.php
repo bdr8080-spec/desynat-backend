@@ -256,12 +256,16 @@
                                 <div class="col-6">Transaction id</div>
                                 <div class="col-6">
                                     <div class="text-end">
-                                       #{{ $plan->online_transaction_id }}
+                                       @if(!empty($plan->online_transaction_id))
+                                            #{{ $plan->online_transaction_id }}
+                                        @else
+                                            N/A
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <div class="col-6">Paid By {{ $plan->payment_method }}</div>
+                                <div class="col-6">Paid By {{ $plan->payment_method ?? '' }}</div>
                                 <div class="col-6">
                                     <div class="text-end">
                                        {{ $plan->amount }} KD
