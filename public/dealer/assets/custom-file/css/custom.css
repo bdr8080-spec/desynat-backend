@@ -943,8 +943,9 @@ table.dataTable td.dt-type-date {
     border-radius: 10px;
 }
 .noti-content p {
-    font-size: 14px;
+    font-size: 14px !important;
     margin-bottom: 0px;
+    line-height: normal !important;
 }
 .noti-title {
     font-weight: 500;
@@ -953,6 +954,9 @@ table.dataTable td.dt-type-date {
 .post-date {
     font-size: 14px;
     font-weight: 400;
+}
+.noti-content {
+    word-break: break-word;
 }
 
 
