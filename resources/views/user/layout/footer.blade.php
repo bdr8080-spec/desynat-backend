@@ -442,8 +442,8 @@ $('.bannerpop').owlCarousel({
     responsiveClass: true,
     dots: true,
     autoplay: true,
-    autoplayTimeout: 5000,
-    smartSpeed: 5000,
+    autoplayTimeout: 3000,
+    smartSpeed: 3000,
     responsive: {
         0: {
             items: 1,
@@ -478,7 +478,30 @@ $('.storeBanner').owlCarousel({
         }
     }
 })
-     </script>
+
+$('.adsbannerpop2').owlCarousel({
+    loop: true,
+    margin: 10,
+    responsiveClass: true,
+    dots: true,
+    autoplay: true,
+    autoplayTimeout: 5000,
+    smartSpeed: 5000,
+    responsive: {
+        0: {
+            items: 1,
+        },
+        600: {
+            items: 1,
+        },
+        1000: {
+            items: 1,
+            dots: true
+        }
+    }
+}) 
+
+</script>
 
      <script>
 $('.storeCarousel').owlCarousel({
@@ -1035,38 +1058,15 @@ function sendSearch() {
      </script>
 
      <script>
-$(window).on('load', function() {
+        $(window).on('load', function() {
+            if (window.location.pathname === '/') {
+                const $modal1 = $('#showBanner');
+                $modal1.fadeIn();
+               //  $('body').addClass('overflow-hidden');
 
-    // 👉 Sirf home page par modal open hoga
-    if (window.location.pathname === '/') {
-        const $modal1 = $('#showBanner');
-
-        // Show modal
-        $modal1.fadeIn();
-        // $('body').addClass('overflow-hidden');
-
-        // Manual skip (button or overlay click)
-        $('.btn-skip, #showBanner').on('click', function(e) {
-            if ($(e.target).is('.btn-skip') || $(e.target).is('#showBanner')) {
-                closeBanner();
             }
+
         });
-
-        // ⏱ Auto skip after 5 seconds
-        setTimeout(function() {
-            if ($modal1.is(':visible')) {
-                closeBanner();
-            }
-        }, 5000);
-
-        // Common close function
-        function closeBanner() {
-            $modal1.fadeOut();
-            $('body').removeClass('overflow-hidden');
-        }
-    }
-
-});
      </script>
 
      <!-- mark notification as read -->
