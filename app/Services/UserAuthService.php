@@ -75,6 +75,16 @@ class UserAuthService
         if($get_user_details){
 
             if(Hash::check($request->password,$get_user_details->password,)){
+              $updateData = [];
+                    if (isset($request->device_type)) {
+                        $updateData['device_type'] = $request->device_type;
+                    }
+                    if (isset($request->fcm_token)) {
+                        $updateData['fcm_token'] = $request->fcm_token;
+                    }
+                    if (!empty($updateData)) {
+                        $get_user_details->update($updateData);
+                    }
          
                  $get_user_details->update(['lang'=> $request->lang??null]);// update code in language 
          
