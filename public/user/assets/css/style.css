@@ -117,7 +117,36 @@ section {
 }
 
 /* header */
-
+#notificationDialogUser{
+    width: 30%;
+}
+.notification-pnl {
+    border: 1px solid #ddd;
+    padding: 14px;
+    border-radius: 10px;
+}
+.bell-icon-1 {
+    height: 45px;
+    width: 45px;
+    background: #eee;
+    border-radius: 50px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.noti-content p {
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.noti-title {
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+.post-date {
+    font-size: 14px;
+    font-weight: 400;
+}
 
 .customBtn {
     background: var(--gradient-color3) !important;
