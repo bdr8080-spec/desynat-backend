@@ -39,7 +39,7 @@ return [
     'otp'=> '123456',
 
     'google_map_key'=>[
-        'key'=>env('GOOGLE_MAP_KEY')??'AIzaSyBk1iHVph8nvXAn0uigTvPzKDpb9cslR18'
+        'key'=>env('GOOGLE_MAP_KEY')??'AIzaSyB5LK7zzKS4q9ov0R4LFLgaRyPZdZsTKz4'
     ]
 
 
