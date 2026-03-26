@@ -497,22 +497,40 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
         $msg="Order Payment Cancelled";                
     }
 
-    // send User Notification to Firebase 
-    $deviceTokens=[$checkOrder->user_details->fcm_token];
     $title='Order Status';
     $body=$msg;
-    sendPushNotificationNew($deviceTokens, $title, $body);
-    // send Notification to Firebase  end here
+    //send push notification to user
+    CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1, 
+
+                'receiver_id' => $checkOrder->user_details->id,
+                'receiver_type' => 2, 
+
+                'title_english' => 'Order Status',
+                'description_english' => $body,
+
+                'notification_type' => 'order_place',
+            ]);
     
     // send Notification to Seller 
     $checkAllproducts=orderdetail::with('product_details.seller_details')->where('order_id', $request->order_id)->get();
 
     foreach($checkAllproducts as $key=>$val){
 
-    $deviceTokens=[$val->product_details->seller_details->fcm_token];
-    $title1='You get a Order';
     $body1='You received a new Order';
-    sendPushNotificationNew($deviceTokens, $title1, $body1);
+    CreateNotification([
+                'sender_id' => $checkOrder->user_details->id, 
+                'sender_type' => 2, 
+
+                'receiver_id' => $val->product_details->seller_details->id,
+                'receiver_type' => 3, 
+
+                'title_english' => 'You recieved a new Order',
+                'description_english' => $body1,
+
+                'notification_type' => 'order_place',
+            ]);
     }
     
     DB::commit();
