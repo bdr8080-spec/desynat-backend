@@ -18,7 +18,7 @@
 </style>
 
 <!-- app story -->
-<div class="storywapper" style="display:none;">
+<!-- <div class="storywapper" style="display:none;">
     <div class="container">
         <div class="modal-content-2 pt-5">
             <div class="story-header d-flex justify-content-between">
@@ -39,14 +39,31 @@
                             </div>
                         </div>
 
-
-
                     </div>
 
                 </div>
 
             </div>
         </div>
+    </div>
+</div> -->
+
+ <!-- WhatsApp Status Viewer -->
+  
+ <div class="status-viewer bgwhite" id="statusViewer">
+    <div id="progressContainer" class="progress-container"></div>
+    <span class="status-close" onclick="closeStatus()">&times;</span>
+    <img id="statusImage" class="status-img" />
+    <!-- Tap Zones -->
+    <div class="status-left" onclick="showPrev()">
+        <span>
+            <i class="fa-solid fa-chevron-left"></i>
+        </span>
+    </div>
+    <div class="status-right" onclick="showNext()">
+        <span>
+            <i class="fa-solid fa-chevron-right"></i>
+        </span>
     </div>
 </div>
 
@@ -139,7 +156,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
-<script>
+<!-- <script>
     
 $(document).on('click', '#storyModal', function(e) {
     e.preventDefault();
@@ -155,9 +172,6 @@ $('.storeBanner').owlCarousel({
     margin: 10,
     responsiveClass: true,
     dots: true,
-    // autoplay: true,
-    // autoplayTimeout: 5000,
-    // smartSpeed: 5000,
     responsive: {
         0: {
             items: 1,
@@ -170,7 +184,87 @@ $('.storeBanner').owlCarousel({
         }
     }
 })
+</script> -->
+
+<script>
+var images = [
+    "{{asset('user')}}/assets/images/store1.jpg",
+    "{{asset('user')}}/assets/images/item-1.svg",
+    "{{asset('user')}}/assets/images/item-2.svg",
+    "{{asset('user')}}/assets/images/store1.jpg",
+    "{{asset('user')}}/assets/images/store1.jpg",
+    "{{asset('user')}}/assets/images/store1.jpg"
+];
+
+var currentIndex = 0;
+var timer = null;
+var duration = 3000;
+
+function openGallery(index) {
+    currentIndex = index;
+    document.getElementById("statusViewer").style.display = "flex";
+    generateProgressBars();
+    showImage();
+}
+
+function generateProgressBars() {
+    const container = document.getElementById("progressContainer");
+    container.innerHTML = "";
+    images.forEach((img, i) => {
+        container.innerHTML += `
+            <div class="progress-bar">
+                <div class="progress-fill" id="bar${i}"></div>
+            </div>
+        `;
+    });
+}
+
+function showImage() {
+    document.getElementById("statusImage").src = images[currentIndex];
+    startProgress();
+}
+
+function startProgress() {
+    clearTimeout(timer);
+    // Reset all bars
+    document.querySelectorAll(".progress-fill").forEach(bar => {
+        bar.style.width = "0%";
+        bar.style.transition = "none";
+    });
+    setTimeout(() => {
+        let bar = document.getElementById("bar" + currentIndex);
+        bar.style.transition = `${duration}ms linear`;
+        bar.style.width = "100%";
+    }, 10);
+
+    timer = setTimeout(() => {
+        showNext();
+    }, duration);
+}
+
+function showNext() {
+    if (currentIndex < images.length - 1) {
+        currentIndex++;
+        showImage();
+    } else {
+        closeStatus(); 
+    }
+}
+
+function showPrev() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showImage();
+    }
+}
+
+function closeStatus() {
+    clearTimeout(timer);
+    document.getElementById("statusViewer").style.display = "none";
+}
+
 </script>
+
 
 <script>
 @if(session('success'))
