@@ -230,6 +230,19 @@ class BannerService
                 'Admin_verify' => '1',
             ]);
 
+            CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1, 
+
+                'receiver_id' => $banner->seller_id,
+                'receiver_type' => 3, 
+
+                'title_english' => 'New Banner Request',
+                'description_english' => 'Your banner request approved successfully',
+
+                'notification_type' => 'banner_approved'
+            ]);
+
             return [
                 'status' => 'success',
                 'message' => 'Banner Request Approved successfully',
@@ -269,6 +282,19 @@ class BannerService
             $banner->update([
                 'Admin_verify' => '2',
                 'cancelled_reason' => $request->reason,
+            ]);
+
+            CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1, 
+
+                'receiver_id' => $banner->seller_id,
+                'receiver_type' => 3, 
+
+                'title_english' => 'New Banner Request',
+                'description_english' => "Your banner request rejected, Reason: {$request->reason}",
+
+                'notification_type' => 'banner_rejected'
             ]);
 
             return [

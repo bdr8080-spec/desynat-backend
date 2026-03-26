@@ -399,7 +399,7 @@ class SellerManagementService
                 'receiver_type' => 3, 
 
                 'title_english' => 'New Account Request',
-                'description_english' => 'Your account rejected,Reason: {$rejectReason}',
+                'description_english' => "Your account rejected,Reason: {$rejectReason}",
 
                 'notification_type' => 'account_rejected'
             ]);
