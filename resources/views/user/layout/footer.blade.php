@@ -110,16 +110,12 @@
 
      <!-- WhatsApp Status Viewer -->
      <div class="status-viewer" id="statusViewer">
-
          <!-- Multiple Progress Bars -->
          <div id="progressContainer" class="progress-container"></div>
-
          <span class="status-close" onclick="closeStatus()">&times;</span>
-
          <img id="statusImage" class="status-img" />
-
          <!-- Tap Zones -->
-         <div class="status-left" onclick="showPrev()">
+         <!-- <div class="status-left" onclick="showPrev()">
              <span>
                  <i class="fa-solid fa-chevron-left"></i>
              </span>
@@ -128,8 +124,16 @@
              <span>
                  <i class="fa-solid fa-chevron-right"></i>
              </span>
-         </div>
+         </div> -->
      </div>
+
+     <!-- Admin status -->
+     <!-- <div class="status-viewer" id="statusViewer">
+        <div id="progressContainer" class="progress-container"></div>
+        <span class="status-close" onclick="closeStatus()">&times;</span>
+        <img id="statusImage" class="status-img" />
+       
+     </div> -->
 
      <!-- Notification Management -->
 
