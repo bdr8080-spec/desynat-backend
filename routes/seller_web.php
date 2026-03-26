@@ -19,6 +19,12 @@ use App\Http\Controllers\Seller\NotificationController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\LanguageController;
 
+use App\Http\Controllers\SaveFirebaseToken;
+
+// Save Admin firebase Token 
+
+Route::get('seller-save-token', [SaveFirebaseToken::class, 'saveSellerToken']);
+
 
 Route::group(['prefix' => 'seller'], function () {
 

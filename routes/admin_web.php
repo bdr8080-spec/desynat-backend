@@ -30,6 +30,12 @@ use App\Http\Controllers\Admin\AffiliateWithdrawController;
 use App\Http\Controllers\Admin\CmsController;
 use App\Http\Controllers\Admin\NotificationController;
 
+use App\Http\Controllers\SaveFirebaseToken;
+
+// Save Admin firebase Token 
+
+Route::get('admin-save-token', [SaveFirebaseToken::class, 'saveAdminToken']);
+
 
 Route::group(['prefix'=>'admin'], function(){
 

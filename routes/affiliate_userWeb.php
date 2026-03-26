@@ -3,6 +3,12 @@
 use App\Http\Controllers\User\UserAffilatedController;
 use App\Http\Controllers\User\UserAffiliatedProfileController;
 
+use App\Http\Controllers\SaveFirebaseToken;
+
+// Save Admin firebase Token 
+
+Route::get('affiliate-save-token', [SaveFirebaseToken::class, 'saveAffiliateToken']);
+
 
  Route::group(['prefix' => 'user','middleware'=>['Affiliate_user']  ], function () { 
 
