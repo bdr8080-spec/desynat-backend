@@ -257,7 +257,7 @@
                                 <div class="col-6">
                                     <div class="text-end">
                                        @if(!empty($plan->online_transaction_id))
-                                            #{{ $plan->online_transaction_id }}
+                                            {{ $plan->online_transaction_id }}
                                         @else
                                             N/A
                                         @endif
