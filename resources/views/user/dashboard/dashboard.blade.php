@@ -851,7 +851,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 2️⃣ Auto call after 5 seconds
-    setTimeout(updateBannerView, 5000);
+    // setTimeout(updateBannerView, 10000);
 
 });
 </script>
