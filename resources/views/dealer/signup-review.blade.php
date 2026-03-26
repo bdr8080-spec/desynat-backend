@@ -82,6 +82,103 @@
 <!--Main JS File -->
 <script src="{{ asset('/dealer') }}/assets/custom-file/js/main.js"></script>
 
+         <!-- Firebase geberate Token and Save token Code  -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <script type="module">
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import {
+    getMessaging,
+    getToken,
+    onMessage
+} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCYQyk6P8Gpp6YA7HgLE_Gf_aXDxze_big",
+    authDomain: "desynat.firebaseapp.com",
+    databaseURL: "https://desynat-default-rtdb.firebaseio.com",
+    projectId: "desynat",
+    storageBucket: "desynat.firebasestorage.app",
+    messagingSenderId: "89320198276",
+    appId: "1:89320198276:web:1d3c84f812a338529d32d1",
+    measurementId: "G-7MVP5BHENE"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+// Ask user for notification permission
+Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+        console.log('Notification permission granted.');
+
+        getToken(messaging, {
+            vapidKey: "BBPk2muPnGI7gfY99rJLaHaUyQhB2HqWS_87X3VtjU_EzQFymAd742YmWH6SkApA-3javZ5JqIRfr9ERqS5FSiU"
+        }).then((currentToken) => {
+            if (currentToken) {
+                console.log("Device Token:", currentToken);
+
+                // save Token Code
+                $.ajax({
+                    url: "{{ url('seller-save-token') }}",
+                    type: "get",
+                    dataType: 'json',
+                    data: {
+                        token: currentToken,
+                    },
+                    success: function(response) {
+                        $('#user_loder').hide();
+                        if (response.success) {
+
+                            console.log(response);
+
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        $('#user_loder').hide();
+                        // toastr.error("Error occurred: " + xhr.responseText);
+                    }
+                });
+
+                // save Token Code end Here
+
+
+
+                // send to server
+            } else {
+                console.log('No registration token available.');
+            }
+        }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+        });
+
+    } else {
+        console.log('Notification permission not granted.');
+    }
+});
+
+
+onMessage(messaging, (payload) => {
+    console.log('Foreground message:', payload);
+    const {
+        title,
+        body
+    } = payload.notification;
+
+    new Notification(title, {
+        body: body,
+        icon: '/icon.png',
+    });
+});
+     </script>
+
 
 {{-- @include('dealer.footer'); --}}
 

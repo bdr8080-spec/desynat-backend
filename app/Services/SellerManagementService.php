@@ -338,6 +338,20 @@ class SellerManagementService
 
             $seller->admin_verify = '2'; 
             $seller->save();
+           
+            //send push notification
+            CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1, 
+
+                'receiver_id' => $seller->id,
+                'receiver_type' => 3, 
+
+                'title_english' => 'New Account Request',
+                'description_english' => 'Your account approved successfully',
+
+                'notification_type' => 'account_approved'
+            ]);
 
             return [
                 'status' => 'success',
@@ -376,6 +390,19 @@ class SellerManagementService
 
             $seller->reject_reason = $rejectReason;
             $seller->save();
+            //send notification
+            CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1, 
+
+                'receiver_id' => $seller->id,
+                'receiver_type' => 3, 
+
+                'title_english' => 'New Account Request',
+                'description_english' => 'Your account rejected,Reason: {$rejectReason}',
+
+                'notification_type' => 'account_rejected'
+            ]);
 
             return [
                 'status' => 'success',
