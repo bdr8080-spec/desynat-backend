@@ -51,20 +51,20 @@
  <!-- WhatsApp Status Viewer -->
   
  <div class="status-viewer bgwhite" id="statusViewer">
-    <div id="progressContainer" class="progress-container"></div>
-    <span class="status-close" onclick="closeStatus()">&times;</span>
-    <img id="statusImage" class="status-img" />
-    <!-- Tap Zones -->
+ <span class="status-close mt-3" onclick="closeStatus()">Skip</span>
+    <div class="logostatus">
+        <div id="progressContainer" class="progress-container"></div>
+        <div class="status-img">
+            <img id="statusImage" class="img-fluid" alt="status" />
+        </div>
+    </div>    
     <div class="status-left" onclick="showPrev()">
-        <span>
-            <i class="fa-solid fa-chevron-left"></i>
-        </span>
+        <span> <i class="fa-solid fa-chevron-left"></i></span>
     </div>
     <div class="status-right" onclick="showNext()">
-        <span>
-            <i class="fa-solid fa-chevron-right"></i>
-        </span>
+        <span><i class="fa-solid fa-chevron-right"></i> </span>
     </div>
+   
 </div>
 
     <!-- Notification Management -->

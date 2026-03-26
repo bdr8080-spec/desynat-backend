@@ -256,10 +256,19 @@
 .sub-grid {
     overflow: hidden;
 }
+
+
+/* logo status Progress bars row */
 .bgwhite{
     background: #fff !important;
+    top: 8%;
 }
-/* Progress bars row */
+.logostatus {
+    width: 33%;
+    background: #333;
+    margin: auto;
+    position: relative;
+}
 .progress-container {
     position: absolute;
     top: 15px;
@@ -269,19 +278,19 @@
     gap: 5px;
 }
 
-.progress-bar {
+.logostatus .progress-bar {
     flex: 1;
     height: 4px;
-    background: rgba(255, 255, 255, 0.3);
+    background: #ddd;
     border-radius: 4px;
     overflow: hidden;
     position: relative;
 }
 
-.progress-fill {
+.logostatus .progress-fill {
     height: 100%;
     width: 0%;
-    background: var(--gradient-color6);
+    background: var(--bg-multiple);
     transition: width linear;
 }
 
@@ -290,18 +299,20 @@
     position: absolute;
     right: 15px;
     top: 20px;
-    font-size: 30px;
-    color: white;
+    font-size: 18px;
+    color: #6E4527;
     cursor: pointer;
 }
 
 /* Image */
-.status-img {
-    max-height: 90%;
-    max-width: 90%;
-    object-fit: contain;
+.logostatus .status-img {
+    height: 90%;
 }
-
+.logostatus .status-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
 /* Tap left/right */
 .status-left span,
 .status-right span {
