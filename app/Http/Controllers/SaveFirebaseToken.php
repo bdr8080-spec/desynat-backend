@@ -15,6 +15,7 @@ class SaveFirebaseToken extends Controller
     public function saveUserToken(Request $request)
     {
             $userId =$request->user()->id;
+            //dd($userId);
             $user = User::find($userId);
 
         if ($user) {

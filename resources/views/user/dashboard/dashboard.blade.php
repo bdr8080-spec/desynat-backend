@@ -819,7 +819,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 2️⃣ Auto call after 10 seconds
-     setTimeout(updateBannerView, 10000);
+    //  setTimeout(updateBannerView, 10000);
 
 });
 </script>
