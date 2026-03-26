@@ -396,6 +396,19 @@ class OrderManagementService
                 'assign_date'     => Carbon::now()
             ]);
 
+             $notificationTitle = 'Delivery Boy Assigned';
+             $notificationBody  = "Delivery B0y {$driver->full_name_english} is assigned to deliver your order #{$order->order_id}";
+
+            CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1,
+                'receiver_id' => $order->user_id,
+                'receiver_type' => 2, 
+                'title_english' => $notificationTitle,
+                'description_english' => $notificationBody,
+                'notification_type' => 'order_driver_assigned'
+            ]);
+
             DB::commit();
 
             return [
