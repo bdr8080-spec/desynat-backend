@@ -136,8 +136,12 @@ section {
     justify-content: center;
 }
 .noti-content p {
-    font-size: 14px;
+    font-size: 14px !important;
     margin-bottom: 0px;
+    line-height: normal !important;
+}
+.noti-content {
+    word-break: break-word;
 }
 .noti-title {
     font-weight: 500;
