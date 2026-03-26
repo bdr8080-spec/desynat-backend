@@ -616,7 +616,7 @@ class AuthController extends Controller
           $homeDealBanner1=$this->UserDashboardService->HomeScreenDealManagement($request_data2);
           $homeDealBanner=$homeDealBanner1['data'];
 
-        //   dd($homeDealBanner);
+          // dd($homeDealBanner);
           
 
         return view('user.dashboard.dashboard', compact('subCategory','stores','banners','topBanners','bottomBanners','homeDealBanner'));

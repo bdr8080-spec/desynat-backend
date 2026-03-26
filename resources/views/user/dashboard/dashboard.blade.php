@@ -390,7 +390,9 @@
         @foreach($bottomBanners['data'] as $banner)
         <div class="item">
             <div class="premiumImg">
+                <a href="{{ url('user/store-details/' . ($banner->seller_details->store_info->id ?? '')) }}">
                 <img src="{{ $banner->upload_banner }}" class="img-fluid" />
+                </a>
             </div>
         </div>
         @endforeach
@@ -567,7 +569,9 @@
         @foreach($homeDealBanner as $key=>$val)
         <div class="item">
             <div class="premiumImg ">
+                <a href="{{ url('user/store-details/' . ($val->sellerDealrecord->first()->product_details->store_id ?? '')) }}">
                 <img src="{{$val->image}}" class="img-fluid" />
+                </a>
             </div>
         </div>
         @endforeach
