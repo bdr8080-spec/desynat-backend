@@ -189,6 +189,16 @@ class SellerAuthService
                   if($seller_details->bank_information!=='1'){
                     return ['status'=>'error','message'=>"Please submit Bank and store document information",'data'=>(object)[]];                                    
                   }
+                  $updateData = [];
+                  if (!empty($request->fcm_token)) {
+                      $updateData['fcm_token'] = $request->fcm_token;
+                  }
+                  if (!empty($request->device_type)) {
+                      $updateData['device_type'] = $request->device_type;
+                  }
+                  if (!empty($updateData)) {
+                      $seller_details->update($updateData);
+                  }
 
                   $seller_details->update(['admin_verify'=>'1']); // update store information
 
