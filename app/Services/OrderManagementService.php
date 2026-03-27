@@ -399,6 +399,9 @@ class OrderManagementService
              $notificationTitle = 'Delivery Boy Assigned';
              $notificationBody  = "Delivery B0y {$driver->full_name_english} is assigned to deliver your order #{$order->order_id}";
 
+             $notificationTitle1 = 'New Order Assigned';
+             $notificationBody1  = "New order assigned to you with order id:{$order->order_id}";
+
             CreateNotification([
                 'sender_id' => 1, 
                 'sender_type' => 1,
@@ -407,6 +410,16 @@ class OrderManagementService
                 'title_english' => $notificationTitle,
                 'description_english' => $notificationBody,
                 'notification_type' => 'order_driver_assigned'
+            ]);
+
+            CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1,
+                'receiver_id' => $driver->id,
+                'receiver_type' => 5, 
+                'title_english' => $notificationTitle1,
+                'description_english' => $notificationBody1,
+                'notification_type' => 'new_order_assign_to_driver'
             ]);
 
             DB::commit();

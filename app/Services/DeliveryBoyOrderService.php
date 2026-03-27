@@ -365,6 +365,7 @@ class DeliveryBoyOrderService
 
         try {
             $orderDetail = orderdetail::find($request->id);
+            $order = Order::find($orderDetail->order_id);
 
             if (!$orderDetail) {
                 return [
@@ -381,11 +382,35 @@ class DeliveryBoyOrderService
 
             if ($status == 3) {
                 $orderDetail->payment_status = '1'; 
+                CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $orderDetail->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Order Status',
+                    'description_english' => "Your order with order id: {$order->order_id} is delivered",
+
+                    'notification_type' => 'order_delivered'
+                ]);
             }
 
             if ($status == 8) {
                 // $orderDetail->payment_status = '0'; 
                 $orderDetail->not_delivered_reason = $request->reason ?? null;
+                CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $orderDetail->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Order Status',
+                    'description_english' => "Your order with order id: {$order->order_id} is failed to delivered, Reason: {$request->reason}",
+
+                    'notification_type' => 'order_not_delivered'
+                ]);
             }
 
             $orderDetail->save();
@@ -402,13 +427,26 @@ class DeliveryBoyOrderService
             }
 
             if ($status == 8) {
+                $nextDeliveryDate = now()->addDay();
                 OrderRecordDetail::create([
                     'order_id'           => $orderDetail->order_id,
                     'orderdetails_id'    => $orderDetail->id,
                     'driver_id'    => $orderDetail->delivery_boy_id,
                     'type'    => '1',
                     'not_delivered_date' => now(),
-                    'next_delivery_date' => now()->addDay(),
+                    'next_delivery_date' => $nextDeliveryDate,
+                ]);
+                CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $orderDetail->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Order Status',
+                    'description_english' => "Your order with order id: {$order->order_id} will be delivered on {$nextDeliveryDate->format('d M Y')}",
+
+                    'notification_type' => 'order_next_delivery_date'
                 ]);
             }
 
@@ -451,7 +489,7 @@ class DeliveryBoyOrderService
     {
         try {
             $data = Order::find($request->id);
-
+            $driver = DeliveryBoy::find($data->delivery_boy_id);
             if (!$data) {
                 return [
                     'status' => 'error',
@@ -462,6 +500,18 @@ class DeliveryBoyOrderService
 
             $data->delivery_status = '7';
             $data->save();
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Order Status',
+                    'description_english' => "Your order with order id: {$data->order_id} is picked by our delivery boy {$driver->full_name_english}",
+
+                    'notification_type' => 'order_picked'
+                ]);
 
             return [
                 'status' => 'success',
@@ -935,6 +985,7 @@ class DeliveryBoyOrderService
     {
         try {
             $data = orderdetail::find($request->id);
+            $driver = DeliveryBoy::find($data->delivery_boy_id);
 
             if (!$data) {
                 return [
@@ -947,6 +998,18 @@ class DeliveryBoyOrderService
             $data->delivery_status = '7';
             $data->is_picked = '1';
             $data->save();
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Order Status',
+                    'description_english' => "Your order with order id: {$data->order_id} is picked by our delivery boy {$driver->full_name_english}",
+
+                    'notification_type' => 'order_picked'
+                ]);
 
             return [
                 'status' => 'success',
@@ -971,6 +1034,7 @@ class DeliveryBoyOrderService
     {
         try {
             $data = orderdetail::find($request->id);
+            $driver = DeliveryBoy::find($data->delivery_boy_id);
 
             if (!$data) {
                 return [
@@ -993,6 +1057,18 @@ class DeliveryBoyOrderService
 
             $data->returntostore = '1';
             $data->save();
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Order Status',
+                    'description_english' => "Your order with order id: {$data->order_id} is returned to store by our delivery boy {$driver->full_name_english}",
+
+                    'notification_type' => 'order_returned_to_store'
+                ]);
 
             return [
                 'status' => 'success',
