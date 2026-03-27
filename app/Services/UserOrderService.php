@@ -534,7 +534,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
                 'receiver_id' => $checkOrder->user_details->id,
                 'receiver_type' => 2, 
 
-                'title_english' => 'Order Status',
+                'title_english' => 'Order Place',
                 'description_english' => $body,
 
                 'notification_type' => 'order_place',
