@@ -283,6 +283,18 @@ class AffiliatedUserManagementService
 
             $user->admin_verify = '2'; 
             $user->save();
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $user->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Affiliate Account',
+                    'description_english' => "Your affiliate account is approved",
+
+                    'notification_type' => 'affiliate_account_approved'
+                ]);
 
             return [
                 'status' => 'success',
@@ -320,6 +332,18 @@ class AffiliatedUserManagementService
 
             $user->reject_reason = $rejectReason;
             $user->save();
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $user->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Affiliate Account',
+                    'description_english' => "Your affiliate account is rejected, Reason: {$rejectReason}",
+
+                    'notification_type' => 'affiliate_account_rejected'
+                ]);
 
             return [
                 'status' => 'success',
