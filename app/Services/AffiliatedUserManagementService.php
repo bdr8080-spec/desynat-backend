@@ -377,6 +377,28 @@ class AffiliatedUserManagementService
             $previousStatus = $user->status; 
             $user->status = $user->status == 0 ? 1 : 0;
             $user->save();
+            $isUnblocked = $user->status == 1;
+
+            $description = $isUnblocked
+                ? "Your affiliate account has been unblocked by Admin"
+                : "Your affiliate account has been blocked by Admin";
+
+            $notificationType = $isUnblocked
+                ? 'affiliate_account_blocked'
+                : 'affiliate_account_unblocked';
+
+            CreateNotification([
+                'sender_id' => 1, 
+                'sender_type' => 1, 
+
+                'receiver_id' => $user->user_id,
+                'receiver_type' => 2, 
+
+                'title_english' => 'Affiliate Account',
+                'description_english' => $description,
+
+                'notification_type' => $notificationType
+            ]);
 
             $message = $user->status == 1
                 ? 'Affiliate User Unblocked Successfully'

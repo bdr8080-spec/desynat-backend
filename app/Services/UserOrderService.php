@@ -1508,7 +1508,7 @@ if($checkOrder->order_type=='2'){
                     'sender_id' => 1, 
                     'sender_type' => 1, 
 
-                    'receiver_id' => $data->seller_id,
+                    'receiver_id' => $store->seller_id,
                     'receiver_type' => 3, 
 
                     'title_english' => 'Rating & Review',
@@ -1521,7 +1521,7 @@ if($checkOrder->order_type=='2'){
                     'sender_id' => 1, 
                     'sender_type' => 1, 
 
-                    'receiver_id' => $data->seller_id,
+                    'receiver_id' => $store->seller_id,
                     'receiver_type' => 3, 
 
                     'title_english' => 'Rating & Review',
