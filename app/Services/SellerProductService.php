@@ -1766,6 +1766,19 @@ public function View_seller_profile($request){
         // $get_seller_details=  seller::where('id',$request->user_id)->first();
   
         // seller::where('id',$request->user_id)->update(['store_information'=>'1']); // update store information
+
+        CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Store Info',
+                    'description_english' => "Your store {$request->store_name} information has been updated",
+
+                    'notification_type' => 'store_info_update'
+                ]);
         
         return ['status'=>'success','message'=>"Profile details updated succesfully",'data'=>$store_information];            
   
@@ -1797,8 +1810,22 @@ public function View_seller_profile($request){
            $store_information=Bankdetails::Updateorcreate($match,$bank_data);
         
             if($store_information){
+                $store_details = sellerStoreInformation::where('seller_id', $request->user_id)->first();
+                $storeName = $store_details->store_name ?? '';
     
             //   seller::where('id',$request->user_id)->update(['bank_information'=>'1']); // update store information
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Store Info',
+                    'description_english' => "Your store {$store_deatils->store_name} bank details has been updated",
+
+                    'notification_type' => 'store_bank_details_update'
+                ]);
       
                 return ['status'=>'success','message'=>"Document and Bank details Save succesfully",'data'=>$store_information];            
       

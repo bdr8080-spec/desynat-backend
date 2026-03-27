@@ -477,6 +477,23 @@ class SellerAuthService
                   }
                   
                  $data->update($array_data);
+                 if($request->payment_status=='1'){
+                  $desc="Subcription Plan Payment is Success,Transaction id: {$request->transaction_id}";
+                 }else{
+                  $desc="Subcription Plan Payment is failed";
+                 }
+                 CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Subscription Plan',
+                    'description_english' => $desc,
+
+                    'notification_type' => 'subscription_plan'
+                ]);
 
                  
                  return ['status'=>'success','message'=>$msg,'data'=>$data];            
@@ -500,12 +517,27 @@ class SellerAuthService
                     if($store_information->Store_Availability=='0'){
                       $status=1;
                       $message="Seller Store Store Availability On";
+                      $desc = "Your store status has been updated to on duty";
                     }else{
                       $status=0;
                       $message="Seller Store Store Availability Off";
+                      $desc = "Your store status has been updated to off duty";
                     }
 
                     $store_information->update(['Store_Availability'=>$status]);
+
+                    CreateNotification([
+                      'sender_id' => 1, 
+                      'sender_type' => 1, 
+
+                      'receiver_id' => $request->seller_id,
+                      'receiver_type' => 3, 
+
+                      'title_english' => 'Store Availability',
+                      'description_english' => $desc,
+
+                      'notification_type' => 'store_availability'
+                  ]);
 
                     return ['status'=>'success','message'=>$message,'data'=>$store_information];            
                   

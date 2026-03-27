@@ -86,10 +86,46 @@ public function SellerbannerPayment($request){
 
   if($request->payment_status=='1'){
         $msg="Banner Payment Paid Successfully";
+        CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $checkBanner->seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Banner',
+                    'description_english' => "Payment for banner is successfull,Transaction id: #{$request->transaction_id}",
+
+                    'notification_type' => 'seller_banner_payment'
+                ]);
     }elseif($request->payment_status=='2'){
         $msg="Banner Payment Cancelled";
+        CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $checkBanner->seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Banner',
+                    'description_english' => "Payment for banner is failed!",
+
+                    'notification_type' => 'seller_banner_payment'
+                ]);
     }else{
-        $msg="Banner Payment Cancelled";     
+        $msg="Banner Payment Cancelled";  
+        CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $checkBanner->seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Banner',
+                    'description_english' => "Payment for banner is failed!",
+
+                    'notification_type' => 'seller_banner_payment'
+                ]);   
     }
     
       return [

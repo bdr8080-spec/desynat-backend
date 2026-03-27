@@ -547,7 +547,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
 
     $body1='You received a new Order';
     CreateNotification([
-                'sender_id' => $checkOrder->user_details->id, 
+                'sender_id' => $val->user_id, 
                 'sender_type' => 2, 
 
                 'receiver_id' => $val->product_details->seller_details->id,
