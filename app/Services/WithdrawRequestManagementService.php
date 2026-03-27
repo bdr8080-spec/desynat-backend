@@ -135,6 +135,27 @@ class WithdrawRequestManagementService
                $data->reject_reason = $rejectReason;
                $data->save();
 
+               if ($data->type == 1) {
+                    $receiverType = 4;
+                } elseif ($data->type == 2) {
+                    $receiverType = 2;
+                } elseif ($data->type == 3) {
+                    $receiverType = 3;
+                }
+
+               CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->user_id,
+                    'receiver_type' => $receiverType, 
+
+                    'title_english' => 'Withdraw Request',
+                    'description_english' => "Your withdraw request with request id: #{$data->request_id} is rejected, Reason:{$rejectReason}",
+
+                    'notification_type' => 'withdraw_req_rejected'
+                ]);
+
             return [
                 'status' => 'success',
                 'message' => 'Withdraw Request Rejected Successfully',
@@ -184,6 +205,27 @@ class WithdrawRequestManagementService
                 // $data->transaction_id = $request->transaction_id;
                 // $data->payment_status = $request->payment_status;
                 $data->save();
+
+                if ($data->type == 1) {
+                    $receiverType = 4;
+                } elseif ($data->type == 2) {
+                    $receiverType = 2;
+                } elseif ($data->type == 3) {
+                    $receiverType = 3;
+                }
+
+               CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->user_id,
+                    'receiver_type' => $receiverType, 
+
+                    'title_english' => 'Withdraw Request',
+                    'description_english' => "Your withdraw request with request id: #{$data->request_id} is approved",
+
+                    'notification_type' => 'withdraw_req_approved'
+                ]);
 
             return [
                 'status' => 'success',

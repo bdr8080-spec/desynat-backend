@@ -1620,8 +1620,32 @@ public function CompleteAddMoneyPayment($request)
             );
 
             $message = 'Add Money in Wallet Complete Successfully';
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $history->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Add Wallet Money',
+                    'description_english' => "Transaction Success,{$history->amount} KD is added to your wallet,Transaction ID: {$request->transaction_id}",
+
+                    'notification_type' => 'wallet_money_added'
+                ]);
         } else {
             $message = 'Add Money in Wallet Cancelled / Failed';
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $history->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Add Wallet Money',
+                    'description_english' => "Transaction Failed,{$history->amount} KD is not added to your wallet,Transaction ID: {$request->transaction_id}",
+
+                    'notification_type' => 'wallet_money_not_added'
+                ]);
         }
 
         DB::commit();

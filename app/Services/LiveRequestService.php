@@ -387,6 +387,18 @@ class LiveRequestService
             $data->update([
                 'admin_verify' => '1',
             ]);
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Live Request',
+                    'description_english' => "Your live request with request id: #{$data->order_id} is approved",
+
+                    'notification_type' => 'live_req_accepted'
+                ]);
 
             return [
                 'status' => 'success',
@@ -420,6 +432,19 @@ class LiveRequestService
                 'admin_verify' => '2',
                 'reject_reason' => $request->reject_reason,
             ]);
+
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Live Request',
+                    'description_english' => "Your live request with request id: #{$data->order_id} is rejected, Reason: {$request->reject_reason}",
+
+                    'notification_type' => 'live_req_rejected'
+                ]);
 
             return [
                 'status' => 'success',

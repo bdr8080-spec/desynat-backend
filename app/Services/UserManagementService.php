@@ -246,6 +246,19 @@ class UserManagementService
                 'payment_status' => '1'
             ]);
 
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $userId,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Add Wallet Money',
+                    'description_english' => "Amount of {$amount} KD is added in your wallet by Admin, Transaction Id: {$$transaction}",
+
+                    'notification_type' => 'money_added_in_wallet_by_admin'
+                ]);
+
             DB::commit();
 
             return [
