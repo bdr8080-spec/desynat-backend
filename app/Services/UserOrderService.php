@@ -155,6 +155,19 @@ class UserOrderService
         'final_amount'=>round($final_amount),
     ];
 
+    CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'Promocode',
+                    'description_english' => "Promocode applied successfully",
+
+                    'notification_type' => 'promocode_applied'
+                ]);
+
     return ['status'=>'success','message'=>"promocode Apply Successfully",'data'=>$response];
 
         
@@ -349,6 +362,19 @@ $checkGiftCard=  UserGiftCards::where('giftCardNo',$request->giftCardNo)
 
 
     ];
+
+    CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'GiftCard',
+                    'description_english' => "GiftCard applied successfully",
+
+                    'notification_type' => 'giftcard_applied'
+                ]);
 
 return ['status'=>'success','message'=>"Gift Card Apply Successfully",'data'=>$response];
 

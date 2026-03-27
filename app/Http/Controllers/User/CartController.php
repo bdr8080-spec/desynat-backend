@@ -75,8 +75,15 @@ class CartController extends Controller
         try {
             $promoId = $request->promo_id;
             $amount = (int) $request->amount; 
+            $user=  $request->user();
 
-            $data = $this->UserOrderService->User_Apply_PromoCode($request);
+            $request_data = (object)[
+                'user_id' => $user->id,
+                'promo_id' => $request->promo_id,
+                'amount' =>  $request->amount,
+            ];
+
+            $data = $this->UserOrderService->User_Apply_PromoCode($request_data);
             //dd($data);
             
             if ($data['status'] === 'success') {
@@ -110,10 +117,15 @@ class CartController extends Controller
         ]);
 
         try {
-            // $promoId = $request->promo_id;
-            // $amount = (int) $request->amount; 
+            $user=  $request->user();
 
-            $data = $this->UserOrderService->User_Apply_giftCardInOrder($request);
+            $request_data = (object)[
+                'user_id' => $user->id,
+                'giftCardNo' => $request->giftCardNo,
+                'giftCardPin' => $request->giftCardPin,
+            ];
+
+            $data = $this->UserOrderService->User_Apply_giftCardInOrder($request_data);
             //dd($data);
             
             if ($data['status'] === 'success') {
