@@ -68,6 +68,18 @@ class UserGiftCardService
             ];
 
             $AddGiftCard = UserGiftCards::Create($data);
+            CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'GiftCard',
+                    'description_english' => "GiftCard added successfully",
+
+                    'notification_type' => 'giftcard_added'
+                ]);
     
         
             return ['status'=>'success','message'=>"GiftCard Add successfully",'data'=>$AddGiftCard];
@@ -135,10 +147,34 @@ class UserGiftCardService
 
 
                 $msg="Gift Card Purchased Successfully";
+                CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'GiftCard',
+                    'description_english' => "GiftCard purchased successfully,Transaction Id:{$request->transaction_id}",
+
+                    'notification_type' => 'giftcard_prchased'
+                ]);
 
             }else{
 
                 $msg="Pyment Failed";
+                CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $request->user_id,
+                    'receiver_type' => 2, 
+
+                    'title_english' => 'GiftCard',
+                    'description_english' => "GiftCard payment failed",
+
+                    'notification_type' => 'giftcard_payment_failed'
+                ]);
 
             }
 
