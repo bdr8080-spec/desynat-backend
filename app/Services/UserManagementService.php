@@ -254,7 +254,7 @@ class UserManagementService
                     'receiver_type' => 2, 
 
                     'title_english' => 'Add Wallet Money',
-                    'description_english' => "Amount of {$amount} KD is added in your wallet by Admin, Transaction Id: {$$transaction}",
+                    'description_english' => "Amount of {$amount} KD is added in your wallet by Admin, Transaction Id: {$transaction}",
 
                     'notification_type' => 'money_added_in_wallet_by_admin'
                 ]);
