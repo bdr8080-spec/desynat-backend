@@ -542,6 +542,7 @@ $OrderPayAmount=round($checkOrder->total_amount);  // Orer Pay Amount
     
     // send Notification to Seller 
     $checkAllproducts=orderdetail::with('product_details.seller_details')->where('order_id', $request->order_id)->get();
+    dd($checkAllproducts);
 
     foreach($checkAllproducts as $key=>$val){
 
