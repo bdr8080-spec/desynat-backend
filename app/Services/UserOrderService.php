@@ -12,6 +12,7 @@ use App\Models\{Promocode,userAddress,country,all_countrie,allproductchats};
 use App\Models\{Order,OrderDeliveryAddress,orderdetail,Addtocart,productRatings,product};
 use DB;
 use App\Models\WithdrawRequest;
+use App\Models\sellerStoreInformation;
 
 class UserOrderService
 {
@@ -1496,6 +1497,38 @@ if($checkOrder->order_type=='2'){
     }
 
    $create_review=productRatings::UpdateOrCreate($match,$requestData);
+   $user = User::find($request->user_id);
+   $store = sellerStoreInformation::find($store_id);
+   $product = product::find($product_id);
+
+   $userName = $user->full_name ?? 'User';
+    $storeName = $store->store_name ?? 'Store';
+    $productName = $product->product_name_en ?? 'Product';
+   CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Rating & Review',
+                    'description_english' => "Your store:{$storeName} got a new review by {$userName}",
+
+                    'notification_type' => 'store_review'
+                ]);
+
+        CreateNotification([
+                    'sender_id' => 1, 
+                    'sender_type' => 1, 
+
+                    'receiver_id' => $data->seller_id,
+                    'receiver_type' => 3, 
+
+                    'title_english' => 'Rating & Review',
+                    'description_english' => "Your product:{$productName} got a new review by {$userName}",
+
+                    'notification_type' => 'product_review'
+                ]);
 
     if($create_review){
         return ['status'=>'success','message'=>"Product Review Save Successfully",'data'=>$create_review];
