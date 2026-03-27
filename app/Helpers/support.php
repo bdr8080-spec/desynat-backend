@@ -101,56 +101,32 @@ function UserBalancePayOrder($user_id,$amount=null){
 
 
 
-// function OrderGiftCardConditionCheck($orderid,$amount=null){
+function OrderGiftCardConditionCheck($orderid,$amount=null){
 
-//     try{
+    try{
 
-//     $userOrder=Order::where('id',$orderid)->first();
+    $userOrder=Order::where('id',$orderid)->first();
 
-//     if($userOrder){
+    if($userOrder){
 
-//         if($userOrder->giftcard_id!==''){
-//         $userGiftCard=UserGiftCards::where('id',$userOrder->giftcard_id)->first();
-//         if($userGiftCard){
-//             $userGiftCard->update(['giftCardUse'=>'1']);
-//         }
-//         }
-        
-//     }
-    
-//     } catch (\Exception $e) {
-//         return [
-//             'status' => 'error',
-//             'message' => 'Failed to update seller status: ' . $e->getMessage(),
-//             'data' => []
-//         ];
-//     }
-
-//     }
-
-    function OrderGiftCardConditionCheck($orderid, $amount = null)
-{
-    try {
-
-        $userOrder = Order::find($orderid);
-
-        if ($userOrder && !empty($userOrder->giftcard_id)) {
-
-            $userGiftCard = UserGiftCards::find($userOrder->giftcard_id);
-
-            if ($userGiftCard) {
-                $userGiftCard->update(['giftCardUse' => '1']);
-            }
+        if($userOrder->giftcard_id!==''){
+        $userGiftCard=UserGiftCards::where('id',$userOrder->giftcard_id)->first();
+        if($userGiftCard){
+            $userGiftCard->update(['giftCardUse'=>'1']);
         }
-
+        }
+        
+    }
+    
     } catch (\Exception $e) {
         return [
             'status' => 'error',
-            'message' => 'Failed to update gift card: ' . $e->getMessage(),
+            'message' => 'Failed to update seller status: ' . $e->getMessage(),
             'data' => []
         ];
     }
-}
+
+    }
 
     function getregionFromCoordinates($lat, $lng)
     {
