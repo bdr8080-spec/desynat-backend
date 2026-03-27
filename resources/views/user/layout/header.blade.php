@@ -56,9 +56,13 @@
                 <div
                     class="container-fluid d-flex align-items-center justify-content-between flex-wrap mobileResponsive">
                     <div class="d-flex align-self-center justify-content-between mobileResponsiveheaderCont w-100">
-                        <a class="navbar-brand" href="{{route('dashboard')}}">
-                            <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" />
+                        <a class="navbar-brand" >
+                            <img src="{{asset('user/assets/images/logo.svg')}}" class="img-fluid" usemap="#logoMap" />
                         </a>
+                        <map name="logoMap">
+                            <!-- <area shape="rect" coords="0,0,50,50" href="javascript:void(0)" onclick="openGallery(0)"> -->
+                            <area shape="rect" coords="60,0,200,50" href="{{route('dashboard')}}">
+                        </map>
 
                         <div class="header_nav_button_dropdown d-flex">
                             @if (Auth::guard('web')->check())
