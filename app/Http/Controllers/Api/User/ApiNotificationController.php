@@ -201,6 +201,8 @@ public function sendDummynotification(Request $request){
             'fcm_token' => 'required',
             'title' => 'required',
             'content' => 'required',
+            "device_type"=>'required',
+            "badge"=>'required'
             
         ]);
         
@@ -208,11 +210,10 @@ public function sendDummynotification(Request $request){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
     }
     
+    $data = sendPushNotificationNew($request->fcm_token, $request->title, $request->content,$request->device_type,$request->badge);  
 
-    $data = sendPushNotificationNew($request->fcm_token, $request->title, $request->content);
-
-
-
+    // 1 for ios 
+    // 2 andriod 
 
 
     return ApiResponse::generateResponse('success', 'notification send ',$data, 200);
