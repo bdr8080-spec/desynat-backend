@@ -197,7 +197,7 @@
         <tr>
           <th>Image</th>
           <th>Item</th>
-          <th>Seller</th>
+          <th>Store</th>
           <th>Type</th>
           <th>Size</th>
           <th>Color</th>
