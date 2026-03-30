@@ -106,7 +106,7 @@ class NotificationManagementService
                     //     $receiver['type']
                     // );
                     sendPushNotificationNew(
-                        [$token->token],
+                        [$token->fcm_token],
                         $title_english,
                         $description_english,
                         [$token->device_type],
