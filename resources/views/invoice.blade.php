@@ -143,7 +143,7 @@
       <hr style="border: 1px dashed rgb(131, 131, 131); margin: 15px 0px 10px" />
     </div>
 
-    <table style="width: 100%;margin-top: 10px;">
+    <!-- <table style="width: 100%;margin-top: 10px;">
       <thead>
         <tr>
           <th>Store Name</th>
@@ -156,8 +156,8 @@
           <td>Fashion Designer</td>
         </tr>
       </tbody>
-    </table>
-    <hr style="border: 1px dashed rgb(131, 131, 131); margin: 1px 0px 10px" />
+    </table> -->
+    <!-- <hr style="border: 1px dashed rgb(131, 131, 131); margin: 1px 0px 10px" /> -->
 
     <div style="text-align: center; font-weight: 600;">Customer Info </div>
     <table style="width: 100%;margin-top: 10px;">
