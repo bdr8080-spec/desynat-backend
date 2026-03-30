@@ -18,14 +18,16 @@ use Validator;
 
 
 use App\Services\SellerAuthService;
+use App\Services\StoryManagementService;
 
 
 class SellerDashboardController extends Controller
 {
 
-    public function __construct(SellerAuthService $SellerAuthService){
+    public function __construct(SellerAuthService $SellerAuthService, StoryManagementService $StoryManagementService){
 
         $this->SellerAuthService=$SellerAuthService;
+        $this->StoryManagementService=$StoryManagementService;
 
     }
 
@@ -275,6 +277,90 @@ class SellerDashboardController extends Controller
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
     
+    }
+
+    public function add_story(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'file' => 'required',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $user_details=$request->user();
+   
+        $request_data=(object )[
+            'seller_id'=>$user_details->id,
+            'file'=>$request->file,
+        ];
+
+        $data= $this->StoryManagementService->addSellerStory($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
+    public function add_reels(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'file' => 'required',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $user_details=$request->user();
+   
+        $request_data=(object )[
+            'seller_id'=>$user_details->id,
+            'file'=>$request->file,
+        ];
+
+        $data= $this->StoryManagementService->addSellerReel($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
+    public function add_highlights(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'file' => 'required',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $user_details=$request->user();
+   
+        $request_data=(object )[
+            'seller_id'=>$user_details->id,
+            'file'=>$request->file,
+        ];
+
+        $data= $this->StoryManagementService->addSellerHighlight($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
     }
 
     

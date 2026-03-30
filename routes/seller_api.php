@@ -137,6 +137,11 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::get('/my_plans', [SellerDashboardController::class,'my_plans']);
     Route::get('/get_seller_notifications_count', [NotificationController::class,'get_seller_notifications_count']);
 
+    //M11
+    Route::post('/add_story', [SellerDashboardController::class,'add_story']);
+    Route::post('/add_highlights', [SellerDashboardController::class,'add_highlights']);
+    Route::post('/add_reels', [SellerDashboardController::class,'add_reels']);
+
 });
 
 

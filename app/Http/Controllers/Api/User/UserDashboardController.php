@@ -9,6 +9,7 @@ use App\Helpers\ApiResponse;
 use Validator;
 
 use App\Services\UserDashboardService;
+use App\Services\StoryManagementService;
 
 use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan };
 
@@ -16,8 +17,9 @@ use App\Models\{ seller,sellerStoreInformation,sellerDocument,Bankdetails,Plan }
 class UserDashboardController extends Controller
 {
 
-    public function __Construct(UserDashboardService $UserDashboardService){
+    public function __Construct(UserDashboardService $UserDashboardService, StoryManagementService $StoryManagementService){
         $this->UserDashboardService=$UserDashboardService;
+        $this->StoryManagementService=$StoryManagementService;
     }
 
 
@@ -252,6 +254,97 @@ public function ScannerSellerdetails(Request $request){
     // Qr Code End here 
 
     }
+
+public function get_seller_stories(Request $request){
+
+    $validate = Validator::make($request->all(), [
+        'seller_id' => 'required|integer| exists:sellers,id',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $request_data=(object)[
+    'seller_id'=>$request->seller_id,
+    ];
+
+    $data=$this->StoryManagementService->getSellerStoryOnUser($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+public function get_admin_stories(Request $request){
+
+    $data=$this->StoryManagementService->getAdminStoryOnUser($request);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+public function get_seller_reels(Request $request){
+
+    $validate = Validator::make($request->all(), [
+        'seller_id' => 'required|integer| exists:sellers,id',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $request_data=(object)[
+    'seller_id'=>$request->seller_id,
+    ];
+
+    $data=$this->StoryManagementService->getSellerReelOnUser($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+public function get_seller_highlights(Request $request){
+
+    $validate = Validator::make($request->all(), [
+        'seller_id' => 'required|integer| exists:sellers,id',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+
+    $request_data=(object)[
+    'seller_id'=>$request->seller_id,
+    ];
+
+    $data=$this->StoryManagementService->getSellerHighlightOnUser($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
 
 
     
