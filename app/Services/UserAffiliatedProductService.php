@@ -1013,6 +1013,59 @@ return [
 
 
 
+public function getAffiliateDashboardData($request)
+{
+    try {
+        $user_id = $request->user_id;
+
+        //  Total products added by the affiliate
+        $totalProducts = AffiliateProduct::where('affiliate_id', $user_id)->count();
+
+        //  Get all product links for this affiliate
+        $affiliateLinks = ProductLink::where('affiliate_id', $user_id)
+            ->pluck('link'); // get the 'link' column
+
+        //  Total revenue, earning, and order status counts
+        $ordersQuery = orderdetail::whereIn('reference_link', $affiliateLinks);
+
+        // Aggregate sums
+        $orderStats = $ordersQuery->selectRaw(
+            'SUM(amount) as total_revenue, SUM(affiliate_commission) as total_earning'
+        )->first();
+
+        // Aggregate counts by delivery_status
+        $statusCounts = $ordersQuery->selectRaw("
+            SUM(CASE WHEN delivery_status IN ('1','2','2.1','2.2') THEN 1 ELSE 0 END) as total_ongoing,
+            SUM(CASE WHEN delivery_status = '3' THEN 1 ELSE 0 END) as total_completed,
+            SUM(CASE WHEN delivery_status = '4' THEN 1 ELSE 0 END) as total_cancelled,
+            SUM(CASE WHEN delivery_status = '5' THEN 1 ELSE 0 END) as total_returned
+        ")->first();
+
+        return [
+            'status' => 'success',
+            'message' => 'Affiliate dashboard data fetched successfully',
+            'data' => [
+                'total_products'    => $totalProducts,
+                'total_revenue'     => $orderStats->total_revenue ?? 0,
+                'total_earning'     => $orderStats->total_earning ?? 0,
+                'total_ongoing'     => $statusCounts->total_ongoing ?? 0,
+                'total_completed'   => $statusCounts->total_completed ?? 0,
+                'total_cancelled'   => $statusCounts->total_cancelled ?? 0,
+                'total_returned'    => $statusCounts->total_returned ?? 0,
+            ]
+        ];
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to fetch affiliate dashboard data: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+}
+
+
+
 
 
 

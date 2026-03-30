@@ -275,6 +275,36 @@ public function getRecommendedSearchData(Request $request){
     return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
 
     }
+
+public function get_affiliate_dashboard_data(Request $request)
+{
+    try {
+
+        $user_id = $request->user()->id;
+
+        $request_data = (object)[
+            'user_id' => $user_id,
+            'from' => $request->from??null,
+            'to' => $request->to??null,
+            "filter_type"=>$request->filter_type??null
+        ];
+
+        $data = $this->UserAffiliatedProductService->getAffiliateDashboardData($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], $data['data'], 422);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => 'Failed to fetch withdraw requests: ' . $e->getMessage(),
+            'data' => []
+        ];
+    }
+}
     
 
 

@@ -286,6 +286,10 @@ Route::get('/getRecommendedSearchData', [UserAffiliatedProductController::class,
   Route::get('/affiliateUserNotification', [ApiNotificationController::class,'affiliateUserNotification']);
   Route::post('/ReadAffiliateUserNotification', [ApiNotificationController::class,'ReadAffiliateUserNotification']);
   Route::get('/CountaffiliateUserNotification', [ApiNotificationController::class,'affiliateUserNotificationCount']);
+
+  //M11
+
+  Route::get('/get_affiliate_dashboard_data', [UserAffiliatedProductController::class,'get_affiliate_dashboard_data']);
   
 
 
