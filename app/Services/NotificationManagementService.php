@@ -94,7 +94,6 @@ class NotificationManagementService
                 $allNotifications[] = $notification;
 
                 $token = $this->getDeviceToken($receiver['id'], $receiver['type']);
-               // dd($token);
 
                 if($token) {
                     // sendPushNotification(
@@ -107,10 +106,12 @@ class NotificationManagementService
                     //     $receiver['type']
                     // );
                     sendPushNotificationNew(
-                        [$token],
+                        [$token->fcm_token],
                         $title_english,
                         $description_english,
-
+                        [$token->device_type],
+                        '1'
+                        
                     );
                 }
             }
@@ -135,15 +136,15 @@ class NotificationManagementService
         $receiver_type = (int)$receiver_type;
         switch ($receiver_type) {
             case 2: // User
-                return User::where('id', $receiver_id)->value('fcm_token');
+                return User::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
             case 3: // seller
-                return seller::where('id', $receiver_id)->value('fcm_token');
+                return seller::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
             case 4: // AffilatedUser
-                return AffilatedUser::where('id', $receiver_id)->value('fcm_token');
+                return AffilatedUser::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
             case 1: // Admin
-                return Admin::where('id', $receiver_id)->value('fcm_token');
+                return Admin::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
             case 5: // Driver
-                return DeliveryBoy::where('id', $receiver_id)->value('fcm_token');
+                return DeliveryBoy::select('fcm_token', 'device_type')->where('id', $receiver_id)->first();
             default:
                 return null;
         }
