@@ -517,6 +517,185 @@ class StoryManagementService
         }
     }
 
+    public function updateSellerReel($request_data)
+    {
+        try {
+            $reel = Reel::find($request_data->reel_id);
+
+            if (!$reel) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Reel not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            // Update file and timestamps
+            $reel->file = $request_data->file;
+            $reel->updated_at = now();
+            $reel->created_at = now(); 
+            $reel->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Reel updated successfully',
+                'data' => $reel
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update reel: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function updateSellerReelStatus($request_data)
+    {
+        try {
+            $reel = Reel::find($request_data->reel_id);
+
+            if (!$reel) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Reel not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $reel->status = $reel->status == 1 ? 0 : 1;
+            $reel->save();
+
+            $message = $reel->status == 1 ? 'Reel Activated successfully' : 'Reel Inactivated successfully';
+
+            return [
+                'status' => 'success',
+                'message' => $message,
+                'data' => $reel
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to update reel status: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+    public function getSellerStories($request_data)
+    {
+        try {
+            $query = Story::where('seller_id', $request_data->seller_id)
+                        ->where('type', '2')
+                        ->orderBy('id', 'desc');
+
+            // Paginate if limit provided, else fetch all
+            if (!empty($request_data->limit)) {
+                $stories = $query->paginate((int)$request_data->limit);
+            } else {
+                $stories = $query->get();
+            }
+
+            if ($stories->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No stories found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller stories fetched successfully',
+                'data' => $stories
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch stories: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getSellerReels($request_data)
+    {
+        try {
+            $query = Reel::where('seller_id', $request_data->seller_id)
+                        ->where('type', '2')
+                        ->orderBy('id', 'desc');
+
+            // Paginate if limit provided, else fetch all
+            if (!empty($request_data->limit)) {
+                $stories = $query->paginate((int)$request_data->limit);
+            } else {
+                $stories = $query->get();
+            }
+
+            if ($stories->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No reel found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller reels fetched successfully',
+                'data' => $stories
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch reels: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function getSellerHighlights($request_data)
+    {
+        try {
+            $query = Highlight::where('seller_id', $request_data->seller_id)
+                        ->where('type', '2')
+                        ->orderBy('id', 'desc');
+
+            // Paginate if limit provided, else fetch all
+            if (!empty($request_data->limit)) {
+                $stories = $query->paginate((int)$request_data->limit);
+            } else {
+                $stories = $query->get();
+            }
+
+            if ($stories->isEmpty()) {
+                return [
+                    'status' => 'success',
+                    'message' => 'No highlights found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Seller highlights fetched successfully',
+                'data' => $stories
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch highlights: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
 
 
 

@@ -440,6 +440,116 @@ class SellerDashboardController extends Controller
 
     }
 
+    public function update_reel(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'reel_id' => 'required|exists:reels,id',
+            'file' => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', $validate->errors()->first(), (object)[], 422);
+        }
+
+        $user_details = $request->user();
+
+        $request_data = (object)[
+            'reel_id' => $request->reel_id,
+            'seller_id' => $user_details->id,
+            'file' => $request->file,
+        ];
+
+        $data = $this->StoryManagementService->updateSellerReel($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
+    public function update_reel_status(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'reel_id' => 'required|exists:reels,id',
+        ]);
+
+        if ($validate->fails()) {
+            return ApiResponse::generateResponse('error', $validate->errors()->first(), (object)[], 422);
+        }
+
+        $user_details = $request->user();
+
+        $request_data = (object)[
+            'reel_id' => $request->reel_id,
+        ];
+
+        $data = $this->StoryManagementService->updateSellerReelStatus($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
+     public function get_my_stories(Request $request)
+    {
+
+        $user_details = $request->user();
+
+        $request_data = (object)[
+            'seller_id' => $user_details->id,
+            'limit' => $request->limit??null,
+        ];
+
+        $data = $this->StoryManagementService->getSellerStories($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
+      public function get_my_reels(Request $request)
+    {
+
+        $user_details = $request->user();
+
+        $request_data = (object)[
+            'seller_id' => $user_details->id,
+            'limit' => $request->limit??null,
+        ];
+
+        $data = $this->StoryManagementService->getSellerReels($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
+      public function get_my_highlights(Request $request)
+    {
+
+        $user_details = $request->user();
+
+        $request_data = (object)[
+            'seller_id' => $user_details->id,
+            'limit' => $request->limit??null,
+        ];
+
+        $data = $this->StoryManagementService->getSellerHighlights($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return ApiResponse::generateResponse('error', $data['message'], (object)[], 400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
     
 
     
