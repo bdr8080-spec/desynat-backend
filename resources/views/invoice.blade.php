@@ -1,417 +1,293 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="{{asset('admin/image/favicon.svg')}}">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <title>DESYNAT Invoice</title>
-
-    <style>
+  <meta charset="utf-8" />
+  <title>Invoice</title>
+  <style>
     * {
-        box-sizing: border-box;
-        font-family: Arial, Helvetica, sans-serif;
+      box-sizing: border-box;
+    }
+    .table-bordered td,
+    .table-bordered th {
+      border: 1px solid #ddd;
+      padding: 10px;
+      word-break: break-all;
     }
 
     body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+    }
+    @media print {
+      @page {
+        size: 80mm auto;
         margin: 0;
-        padding: 40px;
-        background: #eaeaea;
-    }
-
-    .invoice {
-        width: 794px;
-        min-height: 1123px;
-        background: #fff;
-        margin: auto;
-        padding: 40px;
-        color: #000;
-    }
-
-    /* HEADER */
-    .header {
-        display: grid;
-        grid-template-columns: 1fr 1px 1fr;
-        align-items: center;
-        /* padding: 30px; */
-    }
-
-    .header-divider {
-        height: 100%;
-        background: #000;
-    }
-
-    .left-header {
-        padding-right: 15px;
-    }
-
-    .right-header {
-        padding-left: 34px;
-        font-size: 16px;
-    }
-
-    .logo {
-        font-size: 60px;
-        font-weight: bold;
-    }
-
-    .sub {
-        font-size: 21px;
-        color: #555;
-    }
-
-    hr {
-        border: 1px solid #000;
-        margin: 20px 0;
-    }
-
-    /* META */
-    .meta {
-        display: flex;
-        justify-content: space-between;
-        font-size: 16px;
-        text-transform: uppercase;
+      }
 
     }
 
-    /* COMMON TABLE */
-    .table {
-        /* width: 100%; */
-        border-collapse: collapse;
-        font-size: 17px;
+    .h4-14 h4 {
+      font-size: 12px;
+      margin-top: 0;
+      margin-bottom: 5px;
     }
 
-    /* .table td {
-        padding: 6px 0;
-      } */
-
-    .section-title {
-        font-size: 18px;
-        margin: 25px 0 10px;
-        text-transform: uppercase;
-        font-weight: 600;
+    pre,
+    p {
+      padding: 0;
+      margin: 0;
     }
 
-    /* PRODUCT + SUMMARY BLOCK */
-    .box {
-        margin-top: 15px;
-        font-size: 13px;
+    table {
+      font-family: arial, sans-serif;
+      width: 100%;
+      border-collapse: collapse;
+      padding: 1px;
     }
 
-    .box-row {
-        display: flex;
-        justify-content: space-between;
-        gap: 30px;
-        padding-bottom: 10px;
+    .hm-p p {
+      text-align: left;
+      padding: 1px;
+      padding: 5px 4px;
     }
 
-    .box-col {
-        width: 50%;
+    td,
+    th {
+      text-align: left;
+      padding: 4px 6px;
     }
 
-    .box-col.right {
-        text-align: right;
+    .table-b td,
+    .table-b th {
+      border: 1px solid #ddd;
     }
 
-    .box-title {
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-        font-size: 18px;
-
+    th {
+      font-size: 14px;
+      text-align: center;
     }
 
-    .inner-table {
-        width: 100%;
-        border-collapse: collapse;
+    .hm-p td,
+    .hm-p th {
+      padding: 3px 0px;
     }
 
-    .inner-table td {
-        padding: 2px 0px;
-        /* font-size: 18px; */
+    .cropped {
+      float: right;
+      margin-bottom: 20px;
+      height: 100px;
+      overflow: hidden;
     }
 
-    .text-right {
-        text-align: right;
+    .cropped img {
+      width: 400px;
+      margin: 8px 0px 0px 80px;
     }
 
-    /* ONLY SUBTOTAL BOX */
-    .box-footer {
-        border: 1px solid #000;
-        padding: 6px 8px;
-        margin-top: 8px;
+    .main-pd-wrapper {
+      padding: 2mm;
+      margin: 20px auto;
+      width: 100mm;
+      background: #fff;
+      border: 1px solid #ddd;
     }
 
-    .box-footer table {
-        width: 100%;
-        border-collapse: collapse;
+    .table-bordered td,
+    .table-bordered th {
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 14px;
     }
 
-    .box-footer td {
-        padding: 3px 6px;
-        font-size: 14px;
+    .invoice-items {
+      font-size: 14px;
+      border-top: 1px dashed #ddd;
     }
 
-    .box-footer td:nth-child(3),
-    .box-footer td:nth-child(4) {
-        text-align: right;
-        /* width: 90px; */
+    .invoice-items td {
+      padding: 14px 0;
+      text-align: center;
     }
-
-    /* POLICY */
-    .policy {
-        font-size: 12px;
-        padding-left: 18px;
-    }
-
-    .policy li {
-        margin-bottom: 6px;
-        font-size: 17px;
-    }
-
-    .footer {
-        margin-top: 30px;
-        font-size: 18px;
-        text-align: center;
-    }
-
-
-    .customer-info td {
-        padding: 8px 6px;
-        vertical-align: middle;
-    }
-
-    .customer-info .label {
-        width: 180px;
-        /* font-weight: 600; */
-        white-space: nowrap;
-    }
-
-    .customer-info .line {
-        border-bottom: 2px dotted #000;
-        width: 100%;
-    }
-    </style>
+  </style>
 </head>
 
 <body>
-    <div class="invoice">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="left-header">
-                <img src="{{ asset('admin/image/logo.svg') }}" class="img-fluid" alt="Logo" />
+  <section class="main-pd-wrapper">
+    <div style="
+          text-align: center;
+          margin: auto;
+          line-height: 1.5;
+          font-size: 14px;
+          color: #4a4a4a;
+        ">
+        <img src="http://www.desynat.com/user/assets/images/logo.svg" alt="logo">
+      <p style="
+            font-weight: bold;
+            color: #000;
+            margin-top: 5px;
+            font-size: 16px;
+          ">
+        multi-vendor fashion platform
+      </p>
 
-                <div class="sub">multi-vendor fashion platform</div>
-            </div>
-
-            <div class="header-divider"></div>
-
-            <div class="right-header">
-                customer support: support@desynat.com<br />
+      <p style="margin: 5px auto">
+        customer support: support@desynat.com<br />
                 phone / whatsapp: +965 XXXXXXX
-            </div>
-        </div>
+      </p>
+      <p><b>Invoice Number:</b> #{{$checkOrder->order_id}}</p>
+      <p><b>Order Date:</b> {{$checkOrder->created_at->format('Y-m-d') }}</p>
+      <p><b>Order Time :</b> {{ $checkOrder->created_at->format('h:i A') }}</p>
+      <hr style="border: 1px dashed rgb(131, 131, 131); margin: 15px 0px 10px" />
+    </div>
 
-        <hr />
+    <table style="width: 100%;margin-top: 10px;">
+      <thead>
+        <tr>
+          <th>Store Name</th>
+          <th>Seller Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="invoice-items">
+          <td>Desynat Store</td>
+          <td>Fashion Designer</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr style="border: 1px dashed rgb(131, 131, 131); margin: 1px 0px 10px" />
 
-        <!-- META -->
-        <div class="meta">
-            <div>
-                <strong>Invoice Number: </strong> {{$checkOrder->order_id}} <br />
-                Order Date: {{$checkOrder->created_at->format('Y-m-d') }}<br />
-                Order Time: {{ $checkOrder->created_at->format('H-i-s') }}<br />
-                Platform: DESYNAT
-            </div>
-            <div>
-                Store Name: Desynat Store<br />
-                Seller Type: Fashion Designer <br />
-            </div>
-        </div>
+    <div style="text-align: center; font-weight: 600;">Customer Info </div>
+    <table style="width: 100%;margin-top: 10px;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="invoice-items">
+          <td>{{@$checkOrder->delivery_details->name }}</td>
+          <td>{{@$checkOrder->delivery_details->country_code }} {{@$checkOrder->delivery_details->mobile }}</td>
+          <td>{{@$checkOrder->user_details->email }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-        <hr />
-
-        <!-- CUSTOMER -->
-        <div class="section-title">Customer Information</div>
-
-        <table class="table customer-info">
-            <tr>
-                <td class="label">Customer Name:</td>
-                <td class="line"> {{@$checkOrder->delivery_details->name }}</td>
-            </tr>
-            <tr>
-                <td class="label">Mobile Number:</td>
-                <td class="line">{{@$checkOrder->delivery_details->country_code }}
-                    {{@$checkOrder->delivery_details->mobile }}
-                </td>
-            </tr>
-            <tr>
-                <td class="label">Email Address:</td>
-                <td class="line"> {{@$checkOrder->user_details->email }} </td>
-            </tr>
-            <tr>
-                <td class="label">Delivery Address::</td>
-                <td class="line"> {{@$checkOrder->delivery_details->address }}
+    <table style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Delivery Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="invoice-items">
+          <td>{{@$checkOrder->delivery_details->address }}
                     {{@$checkOrder->delivery_details->state }} {{@$checkOrder->delivery_details->postal_code }} </td>
-            </tr>
-        </table>
+        </tr>
+      </tbody>
+    </table>
 
-        <hr />
-
-        <!-- PRODUCT + SUMMARY -->
-        <div class="box">
-            <!-- <div class="box-row">
-                <div class="box-col">
-                    <div class="box-title">Product Details</div>
-                    <table class="inner-table">
-                        <tr>
-                            <td>Product Name:</td>
-                            <td>Dress XZZ</td>
-                        </tr>
-                        <td>Product Type:</td>
-                        <td style="text-transform: uppercase;">Ready-to-Wear / Made-to-Order : ZOMO CODE</td>
-                        </tr>
-                        <tr>
-                            <td>Color Type(s):</td>
-                            <td>Black</td>
-                        </tr>
-
-                    </table>
-                </div>
-
-                <div class="box-col right">
-                    <div class="box-title">.</div>
-
-                    <table class="inner-table">
-                        <tr>
-                            <td>Size:</td>
-                            <td class="text-right">M</td>
-                        </tr>
-                        <tr>
-                            <td>Quantity:</td>
-                            <td class="text-right">2</td>
-                        </tr>
-                        <tr>
-                            <td>Price per Item:</td>
-                            <td class="text-right">25,000 KD</td>
-                        </tr>
-                        <tr>
-                            <td>Subtotal</td>
-                            <td class="text-right">20,000 KD</td>
-                        </tr>
-                    </table>
-                </div>
-            </div> -->
-
-            <div class="table-container">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Sr.</th>
-                            <th>Product Image</th>
-                            <th>Product Name</th>
-                            <th>Order Type</th>
-                            <th>Size</th>
-                            <th>Color</th>
-                            <th>Quantity</th>
-                            <th>Price per Item</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @foreach($checkOrder->order_details as $key=>$val)
-
-                        <tr>
-                            <td>{{$key+1}}</td>
-                            <td><img src="{{$val->variation_details->variant_image[0]}}" width="70px"> </td>
-                            <td>{{$val->product_details->product_name_en}}</td>
-                            <td>
-                                @if($val->order_type=='1')
-                                Normal
-                                @elseif($val->order_type=='2')
-                                Custom
-                                @endif
-                            </td>
-                            <td>{{$val->variation_details->size->name}}</td>
-                            <td>{{$val->variation_details->color->name}}</td>
-                            <td>{{$val->quantity}}</td>
-                            <td>@if($val->order_type=='1')
+    <hr style="border: 1px dashed rgb(131, 131, 131); margin: 10px auto" />
+    <table style="width: 100%; table-layout: fixed">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Item</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Color</th>
+          <th>Qty</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($checkOrder->order_details as $key=>$val)
+        <tr class="invoice-items">
+          <td><img src="{{$val->variation_details->variant_image[0]}}" style="width: 30px; height: 30px;"></td>
+          <td>{{$val->product_details->product_name_en}}</td>
+          <td>@if($val->order_type=='1')
+                Normal
+                @elseif($val->order_type=='2')
+                Custom
+                @endif
+            </td>
+          <td>{{$val->variation_details->size->name}}</td>
+          <td>{{$val->variation_details->color->name}}</td>
+          <td>{{$val->quantity}}</td>
+          <td>
+           @if($val->order_type=='1')
                                 {{$val->variation_details->actual_price}} KD
                                 @elseif($val->order_type=='2')
                                 {{$val->amount}} KD
                                 @endif
-                            </td>
-                        </tr>
+          </td>
+        </tr>
+        @endforeach
+        
+      </tbody>
+    </table>
 
-                        @endforeach
+   
+    <div style="font-weight: 600; margin-top: 15px;">Order Summary </div>
+    <table style="
+          width: 100%;
+          margin-top: 5px;
+          border: 1px dashed #838383;
+          border-radius: 3px;
+        ">
+      <thead>
+        <tr>
+          <td>SubTotal:</td>
+          <td style="text-align: right">{{$checkOrder->total_mrp}} KD</td>
+        </tr>
+        <tr>
+          <td>Discount:</td>
+          <td style="text-align: right">{{$checkOrder->discount_mrp}} KD</td>
+        </tr>
+        @if($checkOrder->promocode_details)
 
+        <td>Promo Code</td>
+        <td style="text-align: right">{{@$checkOrder->promocode_details->name_english }}</td>
 
-                        <!-- Add more rows -->
-                    </tbody>
-                </table>
-            </div>
+        @endif
+        <tr>
+          <td>Delivery Fee:</td>
+          <td style="text-align: right">{{$checkOrder->shipping_fees}} KD</td>
+        </tr>
+        <tr>
+          <td>Tax (VAT)</td>
+          <td style="text-align: right">{{$checkOrder->tax}} KD</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;"> Total Amount:  </td>
+          <td style="text-align: right;font-weight: 600;">{{$checkOrder->total_amount }} KD</td>
+      </tr>
+      </thead>
+    </table>
 
-
-            <!-- SUBTOTAL BOX -->
-            <div class="box-footer">
-                <div class="box-title">Order Summary</div>
-
-                <table>
-                    <tr>
-                        <td><strong>SUBTOTAL</strong></td>
-                        <td>{{$checkOrder->total_mrp}} KD</td>
-
-                    </tr>
-                    <tr>
-                        <td>Discount</td>
-                        <td>{{$checkOrder->discount_mrp}} KD</td>
-
-                        @if($checkOrder->promocode_details)
-
-                        <td>Promo Code</td>
-                        <td>{{@$checkOrder->promocode_details->name_english }}</td>
-
-                        @endif
-                    </tr>
-
-                    <tr>
-                        <td>Delivery Fee</td>
-                        <td>{{$checkOrder->shipping_fees}} KD</td>
-
-                        <td>Tax (VAT)</td>
-                        <td>{{$checkOrder->tax}} KD</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Total Amount:
-                        </td>
-                        <td>{{$checkOrder->total_amount }} KD</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <!-- PAYMENT -->
-        <div class="section-title">Payment Information</div>
-        <table class="table">
-            <tr>
-                <td>Payment Method:</td>
-                <td>
-
-                    @if($checkOrder->payment_method==1)
+    <div style="font-weight: 600; margin-top: 15px;">Payment Information </div>
+    <table style="width: 100%;margin-top: 5px;">
+      <thead>
+        <tr>
+          <td>Payment Method:</td>
+          <td style="text-align: right">
+            @if($checkOrder->payment_method==1)
                     VISA / MASTERCARD
                     @elseif($checkOrder->payment_method==2)
                     WALLET
                     @elseif($checkOrder->payment_method==3)
                     COD
                     @endif
-                </td>
-            </tr>
-            <tr>
-                <td>Payment Status</td>
-                <td>
-                    @if($checkOrder->payment_status==0)
+          </td>
+        </tr>
+        <tr>
+          <td>Payment Status:</td>
+          <td style="text-align: right">
+            @if($checkOrder->payment_status==0)
                     Pending
                     @elseif($checkOrder->payment_status==1)
                     Paid
@@ -420,46 +296,50 @@
                     @elseif($checkOrder->payment_status==3)
                     Refund
                     @endif
-                </td>
-            </tr>
-        </table>
+          </td>
+        </tr>
+      </thead>
+    </table>
 
-        <hr />
-        <div class="section-title">Delivery Information</div>
-        <table class="table">
-            <tr>
-                <td>Expected Delivery Date:</td>
-                <td>{{$checkOrder->created_at->addDays(6)->format('d M Y') }}</td>
-            </tr>
-            <tr>
-                <td>Expected Delivery Time:</td>
-                <td>{{$checkOrder->created_at->addDays(6)->format('h:i:s') }}</td>
-            </tr>
-            <tr>
-                <td>Delivery Managed By:</td>
-                <td>Desynat</td>
-            </tr>
-        </table>
+    <div style=" font-weight: 600; margin-top: 15px;">Delivery Information </div>
+    <table style="width: 100%;margin-top: 5px;">
+      <thead>
+        <tr>
+          <td>Expected Delivery Date:</td>
+          <td style="text-align: right">{{$checkOrder->created_at->addDays(6)->format('d M Y') }}</td>
+        </tr>
+        <tr>
+          <td>Expected Delivery Time:</td>
+          <td style="text-align: right">{{$checkOrder->created_at->addDays(6)->format('h:i:s') }}</td>
+        </tr>
+        <tr>
+          <td>Delivery Managed By:</td>
+          <td style="text-align: right">Desynat</td>
+        </tr>
+      </thead>
+    </table>
 
-        <hr />
+    <div style="font-weight: 600; margin-top: 15px;">Return & Exchange Policy </div>
+    <table style="width: 100%;margin-top: 1px;">
+      <thead>
+        <tr>
+          <td>
+              <div>Exchange & return within 7 days from delivery date.</div>
+              <div>Non-refundable unless defective.</div>
+              <div>Item must be unused and in original packaging.</div>
+              <div>Delivery fee is non-refundable.</div>
+          </td>
+        </tr>
+       
+      </thead>
+    </table>
 
-        <!-- POLICY -->
+    <hr style="border: 1px dashed rgb(131, 131, 131); margin: 10px auto" />
+    <div style="text-align: center; font-weight: 600;">This invoice is generated electronically by DESYNAT and does not require
+      a signature.</div>
 
-        <div class="section-title">Return & Exchange Policy</div>
-        <ul class="policy">
-            <li>Exchange & return within 7 days from delivery date.</li>
-            <li>Non-refundable unless defective.</li>
-            <li>Item must be unused and in original packaging.</li>
-            <li>Delivery fee is non-refundable.</li>
-        </ul>
 
-        <hr />
-
-        <div class="footer">
-            This invoice is generated electronically by DESYNAT and does not require
-            a signature.
-        </div>
-    </div>
+  </section>
 </body>
 
 </html>
