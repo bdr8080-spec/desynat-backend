@@ -209,9 +209,7 @@ public function sendDummynotification(Request $request){
     }
     
 
-    $data = sendPushNotificationNew($request->fcm_token, $request->title, $request->content);
-
-
+    $data = sendPushNotificationNew($request->fcm_token, $request->title, $request->content,'1','2');
 
 
 
