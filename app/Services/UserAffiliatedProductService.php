@@ -1046,8 +1046,8 @@ public function getAffiliateDashboardData($request)
             'message' => 'Affiliate dashboard data fetched successfully',
             'data' => [
                 'total_products'    => $totalProducts,
-                'total_revenue'     => $orderStats->total_revenue ?? 0,
-                'total_earning'     => $orderStats->total_earning ?? 0,
+                'total_revenue' => number_format((float) ($orderStats->total_revenue ?? 0), 2, '.', ''),
+                'total_earning' => number_format((float) ($orderStats->total_earning ?? 0), 2, '.', ''),
                 'total_ongoing'     => $statusCounts->total_ongoing ?? 0,
                 'total_completed'   => $statusCounts->total_completed ?? 0,
                 'total_cancelled'   => $statusCounts->total_cancelled ?? 0,

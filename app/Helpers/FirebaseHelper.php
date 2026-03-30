@@ -95,8 +95,9 @@ if (!function_exists('sendPushNotificationNew')) {
                 // Badge sent at top level for all devices
                 'badge' => $badge,
             ];
+            //dd($message);
 
-            if ($deviceType == 2) {
+            if ($deviceType == '2') {
                 // Android: send as data object
                 $message['data'] = (object)[
                     'title' => $title,
@@ -205,6 +206,7 @@ if (!function_exists('CreateNotification')) {
     function CreateNotification($data = [])
     {
         try {
+            // dd($data);
             // Save notification in DB
             $notification = Notification::create([
                 'sender_id'             => $data['sender_id'],
@@ -240,12 +242,14 @@ if (!function_exists('CreateNotification')) {
                 // Count unread notifications for badge
                 $badgeCount = Notification::where('receiver_id', $receiver->id)
                     ->where('receiver_type', $data['receiver_type'])
-                    ->where('is_read', 0)
+                    ->where('is_read', '0')
                     ->count();
+                //dd($badgeCount);
             }
 
             // Send push notification
             if (!empty($tokens)) {
+                //dd($tokens);
                 sendPushNotificationNew(
                     $tokens,
                     $data['title_english'],
