@@ -1013,56 +1013,113 @@ return [
 
 
 
-public function getAffiliateDashboardData($request)
-{
-    try {
-        $user_id = $request->user_id;
+    public function getAffiliateDashboardData($request)
+    {
+        try {
+            $user_id = $request->user_id;
 
-        //  Total products added by the affiliate
-        $totalProducts = AffiliateProduct::where('affiliate_id', $user_id)->count();
+            // Base query for Affiliate Products
+            $productQuery = AffiliateProduct::where('affiliate_id', $user_id);
 
-        //  Get all product links for this affiliate
-        $affiliateLinks = ProductLink::where('affiliate_id', $user_id)
-            ->pluck('link'); // get the 'link' column
+            // Apply date filters on products
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $productQuery->whereBetween('created_at', [
+                    $request->from_date . ' 00:00:00',
+                    $request->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request->from_date)) {
+                $productQuery->whereDate('created_at', '>=', $request->from_date);
+            } elseif (!empty($request->to_date)) {
+                $productQuery->whereDate('created_at', '<=', $request->to_date);
+            }
 
-        //  Total revenue, earning, and order status counts
-        $ordersQuery = orderdetail::whereIn('reference_link', $affiliateLinks);
+            // Apply filter_type on products
+            if (!empty($request->filter_type)) {
+                if ($request->filter_type == 1) {
+                    $productQuery->whereDate('created_at', Carbon::today());
+                } elseif ($request->filter_type == 2) {
+                    $productQuery->whereBetween('created_at', [
+                        Carbon::now()->startOfWeek(),
+                        Carbon::now()->endOfWeek()
+                    ]);
+                } elseif ($request->filter_type == 3) {
+                    $productQuery->whereMonth('created_at', Carbon::now()->month)
+                                ->whereYear('created_at', Carbon::now()->year);
+                }
+            }
 
-        // Aggregate sums
-        $orderStats = $ordersQuery->selectRaw(
-            'SUM(amount) as total_revenue, SUM(affiliate_commission) as total_earning'
-        )->first();
+            // Total products
+            $totalProducts = $productQuery->count();
 
-        // Aggregate counts by delivery_status
-        $statusCounts = $ordersQuery->selectRaw("
-            SUM(CASE WHEN delivery_status IN ('1','2','2.1','2.2') THEN 1 ELSE 0 END) as total_ongoing,
-            SUM(CASE WHEN delivery_status = '3' THEN 1 ELSE 0 END) as total_completed,
-            SUM(CASE WHEN delivery_status = '4' THEN 1 ELSE 0 END) as total_cancelled,
-            SUM(CASE WHEN delivery_status = '5' THEN 1 ELSE 0 END) as total_returned
-        ")->first();
+            // Get affiliate links
+            $affiliateLinks = ProductLink::where('affiliate_id', $user_id)
+                ->pluck('link');
 
-        return [
-            'status' => 'success',
-            'message' => 'Affiliate dashboard data fetched successfully',
-            'data' => [
-                'total_products'    => $totalProducts,
-                'total_revenue' => number_format((float) ($orderStats->total_revenue ?? 0), 2, '.', ''),
-                'total_earning' => number_format((float) ($orderStats->total_earning ?? 0), 2, '.', ''),
-                'total_ongoing'     => $statusCounts->total_ongoing ?? 0,
-                'total_completed'   => $statusCounts->total_completed ?? 0,
-                'total_cancelled'   => $statusCounts->total_cancelled ?? 0,
-                'total_returned'    => $statusCounts->total_returned ?? 0,
-            ]
-        ];
+            // Orders query
+            $ordersQuery = orderdetail::whereIn('reference_link', $affiliateLinks);
 
-    } catch (\Exception $e) {
-        return [
-            'status' => 'error',
-            'message' => 'Failed to fetch affiliate dashboard data: ' . $e->getMessage(),
-            'data' => []
-        ];
+            // Apply date filters on orders
+            if (!empty($request->from_date) && !empty($request->to_date)) {
+                $ordersQuery->whereBetween('created_at', [
+                    $request->from_date . ' 00:00:00',
+                    $request->to_date . ' 23:59:59'
+                ]);
+            } elseif (!empty($request->from_date)) {
+                $ordersQuery->whereDate('created_at', '>=', $request->from_date);
+            } elseif (!empty($request->to_date)) {
+                $ordersQuery->whereDate('created_at', '<=', $request->to_date);
+            }
+
+            // Apply filter_type on orders
+            if (!empty($request->filter_type)) {
+                if ($request->filter_type == 1) {
+                    $ordersQuery->whereDate('created_at', Carbon::today());
+                } elseif ($request->filter_type == 2) {
+                    $ordersQuery->whereBetween('created_at', [
+                        Carbon::now()->startOfWeek(),
+                        Carbon::now()->endOfWeek()
+                    ]);
+                } elseif ($request->filter_type == 3) {
+                    $ordersQuery->whereMonth('created_at', Carbon::now()->month)
+                                ->whereYear('created_at', Carbon::now()->year);
+                }
+            }
+
+            // Revenue & earning
+            $orderStats = (clone $ordersQuery)->selectRaw(
+                'SUM(amount) as total_revenue, SUM(affiliate_commission) as total_earning'
+            )->first();
+
+            // Status counts
+            $statusCounts = (clone $ordersQuery)->selectRaw("
+                SUM(CASE WHEN delivery_status IN ('1','2','2.1','2.2') THEN 1 ELSE 0 END) as total_ongoing,
+                SUM(CASE WHEN delivery_status = '3' THEN 1 ELSE 0 END) as total_completed,
+                SUM(CASE WHEN delivery_status = '4' THEN 1 ELSE 0 END) as total_cancelled,
+                SUM(CASE WHEN delivery_status = '5' THEN 1 ELSE 0 END) as total_returned
+            ")->first();
+
+            return [
+                'status' => 'success',
+                'message' => 'Affiliate dashboard data fetched successfully',
+                'data' => [
+                    'total_products'    => $totalProducts,
+                    'total_revenue'     => number_format((float) ($orderStats->total_revenue ?? 0), 2, '.', ''),
+                    'total_earning'     => number_format((float) ($orderStats->total_earning ?? 0), 2, '.', ''),
+                    'total_ongoing'     => (int) ($statusCounts->total_ongoing ?? 0),
+                    'total_completed'   => (int) ($statusCounts->total_completed ?? 0),
+                    'total_cancelled'   => (int) ($statusCounts->total_cancelled ?? 0),
+                    'total_returned'    => (int) ($statusCounts->total_returned ?? 0),
+                ]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch affiliate dashboard data: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
     }
-}
 
 
 

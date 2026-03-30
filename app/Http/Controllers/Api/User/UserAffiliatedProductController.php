@@ -284,8 +284,8 @@ public function get_affiliate_dashboard_data(Request $request)
 
         $request_data = (object)[
             'user_id' => $user_id,
-            'from' => $request->from??null,
-            'to' => $request->to??null,
+            'from_date' => $request->from_date??null,
+            'to_date' => $request->to_date??null,
             "filter_type"=>$request->filter_type??null
         ];
 
