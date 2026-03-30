@@ -103,7 +103,7 @@ if (!function_exists('sendPushNotificationNew')) {
             }
 
 
-            // ✅ WEB
+            //  WEB
             if ($deviceType == '0') {
                 $message['webpush'] = [
                     'headers' => [
@@ -115,22 +115,22 @@ if (!function_exists('sendPushNotificationNew')) {
                 ];
             }
 
-            // ✅ iOS
+            //  iOS
             if ($deviceType == '1') {
                 $message['apns'] = [
                     'headers' => [
                         'apns-priority' => '10',
                     ],
-                    'payload' => [
+                    'payload' => [ 
                         'aps' => [
-                            'badge' => (int)$badge, // ✅ correct badge
+                            'badge' => (int)$badge,
                             'sound' => 'default',
                         ],
                     ],
                 ];
             }
 
-            // ✅ ANDROID
+            //  ANDROID
             if ($deviceType == '2') {
                 $message['android'] = [
                     'priority' => 'high',
@@ -143,7 +143,7 @@ if (!function_exists('sendPushNotificationNew')) {
                     'body'  => $body,
                 ];
             }
-           // dd($message);
+            //dd($message);
             $response = Http::withToken($accessToken)
                 ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
                     'message' => $message
@@ -156,6 +156,71 @@ if (!function_exists('sendPushNotificationNew')) {
         return $responses;
     }
 }
+
+// if (!function_exists('sendPushNotificationNew')) {
+//     function sendPushNotificationNew($deviceTokens, $title, $body, $deviceType = 0, $badge = 0)
+//     {
+//         // ✅ You MUST paste server key here manually
+//         $serverKey = 'YOUR_FIREBASE_SERVER_KEY_HERE';
+
+//         $responses = [];
+
+//         foreach ($deviceTokens as $token) {
+
+//             if (empty($token)) continue;
+
+//             // ✅ EXACT STRUCTURE YOU WANT
+//             $message = [
+//                 "to" => $token,
+//                 "notification" => [
+//                     "title" => $title,
+//                     "body"  => $body
+//                 ],
+//             ];
+
+//             // ✅ iOS (same as your JSON)
+//             if ($deviceType == '1') {
+//                 $message["apns"] = [
+//                     "payload" => [
+//                         "aps" => [
+//                             "badge" => (int)$badge,
+//                             "sound" => "default"
+//                         ]
+//                     ]
+//                 ];
+//             }
+
+//             // ✅ Android
+//             if ($deviceType == '2') {
+//                 $message["priority"] = "high";
+//                 $message["data"] = [
+//                     "badge" => (string)$badge,
+//                     "title" => $title,
+//                     "body"  => $body
+//                 ];
+//             }
+
+//             // ✅ Web
+//             if ($deviceType == '0') {
+//                 $message["webpush"] = [
+//                     "headers" => [
+//                         "Urgency" => "high"
+//                     ]
+//                 ];
+//             }
+
+//             // 🔥 SEND REQUEST
+//             $response = Http::withHeaders([
+//                 'Authorization' => 'key=' . $serverKey,
+//                 'Content-Type'  => 'application/json',
+//             ])->post('https://fcm.googleapis.com/fcm/send', $message);
+
+//             $responses[] = $response->json();
+//         }
+
+//         return $responses;
+//     }
+// }
 
 
 // This code for change dynamic value for send  dynamic text in Firebase send Notification 
