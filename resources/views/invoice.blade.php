@@ -120,15 +120,15 @@
           text-align: center;
           margin: auto;
           line-height: 1.5;
-          font-size: 14px;
+          font-size: 13px;
           color: #4a4a4a;
         ">
-        <img src="http://www.desynat.com/user/assets/images/logo.svg" alt="logo">
+        <img src="{{ asset('admin/image/logo.svg') }}" alt="logo">
       <p style="
             font-weight: bold;
             color: #000;
             margin-top: 5px;
-            font-size: 16px;
+            font-size: 14px;
           ">
         multi-vendor fashion platform
       </p>
