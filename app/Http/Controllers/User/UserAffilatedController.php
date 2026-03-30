@@ -784,7 +784,7 @@ if ($validator->fails()) {
          return view('affiliatedUser.auth.signup-review'); 
     }
     
-    public function affiliateDashboard(){
+    public function affiliateDashboard(Request $request){
         
     $affilatedUser=Auth::guard('affilated_user')->user();
 
@@ -811,9 +811,22 @@ if ($validator->fails()) {
         return redirect()->route('affiliate.affiliatereview_submit_page', ['temp_user_id' => $id]);        
         // return view('affiliatedUser.auth.signup-review'); 
         }
+    $request_data=(object)[
+    'user_id'=>$affilatedUser->id,
+    'from_date'=>$request->from_date??null,
+    'to_date'=>$request->to_date??null,
+    'filter_type'=>$request->filter_type??null
+    ];
+    //dd($request_data);
+
+    $dashboardData= $this->UserAffiliatedProductService->getAffiliateDashboardData($request_data)['data'];
+    //dd($dashboardData);
+    if ($request->ajax()) {
+        return view('affiliatedUser.dashboard_data', compact('dashboardData'))->render();
+    }
 
    
-    return View('affiliatedUser.dashboard',compact('affilatedUser'));
+    return View('affiliatedUser.dashboard',compact('affilatedUser','dashboardData'));
 
 }
 

@@ -1085,6 +1085,8 @@ return [
                 }
             }
 
+            $totalOrders = (clone $ordersQuery)->count();
+
             // Revenue & earning
             $orderStats = (clone $ordersQuery)->selectRaw(
                 'SUM(amount) as total_revenue, SUM(affiliate_commission) as total_earning'
@@ -1103,6 +1105,7 @@ return [
                 'message' => 'Affiliate dashboard data fetched successfully',
                 'data' => [
                     'total_products'    => $totalProducts,
+                    'total_orders'      => $totalOrders,
                     'total_revenue'     => number_format((float) ($orderStats->total_revenue ?? 0), 2, '.', ''),
                     'total_earning'     => number_format((float) ($orderStats->total_earning ?? 0), 2, '.', ''),
                     'total_ongoing'     => (int) ($statusCounts->total_ongoing ?? 0),

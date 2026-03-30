@@ -7,53 +7,64 @@
     </div>
 
 
+
     <div class="row">
         <div class="col-lg-12">
             <div class="bg-header mt-3 visitor-pnl">
                 <div class="group-radio-btn d-flex gap-4 justify-content-between flex-wrap">
+
+                    <!-- FILTER RADIO -->
                     <div class="d-flex gap-4 align-items-center flex-wrap">
+
                         <div class="check_radio">
                             <label class="radio-group">
-                                <input type="radio" name="today" checked>
+                                <input type="radio" name="filter_type" value="1">
                                 <span class="custom-radio"></span>
                                 <span class="radio-label">Today</span>
                             </label>
                         </div>
+
                         <div class="check_radio">
                             <label class="radio-group">
-                                <input type="radio" name="today">
+                                <input type="radio" name="filter_type" value="2">
                                 <span class="custom-radio"></span>
                                 <span class="radio-label">This Week</span>
                             </label>
                         </div>
+
                         <div class="check_radio">
                             <label class="radio-group">
-                                <input type="radio" name="today">
+                                <input type="radio" name="filter_type" value="3">
                                 <span class="custom-radio"></span>
                                 <span class="radio-label">This Month</span>
                             </label>
                         </div>
+
                     </div>
-                    <div class="show-date d-flex gap-2  flex-wrap">
+
+                    <!-- DATE FILTER -->
+                    <div class="show-date d-flex gap-2 flex-wrap">
                         <div class="date-form-pnl">
-                            <input type="date" class="form-control">
+                            <input type="date" id="from_date" class="form-control">
                         </div>
                         <div class="date-form-pnl">
-                            <input type="date" class="form-control">
+                            <input type="date" id="to_date" class="form-control">
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 
+<!-- <div id="dashboard-data">
     <div class="row">
         <div class="col-lg-6 col-xxl-6">
             <div class="py-4">
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
                         <h5>Total Products Added</h5>
-                        <div class="title30">120</div>
+                        <div class="title30">{{$dashboardData['total_products']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -67,7 +78,7 @@
                 <div class="total-revenu-box pnl-flex">
                     <div class="dash-content">
                         <h5>Total Revenue Generated</h5>
-                        <h1 class="font-34 py-3">12,542 KD</h1>
+                        <h1 class="font-34 py-3">{{$dashboardData['total_revenue']}} KD</h1>
                     </div>
                     <div class="total-revenu-image">
                         <img src="{{ asset('dealer') }}/assets/img/profit.svg" alt="icon" class="img-fluid">
@@ -78,13 +89,13 @@
     </div>
 
     <div class="py-2">
-        <div class="title24">Total Orders <span class="gold-title">(14)</span></div>
+        <div class="title24">Total Orders <span class="gold-title">({{$dashboardData['total_orders']}})</span></div>
         <div class="row mt-3">
             <div class="col-lg-3 col-md-3">
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-4">
                     <div class="dash-content">
                         <h5>Ongoing </h5>
-                        <div class="title30">120</div>
+                        <div class="title30">{{$dashboardData['total_ongoing']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -95,7 +106,7 @@
                 <div class="dash-box border20 shadow20 p20 pnl-flex mb-3">
                     <div class="dash-content">
                         <h5>Completed</h5>
-                        <div class="title30">50</div>
+                        <div class="title30">{{$dashboardData['total_completed']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -106,7 +117,7 @@
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
                         <h5>Returned </h5>
-                        <div class="title30">50</div>
+                        <div class="title30">{{$dashboardData['total_returned']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -117,7 +128,7 @@
                 <div class="dash-box border20 shadow20 p20 pnl-flex">
                     <div class="dash-content">
                         <h5 style="color:#CD0E26;">Cancelled</h5>
-                        <div class="title30">51</div>
+                        <div class="title30">{{$dashboardData['total_cancelled']}}</div>
                     </div>
                     <div class="dash-circle">
                         <img src="{{ asset('dealer') }}/assets/img/box.svg" alt="icon" class="img-fluid">
@@ -126,6 +137,10 @@
             </div>
         </div>
     </div>
+</div> -->
+<div id="dashboard-data">
+    @include('affiliatedUser.dashboard_data')
+</div>
 
 
 </section>
@@ -152,3 +167,68 @@
 </div>
 
 @include('affiliatedUser.layout.footer');
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function () {
+
+    function loadDashboardData() {
+        let filter_type = $('input[name="filter_type"]:checked').val();
+        let from_date = $('#from_date').val();
+        let to_date = $('#to_date').val();
+
+        // Only fetch if user selects something
+        if (!filter_type && !from_date && !to_date) return;
+
+        $.ajax({
+            url: "{{ route('affiliate.affiliateDashboard') }}",
+            type: "GET",
+            data: {
+                filter_type: filter_type,
+                from_date: from_date,
+                to_date: to_date
+            },
+            success: function (response) {
+                $('#dashboard-data').html(response);
+            }
+        });
+    }
+
+    // 🔁 Radio change
+    $('input[name="filter_type"]').on('change', function () {
+        $('#from_date').val('');
+        $('#to_date').val('');
+        loadDashboardData();
+    });
+
+    // 🔁 Date change
+    $('#from_date, #to_date').on('change', function () {
+        $('input[name="filter_type"]').prop('checked', false);
+        loadDashboardData();
+    });
+
+});
+</script>
+
+<script>
+function updateToDate() {
+    const fromDate = document.getElementById('from_date').value;
+    const toDateInput = document.getElementById('to_date');
+    const toDateValue = toDateInput.value;
+
+    if (fromDate) {
+        toDateInput.setAttribute('min', fromDate);
+
+        if (toDateValue && toDateValue < fromDate) {
+            toDateInput.value = '';
+        }
+    } else {
+        toDateInput.removeAttribute('min');
+    }
+}
+
+document.getElementById('from_date').addEventListener('change', updateToDate);
+
+document.addEventListener('DOMContentLoaded', updateToDate);
+</script>
