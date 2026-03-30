@@ -61,8 +61,70 @@ use App\Models\DeliveryBoy;
 //     }
 // }
 
+// if (!function_exists('sendPushNotificationNew')) {
+//     function sendPushNotificationNew($deviceTokens, $title, $body, $deviceType = 0, $badge = 0)
+//     {
+//         $projectId = 'desynat';
+//         $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
+
+//         $credentials = json_decode(file_get_contents($keyFilePath), true);
+
+//         $oauth = new \Google\Auth\OAuth2([
+//             'audience' => 'https://oauth2.googleapis.com/token',
+//             'issuer' => $credentials['client_email'],
+//             'signingAlgorithm' => 'RS256',
+//             'signingKey' => $credentials['private_key'],
+//             'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
+//             'scope' => ['https://www.googleapis.com/auth/firebase.messaging'],
+//         ]);
+
+//         $oauth->fetchAuthToken();
+//         $accessToken = $oauth->getLastReceivedToken()['access_token'];
+
+//         $responses = [];
+
+//         foreach ($deviceTokens as $token) {
+//             if (empty($token)) continue;
+
+//             $message = [
+//                 'token' => $token,
+//                 'android' => ['priority' => 'high'],
+//                 'apns' => [
+//                     'headers' => ['apns-priority' => '10'],
+//                 ],
+//                 // Badge sent at top level for all devices
+//                 'badge' => $badge,
+//             ];
+//             //dd($message);
+
+//             if ($deviceType == '2') {
+//                 // Android: send as data object
+//                 $message['data'] = (object)[
+//                     'title' => $title,
+//                     'body' => $body,
+//                 ];
+//             } else {
+//                 // iOS / Other: send as notification
+//                 $message['notification'] = [
+//                     'title' => $title,
+//                     'body' => $body,
+//                 ];
+//             }
+
+//             $response = Http::withToken($accessToken)
+//                 ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
+//                     'message' => $message,
+//                 ]);
+
+//             $responses[] = $response->json();
+//         }
+
+//         return $responses;
+//     }
+// }
+
 if (!function_exists('sendPushNotificationNew')) {
-    function sendPushNotificationNew($deviceTokens, $title, $body, $deviceType = 0, $badge = 0)
+    function sendPushNotificationNew($deviceTokens, $title, $body, $badge = 0)
     {
         $projectId = 'desynat';
         $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
@@ -84,36 +146,32 @@ if (!function_exists('sendPushNotificationNew')) {
         $responses = [];
 
         foreach ($deviceTokens as $token) {
+
             if (empty($token)) continue;
-
-            $message = [
-                'token' => $token,
-                'android' => ['priority' => 'high'],
-                'apns' => [
-                    'headers' => ['apns-priority' => '10'],
-                ],
-                // Badge sent at top level for all devices
-                'badge' => $badge,
-            ];
-            //dd($message);
-
-            if ($deviceType == '2') {
-                // Android: send as data object
-                $message['data'] = (object)[
-                    'title' => $title,
-                    'body' => $body,
-                ];
-            } else {
-                // iOS / Other: send as notification
-                $message['notification'] = [
-                    'title' => $title,
-                    'body' => $body,
-                ];
-            }
 
             $response = Http::withToken($accessToken)
                 ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
-                    'message' => $message,
+                    'message' => [
+                        'token' => $token,
+
+                        // ✅ your existing notification
+                        'notification' => [
+                            'title' => $title,
+                            'body' => $body,
+                        ],
+
+                        // ✅ badge added here (top level)
+                        'badge' => $badge,
+
+                        'android' => [
+                            'priority' => 'high',
+                        ],
+                        'apns' => [
+                            'headers' => [
+                                'apns-priority' => '10',
+                            ],
+                        ],
+                    ],
                 ]);
 
             $responses[] = $response->json();
@@ -237,7 +295,7 @@ if (!function_exists('CreateNotification')) {
                 if (!empty($receiver->fcm_token)) {
                     $tokens = explode(',', $receiver->fcm_token);
                 }
-                $deviceType = $receiver->device_type ?? 1;
+                $deviceType = $receiver->device_type ?? 0;
 
                 // Count unread notifications for badge
                 $badgeCount = Notification::where('receiver_id', $receiver->id)
@@ -254,7 +312,6 @@ if (!function_exists('CreateNotification')) {
                     $tokens,
                     $data['title_english'],
                     $data['description_english'],
-                    $deviceType,
                     $badgeCount
                 );
             }
