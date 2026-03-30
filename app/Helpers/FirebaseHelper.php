@@ -9,57 +9,57 @@ use App\Models\seller;
 use App\Models\AffilatedUser;
 use App\Models\DeliveryBoy;
 
-// if (!function_exists('sendPushNotificationNew')) {
-//     function sendPushNotificationNew($deviceTokens, $title, $body)
-//     {
-//         $projectId = 'desynat';
-//         $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
+if (!function_exists('sendPushNotificationNew')) {
+    function sendPushNotificationNew($deviceTokens, $title, $body)
+    {
+        $projectId = 'desynat';
+        $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
 
-//         $credentials = json_decode(file_get_contents($keyFilePath), true);
+        $credentials = json_decode(file_get_contents($keyFilePath), true);
 
-//         $oauth = new \Google\Auth\OAuth2([
-//             'audience' => 'https://oauth2.googleapis.com/token',
-//             'issuer' => $credentials['client_email'],
-//             'signingAlgorithm' => 'RS256',
-//             'signingKey' => $credentials['private_key'],
-//             'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
-//             'scope' => ['https://www.googleapis.com/auth/firebase.messaging'],
-//         ]);
+        $oauth = new \Google\Auth\OAuth2([
+            'audience' => 'https://oauth2.googleapis.com/token',
+            'issuer' => $credentials['client_email'],
+            'signingAlgorithm' => 'RS256',
+            'signingKey' => $credentials['private_key'],
+            'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
+            'scope' => ['https://www.googleapis.com/auth/firebase.messaging'],
+        ]);
 
-//         $oauth->fetchAuthToken();
-//         $accessToken = $oauth->getLastReceivedToken()['access_token'];
+        $oauth->fetchAuthToken();
+        $accessToken = $oauth->getLastReceivedToken()['access_token'];
 
-//         $responses = [];
+        $responses = [];
 
-//         foreach ($deviceTokens as $token) {
+        foreach ($deviceTokens as $token) {
 
-//             if (empty($token)) continue;
+            if (empty($token)) continue;
 
-//             $response = Http::withToken($accessToken)
-//                 ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
-//                     'message' => [
-//                         'token' => $token,
-//                         'notification' => [
-//                             'title' => $title,
-//                             'body' => $body,
-//                         ],
-//                         'android' => [
-//                             'priority' => 'high',
-//                         ],
-//                         'apns' => [
-//                             'headers' => [
-//                                 'apns-priority' => '10',
-//                             ],
-//                         ],
-//                     ],
-//                 ]);
+            $response = Http::withToken($accessToken)
+                ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
+                    'message' => [
+                        'token' => $token,
+                        'notification' => [
+                            'title' => $title,
+                            'body' => $body,
+                        ],
+                        'android' => [
+                            'priority' => 'high',
+                        ],
+                        'apns' => [
+                            'headers' => [
+                                'apns-priority' => '10',
+                            ],
+                        ],
+                    ],
+                ]);
 
-//             $responses[] = $response->json();
-//         }
+            $responses[] = $response->json();
+        }
 
-//         return $responses;
-//     }
-// }
+        return $responses;
+    }
+}
 
 // if (!function_exists('sendPushNotificationNew')) {
 //     function sendPushNotificationNew($deviceTokens, $title, $body, $deviceType = 0, $badge = 0)
@@ -123,63 +123,63 @@ use App\Models\DeliveryBoy;
 //     }
 // }
 
-if (!function_exists('sendPushNotificationNew')) {
-    function sendPushNotificationNew($deviceTokens, $title, $body, $badge = 0)
-    {
-        $projectId = 'desynat';
-        $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
+// if (!function_exists('sendPushNotificationNew')) {
+//     function sendPushNotificationNew($deviceTokens, $title, $body, $badge = 0)
+//     {
+//         $projectId = 'desynat';
+//         $keyFilePath = storage_path('desynat-firebase-adminsdk-fbsvc-511856a90e.json');
 
-        $credentials = json_decode(file_get_contents($keyFilePath), true);
+//         $credentials = json_decode(file_get_contents($keyFilePath), true);
 
-        $oauth = new \Google\Auth\OAuth2([
-            'audience' => 'https://oauth2.googleapis.com/token',
-            'issuer' => $credentials['client_email'],
-            'signingAlgorithm' => 'RS256',
-            'signingKey' => $credentials['private_key'],
-            'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
-            'scope' => ['https://www.googleapis.com/auth/firebase.messaging'],
-        ]);
+//         $oauth = new \Google\Auth\OAuth2([
+//             'audience' => 'https://oauth2.googleapis.com/token',
+//             'issuer' => $credentials['client_email'],
+//             'signingAlgorithm' => 'RS256',
+//             'signingKey' => $credentials['private_key'],
+//             'tokenCredentialUri' => 'https://oauth2.googleapis.com/token',
+//             'scope' => ['https://www.googleapis.com/auth/firebase.messaging'],
+//         ]);
 
-        $oauth->fetchAuthToken();
-        $accessToken = $oauth->getLastReceivedToken()['access_token'];
+//         $oauth->fetchAuthToken();
+//         $accessToken = $oauth->getLastReceivedToken()['access_token'];
 
-        $responses = [];
+//         $responses = [];
 
-        foreach ($deviceTokens as $token) {
+//         foreach ($deviceTokens as $token) {
 
-            if (empty($token)) continue;
+//             if (empty($token)) continue;
 
-            $response = Http::withToken($accessToken)
-                ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
-                    'message' => [
-                        'token' => $token,
+//             $response = Http::withToken($accessToken)
+//                 ->post("https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send", [
+//                     'message' => [
+//                         'token' => $token,
 
-                        // ✅ your existing notification
-                        'notification' => [
-                            'title' => $title,
-                            'body' => $body,
-                        ],
+//                         // ✅ your existing notification
+//                         'notification' => [
+//                             'title' => $title,
+//                             'body' => $body,
+//                         ],
 
-                        // ✅ badge added here (top level)
-                        'badge' => $badge,
+//                         // ✅ badge added here (top level)
+//                         'badge' => $badge,
 
-                        'android' => [
-                            'priority' => 'high',
-                        ],
-                        'apns' => [
-                            'headers' => [
-                                'apns-priority' => '10',
-                            ],
-                        ],
-                    ],
-                ]);
+//                         'android' => [
+//                             'priority' => 'high',
+//                         ],
+//                         'apns' => [
+//                             'headers' => [
+//                                 'apns-priority' => '10',
+//                             ],
+//                         ],
+//                     ],
+//                 ]);
 
-            $responses[] = $response->json();
-        }
+//             $responses[] = $response->json();
+//         }
 
-        return $responses;
-    }
-}
+//         return $responses;
+//     }
+// }
 
 
 // This code for change dynamic value for send  dynamic text in Firebase send Notification 
@@ -194,125 +194,60 @@ if (!function_exists('parseNotificationText')) {
 }
 
 
-// if (!function_exists('CreateNotification')) {
-//     function CreateNotification($data = [])
-//     {
-//        // dd($data);
-//         try {
-//             $notification = Notification::create([
-//                 'sender_id'             => $data['sender_id'],
-//                 'sender_type'           => $data['sender_type'],
-//                 'receiver_id'           => $data['receiver_id'],
-//                 'receiver_type'         => $data['receiver_type'],
-//                 'title_english'         => $data['title_english'],
-//                 //'title_arabic'          => $data['title_arabic'] ?? null,
-//                 'description_english'   => $data['description_english'],
-//                // 'description_arabic'    => $data['description_arabic'] ?? null,
-//                 'notification_type'     => $data['notification_type'] ?? null,
-//                 'is_read'               => 0,
-//             ]);
-
-//             $receiver = null;
-
-//             switch ($data['receiver_type']) {
-//                 case 1: // Admin
-//                     $receiver = Admin::find($data['receiver_id']);
-//                     break;
-
-//                 case 2: // User
-//                     $receiver = User::find($data['receiver_id']);
-//                     break;
-
-//                 case 3: // Seller
-//                     $receiver = seller::find($data['receiver_id']);
-//                     break;
-
-//                 case 4: // Affiliate
-//                     $receiver = AffilatedUser::find($data['receiver_id']);
-//                     break;
-
-//                 case 5: // Driver
-//                     $receiver = DeliveryBoy::find($data['receiver_id']);
-//                     break;
-//             }
-
-//             $tokens = [];
-
-//             if ($receiver && !empty($receiver->fcm_token)) {
-//                 $tokens = explode(',', $receiver->fcm_token);
-//             }
-
-//             //  Send Push Notification
-//             if (!empty($tokens)) {
-//                 sendPushNotificationNew(
-//                     $tokens,
-//                     $data['title_english'],
-//                     $data['description_english']
-//                 );
-//             }
-
-//             return $notification;
-
-//         } catch (\Exception $e) {
-//             \Log::error('Notification Error: ' . $e->getMessage());
-//             return false;
-//         }
-//     }
-// }
-
 if (!function_exists('CreateNotification')) {
     function CreateNotification($data = [])
     {
+       // dd($data);
         try {
-            // dd($data);
-            // Save notification in DB
             $notification = Notification::create([
                 'sender_id'             => $data['sender_id'],
                 'sender_type'           => $data['sender_type'],
                 'receiver_id'           => $data['receiver_id'],
                 'receiver_type'         => $data['receiver_type'],
                 'title_english'         => $data['title_english'],
+                //'title_arabic'          => $data['title_arabic'] ?? null,
                 'description_english'   => $data['description_english'],
+               // 'description_arabic'    => $data['description_arabic'] ?? null,
                 'notification_type'     => $data['notification_type'] ?? null,
                 'is_read'               => 0,
             ]);
 
-            // Fetch the receiver based on type
             $receiver = null;
+
             switch ($data['receiver_type']) {
-                case 1: $receiver = Admin::find($data['receiver_id']); break;
-                case 2: $receiver = User::find($data['receiver_id']); break;
-                case 3: $receiver = Seller::find($data['receiver_id']); break;
-                case 4: $receiver = AffilatedUser::find($data['receiver_id']); break;
-                case 5: $receiver = DeliveryBoy::find($data['receiver_id']); break;
+                case 1: // Admin
+                    $receiver = Admin::find($data['receiver_id']);
+                    break;
+
+                case 2: // User
+                    $receiver = User::find($data['receiver_id']);
+                    break;
+
+                case 3: // Seller
+                    $receiver = seller::find($data['receiver_id']);
+                    break;
+
+                case 4: // Affiliate
+                    $receiver = AffilatedUser::find($data['receiver_id']);
+                    break;
+
+                case 5: // Driver
+                    $receiver = DeliveryBoy::find($data['receiver_id']);
+                    break;
             }
 
             $tokens = [];
-            $deviceType = 1; // default iOS
-            $badgeCount = 0;
 
-            if ($receiver) {
-                if (!empty($receiver->fcm_token)) {
-                    $tokens = explode(',', $receiver->fcm_token);
-                }
-                $deviceType = $receiver->device_type ?? 0;
-
-                // Count unread notifications for badge
-                $badgeCount = Notification::where('receiver_id', $receiver->id)
-                    ->where('receiver_type', $data['receiver_type'])
-                    ->where('is_read', '0')
-                    ->count();
-                //dd($badgeCount);
+            if ($receiver && !empty($receiver->fcm_token)) {
+                $tokens = explode(',', $receiver->fcm_token);
             }
 
-            // Send push notification
+            //  Send Push Notification
             if (!empty($tokens)) {
-                //dd($tokens);
                 sendPushNotificationNew(
                     $tokens,
                     $data['title_english'],
-                    $data['description_english'],
-                    $badgeCount
+                    $data['description_english']
                 );
             }
 
@@ -324,3 +259,68 @@ if (!function_exists('CreateNotification')) {
         }
     }
 }
+
+// if (!function_exists('CreateNotification')) {
+//     function CreateNotification($data = [])
+//     {
+//         try {
+//             // dd($data);
+//             // Save notification in DB
+//             $notification = Notification::create([
+//                 'sender_id'             => $data['sender_id'],
+//                 'sender_type'           => $data['sender_type'],
+//                 'receiver_id'           => $data['receiver_id'],
+//                 'receiver_type'         => $data['receiver_type'],
+//                 'title_english'         => $data['title_english'],
+//                 'description_english'   => $data['description_english'],
+//                 'notification_type'     => $data['notification_type'] ?? null,
+//                 'is_read'               => 0,
+//             ]);
+
+//             // Fetch the receiver based on type
+//             $receiver = null;
+//             switch ($data['receiver_type']) {
+//                 case 1: $receiver = Admin::find($data['receiver_id']); break;
+//                 case 2: $receiver = User::find($data['receiver_id']); break;
+//                 case 3: $receiver = Seller::find($data['receiver_id']); break;
+//                 case 4: $receiver = AffilatedUser::find($data['receiver_id']); break;
+//                 case 5: $receiver = DeliveryBoy::find($data['receiver_id']); break;
+//             }
+
+//             $tokens = [];
+//             $deviceType = 1; // default iOS
+//             $badgeCount = 0;
+
+//             if ($receiver) {
+//                 if (!empty($receiver->fcm_token)) {
+//                     $tokens = explode(',', $receiver->fcm_token);
+//                 }
+//                 $deviceType = $receiver->device_type ?? 0;
+
+//                 // Count unread notifications for badge
+//                 $badgeCount = Notification::where('receiver_id', $receiver->id)
+//                     ->where('receiver_type', $data['receiver_type'])
+//                     ->where('is_read', '0')
+//                     ->count();
+//                 //dd($badgeCount);
+//             }
+
+//             // Send push notification
+//             if (!empty($tokens)) {
+//                 //dd($tokens);
+//                 sendPushNotificationNew(
+//                     $tokens,
+//                     $data['title_english'],
+//                     $data['description_english'],
+//                     $badgeCount
+//                 );
+//             }
+
+//             return $notification;
+
+//         } catch (\Exception $e) {
+//             \Log::error('Notification Error: ' . $e->getMessage());
+//             return false;
+//         }
+//     }
+// }
