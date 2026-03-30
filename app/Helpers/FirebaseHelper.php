@@ -137,7 +137,7 @@ if (!function_exists('sendPushNotificationNew')) {
                 ];
 
                 // Android badge (handled in app)
-                $message['data'] = [
+                $message['data'] = (object)[
                     'badge' => (string)$badge,
                     'title' => $title,
                     'body'  => $body,

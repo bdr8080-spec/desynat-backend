@@ -18,15 +18,17 @@ use App\Helpers\ApiResponse;
 use App\Services\UserAffilatedAuthService;
 use App\Services\UserOrderService;
 use App\Services\NotificationManagementService;
+use App\Services\UserAffiliatedProductService;
 
 class UserAffilatedController extends Controller
 {
 
-    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService)
+    public function __construct(UserAffilatedAuthService $UserAffilatedAuthService, UserOrderService $UserOrderService, NotificationManagementService $NotificationManagementService, UserAffiliatedProductService $UserAffiliatedProductService)
     {
         $this->UserAffilatedAuthService = $UserAffilatedAuthService;
         $this->UserOrderService = $UserOrderService;
         $this->NotificationManagementService = $NotificationManagementService;
+        $this->UserAffiliatedProductService = $UserAffiliatedProductService;
     }
 
 
