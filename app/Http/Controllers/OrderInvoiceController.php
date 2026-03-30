@@ -18,7 +18,7 @@ class OrderInvoiceController extends Controller
                 'order_details.product_details.brand',
                 'order_details.product_details.category',
                 'order_details.product_details.subcategory',
-                'order_details.product_details.seller_details',
+                'order_details.product_details.seller_details.store_info',
                 'order_details.variation_details.color',
                 'order_details.variation_details.size',
                 'driver_details.zone_info'

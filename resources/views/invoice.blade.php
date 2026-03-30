@@ -197,6 +197,7 @@
         <tr>
           <th>Image</th>
           <th>Item</th>
+          <th>Seller</th>
           <th>Type</th>
           <th>Size</th>
           <th>Color</th>
@@ -209,6 +210,7 @@
         <tr class="invoice-items">
           <td><img src="{{$val->variation_details->variant_image[0]}}" style="width: 30px; height: 30px;"></td>
           <td>{{$val->product_details->product_name_en}}</td>
+          <td>{{$val->product_details->seller_details->store_info->store_name}}</td>
           <td>@if($val->order_type=='1')
                 Normal
                 @elseif($val->order_type=='2')
