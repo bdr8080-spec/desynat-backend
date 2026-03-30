@@ -307,6 +307,31 @@ class SellerDashboardController extends Controller
 
     }
 
+    public function delete_story(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'story_id' => 'required|exists:stories,id',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+   
+        $request_data=(object )[
+            'story_id'=>$request->story_id,
+        ];
+
+        $data= $this->StoryManagementService->deleteSellerStory($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
     public function add_reels(Request $request){
 
       $validate = Validator::make($request->all(), [
@@ -335,10 +360,36 @@ class SellerDashboardController extends Controller
 
     }
 
+    public function delete_highlight(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'highlight_id' => 'required|exists:highlights,id',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+   
+        $request_data=(object )[
+            'highlight_id'=>$request->highlight_id,
+        ];
+
+        $data= $this->StoryManagementService->deleteSellerHighlight($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
     public function add_highlights(Request $request){
 
       $validate = Validator::make($request->all(), [
         'file' => 'required',
+        'title' => 'required',
         ]);
     
         if($validate->fails()){
@@ -350,9 +401,35 @@ class SellerDashboardController extends Controller
         $request_data=(object )[
             'seller_id'=>$user_details->id,
             'file'=>$request->file,
+            'title'=>$request->title,
         ];
 
         $data= $this->StoryManagementService->addSellerHighlight($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
+    public function delete_reel(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'reel_id' => 'required|exists:reels,id',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+   
+        $request_data=(object )[
+            'reel_id'=>$request->reel_id,
+        ];
+
+        $data= $this->StoryManagementService->deleteSellerReel($request_data);
       
         if(isset($data['status']) && $data['status']=='error' ){
             return ApiResponse::generateResponse('error', $data['message'],(object)[],400);

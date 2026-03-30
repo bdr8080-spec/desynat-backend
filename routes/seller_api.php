@@ -139,8 +139,11 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
 
     //M11
     Route::post('/add_story', [SellerDashboardController::class,'add_story']);
+    Route::post('/delete_story', [SellerDashboardController::class,'delete_story']);
     Route::post('/add_highlights', [SellerDashboardController::class,'add_highlights']);
+    Route::post('/delete_highlight', [SellerDashboardController::class,'delete_highlight']);
     Route::post('/add_reels', [SellerDashboardController::class,'add_reels']);
+    Route::post('/delete_reel', [SellerDashboardController::class,'delete_reel']);
 
 });
 

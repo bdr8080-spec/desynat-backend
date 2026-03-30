@@ -627,6 +627,7 @@ class NotificationManagementService
            
             $AllNotification = Notification::where('receiver_type','2')
                 ->where('receiver_id', $request_data->user_id )
+                ->orderBy('id', 'desc')
                 ->paginate($limit);
            
             return [

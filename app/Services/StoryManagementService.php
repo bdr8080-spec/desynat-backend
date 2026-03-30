@@ -203,6 +203,7 @@ class StoryManagementService
             // Existing conditions
             $query->where('type', '2');
             $query->where('seller_id', $request->seller_id);
+            $query->where('status', '1');
             $query->orderBy('id', 'desc');
 
             $story_details = $query->get();
@@ -240,6 +241,7 @@ class StoryManagementService
 
             //  Only last 24 hours stories
             $query->where('created_at', '>=', Carbon::now()->subDay());
+            $query->where('status', '1');
 
             $query->orderBy('id', 'desc');
 
@@ -280,6 +282,7 @@ class StoryManagementService
             // Existing conditions
             $query->where('type', '2');
             $query->where('seller_id', $request->seller_id);
+            $query->where('status', '1');
             $query->orderBy('id', 'desc');
 
             $story_details = $query->get();
@@ -307,7 +310,7 @@ class StoryManagementService
         }
     }
 
-        public function getSellerHighlightOnUser($request)
+    public function getSellerHighlightOnUser($request)
     {
         try {
             $query = Highlight::query();
@@ -318,6 +321,7 @@ class StoryManagementService
             // Existing conditions
             $query->where('type', '2');
             $query->where('seller_id', $request->seller_id);
+            $query->where('status', '1');
             $query->orderBy('id', 'desc');
 
             $story_details = $query->get();
@@ -405,6 +409,7 @@ class StoryManagementService
                 'file' => $request_data->file,
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
+                'title' => $request_data->title,
             ]);
 
             return [
@@ -417,6 +422,96 @@ class StoryManagementService
             return [
                 'status' => 'error',
                 'message' => 'Failed to add highlight',
+                'data' => []
+            ];
+        }
+    }
+
+     public function deleteSellerStory($data)
+    {
+        try {
+            $story = Story::find($data->story_id);
+
+            if (!$story) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Story not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $story->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Story deleted successfully',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete story: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+     public function deleteSellerHighlight($data)
+    {
+        try {
+            $story = Highlight::find($data->highlight_id);
+
+            if (!$story) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Highlight not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $story->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Highlight deleted successfully',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete highlight: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+     public function deleteSellerReel($data)
+    {
+        try {
+            $story = Reel::find($data->reel_id);
+
+            if (!$story) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Reel not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            $story->delete();
+
+            return [
+                'status' => 'success',
+                'message' => 'Reel deleted successfully',
+                'data' => (object)[]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to delete reel: ' . $e->getMessage(),
                 'data' => []
             ];
         }
