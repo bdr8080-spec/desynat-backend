@@ -108,7 +108,7 @@ class NotificationManagementService
 
                 if ($token && !empty($token->fcm_token)) {
 
-                    // ✅ Calculate badge (unread count)
+                    //  Calculate badge (unread count)
                     $badgeCount = Notification::where('receiver_id', $receiver['id'])
                         ->where('receiver_type', $receiver['type'])
                         ->where('is_read', '0')

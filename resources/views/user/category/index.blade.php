@@ -89,9 +89,9 @@
                     @forelse($seller_highlights as $highlight)
                         <div class="item">
                             <div class="suggestStore_content"
-                                onclick='openHighlightGallery(@json($seller_highlights), {{ $loop->index }})'>
+                                onclick='openHighlightViewer(@json($highlight))'>
 
-                                <div class="suggestedStore_img" onclick="highlightGallery(0)">
+                                <div class="suggestedStore_img">
                                     <img src="{{ $highlight->file }}" class="img-fluid" />
                                 </div>
 
@@ -419,7 +419,7 @@
                 <div class="row">
                     @forelse($seller_reels as $reel)
                     <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img" onclick="ReelsGallery(0)">
+                        <div class="product-img" onclick='openReelViewer(@json($reel))'>
                             <img src="{{$reel->file}}" alt="Product">
                             <button class="wishlist-btn">
                                 <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
@@ -543,32 +543,28 @@
     </div>
 </div>
 
-<!-- Highlight Story Viewer -->
-<div class="status-viewer" id="statusHighlight" style="display:none;">
-
-    <div class="progress-container" id="progressContainerHighlight"></div>
-
-    <div class="status-img">
-        <img id="statusImageHighlight" style="display:none;" />
-        <video id="statusVideoHighlight" style="display:none;" autoplay muted></video>
-    </div>
-
-    <button onclick="closeHighlight()">Close</button>
-</div>
-
 
 <!-- New Highlight Story Viewer -->
 
-<div class="status-viewer bgwhite" id="heighlightSeller">
-    <div class="container">
-        <div class="story-header d-flex justify-content-between py-4">
-            <h3></h3>
-            <button type="button" class="btn btn-light" onclick="closeheighStatus()"><i class="bi bi-x-lg"></i></button>
+<div class="status-viewer bgwhite" id="highlightViewer">
+    <div class="container highlightStatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeHighlightViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
         </div>
+
         <div class="logostatus">
-            <div id="progressContainer" class="progress-container"></div>
+            <div id="progressContainerHighlight" class="progress-container"></div>
+            
             <div class="status-img">
-                <img id="statusImage" class="img-fluid" alt="status" />
+                <img id="highlightImage" class="img-fluid" style="display:none;" />
+                
+                <video id="highlightVideo"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
             </div>
         </div>    
     </div>
@@ -576,15 +572,26 @@
 
 <!-- New reel  Viewer -->
 
-<div class="status-viewer bgwhite" id="newreels">
-    <div class="container">
-        <div class="story-header d-flex justify-content-between py-4">
-            <h3></h3>
-            <button type="button" class="btn btn-light" onclick="closeheighreels()"><i class="bi bi-x-lg"></i></button>
+<div class="status-viewer bgwhite" id="reelViewer" style="display:none;">
+    <div class="container reelStatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeReelViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
         </div>
+
         <div class="logostatus">
+            <!-- Progress bar -->
+            <div id="progressContainerReel" class="progress-container"></div>
+
+            <!-- Media -->
             <div class="status-img">
-                <img id="reelsImage" class="img-fluid" alt="status" />
+                <img id="reelImage" class="img-fluid" style="display:none;" />
+                <video id="reelVideo" 
+                       style="width:100%; height:100%; object-fit:contain; display:none;" 
+                       controls autoplay muted>
+                </video>
             </div>
         </div>    
     </div>
@@ -991,7 +998,7 @@ function closeSellerStatus() {
 </script>
 
 
-<script>
+<!-- <script>
     // New Highlight Story Viewer
 
     var images = [
@@ -1067,82 +1074,179 @@ function closeSellerStatus() {
         document.getElementById("heighlightSeller").style.display = "none";
     }
 
+</script> -->
+
+ <!-- highlight -->
+<script>
+let highlightTimer = null;
+let highlightDuration = 3000; // default for images
+
+function openHighlightViewer(highlight) {
+    clearTimeout(highlightTimer);
+
+    const imageEl = document.getElementById("highlightImage");
+    const videoEl = document.getElementById("highlightVideo");
+    const progressContainer = document.getElementById("progressContainerHighlight");
+
+    // Hide previous media
+    imageEl.style.display = "none";
+    videoEl.style.display = "none";
+    videoEl.pause();
+    videoEl.src = "";
+
+    // Reset progress bar
+    progressContainer.innerHTML = `
+        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+            <div class="progress-fill" id="highlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+        </div>
+    `;
+    const progressFill = document.getElementById("highlightProgressFill");
+
+    const file = highlight.file;
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+    if (isVideo) {
+        videoEl.src = file;
+        videoEl.style.display = "block";
+
+        videoEl.onloadedmetadata = function() {
+            highlightDuration = videoEl.duration * 1000;
+            startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
+        };
+
+        videoEl.onended = function() {
+            closeHighlightViewer();
+        };
+    } else {
+        imageEl.src = file;
+        imageEl.style.display = "block";
+        highlightDuration = 3000;
+        startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
+    }
+
+    document.getElementById("highlightViewer").style.display = "block";
+}
+
+function startHighlightProgress(progressEl, duration, callback) {
+    clearTimeout(highlightTimer);
+
+    // Reset progress
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
+
+    // Trigger animation
+    setTimeout(() => {
+        progressEl.style.transition = `width ${duration}ms linear`;
+        progressEl.style.width = "100%";
+    }, 50);
+
+    highlightTimer = setTimeout(callback, duration);
+}
+
+function closeHighlightViewer() {
+    clearTimeout(highlightTimer);
+
+    const imageEl = document.getElementById("highlightImage");
+    const videoEl = document.getElementById("highlightVideo");
+    const progressFill = document.getElementById("highlightProgressFill");
+
+    document.getElementById("highlightViewer").style.display = "none";
+
+    imageEl.style.display = "none";
+    videoEl.pause();
+    videoEl.style.display = "none";
+
+    if (progressFill) {
+        progressFill.style.transition = "none";
+        progressFill.style.width = "0%";
+    }
+}
 </script>
 
+<!-- reels -->
 <script>
-    // New Reels panel
-    var images = [
-        "{{asset('user')}}/assets/images/store1.jpg",
-        "{{asset('user')}}/assets/images/item-1.svg",
-        "{{asset('user')}}/assets/images/item-2.svg",
-    ];
+let reelTimer = null;
+let reelDuration = 3000; // default for images
 
-    var currentIndex = 0;
-    var timer = null;
-    var duration = 3000;
+function openReelViewer(reel) {
+    clearTimeout(reelTimer);
 
-    function ReelsGallery(index) {
-        currentIndex = index;
-        document.getElementById("newreels").style.display = "block";
-        generateProgressBars();
-        showImage();
+    const imageEl = document.getElementById("reelImage");
+    const videoEl = document.getElementById("reelVideo");
+    const progressContainer = document.getElementById("progressContainerReel");
+
+    // Hide previous media
+    imageEl.style.display = "none";
+    videoEl.style.display = "none";
+    videoEl.pause();
+    videoEl.src = "";
+
+    // Reset progress bar
+    progressContainer.innerHTML = `
+        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+            <div class="progress-fill" id="reelProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+        </div>
+    `;
+    const progressFill = document.getElementById("reelProgressFill");
+
+    const file = reel.file;
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+    if (isVideo) {
+        videoEl.src = file;
+        videoEl.style.display = "block";
+
+        videoEl.onloadedmetadata = function() {
+            reelDuration = videoEl.duration * 1000;
+            startReelProgress(progressFill, reelDuration, closeReelViewer);
+        };
+
+        videoEl.onended = function() {
+            closeReelViewer();
+        };
+    } else {
+        imageEl.src = file;
+        imageEl.style.display = "block";
+        reelDuration = 3000;
+        startReelProgress(progressFill, reelDuration, closeReelViewer);
     }
 
-    function generateProgressBars() {
-        const container = document.getElementById("progressContainer");
-        container.innerHTML = "";
-        images.forEach((img, i) => {
-            container.innerHTML += `
-                <div class="progress-bar">
-                    <div class="progress-fill" id="bar${i}"></div>
-                </div>
-            `;
-        });
-    }
+    document.getElementById("reelViewer").style.display = "block";
+}
 
-    function showImage() {
-        document.getElementById("reelsImage").src = images[currentIndex];
-        startProgress();
-    }
+function startReelProgress(progressEl, duration, callback) {
+    clearTimeout(reelTimer);
 
-    function startProgress() {
-        clearTimeout(timer);
-        // Reset all bars
-        document.querySelectorAll(".progress-fill").forEach(bar => {
-            bar.style.width = "0%";
-            bar.style.transition = "none";
-        });
-        setTimeout(() => {
-            let bar = document.getElementById("bar" + currentIndex);
-            bar.style.transition = `${duration}ms linear`;
-            bar.style.width = "100%";
-        }, 10);
+    // Reset progress
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
 
-        timer = setTimeout(() => {
-            showNext();
-        }, duration);
-    }
+    setTimeout(() => {
+        progressEl.style.transition = `width ${duration}ms linear`;
+        progressEl.style.width = "100%";
+    }, 50);
 
-    function showNext() {
-        if (currentIndex < images.length - 1) {
-            currentIndex++;
-            showImage();
-        } else {
-            closeheighreels(); 
-        }
-    }
+    reelTimer = setTimeout(callback, duration);
+}
 
-    function showPrev() {
-        if (currentIndex > 0) {
-            currentIndex--;
-            showImage();
-        }
-    }
+function closeReelViewer() {
+    clearTimeout(reelTimer);
 
-    function closeheighreels() {
-        clearTimeout(timer);
-        document.getElementById("newreels").style.display = "none";
+    const imageEl = document.getElementById("reelImage");
+    const videoEl = document.getElementById("reelVideo");
+    const progressFill = document.getElementById("reelProgressFill");
+
+    document.getElementById("reelViewer").style.display = "none";
+
+    imageEl.style.display = "none";
+    videoEl.pause();
+    videoEl.style.display = "none";
+
+    if (progressFill) {
+        progressFill.style.transition = "none";
+        progressFill.style.width = "0%";
     }
+}
 
 </script>
 
