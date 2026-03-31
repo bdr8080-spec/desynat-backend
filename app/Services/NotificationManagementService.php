@@ -95,26 +95,36 @@ class NotificationManagementService
 
                 $token = $this->getDeviceToken($receiver['id'], $receiver['type']);
 
-                if($token) {
-                    // sendPushNotification(
-                    //     [$token],
-                    //     $title_english,
-                    //     $description_english,
-                    //     $notification_type,
-                    //     $sender_id,
-                    //     $receiver['id'],
-                    //     $receiver['type']
-                    // );
+                // if($token) {
+                //     sendPushNotificationNew(
+                //         [$token->fcm_token],
+                //         $title_english,
+                //         $description_english,
+                //         [$token->device_type],
+                //         '1'
+                        
+                //     );
+                // }
+
+                if ($token && !empty($token->fcm_token)) {
+
+                    // ✅ Calculate badge (unread count)
+                    $badgeCount = Notification::where('receiver_id', $receiver['id'])
+                        ->where('receiver_type', $receiver['type'])
+                        ->where('is_read', '0')
+                        ->count();
+
                     sendPushNotificationNew(
                         [$token->fcm_token],
                         $title_english,
                         $description_english,
-                        [$token->device_type],
-                        '1'
-                        
+                        $token->device_type, 
+                        $badgeCount          
                     );
                 }
             }
+
+           // dd($allNotifications);
 
             return [
                 'status' => 'success',
