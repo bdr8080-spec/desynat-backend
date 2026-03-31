@@ -3328,3 +3328,78 @@ img.img-fluid.circle-image {
     margin: auto;
     border-radius: 20px;
 }
+
+/* logo story status Progress bars row */
+.bgwhite{
+    background: #fff !important;
+    top: 15%;
+    padding-top: 20px;
+}
+.adminstatus .logostatus {
+    width: 33%;
+    background: #333;
+    margin: auto;
+    position: relative;
+}
+.adminstatus .progress-container {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.adminstatus .logostatus .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.adminstatus .logostatus .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--login-bg);
+    transition: width linear;
+}
+
+.adminstatus .status-close {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    font-size: 18px;
+    color: #6E4527;
+    cursor: pointer;
+}
+
+.adminstatus .logostatus .status-img {
+    height: 70vh;
+    overflow: hidden;
+}
+.adminstatus .logostatus .status-img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.adminstatus .status-left span,
+.status-right span {
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, 00%);
+    height: 100%;
+    width: 10%;
+    cursor: pointer;
+    color: #000;
+}
+
+.adminstatus .status-left span {
+    left: 0;
+}
+
+.adminstatus .status-right span {
+    right: 0;
+    left: auto;
+}

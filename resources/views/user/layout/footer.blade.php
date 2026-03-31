@@ -108,32 +108,25 @@
          </div>
      </footer>
 
-     <!-- WhatsApp Status Viewer -->
-     <div class="status-viewer" id="statusViewer">
-         <!-- Multiple Progress Bars -->
-         <div id="progressContainer" class="progress-container"></div>
-         <span class="status-close" onclick="closeStatus()">&times;</span>
-         <img id="statusImage" class="status-img" />
-         <!-- Tap Zones -->
-         <!-- <div class="status-left" onclick="showPrev()">
-             <span>
-                 <i class="fa-solid fa-chevron-left"></i>
-             </span>
-         </div>
-         <div class="status-right" onclick="showNext()">
-             <span>
-                 <i class="fa-solid fa-chevron-right"></i>
-             </span>
-         </div> -->
-     </div>
+  <!-- Admin logo story section -->
+<div class="status-viewer bgwhite" id="statusAdmin">
+    <div class="container adminstatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeStatus()"><i class="bi bi-x-lg"></i></button>
+        </div>
 
-     <!-- Admin status -->
-     <!-- <div class="status-viewer" id="statusViewer">
-        <div id="progressContainer" class="progress-container"></div>
-        <span class="status-close" onclick="closeStatus()">&times;</span>
-        <img id="statusImage" class="status-img" />
-       
-     </div> -->
+        <div class="logostatus">
+            <div id="progressContainer" class="progress-container"></div>
+            
+            <div class="status-img">
+                <img id="statusImage" class="img-fluid" alt="status" />
+            </div>
+        </div>    
+    </div>
+</div>
+     
+
 
      <!-- Notification Management -->
 
@@ -1217,6 +1210,81 @@ onMessage(messaging, (payload) => {
      </script>
 
 
+    <script>
+        var images = [
+            "{{asset('user')}}/assets/images/store1.jpg",
+            "{{asset('user')}}/assets/images/item-1.svg",
+            "{{asset('user')}}/assets/images/item-2.svg",
+        ];
+
+        var currentIndex = 0;
+        var timer = null;
+        var duration = 3000; 
+
+        function openGallery(index) {
+            currentIndex = index;
+            document.getElementById("statusAdmin").style.display = "block";
+
+            generateProgressBars();
+            showImage();
+        }
+
+        function generateProgressBars() {
+            const container = document.getElementById("progressContainer");
+            container.innerHTML = "";
+
+            images.forEach((img, i) => {
+                container.innerHTML += `
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="bar${i}"></div>
+                    </div>
+                `;
+            });
+        }
+
+        function showImage() {
+            document.getElementById("statusImage").src = images[currentIndex];
+            startProgress();
+        }
+
+        function startProgress() {
+            clearTimeout(timer);
+            document.querySelectorAll(".progress-fill").forEach(bar => {
+                bar.style.width = "0%";
+                bar.style.transition = "none";
+            });
+            setTimeout(() => {
+                let bar = document.getElementById("bar" + currentIndex);
+                bar.style.transition = `${duration}ms linear`;
+                bar.style.width = "100%";
+            }, 10);
+
+            timer = setTimeout(() => {
+                showNext();
+            }, duration);
+        }
+
+        function showNext() {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                showImage();
+            } else {
+                closeStatus();
+            }
+        }
+
+        function showPrev() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showImage();
+            }
+        }
+
+        function closeStatus() {
+            clearTimeout(timer);
+            document.getElementById("statusAdmin").style.display = "none";
+        }
+    </script>
 
 
      <!-- firebAse code End here  -->
