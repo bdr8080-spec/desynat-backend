@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Helpers\ApiResponse;
 use App\Services\UserManagementService;
 use App\Services\UserDashboardService;
+use App\Services\StoryManagementService;
 
 
 use Validator;
@@ -25,10 +26,11 @@ use Illuminate\Support\Facades\Storage;
 class UserStoreController extends Controller
 {
 
-    public function __construct(UserManagementService $UserManagementService,UserDashboardService $UserDashboardService){
+    public function __construct(UserManagementService $UserManagementService,UserDashboardService $UserDashboardService,StoryManagementService $StoryManagementService){
 
         $this->UserManagementService=$UserManagementService;
         $this->UserDashboardService=$UserDashboardService;
+        $this->StoryManagementService=$StoryManagementService;
    
     }
 
@@ -163,6 +165,7 @@ class UserStoreController extends Controller
         // Call service method
         $store_details = $this->UserManagementService->singleStoreWiseAllproduct($request_data);
         $store_details = $store_details['data'];
+        //dd($store_details);
 
         // Fetch filters for view
         $brand = Brand::orderBy('name_english', 'asc')->get();
@@ -173,8 +176,19 @@ class UserStoreController extends Controller
         // Qr Create Scanner Code 
            $qrSellerCode = url()->full();
 
+        $seller_id = $store_details['store']['seller_id'];
+       // dd($seller_id);
+
+        $request_data1 = (object)[
+            'seller_id' => $seller_id,
+        ];
+
+        $seller_highlights = $this->StoryManagementService->getSellerHighlightOnUser($request_data1)['data'];
+        //dd($seller_highlights);
+        $seller_reels = $this->StoryManagementService->getSellerReelOnUser($request_data1)['data'];
+
           
-        return view('user.category.index', compact('store_details', 'category', 'brand', 'size', 'color','qrSellerCode'));
+        return view('user.category.index', compact('store_details', 'category', 'brand', 'size', 'color','qrSellerCode','seller_highlights','seller_reels'));
         
     }
 

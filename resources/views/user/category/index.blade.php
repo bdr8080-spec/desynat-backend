@@ -78,54 +78,31 @@
         <div class="col-lg-12">
             <div class="suggestStore_contenar">
                 <div class="owl-carousel storeCarousel">
-                    <div class="item" onclick="openSeller(0)">
+                    <!-- <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
                             </div>
                             <p>Kurtas</p>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                    </div> -->
+                    @forelse($seller_highlights as $highlight)
+                        <div class="item">
+                            <div class="suggestStore_content"
+                                onclick='openHighlightGallery(@json($seller_highlights), {{ $loop->index }})'>
+
+                                <div class="suggestedStore_img">
+                                    <img src="{{ $highlight->file }}" class="img-fluid" />
+                                </div>
+
+                                <p>{{ $highlight->title ?? 'Highlight' }}</p>
                             </div>
-                            <p>Polo</p>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Shirts</p>
+                    @empty
+                        <div class="item text-center">
+                            <p>No highlights</p>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Casuals</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Formals</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Kurtas</p>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
 
             </div>
@@ -440,78 +417,22 @@
         <div class="tab-pane fade" id="reels-tab-pane" role="tabpanel" aria-labelledby="reels-tab" tabindex="0">
             <div class="categoryDetail_content reels_content">
                 <div class="row">
+                    @forelse($seller_reels as $reel)
                     <div class="col-lg-3 col-md-3 col-12 my-3">
                         <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m1.jpg" alt="Product">
+                            <img src="{{$reel->file}}" alt="Product">
                             <button class="wishlist-btn">
                                 <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
                                     alt="check" />
                             </button>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m2.png" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
+                    @empty
+                        <div class="item text-center">
+                            <p>No highlights</p>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m3.jpg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m4.png" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
+                    @endforelse
+ 
                 </div>
             </div>
         </div>
@@ -620,6 +541,19 @@
             </div>
         </div>    
     </div>
+</div>
+
+<!-- Highlight Story Viewer -->
+<div class="status-viewer" id="statusHighlight" style="display:none;">
+
+    <div class="progress-container" id="progressContainerHighlight"></div>
+
+    <div class="status-img">
+        <img id="statusImageHighlight" style="display:none;" />
+        <video id="statusVideoHighlight" style="display:none;" autoplay muted></video>
+    </div>
+
+    <button onclick="closeHighlight()">Close</button>
 </div>
 
 
@@ -1022,6 +956,7 @@ function closeSellerStatus() {
 }
 
 </script>
+
 
 
 @endsection

@@ -504,7 +504,7 @@ $('.adsbannerpop2').owlCarousel({
 
      <script>
 $('.storeCarousel').owlCarousel({
-    loop: true,
+    loop: false,
     margin: 10,
     nav: false,
     dots: true,
