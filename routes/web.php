@@ -15,7 +15,7 @@ require __DIR__.'/admin_web.php';
 require __DIR__.'/affiliate_userWeb.php';
 
 Route::get('optimize',function(){
-    Artisan::call('optimize');
+    Artisan::call('optimize:clear');
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
     return 'Application optimized successfully!';
