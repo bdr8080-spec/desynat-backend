@@ -91,7 +91,7 @@
                             <div class="suggestStore_content"
                                 onclick='openHighlightGallery(@json($seller_highlights), {{ $loop->index }})'>
 
-                                <div class="suggestedStore_img">
+                                <div class="suggestedStore_img" onclick="highlightGallery(0)">
                                     <img src="{{ $highlight->file }}" class="img-fluid" />
                                 </div>
 
@@ -557,6 +557,39 @@
 </div>
 
 
+<!-- New Highlight Story Viewer -->
+
+<div class="status-viewer bgwhite" id="heighlightSeller">
+    <div class="container">
+        <div class="story-header d-flex justify-content-between py-4">
+            <h3></h3>
+            <button type="button" class="btn btn-light" onclick="closeheighStatus()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="logostatus">
+            <div id="progressContainer" class="progress-container"></div>
+            <div class="status-img">
+                <img id="statusImage" class="img-fluid" alt="status" />
+            </div>
+        </div>    
+    </div>
+</div>
+
+<!-- New reel  Viewer -->
+
+<div class="status-viewer bgwhite" id="newreels">
+    <div class="container">
+        <div class="story-header d-flex justify-content-between py-4">
+            <h3></h3>
+            <button type="button" class="btn btn-light" onclick="closeheighStatus()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="logostatus">
+            <div class="status-img">
+                <img id="statusImage" class="img-fluid" alt="status" />
+            </div>
+        </div>    
+    </div>
+</div>
+
 
 <script>
 (function() {
@@ -954,6 +987,85 @@ function closeSellerStatus() {
         container.style.display = "none";
     }
 }
+
+</script>
+
+
+<script>
+    // New Highlight Story Viewer
+
+    var images = [
+        "{{asset('user')}}/assets/images/store1.jpg",
+        "{{asset('user')}}/assets/images/item-1.svg",
+        "{{asset('user')}}/assets/images/item-2.svg",
+    ];
+
+    var currentIndex = 0;
+    var timer = null;
+    var duration = 3000;
+
+    function highlightGallery(index) {
+        currentIndex = index;
+        document.getElementById("heighlightSeller").style.display = "block";
+        generateProgressBars();
+        showImage();
+    }
+
+    function generateProgressBars() {
+        const container = document.getElementById("progressContainer");
+        container.innerHTML = "";
+        images.forEach((img, i) => {
+            container.innerHTML += `
+                <div class="progress-bar">
+                    <div class="progress-fill" id="bar${i}"></div>
+                </div>
+            `;
+        });
+    }
+
+    function showImage() {
+        document.getElementById("statusImage").src = images[currentIndex];
+        startProgress();
+    }
+
+    function startProgress() {
+        clearTimeout(timer);
+        // Reset all bars
+        document.querySelectorAll(".progress-fill").forEach(bar => {
+            bar.style.width = "0%";
+            bar.style.transition = "none";
+        });
+        setTimeout(() => {
+            let bar = document.getElementById("bar" + currentIndex);
+            bar.style.transition = `${duration}ms linear`;
+            bar.style.width = "100%";
+        }, 10);
+
+        timer = setTimeout(() => {
+            showNext();
+        }, duration);
+    }
+
+    function showNext() {
+        if (currentIndex < images.length - 1) {
+            currentIndex++;
+            showImage();
+        } else {
+            closeheighStatus(); 
+        }
+    }
+
+    function showPrev() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            showImage();
+        }
+    }
+
+    function closeheighStatus() {
+        clearTimeout(timer);
+        document.getElementById("heighlightSeller").style.display = "none";
+    }
 
 </script>
 
