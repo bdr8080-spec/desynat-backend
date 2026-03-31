@@ -49,10 +49,14 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center">
-            <a href="{{ route('seller.dashboard') }}" class="logo">
-                <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid"
-                    id="storyModal">
+            <a class="logo">
+                <img src="{{ asset('dealer') }}/assets/img/desynat-logo.svg" alt="image" class="img-fluid" usemap="#logoMap">
             </a>
+            <map name="logoMap">
+                <area shape="rect" coords="0,0,50,50" href="javascript:void(0)" onclick="openGallery(0)">
+                <area shape="rect" coords="60,0,200,50" href="{{ route('seller.dashboard') }}">
+            </map>
+
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div>
 
@@ -60,9 +64,10 @@
             <ul class="d-flex align-items-center">
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon" href="{{route('seller.All_chats')}}">
-                        <img src="{{ asset('dealer') }}/assets/img/chat.svg" alt="icon" class="bell-icon">
+                        <img src="{{ asset('dealer') }}/assets/img/chat.svg" alt="icon" class="bell-icon" >
                         <!-- <span class="badge bg-success badge-number">3</span> -->
                     </a>
+                   
                     <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                         <li class="dropdown-header">
                             You have 3 new messages

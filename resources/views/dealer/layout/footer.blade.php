@@ -88,40 +88,22 @@
     </div>
 </div>
 
-
-
-<!-- app story -->
-<div class="storywapper" style="display:none;">
-  <div class="container">
-    <div class="modal-content-2 pt-5">
-      <div class="story-header d-flex justify-content-between">
-        <h3>Story </h3>
-        <button type="button" id="btnclose"><i class="bi bi-x-lg"></i></button>
-      </div>
-      <div class="modal-body">
-        <div class="status-panel">
-            <div class="owl-carousel owl-theme storeBanner">
-                <div class="item">
-                    <div class="sellerstatus">
-                        <img src="{{ asset('dealer') }}/assets/img/reel-1.svg" alt="banner" class="img-fluid" />
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="sellerstatus">
-                        <img src="{{ asset('dealer') }}/assets/img/reel-3.svg" alt="banner" class="img-fluid" />
-                    </div>
-                </div>
-               
-
-
-            </div>
-        
+<!-- Seller story section -->
+<div class="status-viewer bgwhite" id="statusViewer">
+    <div class="container">
+        <div class="story-header d-flex justify-content-between py-4">
+            <h3>Story </h3>
+            <button type="button" class="btn btn-light" onclick="closeStatus()"><i class="bi bi-x-lg"></i></button>
         </div>
-
-      </div>
+        <div class="logostatus">
+            <div id="progressContainer" class="progress-container"></div>
+            <div class="status-img">
+                <img id="statusImage" class="img-fluid" alt="status" />
+            </div>
+        </div>    
     </div>
-  </div>
 </div>
+
 
 
 <!-- Vendor JS Files -->
@@ -141,37 +123,82 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
 <script>
-    $(document).on('click', '#storyModal', function (e) {
-        e.preventDefault();       
-        $('.storywapper').toggle();
-    });
+var images = [
+    "{{asset('user')}}/assets/images/store1.jpg",
+    "{{asset('user')}}/assets/images/item-1.svg",
+    "{{asset('user')}}/assets/images/item-2.svg",
+];
 
-    $(document).on('click', '#btnclose', function () {
-        $('.storywapper').hide();
-    });
+var currentIndex = 0;
+var timer = null;
+var duration = 3000;
 
-    $('.storeBanner').owlCarousel({
-        loop: true,
-        margin: 10,
-        responsiveClass: true,
-        dots: true,
-        // autoplay: true,
-        // autoplayTimeout: 5000,
-        // smartSpeed: 5000,
-        responsive: {
-            0: {
-                items: 1,
-            },
-            600: {
-                items: 1,
-            },
-            1000: {
-                items: 1,
-            }
-        }
-    })
+function openGallery(index) {
+    currentIndex = index;
+    document.getElementById("statusViewer").style.display = "block";
+    generateProgressBars();
+    showImage();
+}
+
+function generateProgressBars() {
+    const container = document.getElementById("progressContainer");
+    container.innerHTML = "";
+    images.forEach((img, i) => {
+        container.innerHTML += `
+            <div class="progress-bar">
+                <div class="progress-fill" id="bar${i}"></div>
+            </div>
+        `;
+    });
+}
+
+function showImage() {
+    document.getElementById("statusImage").src = images[currentIndex];
+    startProgress();
+}
+
+function startProgress() {
+    clearTimeout(timer);
+    // Reset all bars
+    document.querySelectorAll(".progress-fill").forEach(bar => {
+        bar.style.width = "0%";
+        bar.style.transition = "none";
+    });
+    setTimeout(() => {
+        let bar = document.getElementById("bar" + currentIndex);
+        bar.style.transition = `${duration}ms linear`;
+        bar.style.width = "100%";
+    }, 10);
+
+    timer = setTimeout(() => {
+        showNext();
+    }, duration);
+}
+
+function showNext() {
+    if (currentIndex < images.length - 1) {
+        currentIndex++;
+        showImage();
+    } else {
+        closeStatus(); 
+    }
+}
+
+function showPrev() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showImage();
+    }
+}
+
+function closeStatus() {
+    clearTimeout(timer);
+    document.getElementById("statusViewer").style.display = "none";
+}
 
 </script>
+
+
 
 <script>
     document.querySelectorAll('.notapplyspace').forEach(function(input) {
