@@ -123,7 +123,7 @@
           font-size: 13px;
           color: #4a4a4a;
         ">
-        <img src="{{ asset('admin/image/logo.svg') }}" alt="logo">
+        <img src="{{ asset('admin/image/Desynat-logo-2.svg') }}" alt="logo" style="width:205px;">
       <p style="
             font-weight: bold;
             color: #000;
