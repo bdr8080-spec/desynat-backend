@@ -17,7 +17,7 @@
                 <div class="d-flex align-items-center">
                     <div class="img-contenar">
                         <div class="storeClient_profile_img">
-                            <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" />
+                            <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(0)" />
                         </div>
                     </div>
                     <div class="storeClient_profile_content">
@@ -592,10 +592,35 @@
         </div>
     </div>
 </form>
-<input type="hidden" name="seller_id" value="{{ $store_details['store']['seller_id'] }}" />
+<input type="hidden" name="seller_id" id="seller_id" value="{{ $store_details['store']['seller_id'] }}" />
 <a href="javascript:void(0)" class="fixedchat">
     <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
 </a>
+
+ <!-- Seller logo story section -->
+<div class="status-viewer bgwhite" id="statusSeller">
+    <div class="container adminstatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeSellerStatus()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="logostatus">
+            <div id="progressContainerSeller" class="progress-container"></div>
+            
+            <div class="status-img">
+                <img id="statusImageSeller" class="img-fluid" style="display:none;" />
+                
+                <video id="statusVideoSeller"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
+    </div>
+</div>
 
 
 
@@ -747,6 +772,256 @@ document.getElementById("copyLinkBtn").addEventListener("click", function() {
         console.error("Failed to copy: ", err);
     });
 });
+</script>
+
+<script>
+
+var sellerStories = null;  
+var sellerIndex = 0;
+var sellerTimer = null;
+var sellerDuration = 3000;
+var sellerLoading = false;    // prevent multiple API calls
+
+// ================= CLICK HANDLER =================
+function openSellerGallery(index = 0) {
+    console.log("[SELLER] Clicked");
+
+    // Prevent multiple clicks while loading
+    if (sellerLoading) {
+        //console.log("[SELLER] Already loading...");
+        return;
+    }
+
+    // If not loaded → fetch from API
+    if (sellerStories === null) {
+        loadSellerStories(index);
+    } 
+    // If already loaded and has stories → open gallery
+    else if (sellerStories.length > 0) {
+        showSellerGallery(index);
+    } 
+    // If loaded but empty → do nothing
+    else {
+        //console.log("[SELLER] No stories → do nothing");
+    }
+}
+
+// ================= LOAD STORIES FROM API =================
+function loadSellerStories(openIndex = 0) {
+
+    sellerLoading = true;
+
+    // Get seller_id from hidden input
+    var sellerInput = document.getElementById("seller_id");
+
+    if (!sellerInput) {
+        //console.error("[SELLER] seller_id input not found!");
+        sellerLoading = false;
+        return;
+    }
+
+    var seller_id = sellerInput.value;
+    //console.log("[SELLER] seller_id:", seller_id);
+
+    $.ajax({
+        url: "{{ route('user.get_seller_story') }}",
+        type: "GET",
+        dataType: "json",
+
+        data: {
+            seller_id: seller_id
+        },
+
+        success: function(res) {
+            sellerLoading = false;
+
+           // console.log("[SELLER] API RESPONSE:", res);
+
+            if (res.status === "success" && Array.isArray(res.data.data)) {
+                sellerStories = res.data.data;
+            } else {
+                sellerStories = [];
+            }
+
+            // If stories exist → open gallery
+            if (sellerStories.length > 0) {
+                showSellerGallery(openIndex);
+            } else {
+                //console.log("[SELLER] No stories found → do nothing");
+            }
+        },
+
+        error: function(err) {
+            sellerLoading = false;
+            console.error("[SELLER] AJAX ERROR:", err);
+            sellerStories = [];
+        }
+    });
+}
+
+function showSellerGallery(index) {
+
+    sellerIndex = index;
+
+    var container = document.getElementById("statusSeller");
+    if (!container) {
+        //console.error("[SELLER] statusSeller not found");
+        return;
+    }
+
+    container.style.display = "block";
+
+    generateSellerProgressBars();
+    showSellerStory();
+}
+
+
+function generateSellerProgressBars() {
+
+    var container = document.getElementById("progressContainerSeller");
+
+    if (!container) {
+       // console.error("[SELLER] progressContainerSeller not found");
+        return;
+    }
+
+    container.innerHTML = "";
+
+    sellerStories.forEach((s, i) => {
+        container.innerHTML += `
+            <div class="progress-bar">
+                <div class="progress-fill" id="sellerBar${i}"></div>
+            </div>
+        `;
+    });
+}
+
+function showSellerStory() {
+
+    var story = sellerStories[sellerIndex];
+
+    //console.log("[SELLER] showStory index:", sellerIndex, story);
+
+    if (!story) {
+        closeSellerStatus();
+        return;
+    }
+
+    var img = document.getElementById("statusImageSeller");
+    var video = document.getElementById("statusVideoSeller");
+
+    if (!img || !video) {
+        //console.error("[SELLER] Image or Video element missing");
+        return;
+    }
+
+    // Reset
+    img.style.display = "none";
+    video.style.display = "none";
+    video.pause();
+    video.currentTime = 0;
+
+    var file = story.file;
+
+    if (!file) {
+        //console.warn("[SELLER] Empty file → skipping");
+        showNextSeller();
+        return;
+    }
+
+    //console.log("[SELLER] FILE:", file);
+
+    if (file.match(/\.(mp4|webm|ogg)$/i)) {
+
+        video.src = file;
+        video.style.display = "block";
+        video.controls = true;
+
+        video.onloadedmetadata = function () {
+            sellerDuration = (video.duration * 1000) || 3000;
+            startSellerProgress();
+            video.play().catch(e => console.warn("[SELLER] Play blocked:", e));
+        };
+
+        video.onerror = function () {
+            console.error("[SELLER] Video failed → skipping");
+            showNextSeller();
+        };
+
+    } 
+    else {
+
+        img.src = file;
+        img.style.display = "block";
+
+        sellerDuration = 3000;
+        startSellerProgress();
+    }
+}
+
+
+function startSellerProgress() {
+
+    clearTimeout(sellerTimer);
+
+    document.querySelectorAll("#progressContainerSeller .progress-fill")
+        .forEach(bar => {
+            bar.style.width = "0%";
+            bar.style.transition = "none";
+        });
+
+    setTimeout(() => {
+        var bar = document.getElementById("sellerBar" + sellerIndex);
+
+        if (bar) {
+            bar.style.transition = sellerDuration + "ms linear";
+            bar.style.width = "100%";
+        }
+    }, 10);
+
+    sellerTimer = setTimeout(() => {
+        showNextSeller();
+    }, sellerDuration);
+}
+
+
+function showNextSeller() {
+
+    if (sellerIndex < sellerStories.length - 1) {
+        sellerIndex++;
+        showSellerStory();
+    } else {
+        closeSellerStatus();
+    }
+}
+
+
+function showPrevSeller() {
+
+    if (sellerIndex > 0) {
+        sellerIndex--;
+        showSellerStory();
+    }
+}
+
+function closeSellerStatus() {
+
+    clearTimeout(sellerTimer);
+
+    var video = document.getElementById("statusVideoSeller");
+
+    if (video) {
+        video.pause();
+        video.currentTime = 0;
+    }
+
+    var container = document.getElementById("statusSeller");
+
+    if (container) {
+        container.style.display = "none";
+    }
+}
+
 </script>
 
 
