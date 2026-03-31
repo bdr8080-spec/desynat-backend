@@ -78,7 +78,7 @@
         <div class="col-lg-12">
             <div class="suggestStore_contenar">
                 <div class="owl-carousel storeCarousel">
-                    <div class="item" onclick="openGallery(0)">
+                    <div class="item" onclick="openSeller(0)">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
@@ -86,7 +86,7 @@
                             <p>Kurtas</p>
                         </div>
                     </div>
-                    <div class="item" onclick="openGallery(1)">
+                    <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
@@ -94,7 +94,7 @@
                             <p>Polo</p>
                         </div>
                     </div>
-                    <div class="item" onclick="openGallery(2)">
+                    <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
@@ -597,7 +597,22 @@
     <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
 </a>
 
+<!-- seller Highlights story -->
+<div class="status-viewer bgwhite" id="sellerStory">
+    <div class="container adminstatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeStatus()"><i class="bi bi-x-lg"></i></button>
+        </div>
 
+        <div class="logostatus">
+            <div id="progressContainer" class="progress-container"></div>
+            <div class="status-img">
+                <img id="statusImage" class="img-fluid" alt="status" />
+            </div>
+        </div>    
+    </div>
+</div>
 
 
 
@@ -747,6 +762,83 @@ document.getElementById("copyLinkBtn").addEventListener("click", function() {
         console.error("Failed to copy: ", err);
     });
 });
+</script>
+
+<!-- seller Highlights story -->
+<script>
+    var images = [
+        "{{asset('user')}}/assets/images/store1.jpg",
+        "{{asset('user')}}/assets/images/item-1.svg",
+        "{{asset('user')}}/assets/images/item-2.svg",
+    ];
+
+    var currentIndex = 0;
+    var timer = null;
+    var duration = 3000; 
+
+    function openSeller(index) {
+        currentIndex = index;
+        document.getElementById("sellerStory").style.display = "block";
+
+        generateProgressBars();
+        showImage();
+    }
+
+    function generateProgressBars() {
+        const container = document.getElementById("progressContainer");
+        container.innerHTML = "";
+
+        images.forEach((img, i) => {
+            container.innerHTML += `
+                <div class="progress-bar">
+                    <div class="progress-fill" id="bar${i}"></div>
+                </div>
+            `;
+        });
+    }
+
+    function showImage() {
+        document.getElementById("statusImage").src = images[currentIndex];
+        startProgress();
+    }
+
+    function startProgress() {
+        clearTimeout(timer);
+        document.querySelectorAll(".progress-fill").forEach(bar => {
+            bar.style.width = "0%";
+            bar.style.transition = "none";
+        });
+        setTimeout(() => {
+            let bar = document.getElementById("bar" + currentIndex);
+            bar.style.transition = `${duration}ms linear`;
+            bar.style.width = "100%";
+        }, 10);
+
+        timer = setTimeout(() => {
+            showNext();
+        }, duration);
+    }
+
+    function showNext() {
+        if (currentIndex < images.length - 1) {
+            currentIndex++;
+            showImage();
+        } else {
+            closeStatus();
+        }
+    }
+
+    function showPrev() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            showImage();
+        }
+    }
+
+    function closeStatus() {
+        clearTimeout(timer);
+        document.getElementById("sellerStory").style.display = "none";
+    }
 </script>
 
 
