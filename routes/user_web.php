@@ -157,6 +157,7 @@ Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_not
 });
 
 Route::get('/get_admin_story', [DashBoardController::class, 'get_admin_story'])->name('user.get_admin_story');
+Route::get('/get_seller_story', [DashBoardController::class, 'get_seller_story'])->name('user.get_seller_story');
 
 // M7 Code 
 

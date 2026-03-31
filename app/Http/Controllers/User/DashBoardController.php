@@ -215,5 +215,35 @@ class DashBoardController extends Controller
         }
     }
 
+    public function get_seller_story(Request $request)
+    {
+
+        try {
+
+            // $user=  $request->user();
+            $request_data = (object)[
+                    'seller_id' =>  $request->seller_id,
+                ];
+
+            $data = $this->StoryManagementService->getSellerStoryOnUser($request_data);
+            //dd($data);
+            
+            $message = $data['message'];
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to get story',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 }
