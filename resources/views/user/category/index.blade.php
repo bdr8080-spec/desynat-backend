@@ -17,7 +17,7 @@
                 <div class="d-flex align-items-center">
                     <div class="img-contenar">
                         <div class="storeClient_profile_img">
-                            <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" />
+                            <img src="{{ $store_details['store']['store_image'] }}" class="img-fluid" style="cursor:pointer" onclick="openSellerGallery(0)" />
                         </div>
                     </div>
                     <div class="storeClient_profile_content">
@@ -78,54 +78,31 @@
         <div class="col-lg-12">
             <div class="suggestStore_contenar">
                 <div class="owl-carousel storeCarousel">
-                    <div class="item" onclick="openGallery(0)">
+                    <!-- <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
                             </div>
                             <p>Kurtas</p>
                         </div>
-                    </div>
-                    <div class="item" onclick="openGallery(1)">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
+                    </div> -->
+                    @forelse($seller_highlights as $highlight)
+                        <div class="item">
+                            <div class="suggestStore_content"
+                                onclick='openHighlightViewer(@json($highlight))'>
+
+                                <div class="suggestedStore_img">
+                                    <img src="{{ $highlight->file }}" class="img-fluid" />
+                                </div>
+
+                                <p>{{ $highlight->title ?? 'Highlight' }}</p>
                             </div>
-                            <p>Polo</p>
                         </div>
-                    </div>
-                    <div class="item" onclick="openGallery(2)">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Shirts</p>
+                    @empty
+                        <div class="item text-center">
+                            <p>No highlights</p>
                         </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Casuals</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Formals</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="suggestStore_content">
-                            <div class="suggestedStore_img">
-                                <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
-                            </div>
-                            <p>Kurtas</p>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
 
             </div>
@@ -440,78 +417,22 @@
         <div class="tab-pane fade" id="reels-tab-pane" role="tabpanel" aria-labelledby="reels-tab" tabindex="0">
             <div class="categoryDetail_content reels_content">
                 <div class="row">
+                    @forelse($seller_reels as $reel)
                     <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m1.jpg" alt="Product">
+                        <div class="product-img" onclick='openReelViewer(@json($reel))'>
+                            <img src="{{$reel->file}}" alt="Product">
                             <button class="wishlist-btn">
                                 <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
                                     alt="check" />
                             </button>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m2.png" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
+                    @empty
+                        <div class="item text-center">
+                            <p>No highlights</p>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m3.jpg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/m4.png" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img">
-                            <img src="{{ asset('user/') }}/assets/images/product.svg" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
-                            </button>
-                        </div>
-                    </div>
+                    @endforelse
+ 
                 </div>
             </div>
         </div>
@@ -592,95 +513,90 @@
         </div>
     </div>
 </form>
-<input type="hidden" name="seller_id" value="{{ $store_details['store']['seller_id'] }}" />
+<input type="hidden" name="seller_id" id="seller_id" value="{{ $store_details['store']['seller_id'] }}" />
 <a href="javascript:void(0)" class="fixedchat">
     <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
 </a>
 
+  <!-- Seller logo story section -->
+<div class="status-viewer bgwhite" id="statusSeller">
+    <div class="container adminstatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeSellerStatus()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="logostatus">
+            <div id="progressContainerSeller" class="progress-container"></div>
+            
+            <div class="status-img">
+                <img id="statusImageSeller" class="img-fluid" style="display:none;" />
+                
+                <video id="statusVideoSeller"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
+    </div>
+</div>
 
 
-<script>
-var images = [
-    "{{asset('user')}}/assets/images/store1.jpg",
-    "{{asset('user')}}/assets/images/item-1.svg",
-    "{{asset('user')}}/assets/images/item-2.svg",
-    "{{asset('user')}}/assets/images/store1.jpg",
-    "{{asset('user')}}/assets/images/store1.jpg",
-    "{{asset('user')}}/assets/images/store1.jpg"
-];
+<!-- New Highlight Story Viewer -->
 
-var currentIndex = 0;
-var timer = null;
-var duration = 3000; // 3 sec like WhatsApp
+<div class="status-viewer bgwhite" id="highlightViewer">
+    <div class="container highlightStatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeHighlightViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
 
-function openGallery(index) {
-    currentIndex = index;
-    document.getElementById("statusViewer").style.display = "flex";
+        <div class="logostatus">
+            <div id="progressContainerHighlight" class="progress-container"></div>
+            
+            <div class="status-img">
+                <img id="highlightImage" class="img-fluid" style="display:none;" />
+                
+                <video id="highlightVideo"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
+    </div>
+</div>
 
-    generateProgressBars();
-    showImage();
-}
+<!-- New reel  Viewer -->
 
-function generateProgressBars() {
-    const container = document.getElementById("progressContainer");
-    container.innerHTML = "";
+<div class="status-viewer bgwhite" id="reelViewer" style="display:none;">
+    <div class="container reelStatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeReelViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
 
-    images.forEach((img, i) => {
-        container.innerHTML += `
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="bar${i}"></div>
-                    </div>
-                `;
-    });
-}
+        <div class="logostatus">
+            <!-- Progress bar -->
+            <div id="progressContainerReel" class="progress-container"></div>
 
-function showImage() {
-    document.getElementById("statusImage").src = images[currentIndex];
-    startProgress();
-}
+            <!-- Media -->
+            <div class="status-img">
+                <img id="reelImage" class="img-fluid" style="display:none;" />
+                <video id="reelVideo" 
+                       style="width:100%; height:100%; object-fit:contain; display:none;" 
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
+    </div>
+</div>
 
-function startProgress() {
-    clearTimeout(timer);
-
-    // Reset all bars
-    document.querySelectorAll(".progress-fill").forEach(bar => {
-        bar.style.width = "0%";
-        bar.style.transition = "none";
-    });
-
-    // Small delay so restart animation properly
-    setTimeout(() => {
-        let bar = document.getElementById("bar" + currentIndex);
-        bar.style.transition = `${duration}ms linear`;
-        bar.style.width = "100%";
-    }, 10);
-
-    timer = setTimeout(() => {
-        showNext();
-    }, duration);
-}
-
-function showNext() {
-    if (currentIndex < images.length - 1) {
-        currentIndex++;
-        showImage();
-    } else {
-        closeStatus(); // Close after last image like WhatsApp
-    }
-}
-
-function showPrev() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        showImage();
-    }
-}
-
-function closeStatus() {
-    clearTimeout(timer);
-    document.getElementById("statusViewer").style.display = "none";
-}
-</script>
 
 <script>
 (function() {
@@ -829,6 +745,511 @@ document.getElementById("copyLinkBtn").addEventListener("click", function() {
     });
 });
 </script>
+
+<script>
+
+var sellerStories = null;  
+var sellerIndex = 0;
+var sellerTimer = null;
+var sellerDuration = 3000;
+var sellerLoading = false;    // prevent multiple API calls
+
+// ================= CLICK HANDLER =================
+function openSellerGallery(index = 0) {
+    console.log("[SELLER] Clicked");
+
+    // Prevent multiple clicks while loading
+    if (sellerLoading) {
+        //console.log("[SELLER] Already loading...");
+        return;
+    }
+
+    // If not loaded → fetch from API
+    if (sellerStories === null) {
+        loadSellerStories(index);
+    } 
+    // If already loaded and has stories → open gallery
+    else if (sellerStories.length > 0) {
+        showSellerGallery(index);
+    } 
+    // If loaded but empty → do nothing
+    else {
+        //console.log("[SELLER] No stories → do nothing");
+    }
+}
+
+// ================= LOAD STORIES FROM API =================
+function loadSellerStories(openIndex = 0) {
+
+    sellerLoading = true;
+
+    // Get seller_id from hidden input
+    var sellerInput = document.getElementById("seller_id");
+
+    if (!sellerInput) {
+        //console.error("[SELLER] seller_id input not found!");
+        sellerLoading = false;
+        return;
+    }
+
+    var seller_id = sellerInput.value;
+    //console.log("[SELLER] seller_id:", seller_id);
+
+    $.ajax({
+        url: "{{ route('user.get_seller_story') }}",
+        type: "GET",
+        dataType: "json",
+
+        data: {
+            seller_id: seller_id
+        },
+
+        success: function(res) {
+            sellerLoading = false;
+
+           // console.log("[SELLER] API RESPONSE:", res);
+
+            if (res.status === "success" && Array.isArray(res.data.data)) {
+                sellerStories = res.data.data;
+            } else {
+                sellerStories = [];
+            }
+
+            // If stories exist → open gallery
+            if (sellerStories.length > 0) {
+                showSellerGallery(openIndex);
+            } else {
+                //console.log("[SELLER] No stories found → do nothing");
+            }
+        },
+
+        error: function(err) {
+            sellerLoading = false;
+            console.error("[SELLER] AJAX ERROR:", err);
+            sellerStories = [];
+        }
+    });
+}
+
+function showSellerGallery(index) {
+    //console.log('123');
+
+    sellerIndex = index;
+
+    var container = document.getElementById("statusSeller");
+    if (!container) {
+        console.error("[SELLER] statusSeller not found");
+        return;
+    }
+
+    container.style.display = "block";
+
+    generateSellerProgressBars();
+    showSellerStory();
+}
+
+
+function generateSellerProgressBars() {
+
+    var container = document.getElementById("progressContainerSeller");
+
+    if (!container) {
+       // console.error("[SELLER] progressContainerSeller not found");
+        return;
+    }
+
+    container.innerHTML = "";
+
+    sellerStories.forEach((s, i) => {
+        container.innerHTML += `
+            <div class="progress-bar">
+                <div class="progress-fill" id="sellerBar${i}"></div>
+            </div>
+        `;
+    });
+}
+
+function showSellerStory() {
+
+    var story = sellerStories[sellerIndex];
+
+    //console.log("[SELLER] showStory index:", sellerIndex, story);
+
+    if (!story) {
+        closeSellerStatus();
+        return;
+    }
+
+    var img = document.getElementById("statusImageSeller");
+    var video = document.getElementById("statusVideoSeller");
+
+    if (!img || !video) {
+        //console.error("[SELLER] Image or Video element missing");
+        return;
+    }
+
+    // Reset
+    img.style.display = "none";
+    video.style.display = "none";
+    video.pause();
+    video.currentTime = 0;
+
+    var file = story.file;
+
+    if (!file) {
+        //console.warn("[SELLER] Empty file → skipping");
+        showNextSeller();
+        return;
+    }
+
+    //console.log("[SELLER] FILE:", file);
+
+    if (file.match(/\.(mp4|webm|ogg)$/i)) {
+
+        video.src = file;
+        video.style.display = "block";
+        video.controls = true;
+
+        video.onloadedmetadata = function () {
+            sellerDuration = (video.duration * 1000) || 3000;
+            startSellerProgress();
+            video.play().catch(e => console.warn("[SELLER] Play blocked:", e));
+        };
+
+        video.onerror = function () {
+            console.error("[SELLER] Video failed → skipping");
+            showNextSeller();
+        };
+
+    } 
+    else {
+
+        img.src = file;
+        img.style.display = "block";
+
+        sellerDuration = 3000;
+        startSellerProgress();
+    }
+}
+
+
+function startSellerProgress() {
+
+    clearTimeout(sellerTimer);
+
+    document.querySelectorAll("#progressContainerSeller .progress-fill")
+        .forEach(bar => {
+            bar.style.width = "0%";
+            bar.style.transition = "none";
+        });
+
+    setTimeout(() => {
+        var bar = document.getElementById("sellerBar" + sellerIndex);
+
+        if (bar) {
+            bar.style.transition = sellerDuration + "ms linear";
+            bar.style.width = "100%";
+        }
+    }, 10);
+
+    sellerTimer = setTimeout(() => {
+        showNextSeller();
+    }, sellerDuration);
+}
+
+
+function showNextSeller() {
+
+    if (sellerIndex < sellerStories.length - 1) {
+        sellerIndex++;
+        showSellerStory();
+    } else {
+        closeSellerStatus();
+    }
+}
+
+
+function showPrevSeller() {
+
+    if (sellerIndex > 0) {
+        sellerIndex--;
+        showSellerStory();
+    }
+}
+
+function closeSellerStatus() {
+
+    clearTimeout(sellerTimer);
+
+    var video = document.getElementById("statusVideoSeller");
+
+    if (video) {
+        video.pause();
+        video.currentTime = 0;
+    }
+
+    var container = document.getElementById("statusSeller");
+
+    if (container) {
+        container.style.display = "none";
+    }
+}
+
+</script>
+
+
+<!-- <script>
+    // New Highlight Story Viewer
+
+    var images = [
+        "{{asset('user')}}/assets/images/store1.jpg",
+        "{{asset('user')}}/assets/images/item-1.svg",
+        "{{asset('user')}}/assets/images/item-2.svg",
+    ];
+
+    var currentIndex = 0;
+    var timer = null;
+    var duration = 3000;
+
+    function highlightGallery(index) {
+        currentIndex = index;
+        document.getElementById("heighlightSeller").style.display = "block";
+        generateProgressBars();
+        showImage();
+    }
+
+    function generateProgressBars() {
+        const container = document.getElementById("progressContainer");
+        container.innerHTML = "";
+        images.forEach((img, i) => {
+            container.innerHTML += `
+                <div class="progress-bar">
+                    <div class="progress-fill" id="bar${i}"></div>
+                </div>
+            `;
+        });
+    }
+
+    function showImage() {
+        document.getElementById("statusImage").src = images[currentIndex];
+        startProgress();
+    }
+
+    function startProgress() {
+        clearTimeout(timer);
+        // Reset all bars
+        document.querySelectorAll(".progress-fill").forEach(bar => {
+            bar.style.width = "0%";
+            bar.style.transition = "none";
+        });
+        setTimeout(() => {
+            let bar = document.getElementById("bar" + currentIndex);
+            bar.style.transition = `${duration}ms linear`;
+            bar.style.width = "100%";
+        }, 10);
+
+        timer = setTimeout(() => {
+            showNext();
+        }, duration);
+    }
+
+    function showNext() {
+        if (currentIndex < images.length - 1) {
+            currentIndex++;
+            showImage();
+        } else {
+            closeheighStatus(); 
+        }
+    }
+
+    function showPrev() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            showImage();
+        }
+    }
+
+    function closeheighStatus() {
+        clearTimeout(timer);
+        document.getElementById("heighlightSeller").style.display = "none";
+    }
+
+</script> -->
+
+ <!-- highlight -->
+<script>
+let highlightTimer = null;
+let highlightDuration = 3000; // default for images
+
+function openHighlightViewer(highlight) {
+    clearTimeout(highlightTimer);
+
+    const imageEl = document.getElementById("highlightImage");
+    const videoEl = document.getElementById("highlightVideo");
+    const progressContainer = document.getElementById("progressContainerHighlight");
+
+    // Hide previous media
+    imageEl.style.display = "none";
+    videoEl.style.display = "none";
+    videoEl.pause();
+    videoEl.src = "";
+
+    // Reset progress bar
+    progressContainer.innerHTML = `
+        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+            <div class="progress-fill" id="highlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+        </div>
+    `;
+    const progressFill = document.getElementById("highlightProgressFill");
+
+    const file = highlight.file;
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+    if (isVideo) {
+        videoEl.src = file;
+        videoEl.style.display = "block";
+
+        videoEl.onloadedmetadata = function() {
+            highlightDuration = videoEl.duration * 1000;
+            startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
+        };
+
+        videoEl.onended = function() {
+            closeHighlightViewer();
+        };
+    } else {
+        imageEl.src = file;
+        imageEl.style.display = "block";
+        highlightDuration = 3000;
+        startHighlightProgress(progressFill, highlightDuration, closeHighlightViewer);
+    }
+
+    document.getElementById("highlightViewer").style.display = "block";
+}
+
+function startHighlightProgress(progressEl, duration, callback) {
+    clearTimeout(highlightTimer);
+
+    // Reset progress
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
+
+    // Trigger animation
+    setTimeout(() => {
+        progressEl.style.transition = `width ${duration}ms linear`;
+        progressEl.style.width = "100%";
+    }, 50);
+
+    highlightTimer = setTimeout(callback, duration);
+}
+
+function closeHighlightViewer() {
+    clearTimeout(highlightTimer);
+
+    const imageEl = document.getElementById("highlightImage");
+    const videoEl = document.getElementById("highlightVideo");
+    const progressFill = document.getElementById("highlightProgressFill");
+
+    document.getElementById("highlightViewer").style.display = "none";
+
+    imageEl.style.display = "none";
+    videoEl.pause();
+    videoEl.style.display = "none";
+
+    if (progressFill) {
+        progressFill.style.transition = "none";
+        progressFill.style.width = "0%";
+    }
+}
+</script>
+
+<!-- reels -->
+<script>
+let reelTimer = null;
+let reelDuration = 3000; // default for images
+
+function openReelViewer(reel) {
+    clearTimeout(reelTimer);
+
+    const imageEl = document.getElementById("reelImage");
+    const videoEl = document.getElementById("reelVideo");
+    const progressContainer = document.getElementById("progressContainerReel");
+
+    // Hide previous media
+    imageEl.style.display = "none";
+    videoEl.style.display = "none";
+    videoEl.pause();
+    videoEl.src = "";
+
+    // Reset progress bar
+    progressContainer.innerHTML = `
+        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+            <div class="progress-fill" id="reelProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+        </div>
+    `;
+    const progressFill = document.getElementById("reelProgressFill");
+
+    const file = reel.file;
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+    if (isVideo) {
+        videoEl.src = file;
+        videoEl.style.display = "block";
+
+        videoEl.onloadedmetadata = function() {
+            reelDuration = videoEl.duration * 1000;
+            startReelProgress(progressFill, reelDuration, closeReelViewer);
+        };
+
+        videoEl.onended = function() {
+            closeReelViewer();
+        };
+    } else {
+        imageEl.src = file;
+        imageEl.style.display = "block";
+        reelDuration = 3000;
+        startReelProgress(progressFill, reelDuration, closeReelViewer);
+    }
+
+    document.getElementById("reelViewer").style.display = "block";
+}
+
+function startReelProgress(progressEl, duration, callback) {
+    clearTimeout(reelTimer);
+
+    // Reset progress
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
+
+    setTimeout(() => {
+        progressEl.style.transition = `width ${duration}ms linear`;
+        progressEl.style.width = "100%";
+    }, 50);
+
+    reelTimer = setTimeout(callback, duration);
+}
+
+function closeReelViewer() {
+    clearTimeout(reelTimer);
+
+    const imageEl = document.getElementById("reelImage");
+    const videoEl = document.getElementById("reelVideo");
+    const progressFill = document.getElementById("reelProgressFill");
+
+    document.getElementById("reelViewer").style.display = "none";
+
+    imageEl.style.display = "none";
+    videoEl.pause();
+    videoEl.style.display = "none";
+
+    if (progressFill) {
+        progressFill.style.transition = "none";
+        progressFill.style.width = "0%";
+    }
+}
+
+</script>
+
 
 
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Services\UserDashboardService;
 use App\Services\NotificationManagementService;
+use App\Services\StoryManagementService;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\ApiResponse;
 use Validator;
@@ -15,10 +16,11 @@ use Validator;
 class DashBoardController extends Controller
 {
 
-    public function __construct(UserDashboardService $UserDashboardService,NotificationManagementService $NotificationManagementService)
+    public function __construct(UserDashboardService $UserDashboardService,NotificationManagementService $NotificationManagementService, StoryManagementService $StoryManagementService)
     {
         $this->UserDashboardService = $UserDashboardService;
         $this->NotificationManagementService = $NotificationManagementService;
+        $this->StoryManagementService = $StoryManagementService;
     }
 
 
@@ -182,6 +184,96 @@ class DashBoardController extends Controller
     }
 
 }
+
+    public function get_admin_story(Request $request)
+    {
+
+        try {
+
+            // $user=  $request->user();
+            // $request_data = (object)[
+            //         'user_id' =>  $user->id,
+            //     ];
+
+            $data = $this->StoryManagementService->getAdminStoryOnUser($request);
+            //dd($data);
+            
+            $message = $data['message'];
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to get story',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function get_seller_story(Request $request)
+    {
+
+        try {
+
+            // $user=  $request->user();
+            $request_data = (object)[
+                    'seller_id' =>  $request->seller_id,
+                ];
+
+            $data = $this->StoryManagementService->getSellerStoryOnUser($request_data);
+            //dd($data);
+            
+            $message = $data['message'];
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to get story',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function get_seller_highlight(Request $request)
+    {
+
+        try {
+
+            // $user=  $request->user();
+            $request_data = (object)[
+                    'seller_id' =>  $request->seller_id,
+                ];
+
+            $data = $this->StoryManagementService->getSellerHighlightOnUser($request_data);
+            //dd($data);
+            
+            $message = $data['message'];
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to get story',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 }

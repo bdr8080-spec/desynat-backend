@@ -156,6 +156,10 @@ Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_not
 
 });
 
+Route::get('/get_admin_story', [DashBoardController::class, 'get_admin_story'])->name('user.get_admin_story');
+Route::get('/get_seller_story', [DashBoardController::class, 'get_seller_story'])->name('user.get_seller_story');
+Route::get('/get_seller_highlight', [DashBoardController::class, 'get_seller_highlight'])->name('user.get_seller_highlight');
+
 // M7 Code 
 
  Route::match(['get','post'],'/affiliate-add-address', [UserAffilatedController::class,'affiliate_addaddress'])->name('affiliate.affiliate_addaddress');
