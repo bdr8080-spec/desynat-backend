@@ -78,7 +78,7 @@
         <div class="col-lg-12">
             <div class="suggestStore_contenar">
                 <div class="owl-carousel storeCarousel">
-                    <div class="item" onclick="openGallery(0)">
+                    <div class="item" onclick="openSeller(0)">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
@@ -86,7 +86,7 @@
                             <p>Kurtas</p>
                         </div>
                     </div>
-                    <div class="item" onclick="openGallery(1)">
+                    <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
@@ -94,7 +94,7 @@
                             <p>Polo</p>
                         </div>
                     </div>
-                    <div class="item" onclick="openGallery(2)">
+                    <div class="item">
                         <div class="suggestStore_content">
                             <div class="suggestedStore_img">
                                 <img src="{{ asset('user/') }}/assets/images/store1.jpg" class="img-fluid" />
@@ -597,7 +597,7 @@
     <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
 </a>
 
- <!-- Seller logo story section -->
+  <!-- Seller logo story section -->
 <div class="status-viewer bgwhite" id="statusSeller">
     <div class="container adminstatus">
         <div class="story-header d-flex justify-content-between">
@@ -621,8 +621,6 @@
         </div>    
     </div>
 </div>
-
-
 
 
 
@@ -860,12 +858,13 @@ function loadSellerStories(openIndex = 0) {
 }
 
 function showSellerGallery(index) {
+    //console.log('123');
 
     sellerIndex = index;
 
     var container = document.getElementById("statusSeller");
     if (!container) {
-        //console.error("[SELLER] statusSeller not found");
+        console.error("[SELLER] statusSeller not found");
         return;
     }
 
