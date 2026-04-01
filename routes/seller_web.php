@@ -205,6 +205,16 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
+Route::match(['get', 'post'], '/add-story', function () {
+    return view('dealer.addstory.index');
+
+})->name('dealer.add-story');
+
+Route::match(['get', 'post'], '/add-highlight', function () {
+    return view('dealer.addstory.add-highlight');
+
+})->name('dealer.add-highlight');
+
 // Route::match(['get', 'post'], '/subscription-plans', function () {
 //     return view('dealer.plans.index');
 

@@ -1271,7 +1271,7 @@ table.dataTable td.dt-type-date {
 }
 .logostatus {
     width: 33%;
-    background: #333;
+    background: #eee;
     margin: auto;
     position: relative;
 }
@@ -1312,6 +1312,9 @@ table.dataTable td.dt-type-date {
 .logostatus .status-img {
     height: 70vh;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .logostatus .status-img img {
     height: 100%;
@@ -1337,4 +1340,25 @@ table.dataTable td.dt-type-date {
 .status-right span {
     right: 0;
     left: auto;
+}
+
+.storyUpload {
+    position: absolute;
+    opacity: 0;
+}
+.btn-red{
+    background: #D53B361A;
+    width: 30px;
+    padding: 3px;
+    text-align: center;
+    color: #D53B36;
+    border-radius: 5px;
+}
+.edt-btn{
+    background: #FFF7EA;
+    width: 30px;
+    padding: 3px;
+    text-align: center;
+    color: #6E4527;
+    border-radius: 5px;
 }

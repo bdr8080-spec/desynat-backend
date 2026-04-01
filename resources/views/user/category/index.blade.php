@@ -419,11 +419,17 @@
                 <div class="row">
                     @forelse($seller_reels as $reel)
                     <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img" onclick='openReelViewer(@json($reel))'>
+                        <div class="product-img" data-reel='@json($reel)'>
                             <img src="{{$reel->file}}" alt="Product">
-                            <button class="wishlist-btn">
-                                <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" />
+                            <button class="wishlist-btn" data-reel-id="{{ $reel->id }}">
+                                <!-- <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
+                                    alt="check" /> -->
+                                    @if($reel->is_whishlisted==1)
+                                        <img src="{{ asset('user/assets/images/reels_check.svg') }}" 
+                                            class="img-fluid" alt="check" />
+                                    @else
+                                        <i class="fa-regular fa-heart"></i>
+                                    @endif
                             </button>
                         </div>
                     </div>
@@ -1169,6 +1175,7 @@ let reelTimer = null;
 let reelDuration = 3000; // default for images
 
 function openReelViewer(reel) {
+    console.log('def');
     clearTimeout(reelTimer);
 
     const imageEl = document.getElementById("reelImage");
@@ -1248,6 +1255,92 @@ function closeReelViewer() {
     }
 }
 
+</script>
+
+<script>
+// $(document).ready(function(){
+
+//     $('.wishlist-btn').click(function(e){
+//         e.stopPropagation(); // 🔹 important: prevents parent click (openReelViewer)
+
+//         var button = $(this);
+//         var reelId = button.data('reel-id');
+
+//         $.ajax({
+//             url: "{{ route('user.add_remove_reel_to_whishlist') }}",
+//             type: "POST",
+//             data: {
+//                 reel_id: reelId,
+//                 _token: "{{ csrf_token() }}"
+//             },
+//             success: function(response){
+//                 if(response.status === 'success'){
+//                     toastr.success(response.message);
+
+//                     setTimeout(function(){
+//                         location.reload();
+//                     }, 1500);
+
+//                 } else {
+//                     toastr.error(response.message || 'Something went wrong');
+//                 }
+//             },
+//             error: function(xhr){
+//                 var msg = 'Something went wrong';
+//                 if(xhr.responseJSON && xhr.responseJSON.message){
+//                     msg = xhr.responseJSON.message;
+//                 }
+//                 toastr.error(msg);
+//             }
+//         });
+
+//     });
+
+// });
+$(document).ready(function(){
+
+    // Reel viewer click
+    $('.product-img').click(function(e){
+        console.log('abc');
+        var reel = $(this).data('reel');
+        openReelViewer(reel);
+    });
+
+    // Wishlist click
+    $('.wishlist-btn').click(function(e){
+        e.stopPropagation(); // 🔹 prevents parent click
+
+        var button = $(this);
+        var reelId = button.data('reel-id');
+
+        $.ajax({
+            url: "{{ route('user.add_remove_reel_to_whishlist') }}",
+            type: "POST",
+            data: {
+                reel_id: reelId,
+                _token: "{{ csrf_token() }}"
+            },
+            success: function(response){
+                if(response.status === 'success'){
+                    toastr.success(response.message);
+                    setTimeout(function(){
+                        location.reload();
+                    }, 1500);
+                } else {
+                    toastr.error(response.message || 'Something went wrong');
+                }
+            },
+            error: function(xhr){
+                var msg = 'Something went wrong';
+                if(xhr.responseJSON && xhr.responseJSON.message){
+                    msg = xhr.responseJSON.message;
+                }
+                toastr.error(msg);
+            }
+        });
+    });
+
+});
 </script>
 
 

@@ -102,7 +102,8 @@
 
 
         <div class="brand-banner">
-            <img src="{{ $seller_details->store_info?->store_image ?? asset('images/default-store.png') }}" alt="Profile">
+            <img src="{{ $seller_details->store_info?->store_image ?? asset('images/default-store.png') }}"
+                alt="Profile">
         </div>
 
         <div class="profile_wapper">
@@ -114,7 +115,7 @@
                                 <div class="addprofile">
                                     <img src="{{$seller_details->profile_pic}}" class="img-fluid">
                                 </div>
-                                <a href="#" class="addic">
+                                <a href="/add-story" class="addic">
                                     <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid">
                                 </a>
                             </div>
@@ -161,7 +162,9 @@
 
             <div class="product-row d-flex align-items-center gap-4 profile-card">
                 <div class="product-item">
-                    <img src="{{asset('dealer/assets/img/hightlights-add.svg')}}" class="product-circle">
+                    <a href="/add-highlight">
+                        <img src="{{asset('dealer/assets/img/hightlights-add.svg')}}" class="product-circle">
+                    </a>
                 </div>
 
                 <div class="product-item">
@@ -217,7 +220,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3">
                         <div class="reel-upload-box">
-                            <div class="upload-inner">
+                            <div class="upload-inner" onclick="uploadReels(0)">
                                 <img src="/dealer/assets/img/hightlights-add.svg" alt="">
                                 <p>Upload New</p>
                             </div>
@@ -225,7 +228,7 @@
                     </div>
 
                     <div class="col-lg-3 col-md-3">
-                        <div class="reels-grid">
+                        <div class="reels-grid" onclick="showReels(0)">
                             <div class="reel-card">
                                 <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
                             </div>
@@ -399,8 +402,175 @@
     </div>
 </div>
 
+
+<!-- Upload New reeels  section -->
+<div class="status-viewer bgwhite" id="Addstory">
+    <div class="container">
+        <div class="story-header d-flex justify-content-between py-4">
+            <div class="d-flex gap-2">
+                <a href="#"><i class="bi bi-chevron-left"></i> </a>
+                <h3>Upload new reel </h3>
+            </div>
+            <button type="button" class="btn btn-light" onclick="closeStatus1()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="logostatus">
+            <label class="status-img" id="previewContainer">
+                <div id="bannerPlaceholderImg" class="text-center">
+                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                        style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                    <div class="py-2" style="color:#875C3A">
+                        Upload Image/Video
+                    </div>
+                </div>
+                <div class="status-img" id="previewContainer">
+                    <img id="storyimg" class="img-fluid" style="display:none;" />
+                    <video id="storyvideo" class="img-fluid" controls style="display:none;"></video>
+                </div>
+                <input type="file" id="storyUpload" accept="image/*,video/*" class="storyUpload" />
+            </label>
+
+        </div>
+
+        <div class="dashboard-button mt-4 logostatus bgwhite">
+            <button type="button" class="btn add-fillbtn w-100">Upload</button>
+        </div>
+    </div>
 </div>
 
+<!--  reeels show  section -->
+<div class="status-viewer bgwhite" id="reelsview">
+    <div class="container">
+        <div class="story-header d-flex justify-content-between py-4">
+            <div class="d-flex gap-2">
+                <a href="#"><i class="bi bi-chevron-left"></i> </a>
+                <h3>Reel </h3>
+            </div>
+            <button type="button" class="btn btn-light" onclick="closeStatus2()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="logostatus">
+            <label class="status-img">
+                <div class="status-img" id="previewContainer">
+                    <img id="storyimg" class="img-fluid" style="display:none;" />
+                    <video id="storyvideo" class="img-fluid" controls style="display:none;"></video>
+                </div>
+            </label>
+        </div>
+
+        <div class="dashboard-button mt-4 logostatus bgwhite d-flex justify-content-center gap-4">
+            Active
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" checked="">
+                <label class="form-check-label" for="switchCheckDefault"></label>
+            </div>
+            <a href="#" class="pencil-btn-2 btn-red"><i class="bi bi-trash3"></i> </a>
+            <a href="javascript:void(0)" class="pencil-btn-2 edt-btn" onclick="updateReels()"><i class="bi bi-pencil"></i> </a>
+        </div>
+    </div>
+</div>
+
+<!-- Update New reeels section -->
+<div class="status-viewer bgwhite" id="updatestory">
+    <div class="container">
+        <div class="story-header d-flex justify-content-between py-4">
+            <div class="d-flex gap-2">
+                <a href="#"><i class="bi bi-chevron-left"></i> </a>
+                <h3>Update New Reel </h3>
+            </div>
+            <button type="button" class="btn btn-light" onclick="closeStatus3()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="logostatus">
+            <label class="status-img" id="previewContainer">
+                <div id="bannerhide" class="text-center">
+                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                        style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                    <div class="py-2" style="color:#875C3A">
+                        Upload Image/Video
+                    </div>
+                </div>
+                <div class="status-img" id="previewContainer">
+                    <img id="storyimg2" class="img-fluid" style="display:none;" />
+                    <video id="storyvideo2" class="img-fluid" controls style="display:none;"></video>
+                </div>
+                <input type="file" id="storyUpload2" accept="image/*,video/*" class="storyUpload" />
+            </label>
+
+        </div>
+
+        <div class="dashboard-button mt-4 logostatus bgwhite">
+            <button type="button" class="btn add-fillbtn w-100">Upload</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function uploadReels() {
+        $("#Addstory").show();
+    }
+    function closeStatus1() {
+        $("#Addstory").hide();
+    }
+    // Upload Preview
+    $("#storyUpload").on("change", function(e) {
+        let file = e.target.files[0];
+        if (!file) return;
+
+        let url = URL.createObjectURL(file);
+
+        $("#storyimg, #storyvideo").hide();
+
+        if (file.type.startsWith("image/")) {
+            $("#storyimg").attr("src", url).show();
+            $("#bannerPlaceholderImg").hide();
+        } else if (file.type.startsWith("video/")) {
+            $("#storyvideo").attr("src", url).show();
+        } else {
+            alert("Only image/video allowed");
+        }
+    });
+
+</script>
+
+<script>
+    function showReels() {
+        $("#reelsview").show();
+    }
+    function closeStatus2() {
+        $("#reelsview").hide();
+    }
+
+</script>
+
+<script>
+// update new reels  function
+
+    function updateReels() {
+        $("#updatestory").show();
+    }
+    function closeStatus3() {
+        $("#updatestory").hide();
+    }
+    // Upload Preview
+    $("#storyUpload2").on("change", function(e) {
+        let file = e.target.files[0];
+        if (!file) return;
+
+        let url = URL.createObjectURL(file);
+
+        $("#storyimg2, #storyvideo2").hide();
+
+        if (file.type.startsWith("image/")) {
+            $("#storyimg2").attr("src", url).show();
+            $("#bannerhide").hide();
+        } else if (file.type.startsWith("video/")) {
+            $("#storyvideo2").attr("src", url).show();
+        } else {
+            alert("Only image/video allowed");
+        }
+    });
+
+</script>
 
 
 @include('dealer.layout.footer');

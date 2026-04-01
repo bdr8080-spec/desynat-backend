@@ -275,5 +275,53 @@ class DashBoardController extends Controller
         }
     }
 
+    public function add_remove_reel_to_whishlist(Request $request)
+    {
+        try {
+            $user = $request->user();
+            if (!$user) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    'Please login to add to wishlist',
+                    (object)[],
+                    401
+                );
+            }
+
+            $validate = Validator::make($request->all(), [
+                'reel_id' => 'required|exists:reels,id',
+            ]);
+
+            if ($validate->fails()) {
+                return ApiResponse::generateResponse(
+                    'error',
+                    $validate->errors()->first(),
+                    $validate->errors()->first(),
+                    422
+                );
+            }
+
+            $request_data = (object)[
+                'user_id' => $user->id,
+                'reel_id' => $request->reel_id,
+            ];
+
+            $data = $this->StoryManagementService->addRemoveReelToWhislist($request_data);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => $data['message'],
+                'data' => $data
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to get story',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 }
