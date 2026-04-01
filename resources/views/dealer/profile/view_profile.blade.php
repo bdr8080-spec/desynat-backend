@@ -115,7 +115,7 @@
                                 <div class="addprofile">
                                     <img src="{{$seller_details->profile_pic}}" class="img-fluid">
                                 </div>
-                                <a href="/add-story" class="addic">
+                                <a href="{{route('seller.add_story')}}" class="addic">
                                     <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid">
                                 </a>
                             </div>
@@ -162,35 +162,17 @@
 
             <div class="product-row d-flex align-items-center gap-4 profile-card">
                 <div class="product-item">
-                    <a href="/add-highlight">
+                    <a href="{{route('seller.add_highlight')}}">
                         <img src="{{asset('dealer/assets/img/hightlights-add.svg')}}" class="product-circle">
                     </a>
                 </div>
-
+                @foreach($highlights as $index => $highlight)
                 <div class="product-item">
-                    <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-                    <small>T Shirt</small>
+                    <img src="{{$highlight->file}}" class="product-circle">
+                    <small>{{$highlight->title??''}}</small>
                 </div>
+                @endforeach
 
-                <div class="product-item">
-                    <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-                    <small>T Shirt</small>
-                </div>
-
-                <div class="product-item">
-                    <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-                    <small>T Shirt</small>
-                </div>
-
-                <div class="product-item">
-                    <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-                    <small>T Shirt</small>
-                </div>
-
-                <div class="product-item">
-                    <img src="{{asset('dealer/assets/img/highlights.svg')}}" class="product-circle">
-                    <small>T Shirt</small>
-                </div>
             </div>
         </div>
     </div>
@@ -226,49 +208,15 @@
                             </div>
                         </div>
                     </div>
-
+                    @foreach($reels as $index => $reel)
                     <div class="col-lg-3 col-md-3">
-                        <div class="reels-grid" onclick="showReels(0)">
+                        <div class="reels-grid" onclick="showReels({{ $index }})">
                             <div class="reel-card">
-                                <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                            </div>
-                            <!-- <div class="play-icon">
-                                    <i class="bi bi-play-fill"></i>
-                                </div> -->
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3">
-                        <div class="reels-grid">
-                            <div class="reel-card">
-                                <img src="{{asset('dealer/assets/img/reel-2.svg')}}" alt="image" class="img-fluid">
+                                <img src="{{$reel->file}}" alt="image" class="img-fluid">
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3">
-                        <div class="reels-grid">
-                            <div class="reel-card">
-                                <img src="{{asset('dealer/assets/img/reel-3.svg')}}" alt="image" class="img-fluid">
-                            </div>
-                            <!-- <div class="play-icon">
-                                    <i class="bi bi-play-fill"></i>
-                                </div> -->
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3">
-                        <div class="reels-grid">
-                            <div class="reel-card">
-                                <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-3">
-                        <div class="reels-grid">
-                            <div class="reel-card">
-                                <img src="{{asset('dealer/assets/img/reel-2.svg')}}" alt="image" class="img-fluid">
-                            </div>
-
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
             </div>
@@ -450,8 +398,8 @@
         <div class="logostatus">
             <label class="status-img">
                 <div class="status-img" id="previewContainer">
-                    <img id="storyimg" class="img-fluid" style="display:none;" />
-                    <video id="storyvideo" class="img-fluid" controls style="display:none;"></video>
+                    <img id="showImageReel" class="img-fluid" style="display:none;" />
+                    <video id="showVideoReel" class="img-fluid" controls style="display:none;"></video>
                 </div>
             </label>
         </div>
@@ -532,7 +480,7 @@
 
 </script>
 
-<script>
+<!-- <script>
     function showReels() {
         $("#reelsview").show();
     }
@@ -540,7 +488,7 @@
         $("#reelsview").hide();
     }
 
-</script>
+</script> -->
 
 <script>
 // update new reels  function
@@ -570,6 +518,48 @@
         }
     });
 
+</script>
+
+//prakash
+
+<script>
+    var reels = @json($reels);
+</script>
+<script>
+function showReels(index) {
+    $("#reelsview").show();
+
+    var reel = reels[index];
+    var file = reel.file;
+
+    var img = $("#showImageReel");
+    var video = $("#showVideoReel");
+
+    // Reset
+    img.hide();
+    video.hide();
+    video.get(0).pause();
+    video.attr("src", "");
+
+    // Check file type
+    if (file.match(/\.(mp4|webm|ogg)$/i)) {
+        video.attr("src", file);
+        video.show();
+        video.get(0).play();
+    } else {
+        img.attr("src", file);
+        img.show();
+    }
+}
+
+function closeStatus2() {
+    $("#reelsview").hide();
+
+    // stop video on close
+    var video = $("#storyvideo").get(0);
+    video.pause();
+    video.src = "";
+}
 </script>
 
 

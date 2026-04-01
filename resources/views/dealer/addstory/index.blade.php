@@ -35,37 +35,15 @@
     <div class="title24">Select From gallary</div>
     <div class="reels-wrapper mt-4">
         <div class="row">
+            @foreach($highlights as $index => $highlight)
             <div class="col-lg-3 col-md-3">
-                <div class="reels-grid" onclick="addSeller(0)">
+                <div class="reels-grid" onclick="addSeller({{ $index }})">
                     <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                    <!-- <div class="play-icon">
-                        <i class="bi bi-play-fill"></i>
-                    </div> -->
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-2.svg')}}" alt="image" class="img-fluid">
+                        <img src="{{$highlight->file}}" alt="image" class="img-fluid">
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-3.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 
     </div>
@@ -81,6 +59,7 @@
         <div class="logostatus">
             <div class="status-img">
                 <img id="storyimg" class="img-fluid" alt="status" />
+                <video id="storyvideo" class="img-fluid" controls style="display:none;"></video>
             </div>
         </div>   
 
@@ -108,22 +87,54 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 </script>
 
 <script>
-    var images = [ "{{asset('user')}}/assets/images/store1.jpg",];
+    var stories = @json($stories);
+</script>
 
+<script>
     var currentIndex = 0;
+
     function addSeller(index) {
         currentIndex = index;
+
         document.getElementById("Addstory").style.display = "block";
-        storyimg();
+        loadStory();
     }
-    function storyimg() {
-        document.getElementById("storyimg").src = images[currentIndex];
+
+    function loadStory() {
+        var story = stories[currentIndex];
+        var file = story.file;
+
+        var img = document.getElementById("storyimg");
+        var video = document.getElementById("storyvideo");
+
+        // Reset both
+        img.style.display = "none";
+        video.style.display = "none";
+        video.pause();
+        video.src = "";
+
+        // Check file type
+        if (file.match(/\.(mp4|webm|ogg)$/i)) {
+            video.src = file;
+            video.style.display = "block";
+            video.play();
+        } else {
+            img.src = file;
+            img.style.display = "block";
+        }
     }
+
     function closeStatus1() {
-        clearTimeout(timer);
         document.getElementById("Addstory").style.display = "none";
+
+        // Stop video on close
+        var video = document.getElementById("storyvideo");
+        video.pause();
+        video.src = "";
     }
 </script>
+
+
 
 
 
