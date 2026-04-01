@@ -19,15 +19,13 @@ use App\Http\Controllers\Api\User\UserWalletController;
 
 use App\Http\Controllers\Api\User\UserAffiliatedProductController;
 use App\Http\Controllers\Api\User\ApiNotificationController;
-
-
-
-
-
+use App\Http\Controllers\AgoraController;
 
 use App\Http\Controllers\CommonController;
-
 use Illuminate\Support\Facades\Artisan;
+
+Route::post('/agora/token', [AgoraController::class, 'generateToken']);
+
 
 
 Route::get('optimize',function(){
@@ -75,6 +73,7 @@ Route::post('single-store-details', [UserStoreController::class,'single_store_de
 Route::post('single-product-details', [UserStoreController::class,'single_product_details']);
 
 });  
+
 
 
 
