@@ -429,7 +429,7 @@
                     </div>
                     @empty
                         <div class="item text-center">
-                            <p>No highlights</p>
+                            <p>No reels found</p>
                         </div>
                     @endforelse
  

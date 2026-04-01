@@ -173,29 +173,7 @@ class StoryManagementService
     public function getSellerStoryOnUser($request)
     {
         try {
-            $query = Story::with([
-                'seller_details',
-                'seller_details.country_details'
-            ]);
-
-            // Search by seller name
-            // if ($request->filled('search')) {
-            //     $search = $request->input('search');
-
-            //     $query->whereHas('seller_details', function ($q) use ($search) {
-            //         $q->where('first_name', 'like', '%' . $search . '%')
-            //         ->orWhere('last_name', 'like', '%' . $search . '%');
-            //     });
-            // }
-
-            // Filter by country
-            // if ($request->filled('country')) {
-            //     $country = $request->input('country');
-
-            //     $query->whereHas('seller_details.country_details', function ($q) use ($country) {
-            //         $q->where('name', 'like', '%' . $country . '%');
-            //     });
-            // }
+            $query = Story::query();
 
 
             // Only last 24 hours stories
