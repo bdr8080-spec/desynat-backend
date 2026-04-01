@@ -158,7 +158,8 @@ Route::post('/mark_notification_as_read', [DashBoardController::class, 'mark_not
 
 Route::get('/get_admin_story', [DashBoardController::class, 'get_admin_story'])->name('user.get_admin_story');
 Route::get('/get_seller_story', [DashBoardController::class, 'get_seller_story'])->name('user.get_seller_story');
-Route::get('/get_seller_highlight', [DashBoardController::class, 'get_seller_highlight'])->name('user.get_seller_highlight');
+Route::post('/add_remove_reel_to_whishlist', [DashBoardController::class, 'add_remove_reel_to_whishlist'])->name('user.add_remove_reel_to_whishlist');
+
 
 // M7 Code 
 
