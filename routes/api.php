@@ -220,6 +220,8 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::get('/get_admin_stories', [UserDashboardController::class,'get_admin_stories']);
     Route::get('/get_seller_reels', [UserDashboardController::class,'get_seller_reels']);
     Route::get('/get_seller_highlights', [UserDashboardController::class,'get_seller_highlights']);
+    Route::post('/add_remove_reel_to_whislist', [UserDashboardController::class,'add_remove_reel_to_whislist']);
+    Route::get('/share_reel', [UserDashboardController::class,'share_reel']);
 
 
 });

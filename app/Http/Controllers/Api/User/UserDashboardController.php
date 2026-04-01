@@ -304,9 +304,11 @@ public function get_seller_reels(Request $request){
     return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
     }
 
-
+     $user_id=$request->user()->id;
     $request_data=(object)[
     'seller_id'=>$request->seller_id,
+    'user_id'=>$user_id,
+    'limit'=>$request->limit??null,
     ];
 
     $data=$this->StoryManagementService->getSellerReelOnUser($request_data);
@@ -336,6 +338,59 @@ public function get_seller_highlights(Request $request){
     ];
 
     $data=$this->StoryManagementService->getSellerHighlightOnUser($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+public function add_remove_reel_to_whislist(Request $request){
+
+    $validate = Validator::make($request->all(), [
+        'reel_id' => 'required|integer| exists:reels,id',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    $user_id=$request->user()->id;
+    $request_data=(object)[
+    'reel_id'=>$request->reel_id,
+    'user_id'=>$user_id,
+    ];
+
+    $data=$this->StoryManagementService->addRemoveReelToWhislist($request_data);
+
+    if(isset($data['status']) && $data['status']=='error' ){
+        return ApiResponse::generateResponse('error', $data['message'],(object)[],422);
+
+    }
+
+    return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+}
+
+public function share_reel(Request $request){
+
+    $validate = Validator::make($request->all(), [
+        'reel_id' => 'required|integer| exists:reels,id',
+        ]);
+    
+    if($validate->fails()){
+    return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+    }
+
+    $user_id=$request->user()->id;
+    $request_data=(object)[
+    'reel_id'=>$request->reel_id,
+    ];
+
+    $data=$this->StoryManagementService->shareReel($request_data);
 
     if(isset($data['status']) && $data['status']=='error' ){
         return ApiResponse::generateResponse('error', $data['message'],(object)[],422);

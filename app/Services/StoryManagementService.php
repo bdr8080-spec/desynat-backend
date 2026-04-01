@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\Story;
 use App\Models\Reel;
 use App\Models\Highlight;
+use App\Models\WhislistReel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CommonController;
 use Carbon\Carbon;
@@ -212,7 +213,7 @@ class StoryManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Story found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -251,7 +252,7 @@ class StoryManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Story found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -271,13 +272,52 @@ class StoryManagementService
     }
 
 
+    // public function getSellerReelOnUser($request)
+    // {
+    //     try {
+    //         $query = Reel::query();
+
+    //         // Only last 24 hours 
+    //         $query->where('created_at', '>=', Carbon::now()->subDay());
+
+    //         // Existing conditions
+    //         $query->where('type', '2');
+    //         $query->where('seller_id', $request->seller_id);
+    //         $query->where('status', '1');
+    //         $query->orderBy('id', 'desc');
+
+    //         $story_details = $query->get();
+
+    //         if ($story_details->isEmpty()) {
+    //             return [
+    //                 'status' => 'success',
+    //                 'message' => 'No Reel found',
+    //                 'data' => (object)[]
+    //             ];
+    //         }
+
+    //         return [
+    //             'status' => 'success',
+    //             'message' => 'Seller Reels fetched successfully',
+    //             'data' => $story_details
+    //         ];
+
+    //     } catch (\Exception $e) {
+    //         return [
+    //             'status' => 'error',
+    //             'message' => 'Failed to fetch reels: ' . $e->getMessage(),
+    //             'data' => []
+    //         ];
+    //     }
+    // }
+
     public function getSellerReelOnUser($request)
     {
         try {
             $query = Reel::query();
 
             // Only last 24 hours 
-            $query->where('created_at', '>=', Carbon::now()->subDay());
+            //$query->where('created_at', '>=', Carbon::now()->subDay());
 
             // Existing conditions
             $query->where('type', '2');
@@ -285,15 +325,37 @@ class StoryManagementService
             $query->where('status', '1');
             $query->orderBy('id', 'desc');
 
-            $story_details = $query->get();
+            //  Apply pagination if limit exists
+            if (!empty($request->limit)) {
+                $story_details = $query->paginate((int)$request->limit);
+                $collection = collect($story_details->items());
+            } else {
+                $story_details = $query->get();
+                $collection = $story_details;
+            }
 
-            if ($story_details->isEmpty()) {
+            if ($collection->isEmpty()) {
                 return [
                     'status' => 'success',
                     'message' => 'No Reel found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
+
+            //  Get reel IDs
+            $reelIds = $collection->pluck('id')->toArray();
+
+            //  Fetch wishlist reels
+            $wishlistReels = WhislistReel::where('user_id', $request->user_id)
+                ->whereIn('reel_id', $reelIds)
+                ->where('status', 1)
+                ->pluck('reel_id')
+                ->toArray();
+
+            $collection->transform(function ($reel) use ($wishlistReels) {
+                $reel->is_whishlisted = in_array($reel->id, $wishlistReels) ? 1 : 0;
+                return $reel;
+            });
 
             return [
                 'status' => 'success',
@@ -330,7 +392,7 @@ class StoryManagementService
                 return [
                     'status' => 'success',
                     'message' => 'No Highlight found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -466,7 +528,7 @@ class StoryManagementService
                 return [
                     'status' => 'error',
                     'message' => 'Highlight not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -496,7 +558,7 @@ class StoryManagementService
                 return [
                     'status' => 'error',
                     'message' => 'Reel not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -526,7 +588,7 @@ class StoryManagementService
                 return [
                     'status' => 'error',
                     'message' => 'Reel not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -560,7 +622,7 @@ class StoryManagementService
                 return [
                     'status' => 'error',
                     'message' => 'Reel not found',
-                    'data' => (object)[]
+                    'data' => []
                 ];
             }
 
@@ -659,6 +721,7 @@ class StoryManagementService
         }
     }
 
+
     public function getSellerHighlights($request_data)
     {
         try {
@@ -692,6 +755,76 @@ class StoryManagementService
                 'status' => 'error',
                 'message' => 'Failed to fetch highlights: ' . $e->getMessage(),
                 'data' => []
+            ];
+        }
+    }
+
+    public function addRemoveReelToWhislist($request_data)
+    {
+        try {
+            $existing = WhislistReel::where('user_id', $request_data->user_id)
+                ->where('reel_id', $request_data->reel_id)
+                ->first();
+
+            if ($existing) {
+                $existing->delete();
+
+                return [
+                    'status' => 'success',
+                    'message' => 'Reel removed from wishlist',
+                    'data' => (object)[]
+                ];
+            } else {
+                $data = WhislistReel::create([
+                    'user_id' => $request_data->user_id,
+                    'reel_id' => $request_data->reel_id,
+                ]);
+
+                return [
+                    'status' => 'success',
+                    'message' => 'Reel added to wishlist',
+                    'data' => $data
+                ];
+            }
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Something went wrong',
+                'data' => []
+            ];
+        }
+    }
+
+    public function shareReel($request_data)
+    {
+        try {
+            $reel = Reel::select('id', 'file')
+                ->where('id', $request_data->reel_id)
+                ->first();
+
+            if (!$reel) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Reel not found',
+                    'data' => (object)[]
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Reel link fetched successfully',
+                'data' => [
+                    'reel_id' => $reel->id,
+                    'file' => $reel->file
+                ]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch reel',
+                'data' => (object)[]
             ];
         }
     }
