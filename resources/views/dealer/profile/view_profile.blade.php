@@ -114,7 +114,7 @@
                                 <div class="addprofile">
                                     <img src="{{$seller_details->profile_pic}}" class="img-fluid">
                                 </div>
-                                <a href="#" class="addic">
+                                <a href="/add-story" class="addic">
                                     <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid">
                                 </a>
                             </div>
@@ -161,7 +161,9 @@
 
             <div class="product-row d-flex align-items-center gap-4 profile-card">
                 <div class="product-item">
-                    <img src="{{asset('dealer/assets/img/hightlights-add.svg')}}" class="product-circle">
+                    <a href="/add-highlight">
+                         <img src="{{asset('dealer/assets/img/hightlights-add.svg')}}" class="product-circle">
+                    </a>
                 </div>
 
                 <div class="product-item">
