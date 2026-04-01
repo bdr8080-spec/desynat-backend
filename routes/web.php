@@ -48,3 +48,9 @@ Route::match(['get', 'post'], '/Invoice/{id}', [OrderInvoiceController::class, '
  
     return response()->json($aasa, 200, [], JSON_UNESCAPED_SLASHES);
 });
+
+
+
+Route::get('/agora', function () {
+    return view('agora');
+});

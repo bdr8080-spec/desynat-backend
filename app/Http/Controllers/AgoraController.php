@@ -11,7 +11,7 @@ class AgoraController extends Controller
     {
         $request->validate([
             'channel_name' => 'required|string',
-            'uid' => 'nullable|integer'
+            // 'uid' => 'nullable|integer'
         ]);
 
         $channelName = $request->channel_name;
@@ -19,11 +19,17 @@ class AgoraController extends Controller
 
         $token = AgoraService::generateToken($channelName, $uid);
 
-        return response()->json([
-            'status' => true,
-            'token' => $token,
-            'channel' => $channelName,
-            'uid' => $uid
-        ]);
+
+    return response()->json([
+        'token' => $token,
+        'uid' => $uid
+    ]);
+
+        // return response()->json([
+        //     'status' => true,
+        //     'token' => $token,
+        //     'channel' => $channelName,
+        //     'uid' => $uid
+        // ]);
     }
 }
