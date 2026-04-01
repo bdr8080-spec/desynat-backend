@@ -513,7 +513,7 @@
         </div>
     </div>
 </form>
-<input type="text" name="seller_id" id="seller_id" value="{{ $store_details['store']['seller_id'] }}" />
+<input type="hidden" name="seller_id" id="seller_id" value="{{ $store_details['store']['seller_id'] }}" />
 <a href="javascript:void(0)" class="fixedchat">
     <img src="{{ asset('user/') }}/assets/images/chat-ic.svg" alt="chat icon" class="img-fluid" />
 </a>
