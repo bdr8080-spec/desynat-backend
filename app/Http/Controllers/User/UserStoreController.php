@@ -185,7 +185,13 @@ class UserStoreController extends Controller
 
         $seller_highlights = $this->StoryManagementService->getSellerHighlightOnUser($request_data1)['data'];
         //dd($seller_highlights);
-        $seller_reels = $this->StoryManagementService->getSellerReelOnUser($request_data1)['data'];
+        $request_data2 = (object)[
+            'seller_id' => $seller_id,
+            'user_id' => $user_id,
+            'limit' => $request->limit??null,
+        ];
+        $seller_reels = $this->StoryManagementService->getSellerReelOnUser($request_data2)['data'];
+       // dd($seller_reels);
 
           
         return view('user.category.index', compact('store_details', 'category', 'brand', 'size', 'color','qrSellerCode','seller_highlights','seller_reels'));
