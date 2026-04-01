@@ -24,7 +24,7 @@ use App\Http\Controllers\AgoraController;
 use App\Http\Controllers\CommonController;
 use Illuminate\Support\Facades\Artisan;
 
-Route::post('/agora/token', [AgoraController::class, 'generateToken']);
+Route::match(['get','post'],'/agora/token', [AgoraController::class, 'generateToken']);
 
 
 
