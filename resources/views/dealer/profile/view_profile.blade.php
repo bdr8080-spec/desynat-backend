@@ -375,17 +375,20 @@
 
 
 <!-- Upload New reeels  section -->
+
 <div class="status-viewer bgwhite" id="Addstory">
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
-                <a href="javascript:void(0)"  onclick="closeStatus1()"><i class="bi bi-chevron-left"></i> </a>
+                <a href="javascript:void(0)" onclick="closeStatus1()"><i class="bi bi-chevron-left"></i> </a>
                 <h3>Upload new reel </h3>
             </div>
             <button type="button" class="btn btn-light" onclick="closeStatus1()"><i class="bi bi-x-lg"></i></button>
         </div>
+
         <div class="logostatus">
             <label class="status-img" id="previewContainer">
+                <!-- Placeholder -->
                 <div id="bannerPlaceholderImg" class="text-center">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
@@ -393,17 +396,27 @@
                         Upload Image/Video
                     </div>
                 </div>
-                <div class="status-img" id="previewContainer">
+
+                <!-- Preview -->
+                <div class="status-img">
                     <img id="storyimg" class="img-fluid" style="display:none;" />
                     <video id="storyvideo" class="img-fluid" controls style="display:none;"></video>
                 </div>
-                <input type="file" id="storyUpload" accept="image/*,video/*" class="storyUpload" />
-            </label>
-            <div class="add-caption">
-                <h6>Caption</h6>
-                <textarea class="form-control" placeholder="Write here..."></textarea>
-            </div>
 
+                <!-- File Input -->
+                <input type="file" id="storyUpload" accept="image/*,video/*" class="storyUpload" />
+
+                <!-- File Error -->
+                <div id="fileError" style="color:red; font-size:0.9rem; margin-top:0.5rem;"></div>
+            </label>
+
+            <div class="add-caption mt-3">
+                <h6>Caption</h6>
+                <textarea id="storyCaption" class="form-control" placeholder="Write here..."></textarea>
+
+                <!-- Caption Error -->
+                <div id="captionError" style="color:red; font-size:0.9rem; margin-top:0.5rem;"></div>
+            </div>
         </div>
 
         <div class="dashboard-button mt-4 logostatus bgwhite">
@@ -411,6 +424,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 <!--  reeels show  section -->
 <div class="status-viewer bgwhite" id="reelsview">
@@ -430,8 +446,8 @@
                 </div>
             </label>
             <div class="add-caption">
-                <h6>Added On 02/04/2026</h6>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iure enim laudantium labore veniam necessitatibus illo alias aperiam harum</p>
+                <h6 id="reelAddedOn">Added On 02/04/2026</h6>
+                <p id="reelCaption">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iure enim laudantium labore veniam necessitatibus illo alias aperiam harum</p>
             </div>
         </div>
 
@@ -494,36 +510,8 @@
     function closeStatus1() {
         $("#Addstory").hide();
     }
-    // Upload Preview
-    $("#storyUpload").on("change", function(e) {
-        let file = e.target.files[0];
-        if (!file) return;
-
-        let url = URL.createObjectURL(file);
-
-        $("#storyimg, #storyvideo").hide();
-
-        if (file.type.startsWith("image/")) {
-            $("#storyimg").attr("src", url).show();
-            $("#bannerPlaceholderImg").hide();
-        } else if (file.type.startsWith("video/")) {
-            $("#storyvideo").attr("src", url).show();
-        } else {
-            alert("Only image/video allowed");
-        }
-    });
-
 </script>
 
-<!-- <script>
-    function showReels() {
-        $("#reelsview").show();
-    }
-    function closeStatus2() {
-        $("#reelsview").hide();
-    }
-
-</script> -->
 
 <script>
 // update new reels  function
@@ -567,16 +555,28 @@ function showReels(index) {
     var reel = reels[index];
     var file = reel.file;
 
+    // Format created_at to DD/MM/YYYY
+    var addedOn = "N/A";
+    if (reel.created_at) {
+        var date = new Date(reel.created_at);
+        var day = String(date.getDate()).padStart(2, '0');
+        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        var year = date.getFullYear();
+        addedOn = `${day}/${month}/${year}`;
+    }
+
+    var caption = reel.caption && reel.caption.trim() ? reel.caption : "N/A"; // dynamic caption
+
     var img = $("#showImageReel");
     var video = $("#showVideoReel");
 
-    // Reset
+    // Reset preview
     img.hide();
     video.hide();
     video.get(0).pause();
     video.attr("src", "");
 
-    // Check file type
+    // Show image or video
     if (file.match(/\.(mp4|webm|ogg)$/i)) {
         video.attr("src", file);
         video.show();
@@ -585,17 +585,126 @@ function showReels(index) {
         img.attr("src", file);
         img.show();
     }
+
+    // Set added-on and caption dynamically
+    $("#reelAddedOn").text("Added On " + addedOn);
+    $("#reelCaption").text(caption);
 }
 
 function closeStatus2() {
     $("#reelsview").hide();
 
-    // stop video on close
-    var video = $("#storyvideo").get(0);
+    // Stop video on close
+    var video = $("#showVideoReel").get(0);
     video.pause();
     video.src = "";
 }
 </script>
 
+<!-- upload reel -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Get Elements ---
+    const storyUpload = document.getElementById('storyUpload');
+    const storyImg = document.getElementById('storyimg');
+    const storyVideo = document.getElementById('storyvideo');
+    const placeholder = document.getElementById('bannerPlaceholderImg');
+    const uploadBtn = document.querySelector('.dashboard-button .add-fillbtn');
+
+    // Add IDs for caption and errors if not exist
+    const caption = document.querySelector('.add-caption textarea');
+    caption.id = 'storyCaption';
+    
+    let captionError = document.getElementById('captionError');
+    if (!captionError) {
+        captionError = document.createElement('div');
+        captionError.id = 'captionError';
+        captionError.style.color = 'red';
+        captionError.style.fontSize = '0.9rem';
+        caption.parentNode.appendChild(captionError);
+    }
+
+    let fileError = document.getElementById('fileError');
+    if (!fileError) {
+        fileError = document.createElement('div');
+        fileError.id = 'fileError';
+        fileError.style.color = 'red';
+        fileError.style.fontSize = '0.9rem';
+        placeholder.parentNode.appendChild(fileError);
+    }
+
+    // --- Preview Image/Video ---
+    storyUpload.addEventListener('change', function() {
+        const file = this.files[0];
+        fileError.textContent = '';
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            placeholder.style.display = 'none';
+            if (file.type.startsWith('image/')) {
+                storyImg.src = e.target.result;
+                storyImg.style.display = 'block';
+                storyVideo.style.display = 'none';
+            } else if (file.type.startsWith('video/')) {
+                storyVideo.src = e.target.result;
+                storyVideo.style.display = 'block';
+                storyImg.style.display = 'none';
+            }
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // --- Remove errors when typing/selecting ---
+    caption.addEventListener('input', () => captionError.textContent = '');
+    storyUpload.addEventListener('change', () => fileError.textContent = '');
+
+    // --- Upload AJAX ---
+    uploadBtn.addEventListener('click', async function() {
+        fileError.textContent = '';
+        captionError.textContent = '';
+
+        const file = storyUpload.files[0];
+        const captionText = caption.value.trim();
+        let hasError = false;
+
+        if (!file) {
+            fileError.textContent = 'Please upload image/video';
+            hasError = true;
+        }
+        if (!captionText) {
+            captionError.textContent = 'Please enter caption';
+            hasError = true;
+        }
+        if (hasError) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('caption', captionText);
+
+        // Optional: show loader here if you have one
+        try {
+            const response = await fetch("{{ route('seller.upload_reel') }}", {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                toastr.success(data.message || 'Reel uploaded successfully');
+                setTimeout(() => location.reload(), 1200);
+            } else {
+                toastr.error(data.message || 'Failed to upload reel');
+            }
+
+        } catch (error) {
+            toastr.error('Something went wrong');
+            console.error(error);
+        }
+    });
+});
+</script>
 
 @include('dealer.layout.footer')

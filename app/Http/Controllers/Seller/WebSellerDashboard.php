@@ -732,6 +732,50 @@ $seller_id=Auth::guard('seller')->user()->id;
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
 
+    public function upload_reel(REQUEST $request){
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
+            'caption' => 'required',
+        ], [
+            'file.required' => 'Please Upload an Image or Video',
+            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
+            'file.max' => 'Image size should not exceed 5MB',
+            'file.required' => 'Please enter caption',
+        ]);
+
+        $seller_id=Auth::guard('seller')->user()->id;
+        //dd($seller_id);
+
+        if($request->hasFile('file')){
+            $commonController = new CommonController();
+            $uploadResult = $commonController->uploadFile($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+           // dd($imageUrl);
+        }
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'file'=>$imageUrl,
+        'caption'=>$request->caption,
+        ];
+
+        $data=  $this->StoryManagementService->addSellerReel($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
 
       
 

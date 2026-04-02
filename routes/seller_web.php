@@ -191,6 +191,7 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('/upload_story_from_gallery', [WebSellerDashboard::class,'upload_story_from_gallery'])->name('seller.upload_story_from_gallery');
     Route::post('/upload_highlight', [WebSellerDashboard::class,'upload_highlight'])->name('seller.upload_highlight');
     Route::post('/upload_highlight_from_gallery', [WebSellerDashboard::class,'upload_highlight_from_gallery'])->name('seller.upload_highlight_from_gallery');
+    Route::post('/upload_reel', [WebSellerDashboard::class,'upload_reel'])->name('seller.upload_reel');
 
     });
 
