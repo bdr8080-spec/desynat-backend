@@ -132,23 +132,31 @@
                             @forelse($sellerStory as $index => $story)
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
-                                <td>{{ $story['seller_details']['first_name'] }} {{ $story['seller_details']['last_name'] }}</td>
-                                <td>{{ $story['seller_details']['country_details']['name']??'N/A' }} </td>
+
+                                <td>
+                                    {{ $story->seller_details?->first_name ?? 'N/A' }} 
+                                    {{ $story->seller_details?->last_name ?? '' }}
+                                </td>
+
+                                <td>
+                                    {{ $story->seller_details?->country_details?->name ?? 'N/A' }}
+                                </td>
+
                                 <td>
                                     @php
-                                        $ext = strtolower(pathinfo($story['file'], PATHINFO_EXTENSION));
+                                        $ext = strtolower(pathinfo($story->file, PATHINFO_EXTENSION));
                                         $imageExtensions = ['jpg','jpeg','png','gif','svg'];
                                         $videoExtensions = ['mp4','mov','avi','mkv'];
                                     @endphp
 
                                     @if(in_array($ext, $imageExtensions))
-                                        <a href="{{ $story['file'] }}" target="_blank">
-                                            <img src="{{ $story['file'] }}" alt="Story" width="40" height="40" class="square" />
+                                        <a href="{{ $story->file }}" target="_blank">
+                                            <img src="{{ $story->file }}" alt="Story" width="40" height="40" class="square" />
                                         </a>
                                     @elseif(in_array($ext, $videoExtensions))
-                                        <a href="{{ $story['file'] }}" target="_blank">
+                                        <a href="{{ $story->file }}" target="_blank">
                                             <video width="40" height="40" class="square" muted playsinline loop>
-                                                <source src="{{ $story['file'] }}" type="video/{{ $ext }}">
+                                                <source src="{{ $story->file }}" type="video/{{ $ext }}">
                                                 Your browser does not support the video tag.
                                             </video>
                                         </a>
@@ -156,8 +164,9 @@
                                         <span>File not supported</span>
                                     @endif
                                 </td>
+
                                 <td>
-                                    {{ \Carbon\Carbon::parse($story['created_at'])
+                                    {{ \Carbon\Carbon::parse($story->created_at)
                                         ->timezone('Asia/Kolkata')
                                         ->format('jS F Y | h:i A') }}
                                 </td>
