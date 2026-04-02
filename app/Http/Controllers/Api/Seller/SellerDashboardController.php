@@ -294,6 +294,7 @@ class SellerDashboardController extends Controller
         $request_data=(object )[
             'seller_id'=>$user_details->id,
             'file'=>$request->file,
+            'thumbnail' => $request_data->thumbnail??null,
         ];
 
         $data= $this->StoryManagementService->addSellerStory($request_data);
@@ -349,6 +350,7 @@ class SellerDashboardController extends Controller
             'seller_id'=>$user_details->id,
             'file'=>$request->file,
             'caption'=>$request->caption,
+            'thumbnail' => $request_data->thumbnail??null,
         ];
 
         $data= $this->StoryManagementService->addSellerReel($request_data);
@@ -404,6 +406,7 @@ class SellerDashboardController extends Controller
             'seller_id'=>$user_details->id,
             'file'=>$request->file,
             'title'=>$request->title,
+            'thumbnail' => $request_data->thumbnail??null,
         ];
 
         $data= $this->StoryManagementService->addSellerHighlight($request_data);
@@ -461,6 +464,7 @@ class SellerDashboardController extends Controller
             'seller_id' => $user_details->id,
             'file' => $request->file,
             'caption' => $request->caption,
+            'thumbnail' => $request->thumbnail??null,
         ];
 
         $data = $this->StoryManagementService->updateSellerReel($request_data);

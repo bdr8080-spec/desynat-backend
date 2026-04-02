@@ -1,4 +1,11 @@
 @include('dealer.layout.header')
+<style>
+.add-fillbtn-abc {
+    background: var(--all-btn-bg);
+    line-height: 35px;
+    color: #fff;
+}
+</style>
 
 <div class="onepage-2">
     <div class="customContainer position-relative">
@@ -107,7 +114,7 @@
         </div>   
 
         <div class="dashboard-button mt-4 logostatus bgwhite">
-            <button type="button" class="btn add-fillbtn w-100">Add to highlight</button>
+            <button type="button" class="btn add-fillbtn-abc w-100">Add to highlight</button>
         </div>
     </div>
 </div>
@@ -179,7 +186,7 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
 
 <!-- upload from gallery -->
 <script>
-document.querySelector('.add-fillbtn').addEventListener('click', async function () {
+document.querySelector('.add-fillbtn-abc').addEventListener('click', async function () {
     const img = document.getElementById('highlightImg');
     const video = document.getElementById('highlightVideo');
     const loader = document.getElementById('loader'); // loader div

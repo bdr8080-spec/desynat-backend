@@ -647,18 +647,27 @@ function renderReelActions(reel) {
     actionsDiv.empty(); // remove old buttons
 
     // Status Toggle
-    var checked = reel.status ? "checked" : "";
+    // var checked = reel.status ? "checked" : "";
+    // var statusHtml = `
+    //     <div class="form-check form-switch">
+    //         <input class="form-check-input" type="checkbox" role="switch" id="switchReelStatus" ${checked} data-id="${reel.id}">
+    //         <label class="form-check-label" for="switchReelStatus">Active</label>
+    //     </div>
+    // `;
+    // actionsDiv.append(statusHtml);
+    var checked = reel.status == 1 ? "checked" : "";
+    var labelText = reel.status == 1 ? "Active" : "Inactive";
     var statusHtml = `
         <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="switchReelStatus" ${checked} onchange="toggleReelStatus(${reel.id})">
-            <label class="form-check-label" for="switchReelStatus">Active</label>
+            <input class="form-check-input" type="checkbox" role="switch" id="switchReelStatus${reel.id}" ${checked} data-id="${reel.id}">
+            <label class="form-check-label" for="switchReelStatus${reel.id}">${labelText}</label>
         </div>
     `;
     actionsDiv.append(statusHtml);
 
     // Delete Button
     actionsDiv.append(`
-        <a href="javascript:void(0)" class="pencil-btn-2 btn-red" onclick="deleteReel(${reel.id})">
+        <a href="javascript:void(0)" class="pencil-btn-2 btn-red deleteReelBtn" data-id="${reel.id}">
             <i class="bi bi-trash3"></i>
         </a>
     `);
@@ -682,19 +691,19 @@ function closeStatus2() {
     }
 }
 
-// Example functions for buttons (replace with your AJAX)
-function deleteReel(reelId) {
-    if (confirm("Are you sure you want to delete this reel?")) {
-        console.log("Delete reel:", reelId);
-        // TODO: AJAX call to delete
-    }
-}
+// // Example functions for buttons (replace with your AJAX)
+// function deleteReel(reelId) {
+//     if (confirm("Are you sure you want to delete this reel?")) {
+//         console.log("Delete reel:", reelId);
+//         // TODO: AJAX call to delete
+//     }
+// }
 
-function toggleReelStatus(reelId) {
-    var isActive = $("#switchReelStatus").is(":checked");
-    console.log("Toggle reel status:", reelId, isActive);
-    // TODO: AJAX call to update status
-}
+// function toggleReelStatus(reelId) {
+//     var isActive = $("#switchReelStatus").is(":checked");
+//     console.log("Toggle reel status:", reelId, isActive);
+//     // TODO: AJAX call to update status
+// }
 
 function updateReels(index) {
     var reel = reels[index];
@@ -842,6 +851,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- update reel -->
 <script>
 let currentReelId = null;
 
@@ -1034,6 +1044,91 @@ async function updateReelSubmit() {
     }
 }
 </script>
+
+<!-- delete reel -->
+<script>
+document.body.addEventListener('click', function(e) {
+    if (e.target.closest('.deleteReelBtn')) {
+        const button = e.target.closest('.deleteReelBtn');
+        const reelId = button.getAttribute('data-id');
+
+        const originalHTML = button.innerHTML;
+       // button.innerHTML = "Deleting...";
+        button.disabled = true;
+
+        fetch(`/seller/delete_reel/${reelId}`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                "Accept": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            button.innerHTML = originalHTML;
+            button.disabled = false;
+
+            if (data.status === "success") {
+                toastr.success(data.message || "Reel deleted successfully");
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                toastr.error(data.message || "Failed to delete reel");
+            }
+        })
+        .catch(err => {
+            button.innerHTML = originalHTML;
+            button.disabled = false;
+            toastr.error("Something went wrong.");
+            console.error(err);
+        });
+    }
+});
+</script>
+
+<script>
+document.body.addEventListener('change', function(e) {
+    // Check if the changed element is a reel status toggle
+    if (e.target && e.target.classList.contains('form-check-input')) {
+        const toggle = e.target;
+        const reelId = toggle.getAttribute('data-id');
+        const isActive = toggle.checked ? 1 : 0;
+
+        // Update label next to the switch
+        const label = toggle.nextElementSibling;
+        if (label) label.textContent = isActive ? 'Active' : 'Inactive';
+
+        // AJAX call to update status
+        fetch('/seller/updateReelStatus', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ reel_id: reelId, status: isActive })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'success') {
+                toastr.success(data.message || 'Reel status updated');
+            } else {
+                toastr.error(data.message || 'Failed to update status');
+                // Revert toggle if failed
+                toggle.checked = !toggle.checked;
+                if (label) label.textContent = toggle.checked ? 'Active' : 'Inactive';
+            }
+        })
+        .catch(err => {
+            toastr.error('Something went wrong');
+            console.error(err);
+            // Revert toggle on error
+            toggle.checked = !toggle.checked;
+            if (label) label.textContent = toggle.checked ? 'Active' : 'Inactive';
+        });
+    }
+});
+</script>
+
 
 
 @include('dealer.layout.footer')

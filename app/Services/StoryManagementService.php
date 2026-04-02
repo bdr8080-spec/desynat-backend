@@ -21,7 +21,7 @@ class StoryManagementService
 
             $query = Story::with([
                 'seller_details',
-                'seller_details.country_details'
+                'seller_details.store_info.country_info'
             ]);
 
             if ($request->filled('search')) {
@@ -36,7 +36,7 @@ class StoryManagementService
             if ($request->filled('country')) {
                 $country = $request->input('country');
 
-                $query->whereHas('seller_details.country_details', function ($q) use ($country) {
+                $query->whereHas('seller_details.store_info.country_info', function ($q) use ($country) {
                     $q->where('name', 'like', '%' . $country . '%');
                 });
             }
@@ -119,6 +119,7 @@ class StoryManagementService
         try {
             $story = Story::create([
                 'file' => $request->file,
+                'thumbnail' => $request->thumbnail??null,
             ]);
 
             return [
@@ -399,6 +400,7 @@ class StoryManagementService
                 'file' => $request_data->file,
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
+                'thumbnail' => $request_data->thumbnail??null,
             ]);
 
             return [
@@ -425,6 +427,7 @@ class StoryManagementService
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
                 'caption' => $request_data->caption,
+                'thumbnail' => $request_data->thumbnail??null,
             ]);
 
             return [
@@ -451,6 +454,7 @@ class StoryManagementService
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
                 'title' => $request_data->title,
+                'thumbnail' => $request_data->thumbnail??null,
             ]);
 
             return [
@@ -574,6 +578,7 @@ class StoryManagementService
             // Update file and timestamps
             $reel->file = $request_data->file;
             $reel->caption = $request_data->caption;
+            $reel->thumbnail = $request_data->thumbnail??null;
             $reel->updated_at = now();
             $reel->created_at = now(); 
             $reel->save();
