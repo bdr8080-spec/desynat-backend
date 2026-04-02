@@ -266,6 +266,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/get_admin_notifications_count',[NotificationController::class,'get_admin_notifications_count']);
      
 
+    Route::get('/admin-all-live-request',[LiveRequestController::class,'adminAllLiveRequest']);
 
 
 
@@ -277,5 +278,3 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 });
-
-
