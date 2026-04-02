@@ -145,6 +145,28 @@ class SellerLiveRequestController extends Controller
 
 
 
+    public function live_room_records(Request $request)
+    {
+
+        try {
+            $seller_details=$request->user();
+            $request_data=(object )[
+                'seller_id'=>$seller_details->id
+            ];
+
+            $data = $this->SellerLiveRequestService->live_room_records($request_data);
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+
 
 
 }

@@ -150,6 +150,12 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::get('/get_my_reels', [SellerDashboardController::class,'get_my_reels']);
     Route::get('/get_my_highlights', [SellerDashboardController::class,'get_my_highlights']);
 
+
+    // m11 Apis
+
+  Route::get('/live_room_records', [SellerLiveRequestController::class,'live_room_records']);
+
+
 });
 
 

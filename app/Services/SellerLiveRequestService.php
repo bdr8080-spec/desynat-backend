@@ -306,6 +306,80 @@ class SellerLiveRequestService
 
 
 
+    public function live_room_records($request_data)
+    {
+        try {
+          
+ 
+$limit = isset($request_data->limit) ? (int)$request_data->limit : 10;
+
+$baseQuery = LiveRequest::with([
+    'timeslot_details',
+    'timeslot_details.country_info',
+])
+->where('seller_id', $request_data->seller_id)
+->where('admin_verify', '1');
+
+// 🔍 Search
+if (!empty($request_data->search)) {
+    $baseQuery->where('order_id', 'like', '%' . $request_data->search . '%');
+}
+
+$today = Carbon::today()->toDateString();
+
+/**
+ * ✅ Current (Today)
+ */
+$currentQuery = clone $baseQuery;
+$currentQuery->whereHas('timeslot_details', function ($q) use ($today) {
+    $q->whereDate('date', $today);
+});
+
+$current_requests = $currentQuery->get();
+
+/**
+ * ✅ Future
+ */
+$futureQuery = clone $baseQuery;
+$futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
+    $q->whereDate('date', '>', $today);
+});
+
+$future_requests = $futureQuery->get();
+
+
+// ❌ If both empty
+if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
+    return [
+        'status' => 'success',
+        'message' => 'No Request found',
+        'data' => (object)[]
+    ];
+}
+
+// ✅ Final response
+return [
+    'status' => 'success',
+    'message' => 'Requests fetched successfully',
+    'data' => [
+        'current_requests' => $current_requests,
+        'future_requests' => $future_requests,
+    ]
+];
+
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch request: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+
+
 
 
 
