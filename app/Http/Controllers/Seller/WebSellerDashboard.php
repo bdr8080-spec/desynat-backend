@@ -21,6 +21,7 @@ use App\Services\StoryManagementService;
 
 
 use App\Helpers\ApiResponse;
+use App\Http\Controllers\CommonController;
 
 
 
@@ -603,6 +604,132 @@ $seller_id=Auth::guard('seller')->user()->id;
         $highlights=  $this->StoryManagementService->getSellerHighlights($request_data)['data'];
 
         return view('dealer.addstory.add-highlight',compact('highlights'));
+    }
+
+    public function upload_story(REQUEST $request){
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
+        ], [
+            'file.required' => 'Please Upload an Image or Video',
+            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
+            'file.max' => 'Image size should not exceed 5MB',
+        ]);
+
+        $seller_id=Auth::guard('seller')->user()->id;
+        //dd($seller_id);
+
+        if($request->hasFile('file')){
+            $commonController = new CommonController();
+            $uploadResult = $commonController->uploadFile($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+           // dd($imageUrl);
+        }
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'file'=>$imageUrl,
+        ];
+
+        $data=  $this->StoryManagementService->addSellerStory($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
+    public function upload_story_from_gallery(REQUEST $request){
+
+        $seller_id=Auth::guard('seller')->user()->id;
+        //dd($seller_id);
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'file' => $request->file,
+        ];
+        //dd($request_data);
+
+        $data=  $this->StoryManagementService->uploadStoryFromGallery($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
+    public function upload_highlight(REQUEST $request){
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
+        ], [
+            'file.required' => 'Please Upload an Image or Video',
+            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
+            'file.max' => 'Image size should not exceed 5MB',
+        ]);
+
+        $seller_id=Auth::guard('seller')->user()->id;
+        //dd($seller_id);
+
+        if($request->hasFile('file')){
+            $commonController = new CommonController();
+            $uploadResult = $commonController->uploadFile($request);
+            $uploadResultArray = $uploadResult->getData(true); 
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['success' => false, 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url'];
+           // dd($imageUrl);
+        }
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'title'=>$request->title,
+        'file'=>$imageUrl,
+        ];
+
+        $data=  $this->StoryManagementService->addSellerHighlight($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+    }
+
+    public function upload_highlight_from_gallery(REQUEST $request){
+
+        $seller_id=Auth::guard('seller')->user()->id;
+        //dd($seller_id);
+
+        $request_data=(object) [
+        'seller_id'=>$seller_id,
+        'file' => $request->file,
+        'title' => $request->title,
+        ];
+        //dd($request_data);
+
+        $data=  $this->StoryManagementService->uploadHighlightFromGallery($request_data);
+        //dd($stories);
+
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
 
 

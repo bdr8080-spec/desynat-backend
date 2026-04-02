@@ -187,6 +187,10 @@ Route::group(['prefix' => 'seller'], function () {
     //M11
     Route::get('/add_story', [WebSellerDashboard::class,'add_story'])->name('seller.add_story');
     Route::get('/add_highlight', [WebSellerDashboard::class,'add_highlight'])->name('seller.add_highlight');
+    Route::post('/upload_story', [WebSellerDashboard::class,'upload_story'])->name('seller.upload_story');
+    Route::post('/upload_story_from_gallery', [WebSellerDashboard::class,'upload_story_from_gallery'])->name('seller.upload_story_from_gallery');
+    Route::post('/upload_highlight', [WebSellerDashboard::class,'upload_highlight'])->name('seller.upload_highlight');
+    Route::post('/upload_highlight_from_gallery', [WebSellerDashboard::class,'upload_highlight_from_gallery'])->name('seller.upload_highlight_from_gallery');
 
     });
 

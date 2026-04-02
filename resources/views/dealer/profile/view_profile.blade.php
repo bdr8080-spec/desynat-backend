@@ -167,10 +167,22 @@
                     </a>
                 </div>
                 @foreach($highlights as $index => $highlight)
-                <div class="product-item">
-                    <img src="{{$highlight->file}}" class="product-circle">
-                    <small>{{$highlight->title??''}}</small>
-                </div>
+                    <div class="product-item">
+                        @php
+                            $extension = pathinfo($highlight->file, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                            <video class="product-circle" autoplay muted loop playsinline>
+                                <source src="{{ $highlight->file }}" type="video/{{ $extension }}">
+                                Your browser does not support the video tag.
+                            </video>
+                        @else
+                            <img src="{{ $highlight->file }}" class="product-circle">
+                        @endif
+
+                        <small>{{ $highlight->title ?? '' }}</small>
+                    </div>
                 @endforeach
 
             </div>
@@ -209,13 +221,24 @@
                         </div>
                     </div>
                     @foreach($reels as $index => $reel)
-                    <div class="col-lg-3 col-md-3">
-                        <div class="reels-grid" onclick="showReels({{ $index }})">
-                            <div class="reel-card">
-                                <img src="{{$reel->file}}" alt="image" class="img-fluid">
+                        <div class="col-lg-3 col-md-3">
+                            <div class="reels-grid" onclick="showReels({{ $index }})">
+                                <div class="reel-card">
+                                    @php
+                                        $extension = pathinfo($reel->file, PATHINFO_EXTENSION);
+                                    @endphp
+
+                                    @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                                        <video class="img-fluid" autoplay muted loop playsinline>
+                                            <source src="{{ $reel->file }}" type="video/{{ $extension }}">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @else
+                                        <img src="{{ $reel->file }}" alt="image" class="img-fluid">
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
 

@@ -336,6 +336,7 @@ class SellerDashboardController extends Controller
 
       $validate = Validator::make($request->all(), [
         'file' => 'required',
+        'caption' => 'required',
         ]);
     
         if($validate->fails()){
@@ -347,6 +348,7 @@ class SellerDashboardController extends Controller
         $request_data=(object )[
             'seller_id'=>$user_details->id,
             'file'=>$request->file,
+            'caption'=>$request->caption,
         ];
 
         $data= $this->StoryManagementService->addSellerReel($request_data);
@@ -445,6 +447,7 @@ class SellerDashboardController extends Controller
         $validate = Validator::make($request->all(), [
             'reel_id' => 'required|exists:reels,id',
             'file' => 'required',
+            'caption' => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -457,6 +460,7 @@ class SellerDashboardController extends Controller
             'reel_id' => $request->reel_id,
             'seller_id' => $user_details->id,
             'file' => $request->file,
+            'caption' => $request->caption,
         ];
 
         $data = $this->StoryManagementService->updateSellerReel($request_data);

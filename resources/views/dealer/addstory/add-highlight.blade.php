@@ -58,13 +58,24 @@
     <div class="reels-wrapper mt-4">
         <div class="row">
             @foreach($highlights as $index => $highlight)
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid" onclick="addHighlight({{ $index }})">
-                    <div class="reel-card">
-                        <img src="{{$highlight->file}}" alt="image" class="img-fluid">
+                <div class="col-lg-3 col-md-3">
+                    <div class="reels-grid" onclick="addHighlight({{ $index }})">
+                        <div class="reel-card">
+                            @php
+                                $extension = pathinfo($highlight->file, PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                                <video class="img-fluid" muted loop playsinline preload="metadata">
+                                    <source src="{{ $highlight->file }}" type="video/{{ $extension }}">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <img src="{{ $highlight->file }}" alt="image" class="img-fluid">
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
 
@@ -80,7 +91,7 @@
         </div>
         <div class="logostatus">
             <div class="status-img">
-                <img id="storyimg" class="img-fluid" />
+                <img id="highlightImg" class="img-fluid" />
                 <video id="highlightVideo" class="img-fluid" controls style="display:none;"></video>
             </div>
         </div>   
@@ -154,6 +165,69 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
         video.pause();
         video.src = "";
     }
+</script>
+
+<!-- upload from gallery -->
+ <script>
+document.querySelector('.add-fillbtn').addEventListener('click', async function () {
+    const img = document.getElementById('highlightImg');
+    const video = document.getElementById('highlightVideo');
+    const loader = document.getElementById('loader'); // make sure you have a loader div
+
+    // 1️⃣ Get the full file URL from preview
+    let fileUrl = null;
+
+    if (img.style.display !== 'none' && img.src) {
+        fileUrl = img.src; // existing image URL
+    } else if (video.style.display !== 'none' && video.src) {
+        fileUrl = video.src; // existing video URL
+    }
+
+    if (!fileUrl) {
+        toastr.error("No preview found to add to highlight.");
+        return;
+    }
+
+    try {
+        // 2️⃣ Show loader
+        if (loader) loader.style.display = 'block';
+
+        // 3️⃣ Send URL to backend
+        const formData = new FormData();
+        formData.append('file', fileUrl);
+
+        const response = await fetch("{{ route('seller.upload_highlight_from_gallery') }}", {
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+
+        // 4️⃣ Hide loader
+        if (loader) loader.style.display = 'none';
+
+        // 5️⃣ Handle response
+        if (response.status === 422) {
+            toastr.error(data.message || 'Validation error');
+            return;
+        }
+
+        if (data.status === 'success') {
+            toastr.success(data.message || 'Highlight added successfully');
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            toastr.error(data.message || 'Failed to add highlight');
+        }
+
+    } catch (error) {
+        if (loader) loader.style.display = 'none';
+        toastr.error('Something went wrong');
+        console.error(error);
+    }
+});
 </script>
 
 
