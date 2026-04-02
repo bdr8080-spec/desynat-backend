@@ -1,8 +1,10 @@
 <?php
 namespace App\Services;
 use App\Helpers\ApiResponse;
-use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner,sellerBanner,Deal};
+use App\Models\{RecentSearch,sellerStoreInformation,wishlist,product,Brand,User,all_countrie,FullBanner,sellerBanner,Deal,LiveRequest};
 
+
+use Carbon\Carbon;
 
 
 class UserDashboardService
@@ -565,10 +567,77 @@ return [
     }
 
 
+ public function UserSidelive_room_records()
+    {
+        try {
+          
+ 
+$baseQuery = LiveRequest::with([
+    'timeslot_details',
+    'timeslot_details.country_info',
+])
+->where('admin_verify', '1');
+
+// 🔍 Search
+if (!empty($request_data->search)) {
+    $baseQuery->where('order_id', 'like', '%' . $request_data->search . '%');
+}
+
+$today = Carbon::today()->toDateString();
+$currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
+
+/**
+ * ✅ Current (Today)
+ */
+$currentQuery = clone $baseQuery;
+$currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTime) {
+    $q->whereDate('date', $today)
+    ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
+    // ->where('to','>', )
+
+});
+
+$current_requests = $currentQuery->get();
+
+/**
+ * ✅ Future
+ */
+$futureQuery = clone $baseQuery;
+$futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
+    $q->whereDate('date', '>', $today);
+});
+
+$future_requests = $futureQuery->get();
 
 
+// ❌ If both empty
+if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
+    return [
+        'status' => 'success',
+        'message' => 'No Request found',
+        'data' => (object)[]
+    ];
+}
+
+// ✅ Final response
+return [
+    'status' => 'success',
+    'message' => 'Requests fetched successfully',
+    'data' => [
+        'current_requests' => $current_requests,
+        'future_requests' => $future_requests,
+    ]
+];
 
 
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch request: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
 
 
 }

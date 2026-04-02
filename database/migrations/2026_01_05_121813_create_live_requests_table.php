@@ -24,6 +24,11 @@ return new class extends Migration
 
             $table->string('reject_reason')->nullable();
 
+
+            $table->string('channel_id')->nullable();
+            $table->string('uid')->nullable();
+            $table->longtext('liveToken')->nullable();
+
             $table->timestamps();
 
             // Foreign keys

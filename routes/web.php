@@ -18,6 +18,10 @@ Route::get('optimize',function(){
     Artisan::call('optimize:clear');
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
+
+
+    dump(env('AGORA_APP_ID'));
+
     return 'Application optimized successfully!';
 });
 

@@ -251,12 +251,18 @@ class SellerLiveRequestService
     {
         try {
 
+            $uid= rand(000000000,999999999);
+            
+
             $orderId = mt_rand(100000, 999999);
             $data = LiveRequest::create([
                 'timeslot_id' => $request_data->timeslot_id,
                 'seller_id'   => $request_data->seller_id,
                 'order_id'    => $orderId,
+                'uid' =>$uid    
             ]);
+
+            $data->update(['channel_id'=>"channel_id$data->id"]);// update channel record
 
             return [
                 'status' => 'success',
@@ -298,6 +304,83 @@ class SellerLiveRequestService
             return [
                 'status' => 'error',
                 'message' => 'Failed to delete live request: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+
+
+
+    public function live_room_records($request_data)
+    {
+        try {
+          
+ 
+$limit = isset($request_data->limit) ? (int)$request_data->limit : 10;
+
+$baseQuery = LiveRequest::with([
+    'timeslot_details',
+    'timeslot_details.country_info',
+])
+->where('seller_id', $request_data->seller_id)
+->where('admin_verify', '1');
+
+// 🔍 Search
+if (!empty($request_data->search)) {
+    $baseQuery->where('order_id', 'like', '%' . $request_data->search . '%');
+}
+
+$today = Carbon::today()->toDateString();
+$currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
+
+
+/**
+ * ✅ Current (Today)
+ */
+$currentQuery = clone $baseQuery;
+$currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTime) {
+    $q->whereDate('date', $today)
+     ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
+});
+
+$current_requests = $currentQuery->get();
+
+/**
+ * ✅ Future
+ */
+$futureQuery = clone $baseQuery;
+$futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
+    $q->whereDate('date', '>', $today);
+});
+
+$future_requests = $futureQuery->get();
+
+
+// ❌ If both empty
+if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
+    return [
+        'status' => 'success',
+        'message' => 'No Request found',
+        'data' => (object)[]
+    ];
+}
+
+// ✅ Final response
+return [
+    'status' => 'success',
+    'message' => 'Requests fetched successfully',
+    'data' => [
+        'current_requests' => $current_requests,
+        'future_requests' => $future_requests,
+    ]
+];
+
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch request: ' . $e->getMessage(),
                 'data' => []
             ];
         }

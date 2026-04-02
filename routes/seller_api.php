@@ -152,6 +152,12 @@ Route::middleware(['auth:sanctum', 'ability:seller'])->group(function () {
     Route::post('/upload_story_from_gallery', [SellerDashboardController::class,'upload_story_from_gallery']);
     Route::post('/upload_highlight_from_gallery', [SellerDashboardController::class,'upload_highlight_from_gallery']);
 
+
+    // m11 Apis
+
+  Route::get('/live_room_records', [SellerLiveRequestController::class,'live_room_records']);
+
+
 });
 
 
