@@ -860,6 +860,35 @@ class StoryManagementService
         }
     }
 
+    public function GetWhislistedReels($request_data)
+    {
+        try {
+            $reel = WhislistReel::where('user_id', $request_data->user_id)
+                ->get();
+
+            if (!$reel) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Whishlisted Reel not found',
+                    'data' => []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Whislist Reels  fetched successfully',
+                'data' => $reel
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch reel',
+                'data' => (object)[]
+            ];
+        }
+    }
+
 
 
 
