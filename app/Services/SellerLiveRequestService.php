@@ -251,12 +251,18 @@ class SellerLiveRequestService
     {
         try {
 
+            $uid= rand(000000000,999999999);
+            
+
             $orderId = mt_rand(100000, 999999);
             $data = LiveRequest::create([
                 'timeslot_id' => $request_data->timeslot_id,
                 'seller_id'   => $request_data->seller_id,
                 'order_id'    => $orderId,
+                'uid' =>$uid    
             ]);
+
+            $data->update(['channel_id'=>"channel_id$data->id"]);// update channel record
 
             return [
                 'status' => 'success',
