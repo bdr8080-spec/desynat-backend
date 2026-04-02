@@ -863,7 +863,7 @@ class StoryManagementService
     public function GetWhislistedReels($request_data)
     {
         try {
-            $reel = WhislistReel::where('user_id', $request_data->user_id)
+            $reel = WhislistReel::with('reel_details')->where('user_id', $request_data->user_id)
                 ->get();
 
             if (!$reel) {

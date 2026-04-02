@@ -353,7 +353,14 @@ foreach ($data->product_variants as $item) {
                 return $item;
             });
 
-        return view('user.profile.wishlist', compact('wishListProduct'));
+        $request_data=(object)[
+            'user_id'=>$id,
+            ];
+
+        $wishlistedReels = $this->StoryManagementService->GetWhislistedReels($request_data)['data'];
+       // dd($wishlistedReels);
+
+        return view('user.profile.wishlist', compact('wishListProduct','wishlistedReels'));
        
 
      }
