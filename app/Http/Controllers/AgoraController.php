@@ -13,6 +13,7 @@ use Validator;
 
 class AgoraController extends Controller
 {
+
     public function generateToken(Request $request)
     {
 
@@ -76,6 +77,16 @@ class AgoraController extends Controller
         // ]);
     }
 
+     public function agoraViewPageWeb(Request $request)
+    {
+
+    $id=$request->id??41;
+
+
+    $livechat_details=  LiveRequest::where('id',$id)->first();
+
+          return view('agora',compact('livechat_details'));
+    }
     
 
 

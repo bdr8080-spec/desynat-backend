@@ -20,7 +20,7 @@
     <script>
     const APP_ID = "{{ env('AGORA_APP_ID') }}";
 
-    const CHANNEL = "test";
+    const CHANNEL = "{{$livechat_details->channel_id}}";
 
     let client = AgoraRTC.createClient({
         mode: "live",
