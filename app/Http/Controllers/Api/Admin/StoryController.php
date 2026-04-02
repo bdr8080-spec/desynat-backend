@@ -65,7 +65,11 @@ class StoryController extends Controller
         }
 
         try {
-            $result = $this->StoryManagementService->addStory($request);
+            $request_data=(object )[
+                'file'=>$request->file,
+                'thumbnail' => $request_data->thumbnail??null,
+            ];
+            $result = $this->StoryManagementService->addStory($request_data);
 
             if ($result['status'] === 'error') {
                 return ApiResponse::generateResponse('error', $result['message'], [], 400);

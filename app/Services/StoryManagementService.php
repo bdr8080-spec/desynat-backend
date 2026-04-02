@@ -119,6 +119,7 @@ class StoryManagementService
         try {
             $story = Story::create([
                 'file' => $request->file,
+                'thumbnail' => $request->thumbnail??null,
             ]);
 
             return [
@@ -399,6 +400,7 @@ class StoryManagementService
                 'file' => $request_data->file,
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
+                'thumbnail' => $request_data->thumbnail??null,
             ]);
 
             return [
@@ -425,6 +427,7 @@ class StoryManagementService
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
                 'caption' => $request_data->caption,
+                'thumbnail' => $request_data->thumbnail??null,
             ]);
 
             return [
@@ -451,6 +454,7 @@ class StoryManagementService
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
                 'title' => $request_data->title,
+                'thumbnail' => $request_data->thumbnail??null,
             ]);
 
             return [
