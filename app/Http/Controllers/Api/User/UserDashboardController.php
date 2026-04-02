@@ -421,6 +421,31 @@ public function get_whishlisted_reel(Request $request){
 }
 
 
+
+
+// user Live Streming Chats
+
+
+ public function live_room_records(Request $request)
+    {
+
+        try {
+
+            $data = $this->UserDashboardService->UserSidelive_room_records();
+
+            if (isset($data['status']) && $data['status'] === 'error') {
+                return ApiResponse::generateResponse('error', $data['message'], [], 400);
+            }
+            return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+
+        } catch (\Exception $e) {
+            return ApiResponse::generateResponse('error', 'Something went wrong: ' . $e->getMessage(), [], 500);
+        }
+    }
+
+    
+
+
     
 
 

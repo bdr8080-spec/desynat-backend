@@ -332,13 +332,16 @@ if (!empty($request_data->search)) {
 }
 
 $today = Carbon::today()->toDateString();
+$currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
+
 
 /**
  * ✅ Current (Today)
  */
 $currentQuery = clone $baseQuery;
-$currentQuery->whereHas('timeslot_details', function ($q) use ($today) {
-    $q->whereDate('date', $today);
+$currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTime) {
+    $q->whereDate('date', $today)
+     ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
 });
 
 $current_requests = $currentQuery->get();

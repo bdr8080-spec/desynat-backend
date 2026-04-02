@@ -283,5 +283,4 @@ public function customAcceptRejectOrder(Request $request){
 
 
 
-
 }
