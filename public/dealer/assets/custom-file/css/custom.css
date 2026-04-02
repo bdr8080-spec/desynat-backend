@@ -1362,3 +1362,28 @@ table.dataTable td.dt-type-date {
     color: #6E4527;
     border-radius: 5px;
 }
+.add-caption {
+    background: #00000078;
+    padding: 9px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+}
+.add-caption .form-control {
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    background: #00000000;
+    color: #fff;
+}
+.add-caption .form-control::placeholder {
+    color: #fff;
+}
+.add-caption p {
+    font-size: 13px;
+    margin-bottom: 0px;
+}
+.add-caption h6 {
+    font-size: 14px;
+}
