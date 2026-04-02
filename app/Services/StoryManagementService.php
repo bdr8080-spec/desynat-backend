@@ -36,7 +36,7 @@ class StoryManagementService
             if ($request->filled('country')) {
                 $country = $request->input('country');
 
-                $query->whereHas('seller_details.country_details', function ($q) use ($country) {
+                $query->whereHas('seller_details.store_info.country_info', function ($q) use ($country) {
                     $q->where('name', 'like', '%' . $country . '%');
                 });
             }
