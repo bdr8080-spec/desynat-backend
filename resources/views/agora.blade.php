@@ -27,8 +27,8 @@
         codec: "vp8"
     });
     let localTracks = [];
-    // let uid = "{{$livechat_details->uid}}";
-    let uid = 41261702;
+    let uid = "{{$livechat_details->uid}}";
+    // let uid = 41261702;
 
     async function getToken() {
         const res = await fetch(`api/agora/tokenWeb?channel_name=${CHANNEL}`);
