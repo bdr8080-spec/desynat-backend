@@ -614,9 +614,8 @@ if ($current_requests->isEmpty()) {
 return [
     'status' => 'success',
     'message' => 'Requests fetched successfully',
-    'data' => [
+    'data' => 
          $current_requests
-    ]
 ];
 
 
