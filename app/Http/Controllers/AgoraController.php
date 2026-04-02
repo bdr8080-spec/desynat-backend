@@ -56,13 +56,11 @@ class AgoraController extends Controller
         $channelName = $request->channel_id;
         $uid = $request->uid ?? 0;
 
-     $livechat_details=LiveRequest::where('channel_id',$request->channel_id)->first();
+     $livechat_details=LiveRequest::where('channel_id',$request->channel_name)->first();
 
      if($livechat_details){
          $uid = $livechat_details->uid ;
      }
-
-     dd($livechat_details);
 
     $token = AgoraService::generateToken($channelName, $uid);
 
@@ -86,11 +84,9 @@ class AgoraController extends Controller
 
 
     $livechat_details=  LiveRequest::where('id',$id)->first();
-
-    dump($livechat_details);
     
 
-          return view('agora',compact('livechat_details'));
+    return view('agora',compact('livechat_details'));
     }
     
 

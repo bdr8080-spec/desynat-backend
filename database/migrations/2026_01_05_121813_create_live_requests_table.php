@@ -26,7 +26,7 @@ return new class extends Migration
 
 
             $table->string('channel_id')->nullable();
-            $table->string('uid')->nullable();
+            $table->integer('uid')->nullable();
             $table->longtext('liveToken')->nullable();
 
             $table->timestamps();
