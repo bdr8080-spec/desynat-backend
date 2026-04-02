@@ -20,8 +20,6 @@
     <script>
     const APP_ID = "{{ env('AGORA_APP_ID') }}";
 
-    alert(APP_ID);
-
     const CHANNEL = "test";
 
     let client = AgoraRTC.createClient({
@@ -32,7 +30,7 @@
     let uid = null;
 
     async function getToken() {
-        const res = await fetch(`api/agora/token?channel_name=${CHANNEL}`);
+        const res = await fetch(`api/agora/tokenWeb?channel_name=${CHANNEL}`);
         return await res.json();
     }
 

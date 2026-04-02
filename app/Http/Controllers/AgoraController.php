@@ -39,4 +39,35 @@ class AgoraController extends Controller
         //     'uid' => $uid
         // ]);
     }
+
+
+     public function generateTokenWeb(Request $request)
+    {
+        $request->validate([
+            // 'id'=>'required|exists:live_requests,id'
+            'channel_name' => 'required|string',
+            'uid' => 'nullable|integer'
+        ]);
+
+        $channelName = $request->channel_id;
+        $uid = $request->uid ?? 0;
+
+        $token = AgoraService::generateToken($channelName, $uid);
+
+    return response()->json([
+        'token' => $token,
+        'uid' => $uid
+    ]);
+
+        // return response()->json([
+        //     'status' => true,
+        //     'token' => $token,
+        //     'channel' => $channelName,
+        //     'uid' => $uid
+        // ]);
+    }
+
+    
+
+
 }
