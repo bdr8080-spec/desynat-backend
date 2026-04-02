@@ -511,6 +511,22 @@ $currentQuery->whereHas('timeslot_details', function ($q) use ($today, $currentT
 });
 
 
+if (!empty($request_data->country_id)) {
+
+$country_id=$request_data->country_id;
+
+$currentQuery->whereHas('timeslot_details', function ($q) use ($country_id) {
+    $q->where(function ($query) use ($country_id) {
+         $query->where('country_id', $country_id);
+
+    });
+});
+
+}
+
+
+
+
 $current_requests = $currentQuery->get();
 
 
