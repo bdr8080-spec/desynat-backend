@@ -42,6 +42,7 @@ class AgoraService
 {
     public static function generateToken($channelName, $uid = 0)
     {
+
         $appId = env('AGORA_APP_ID');
         $appCertificate = env('AGORA_APP_CERTIFICATE');
 

@@ -593,6 +593,7 @@ $currentTime = Carbon::now()->format('H:i:s'); // 24-hour format
 $currentQuery = clone $baseQuery;
 $currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTime) {
     $q->whereDate('date', $today)
+    ->whereRaw("STR_TO_DATE(`from`, '%h:%i %p') < ?", [$currentTime])
     ->whereRaw("STR_TO_DATE(`to`, '%h:%i %p') > ?", [$currentTime]);
     // ->where('to','>', )
 
@@ -600,19 +601,8 @@ $currentQuery->whereHas('timeslot_details', function ($q) use ($today,$currentTi
 
 $current_requests = $currentQuery->get();
 
-/**
- * ✅ Future
- */
-$futureQuery = clone $baseQuery;
-$futureQuery->whereHas('timeslot_details', function ($q) use ($today) {
-    $q->whereDate('date', '>', $today);
-});
-
-$future_requests = $futureQuery->get();
-
-
 // ❌ If both empty
-if ($current_requests->isEmpty() && $future_requests->isEmpty()) {
+if ($current_requests->isEmpty()) {
     return [
         'status' => 'success',
         'message' => 'No Request found',
@@ -625,8 +615,7 @@ return [
     'status' => 'success',
     'message' => 'Requests fetched successfully',
     'data' => [
-        'current_requests' => $current_requests,
-        'future_requests' => $future_requests,
+         $current_requests
     ]
 ];
 
