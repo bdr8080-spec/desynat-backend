@@ -62,7 +62,13 @@ class AgoraController extends Controller
         $channelName = $request->channel_id;
         $uid = $request->uid ?? 0;
 
-        $token = AgoraService::generateToken($channelName, $uid);
+     $livechat_details=LiveRequest::where('channel_id',$request->channel_id)->first();
+
+     if($livechat_details){
+         $uid = $livechat_details->uid ;
+     }
+
+    $token = AgoraService::generateToken($channelName, $uid);
 
     return response()->json([
         'token' => $token,
