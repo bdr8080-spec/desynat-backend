@@ -167,7 +167,7 @@
                     </a>
                 </div>
                 @foreach($highlights as $index => $highlight)
-                    <div class="product-item">
+                    <div class="product-item" onclick='openSellerHighlightViewer(@json($highlight))'>
                         @php
                             $extension = pathinfo($highlight->file, PATHINFO_EXTENSION);
                         @endphp
@@ -187,6 +187,32 @@
 
             </div>
         </div>
+    </div>
+</div>
+
+
+<!-- Seller Highlight Viewer Modal -->
+<div class="status-viewer bgwhite" id="sellerHighlightViewer" style="display:none;">
+    <div class="container highlightStatus">
+        <div class="story-header d-flex justify-content-between">
+            <div></div>
+            <button type="button" class="btn btn-light" onclick="closeSellerHighlightViewer()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="logostatus">
+            <div id="sellerProgressContainer" class="progress-container"></div>
+            
+            <div class="status-img">
+                <img id="sellerHighlightImage" class="img-fluid" style="display:none;" />
+                
+                <video id="sellerHighlightVideo"
+                       style="width:100%; height:100%; object-fit:contain; display:none;"
+                       controls autoplay muted>
+                </video>
+            </div>
+        </div>    
     </div>
 </div>
 
@@ -1127,6 +1153,93 @@ document.body.addEventListener('change', function(e) {
         });
     }
 });
+</script>
+
+<!-- highlight viewer -->
+<script>
+let sellerHighlightTimer = null;
+let sellerHighlightDuration = 3000; // default duration for images
+
+function openSellerHighlightViewer(highlight) {
+    clearTimeout(sellerHighlightTimer);
+
+    const imageEl = document.getElementById("sellerHighlightImage");
+    const videoEl = document.getElementById("sellerHighlightVideo");
+    const progressContainer = document.getElementById("sellerProgressContainer");
+
+    // Hide previous media
+    imageEl.style.display = "none";
+    videoEl.style.display = "none";
+    videoEl.pause();
+    videoEl.src = "";
+
+    // Reset progress bar
+    progressContainer.innerHTML = `
+        <div class="progress-bar" style="width:100%; height:4px; background:#ddd;">
+            <div class="progress-fill" id="sellerHighlightProgressFill" style="width:0%; height:100%; background:#007bff;"></div>
+        </div>
+    `;
+    const progressFill = document.getElementById("sellerHighlightProgressFill");
+
+    const file = highlight.file;
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+    if (isVideo) {
+        videoEl.src = file;
+        videoEl.style.display = "block";
+
+        videoEl.onloadedmetadata = function() {
+            sellerHighlightDuration = videoEl.duration * 1000;
+            startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+        };
+
+        videoEl.onended = function() {
+            closeSellerHighlightViewer();
+        };
+    } else {
+        imageEl.src = file;
+        imageEl.style.display = "block";
+        sellerHighlightDuration = 3000; // 3 seconds for images
+        startSellerHighlightProgress(progressFill, sellerHighlightDuration, closeSellerHighlightViewer);
+    }
+
+    document.getElementById("sellerHighlightViewer").style.display = "block";
+}
+
+function startSellerHighlightProgress(progressEl, duration, callback) {
+    clearTimeout(sellerHighlightTimer);
+
+    // Reset progress
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
+
+    // Trigger animation
+    setTimeout(() => {
+        progressEl.style.transition = `width ${duration}ms linear`;
+        progressEl.style.width = "100%";
+    }, 50);
+
+    sellerHighlightTimer = setTimeout(callback, duration);
+}
+
+function closeSellerHighlightViewer() {
+    clearTimeout(sellerHighlightTimer);
+
+    const imageEl = document.getElementById("sellerHighlightImage");
+    const videoEl = document.getElementById("sellerHighlightVideo");
+    const progressFill = document.getElementById("sellerHighlightProgressFill");
+
+    document.getElementById("sellerHighlightViewer").style.display = "none";
+
+    imageEl.style.display = "none";
+    videoEl.pause();
+    videoEl.style.display = "none";
+
+    if (progressFill) {
+        progressFill.style.transition = "none";
+        progressFill.style.width = "0%";
+    }
+}
 </script>
 
 
