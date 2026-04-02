@@ -443,10 +443,6 @@ public function get_whishlisted_reel(Request $request){
         }
     }
 
-    
-
-
-    
 
 
 
