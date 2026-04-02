@@ -573,6 +573,7 @@ return [
           
  
 $baseQuery = LiveRequest::with([
+    'seller_details',
     'timeslot_details',
     'timeslot_details.country_info',
 ])
