@@ -223,17 +223,11 @@ Route::middleware(['auth:sanctum', 'ability:user'])->prefix('user')->group(funct
     Route::get('/share_reel', [UserDashboardController::class,'share_reel']);
     Route::get('/get_whishlisted_reel', [UserDashboardController::class,'get_whishlisted_reel']);
 
-
-
     // m11 Api 
-    
     Route::get('/show-all-live-streaming-request', [UserDashboardController::class,'live_room_records']);
-
-
-
+  
 
 });
-
    
 
 
