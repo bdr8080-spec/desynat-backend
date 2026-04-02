@@ -776,6 +776,81 @@ $seller_id=Auth::guard('seller')->user()->id;
         return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
     }
 
+    public function update_reel(Request $request)
+    {
+        // Validate caption & reel_id only; file is optional
+        $validator = Validator::make($request->all(), [
+            'caption' => 'required',
+            'reel_id' => 'required',
+            'file' => 'nullable|mimes:jpeg,png,jpg,gif,svg,mp4,mov,avi,mkv|max:5120',
+        ], [
+            'file.mimes' => 'File must be in JPEG, PNG, JPG, GIF, SVG, MP4, MOV, AVI, MKV format',
+            'file.max' => 'Image size should not exceed 5MB',
+            'caption.required' => 'Please enter caption',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
+        $seller_id = Auth::guard('seller')->user()->id;
+
+        $imageUrl = null;
+
+        if ($request->hasFile('file')) {
+            $commonController = new CommonController();
+            $uploadResult = $commonController->uploadFile($request);
+            $uploadResultArray = $uploadResult->getData(true);
+
+            if ($uploadResultArray['status'] === 'error') {
+                return response()->json(['status' => 'error', 'message' => $uploadResultArray['message']]);
+            }
+
+            $imageUrl = $uploadResultArray['data']['url']; // new uploaded file
+        } else {
+            // No new file selected, use existing URL from request
+            $imageUrl = $request->existing_file ?? null;
+        }
+
+        $request_data = (object) [
+            'seller_id' => $seller_id,
+            'file' => $imageUrl,
+            'caption' => $request->caption,
+            'reel_id' => $request->reel_id,
+        ];
+
+        $data = $this->StoryManagementService->updateSellerReel($request_data);
+
+        if (isset($data['status']) && $data['status'] == 'error') {
+            return response()->json(['status' => 'error', 'message' => $data['message']]);
+        }
+
+        return response()->json(['status' => 'success', 'message' => $data['message'], 'data' => $data['data']]);
+    }
+
+   public function delete_reel($id)
+    {
+        $request_data = (object) [
+            'reel_id' => $id
+        ];
+
+        $result = $this->StoryManagementService->deleteSellerReel($request_data);
+
+        if (isset($result['status']) && $result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
 
       
 
