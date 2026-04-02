@@ -61,7 +61,7 @@
 <input type="text" id="highlightTitleInput" class="form-control mb-3" placeholder="Enter Highlight Name" style="display:none;">
 <div id="titleError" style="color:red; font-size:0.9rem;"></div>
 
-<button id="submitHighlight" type="button" class="btn btn-primary w-100">Submit</button>
+<button id="submitHighlight" type="button" class="btn add-fillbtn w-100">Submit</button>
 
 <div class="product_reels customContainer mt-4">
     <div class="title24">Select From gallary</div>

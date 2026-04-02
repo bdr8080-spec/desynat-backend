@@ -451,20 +451,20 @@
             </div>
         </div>
 
-        <div class="dashboard-button mt-4 logostatus bgwhite d-flex justify-content-center gap-4">
-            Active
+        <div class="dashboard-button mt-4 logostatus bgwhite d-flex justify-content-center gap-4" id="reelActions">
+            <!-- Active
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" checked="">
                 <label class="form-check-label" for="switchCheckDefault"></label>
             </div>
             <a href="#" class="pencil-btn-2 btn-red"><i class="bi bi-trash3"></i> </a>
-            <a href="javascript:void(0)" class="pencil-btn-2 edt-btn" onclick="updateReels()"><i class="bi bi-pencil"></i> </a>
+            <a href="javascript:void(0)" class="pencil-btn-2 edt-btn" onclick='updateReels(@json($reel))'><i class="bi bi-pencil"></i> </a> -->
         </div>
     </div>
 </div>
 
 <!-- Update New reeels section -->
-<div class="status-viewer bgwhite" id="updatestory">
+<!-- <div class="status-viewer bgwhite" id="updatestory">
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
@@ -499,6 +499,51 @@
             <button type="button" class="btn add-fillbtn w-100">Upload</button>
         </div>
     </div>
+</div> -->
+<div class="status-viewer bgwhite" id="updatestory">
+    <div class="container">
+        <div class="story-header d-flex justify-content-between py-4">
+            <div class="d-flex gap-2">
+                <a href="javascript:void(0)" onclick="closeStatus3()"><i class="bi bi-chevron-left"></i></a>
+                <h3>Update Reel</h3>
+            </div>
+            <button type="button" class="btn btn-light" onclick="closeStatus3()"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <div class="logostatus">
+            <label class="status-img">
+                <!-- Placeholder -->
+                <div id="bannerhide2" class="text-center">
+                    <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
+                        style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                    <div class="py-2" style="color:#875C3A">Upload Image/Video</div>
+                </div>
+
+                <!-- Preview -->
+                <div class="status-img" id="previewContainerUpdate">
+                    <img id="storyimg2" class="img-fluid" style="display:none;" />
+                    <video id="storyvideo2" class="img-fluid" controls style="display:none;"></video>
+                </div>
+
+                <!-- File Input -->
+                <input type="file" id="storyUpload2" accept="image/*,video/*" class="storyUpload" />
+                <div id="fileError2" style="color:red; font-size:0.9rem;"></div>
+            </label>
+            <input type="hidden" id="existing_file2" value="">
+
+            
+
+            <div class="add-caption">
+                <h6>Caption</h6>
+                <textarea id="caption2" class="form-control" placeholder="Write here..."></textarea>
+                <div id="captionError2" style="color:red; font-size:0.9rem;"></div>
+            </div>
+        </div>
+
+        <div class="dashboard-button mt-4 logostatus bgwhite">
+            <button type="button" class="btn add-fillbtn w-100" onclick="updateReelSubmit()">Update</button>
+        </div>
+    </div>
 </div>
 
 
@@ -516,30 +561,30 @@
 <script>
 // update new reels  function
 
-    function updateReels() {
-        $("#updatestory").show();
-    }
-    function closeStatus3() {
-        $("#updatestory").hide();
-    }
-    // Upload Preview
-    $("#storyUpload2").on("change", function(e) {
-        let file = e.target.files[0];
-        if (!file) return;
+    // function updateReels() {
+    //     $("#updatestory").show();
+    // }
+    // function closeStatus3() {
+    //     $("#updatestory").hide();
+    // }
+    // // Upload Preview
+    // $("#storyUpload2").on("change", function(e) {
+    //     let file = e.target.files[0];
+    //     if (!file) return;
 
-        let url = URL.createObjectURL(file);
+    //     let url = URL.createObjectURL(file);
 
-        $("#storyimg2, #storyvideo2").hide();
+    //     $("#storyimg2, #storyvideo2").hide();
 
-        if (file.type.startsWith("image/")) {
-            $("#storyimg2").attr("src", url).show();
-            $("#bannerhide").hide();
-        } else if (file.type.startsWith("video/")) {
-            $("#storyvideo2").attr("src", url).show();
-        } else {
-            alert("Only image/video allowed");
-        }
-    });
+    //     if (file.type.startsWith("image/")) {
+    //         $("#storyimg2").attr("src", url).show();
+    //         $("#bannerhide").hide();
+    //     } else if (file.type.startsWith("video/")) {
+    //         $("#storyvideo2").attr("src", url).show();
+    //     } else {
+    //         alert("Only image/video allowed");
+    //     }
+    // });
 
 </script>
 
@@ -549,8 +594,13 @@
     var reels = @json($reels);
 </script>
 <script>
+
+var reels = @json($reels);
+var currentReelIndex = null;
+
 function showReels(index) {
     $("#reelsview").show();
+    currentReelIndex = index;
 
     var reel = reels[index];
     var file = reel.file;
@@ -560,12 +610,12 @@ function showReels(index) {
     if (reel.created_at) {
         var date = new Date(reel.created_at);
         var day = String(date.getDate()).padStart(2, '0');
-        var month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        var month = String(date.getMonth() + 1).padStart(2, '0');
         var year = date.getFullYear();
         addedOn = `${day}/${month}/${year}`;
     }
 
-    var caption = reel.caption && reel.caption.trim() ? reel.caption : "N/A"; // dynamic caption
+    var caption = reel.caption && reel.caption.trim() ? reel.caption : "N/A";
 
     var img = $("#showImageReel");
     var video = $("#showVideoReel");
@@ -578,26 +628,111 @@ function showReels(index) {
 
     // Show image or video
     if (file.match(/\.(mp4|webm|ogg)$/i)) {
-        video.attr("src", file);
-        video.show();
+        video.attr("src", file).show();
         video.get(0).play();
     } else {
-        img.attr("src", file);
-        img.show();
+        img.attr("src", file).show();
     }
 
     // Set added-on and caption dynamically
     $("#reelAddedOn").text("Added On " + addedOn);
     $("#reelCaption").text(caption);
+
+    // Inject dynamic buttons
+    renderReelActions(reel);
+}
+
+function renderReelActions(reel) {
+    var actionsDiv = $("#reelActions");
+    actionsDiv.empty(); // remove old buttons
+
+    // Status Toggle
+    var checked = reel.status ? "checked" : "";
+    var statusHtml = `
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="switchReelStatus" ${checked} onchange="toggleReelStatus(${reel.id})">
+            <label class="form-check-label" for="switchReelStatus">Active</label>
+        </div>
+    `;
+    actionsDiv.append(statusHtml);
+
+    // Delete Button
+    actionsDiv.append(`
+        <a href="javascript:void(0)" class="pencil-btn-2 btn-red" onclick="deleteReel(${reel.id})">
+            <i class="bi bi-trash3"></i>
+        </a>
+    `);
+
+    // Edit Button
+    actionsDiv.append(`
+        <a href="javascript:void(0)" class="pencil-btn-2 edt-btn" onclick="updateReels(${currentReelIndex})">
+            <i class="bi bi-pencil"></i>
+        </a>
+    `);
 }
 
 function closeStatus2() {
     $("#reelsview").hide();
 
-    // Stop video on close
+    // Stop video
     var video = $("#showVideoReel").get(0);
-    video.pause();
-    video.src = "";
+    if (video) {
+        video.pause();
+        video.src = "";
+    }
+}
+
+// Example functions for buttons (replace with your AJAX)
+function deleteReel(reelId) {
+    if (confirm("Are you sure you want to delete this reel?")) {
+        console.log("Delete reel:", reelId);
+        // TODO: AJAX call to delete
+    }
+}
+
+function toggleReelStatus(reelId) {
+    var isActive = $("#switchReelStatus").is(":checked");
+    console.log("Toggle reel status:", reelId, isActive);
+    // TODO: AJAX call to update status
+}
+
+function updateReels(index) {
+    var reel = reels[index];
+    $("#updatestory").show();
+
+    // Populate update modal dynamically
+    var file = reel.file;
+    var caption = reel.caption || "";
+
+    var img = $("#storyimg2");
+    var video = $("#storyvideo2");
+    var placeholder = $("#bannerhide2");
+
+    // Reset
+    img.hide();
+    video.hide();
+    video.get(0).pause();
+    video.attr("src", "");
+    placeholder.show();
+
+    // Show preview
+    if (file.match(/\.(mp4|webm|ogg)$/i)) {
+        video.attr("src", file).show();
+        placeholder.hide();
+    } else {
+        img.attr("src", file).show();
+        placeholder.hide();
+    }
+
+    // Set caption
+    $("#caption2").val(caption);
+
+    // Store current reel ID for AJAX
+    currentReelId = reel.id;
+
+    // Clear previous errors
+    $("#fileError2").text("");
+    $("#captionError2").text("");
 }
 </script>
 
@@ -706,5 +841,199 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<script>
+let currentReelId = null;
+
+/* =========================
+   OPEN EDIT MODAL
+========================= */
+function updateReels(index) {
+
+    const reel = reels[index];
+
+    $("#updatestory").show();
+
+    currentReelId = reel.id;
+
+    const file = reel.file;
+    const caption = reel.caption || "";
+
+    const img = document.getElementById("storyimg2");
+    const video = document.getElementById("storyvideo2");
+    const placeholder = document.getElementById("bannerhide2");
+
+    // Reset preview
+    img.style.display = "none";
+    img.src = "";
+
+    video.style.display = "none";
+    video.pause();
+    video.src = "";
+
+    placeholder.style.display = "block";
+
+    // Set existing file
+    document.getElementById("existing_file2").value = file;
+
+    // Show preview
+    if (file && file.match(/\.(mp4|webm|ogg)$/i)) {
+        video.src = file;
+        video.style.display = "block";
+        placeholder.style.display = "none";
+    } else if (file) {
+        img.src = file;
+        img.style.display = "block";
+        placeholder.style.display = "none";
+    }
+
+    // Set caption
+    document.getElementById("caption2").value = caption;
+
+    // Clear errors
+    document.getElementById("fileError2").textContent = "";
+    document.getElementById("captionError2").textContent = "";
+}
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+function closeStatus3() {
+    document.getElementById("updatestory").style.display = "none";
+
+    const video = document.getElementById("storyvideo2");
+    video.pause();
+    video.src = "";
+
+    document.getElementById("storyUpload2").value = "";
+    document.getElementById("caption2").value = "";
+    document.getElementById("existing_file2").value = "";
+
+    document.getElementById("storyimg2").style.display = "none";
+    document.getElementById("storyvideo2").style.display = "none";
+    document.getElementById("bannerhide2").style.display = "block";
+
+    document.getElementById("fileError2").textContent = "";
+    document.getElementById("captionError2").textContent = "";
+}
+
+
+/* =========================
+   FILE PREVIEW
+========================= */
+document.getElementById("storyUpload2").addEventListener("change", function(e) {
+
+    const file = e.target.files[0];
+    document.getElementById("fileError2").textContent = "";
+
+    if (!file) return;
+
+    const img = document.getElementById("storyimg2");
+    const video = document.getElementById("storyvideo2");
+    const placeholder = document.getElementById("bannerhide2");
+
+    img.style.display = "none";
+    video.style.display = "none";
+
+    const fileURL = URL.createObjectURL(file);
+
+    if (file.type.startsWith("image/")) {
+        img.src = fileURL;
+        img.style.display = "block";
+        placeholder.style.display = "none";
+    } 
+    else if (file.type.startsWith("video/")) {
+        video.src = fileURL;
+        video.style.display = "block";
+        placeholder.style.display = "none";
+    }
+});
+
+
+/* =========================
+   REMOVE ERROR ON INPUT
+========================= */
+document.getElementById("caption2").addEventListener("input", function() {
+    document.getElementById("captionError2").textContent = "";
+});
+
+
+/* =========================
+   SUBMIT UPDATE (FETCH)
+========================= */
+async function updateReelSubmit() {
+
+    const file = document.getElementById("storyUpload2").files[0];
+    const caption = document.getElementById("caption2").value.trim();
+    const existingFile = document.getElementById("existing_file2").value;
+
+    const fileError = document.getElementById("fileError2");
+    const captionError = document.getElementById("captionError2");
+
+    fileError.textContent = "";
+    captionError.textContent = "";
+
+    let hasError = false;
+
+    // Validation
+    if (!file && !existingFile) {
+        fileError.textContent = "Please upload image/video";
+        hasError = true;
+    }
+
+    if (!caption) {
+        captionError.textContent = "Please enter caption";
+        hasError = true;
+    }
+
+    if (hasError) return;
+
+    const formData = new FormData();
+
+    if (file) {
+        formData.append("file", file);
+    } else {
+        formData.append("existing_file", existingFile);
+    }
+
+    formData.append("caption", caption);
+    formData.append("reel_id", currentReelId);
+
+    try {
+        // ✅ SHOW LOADER
+        if (window.loader) loader.style.display = 'block';
+
+        const res = await fetch("{{ route('seller.update_reel') }}", {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: formData
+        });
+
+        const data = await res.json();
+
+        // ✅ HIDE LOADER
+        if (window.loader) loader.style.display = 'none';
+
+        if (data.status === "success") {
+            toastr.success(data.message || "Reel updated successfully");
+            setTimeout(() => location.reload(), 1200);
+        } else {
+            toastr.error(data.message || "Failed to update reel");
+        }
+
+    } catch (error) {
+
+        // ✅ HIDE LOADER ON ERROR
+        if (window.loader) loader.style.display = 'none';
+
+        toastr.error("Something went wrong");
+        console.error(error);
+    }
+}
+</script>
+
 
 @include('dealer.layout.footer')

@@ -133,7 +133,7 @@
                             <tr>
                                 <th scope="row">{{ $index + 1 }}</th>
                                 <td>{{ $story['seller_details']['first_name'] }} {{ $story['seller_details']['last_name'] }}</td>
-                                <td>{{ $story['seller_details']['country_details']['name'] }} </td>
+                                <td>{{ $story['seller_details']['country_details']['name']??'N/A' }} </td>
                                 <td>
                                     @php
                                         $ext = strtolower(pathinfo($story['file'], PATHINFO_EXTENSION));
