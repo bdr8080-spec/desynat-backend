@@ -19,14 +19,18 @@
                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                 <div class="py-2" style="color:#875C3A">
-                    Upload image
+                    Upload image/video
                 </div>
             </div>
             <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
-
-            <input type="file" accept="image/*" id="banner_image_upload" style="opacity:0;position: absolute;"
-                name="upload_banner">
+            <video id="bannerUploadedVideo" class="img-fluid uploadbnr" controls
+                style="display:none;"></video
         </label>
+        <input type="file"
+               id="banner_image_upload"
+               name="file"
+               accept="image/*,video/*"
+               style="display:none;">
     </div>
 </div>
 
@@ -35,37 +39,26 @@
     <div class="title24">Select From gallary</div>
     <div class="reels-wrapper mt-4">
         <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid" onclick="addSeller(0)">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                    <!-- <div class="play-icon">
-                        <i class="bi bi-play-fill"></i>
-                    </div> -->
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-2.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-3.svg')}}" alt="image" class="img-fluid">
+            @foreach($stories as $index => $story)
+                <div class="col-lg-3 col-md-3">
+                    <div class="reels-grid" onclick="addSeller({{ $index }})">
+                        <div class="reel-card">
+                            @php
+                                $extension = pathinfo($story->file, PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                                <video class="img-fluid" muted loop playsinline preload="metadata">
+                                    <source src="{{ $story->file }}" type="video/{{ $extension }}">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <img src="{{ $story->file }}" alt="image" class="img-fluid">
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 
     </div>
@@ -81,6 +74,7 @@
         <div class="logostatus">
             <div class="status-img">
                 <img id="storyimg" class="img-fluid" alt="status" />
+                <video id="storyvideo" class="img-fluid" controls style="display:none;"></video>
             </div>
         </div>   
 
@@ -92,38 +86,203 @@
 
 
 
+<script>
+    var stories = @json($stories);
+</script>
 
+<script>
+    var currentIndex = 0;
+
+    function addSeller(index) {
+        currentIndex = index;
+
+        document.getElementById("Addstory").style.display = "block";
+        loadStory();
+    }
+
+    function loadStory() {
+        var story = stories[currentIndex];
+        var file = story.file;
+
+        var img = document.getElementById("storyimg");
+        var video = document.getElementById("storyvideo");
+
+        // Reset both
+        img.style.display = "none";
+        video.style.display = "none";
+        video.pause();
+        video.src = "";
+
+        // Check file type
+        if (file.match(/\.(mp4|webm|ogg)$/i)) {
+            video.src = file;
+            video.style.display = "block";
+            video.play();
+        } else {
+            img.src = file;
+            img.style.display = "block";
+        }
+    }
+
+    function closeStatus1() {
+        document.getElementById("Addstory").style.display = "none";
+
+        // Stop video on close
+        var video = document.getElementById("storyvideo");
+        video.pause();
+        video.src = "";
+    }
+</script>
+
+<!-- add story -->
 <script>
 document.getElementById('banner_image_upload').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        document.getElementById('bannerUploadedImg').src = e.target.result;
-        document.getElementById('bannerUploadedImg').style.display = 'block';
-        document.getElementById('bannerPlaceholderImg').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
+
+    const img = document.getElementById('bannerUploadedImg');
+    const video = document.getElementById('bannerUploadedVideo');
+    const placeholder = document.getElementById('bannerPlaceholderImg');
+    const loader = document.getElementById('loader');
+
+    // Reset preview
+    img.style.display = 'none';
+    video.style.display = 'none';
+    placeholder.style.display = 'none';
+
+    const fileType = file.type;
+
+    //  Show preview
+    if (fileType.startsWith('video/')) {
+        const videoURL = URL.createObjectURL(file);
+        video.src = videoURL;
+        video.style.display = 'block';
+    } else {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            img.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    //  Prepare form data
+    let formData = new FormData();
+    formData.append('file', file);
+
+    //  Show loader
+    if (loader) loader.style.display = 'block';
+
+    //  AJAX upload
+    fetch("{{ route('seller.upload_story') }}", {
+        method: "POST",
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        body: formData
+    })
+    .then(async res => {
+        let data;
+        try {
+            data = await res.json();
+        } catch (e) {
+            throw new Error("Invalid JSON response");
+        }
+
+        return { statusCode: res.status, body: data };
+    })
+    .then(({ statusCode, body }) => {
+        if (loader) loader.style.display = 'none';
+
+        //  Handle Laravel validation (422)
+        if (statusCode === 422) {
+            toastr.error(body.message || 'Validation error');
+            return;
+        }
+
+        //  Handle API response
+        if (body.status === 'success') {
+            toastr.success(body.message || 'Uploaded successfully');
+
+            setTimeout(() => {
+                location.reload();
+            }, 1500);
+        } else {
+            toastr.error(body.message || 'Upload failed');
+        }
+    })
+    .catch(error => {
+        if (loader) loader.style.display = 'none';
+        toastr.error('Something went wrong');
+        console.error(error);
+    });
 });
 </script>
 
+<!-- upload from gallery -->
 <script>
-    var images = [ "{{asset('user')}}/assets/images/store1.jpg",];
+document.querySelector('.add-fillbtn').addEventListener('click', async function () {
+    const img = document.getElementById('storyimg');
+    const video = document.getElementById('storyvideo');
+    const loader = document.getElementById('loader');
 
-    var currentIndex = 0;
-    function addSeller(index) {
-        currentIndex = index;
-        document.getElementById("Addstory").style.display = "block";
-        storyimg();
+    // 1️⃣ Get the full file URL from preview
+    let fileUrl = null;
+
+    if (img.style.display !== 'none' && img.src) {
+        fileUrl = img.src; // existing image URL
+    } else if (video.style.display !== 'none' && video.src) {
+        fileUrl = video.src; // existing video URL
     }
-    function storyimg() {
-        document.getElementById("storyimg").src = images[currentIndex];
+
+    if (!fileUrl) {
+        toastr.error("No preview found to save.");
+        return;
     }
-    function closeStatus1() {
-        clearTimeout(timer);
-        document.getElementById("Addstory").style.display = "none";
+
+    try {
+        // 2️⃣ Show loader
+        if (loader) loader.style.display = 'block';
+
+        // 3️⃣ Send URL to backend
+        const formData = new FormData();
+        formData.append('file', fileUrl);
+
+        const response = await fetch("{{ route('seller.upload_story_from_gallery') }}", {
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+
+        // 4️⃣ Hide loader
+        if (loader) loader.style.display = 'none';
+
+        // 5️⃣ Handle response
+        if (response.status === 422) {
+            toastr.error(data.message || 'Validation error');
+            return;
+        }
+
+        if (data.status === 'success') {
+            toastr.success(data.message || 'Story added successfully');
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            toastr.error(data.message || 'Failed to add story');
+        }
+
+    } catch (error) {
+        if (loader) loader.style.display = 'none';
+        toastr.error('Something went wrong');
+        console.error(error);
     }
+});
 </script>
+
+
 
 
 

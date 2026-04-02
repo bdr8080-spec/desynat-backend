@@ -336,6 +336,7 @@ class SellerDashboardController extends Controller
 
       $validate = Validator::make($request->all(), [
         'file' => 'required',
+        'caption' => 'required',
         ]);
     
         if($validate->fails()){
@@ -347,6 +348,7 @@ class SellerDashboardController extends Controller
         $request_data=(object )[
             'seller_id'=>$user_details->id,
             'file'=>$request->file,
+            'caption'=>$request->caption,
         ];
 
         $data= $this->StoryManagementService->addSellerReel($request_data);
@@ -445,6 +447,7 @@ class SellerDashboardController extends Controller
         $validate = Validator::make($request->all(), [
             'reel_id' => 'required|exists:reels,id',
             'file' => 'required',
+            'caption' => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -457,6 +460,7 @@ class SellerDashboardController extends Controller
             'reel_id' => $request->reel_id,
             'seller_id' => $user_details->id,
             'file' => $request->file,
+            'caption' => $request->caption,
         ];
 
         $data = $this->StoryManagementService->updateSellerReel($request_data);
@@ -548,6 +552,64 @@ class SellerDashboardController extends Controller
         }
 
         return ApiResponse::generateResponse('success', $data['message'], $data['data'], 200);
+    }
+
+    public function upload_story_from_gallery(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'file' => 'required',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $user_details=$request->user();
+   
+        $request_data=(object )[
+            'seller_id'=>$user_details->id,
+            'file'=>$request->file,
+        ];
+
+        $data= $this->StoryManagementService->uploadStoryFromGallery($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
+    }
+
+    public function upload_highlight_from_gallery(Request $request){
+
+      $validate = Validator::make($request->all(), [
+        'file' => 'required',
+        'title' => 'required',
+        ]);
+    
+        if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+        }
+
+        $user_details=$request->user();
+   
+        $request_data=(object )[
+            'seller_id'=>$user_details->id,
+            'file'=>$request->file,
+            'title'=>$request->title,
+        ];
+
+        $data= $this->StoryManagementService->uploadHighlightFromGallery($request_data);
+      
+        if(isset($data['status']) && $data['status']=='error' ){
+            return ApiResponse::generateResponse('error', $data['message'],(object)[],400);
+        }
+
+        return ApiResponse::generateResponse('success', $data['message'],$data['data'], 200);
+
+
     }
 
     

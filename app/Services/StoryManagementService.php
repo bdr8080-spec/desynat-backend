@@ -424,6 +424,7 @@ class StoryManagementService
                 'file' => $request_data->file,
                 'type' => 2,
                 'seller_id' => $request_data->seller_id,
+                'caption' => $request_data->caption,
             ]);
 
             return [
@@ -572,6 +573,7 @@ class StoryManagementService
 
             // Update file and timestamps
             $reel->file = $request_data->file;
+            $reel->caption = $request_data->caption;
             $reel->updated_at = now();
             $reel->created_at = now(); 
             $reel->save();
@@ -796,6 +798,86 @@ class StoryManagementService
                     'reel_id' => $reel->id,
                     'file' => $reel->file
                 ]
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to fetch reel',
+                'data' => (object)[]
+            ];
+        }
+    }
+
+    public function uploadStoryFromGallery($request_data)
+    {
+        try {
+            $story = new Story();
+            $story->seller_id = $request_data->seller_id;
+            $story->file = $request_data->file;
+            $story->type = 2;
+
+            $story->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Story uploaded successfully',
+                'data' => $story
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to upload story: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function uploadHighlightFromGallery($request_data)
+    {
+        try {
+            $story = new Highlight();
+            $story->seller_id = $request_data->seller_id;
+            $story->file = $request_data->file;
+            $story->title = $request_data->title;
+            $story->type = 2;
+
+            $story->save();
+
+            return [
+                'status' => 'success',
+                'message' => 'Highlight uploaded successfully',
+                'data' => $story
+            ];
+
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'Failed to upload highlight: ' . $e->getMessage(),
+                'data' => []
+            ];
+        }
+    }
+
+    public function GetWhislistedReels($request_data)
+    {
+        try {
+            $reel = WhislistReel::with('reel_details')->where('user_id', $request_data->user_id)
+                ->get();
+
+            if (!$reel) {
+                return [
+                    'status' => 'error',
+                    'message' => 'Whishlisted Reel not found',
+                    'data' => []
+                ];
+            }
+
+            return [
+                'status' => 'success',
+                'message' => 'Whislist Reels  fetched successfully',
+                'data' => $reel
             ];
 
         } catch (\Exception $e) {

@@ -13,20 +13,23 @@
 </div>
 
 <div class="product-pnls2 mt-3 mb-3">
-    <div class="upload-image" style="height:250px;">
+    <div class="upload-image" style="height:250px; position: relative;">
         <label id="bannerUploadLabel" style="cursor:pointer;text-align:center;display:block;">
             <div id="bannerPlaceholderImg">
                 <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
-                    style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-                <div class="py-2" style="color:#875C3A">
-                    Upload image
-                </div>
+                     style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
+                <div class="py-2" style="color:#875C3A">Upload image/video</div>
             </div>
-            <img id="bannerUploadedImg" src="" alt="image" class="img-fluid uploadbnr" style="display:none;">
 
-            <input type="file" accept="image/*" id="banner_image_upload" style="opacity:0;position: absolute;"
-                name="upload_banner">
+            <!-- Image Preview -->
+            <img id="bannerUploadedImg" src="" alt="preview" class="img-fluid uploadbnr" style="display:none;">
+
+            <!-- Video Preview -->
+            <video id="bannerUploadedVideo" class="img-fluid uploadbnr" controls style="display:none;"></video>
+
+            <input type="file" accept="image/*,video/*" id="banner_image_upload" style="opacity:0;position:absolute;" name="upload_banner">
         </label>
+        <div id="fileError" style="color:red; font-size:0.9rem;"></div>
     </div>
 </div>
 
@@ -39,7 +42,6 @@
             <span class="radio-label">Select from previous</span>
         </label>
     </div>
-
     <div class="check_radio">
         <label class="radio-group">
             <input type="radio" name="banner_position" value="2">
@@ -49,45 +51,42 @@
     </div>
 </div>
 
-<div class="sub-form">
-    <input type="text" class="form-control" placeholder="Enter Highlight Name">
-</div>
+<select id="previousHighlights" class="form-select mb-3">
+    <option value="">Select Highlight</option>
+    @foreach($highlights as $highlight)
+        <option value="{{ $highlight->title }}">{{ $highlight->title }}</option>
+    @endforeach
+</select>
+
+<input type="text" id="highlightTitleInput" class="form-control mb-3" placeholder="Enter Highlight Name" style="display:none;">
+<div id="titleError" style="color:red; font-size:0.9rem;"></div>
+
+<button id="submitHighlight" type="button" class="btn btn-primary w-100">Submit</button>
 
 <div class="product_reels customContainer mt-4">
     <div class="title24">Select From gallary</div>
     <div class="reels-wrapper mt-4">
         <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid" onclick="addSeller(0)">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                    <!-- <div class="play-icon">
-                        <i class="bi bi-play-fill"></i>
-                    </div> -->
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-2.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-3.svg')}}" alt="image" class="img-fluid">
+            @foreach($highlights as $index => $highlight)
+                <div class="col-lg-3 col-md-3">
+                    <div class="reels-grid" onclick="addHighlight({{ $index }})">
+                        <div class="reel-card">
+                            @php
+                                $extension = pathinfo($highlight->file, PATHINFO_EXTENSION);
+                            @endphp
+
+                            @if(in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                                <video class="img-fluid" muted loop playsinline preload="metadata">
+                                    <source src="{{ $highlight->file }}" type="video/{{ $extension }}">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @else
+                                <img src="{{ $highlight->file }}" alt="image" class="img-fluid">
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="reels-grid">
-                    <div class="reel-card">
-                        <img src="{{asset('dealer/assets/img/reel-1.svg')}}" alt="image" class="img-fluid">
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 
     </div>
@@ -102,7 +101,8 @@
         </div>
         <div class="logostatus">
             <div class="status-img">
-                <img id="storyimg" class="img-fluid" alt="status" />
+                <img id="highlightImg" class="img-fluid" />
+                <video id="highlightVideo" class="img-fluid" controls style="display:none;"></video>
             </div>
         </div>   
 
@@ -115,7 +115,7 @@
 
 
 
-<script>
+<!-- <script>
 document.getElementById('banner_image_upload').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -127,25 +127,265 @@ document.getElementById('banner_image_upload').addEventListener('change', functi
     };
     reader.readAsDataURL(file);
 });
+</script> -->
+
+<script>
+    var highlights = @json($highlights);
 </script>
 
 <script>
-    var images = [ "{{asset('user')}}/assets/images/store1.jpg",];
+    var currentHighlightIndex = 0;
 
-    var currentIndex = 0;
-    function addSeller(index) {
-        currentIndex = index;
+    function addHighlight(index) {
+        currentHighlightIndex = index;
+
         document.getElementById("Addstory").style.display = "block";
-        storyimg();
+        loadHighlight();
     }
-    function storyimg() {
-        document.getElementById("storyimg").src = images[currentIndex];
+
+    function loadHighlight() {
+        var highlight = highlights[currentHighlightIndex];
+        var file = highlight.file;
+
+        var img = document.getElementById("highlightImg");
+        var video = document.getElementById("highlightVideo");
+
+        // Reset
+        img.style.display = "none";
+        video.style.display = "none";
+        video.pause();
+        video.src = "";
+
+        // Detect type
+        if (file.match(/\.(mp4|webm|ogg)$/i)) {
+            video.src = file;
+            video.style.display = "block";
+            video.play();
+        } else {
+            img.src = file;
+            img.style.display = "block";
+        }
     }
+
     function closeStatus1() {
-        clearTimeout(timer);
         document.getElementById("Addstory").style.display = "none";
+
+        // stop video
+        var video = document.getElementById("highlightVideo");
+        video.pause();
+        video.src = "";
     }
 </script>
+
+<!-- upload from gallery -->
+<script>
+document.querySelector('.add-fillbtn').addEventListener('click', async function () {
+    const img = document.getElementById('highlightImg');
+    const video = document.getElementById('highlightVideo');
+    const loader = document.getElementById('loader'); // loader div
+    const titleEl = document.querySelector('#Addstory .story-header h3'); // fetch title
+    const title = titleEl ? titleEl.textContent.trim() : '';
+
+    // 1️⃣ Get the full file URL from preview
+    let fileUrl = null;
+
+    if (img.style.display !== 'none' && img.src) {
+        fileUrl = img.src;
+    } else if (video.style.display !== 'none' && video.src) {
+        fileUrl = video.src;
+    }
+
+    if (!fileUrl) {
+        toastr.error("No preview found to add to highlight.");
+        return;
+    }
+
+    try {
+        // 2️⃣ Show loader
+        if (loader) loader.style.display = 'block';
+
+        // 3️⃣ Send URL and title to backend
+        const formData = new FormData();
+        formData.append('file', fileUrl);
+        formData.append('title', title); // add title
+
+        const response = await fetch("{{ route('seller.upload_highlight_from_gallery') }}", {
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            body: formData
+        });
+
+        const data = await response.json();
+
+        // 4️⃣ Hide loader
+        if (loader) loader.style.display = 'none';
+
+        // 5️⃣ Handle response
+        if (response.status === 422) {
+            toastr.error(data.message || 'Validation error');
+            return;
+        }
+
+        if (data.status === 'success') {
+            toastr.success(data.message || 'Highlight added successfully');
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            toastr.error(data.message || 'Failed to add highlight');
+        }
+
+    } catch (error) {
+        if (loader) loader.style.display = 'none';
+        toastr.error('Something went wrong');
+        console.error(error);
+    }
+});
+</script>
+
+
+
+<!-- upload highlight -->
+<script>
+const fileInput = document.getElementById('banner_image_upload');
+const fileImg = document.getElementById('bannerUploadedImg');
+const fileVideo = document.getElementById('bannerUploadedVideo');
+const placeholder = document.getElementById('bannerPlaceholderImg');
+const fileError = document.getElementById('fileError');
+
+const radios = document.querySelectorAll('input[name="banner_position"]');
+const dropdown = document.getElementById('previousHighlights');
+const inputField = document.getElementById('highlightTitleInput');
+const titleError = document.getElementById('titleError');
+const submitBtn = document.getElementById('submitHighlight');
+
+// --- File Preview ---
+fileInput.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    fileError.textContent = '';
+
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const type = file.type;
+
+        // Reset preview
+        fileImg.style.display = 'none';
+        fileVideo.style.display = 'none';
+        fileVideo.pause();
+        fileVideo.src = '';
+
+        if (type.startsWith('image/')) {
+            fileImg.src = e.target.result;
+            fileImg.style.display = 'block';
+            placeholder.style.display = 'none';
+        } else if (type.startsWith('video/')) {
+            fileVideo.src = e.target.result;
+            fileVideo.style.display = 'block';
+            fileVideo.controls = true;
+            fileVideo.play();
+            placeholder.style.display = 'none';
+        }
+    };
+    reader.readAsDataURL(file);
+});
+
+// --- Handle radio buttons ---
+function updateHighlightField() {
+    const selected = document.querySelector('input[name="banner_position"]:checked').value;
+
+    if (selected === "1") {
+        // Show dropdown, hide input field
+        dropdown.style.display = 'block';
+        inputField.style.display = 'none';
+        inputField.value = ''; // Clear input
+        titleError.textContent = '';
+    } else {
+        // Show input field, hide dropdown
+        dropdown.style.display = 'none';
+        inputField.style.display = 'block';
+        dropdown.value = ''; // Clear dropdown
+        titleError.textContent = '';
+    }
+}
+
+radios.forEach(r => r.addEventListener('change', updateHighlightField));
+
+// Remove title error when dropdown or input changes
+dropdown.addEventListener('change', () => {
+    titleError.textContent = '';
+});
+inputField.addEventListener('input', () => {
+    titleError.textContent = '';
+});
+updateHighlightField();
+
+// --- Submit ---
+submitBtn.addEventListener('click', async function() {
+    fileError.textContent = '';
+    titleError.textContent = '';
+
+    const selectedRadio = document.querySelector('input[name="banner_position"]:checked').value;
+    let title = '';
+
+    // Get title based on selection
+    if (selectedRadio === "1") {
+        title = dropdown.value.trim();
+    } else {
+        title = inputField.value.trim();
+    }
+
+    const file = fileInput.files[0];
+    const hasPreview = (fileImg.src && fileImg.style.display !== 'none') || (fileVideo.src && fileVideo.style.display !== 'none');
+
+    // Validation
+    let hasError = false;
+    if (!file && !hasPreview) {
+        fileError.textContent = 'Please select image/video';
+        hasError = true;
+    }
+    if (!title) {
+        titleError.textContent = selectedRadio === "1" ? 'Please select title' : 'Please enter highlight name';
+        hasError = true;
+    }
+    if (hasError) return;
+
+    const formData = new FormData();
+
+    if (file) {
+        formData.append('file', file);
+    } else {
+        // No new file, use preview URL for existing media (if backend supports)
+        formData.append('file', fileVideo.src || fileImg.src);
+    }
+    formData.append('title', title);
+
+    try {
+        if (window.loader) loader.style.display = 'block';
+
+        const res = await fetch("{{ route('seller.upload_highlight') }}", {
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+            body: formData
+        });
+        const data = await res.json();
+        if (window.loader) loader.style.display = 'none';
+
+        if (data.status === 'success') {
+            toastr.success(data.message || 'Highlight added successfully');
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            toastr.error(data.message || 'Something went wrong');
+        }
+    } catch (err) {
+        if (window.loader) loader.style.display = 'none';
+        toastr.error('Something went wrong');
+        console.error(err);
+    }
+});
+</script>
+
 
 
 

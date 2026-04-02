@@ -184,6 +184,15 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('/renew_subcription_plan_buy', [WebSellerDashboard::class,'renew_subcription_plan_buy'])->name('seller.renew_subcription_plan_buy');
     Route::get('/my_plans', [WebSellerDashboard::class,'my_plans'])->name('seller.my_plans');
 
+    //M11
+    Route::get('/add_story', [WebSellerDashboard::class,'add_story'])->name('seller.add_story');
+    Route::get('/add_highlight', [WebSellerDashboard::class,'add_highlight'])->name('seller.add_highlight');
+    Route::post('/upload_story', [WebSellerDashboard::class,'upload_story'])->name('seller.upload_story');
+    Route::post('/upload_story_from_gallery', [WebSellerDashboard::class,'upload_story_from_gallery'])->name('seller.upload_story_from_gallery');
+    Route::post('/upload_highlight', [WebSellerDashboard::class,'upload_highlight'])->name('seller.upload_highlight');
+    Route::post('/upload_highlight_from_gallery', [WebSellerDashboard::class,'upload_highlight_from_gallery'])->name('seller.upload_highlight_from_gallery');
+    Route::post('/upload_reel', [WebSellerDashboard::class,'upload_reel'])->name('seller.upload_reel');
+
     });
 
 });
@@ -205,15 +214,7 @@ Route::match(['get', 'post'], '/add-products', function () {
 
 })->name('dealer.add-products');
 
-Route::match(['get', 'post'], '/add-story', function () {
-    return view('dealer.addstory.index');
 
-})->name('dealer.add-story');
-
-Route::match(['get', 'post'], '/add-highlight', function () {
-    return view('dealer.addstory.add-highlight');
-
-})->name('dealer.add-highlight');
 
 // Route::match(['get', 'post'], '/subscription-plans', function () {
 //     return view('dealer.plans.index');
