@@ -379,7 +379,7 @@
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
-                <a href="#"><i class="bi bi-chevron-left"></i> </a>
+                <a href="javascript:void(0)"  onclick="closeStatus1()"><i class="bi bi-chevron-left"></i> </a>
                 <h3>Upload new reel </h3>
             </div>
             <button type="button" class="btn btn-light" onclick="closeStatus1()"><i class="bi bi-x-lg"></i></button>
@@ -399,6 +399,10 @@
                 </div>
                 <input type="file" id="storyUpload" accept="image/*,video/*" class="storyUpload" />
             </label>
+            <div class="add-caption">
+                <h6>Caption</h6>
+                <textarea class="form-control" placeholder="Write here..."></textarea>
+            </div>
 
         </div>
 
@@ -413,7 +417,7 @@
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
-                <a href="#"><i class="bi bi-chevron-left"></i> </a>
+                <a href="javascript:void(0)" onclick="closeStatus2()"><i class="bi bi-chevron-left"></i> </a>
                 <h3>Reel </h3>
             </div>
             <button type="button" class="btn btn-light" onclick="closeStatus2()"><i class="bi bi-x-lg"></i></button>
@@ -425,6 +429,10 @@
                     <video id="showVideoReel" class="img-fluid" controls style="display:none;"></video>
                 </div>
             </label>
+            <div class="add-caption">
+                <h6>Added On 02/04/2026</h6>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iure enim laudantium labore veniam necessitatibus illo alias aperiam harum</p>
+            </div>
         </div>
 
         <div class="dashboard-button mt-4 logostatus bgwhite d-flex justify-content-center gap-4">
@@ -444,7 +452,7 @@
     <div class="container">
         <div class="story-header d-flex justify-content-between py-4">
             <div class="d-flex gap-2">
-                <a href="#"><i class="bi bi-chevron-left"></i> </a>
+                <a href="javascript:void(0)" onclick="closeStatus3()"><i class="bi bi-chevron-left"></i> </a>
                 <h3>Update New Reel </h3>
             </div>
             <button type="button" class="btn btn-light" onclick="closeStatus3()"><i class="bi bi-x-lg"></i></button>
@@ -464,6 +472,10 @@
                 </div>
                 <input type="file" id="storyUpload2" accept="image/*,video/*" class="storyUpload" />
             </label>
+            <div class="add-caption">
+                <h6>Caption</h6>
+                <textarea class="form-control" placeholder="Write here..."></textarea>
+            </div>
 
         </div>
 
@@ -543,7 +555,7 @@
 
 </script>
 
-//prakash
+
 
 <script>
     var reels = @json($reels);
@@ -586,4 +598,4 @@ function closeStatus2() {
 </script>
 
 
-@include('dealer.layout.footer');
+@include('dealer.layout.footer')

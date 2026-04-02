@@ -1606,6 +1606,7 @@ storeClient_profile_img {
   cursor: pointer;
   height: 510px;
   margin-bottom: 30px;
+  border: 1px solid #ddd;
 }
 
 .reel-card img {
