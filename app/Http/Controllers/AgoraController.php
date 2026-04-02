@@ -80,10 +80,13 @@ class AgoraController extends Controller
      public function agoraViewPageWeb(Request $request)
     {
 
-    $id=$request->id??41;
+    $id=$request->id??43;
 
 
     $livechat_details=  LiveRequest::where('id',$id)->first();
+
+    dump($livechat_details);
+    
 
           return view('agora',compact('livechat_details'));
     }
