@@ -117,6 +117,7 @@ class SellerLiveRequestService
             $limit = isset($request_data->limit) ? (int)$request_data->limit : 10;
 
             $query = LiveRequest::with([
+                 'seller_details',
                 'timeslot_details',
                 'timeslot_details.country_info',
             ]);

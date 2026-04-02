@@ -7,15 +7,25 @@ use Illuminate\Http\Request;
 use App\Models\LiveRequest;
 use App\Services\AgoraService;
 
+use App\Helpers\ApiResponse;
+
+use Validator;
+
 class AgoraController extends Controller
 {
+
     public function generateToken(Request $request)
     {
-        $request->validate([
-            'id'=>'required|exists:live_requests,id'
-            // 'channel_name' => 'required|string',
-            // 'uid' => 'nullable|integer'
-        ]);
+
+         $validate = Validator::make($request->all(), [
+           'id'=>'required|exists:live_requests,id'
+
+            ]);
+            
+       if($validate->fails()){
+        return ApiResponse::generateResponse('error', $validate->errors()->first(),$validate->errors()->first(),422);
+       }
+       
 
       $livechat_details=  LiveRequest::where('id',$request->id)->first();
 
@@ -25,7 +35,36 @@ class AgoraController extends Controller
         $token = AgoraService::generateToken($channelName, $uid);
         
         $livechat_details->update(['liveToken'=>$token]);
+                
+        $token_record=[
+            'token' => $token,
+            'uid' => $uid
+        ];
         
+    return ApiResponse::generateResponse('success','agora token generate',$token_record, 200);
+}
+
+
+     public function generateTokenWeb(Request $request)
+    {
+        $request->validate([
+            // 'id'=>'required|exists:live_requests,id'
+            'channel_name' => 'required|string',
+            'uid' => 'nullable|integer'
+        ]);
+
+        $channelName = $request->channel_id;
+        $uid = $request->uid ?? 0;
+
+     $livechat_details=LiveRequest::where('channel_id',$request->channel_id)->first();
+
+     if($livechat_details){
+         $uid = $livechat_details->uid ;
+     }
+
+     dd($livechat_details);
+
+    $token = AgoraService::generateToken($channelName, $uid);
 
     return response()->json([
         'token' => $token,
@@ -39,4 +78,21 @@ class AgoraController extends Controller
         //     'uid' => $uid
         // ]);
     }
+
+     public function agoraViewPageWeb(Request $request)
+    {
+
+    $id=$request->id??43;
+
+
+    $livechat_details=  LiveRequest::where('id',$id)->first();
+
+    dump($livechat_details);
+    
+
+          return view('agora',compact('livechat_details'));
+    }
+    
+
+
 }
