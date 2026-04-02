@@ -139,7 +139,7 @@
                                 </td>
 
                                 <td>
-                                    {{ $story->seller_details?->country_details?->name ?? 'N/A' }}
+                                    {{ $story->seller_details?->store_info?->country_info?->name ?? 'N/A' }}
                                 </td>
 
                                 <td>

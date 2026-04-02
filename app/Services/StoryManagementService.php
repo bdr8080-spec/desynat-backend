@@ -21,7 +21,7 @@ class StoryManagementService
 
             $query = Story::with([
                 'seller_details',
-                'seller_details.country_details'
+                'seller_details.store_info.country_info'
             ]);
 
             if ($request->filled('search')) {

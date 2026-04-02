@@ -24,7 +24,7 @@ class StoryController extends Controller
         $sellerStory = $this->StoryManagementService->getSelletStory($request)['data'];
         //dd($sellerStory);
         $adminStory = $this->StoryManagementService->getAdminStory($request)['data'];
-        $countries = $this->CountryService->getUserAllCountries()['data'];
+        $countries = $this->CountryService->getCountries()['data'];
         return view('admin.story-management.index',compact('sellerStory','adminStory','countries'));
     }
 
