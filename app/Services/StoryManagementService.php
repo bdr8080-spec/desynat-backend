@@ -578,6 +578,7 @@ class StoryManagementService
             // Update file and timestamps
             $reel->file = $request_data->file;
             $reel->caption = $request_data->caption;
+            $reel->thumbnail = $request_data->thumbnail??null;
             $reel->updated_at = now();
             $reel->created_at = now(); 
             $reel->save();

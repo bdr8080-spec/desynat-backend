@@ -464,6 +464,7 @@ class SellerDashboardController extends Controller
             'seller_id' => $user_details->id,
             'file' => $request->file,
             'caption' => $request->caption,
+            'thumbnail' => $request->thumbnail??null,
         ];
 
         $data = $this->StoryManagementService->updateSellerReel($request_data);
