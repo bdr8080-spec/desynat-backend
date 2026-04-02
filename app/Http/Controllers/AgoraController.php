@@ -35,20 +35,14 @@ class AgoraController extends Controller
         $token = AgoraService::generateToken($channelName, $uid);
         
         $livechat_details->update(['liveToken'=>$token]);
+                
+        $token_record=[
+            'token' => $token,
+            'uid' => $uid
+        ];
         
-
-    return response()->json([
-        'token' => $token,
-        'uid' => $uid
-    ]);
-
-        // return response()->json([
-        //     'status' => true,
-        //     'token' => $token,
-        //     'channel' => $channelName,
-        //     'uid' => $uid
-        // ]);
-    }
+    return ApiResponse::generateResponse('success','agora token generate',$token_record, 200);
+}
 
 
      public function generateTokenWeb(Request $request)
@@ -67,6 +61,8 @@ class AgoraController extends Controller
      if($livechat_details){
          $uid = $livechat_details->uid ;
      }
+
+     dd($livechat_details);
 
     $token = AgoraService::generateToken($channelName, $uid);
 
