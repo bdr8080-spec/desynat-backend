@@ -417,22 +417,31 @@
         <div class="tab-pane fade" id="reels-tab-pane" role="tabpanel" aria-labelledby="reels-tab" tabindex="0">
             <div class="categoryDetail_content reels_content">
                 <div class="row">
+
                     @forelse($seller_reels as $reel)
-                    <div class="col-lg-3 col-md-3 col-12 my-3">
-                        <div class="product-img" data-reel='@json($reel)'>
-                            <img src="{{$reel->file}}" alt="Product">
-                            <button class="wishlist-btn" data-reel-id="{{ $reel->id }}">
-                                <!-- <img src="{{asset('user/assets/images/reels_check.svg')}}" class="img-fluid"
-                                    alt="check" /> -->
+                        <div class="col-lg-3 col-md-3 col-12 my-3">
+                            <div class="product-img" data-reel='@json($reel)' style="position:relative; cursor:pointer;">
+                                
+                                @php
+                                    $isVideo = preg_match('/\.(mp4|webm|ogg)$/i', $reel->file);
+                                @endphp
+
+                                @if($isVideo)
+                                    <video src="{{ $reel->file }}" muted autoplay loop style="width:100%; height:100%; object-fit:cover;"></video>
+                                @else
+                                    <img src="{{ $reel->file }}" alt="Product" class="img-fluid">
+                                @endif
+
+                                <!-- Wishlist button -->
+                                <button class="wishlist-btn" data-reel-id="{{ $reel->id }}" style="position:absolute; top:10px; right:10px; z-index:10;">
                                     @if($reel->is_whishlisted==1)
-                                        <img src="{{ asset('user/assets/images/reels_check.svg') }}" 
-                                            class="img-fluid" alt="check" />
+                                        <img src="{{ asset('user/assets/images/reels_check.svg') }}" class="img-fluid" alt="check" />
                                     @else
                                         <i class="fa-regular fa-heart"></i>
                                     @endif
-                            </button>
+                                </button>
+                            </div>
                         </div>
-                    </div>
                     @empty
                         <div class="item text-center">
                             <p>No reels found</p>
@@ -588,22 +597,17 @@
         </div>
 
         <div class="logostatus">
-            <!-- Progress bar -->
             <div id="progressContainerReel" class="progress-container"></div>
 
-            <!-- Media -->
             <div class="status-img">
                 <img id="reelImage" class="img-fluid" style="display:none;" />
-                <video id="reelVideo" 
-                       style="width:100%; height:100%; object-fit:contain; display:none;" 
-                       controls autoplay muted>
-                </video>
+                <video id="reelVideo" style="width:100%; height:100%; object-fit:contain; display:none;" controls autoplay muted></video>
             </div>
         </div>    
     </div>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
 (function() {
     const range = document.getElementById('priceRange');
@@ -1004,84 +1008,6 @@ function closeSellerStatus() {
 </script>
 
 
-<!-- <script>
-    // New Highlight Story Viewer
-
-    var images = [
-        "{{asset('user')}}/assets/images/store1.jpg",
-        "{{asset('user')}}/assets/images/item-1.svg",
-        "{{asset('user')}}/assets/images/item-2.svg",
-    ];
-
-    var currentIndex = 0;
-    var timer = null;
-    var duration = 3000;
-
-    function highlightGallery(index) {
-        currentIndex = index;
-        document.getElementById("heighlightSeller").style.display = "block";
-        generateProgressBars();
-        showImage();
-    }
-
-    function generateProgressBars() {
-        const container = document.getElementById("progressContainer");
-        container.innerHTML = "";
-        images.forEach((img, i) => {
-            container.innerHTML += `
-                <div class="progress-bar">
-                    <div class="progress-fill" id="bar${i}"></div>
-                </div>
-            `;
-        });
-    }
-
-    function showImage() {
-        document.getElementById("statusImage").src = images[currentIndex];
-        startProgress();
-    }
-
-    function startProgress() {
-        clearTimeout(timer);
-        // Reset all bars
-        document.querySelectorAll(".progress-fill").forEach(bar => {
-            bar.style.width = "0%";
-            bar.style.transition = "none";
-        });
-        setTimeout(() => {
-            let bar = document.getElementById("bar" + currentIndex);
-            bar.style.transition = `${duration}ms linear`;
-            bar.style.width = "100%";
-        }, 10);
-
-        timer = setTimeout(() => {
-            showNext();
-        }, duration);
-    }
-
-    function showNext() {
-        if (currentIndex < images.length - 1) {
-            currentIndex++;
-            showImage();
-        } else {
-            closeheighStatus(); 
-        }
-    }
-
-    function showPrev() {
-        if (currentIndex > 0) {
-            currentIndex--;
-            showImage();
-        }
-    }
-
-    function closeheighStatus() {
-        clearTimeout(timer);
-        document.getElementById("heighlightSeller").style.display = "none";
-    }
-
-</script> -->
-
  <!-- highlight -->
 <script>
 let highlightTimer = null;
@@ -1169,20 +1095,19 @@ function closeHighlightViewer() {
 }
 </script>
 
-<!-- reels -->
+<!-- reel -->
 <script>
 let reelTimer = null;
-let reelDuration = 3000; // default for images
+let reelDuration = 3000;
 
-function openReelViewer(reel) {
-    console.log('def');
+// OPEN VIEWER
+function openReelViewer(reel){
     clearTimeout(reelTimer);
 
     const imageEl = document.getElementById("reelImage");
     const videoEl = document.getElementById("reelVideo");
     const progressContainer = document.getElementById("progressContainerReel");
 
-    // Hide previous media
     imageEl.style.display = "none";
     videoEl.style.display = "none";
     videoEl.pause();
@@ -1199,18 +1124,20 @@ function openReelViewer(reel) {
     const file = reel.file;
     const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
 
-    if (isVideo) {
+    if(isVideo){
         videoEl.src = file;
         videoEl.style.display = "block";
+        videoEl.muted = true;
+        videoEl.play().catch(err => console.warn("Video play error:", err));
 
-        videoEl.onloadedmetadata = function() {
+        videoEl.onloadedmetadata = function(){
             reelDuration = videoEl.duration * 1000;
             startReelProgress(progressFill, reelDuration, closeReelViewer);
-        };
+        }
 
-        videoEl.onended = function() {
+        videoEl.onended = function(){
             closeReelViewer();
-        };
+        }
     } else {
         imageEl.src = file;
         imageEl.style.display = "block";
@@ -1221,120 +1148,72 @@ function openReelViewer(reel) {
     document.getElementById("reelViewer").style.display = "block";
 }
 
-function startReelProgress(progressEl, duration, callback) {
+// PROGRESS BAR
+function startReelProgress(progressEl, duration, callback){
     clearTimeout(reelTimer);
-
-    // Reset progress
     progressEl.style.transition = "none";
     progressEl.style.width = "0%";
 
-    setTimeout(() => {
+    setTimeout(()=>{
         progressEl.style.transition = `width ${duration}ms linear`;
         progressEl.style.width = "100%";
-    }, 50);
+    },50);
 
     reelTimer = setTimeout(callback, duration);
 }
 
-function closeReelViewer() {
+// CLOSE VIEWER
+function closeReelViewer(){
     clearTimeout(reelTimer);
-
     const imageEl = document.getElementById("reelImage");
     const videoEl = document.getElementById("reelVideo");
     const progressFill = document.getElementById("reelProgressFill");
 
     document.getElementById("reelViewer").style.display = "none";
-
     imageEl.style.display = "none";
     videoEl.pause();
     videoEl.style.display = "none";
 
-    if (progressFill) {
+    if(progressFill){
         progressFill.style.transition = "none";
         progressFill.style.width = "0%";
     }
 }
 
-</script>
-
-<script>
-// $(document).ready(function(){
-
-//     $('.wishlist-btn').click(function(e){
-//         e.stopPropagation(); // 🔹 important: prevents parent click (openReelViewer)
-
-//         var button = $(this);
-//         var reelId = button.data('reel-id');
-
-//         $.ajax({
-//             url: "{{ route('user.add_remove_reel_to_whishlist') }}",
-//             type: "POST",
-//             data: {
-//                 reel_id: reelId,
-//                 _token: "{{ csrf_token() }}"
-//             },
-//             success: function(response){
-//                 if(response.status === 'success'){
-//                     toastr.success(response.message);
-
-//                     setTimeout(function(){
-//                         location.reload();
-//                     }, 1500);
-
-//                 } else {
-//                     toastr.error(response.message || 'Something went wrong');
-//                 }
-//             },
-//             error: function(xhr){
-//                 var msg = 'Something went wrong';
-//                 if(xhr.responseJSON && xhr.responseJSON.message){
-//                     msg = xhr.responseJSON.message;
-//                 }
-//                 toastr.error(msg);
-//             }
-//         });
-
-//     });
-
-// });
 $(document).ready(function(){
 
-    // Reel viewer click
-    $('.product-img').click(function(e){
-        console.log('abc');
-        var reel = $(this).data('reel');
+    // CLICK ON REEL (IGNORE WISHLIST BUTTON)
+    $(document).on('click', '.product-img', function(e){
+        if($(e.target).closest('.wishlist-btn').length) return; // ignore wishlist
+        const reel = JSON.parse($(this).attr('data-reel'));
         openReelViewer(reel);
     });
 
-    // Wishlist click
-    $('.wishlist-btn').click(function(e){
-        e.stopPropagation(); // 🔹 prevents parent click
-
-        var button = $(this);
-        var reelId = button.data('reel-id');
+    // WISHLIST AJAX
+    $(document).on('click', '.wishlist-btn', function(e){
+        e.stopPropagation(); // important: prevent viewer
+        const button = $(this);
+        const reelId = button.data('reel-id');
 
         $.ajax({
             url: "{{ route('user.add_remove_reel_to_whishlist') }}",
             type: "POST",
-            data: {
-                reel_id: reelId,
-                _token: "{{ csrf_token() }}"
-            },
+            data: { reel_id: reelId, _token: "{{ csrf_token() }}" },
             success: function(response){
                 if(response.status === 'success'){
+                    if(button.find('i').length){
+                        button.html('<img src="{{ asset('user/assets/images/reels_check.svg') }}" class="img-fluid" alt="check" />');
+                    } else {
+                        button.html('<i class="fa-regular fa-heart"></i>');
+                    }
                     toastr.success(response.message);
-                    setTimeout(function(){
-                        location.reload();
-                    }, 1500);
                 } else {
                     toastr.error(response.message || 'Something went wrong');
                 }
             },
             error: function(xhr){
                 var msg = 'Something went wrong';
-                if(xhr.responseJSON && xhr.responseJSON.message){
-                    msg = xhr.responseJSON.message;
-                }
+                if(xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
                 toastr.error(msg);
             }
         });
@@ -1342,6 +1221,8 @@ $(document).ready(function(){
 
 });
 </script>
+
+
 
 
 
