@@ -194,6 +194,7 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('/upload_reel', [WebSellerDashboard::class,'upload_reel'])->name('seller.upload_reel');
     Route::post('/update_reel', [WebSellerDashboard::class,'update_reel'])->name('seller.update_reel');
     Route::post('/delete_reel/{id}', [WebSellerDashboard::class,'delete_reel'])->name('seller.delete_reel');
+    Route::post('/updateReelStatus', [WebSellerDashboard::class,'updateReelStatus'])->name('seller.updateReelStatus');
 
     });
 

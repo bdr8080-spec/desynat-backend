@@ -852,6 +852,27 @@ $seller_id=Auth::guard('seller')->user()->id;
         ], 200);
     }
 
+    public function updateReelStatus(Request $request)
+    {
+        $request_data = (object) [
+            'reel_id' => $request->reel_id
+        ];
+
+        $result = $this->StoryManagementService->updateSellerReelStatus($request_data);
+
+        if (isset($result['status']) && $result['status'] === 'error') {
+            return response()->json([
+                'status' => 'error',
+                'message' => $result['message']
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => $result['message']
+        ], 200);
+    }
+
       
 
       
