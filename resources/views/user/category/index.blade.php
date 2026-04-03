@@ -562,7 +562,7 @@
 <!-- New Highlight Story Viewer -->
 
 <div class="status-viewer bgwhite" id="highlightViewer">
-    <div class="container highlightStatus">
+    <div class="container highlightStatus adminstatus">
         <div class="story-header d-flex justify-content-between">
             <div></div>
             <button type="button" class="btn btn-light" onclick="closeHighlightViewer()">
