@@ -357,7 +357,7 @@ class StoryManagementService
             $query = Highlight::query();
 
             // Only last 24 hours 
-            $query->where('created_at', '>=', Carbon::now()->subDay());
+           // $query->where('created_at', '>=', Carbon::now()->subDay());
 
             // Existing conditions
             $query->where('type', '2');

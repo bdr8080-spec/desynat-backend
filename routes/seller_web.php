@@ -196,6 +196,7 @@ Route::group(['prefix' => 'seller'], function () {
     Route::post('/delete_reel/{id}', [WebSellerDashboard::class,'delete_reel'])->name('seller.delete_reel');
     Route::post('/updateReelStatus', [WebSellerDashboard::class,'updateReelStatus'])->name('seller.updateReelStatus');
     Route::post('/delete_highlight/{id}', [WebSellerDashboard::class,'delete_highlight'])->name('seller.delete_highlight');
+    Route::post('/delete_story/{id}', [WebSellerDashboard::class,'delete_story'])->name('seller.delete_story');
 
     });
 
