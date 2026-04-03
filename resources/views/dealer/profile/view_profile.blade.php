@@ -83,6 +83,14 @@
     color: #fff;
 }
 
+#storyvideo2 {
+    pointer-events: none;
+}
+
+#storyimg2 {
+    pointer-events: none;
+}
+
 </style>
 
 
@@ -738,19 +746,6 @@ function closeStatus2() {
     }
 }
 
-// // Example functions for buttons (replace with your AJAX)
-// function deleteReel(reelId) {
-//     if (confirm("Are you sure you want to delete this reel?")) {
-//         console.log("Delete reel:", reelId);
-//         // TODO: AJAX call to delete
-//     }
-// }
-
-// function toggleReelStatus(reelId) {
-//     var isActive = $("#switchReelStatus").is(":checked");
-//     console.log("Toggle reel status:", reelId, isActive);
-//     // TODO: AJAX call to update status
-// }
 
 function updateReels(index) {
     var reel = reels[index];
