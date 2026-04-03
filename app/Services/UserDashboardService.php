@@ -606,7 +606,7 @@ if ($current_requests->isEmpty()) {
     return [
         'status' => 'success',
         'message' => 'No Request found',
-        'data' => (object)[]
+        'data' => []
     ];
 }
 
