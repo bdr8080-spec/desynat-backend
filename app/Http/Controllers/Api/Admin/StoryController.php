@@ -67,7 +67,7 @@ class StoryController extends Controller
         try {
             $request_data=(object )[
                 'file'=>$request->file,
-                'thumbnail' => $request_data->thumbnail??null,
+                'thumbnail' => $request->thumbnail??null,
             ];
             $result = $this->StoryManagementService->addStory($request_data);
 

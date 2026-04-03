@@ -562,7 +562,7 @@
 <!-- New Highlight Story Viewer -->
 
 <div class="status-viewer bgwhite" id="highlightViewer">
-    <div class="container highlightStatus">
+    <div class="container highlightStatus adminstatus">
         <div class="story-header d-flex justify-content-between">
             <div></div>
             <button type="button" class="btn btn-light" onclick="closeHighlightViewer()">
@@ -588,7 +588,7 @@
 <!-- New reel  Viewer -->
 
 <div class="status-viewer bgwhite" id="reelViewer" style="display:none;">
-    <div class="container reelStatus">
+    <div class="container reelStatus adminstatus">
         <div class="story-header d-flex justify-content-between">
             <div></div>
             <button type="button" class="btn btn-light" onclick="closeReelViewer()">
@@ -602,6 +602,14 @@
             <div class="status-img">
                 <img id="reelImage" class="img-fluid" style="display:none;" />
                 <video id="reelVideo" style="width:100%; height:100%; object-fit:contain; display:none;" controls autoplay muted></video>
+            </div>
+
+            <div class="add-caption">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iure enim laudantium labore veniam necessitatibus illo alias aperiam harum</p>
+            </div>
+            <div class="caption-share">
+                <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                <button class="wishlist-btn reply-ic"><i class="bi bi-reply"></i></button>
             </div>
         </div>    
     </div>

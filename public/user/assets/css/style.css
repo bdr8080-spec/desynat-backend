@@ -1653,6 +1653,7 @@ h3.mid-headng {
 .reels_content .product-img {
     height: 500px !important;
     border-radius: 15px;
+    border: 1px solid #ddd;
 }
 
 .reels_content .product-img img {
@@ -3402,4 +3403,28 @@ img.img-fluid.circle-image {
 .adminstatus .status-right span {
     right: 0;
     left: auto;
+}
+
+.add-caption {
+    background: #00000078;
+    padding: 9px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+}
+.add-caption p {
+    font-size: 12px;
+    margin-bottom: 0px;
+}
+.caption-share {
+    position: absolute;
+    bottom: 35%;
+    right: 9px;
+}
+.wishlist-btn.reply-ic .bi-reply {
+    transform: rotateY(180deg);
+}
+.wishlist-btn.reply-ic {
+    transform: translateY(50px);
 }
