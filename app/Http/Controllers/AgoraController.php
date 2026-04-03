@@ -57,7 +57,7 @@ class AgoraController extends Controller
        $token_record=  [
             'token' => $token,
             'appId' => config('services.agora.app_id'),
-            'channel' => $request->channel,
+            'channel' => $channelName,
             'uid' => $uid ?? 0
         ];
 
