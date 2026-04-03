@@ -607,7 +607,10 @@
             <div class="add-caption">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam iure enim laudantium labore veniam necessitatibus illo alias aperiam harum</p>
             </div>
-
+            <div class="caption-share">
+                <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
+                <button class="wishlist-btn reply-ic"><i class="bi bi-reply"></i></button>
+            </div>
         </div>    
     </div>
 </div>
