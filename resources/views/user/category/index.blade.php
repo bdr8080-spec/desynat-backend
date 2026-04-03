@@ -588,7 +588,7 @@
 <!-- New reel  Viewer -->
 
 <div class="status-viewer bgwhite" id="reelViewer" style="display:none;">
-    <div class="container reelStatus">
+    <div class="container reelStatus adminstatus">
         <div class="story-header d-flex justify-content-between">
             <div></div>
             <button type="button" class="btn btn-light" onclick="closeReelViewer()">
