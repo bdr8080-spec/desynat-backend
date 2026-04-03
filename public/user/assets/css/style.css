@@ -3419,6 +3419,12 @@ img.img-fluid.circle-image {
 }
 .caption-share {
     position: absolute;
-    bottom: 10%;
-    right: 20px;
+    bottom: 35%;
+    right: 9px;
+}
+.wishlist-btn.reply-ic .bi-reply {
+    transform: rotateY(180deg);
+}
+.wishlist-btn.reply-ic {
+    transform: translateY(50px);
 }
