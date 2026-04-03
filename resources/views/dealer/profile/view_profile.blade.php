@@ -113,10 +113,10 @@
                         <div class="user_view">
                             <div class="position-relative">
                                 <div class="addprofile">
-                                    <img src="{{$seller_details->profile_pic}}" class="img-fluid">
+                                    <img src="{{$seller_details->profile_pic}}" class="img-fluid" onclick='openSellerStoryViewer(@json($stories), 0)'>
                                 </div>
                                 <a href="{{route('seller.add_story')}}" class="addic">
-                                    <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid" onclick='openSellerStoryViewer(@json($stories), 0)'>
+                                    <img src="{{asset('dealer/assets/img/add.svg')}}" class="img-fluid">
                                 </a>
                             </div>
 
@@ -1259,6 +1259,143 @@ function closeSellerHighlightViewer() {
         progressFill.style.transition = "none";
         progressFill.style.width = "0%";
     }
+}
+</script>
+
+<script>
+let sellerStories = [];
+let sellerStoryIndex = 0;
+let sellerStoryTimer = null;
+let sellerStoryDuration = 3000;
+
+// OPEN VIEWER
+function openSellerStoryViewer(stories, startIndex = 0) {
+    clearTimeout(sellerStoryTimer);
+
+    sellerStories = stories;
+    sellerStoryIndex = startIndex;
+
+    document.getElementById("sellerStoryViewer").style.display = "block";
+
+    renderProgressBars(); // ✅ create all bars once
+    showSellerStory(sellerStoryIndex);
+}
+
+// CREATE ALL PROGRESS BARS
+function renderProgressBars() {
+    const container = document.getElementById("sellerStoryProgressContainer");
+    container.innerHTML = '';
+
+    sellerStories.forEach((_, i) => {
+        container.innerHTML += `
+            <div style="flex:1; margin:2px; background:#ddd; height:4px;">
+                <div id="progress_${i}" 
+                     style="width:0%; height:100%; background:#007bff;"></div>
+            </div>
+        `;
+    });
+}
+
+// SHOW STORY
+function showSellerStory(index) {
+    clearTimeout(sellerStoryTimer);
+
+    if (index >= sellerStories.length) {
+        closeSellerStoryViewer();
+        return;
+    }
+
+    const story = sellerStories[index];
+    const imageEl = document.getElementById("sellerStoryImage");
+    const videoEl = document.getElementById("sellerStoryVideo");
+
+    // RESET MEDIA
+    imageEl.style.display = "none";
+    videoEl.style.display = "none";
+    videoEl.pause();
+    videoEl.src = "";
+
+    // UPDATE PROGRESS BARS
+    sellerStories.forEach((_, i) => {
+        const bar = document.getElementById(`progress_${i}`);
+        if (!bar) return;
+
+        if (i < index) {
+            bar.style.width = "100%";
+        } else {
+            bar.style.width = "0%";
+        }
+    });
+
+    const currentBar = document.getElementById(`progress_${index}`);
+
+    const file = story.file;
+    const isVideo = file.match(/\.(mp4|webm|ogg)$/i);
+
+    if (isVideo) {
+        videoEl.src = file;
+        videoEl.style.display = "block";
+
+        videoEl.onloadedmetadata = function () {
+            sellerStoryDuration = videoEl.duration * 1000;
+            animateProgress(currentBar, sellerStoryDuration);
+        };
+
+        videoEl.onended = function () {
+            nextSellerStory();
+        };
+
+    } else {
+        imageEl.src = file;
+        imageEl.style.display = "block";
+
+        sellerStoryDuration = 3000;
+        animateProgress(currentBar, sellerStoryDuration);
+    }
+}
+
+// PROGRESS ANIMATION
+function animateProgress(progressEl, duration) {
+    clearTimeout(sellerStoryTimer);
+
+    progressEl.style.transition = "none";
+    progressEl.style.width = "0%";
+
+    setTimeout(() => {
+        progressEl.style.transition = `width ${duration}ms linear`;
+        progressEl.style.width = "100%";
+    }, 50);
+
+    sellerStoryTimer = setTimeout(() => {
+        nextSellerStory();
+    }, duration);
+}
+
+// NEXT STORY
+function nextSellerStory() {
+    sellerStoryIndex++;
+
+    if (sellerStoryIndex >= sellerStories.length) {
+        closeSellerStoryViewer();
+    } else {
+        showSellerStory(sellerStoryIndex);
+    }
+}
+
+// CLOSE VIEWER
+function closeSellerStoryViewer() {
+    clearTimeout(sellerStoryTimer);
+
+    const imageEl = document.getElementById("sellerStoryImage");
+    const videoEl = document.getElementById("sellerStoryVideo");
+
+    document.getElementById("sellerStoryViewer").style.display = "none";
+
+    imageEl.style.display = "none";
+
+    videoEl.pause();
+    videoEl.style.display = "none";
+    videoEl.src = "";
 }
 </script>
 
