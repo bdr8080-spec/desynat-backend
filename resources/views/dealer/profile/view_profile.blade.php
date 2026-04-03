@@ -419,7 +419,7 @@
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
                     <div class="py-2" style="color:#875C3A">
-                        Upload Image/Video
+                        Upload Video
                     </div>
                 </div>
 
@@ -430,7 +430,7 @@
                 </div>
 
                 <!-- File Input -->
-                <input type="file" id="storyUpload" accept="image/*,video/*" class="storyUpload" />
+                <input type="file" id="storyUpload" accept="video/*" class="storyUpload" />
 
                 <!-- File Error -->
                 <div id="fileError" style="color:red; font-size:0.9rem; margin-top:0.5rem;"></div>
@@ -478,13 +478,6 @@
         </div>
 
         <div class="dashboard-button mt-4 logostatus bgwhite d-flex justify-content-center gap-4" id="reelActions">
-            <!-- Active
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault" checked="">
-                <label class="form-check-label" for="switchCheckDefault"></label>
-            </div>
-            <a href="#" class="pencil-btn-2 btn-red"><i class="bi bi-trash3"></i> </a>
-            <a href="javascript:void(0)" class="pencil-btn-2 edt-btn" onclick='updateReels(@json($reel))'><i class="bi bi-pencil"></i> </a> -->
         </div>
     </div>
 </div>
@@ -542,7 +535,7 @@
                 <div id="bannerhide2" class="text-center">
                     <img src="{{ asset('/dealer') }}/assets/img/upload-icon.svg"
                         style="width:70px;object-fit:cover;border-radius:6px;padding-top:2rem;">
-                    <div class="py-2" style="color:#875C3A">Upload Image/Video</div>
+                    <div class="py-2" style="color:#875C3A">Upload Video</div>
                 </div>
 
                 <!-- Preview -->
@@ -552,7 +545,7 @@
                 </div>
 
                 <!-- File Input -->
-                <input type="file" id="storyUpload2" accept="image/*,video/*" class="storyUpload" />
+                <input type="file" id="storyUpload2" accept="video/*" class="storyUpload" />
                 <div id="fileError2" style="color:red; font-size:0.9rem;"></div>
             </label>
             <input type="hidden" id="existing_file2" value="">
