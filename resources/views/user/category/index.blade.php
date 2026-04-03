@@ -851,6 +851,17 @@ function loadSellerStories(openIndex = 0) {
             } else {
                 sellerStories = [];
             }
+            var profileDiv = document.querySelector('.storeClient_profile_img');
+
+            if (sellerStories.length > 0) {
+                if(profileDiv){
+                    profileDiv.classList.add('story-active');
+                }
+            } else {
+                if(profileDiv){
+                    profileDiv.classList.remove('story-active');
+                }
+            }
 
             // If stories exist → open gallery
             if (sellerStories.length > 0) {

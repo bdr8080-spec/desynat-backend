@@ -121,7 +121,7 @@
                     <div class="col-md-8">
                         <div class="user_view">
                             <div class="position-relative">
-                                <div class="addprofile">
+                                <div class="{{ !empty($stories) && count($stories) > 0 ? 'addprofile story-active' : 'addprofile' }}">
                                     <img src="{{$seller_details->profile_pic}}" class="img-fluid" onclick='openSellerStoryViewer(@json($stories), 0)'>
                                 </div>
                                 <a href="{{route('seller.add_story')}}" class="addic">
